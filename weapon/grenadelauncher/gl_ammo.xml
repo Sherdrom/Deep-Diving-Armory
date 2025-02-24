@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_40mmgrenade_he" subcategory="deep_gl_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="2" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,grenade" Scale="0.3" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="iron" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="iron" />
+	  <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="uex" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_gl.png" sourcerect="15,9,114,109" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="10,150,58,28" depth="0.55" origin="0.5,0.5" />
+    <Body width="60" height="30" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" launchimpulse="15.0" sticktocharacters="false">
+      <Attack structuredamage="0.5" penetration="0.5" severlimbsprobability="5">
+        <Affliction identifier="explosiondamage" strength="200" />
+      </Attack>
+      <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnImpact" range="3000" volume="2" forcePlaySounds="true" />
+      <!--Grenade launcher ammo explodes on impact-->
+      <StatusEffect type="OnImpact" target="This" Condition="-100.0" disabledeltatime="true">
+        <Explosion range="500.0" ballastfloradamage="300" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5">
+		  <Affliction identifier="Shrapnel_residue" strength="350" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_meteorite_mag" subcategory="gl_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.15" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_phy_reload" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium"  />
+	  <RequiredItem identifier="c4block" amount="2" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+	<Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="90"/>
+      <RequiredItem identifier="physicorium" mincondition="0.5" />
+      <RequiredItem identifier="gun_powder_fulgurium" mincondition="0.5" />
+	  <RequiredItem identifier="c4block" />
+	  <RequiredItem identifier="copper" mincondition="0.5" />
+      <RequiredItem identifier="deep_meteorite_mag" mincondition="0.0" maxcondition="0.2" usecondition="false"/>
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_2.png" sourcerect="377,137,159,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="377,137,159,106" origin="0.5,0.5" />
+    <Body width="40" height="50" density="25" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="40mm_meteorite" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="40mm_meteorite" />
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+      <!--Spawn an SMG round on use. Condition -4.8 -> 21 shots per magazine.-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="40mm_meteorite" spawnposition="ThisInventory" />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="40mm_meteorite" hideinmenus="true" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,grenade" Scale="0.5" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" depth="0.55" origin="0.5,0.5" />
+    <Body width="70" height="15" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" launchimpulse="20.0" sticktocharacters="false">
+      <Attack structuredamage="0.5" penetration="0.5" severlimbsprobability="5">
+		<Affliction identifier="Shrapnel_residue" strength="150" />
+      </Attack>
+      <sound file="Content/Items/Weapons/FragGrenade40mmShot1.ogg" type="OnImpact" range="3000" selectionmode="Random" />
+      <sound file="Content/Items/Weapons/FragGrenade40mmShot2.ogg" type="OnImpact" range="3000" />
+      <!--Grenade launcher ammo explodes on impact-->
+      <StatusEffect type="OnImpact" target="This" Condition="-100.0" disabledeltatime="true">
+        <sound file="Content/Items/Weapons/ExplosionDebris2.ogg" range="2000" />
+        <Explosion range="600.0" ballastfloradamage="500" structuredamage="0.5" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="0.6">
+          <Affliction identifier="burn" strength="150" />
+		  <Affliction identifier="Shrapnel_residue" strength="80" />
+		  <Affliction identifier="explosiondamage" strength="150" />
+          <Affliction identifier="bleeding" strength="100" probability="0.5" />
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>

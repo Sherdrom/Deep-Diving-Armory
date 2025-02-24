@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_m870" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun,deep_shotgun_3" Scale="0.5" impactsoundtag="impact_metal_light">
+    <Deconstruct time="10">
+      <Item identifier="physicorium" />
+	  <Item identifier="physicorium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium_barrel" />
+	  <RequiredItem identifier="physicorium_part" />	  
+      <RequiredItem identifier="engineeringplastic" />
+	  <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="16,359,174,139" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/shotgun/shotgun.png" sourcerect="2,118,194,62" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="50" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,3" handle1="-12,-8" handle2="80,25" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_shotgun,deep_shotgun_2,deep_shotgun_3,deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon barrelpos="70,-8" weapondamagemodifier="1.8" reloadnoskill="1.6" reloadskillrequirement="70" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.8" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="5" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/870.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/870.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/870.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-1200" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
+	  <StatusEffect type="InWater" target="This" Condition="10"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="4" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/870re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="3" shockwave="false" smoke="false" flash="true" sparks="false" flames="false" underwaterbubble="false" camerashake="24" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <RequiredItems items="shotgunammo" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="80" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="8" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="shotgunammo" hide="true" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="197,210,72,54" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight" hide="false" itempos="32,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="29,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="8,13" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="8,13" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="shotgun_ammo_bag" hide="false" itempos="3,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget sightrange="3000" soundrange="5000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
+	  <QualityStat stattype="Condition" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="80" />
+  </Item>
+  </Items>
