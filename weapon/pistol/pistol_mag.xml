@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_9mmp" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="150" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="6,11,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="14,108,32,79" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-11.2" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_9mm_2" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="150" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="8,228,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="83,111,37,77" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_2" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-6.25" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+   <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_2" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_5.7" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="150" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="151,10,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="122,114,45,73" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="5.7round" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="5.7round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_57_mag_phy" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_phy_reload,deep_5.7" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="295,774,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="122,114,45,73" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="57round_phy" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="57round_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_.45acpmag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="150" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="8,120,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="50,110,32,75" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items=".45acp" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers=".45acp" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_45acpmag_tit" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload,deep_.45acpmag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="152,339,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="50,110,32,75" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="p_45acp_tit" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="p_45acp_tit" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_45acpmag_phy" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_phy_reload,deep_.45acpmag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="294,339,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="50,110,32,75" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="p_45acp_phy" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="p_45acp_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_.50aemag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="500" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="293,10,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="169,96,40,89" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items=".50ae" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers=".50ae" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_50glmag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="600" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder"  />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="292,120,118,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="293,110,45,79" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items=".50gl" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-14.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers=".50gl" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  
+  <Item name="" identifier="deep_44mag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="213,104,82,80" origin="0.5,0.5" />
+	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="819,34,64,67" depth="0.65" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="44_Magnum" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-16.7" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="44_Magnum" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_50swmag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="800" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="344,114,76,78" origin="0.5,0.5" />
+	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="818,121,57,58" depth="0.65" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items=".50sw" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers=".50sw" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_cz75mag" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="152,229,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.54" sourcerect="425,101,52,89" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_3" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-6.67" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_stand_tit" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="153,557,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="108,609,38,55" origin="0.5,0.8" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_3" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-5.88" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_stand_phy" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="32" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,pistol_tit_reload,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="8" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="294,666,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="108,609,38,55" origin="0.5,0.8" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_phy" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-5.88" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_long_tit" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="153,448,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="64,584,44,86" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_3" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	  <StatusEffect type="OnActive" target="Character" disabledeltatime="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_glock_long_mag" strength="100" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_long_phy" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_phy_reload,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="294,557,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="64,584,44,86" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_phy" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	  <StatusEffect type="OnActive" target="Character" disabledeltatime="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_glock_long_mag" strength="100" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_drum_tit" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,drums_tit,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="153,665,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="24,582,36,88" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_3" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	  <StatusEffect type="OnActive" target="Character" disabledeltatime="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_glock_drum_mag" strength="100" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_glock_mag_drum_phy" subcategory="pistol_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,drums_phy,deep_glock" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_pistol.png" sourcerect="294,448,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="24,582,36,88" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9mmround_phy" />
+      <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	  <StatusEffect type="OnActive" target="Character" disabledeltatime="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_glock_drum_mag" strength="100" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>

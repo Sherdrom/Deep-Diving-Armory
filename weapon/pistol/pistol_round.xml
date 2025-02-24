@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="9mmround" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.05" penetration="0.1" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="5" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="5" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="9mmround_2" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.05" penetration="0.15" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="5" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="5" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.15" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="9mmround_3" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.05" penetration="0.3" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="5" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="5" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.15" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="9mmround_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.05" penetration="0.5" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="5" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="5" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.15" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="5.7round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.02" penetration="0.6" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+		<Affliction identifier="bleeding" strength="10" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="57round_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="3" severlimbsprobability="0.02" penetration="0.8" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+		<Affliction identifier="bleeding" strength="10" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.1" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier=".45acp" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="5" severlimbsprobability="0.1" penetration="0.08" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="10" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.25" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="p_45acp_tit" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="5" severlimbsprobability="0.1" penetration="0.25" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="10" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.25" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="p_45acp_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="2" itemdamage="5" severlimbsprobability="0.1" penetration="0.4" >
+		<Affliction identifier="deep_headshot_deadly" strength="2" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+		<Affliction identifier="bleeding" strength="10" probability="0.1"/>
+        <Affliction identifier="stun" strength="0.25" probability="0.1" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier=".50ae" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,40,21,9" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,40,21,9" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="12" itemdamage="25" severlimbsprobability="0.8" penetration="0.3" >
+		<Affliction identifier="deep_headshot_deadly" strength="7" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="70" />
+		<Affliction identifier="gunshotwound" strength="30" probability="0.4"/>
+        <Affliction identifier="bleeding" strength="30" />
+		<Affliction identifier="bleeding" strength="15" probability="0.4"/>
+        <Affliction identifier="stun" strength="0.4" probability="0.5" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+<Item name="" identifier="44_Magnum" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="10" itemdamage="25" severlimbsprobability="0.5" penetration="0.1" >
+		<Affliction identifier="deep_headshot_deadly" strength="5" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="60" />
+		<Affliction identifier="gunshotwound" strength="30" probability="0.3"/>
+        <Affliction identifier="bleeding" strength="20" />
+		<Affliction identifier="bleeding" strength="15" probability="0.3"/>
+        <Affliction identifier="stun" strength="0.3" probability="0.5" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier=".50gl" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="15" itemdamage="25" severlimbsprobability="0.8" penetration="0.3" >
+		<Affliction identifier="deep_headshot_deadly" strength="8" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="80" />
+		<Affliction identifier="gunshotwound" strength="40" probability="0.4"/>
+        <Affliction identifier="bleeding" strength="50" />
+		<Affliction identifier="bleeding" strength="30" probability="0.4"/>
+        <Affliction identifier="stun" strength="0.8" probability="0.8" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier=".50sw" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,pistolammoitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,51,21,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="20" itemdamage="50" severlimbsprobability="0.9" penetration="0.4" >
+		<Affliction identifier="deep_headshot_deadly" strength="10" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="gunshotwound" strength="100" />
+		<Affliction identifier="gunshotwound" strength="50" probability="0.5"/>
+        <Affliction identifier="bleeding" strength="100" />
+		<Affliction identifier="bleeding" strength="80" probability="0.5"/>
+        <Affliction identifier="stun" strength="1" probability="0.8" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>
