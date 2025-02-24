@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_vhs_d3_baka" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,zoom3x" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium_barrel" />
+	  <RequiredItem identifier="physicorium_part" />	  
+      <RequiredItem identifier="engineeringplastic" />
+	  <RequiredItem identifier="glassfibre" />
+	  <RequiredItem identifier="vhs_d3_baka_design" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" amount="6" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/rifle/rifle45.png" sourcerect="1024,590,192,184" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/rifle/rifle.png" sourcerect="1127,325,198,72" depth="0.55" origin="0.5,0.5" />
+    <Body width="185" height="70" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="45,8" handle1="0,-15" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.2" setvalue="true" >
+	  <Affliction identifier="smg" strength="2" />
+	 </StatusEffect>
+	  <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="2" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.075" weapondamagemodifier="1.1" penetrationmultiplier="1.5" holdtrigger="true" barrelpos="80,-5" spread="1" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/5.56_2.ogg" type="OnUse" range="500" />
+	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.2" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/5.56re_2.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.8" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,deep_556x45_vhs" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="80" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_5.56x45,deep_5.56x45_expansion,deep_556x45_vhs" hide="false" setactive="true" itempos="-16,-11" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="23,0" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="27,0" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+	  <TickBox text="战术小地图开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="MiniMap" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="MiniMap" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<MiniMap IsUsableOutsidePlayerSub="true" enableitemfinder="false" enablehullcondition="false" enableelectricalview="false" drawhudwhenequipped="true" displaybordersize="-0.1" characterusable="false" allowuioverlap="true">
+        <GuiFrame relativesize="0.4,0.4" anchor="UpperLeft" relativeoffset="0.006,-0.01" style="ItemUI" />
+     </MiniMap>
+    <aitarget sightrange="500" soundrange="500" fadeouttime="1" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.2" />
+	  <QualityStat stattype="FiringRateMultiplier" value="0.05"/>
+	  <QualityStat stattype="Condition" value="0.25" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="80" />
+  </Item>
+  </Items>

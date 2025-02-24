@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_EF88" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1500" minleveldifficulty="30" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titaniumaluminiumalloy_barrel" />
+	  <RequiredItem identifier="titaniumaluminiumalloy_part" />	  
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="titaniumaluminiumalloy" />
+	  <Item identifier="titanium" />
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/rifle/rifle45.png" sourcerect="282,539,153,135" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/rifle/rifle.png" sourcerect="285,251,188,63" depth="0.55" origin="0.5,0.5" />
+    <Body width="185" height="70" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="45,8" handle1="5,-15" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="1.05" setvalue="true" />
+	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	
+	</Holdable>
+    <RangedWeapon reload="0.077" weapondamagemodifier="0.9" holdtrigger="true" barrelpos="80,3" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/5.56_2.ogg" type="OnUse" range="3000" />
+	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/5.56re_2.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.8" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="70" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_5.56x45,deep_5.56x45_expansion" hide="false" itempos="-14,-8" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="25,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="32,6" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-5,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-5,14" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
+	  <QualityStat stattype="Condition" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="70" />
+  </Item>
+  </Items>
