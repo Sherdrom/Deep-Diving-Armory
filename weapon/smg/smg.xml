@@ -1,0 +1,2453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="deep_c1" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1000" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="30" />
+	  <RequiredItem identifier="steel" amount="3" />
+	  <RequiredItem identifier="carbon" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="16,6,170,144" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="0,71,199,48" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.11" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="90,2" spread="7" unskilledspread="14" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/smg9mm.ogg" type="OnUse" range="3000" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/smg9mmre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="5" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_9mm" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="30" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_9mm" hide="true" itempos="2,-8" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="30,6" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="33,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-7,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-7,14" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="32,0" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="60,6.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="52,6.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+	  <QualityStat stattype="Condition" value="0.05" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="30" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_thompson" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1000" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel_barrel" />
+	  <RequiredItem identifier="steel_part" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" amount="2" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="422,372,203,160" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="393,91,239,66" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="30,-20" aimpos="45,-20" handle1="-15,-10" handle2="90,-10" holdangle="50" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.08" weapondamagemodifier="1" holdtrigger="true" barrelpos="100,8" spread="10" unskilledspread="20" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/tom.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/tom.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/tom.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/tomre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="8" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_tom" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="30" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_tom" hide="false" itempos="7,-2" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="41,9" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="38,8" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-22,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-22,15" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="60,9.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="58,9.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+	  <QualityStat stattype="Condition" value="0.05" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="30" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_mac10" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="800" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="steel" amount="3" />
+	  <RequiredItem identifier="carbon" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="276,417,92,85" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="288,222,101,62" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" aimpos="90,10" handle1="-15,-10" handle2="-15,-10" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.05" weapondamagemodifier="1" holdtrigger="true" barrelpos="50,2" spread="20" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/vector.ogg" type="OnUse" range="3000" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/smg9mmre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="5" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_mac" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="40" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_mac" hide="false" itempos="-7,-15" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="10,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="13,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-7,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-7,16" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="29,7.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="21,7.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+	  <QualityStat stattype="Condition" value="0.05" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="40" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_mp5k" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="800" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" amount="3" />
+	  <RequiredItem identifier="carbon" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="10,451,148,134" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="0,253,160,59" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.075" weapondamagemodifier="1" holdtrigger="true" barrelpos="70,2" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/smg9mm.ogg" type="OnUse" range="3000" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/smg9mmre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="3" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_9mm" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="30" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_9mm" hide="false" itempos="20,-8" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="28,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="29,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="8,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="8,15" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="48,5.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="40,5.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+	  <QualityStat stattype="Condition" value="0.05" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="30" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_ump45" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.4" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="900" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="steel" amount="3" />
+	  <RequiredItem identifier="carbon" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="214,517,200,180" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="200,297,242,80" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="-10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="90,-2" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/ump45.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/ump45.ogg" type="OnUse" range="3000" frequencymultiplier="0.9" />
+      <Sound file="%ModDir%/weapon/ammo/ump45.ogg" type="OnUse" range="3000" frequencymultiplier="1.1" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/ump45re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="8" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_ump45" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="30" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_ump45" hide="false" setactive="true" itempos="14,-8" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="30,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="35,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="5,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="5,16" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="30,-2" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="51,5.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="43,5.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+	  <QualityStat stattype="Condition" value="0.05" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="30" />
+  </Item>
+  
+  
+  
+  <Item name="" identifier="deep_mp5sd" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1600" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="3"  />
+	  <RequiredItem identifier="aluminium" amount="2" />
+      <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="titaniumaluminiumalloy" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="12,596,167,148" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="0,312,196,56" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="-15,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.075" weapondamagemodifier="0.9" holdtrigger="true" barrelpos="80,2" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+      <Sound file="%ModDir%/weapon/ammo/mp5sd.ogg" type="OnUse" range="500" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/mp5sd.ogg" type="OnUse" range="500" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/mp5sd.ogg" type="OnUse" range="500" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/ump45re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="3" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_9mm" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="60" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_9mm" hide="false" itempos="10,-8" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="28,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="30,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="0,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="0,15" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="23,-2" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="400" soundrange="400" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
+	  <QualityStat stattype="Condition" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="60" />
+  </Item>
+  
+  
+  
+  <Item name="" identifier="deep_p90" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1800" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="3"  />
+	  <RequiredItem identifier="aluminium" amount="2" />
+      <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="titaniumaluminiumalloy" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="238,274,139,126" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="200,71,154,65" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="20,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.07" weapondamagemodifier="1" holdtrigger="true" barrelpos="70,-5" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/p90.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/p90.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/p90.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/p90re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_57_28" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="3" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_p90" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="60" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_p90" hide="false" itempos="4,4" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="25,-1" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="29,-1" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="23,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="23,15" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="42,0.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="34,0.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
+	  <QualityStat stattype="Condition" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="60" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_pdw" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1800" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="3"  />
+	  <RequiredItem identifier="aluminium" amount="2" />
+      <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="titaniumaluminiumalloy" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="444,13,166,138" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="200,144,186,80" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.075" weapondamagemodifier="1" holdtrigger="true" barrelpos="70,2" spread="4" unskilledspread="8" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/pdwre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="3" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_9mm" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="60" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_9mm" hide="false" itempos="16,-9" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="35,7" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="37,7" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="10,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="10,16" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="29,-1.5" setactive="true" containedspritedepth="0.1" depth="0.1" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="56,7.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="48,7.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
+	  <QualityStat stattype="Condition" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="60" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_vector" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="5000" minleveldifficulty="10" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="physicorium" amount="3"  />
+	  <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="225,865,166,159" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="200,448,196,68" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="0,0" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.05" weapondamagemodifier="1" holdtrigger="true" barrelpos="90,2" spread="10" unskilledspread="20" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/vector.ogg" type="OnUse" range="3000" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.5" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/smg9mmre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_vector" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="70" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_vector" hide="false" itempos="18,-15" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="35,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="37,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="10,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="10,16" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="37,-3" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="57,3.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="49,3.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
+	  <QualityStat stattype="Condition" value="0.2" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="70" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_mp7" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="5000" minleveldifficulty="10" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="physicorium" amount="3"  />
+	  <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="11,750,157,151" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="0,368,189,62" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="15,0" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.06" weapondamagemodifier="1" holdtrigger="true" barrelpos="90,2" spread="4" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/mp7.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/mp7.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/mp7.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.2" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/mp7re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_46_30" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="5" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_mp7" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="70" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_mp7" hide="false" itempos="7,-16" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="28,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="29,5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="10,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="10,15" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="48,4.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="42,4.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+	  <TickBox text="战术小地图开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="MiniMap" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="MiniMap" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<MiniMap IsUsableOutsidePlayerSub="true" enableitemfinder="false" enablehullcondition="false" enableelectricalview="false" drawhudwhenequipped="true" displaybordersize="-0.1" characterusable="false" allowuioverlap="true">
+        <GuiFrame relativesize="0.4,0.4" anchor="UpperLeft" relativeoffset="0.006,-0.01" style="ItemUI" />
+     </MiniMap>
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
+	  <QualityStat stattype="Condition" value="0.2" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="70" />
+  </Item>
+  
+    <Item name="" identifier="deep_pp19_warrior" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <Price baseprice="5000" minleveldifficulty="10" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" amount="3"  />
+	  <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="15,159,171,148" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="0,129,199,63" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="50,0" handle1="-10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.085" weapondamagemodifier="1" penetrationmultiplier="1.3" holdtrigger="true" barrelpos="90,2" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.2" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/pdwre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="8" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_9mm" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="80" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_9mm" hide="false" itempos="13,-9" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="279,20,55,34" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="33,9" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="33,9" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="0,18" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="0,18" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="32,0.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="57,7.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="49,7.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget sightrange="800" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
+	  <QualityStat stattype="Condition" value="0.2" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="80" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_pp19" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium_barrel" />
+	  <RequiredItem identifier="physicorium_part" />
+      <RequiredItem identifier="engineeringplastic" />
+	  <RequiredItem identifier="pp19_design" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" />
+	  <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/smg/smg45.png" sourcerect="426,179,198,170" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/smg/smg.png" sourcerect="350,7,233,71" depth="0.55" origin="0.5,0.5" />
+    <Body width="200" height="65" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="50,0" handle1="-10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
+	  <Affliction identifier="smg" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="OnContained" target="Character" setvalue="true" >
+	  <Affliction identifier="smg_water_resistance" strength="100" />
+	  <Affliction identifier="AlwaysStayConscious" strength="100" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
+     </StatusEffect>
+	</Holdable>
+    <RangedWeapon reload="0.086" weapondamagemodifier="1.2" holdtrigger="true" barrelpos="105,4" spread="6" unskilledspread="20" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/pdw.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+	  <StatusEffect type="OnUse" target="This" Condition="-80" />  
+	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
+	  <StatusEffect type="InWater" target="This" Condition="1000"/>
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.2" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/weapon/ammo/p90re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+	  <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+      </StatusEffect>
+	  <StatusEffect type="NotInWater" target="This" >
+	  <Conditional Condition="lt 50" />
+	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-80" target="This" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" Condition="-120" target="This" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      </StatusEffect>
+      <RequiredItems items="deep_smg_pp19" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="80" />
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
+      <Containable items="deep_smg_pp19" hide="false" itempos="28,1" setactive="true" rotation="0" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="45,9" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_laser" hide="false" itempos="47,9" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="10,19" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="10,19" setactive="true" >
+		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_muzzle" hide="false" itempos="66,7.5" setactive="true" />
+		<Containable tags="deep_muzzle_short" hide="false" itempos="58,7.5" setactive="true" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget sightrange="2000" soundrange="2000" fadeouttime="5" />
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
+	  <QualityStat stattype="Condition" value="0.2" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="80" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_9mm" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_9mm,smallitem,smg_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="100" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="15,10,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="88,210,48,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_9mm_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_smg_9mm_tit" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_9mm,smallitem,smg_tit_reload" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="212,10,122,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="88,210,48,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_tit" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_9mm_round_tit" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_smg_9mm_phy" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_9mm,smallitem,smg_phy_reload" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="358,11,118,110" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="88,210,48,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_phy" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_9mm_round_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_tom" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,drums_tom_lead" impactsoundtag="impact_metal_light">
+    <Price baseprice="500" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="16,353,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="670,201,39,101" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_1143_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_1143_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_mac" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="100" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="16,122,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="152,209,37,82" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_mac_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_mac_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_ump45" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.35" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="100" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="16,232,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="202,211,41,80" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_ump45_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_ump45_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+ 
+  <Item name="" identifier="deep_smg_ump45_tit" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.35" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_ump45,smallitem,smg_tit_reload" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="223,147,120,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="202,211,41,80" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_ump45_round_tit" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_ump45_round_tit" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_smg_ump45_phy" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.35" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_ump45,smallitem,smg_phy_reload" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="381,148,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="202,211,41,80" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_ump45_round_phy" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_ump45_round_phy" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+    <Item name="" identifier="deep_smg_vector" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="200" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="241,707,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="11,208,64,87" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_vector_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_vector_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_p90" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="400" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="225,458,123,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="249,212,147,18" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_57mm_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_mp7" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="600" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="510,10,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="417,210,53,91" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_46mm_round" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_46mm_round" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_smg_pp19" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="800" displaynonempty="true" minleveldifficulty="15">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+	  <RequiredItem identifier="copper" />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="423,705,122,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="245,248,156,47" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_pp19" />
+	  <!--子弹打完，枪械进行换弹-->
+	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+      </StatusEffect>
+	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	  <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true">
+      </StatusEffect>
+	  <!--每隔5s删除子弹-->
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
+	  <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
+	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
+	  <SpawnItem identifiers="smg_9mm_round_pp19" spawnposition="ThisInventory" Count="30" />
+      </StatusEffect>
+	</Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  
+  <Item name="" identifier="smg_9mm_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.15" >
+		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="25" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.25" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_9mm_round_tit" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.35" >
+		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="25" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.25" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_9mm_round_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.55" >
+		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="25" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.25" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_1143_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.05" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_1143_round_tit" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.25" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_1143_round_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.35" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_9mm_round_pp19" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.55" >
+		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="25" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.25" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_mac_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.05" >
+		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+        <Affliction identifier="bleeding" strength="5" />
+        <Affliction identifier="stun" strength="0.2" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_vector_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_ump45_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.1" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_ump45_round_tit" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="smg_ump45_round_phy" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4" >
+		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="30" />
+		<Affliction identifier="gunshotwound" strength="15" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.3" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_57mm_round" category="Weapon" maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.5" >
+		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+		<Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+        <Affliction identifier="stun" strength="0.2" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="0.5">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  
+  <Item name="" identifier="smg_46mm_round" category="Weapon"  maxstacksize="30" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.8" >
+		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+		<Affliction identifier="deep_headshot_2" strength="100" />
+		<Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="gunshotwound" strength="20" />
+        <Affliction identifier="gunshotwound" strength="10" probability="0.1"/>
+        <Affliction identifier="bleeding" strength="10" />
+        <Affliction identifier="stun" strength="0.2" probability="0.2" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="steel_plate_1" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="secarmcab" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="steel" amount="6" />
+      <RequiredItem identifier="carbon" amount="3" />
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="steel" amount="3" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="12,5,170,204" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="12,5,170,204" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="steel_plate_2" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<RequiredSkill identifier="weapons" level="80" />
+	  <RequiredItem identifier="titaniumaluminiumalloy" amount="6" />
+      <RequiredItem identifier="carbon" amount="4" />
+	  <RequiredItem identifier="phosphorus" amount="4" />
+	  <RequiredItem identifier="silicon" amount="4" />
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="titaniumaluminiumalloy" amount="2" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="210,5,183,206" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="210,5,183,206" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="steel_plate_3" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<RequiredSkill identifier="weapons" level="100" />
+	  <RequiredItem identifier="physicorium" amount="8" />
+      <RequiredItem identifier="dementonite" amount="8" />
+	  <RequiredItem identifier="carbon" amount="4"/>
+	  <RequiredItem identifier="phosphorus" amount="4" />
+	  <RequiredItem identifier="deep_ssd" amount="2"/>
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="physicorium" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="424,5,202,206" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="424,5,202,206" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="ceramics_plate_1" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="secarmcab" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="aluminium" amount="6" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="6" />
+    </Fabricate>
+	<Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+        <RequiredSkill identifier="weapons" level="60" />
+        <RequiredItem identifier="titaniumaluminiumalloy" amount="3" />
+		<RequiredItem identifier="aluminium" amount="3" />
+        <RequiredItem identifier="ceramics_plate_1" mincondition="0.0" maxcondition="0.5" usecondition="false" defaultitem="ceramics_plate_1" />
+      </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="titaniumaluminiumalloy" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="6,304,180,216" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="6,304,180,216" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+	  <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/jobgear/sound/armor_de.ogg" type="OnUse" range="2000.0" loop="false" volume="1" />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="ceramics_plate_2" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="6" />
+	  <RequiredItem identifier="silicon" amount="6" />
+	  <RequiredItem identifier="carbon" amount="6" />
+      <RequiredItem identifier="physicorium" amount="3" />
+    </Fabricate>
+	<Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+        <RequiredSkill identifier="weapons" level="80" />
+        <RequiredItem identifier="titaniumaluminiumalloy" amount="3" />
+		<RequiredItem identifier="silicon" amount="3" />
+		<RequiredItem identifier="carbon" amount="3" />
+		<RequiredItem identifier="physicorium" amount="1" />
+        <RequiredItem identifier="ceramics_plate_2" mincondition="0.0" maxcondition="0.5" usecondition="false" defaultitem="ceramics_plate_2" />
+      </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="physicorium" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="200,301,191,219" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="200,301,191,219" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/jobgear/sound/armor_de.ogg" type="OnUse" range="2000.0" loop="false" volume="1" />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="ceramics_plate_3" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" amount="6" />
+	  <RequiredItem identifier="dementonite" amount="6"/>
+	  <RequiredItem identifier="carbon" amount="4" />
+	  <RequiredItem identifier="engineeringplastic" amount="2" />
+	  <RequiredItem identifier="deep_ssd" amount="2"/>
+    </Fabricate>
+	<Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+        <RequiredSkill identifier="weapons" level="100" />
+        <RequiredItem identifier="physicorium" amount="3" />
+		<RequiredItem identifier="dementonite" amount="3"/>
+		<RequiredItem identifier="silicon" amount="3" />
+		<RequiredItem identifier="engineeringplastic" amount="1" />
+        <RequiredItem identifier="ceramics_plate_3" mincondition="0.0" maxcondition="0.5" usecondition="false" defaultitem="ceramics_plate_3" />
+      </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="physicorium" amount="4"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="410,302,190,219" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="410,302,190,219" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/jobgear/sound/armor_de.ogg" type="OnUse" range="2000.0" loop="false" volume="1" />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="steel_plate_arm" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate_2" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<RequiredSkill identifier="weapons" level="80" />
+	  <RequiredItem identifier="physicorium" amount="4" />
+	  <RequiredItem identifier="carbon" amount="4"/>
+	  <RequiredItem identifier="deep_ssd" amount="1"/>
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="physicorium" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="36,844,111,145" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="36,844,111,145" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="steel_plate_groin" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate_2" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<RequiredSkill identifier="weapons" level="80" />
+	  <RequiredItem identifier="physicorium" amount="2" />
+	  <RequiredItem identifier="carbon" amount="4"/>
+	  <RequiredItem identifier="deep_ssd" amount="1"/>
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="physicorium" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="188,853,194,126" />
+    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="188,853,194,126" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+  </Item>
+</Items>

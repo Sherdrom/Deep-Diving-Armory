@@ -1,0 +1,465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+    <Item name="" identifier="steel_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" amount="2"/>
+      <RequiredItem identifier="carbon" />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="steel"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,8,172,70" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,8,172,70" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+   <Item name="" identifier="titaniumaluminiumalloy_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="2"/>
+      <RequiredItem identifier="titanium" amount="1" />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="titaniumaluminiumalloy"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="11,95,176,79" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="11,95,176,79" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="physicorium_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="secarmcab" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.01" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" amount="2"/>
+      <RequiredItem identifier="dementonite" />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="physicorium"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,191,175,101" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,191,175,101" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+    <Item name="" identifier="steel_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" amount="4"/>
+      <RequiredItem identifier="carbon" amount="2" />
+	  <RequiredItem identifier="aluminium"  />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="steel" amount="2" mincondition="0.95"/>
+      <Item identifier="carbon" amount="1" mincondition="0.95"/>
+	  <Item identifier="aluminium" mincondition="0.95"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="217,5,132,129" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="217,5,132,129" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="titaniumaluminiumalloy_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="secarmcab" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="4"/>
+      <RequiredItem identifier="titanium" amount="2" />
+	  <RequiredItem identifier="aluminium"  />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="titaniumaluminiumalloy" amount="2" mincondition="0.95"/>
+      <Item identifier="titanium" amount="1" mincondition="0.95"/>
+	  <Item identifier="aluminium" mincondition="0.95"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="215,140,135,130" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="215,140,135,130" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="physicorium_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.01" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" amount="4"/>
+      <RequiredItem identifier="dementonite" amount="2" />
+	  <RequiredItem identifier="aluminium"  />
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="physicorium" amount="2" mincondition="0.95"/>
+      <Item identifier="dementonite" amount="1" mincondition="0.95"/>
+	  <Item identifier="aluminium" mincondition="0.95"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="216,285,135,130" />
+    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="216,285,135,130" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="SCAR_shield_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="44000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="8"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="4"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="2,8,186,188" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="2,8,186,188" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="NTW_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="66000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="12"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="6"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="0,210,184,188" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="0,210,184,188" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="gm6_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="66000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="12"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="6"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="6,793,195,192" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="6,793,195,192" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="whiteeagle_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="35000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="6"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="3"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="4,415,188,180" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="4,415,188,180" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="m500_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="35000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="6"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="3"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="0,593,189,175" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="0,593,189,175" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="pp19_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="35000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="6"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="3"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="240,208,202,201" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="240,208,202,201" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="vhs_d3_baka_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="55000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="5"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="242,420,192,188" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="242,420,192,188" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="74m_103_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="55000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="5"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="242,628,196,195" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="242,628,196,195" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="meteorite_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="55000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="5"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="233,824,199,190" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="233,824,199,190" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="mg42_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="66000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="12"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="6"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="451,219,198,191" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="451,219,198,191" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="aa12_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="66000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="12"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="6"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="464,402,198,191" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="464,402,198,191" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="wuchuan_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="55000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="5"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="660,213,198,200" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="660,213,198,200" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="gauss_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Price baseprice="60000" minleveldifficulty="48" sold="true">
+      <Price storeidentifier="merchantmilitary" multiplier="1" minavailable="1" sold="true" />
+      <Price storeidentifier="merchantarmory" multiplier="1" minavailable="1" sold="true" />
+    </Price>
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	  <Item identifier="deep_ssd" amount="5"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="433,627,213,216" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="433,627,213,216" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_ssd" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="deep_gold" amount="1"/>
+	  <RequiredItem identifier="fpgacircuit" amount="1"/>
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/part/design.png" sourcerect="811,4,188,183" />
+    <Sprite texture="%ModDir%/weapon/part/design.png" sourcerect="811,4,188,183" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  </Items>

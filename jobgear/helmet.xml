@@ -1,0 +1,1251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="6b47" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Upgrade gameversion="0.9.6.0" scale="0.325" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="700">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="KEVLAR" amount="2" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="109,166,102,101" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="109,166,102,101" origin="0.55,0.62" /> 
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>	 
+      <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>	
+      <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_fast_helmet" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Upgrade gameversion="0.9.6.0" scale="0.325" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1000">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="KEVLAR" amount="3" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="340,166,100,92" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="340,166,100,92" origin="0.55,0.62" />  
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_fast_helmet_black" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Upgrade gameversion="0.9.6.0" scale="0.325" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1000">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="KEVLAR" amount="3" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="339,66,100,92" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="339,66,100,92" origin="0.55,0.62" />  
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_fast_helmet_ghost" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="physicorium" amount="2" />
+	  <RequiredItem identifier="deep_ghost_formula" mincondition="0.0"  />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="714,555,123,96" depth="0.65" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+	<WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent,deep_headset" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.65" limb="Head" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="714,555,123,96" origin="0.5,0.62" />  
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  
+	  
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_fast_helmet_ghost_thermal" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="thermalgoggles_t7" amount="1" />
+	  <RequiredItem identifier="deep_ghost_formula" mincondition="0.0"  />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor_2.png" sourcerect="27,259,142,97" depth="0.65" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+	<WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="false" />
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent,deep_headset" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.15" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor_2.png" depth="0.65" limb="Head" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="27,259,142,97" origin="0.45,0.62" />  
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  
+	  
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="热成像开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_fast_helmet_ghost_night" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="gpnvg_18" amount="1" />
+	  <RequiredItem identifier="deep_ghost_formula" mincondition="0.0"  />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor_2.png" sourcerect="20,131,141,97" depth="0.65" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+	<WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent,deep_headset" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.15" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor_2.png" depth="0.65" limb="Head" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="20,131,141,97" origin="0.45,0.62" >
+	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  </sprite>
+	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
+      </StatusEffect>
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  
+	  
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight"  relativeoffset="-0.02,0.09" style="ItemUI" />
+        <TickBox text="夜视仪开关">
+          <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+        </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  
+  
+  <Item name="" identifier="6b47_thermal" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="thermalgoggles_t7" />
+	  <Item identifier="6b47" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="6b47" />
+	  <RequiredItem identifier="thermalgoggles_t7" />
+	  <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="160,13,130,137" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="17,9,145,99" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="17,9,145,99" origin="0.41,0.62" />
+	  <StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="false" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="热成像开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="6b47_night" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="gpnvg_18" />
+	  <Item identifier="6b47" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="6b47" />
+	  <RequiredItem identifier="gpnvg_18" />
+	  <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="297,13,149,137" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="220,157,145,94" depth="0.6" origin="0.5,0.5" > 
+	</Sprite> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" displaycontainedstatus="true" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="220,157,145,94" origin="0.41,0.62" >
+	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  </sprite>
+	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight"  relativeoffset="-0.02,0.09" style="ItemUI" />
+        <TickBox text="夜视仪开关">
+          <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+        </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" canbeselected="false" maxstacksize="1" hideitems="true">
+	<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+        <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+    </ItemContainer>
+  </Item>
+    
+  <Item name="" identifier="fast_thermal" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="thermalgoggles_t7" />
+	  <Item identifier="deep_fast_helmet" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_fast_helmet" />
+	  <RequiredItem identifier="thermalgoggles_t7" />
+	  <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="148,194,120,148" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="17,285,144,94" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.63" hidewearablesoftype="Hair" sourcerect="17,285,144,94" origin="0.4,0.59" />
+	  <StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="false" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="热成像开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="fast_thermal_black" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="thermalgoggles_t7" />
+	  <Item identifier="deep_fast_helmet_black" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_fast_helmet_black" />
+	  <RequiredItem identifier="thermalgoggles_t7" />
+	  <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="28,638,134,88" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.63" hidewearablesoftype="Hair" sourcerect="28,638,134,88" origin="0.4,0.59" />
+	  <StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="false" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="热成像开关" IsOn="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" drawhudwhenequipped="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" />
+      </TickBox>
+    </CustomInterface>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="fast_night" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="gpnvg_18" />
+	  <Item identifier="deep_fast_helmet" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_fast_helmet" />
+	  <RequiredItem identifier="gpnvg_18" />
+	  <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="272,194,164,146" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="230,286,140,92" depth="0.6" origin="0.5,0.5" > 
+	</Sprite> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" displaycontainedstatus="true" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="230,286,140,92" origin="0.41,0.62" >
+	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  </sprite>
+	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
+      </StatusEffect>
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+        <TickBox text="夜视仪开关">
+          <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+        </TickBox>
+    </CustomInterface>
+	  <ItemContainer capacity="1" canbeselected="false" maxstacksize="1" hideitems="true">
+	    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+        <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="fast_night_black" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="gpnvg_18" />
+	  <Item identifier="deep_fast_helmet_black" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_fast_helmet_black" />
+	  <RequiredItem identifier="gpnvg_18" />
+	  <RequiredItem identifier="glassfibre" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="227,637,131,89" depth="0.6" origin="0.5,0.5" > 
+	</Sprite> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" displaycontainedstatus="true" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="227,637,131,89" origin="0.41,0.62" >
+	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  </sprite>
+	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
+      </StatusEffect>
+	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+        <TickBox text="夜视仪开关">
+          <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+        </TickBox>
+    </CustomInterface>
+	  <ItemContainer capacity="1" canbeselected="false" maxstacksize="1" hideitems="true">
+	    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+        <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="deep_altyn" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="2" />
+	  <Item identifier="physicorium" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="6" />
+	  <RequiredItem identifier="physicorium" amount="4" />
+	  <RequiredItem identifier="engineeringplastic" />
+	  <RequiredItem identifier="deep_ssd" amount="2" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="650,13,125,140" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="453,165,118,96" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.3" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.4" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.3" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hidewearablesoftype="Hair" sourcerect="453,165,118,96" origin="0.52,0.59" /> 
+      <SkillModifier skillidentifier="weapons" skillvalue="-20" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_altyn_1" strength="100" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="deep_maska" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="1" />
+	  <Item identifier="physicorium" amount="1" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="physicorium" amount="2" />
+	  <RequiredItem identifier="dementonite" amount="2" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/helmet_icon.png" sourcerect="793,13,115,146" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="712,174,102,110" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.2" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.3" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.2" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hidewearablesoftype="Hair" sourcerect="712,174,102,110" origin="0.55,0.59" /> 
+      <SkillModifier skillidentifier="weapons" skillvalue="-30" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <Affliction identifier="deep_maska_1" strength="100" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing,InWater" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_Fearless_Vanguard" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="2" />
+	  <Item identifier="physicorium" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="physicorium" amount="4" />
+	  <RequiredItem identifier="deep_ssd" amount="2" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/armor/armor.png" sourcerect="711,305,122,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="711,305,122,104" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.4" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.4" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.4" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.6" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hidewearablesoftype="Hair" sourcerect="711,305,122,104" origin="0.55,0.59" /> 
+      <SkillModifier skillidentifier="weapons" skillvalue="-25" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing,InWater" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="steel_helmet" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Upgrade gameversion="0.9.6.0" scale="0.325" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="500">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" amount="2" />
+	  <RequiredItem identifier="organicfiber" />
+    </Fabricate>
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="230,162,106,87" depth="0.6" origin="0.5,0.5" />
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.8" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.3" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.7" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hidewearablesoftype="Hair" sourcerect="230,162,106,87" origin="0.5,0.65" />
+    </Wearable>
+  </Item>
+</Items>

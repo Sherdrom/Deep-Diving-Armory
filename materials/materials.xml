@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+    <Item name="" identifier="saltpeter_powder" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="storagecab" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="4" maxamount="4" spawnprobability="0.25" />
+	<Price baseprice="75" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+    </Price>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="665,14,27,48" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="665,14,27,48" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+<Item name="" identifier="sulfur_powder" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="storagecab" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="4" maxamount="4" spawnprobability="0.25" />
+	<Price baseprice="75" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+    </Price>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="694,15,27,48" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="694,15,27,48" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+    <Item name="" identifier="gun_powder" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="4" spawnprobability="0.25" notcampaign="true" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="4" maxamount="4" spawnprobability="0.25" />
+	<Price baseprice="150">
+      <Price storeidentifier="merchantoutpost" multiplier="1.3" minavailable="10" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="10" />
+      <Price storeidentifier="merchantresearch" minavailable="10" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="10" />
+      <Price storeidentifier="merchantmine" multiplier="0.9" minavailable="10" />
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+    </Price>
+    <Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="saltpeter_powder" />
+      <RequiredItem identifier="sulfur_powder" />
+      <RequiredItem identifier="carbon" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="721,15,27,48" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="721,15,27,48" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="gun_powder_fulgurium" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.1" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.1" />
+	<Price baseprice="500" minleveldifficulty="10" sold="true">
+      <Price storeidentifier="merchantcity" multiplier="1" minavailable="4" />
+      <Price storeidentifier="merchantmilitary" multiplier="2" minavailable="4" />
+      <Price storeidentifier="merchantarmory" multiplier="2" minavailable="4" />
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+    </Price>
+    <Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="saltpeter_powder" />
+      <RequiredItem identifier="sulfur_powder" />
+	  <RequiredItem identifier="fulgurium" />
+      <RequiredItem identifier="carbon" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="645,79,64,70" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="645,79,64,70" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="glassfibre" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="2" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="1" maxamount="2" spawnprobability="0.05" />
+	<Price baseprice="500" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="6" />
+    </Price>
+	<Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="silicon" amount="3" />
+      <RequiredItem identifier="calcium" amount="1" />
+      <RequiredItem identifier="carbon" amount="2" />
+	  <RequiredItem identifier="magnesium" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="781,13,103,61" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="781,13,103,61" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="engineeringplastic" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="2" spawnprobability="0.02" notcampaign="true" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="1" maxamount="2" spawnprobability="0.02" />
+	<Price baseprice="1000" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="4" />
+    </Price>
+	<Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="cyanide" />
+      <RequiredItem identifier="ethanol" amount="2" />
+      <RequiredItem identifier="sulphuricacid" amount="2" />
+	  <RequiredItem identifier="carbon" amount="2"/>
+	  <RequiredItem identifier="liquidoxygenite" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="899,11,66,88" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="899,11,66,88" depth="0.55" origin="0.5,0.5" />
+    <Body width="70" height="80" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="groundglass" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="2" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="1" maxamount="2" spawnprobability="0.05" />
+	<Price baseprice="500" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="6" />
+    </Price>
+	<Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="silicon" amount="3" />
+      <RequiredItem identifier="calcium" amount="2" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="785,100,105,80" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="785,100,105,80" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  
+  <Item name="" identifier="KEVLAR" subcategory="materials" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<PreferredContainer primary="secarmcab" amount="2" spawnprobability="0.05" notcampaign="true" />
+    <PreferredContainer secondary="wreckstoragecab,abandonedstoragecab" minamount="1" maxamount="2" spawnprobability="0.05" />
+	<Price baseprice="400" minleveldifficulty="10" sold="true">
+	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="6" />
+    </Price>
+	<Fabricate suitablefabricators="chemicalfabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="chlorine" amount="1" />
+      <RequiredItem identifier="carbon" amount="3" />
+	  <RequiredItem identifier="liquidoxygenite"  />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="ballisticfiber" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="913,191,75,112" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="913,191,75,112" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_graphite" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+    <Price baseprice="1000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="80" />
+      <RequiredItem identifier="graphite" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="carbon" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="15,465,127,162" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="15,465,127,162" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_diamond" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="1000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="80" />
+      <RequiredItem identifier="diamond" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="carbon" amount="6" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="170,468,122,159" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="170,468,122,159" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_cryolite" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="2000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="cryolite" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="sodium" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="312,465,127,165" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="312,465,127,165" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_pyromorphite" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="2000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="pyromorphite" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="chlorine" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="458,468,123,180" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="458,468,123,180" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_chrysoprase" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="1000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="80" />
+      <RequiredItem identifier="chrysoprase" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="silicon" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="610,484,111,143" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="610,484,111,143" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_langbeinite" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="2000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="langbeinite" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="magnesium" amount="4" />
+	<Item identifier="potassium" amount="2" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="740,498,115,141" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="740,498,115,141" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_saltpeter" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="1000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="80" />
+      <RequiredItem identifier="saltpeter_mineral" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="saltpeter_powder" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="200,177,157,145" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="200,177,157,145" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_refine_sulfur" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="1000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="80" />
+      <RequiredItem identifier="sulfur_mineral" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="sulfur_powder" amount="4" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="212,328,131,129" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="212,328,131,129" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_gold" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="5000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.5" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1.5" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="1.5" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="15">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="gold_mineral" amount="2" />
+	  <RequiredItem identifier="chlorine" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="800,301,71,75" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="800,301,71,75" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_tungsten" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="deep_tungsten_ore" amount="1" />
+	  <RequiredItem identifier="carbon" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="920,406,63,52" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="920,406,63,52" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_tungsten_phy" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="deep_tungsten" amount="1" />
+	  <RequiredItem identifier="physicorium" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="790,384,77,60" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="790,384,77,60" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  <Item name="" identifier="deep_gold_bar" subcategory="refine" category="Material" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,ore" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light">
+  <Price baseprice="20000" minleveldifficulty="30" sold="false">
+      <Price storeidentifier="merchantcity" multiplier="1.5" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1.5" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="1.5" minavailable="1" />
+    </Price>
+	<Fabricate suitablefabricators="ore_refining_machine" requiredtime="30">
+      <RequiredSkill identifier="mechanical" level="100" />
+      <RequiredItem identifier="deep_gold" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/materials/materials.png" sourcerect="907,311,86,81" />
+    <Sprite texture="%ModDir%/materials/materials.png" sourcerect="907,311,86,81" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="60" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  
+  </Items>

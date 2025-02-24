@@ -1,0 +1,2907 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Afflictions>
+<Override>
+<InternalDamage
+    name="cavity effect"
+    identifier="hollow_point"
+    description="The hollow pointed bullet tore apart the flesh"
+    type="deep_gunwound"
+    causeofdeathdescription="hollow_point"
+    selfcauseofdeathdescription="You have died of hollow_point"
+    limbspecific="true"
+    maxstrength="20"
+    karmachangeonapplied="-1"
+    damageoverlayalpha="2"
+    WeaponsSkillGain="2">
+    <Description
+      textidentifier="afflictiondescription.hollow_point.low"
+      minstrength="0"
+      maxstrength="10"/>
+    <Description
+      textidentifier="afflictiondescription.hollow_point"
+      minstrength="10"
+      maxstrength="20"/>
+    <Effect minstrength="0" maxstrength="20" strengthchange="-0.1" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="0.20"
+      dialogflag="damage"/>
+    <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </InternalDamage>
+  
+  <InternalDamage
+    name="Shrapnel_residue"
+    identifier="Shrapnel_residue"
+    description="The Shrapnel_residue tore apart the flesh"
+    type="deep_gunwound"
+    causeofdeathdescription="Shrapnel_residue"
+    selfcauseofdeathdescription="You have died of Shrapnel_residue"
+    limbspecific="true"
+    maxstrength="20"
+    karmachangeonapplied="-1"
+    damageoverlayalpha="2"
+    WeaponsSkillGain="2">
+    <Description
+      textidentifier="afflictiondescription.Shrapnel_residue.low"
+      minstrength="0"
+      maxstrength="10"/>
+    <Description
+      textidentifier="afflictiondescription.Shrapnel_residue"
+      minstrength="10"
+      maxstrength="20"/>
+    <Effect minstrength="0" maxstrength="20" strengthchange="-0.2" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="0.20"
+      dialogflag="damage" />
+    <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </InternalDamage>
+  
+  <InternalDamage
+    name="head shot"
+    identifier="deep_headshot_deadly"
+    description="The bullet brushed past your skull"
+    type="deep_gunwound"
+    causeofdeathdescription="deep_headshot_deadly"
+    selfcauseofdeathdescription="You have died of deep_headshot_deadly"
+    limbspecific="true"
+    maxstrength="40"
+    karmachangeonapplied="-1"
+    damageoverlayalpha="2"
+    WeaponsSkillGain="5">
+    <Description
+      textidentifier="afflictiondescription.deep_headshot_deadly.low"
+      minstrength="0"
+      maxstrength="20"/>
+    <Description
+      textidentifier="afflictiondescription.deep_headshot_deadly"
+      minstrength="20"
+      maxstrength="40"/>
+    <Effect minstrength="0" maxstrength="40" strengthchange="-0.1" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="2"
+      dialogflag="damage" />
+    <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0"/>
+  </InternalDamage>
+  
+  <InternalDamage
+    name="head shot"
+    identifier="deep_headshot_deadly_irresistible"
+    description="The bullet brushed past your skull"
+    type="deep_gunwound_irresistible"
+    causeofdeathdescription="deep_headshot_deadly"
+    selfcauseofdeathdescription="You have died of deep_headshot_deadly"
+    limbspecific="true"
+    maxstrength="40"
+    karmachangeonapplied="-1"
+    damageoverlayalpha="2"
+    WeaponsSkillGain="5">
+    <Description
+      textidentifier="afflictiondescription.deep_headshot_deadly.low"
+      minstrength="0"
+      maxstrength="20"/>
+    <Description
+      textidentifier="afflictiondescription.deep_headshot_deadly"
+      minstrength="20"
+      maxstrength="40"/>
+    <Effect minstrength="0" maxstrength="40" strengthchange="-0.1" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="2"
+      dialogflag="damage" />
+    <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0"/>
+  </InternalDamage>
+  
+  <Affliction
+    identifier="deep_headshot_deadly_onlyhead_irresistible"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly_irresistible" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_headshot_deadly_onlyhead"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_bodyshot_30"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="-0.3" maxresistance="-0.3" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="m18_smoke"
+    type="deep_smoke"
+    isbuff="true"
+    limbspecific="false"
+    hideiconafterdelay="true"
+    maxstrength="1">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="SoundRangeMultiplier" value="-1" />
+      <StatValue stattype="SightRangeMultiplier" value="-1" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.5" />
+	  <StatValue stattype="MaximumHealthMultiplier" value="1" />
+    </Effect>
+	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="422,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="m18_smoke_hide"
+    type="deep_smoke"
+    isbuff="true"
+    limbspecific="false"
+    hideiconafterdelay="true"
+    maxstrength="1">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	<AbilityFlag flagtype="IgnoredByEnemyAI" />
+    </Effect>
+	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="422,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="m18_smoke_hide_fire"
+    type="deep_smoke"
+    isbuff="true"
+    limbspecific="false"
+    hideiconafterdelay="true"
+    maxstrength="1">
+    <Effect minstrength="0" maxstrength="1" resistancefor="m18_smoke_hide" minresistance="1" maxresistance="1" strengthchange="-2" >
+    </Effect>
+	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="422,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="armor_ceramics"
+    description=""
+	isbuff="true"
+    type="deep_ceramics"
+    limbspecific="false"
+    indicatorlimb="Torso"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="100"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="100" strengthchange="-80" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="-100">
+	  </Effect>
+	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="286,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="holographic_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.3" />
+	  <StatValue stattype="WalkingSpeed" value="0.2" />
+	  <StatValue stattype="AttackMultiplier" value="0.15" />
+	  <StatValue stattype="WeaponsSkillBonus" value="15" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="2x_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2" >
+      <StatValue stattype="RangedSpreadReduction" value="0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+	  <StatValue stattype="AttackMultiplier" value="0.1" />
+	  <StatValue stattype="WalkingSpeed" value="0.15" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="2.5x_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.6" />
+	  <StatValue stattype="WeaponsSkillBonus" value="20" />
+	  <StatValue stattype="AttackMultiplier" value="0.05" />
+	  <StatValue stattype="WalkingSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="3x_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="30" />
+	  <StatValue stattype="WalkingSpeed" value="-0.25" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="heavy_machinegun"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="2"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="2"
+      strengthchange="-10">
+      <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="1" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="light_machinegun"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-10">
+      <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="1" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="red_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.15" />
+	  <StatValue stattype="WalkingSpeed" value="0.3" />
+	  <StatValue stattype="AttackMultiplier" value="0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="20" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="thermalgoggles_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.3" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-15" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="thermalgoggles_sight_6x"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="25" />
+	  <StatValue stattype="WalkingSpeed" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="vertical_grip"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.3"
+      maxresistance="0.3">
+      <StatValue stattype="FlowResistance" value="1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="5" />
+	  <StatValue stattype="WalkingSpeed" value="-0.1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="vertical_grip_short"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.2"
+      maxresistance="0.2">
+      <StatValue stattype="FlowResistance" value="0.5" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="vertical_grips_hollow_out"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.1"
+      maxresistance="0.1">
+      <StatValue stattype="WeaponsSkillGainSpeed" value="1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="15" />
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="cqr_grips"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.2"
+      maxresistance="0.2">
+      <StatValue stattype="WalkingSpeed" value="0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="oblique_grips"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.5"
+      maxresistance="0.5">
+      <StatValue stattype="WalkingSpeed" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="corner_grip"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="WalkingSpeed" value="0.15" />
+	  <StatValue stattype="WeaponsSkillBonus" value="25" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="extended_barrel"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.3" />
+	  <StatValue stattype="AttackMultiplier" value="0.2" />
+	  <StatValue stattype="RangedAttackSpeed" value="-0.15" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-15" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="flash_hider"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.1" />
+	  <StatValue stattype="AttackMultiplier" value="0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_compensator"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2">
+	  <StatValue stattype="MaximumHealthMultiplier" value="0.25" />
+      <StatValue stattype="RangedSpreadReduction" value="0.1" />
+	  <StatValue stattype="AttackMultiplier" value="0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_muzzle_brake"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.3" />
+	  <StatValue stattype="WeaponsSkillBonus" value="20" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="improved_barrel"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="chip_oc_gun"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="-0.8" />
+	  <StatValue stattype="AttackMultiplier" value="0.3" />
+	  <StatValue stattype="RangedAttackSpeed" value="0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_headshot_detect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_bodyshot_detect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="chip_headshot_effect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-2" maxresistance="-2" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_bodyshot_effect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Torso,Waist,LeftArm,RightArm,LeftLeg,RightLeg,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightFoot,LeftFoot" minresistance="-0.4" maxresistance="-0.4" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_headshot_effect_weak"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Torso,LeftArm,RightArm,LeftLeg,RightLeg" minresistance="0.5" maxresistance="0.5" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="chip_bodyshot_effect_weak"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="1.8" maxresistance="1.8" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="shotgun_choke"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="1" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="deadeyes"
+    description=""
+	isbuff="true"
+    type="pistol"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+	  minscreendistort="0"
+      maxscreendistort="0"
+      minscreenblur="0"
+      maxscreenblur="0"
+      minradialdistort="0"
+      maxradialdistort="0"
+      minchromaticaberration="0"
+      maxchromaticaberration="10"
+      strengthchange="-2"
+	  resistancefor="stun,damage,Shrapnel_residue"
+      minresistance="0.5"
+      maxresistance="0.5">
+      <StatValue stattype="RangedAttackSpeed" value="0.6" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="deadeyes_2"
+    description=""
+	isbuff="true"
+    type="pistol"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="RangedAttackSpeed" value="-0.5" />
+	  <StatValue stattype="MeleeAttackSpeed" value="-0.5" />
+	  
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="smg"
+    description=""
+	isbuff="true"
+    type="pistol"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun"
+      minresistance="0.3"
+      maxresistance="0.3">
+	  <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  
+  
+  <Affliction
+    identifier="smg_water_resistance"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="FlowResistance" value="1" />
+    </Effect>
+  </Affliction>
+  
+  
+  
+  <Affliction
+    identifier="8x_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="30" />
+	  <StatValue stattype="AttackMultiplier" value="0.5" />
+	  <StatValue stattype="RangedAttackSpeed" value="-0.5" />
+	  <StatValue stattype="WalkingSpeed" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="1_3x_sight"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.7" />
+	  <StatValue stattype="WeaponsSkillBonus" value="25" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="friendly_fire"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="TeamAttackMultiplier" value="-1" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="chip_first_aid"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <AbilityFlag flagtype="MoveNormallyWhileDragging	" />
+	  <StatValue stattype="MovementSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="chip_rapid_receiver"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedAttackSpeed" value="0.15" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="chip_unstable_gunpowder"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="AttackMultiplier" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="heavy_sniper"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <AbilityFlag flagtype="MustWalk" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="AlwaysStayConscious"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <AbilityFlag flagtype="AlwaysStayConscious" />
+    </Effect>
+  </Affliction>
+  
+  
+  
+  <Affliction
+    identifier="expansion_mag"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="WeaponsSkillBonus" value="-15" />
+	  <StatValue stattype="WalkingSpeed" value="-0.15" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="shotgun_3"
+    type="talentbuff"
+    isbuff="true"
+    hideiconafterdelay="true"
+    limbspecific="false"
+    maxstrength="2"
+    treatmentthreshold="1000">
+    <Effect minstrength="0" maxstrength="2"
+      strengthchange="-2">
+      <StatValue stattype="RangedAttackSpeed" value="0.2" />
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="steel_1"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="bleeding"
+      minresistance="0.3"
+      maxresistance="0.3">
+	  <StatValue stattype="MaximumHealthMultiplier" value="0.43" />
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="steel_2"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="bleeding"
+      minresistance="0.6"
+      maxresistance="0.6">
+	  <StatValue stattype="MaximumHealthMultiplier" value="1.5" />
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="steel_3"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="2"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="2"
+      strengthchange="-2"
+	  resistancefor="bleeding"
+      minresistance="0.8"
+      maxresistance="0.8">
+	  <StatValue stattype="MaximumHealthMultiplier" value="4" />
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-30" />
+	  <AbilityFlag flagtype="MustWalk" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="steel_plate_heavy_run"
+    description=""
+	isbuff="true"
+    type="armor_weakness"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="ceramics_1"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun,bleeding,Shrapnel_residue"
+      minresistance="0.3"
+      maxresistance="0.3">
+	  <StatValue stattype="MovementSpeed" value="-0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+	</Affliction>
+
+
+
+	<Affliction
+    identifier="ceramics_2"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun,bleeding,Shrapnel_residue"
+      minresistance="0.6"
+      maxresistance="0.6">
+	  <StatValue stattype="MovementSpeed" value="-0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="ceramics_3"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun,bleeding,Shrapnel_residue"
+      minresistance="0.8"
+      maxresistance="0.8">
+	  <StatValue stattype="MovementSpeed" value="-0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="deep_water_protect"
+    description=""
+	isbuff="true"
+    type="deep_protect"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+	  resistancefor="oxygenlow"
+      minresistance="1"
+      maxresistance="1">
+	  <AbilityFlag flagtype="ImmuneToPressure" />
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="deep_gpnvg18"
+    description=""
+	isbuff="true"
+    type="none"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="10"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="10">
+    </Effect>
+  </Affliction>
+  
+  
+  <Affliction
+    identifier="chip_cqb_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" resistancefor="stun" minresistance="0.25" maxresistance="0.25">
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="AttackMultiplier" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_frogman_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_altyn_1"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+	<AfflictionOverlay texture="%ModDir%/jobgear/armor/altyn.png" />
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_maska_1"
+    description=""
+	isbuff="true"
+    type="armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+	<AfflictionOverlay texture="%ModDir%/jobgear/armor/maska.png" />
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_ergonomics_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="20" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="chip_heavy_armor"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.2" maxresistance="0.2" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_strengthening_of_limbs"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="bleeding" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.9" maxresistance="0.9" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_learn_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="SkillGainSpeed" value="1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_mechanical_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="MechanicalSkillGainSpeed" value="1" />
+	  <StatValue stattype="MechanicalRepairSpeed" value="0.3" />
+	  <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.3" />
+	  <StatValue stattype="RepairToolStructureDamageMultiplier" value="0.3" />
+	  <StatValue stattype="RepairToolDeattachTimeMultiplier" value="0.3" />
+	  <StatValue stattype="FlowResistance" value="0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_mechanical_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="MechanicalSkillGainSpeed" value="2" />
+	  <StatValue stattype="MechanicalSkillOverride" value="55" />
+	  <StatValue stattype="MechanicalRepairSpeed" value="0.5" />
+	  <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.5" />
+	  <StatValue stattype="RepairToolStructureDamageMultiplier" value="0.5" />
+	  <StatValue stattype="RepairToolDeattachTimeMultiplier" value="0.5" />
+	  <StatValue stattype="DeconstructorSpeedMultiplier" value="0.5" />
+	  <StatValue stattype="FabricationSpeed" value="0.5" />
+	  <StatValue stattype="IncreaseFabricationQuality" value="1" />
+	  <StatValue stattype="FlowResistance" value="0.8" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_electrician_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" resistancefor="burn,electricshock" minresistance="0.5" maxresistance="0.5">
+	  <StatValue stattype="ElectricalSkillGainSpeed" value="1" />
+	  <StatValue stattype="MaxRepairConditionMultiplierElectrical" value="0.3" />
+	  <StatValue stattype="RepairSpeed" value="0.5" />
+	  <StatValue stattype="FlowResistance" value="0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_electrician_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" resistancefor="burn,electricshock" minresistance="0.5" maxresistance="0.5">
+	  <StatValue stattype="ElectricalSkillGainSpeed" value="2" />
+	  <StatValue stattype="ElectricalSkillOverride" value="55" />
+	  <StatValue stattype="MaxRepairConditionMultiplierElectrical" value="0.5" />
+	  <StatValue stattype="RepairSpeed" value="0.7" />
+	  <StatValue stattype="DeconstructorSpeedMultiplier" value="0.5" />
+	  <StatValue stattype="FabricationSpeed" value="0.5" />
+	  <StatValue stattype="IncreaseFabricationQuality" value="1" />
+	  <StatValue stattype="FlowResistance" value="0.8" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_security_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="WeaponsSkillGainSpeed" value="1" />
+	  <StatValue stattype="MovementSpeed" value="0.1" />
+	  <StatValue stattype="MaximumHealthMultiplier" value="0.1" />
+	  <StatValue stattype="MeleeAttackMultiplier" value="0.2" />
+	  <StatValue stattype="MeleeAttackSpeed" value="0.2" />
+	  <StatValue stattype="BuffDurationMultiplier" value="0.2" />
+	  <StatValue stattype="DebuffDurationMultiplier" value="0.2" />
+	  <StatValue stattype="FlowResistance" value="0.5" />
+	  <StatValue stattype="RangedSpreadReduction" value="0.2" />
+	  <StatValue stattype="TurretAttackSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_security_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="WeaponsSkillGainSpeed" value="2" />
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
+	  <StatValue stattype="MeleeAttackMultiplier" value="0.4" />
+	  <StatValue stattype="MeleeAttackSpeed" value="0.4" />
+	  <StatValue stattype="BuffDurationMultiplier" value="0.4" />
+	  <StatValue stattype="DebuffDurationMultiplier" value="0.4" />
+	  <StatValue stattype="FlowResistance" value="0.8" />
+	  <StatValue stattype="RangedSpreadReduction" value="0.25" />
+	  <StatValue stattype="TurretAttackSpeed" value="0.15" />
+	  <StatValue stattype="TeamAttackMultiplier" value="-0.5" />
+	  <StatValue stattype="TurretPowerCostReduction" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_captain_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="HelmSkillGainSpeed" value="1" />
+	  <StatValue stattype="ReputationGainMultiplier" value="0.2" />
+	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.2" />
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.2" />
+	  <StatValue stattype="ExtraMissionCount" value="1" />
+	  <StatValue stattype="ExtraSpecialSalesCount" value="3" />
+	  <StatValue stattype="StoreSellMultiplier" value="0.2" />
+	  <StatValue stattype="StoreBuyMultiplier" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_captain_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="HelmSkillGainSpeed" value="2" />
+	  <StatValue stattype="ReputationGainMultiplier" value="0.4" />
+	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.4" />
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.4" />
+	  <StatValue stattype="ExtraMissionCount" value="2" />
+	  <StatValue stattype="ExtraSpecialSalesCount" value="6" />
+	  <StatValue stattype="StoreSellMultiplier" value="0.4" />
+	  <StatValue stattype="StoreBuyMultiplier" value="0.4" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_captain_2_talent"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="stun,damage" minresistance="0.1" maxresistance="0.1" strengthchange="-2" >
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.2" />
+	  <StatValue stattype="MovementSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="chip_heavy_defender_talent"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="stun,damage,Shrapnel_residue" minresistance="0.15" maxresistance="0.15" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_medic_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="MedicalSkillGainSpeed" value="1" />
+	  <StatValue stattype="WalkingSpeed" value="0.1" />
+	  <StatValue stattype="PoisonMultiplier" value="0.2" />
+	  <StatValue stattype="CPRBoost" value="0.5" />
+	  <StatValue stattype="GeneticMaterialRefineBonus" value="0.1" />
+	  <StatValue stattype="GeneticMaterialTaintedProbabilityReductionOnCombine" value="0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_medic_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="MedicalSkillGainSpeed" value="2" />
+	  <StatValue stattype="WalkingSpeed" value="0.2" />
+	  <StatValue stattype="PoisonMultiplier" value="0.3" />
+	  <StatValue stattype="CPRBoost" value="0.7" />
+	  <StatValue stattype="GeneticMaterialRefineBonus" value="0.2" />
+	  <StatValue stattype="GeneticMaterialTaintedProbabilityReductionOnCombine" value="0.7" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_assistant_1"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="oxygenlow" minresistance="1" maxresistance="1" strengthchange="-2" >
+	  <StatValue stattype="SkillGainSpeed" value="0.5" />
+	  <StatValue stattype="MovementSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_assistant_2"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" tag="provocative" resistancefor="oxygenlow" minresistance="1" maxresistance="1" strengthchange="-2" >
+	  <StatValue stattype="SkillGainSpeed" value="1" />
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_laser_1"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+      <StatValue stattype="RangedSpreadReduction" value="0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+	  <StatValue stattype="TeamAttackMultiplier" value="-0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_chip_marksman_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="AttackMultiplier" value="0.5" />
+	  <StatValue stattype="RangedSpreadReduction" value="0.8" />
+	  <StatValue stattype="RangedAttackSpeed" value="-0.2" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_commando_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2"
+	  resistancefor="stun,damage"
+      minresistance="0.25"
+      maxresistance="0.25">
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_chip_heavy_defender"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="AttackMultiplier" value="-0.3" />
+	  <StatValue stattype="RangedAttackSpeed" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_doc_1"
+    description=""
+	isbuff="true"
+    type="chip_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="MedicalSkillOverride" value="60" />
+	  <StatValue stattype="WeaponsSkillOverride" value="60" />
+	  <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="DebuffDurationMultiplier" value="0.5" />
+	  <AbilityFlag flagtype="MoveNormallyWhileDragging" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_protect_high_damage"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="10"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="10" strengthchange="0" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_highmorale_co_hard"
+    type="talentbuff"
+    isbuff="true"
+    limbspecific="false"
+    hideiconafterdelay="true"
+    showiconthreshold="1"
+    maxstrength="10"
+    showbarinhealthmenu="false"
+    treatmentthreshold="1000"
+    iconcolors="227,247,249">
+    <Effect minstrength="0" maxstrength="10" strengthchange="-2">
+      <StatValue stattype="MovementSpeed" value="0.2" />
+	  <StatValue stattype="AttackMultiplier" value="0.2" />
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="4,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_revengesquad_co_hard"
+    type="talentbuff"
+    isbuff="true"
+    limbspecific="false"
+    maxstrength="240"
+    duration="240"
+    treatmentthreshold="1000"
+    iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="240" strengthchange="-2" 
+            resistancefor="damage" 
+            minresistance="0.3" 
+            maxresistance="0.3">
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0"/>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_shotgun_damgage_balance"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_shotgun_damgage_balance_12shell"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_pistol_mozambique_aff"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="AttackMultiplier" value="0.5" />
+	  <StatValue stattype="RangedAttackSpeed" value="0.1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_pistol_mozambique_hand"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_sniper_aim_heavy"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_sniper_aim_heavy_damage_reduce_1"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="AttackMultiplier" value="-0.1" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_sniper_aim_heavy_damage_reduce_2"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="AttackMultiplier" value="-0.1" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_sniper_aim_heavy_damage_reduce_3"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="AttackMultiplier" value="-0.1" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_machinegun_crouch"
+    description=""
+	isbuff="true"
+    type="talentbuff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_machinegun_pressing"
+    description=""
+	isbuff="true"
+    type="machinegun_pressing"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="10"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="10" strengthchange="-2" >
+	<StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_wuchuan_sata"
+    description=""
+	isbuff="true"
+    type="wuchuan"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="120"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="120" resistancefor="stun" minresistance="0.9" maxresistance="0.9" strengthchange="-2" >
+	<StatValue stattype="MovementSpeed" minvalue="0.2" maxvalue="0.7" />
+	<StatValue stattype="FlowResistance" value="1" />
+	<StatValue stattype="MeleeAttackMultiplier" minvalue="0.2" maxvalue="2" />
+	<StatValue stattype="MeleeAttackSpeed" minvalue="0.2" maxvalue="1" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_wuchuan_detection"
+    description=""
+	isbuff="true"
+    type="wuchuan"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_headshot_2"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-1" maxresistance="-1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_headshot_2_5"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-1.5" maxresistance="-1.5" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_headshot_3"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-2" maxresistance="-2" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_legshot_2_smg"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="-1" maxresistance="-1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_shot_gauss"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="-1" maxresistance="-1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b13_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_thor_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_hpc_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_gen4_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_osprey_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b43_steel_1"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b13_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_thor_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_hpc_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_gen4_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b43_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_osprey_steel_2"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.6" maxresistance="0.6" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b13_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_thor_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_hpc_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_gen4_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_6b43_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_osprey_steel_3"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="Torso" minresistance="0.8" maxresistance="0.8" strengthchange="-2" >
+	  <StatValue stattype="MovementSpeed" value="-0.8" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_steel_arm"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="WeaponsSkillBonus" value="-10" />
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="deep_steel_groin"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,bleeding,stun,Shrapnel_residue" resistancelimbs="RightThigh,LeftThigh" minresistance="0.3" maxresistance="0.3" strengthchange="-2" >
+	  <StatValue stattype="WeaponsSkillBonus" value="-5" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_knife_detect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="deep_knife_detect_1"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="chip_emergency_defibrillation_detect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  <Affliction identifier="chip_emergency_defibrillation" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="1" treatmentthreshold="1000" duration="1" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+      <Effect minstrength="0" maxstrength="1">
+        <StatusEffect target="Character">
+		  <ReduceAffliction type="Shrapnel_residue" strength="1000" />
+          <ReduceAffliction type="damage" strength="1000" />
+          <ReduceAffliction type="burn" strength="1000" />
+          <ReduceAffliction identifier="bloodloss" strength="1000" />
+          <ReduceAffliction identifier="bleeding" strength="1000" />
+          <ReduceAffliction identifier="oxygenlow" strength="1000" />
+          <ReduceAffliction identifier="stun" strength="1000" />
+        </StatusEffect>
+      </Effect>
+      <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="0,6" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
+   </Affliction>
+   
+  <Affliction
+    identifier="deep_enemy_four_limbs_balance"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="5"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="5" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="0.25" maxresistance="0.25" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_du_buff"
+    description=""
+	isbuff="true"
+    type="du_buff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="3"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="3" strengthchange="-2" >
+	<StatValue stattype="MovementSpeed" value="-0.3"/>
+    </Effect>
+  </Affliction>
+  
+    <Affliction
+    identifier="deep_enenmy_Shrapnel_residue_60"
+    description=""
+	isbuff="true"
+    type="enenmy_buff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue" resistancelimbs="Torso,LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="-0.6" maxresistance="-0.6" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_stun_grenade_reduce"
+    description=""
+	isbuff="true"
+    type="stun_buff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="10"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="10" resistancefor="stun" minresistance="-2" maxresistance="-2" strengthchange="-2" multiplybymaxvitality="true" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_gunwound_reduce_25"
+    description=""
+	isbuff="true"
+    type="stun_buff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="5"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="5" resistancefor="gunshotwound" resistancelimbs="Torso" minresistance="-0.25" maxresistance="-0.25" strengthchange="-2" multiplybymaxvitality="true" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_gunwound_reduce_40"
+    description=""
+	isbuff="true"
+    type="stun_buff"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="5"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="5" resistancefor="gunshotwound" resistancelimbs="Torso" minresistance="-0.4" maxresistance="-0.4" strengthchange="-2" multiplybymaxvitality="true" >
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deepgun_inwater_detect"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deepgun_inwater_detect_chip"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_glock_long_mag"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="WalkingSpeed" value="-0.1" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-20" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_glock_drum_mag"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="WalkingSpeed" value="-0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="-40" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_18c_buttstock"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="WalkingSpeed" value="-0.1" />
+	  <StatValue stattype="RangedSpreadReduction" value="0.2" />
+	  <StatValue stattype="WeaponsSkillBonus" value="10" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_fn57_mute"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1"
+      strengthchange="-2">
+	  <StatValue stattype="SoundRangeMultiplier" value="0.5" />
+      <StatValue stattype="SightRangeMultiplier" value="0.5" />
+    </Effect>
+  </Affliction>
+  
+  
+        </Override>
+</Afflictions>

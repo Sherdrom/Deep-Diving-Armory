@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  <Talents>
+  <Talent identifier="deep_headset">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_headset">
+    </Description>
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="chip_captain_2" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" requiresalive="true" allowself="true" >
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="chip_captain_2_talent" strength="100.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+</Talents>

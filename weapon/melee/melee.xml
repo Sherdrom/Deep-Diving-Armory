@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_wuchuan" subcategory="deep_special" health="1000" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" category="Weapon" Tags="mediumitem,weapon,gunsmith,mountableweapon" scale="0.5" allowasextracargo="true" requireaimtouse="true" impactsoundtag="impact_metal_light">
+    <Deconstruct time="20">
+      <Item identifier="dementonite" amount="12" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" amount="12" />
+	  <RequiredItem identifier="dementonite" amount="12" />
+	  <RequiredItem identifier="wuchuan_design" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/melee/melee45.png" sourcerect="24,21,227,251" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/melee/melee.png" sourcerect="20,5,477,109" depth="0.55" origin="0.5,0.2" />
+    <Body width="480" height="110" density="10" />
+	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/melee/melee.png" canbehiddenbyotherwearables="false" sourcerect="20,5,477,109" rotation="270" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.5,0.3" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="1" setvalue="true" />
+    </Wearable>
+    <MeleeWeapon slots="RightHand+LeftHand" blocksplayers="true" controlpose="true" holdpos="-20,-15" aimpos="40,-60" handle1="-70,-20" handle2="0,-20" holdangle="200" reload="1.2" range="800" combatPriority="40" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="NotInWater" target="This" Condition="5" disabledeltatime="true" />
+	<StatusEffect type="InWater" target="This" Condition="5" disabledeltatime="true" />
+	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	<GiveTalentInfo giverandom="false" talentidentifiers="deep_wuchuan" />
+	<Affliction identifier="deep_wuchuan_detection" strength="100" />
+	</StatusEffect>
+	<StatusEffect type="OnSecondaryUse" target="This" Condition="-6.5" disabledeltatime="true" >
+	</StatusEffect>
+	<StatusEffect type="OnSecondaryUse" target="Character" setvalue="true" SpeedMultiplier="0.5" >
+	</StatusEffect>
+	  <StatusEffect type="OnBroken" target="This" delay="0.1" disabledeltatime="true" >
+        <sound file="%ModDir%/weapon/melee/sound/wuchuan_xuli.ogg" type="OnUse" range="500.0" loop="false" volume="2" />
+      </StatusEffect>
+	  <StatusEffect type="OnBroken" target="This" delay="0.5" disabledeltatime="true" >
+        <sound file="%ModDir%/weapon/melee/sound/wuchuan_sata.ogg" type="OnUse" range="500.0" loop="false" volume="2" />
+      </StatusEffect>
+	  <StatusEffect type="OnBroken" target="This" delay="2" disabledeltatime="true" >
+        <sound file="%ModDir%/weapon/melee/sound/wuchuan_bgm.ogg" type="OnUse" range="100.0" loop="false" volume="2" />
+      </StatusEffect>
+	  <StatusEffect type="OnBroken" target="This" delay="1" Condition="3000" Duration="120" disabledeltatime="true" >
+	  		<ParticleEmitter particle="deep_plasmaspark" particlespersecond="30" anglemin="0" anglemax="360" velocitymin="100" velocitymax="800" />
+      </StatusEffect>
+	  <StatusEffect type="OnSecondaryUse" setvalue="true" target="This,Character" comparison="and" disabledeltatime="true" delay="0" stackable="false" >
+	  <Conditional Condition="lt 25" />
+	  <Affliction identifier="deep_wuchuan_sata" strength="120" />
+      </StatusEffect>
+      <Attack targetimpulse="50" penetration="0.8" severlimbsprobability="50" itemdamage="200" structuredamage="0">
+        <Affliction identifier="lacerations" strength="150" />
+        <Affliction identifier="bleeding" strength="100" />
+        <Affliction identifier="stun" strength="2" />
+        <StatusEffect type="OnUse" target="UseTarget">
+          <Conditional entitytype="eq Character"/>
+          <Sound file="Content/Sounds/Damage/LimbSlash1.ogg" selectionmode="random" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash2.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash3.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash4.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash5.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash6.ogg" range="500" />
+        </StatusEffect>
+      </Attack>
+	  <StatusEffect type="OnDamaged" target="This">
+        <ParticleEmitter particle="deep_spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="1" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+        <Sound file="%ModDir%/weapon/melee/sound/wuchuan_gedang1.ogg" type="OnUse" range="800" selectionmode="Random" volume="2" />
+        <Sound file="%ModDir%/weapon/melee/sound/wuchuan_gedang2.ogg" type="OnUse" range="800" frequencymultiplier="0.95" volume="2" />
+        <Sound file="%ModDir%/weapon/melee/sound/wuchuan_gedang3.ogg" type="OnUse" range="800" frequencymultiplier="1.05" volume="2" />
+		<Sound file="%ModDir%/weapon/melee/sound/wuchuan_gedang4.ogg" type="OnUse" range="800" frequencymultiplier="1.05" volume="2" />
+        <Explosion range="100.0" force="1" showeffects="false" camerashake="10" />
+      </StatusEffect>
+    </MeleeWeapon>
+    <Quality>
+      <QualityStat stattype="StrikingPowerMultiplier" value="0.1" />
+    </Quality>
+    <aitarget sightrange="500" soundrange="250" fadeouttime="1" />
+  </Item>
+  
+  <Item name="" identifier="deep_knife" subcategory="deep_melee" category="Weapon" Tags="smallitem,weapon,gunsmith,mountableweapon,sharptool" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" RequireAimToUse="True">
+    <Deconstruct time="10">
+      <Item identifier="titanium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/melee/melee45.png" sourcerect="324,2,73,73" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/melee/melee.png" sourcerect="18,154,96,27" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" height="27" density="25" />
+    <MeleeWeapon slots="Any,RightHand,LeftHand" aimpos="50,0" handle1="10,0" holdangle="90" reload="1" range="75" combatPriority="25" msg="ItemMsgPickUpSelect">
+     <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_melee_talent" />
+	 </StatusEffect>
+	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <Affliction identifier="deep_knife_detect_1" strength="100" />
+	 </StatusEffect>
+      <Attack targetimpulse="5" severlimbsprobability="0.2" itemdamage="5" structuredamage="0" structuresoundtype="StructureSlash" penetration="0.5" >
+        <Affliction identifier="lacerations" strength="20" />
+        <Affliction identifier="bleeding" strength="20" />
+        <Affliction identifier="stun" strength="0.5" />
+        <StatusEffect type="OnUse" target="UseTarget">
+          <Conditional entitytype="eq Character" />
+          <Sound file="Content/Sounds/Damage/LimbSlash1.ogg" selectionmode="random" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash2.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash3.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash4.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash5.ogg" range="500" />
+          <Sound file="Content/Sounds/Damage/LimbSlash6.ogg" range="500" />
+        </StatusEffect>
+      </Attack>
+    </MeleeWeapon>
+    <aitarget sightrange="200" soundrange="100" fadeouttime="1" />
+    <Quality>
+      <QualityStat stattype="StrikingPowerMultiplier" value="0.1" />
+    </Quality>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>

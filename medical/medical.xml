@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_medical_kit" subcategory="deep_medical" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <PreferredContainer secondary="abandonedmedcab,piratemedcab,wreckmedcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" >
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="antidama1" amount="5" />
+	  <RequiredItem identifier="organicfiber" amount="2" />	  
+      <RequiredItem identifier="elastin" />
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="antidama1" />
+	  <Item identifier="organicfiber" />
+	  <Item identifier="elastin" />
+    </Deconstruct>
+    <SuitableTreatment type="damage" suitability="50" />
+	<SuitableTreatment type="Shrapnel_residue" suitability="50" />
+	<SuitableTreatment type="deep_headshot_deadly" suitability="50" />
+	<SuitableTreatment type="bleeding" suitability="50" />
+	<SuitableTreatment type="burn" suitability="50" />
+    <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="23,28,170,214" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/medical/med.png" sourcerect="23,28,170,214" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="55" density="15" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <StatusEffect type="OnUse" target="This" Condition="-10" disabledeltatime="true" >
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="25">
+        <ReduceAffliction type="Shrapnel_residue" amount="1" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+		<ReduceAffliction type="damage" amount="1" />
+		<ReduceAffliction type="bleeding" amount="1" />
+        <ReduceAffliction type="burn" amount="1" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="25">
+	    <ReduceAffliction type="Shrapnel_residue" amount="0.5" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+        <ReduceAffliction type="damage" amount="0.65" />
+		<ReduceAffliction type="bleeding" amount="1" />
+        <ReduceAffliction type="burn" amount="0.15" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <SkillRequirementHint identifier="medical" level="30" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_medical_surgical_box" subcategory="deep_medical" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" >
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="plastic" amount="2" />
+	  <RequiredItem identifier="aluminium" amount="2" />	  
+      <RequiredItem identifier="zinc" />
+    </Fabricate>
+	<Deconstruct time="5">
+      <Item identifier="aluminium" />
+	  <Item identifier="plastic" />
+	  <Item identifier="zinc" />
+    </Deconstruct>
+    <SuitableTreatment type="Shrapnel_residue" suitability="100" />
+	<SuitableTreatment type="deep_headshot_deadly" suitability="100" />
+    <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="211,24,231,227" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/medical/med.png" sourcerect="211,24,231,227" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="55" density="15" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <StatusEffect type="OnUse" target="This" Condition="-5" disabledeltatime="true" >
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="5">
+        <ReduceAffliction type="Shrapnel_residue" amount="5" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="5" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="25">
+	    <ReduceAffliction type="Shrapnel_residue" amount="0.5" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <SkillRequirementHint identifier="medical" level="30" />
+  </Item>
+  
+  <Item name="" identifier="deep_medical_tourniquet" subcategory="deep_medical" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem,medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" amount="4">
+      <RequiredSkill identifier="medical" level="30" />
+      <RequiredItem identifier="organicfiber" amount="1" />	  
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <SuitableTreatment type="bleeding" suitability="100" />
+    <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="487,66,142,151" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/medical/med.png" sourcerect="487,66,142,151" depth="0.6" origin="0.5,0.5" />
+    <Body width="140" height="150" density="15" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="30" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" disabledeltatime="true" >
+        <Sound file="Content/Items/Medical/Bandage1.ogg" range="500" />
+        <Sound file="Content/Items/Medical/Bandage2.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="2">
+        <ReduceAffliction type="bleeding" amount="50" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="2">
+	    <ReduceAffliction type="bleeding" amount="25" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <SkillRequirementHint identifier="medical" level="30" />
+  </Item>
+  
+  <Item name="" identifier="deep_medical_Hemostatic_agent" subcategory="deep_medical" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" >
+      <RequiredSkill identifier="medical" level="80" amount="1" />
+      <RequiredItem identifier="antibloodloss2" amount="1" />
+	  <RequiredItem identifier="antibleeding3" amount="1" />
+	  <RequiredItem identifier="antibleeding2" amount="1" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <SuitableTreatment type="bleeding" suitability="100" />
+    <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="670,18,149,202" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/medical/med.png" sourcerect="670,18,149,202" depth="0.6" origin="0.5,0.5" />
+    <Body width="130" height="200" density="15" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="80" />
+      <StatusEffect type="OnUse" target="This" Condition="-10" disabledeltatime="true" >
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="1">
+        <ReduceAffliction type="bleeding" amount="100" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="1">
+	    <ReduceAffliction type="bleeding" amount="50" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <SkillRequirementHint identifier="medical" level="80" />
+  </Item>
+  
+  <Item name="" identifier="deep_medical_ai2" subcategory="deep_medical" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Fabricate suitablefabricators="medicalfabricator" requiredtime="5" >
+      <RequiredSkill identifier="medical" level="5" amount="1" />
+      <RequiredItem identifier="antibiotics" amount="1" />
+	  <RequiredItem identifier="stabilozine" amount="1" />
+	  <RequiredItem identifier="antirad" amount="1" />
+	  <RequiredItem identifier="antidama1" amount="1" />
+	  <RequiredItem identifier="plastic" amount="1" />
+    </Fabricate>
+	<Deconstruct time="5">
+    </Deconstruct>
+    <SuitableTreatment type="damage,poison,alieninfection,radiationsickness" suitability="100" />
+    <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="850,38,141,185" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/medical/med.png" sourcerect="850,38,141,185" depth="0.6" origin="0.5,0.5" />
+    <Body width="130" height="200" density="15" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="5" />
+      <StatusEffect type="OnUse" target="This" Condition="-20" disabledeltatime="true" >
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="1">
+        <Affliction identifier="huskinfectionresistance" amount="120" />
+		<ReduceAffliction type="alieninfection" amount="10" />
+		<ReduceAffliction identifier="radiationsickness" amount="30" />
+		<ReduceAffliction identifier="paralysis" amount="30" />
+		<ReduceAffliction type="poison" amount="15" />
+		<ReduceAffliction type="damage" amount="0.4" />
+      </StatusEffect>
+	  <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="1" delay="5" >
+        <Affliction identifier="nausea" amount="20" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="1">
+	    <Affliction identifier="huskinfectionresistance" amount="120" />
+		<ReduceAffliction type="alieninfection" amount="10" />
+		<ReduceAffliction identifier="radiationsickness" amount="30" />
+		<ReduceAffliction identifier="paralysis" amount="30" />
+		<ReduceAffliction type="poison" amount="15" />
+		<ReduceAffliction type="damage" amount="0.4" />
+      </StatusEffect>
+	  <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="1" delay="5" >
+        <Affliction identifier="nausea" amount="20" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <SkillRequirementHint identifier="medical" level="5" />
+  </Item>
+  </Items>

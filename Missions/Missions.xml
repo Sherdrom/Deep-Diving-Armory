@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Missions>
+<MineralMission
+    identifier="deep_mine_saltpeter_mineral"
+    textIdentifier="miningmission1"
+    tags="collectminerals,collectminerals_set3"
+    achievementidentifier="miningmission"
+    type="Mineral"
+    difficulty="2"
+    commonness="200"
+    resourceHandoverAmount="0.25"
+    reward="3000">
+    <Items>
+      <Item identifier="saltpeter_mineral" />
+      <Item identifier="saltpeter_mineral" />
+      <Item identifier="saltpeter_mineral" />
+	  <Item identifier="saltpeter_mineral" />
+	  <Item identifier="saltpeter_mineral" />
+	  <Item identifier="saltpeter_mineral" />
+	  <Item identifier="saltpeter_mineral" />
+	  <Item identifier="saltpeter_mineral" />
+    </Items>
+    <Icon texture="Content/UI/MissionIcons2.png" sourcerect="256,0,256,256" color="243,146,55"/>
+    <!--TODO: revise the restrictions: is there any intended?-->
+    <LocationType from="Outpost" to="City"/>
+    <LocationType from="Outpost" to="Outpost"/>
+    <LocationType from="Outpost" to="Military"/>
+    <LocationType from="Outpost" to="Research"/>
+    <LocationType from="Outpost" to="Mine"/>
+    <LocationType from="City" to="Mine"/>
+    <LocationType from="Military" to="Mine"/>
+    <LocationType from="Research" to="Mine"/>
+    <LocationType from="Mine" to="AnyOutpost"/>
+    <Reputation identifier="location" amount="1" amountforopposingfaction="-1" />
+    <message header="missionheader0.deep_mine_saltpeter_mineral" text="missionmessage0.deep_mine_saltpeter_mineral"/>
+  </MineralMission>
+  
+  <MineralMission
+    identifier="deep_mine_sulfur_mineral"
+    textIdentifier="miningmission1"
+    tags="collectminerals,collectminerals_set3"
+    achievementidentifier="miningmission"
+    type="Mineral"
+    difficulty="2"
+    commonness="200"
+    resourceHandoverAmount="0.25"
+    reward="3000">
+    <Items>
+      <Item identifier="sulfur_mineral" />
+      <Item identifier="sulfur_mineral" />
+      <Item identifier="sulfur_mineral" />
+	  <Item identifier="sulfur_mineral" />
+	  <Item identifier="sulfur_mineral" />
+	  <Item identifier="sulfur_mineral" />
+	  <Item identifier="sulfur_mineral" />
+	  <Item identifier="sulfur_mineral" />
+    </Items>
+    <Icon texture="Content/UI/MissionIcons2.png" sourcerect="256,0,256,256" color="243,146,55"/>
+    <!--TODO: revise the restrictions: is there any intended?-->
+    <LocationType from="Outpost" to="City"/>
+    <LocationType from="Outpost" to="Outpost"/>
+    <LocationType from="Outpost" to="Military"/>
+    <LocationType from="Outpost" to="Research"/>
+    <LocationType from="Outpost" to="Mine"/>
+    <LocationType from="City" to="Mine"/>
+    <LocationType from="Military" to="Mine"/>
+    <LocationType from="Research" to="Mine"/>
+    <LocationType from="Mine" to="AnyOutpost"/>
+    <Reputation identifier="location" amount="1" amountforopposingfaction="-1" />
+    <message header="missionheader0.deep_mine_sulfur_mineral" text="missionmessage0.deep_mine_sulfur_mineral"/>
+  </MineralMission>
+  
+  
+  <OutpostDestroyMission identifier="deep_destory_pirate_base_easy" minleveldifficulty="0" maxleveldifficulty="15" tags="abandonedoutpost" textidentifier="deep_destory_pirate_base_easy" type="OutpostDestroy" reward="5000" difficulty="3" commonness="100" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_pirate_base_easy">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="214,50,48" />
+    <LocationType identifier="Abandoned" />
+    <LocationTypeChange from="Abandoned" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="coalition" amount="3" />
+    <Characters>
+      <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_rookie" from="deep_pirate" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_heavy" from="deep_pirate_elite" moduleflags="researchmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+      <Character identifier="deep_pirate_leader_easy" from="deep_pirate" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true"  />
+    </Characters>
+    <message header="missionheader0.deep_destory_pirate_base_easy" text="missionmessage0.deep_destory_pirate_base_easy" />
+  </OutpostDestroyMission>
+  
+  
+  <OutpostDestroyMission identifier="deep_destory_pirate_base_normal" minleveldifficulty="15" maxleveldifficulty="35" tags="abandonedoutpost" textidentifier="deep_destory_pirate_base_normal" type="OutpostDestroy" reward="7000" difficulty="4" commonness="100" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_pirate_base_normal">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="214,50,48" />
+    <LocationType identifier="Abandoned" />
+    <LocationTypeChange from="Abandoned" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="coalition" amount="5" />
+    <Characters>
+      <Character identifier="deep_pirate_scout" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_scout" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_soldier" from="deep_pirate" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_soldier" from="deep_pirate" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_pirate_soldier_elite" from="deep_pirate_elite" moduleflags="researchmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_pirate_scout_elite" from="deep_pirate_elite" moduleflags="engineeringmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+      <Character identifier="deep_pirate_leader_normal" from="deep_pirate" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
+	  <Character identifier="deep_pirate_leader_normal" from="deep_pirate" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
+	  <Character identifier="deep_pirate_leader_normal_elite" from="deep_pirate_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_pirate_base_normal" text="missionmessage0.deep_destory_pirate_base_normal" />
+	<OverrideMusic state="0" type="deep_pir_normal" />
+  </OutpostDestroyMission>
+  
+  <OutpostDestroyMission identifier="deep_destory_pirate_base_hard" minleveldifficulty="30" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_pirate_base_hard" type="OutpostDestroy" reward="10000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_pirate_base_hard">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="214,50,48" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="coalition" amount="8" />
+    <Characters>
+	<Character identifier="deep_pirate_soldier" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	<Character identifier="deep_pirate_soldier" from="deep_pirate" moduleflags="researchmodule" requirekill="true" />
+	<Character identifier="deep_pirate_soldier" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	<Character identifier="deep_pirate_scout" from="deep_pirate" moduleflags="researchmodule" requirekill="true" asfaraspossible="true" />
+	<Character identifier="deep_pirate_scout" from="deep_pirate" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" />
+	<Character identifier="deep_pirate_heavy" from="deep_pirate" moduleflags="researchmodule" requirekill="true" />
+	<Character identifier="deep_pirate_heavy" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	<Character identifier="deep_pirate_leader_hard" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	<Character identifier="deep_pirate_leader_hard" from="deep_pirate" moduleflags="crewmodule" requirekill="true" />
+	<Character identifier="deep_pirate_leader_hard" from="deep_pirate" moduleflags="engineeringmodule" requirekill="true" />
+	<Character identifier="deep_pirate_soldier_elite" from="deep_pirate_elite" moduleflags="engineeringmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	<Character identifier="deep_pirate_scout_elite" from="deep_pirate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	<Character identifier="deep_pirate_heavy_elite" from="deep_pirate_elite" moduleflags="researchmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	<Character identifier="deep_pirate_leader_hard_elite" from="deep_pirate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_pirate_base_hard" text="missionmessage0.deep_destory_pirate_base_hard" />
+	<OverrideMusic state="0" type="deep_pir_hard" />
+  </OutpostDestroyMission>
+  
+  <OutpostDestroyMission identifier="deep_destory_separatist_base_normal" minleveldifficulty="15" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_separatist_base_normal" type="OutpostDestroy" reward="10000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_separatist_base_normal">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="214,50,48" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="coalition" amount="15" />
+	<Reputation identifier="separatists" amount="-10" />
+    <Characters>
+      <Character identifier="deep_separatist_soldier_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_soldier_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_striker_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_striker_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_heavy_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_heavy_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_heavy_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_sniper_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_grenadier_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_dreadnaught" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_soldier_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_striker_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_heavy_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_sniper_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_separatist_base_normal" text="missionmessage0.deep_destory_separatist_base_normal" />
+	<OverrideMusic state="0" type="deep_sp_normal" />
+  </OutpostDestroyMission>
+  
+  
+  <OutpostDestroyMission identifier="deep_destory_separatist_base_hard" minleveldifficulty="30" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_separatist_base_hard" type="OutpostDestroy" reward="15000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_separatist_base_hard">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="214,50,48" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="coalition" amount="20" />
+	<Reputation identifier="separatists" amount="-15" />
+    <Characters>
+	  <Character identifier="deep_separatist_dreadnaught" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_blaster_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_soldier_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_grenadier_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_striker_hard" from="deep_separatists_hard" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_striker_hard" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_blaster_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_sniper_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_heavy_hard" from="deep_separatists_hard" moduleflags="crewmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_heavy_hard" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
+	  <Character identifier="deep_separatist_heavy_moderate_elite" from="deep_separatists_moderate_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
+	  <Character identifier="deep_separatist_sniper_hard" from="deep_separatists_hard" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
+	  <Character identifier="deep_separatist_leader_hard" from="deep_separatists_hard" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
+	  <Character identifier="deep_separatist_leader_hard_elite" from="deep_separatist_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_separatist_base_hard" text="missionmessage0.deep_destory_separatist_base_hard" />
+	<OverrideMusic state="0" type="deep_sp_normal" />
+  </OutpostDestroyMission>
+  
+  <OutpostDestroyMission identifier="deep_destory_coalition_base_hard" minleveldifficulty="30" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_coalition_base_hard" type="OutpostDestroy" reward="15000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_coalition_base_hard">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="214,50,48" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="2,3" cooldownafterchange="5" />
+    <Reputation identifier="separatists" amount="20" />
+	<Reputation identifier="coalition" amount="-15" />
+    <Characters>
+	  <Character identifier="deep_co_soldier" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_blaster" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_striker" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_striker" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_heavy" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_heavy" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_sniper" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_heavy_gunner" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_grenadier" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_co_leader" from="deep_co" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
+	  <Character identifier="deep_co_sniper_elite" from="deep_co_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_co_blaster_elite" from="deep_co_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_co_heavy_elite" from="deep_co_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_co_leader_elite" from="deep_co_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_coalition_base_hard" text="missionmessage0.deep_destory_coalition_base_hard" />
+	<OverrideMusic state="0" type="deep_coalition_hard" />
+</OutpostDestroyMission>
+
+<OutpostDestroyMission identifier="deep_destory_ghost_base_hard" minleveldifficulty="35" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_ghost_base_hard" type="OutpostDestroy" reward="25000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_ghost_base_hard">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="275,244,264,235" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="1,2" cooldownafterchange="5" />
+    <Reputation identifier="separatists" amount="30" />
+	<Reputation identifier="coalition" amount="-20" />
+    <Characters>
+	  <Character identifier="deep_ghost_soldier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_soldier_2" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_striker" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_Fearless_Vanguard" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_Fearless_Vanguard" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_sniper" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_sniper" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_leader" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_ghost_grenadier_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_ghost_soldier_2_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_ghost_Fearless_Vanguard_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_ghost_sniper_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_ghost_leader_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_ghost_base_hard" text="missionmessage0.deep_destory_ghost_base_hard" />
+	<OverrideMusic state="0" type="deep_coalition_hard" />
+</OutpostDestroyMission>
+  
+  <EliminateTargetsMission
+      identifier="deep_clear_wreck"
+      tags="wreck,wreckthalamus"
+      type="EliminateTargets"
+      difficulty="4"
+      commonness="200"
+      reward="5000"
+      sonarlabel="target"
+      targetitems="thalamusbrain1"
+      targetsub="wreck"
+      requirethalamuswreck="true">
+    <Reputation identifier="location" amount="2" amountforopposingfaction="-2" />
+    <message header="missionheader0.deep_clear_wreck" text="missionmessage0.deep_clear_wreck"/>
+    <Portrait texture="Content/Map/LocationPortraits/Wreck1.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/Wreck2.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/Wreck3.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/Wreck4.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/Wreck5.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="441,5,186,219" color="255,129,15"/>
+  </EliminateTargetsMission>
+  
+  
+  <EliminateTargetsMission
+      identifier="deep_clear_husk_beacon"
+      tags="deep_clear"
+      type="EliminateTargets"
+      difficulty="4"
+      commonness="200"
+      reward="5000"
+      sonarlabel="target"
+	  targetenemies="Husk_chimera,Husk,Husk_exosuit"
+	  minenemycount="6"
+      targetsub="BeaconStation"
+	  requireBeaconStation="true">
+    <Reputation identifier="location" amount="2" amountforopposingfaction="-2" />
+    <message header="missionheader0.deep_clear_wreck" text="missionmessage0.deep_clear_wreck"/>
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="230,5,186,219" color="255,129,15"/>
+  </EliminateTargetsMission>
+  
+  <EliminateTargetsMission
+      identifier="deep_clear_husk_ruin"
+      tags="deep_clear"
+      type="EliminateTargets"
+      difficulty="4"
+      commonness="200"
+      reward="7000"
+      sonarlabel="target"
+	  targetenemies="Deep_husk_chimera,Husk_exosuit"
+	  minenemycount="4"
+      targetsub="Ruin"
+	  requireRuin="true">
+    <Reputation identifier="location" amount="3" amountforopposingfaction="-3" />
+    <message header="missionheader0.deep_clear_husk_ruin" text="missionmessage0.deep_clear_husk_ruin"/>
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="230,5,186,219" color="255,129,15"/>
+  </EliminateTargetsMission>
+  
+  
+   <PirateMission
+    type="Pirate"
+    identifier="deep_beacon_fight_1"
+    tags="deep_beacon_fight"
+    difficulty="4"
+    commonness="100"
+    reward="7000"
+    achievementidentifier="deep_beacon_fight"
+    addedmissiondifficultyperplayer="8" >
+    <Reputation identifier="coalition" amount="5" />
+    <Reputation identifier="separatists" amount="5" />
+	<SubmarineTypes>
+      <Submarine path="%ModDir%/sub/deep_beacon_fight_1.sub" preferreddifficulty="14" alternatereward="7000" />
+	  <Submarine path="%ModDir%/sub/deep_beacon_fight_2.sub" preferreddifficulty="34" alternatereward="8000" />
+	  <Submarine path="%ModDir%/sub/deep_beacon_fight_3.sub" preferreddifficulty="34" alternatereward="9000" />
+	  <Submarine path="%ModDir%/sub/deep_beacon_fight_4.sub" preferreddifficulty="48" alternatereward="10000" />
+    </SubmarineTypes>
+    <Characters>
+      <Character typeidentifier="Pirate_security" minamount="3" maxamount="4" />
+	  <Character typeidentifier="Pirate_leader" minamount="1" maxamount="1" />
+    </Characters>
+    <CharacterTypes>
+      <CharacterType typeidentifier="Pirate_security">
+        <Character identifier="deep_pirate_soldier_beacon_fight" from="deep_pirate_beacon_fight" preferreddifficulty="40"/>
+        <Character identifier="deep_pirate_heavy_beacon_fight" from="deep_pirate_beacon_fight" preferreddifficulty="70"/>
+      </CharacterType>
+	  <CharacterType typeidentifier="Pirate_leader">
+        <Character identifier="deep_pirate_leader_normal_beacon_fight" from="deep_pirate_beacon_fight" preferreddifficulty="50"/>
+		<Character identifier="deep_pirate_heavy_elite_beacon_fight" from="deep_pirate_beacon_fight" preferreddifficulty="80"/>
+		<Character identifier="deep_pirate_leader_hard_elite" from="deep_pirate_beacon_fight" preferreddifficulty="90"/>
+      </CharacterType>
+    </CharacterTypes>
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
+    <message header="missionheader0.deep_beacon_fight_1" text="missionmessage0.deep_beacon_fight_1"/>
+    <message header="missionheader1.deep_beacon_fight_1" text="missionmessage1.deep_beacon_fight_1"/>
+	<OverrideMusic state="1" type="pvp" />
+  </PirateMission>
+  
+  <PirateMission
+    type="Pirate"
+    identifier="deep_beacon_fight_2"
+    tags="deep_beacon_fight"
+    difficulty="4"
+    commonness="100"
+    reward="12000"
+    achievementidentifier="deep_beacon_fight"
+    addedmissiondifficultyperplayer="8">
+    <Reputation identifier="coalition" amount="15" />
+    <Reputation identifier="separatists" amount="-10" />
+	<SubmarineTypes>
+      <Submarine path="%ModDir%/sub/deep_beacon_fight_outpost_1.sub" preferreddifficulty="34" alternatereward="12000" />
+    </SubmarineTypes>
+    <Characters>
+      <Character typeidentifier="separatists_security" minamount="5" maxamount="8" />
+	  <Character typeidentifier="separatists_leader" minamount="1" maxamount="2" />
+    </Characters>
+    <CharacterTypes>
+      <CharacterType typeidentifier="separatists_security">
+        <Character identifier="deep_separatist_soldier_hard" from="deep_separatists_hard" preferreddifficulty="40"/>
+        <Character identifier="deep_separatist_striker_hard" from="deep_separatists_hard" preferreddifficulty="70"/>
+        <Character identifier="deep_separatist_heavy_hard" from="deep_separatists_hard" preferreddifficulty="90"/>
+      </CharacterType>
+	  <CharacterType typeidentifier="separatists_leader">
+        <Character identifier="deep_separatist_leader_hard" from="deep_separatists_hard" preferreddifficulty="40"/>
+		<Character identifier="deep_separatist_soldier_moderate_elite" from="deep_separatists_moderate_elite" preferreddifficulty="60"/>
+		<Character identifier="deep_separatist_heavy_moderate_elite" from="deep_separatists_moderate_elite" preferreddifficulty="70"/>
+		<Character identifier="deep_separatist_leader_hard_elite" from="deep_separatist_elite" preferreddifficulty="90"/>
+      </CharacterType>
+    </CharacterTypes>
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="243,146,55"/>
+    <message header="missionheader0.deep_beacon_fight_2" text="missionmessage0.deep_beacon_fight_2"/>
+    <message header="missionheader1.deep_beacon_fight_2" text="missionmessage1.deep_beacon_fight_2"/>
+	<OverrideMusic state="1" type="deep_pir_normal" />
+  </PirateMission>
+</Missions>

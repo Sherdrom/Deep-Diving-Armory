@@ -1,0 +1,768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="deep_f1" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade" >
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="400">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="uex" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
+    <!-- Broken sprite is the same but without the pin and lever-->
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body radius="20" height="10" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="750.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="400" />
+		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="400" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <!-- Skip the removal of safeties and explode immediatly if inside of a detonator, railgun shell or a depth charge-->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-24">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_m67" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="500">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="titaniumaluminiumalloy" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" />
+      <RequiredItem identifier="uex" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="257,10,88,93" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" />
+    <!-- Broken sprite is the same but without the pin and lever-->
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body radius="20" height="10" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="1000.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.7" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="400" />
+		  <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <!-- Skip the removal of safeties and explode immediatly if inside of a detonator, railgun shell or a depth charge-->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-19">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+    <Item name="" identifier="deep_RGD5" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="300">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="uex" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="483,10,79,93" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" />
+    <!-- Broken sprite is the same but without the pin and lever-->
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body radius="20" height="10" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="500.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="400" />
+		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <!-- Skip the removal of safeties and explode immediatly if inside of a detonator, railgun shell or a depth charge-->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-49">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_Cluster" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+    <Price baseprice="1000">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="sodium" amount="4" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="uex" amount="4" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="585,6,98,122" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" />
+    <!-- Broken sprite is the same but without the pin and lever-->
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body radius="20" height="10" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="1200.0" ballastfloradamage="1000" structuredamage="0" levelwalldamage="500" itemdamage="1000" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="800" />
+		  <Affliction identifier="explosiondamage" strength="400" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="10" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <!-- Skip the removal of safeties and explode immediatly if inside of a detonator, railgun shell or a depth charge-->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <sound file="Content/Items/Tools/FlareIgnite.ogg" range="1000.0" volume="2" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-12.5">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_RGO" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.4" impactsoundtag="impact_grenade">
+  <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="350">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="steel" />
+	  <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="uex" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
+    <Body radius="20" height="10" density="30" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" />
+    <RangedWeapon barrelpos="80,11" spread="1" unskilledspread="10" combatPriority="1000" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="80" />
+	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
+	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
+	    <Remove />
+	  </StatusEffect>
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_rgo_ammo" canbeselected="false" removecontaineditemsondeconstruct="true" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
+      <Containable items="deep_rgo_ammo" hide="true" />
+    </ItemContainer>
+    <aitarget sightrange="500" soundrange="500" fadeouttime="3" />
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="80" />
+	<Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+      <Item name="" identifier="deep_m24" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="300">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="iron" />
+      <Item identifier="sodium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="iron" />
+	  <RequiredItem identifier="carbon" />
+      <RequiredItem identifier="uex" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" />
+    <!-- Broken sprite is the same but without the pin and lever-->
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body radius="20" height="10" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="500.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="350" />
+		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <!-- Skip the removal of safeties and explode immediatly if inside of a detonator, railgun shell or a depth charge-->
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <!-- forcefully pull the pin if player hasnt done so -->
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <sound file="Content/Items/Tools/FlareIgnite.ogg" range="1000.0" volume="2" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-49">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+    <Item name="" identifier="deep_stun_grenade" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.5" impactsoundtag="impact_grenade">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.2.0" scale="0.5" />
+    <Price baseprice="500">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.5" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="3" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="6" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="6" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="phosphorus" mincondition="0.9" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="phosphorus" />
+      <RequiredItem identifier="flashpowder" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="132,6,89,85" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body width="26" height="50" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" />
+        <!-- Effect without distance fall off to ensure some stun and flash effect -->
+        <Explosion range="750" force="0" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+          <Affliction identifier="stun" strength="10" />
+          <Affliction identifier="blind" strength="15" />
+          <Affliction identifier="sensoryoverload" strength="15" />
+		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        </Explosion>
+        <Explosion range="500" force="0.1" smoke="false">
+          <Affliction identifier="stun" strength="20" />
+          <Affliction identifier="blind" strength="25" />
+          <Affliction identifier="sensoryoverload" strength="30" />
+		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        </Explosion>
+        <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
+        <Explosion range="200" force="0.1" smoke="false" penetration="1">
+          <Affliction identifier="explosiondamage" strength="10" />
+          <Affliction identifier="blind_hard" strength="10" />
+		  <Affliction identifier="stun" strength="40" />
+		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <!-- Activating the ItemComponent starts the timer -->
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-49">
+        <ParticleEmitter particle="flamethrowersmoke" particlespersecond="25" anglemin="0" anglemax="0" velocitymin="75" velocitymax="125" copyentityangle="true" scalemin="0.1" scalemax="0.15" colormultiplier="255,255,255,150" />
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_m18" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.5" impactsoundtag="impact_grenade">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.2.0" scale="0.5" />
+    <Price baseprice="500">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.5" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="3" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="6" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="6" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+      <Item identifier="phosphorus" mincondition="0.9" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="phosphorus" amount="1" />
+      <RequiredItem identifier="flashpowder" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="362,9,96,93" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
+    <Body width="26" height="50" density="30" />
+    <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true" >
+	  <Conditional Condition="lt 10" />
+	  <Affliction identifier="m18_smoke" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnNotContained" target="This" stackable="false" comparison="and" AllowWhenBroken="true" Range="600" setvalue="true" >
+	  <Conditional Condition="lt 10" />
+          <ParticleEmitter particle="deep_smoke_grenade" anglemin="0" anglemax="360" particlespersecond="3" velocitymin="25" velocitymax="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnNotContained" target="This" delay="15" AllowWhenBroken="true" stackable="false" >
+	  <Conditional Condition="lt 10" />
+	   <Remove />
+      </StatusEffect>
+	  <StatusEffect type="OnBroken" target="This" >
+        <Sound file="%ModDir%/weapon/explosive/sound/smoke.ogg" type="OnUse" range="3000" volume="1" forcePlaySounds="true" />
+      </StatusEffect>
+	  <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+        <Conditional HasTag="detonator" targetcontainer="true" />
+        <Conditional HasTag="railgunammo" targetcontainer="true" />
+        <Conditional HasTag="depthchargeammo" targetcontainer="true" />
+      </StatusEffect>
+	  <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <Use />
+      </StatusEffect>
+    </Throwable>
+    <ItemComponent IsActive="false" CharacterUsable="true">
+      <!--reduce condition by 1 to mark the user as the one responsible for the item breaking and exploding -->
+      <StatusEffect type="OnUse" targettype="This" IsActive="true" DontCleanUp="true" comparison="AND" condition="-1">
+        <Conditional HasTag="neq detonator" targetcontainer="true" />
+        <Conditional HasTag="neq railgunammo" targetcontainer="true" />
+        <Conditional HasTag="neq depthchargeammo" targetcontainer="true" />
+        <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" Condition="-49">
+      </StatusEffect>
+    </ItemComponent>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_claymore" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+    <Upgrade gameversion="0.9.3.0" scale="0.5" />
+    <Price baseprice="800">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.35" />
+      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" multiplier="1.25" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="uex" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="titaniumaluminiumalloy" />
+	  <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="uex" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="802,33,90,94" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="30,261,256,93" depth="0.55" origin="0.5,0.5" />
+    <Body width="256" height="93" density="10" />
+	<Holdable blocksplayers="true" selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="100,-60" handle1="-100,0" attachable="true" aimable="false">
+      <StatusEffect type="OnActive" target="This" condition="100" setvalue="true" Interval="0.5" />
+	  <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="400.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="400" />
+		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="阔剑地雷开关" >
+        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false" >
+      </StatusEffect>
+      </TickBox>
+    </CustomInterface>
+	<MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
+        <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+		  <Conditional Condition="lte 99" />
+          <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+        </StatusEffect>
+    </MotionSensor>
+	<MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
+        <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+		  <Conditional Condition="lte 99" />
+          <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+        </StatusEffect>
+    </MotionSensor>
+    <Quality>
+      <QualityStat stattype="ExplosionRadius" value="0.1" />
+      <QualityStat stattype="ExplosionDamage" value="0.1" />
+    </Quality>
+  </Item>
+  
+  <Item name="" identifier="deep_ied" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.35" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="uex" />
+      <Item identifier="phosphorus" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="c4block" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="876,148,99,98" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
+    <Body width="26" height="50" density="30" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" />
+    <RangedWeapon barrelpos="80,11" reload="0.2" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
+      <RequiredItems items="deep_ied_ammo" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="60" />
+	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
+	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
+	    <Remove />
+	  </StatusEffect>
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_ied_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
+      <Containable items="deep_ied_ammo" hide="true" />
+    </ItemContainer>
+    <aitarget sightrange="1000" soundrange="3000" fadeouttime="3" />
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="60" />
+  </Item>
+  
+  <Item name="" identifier="deep_ied_remote" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.2" impactsoundtag="impact_grenade">
+    <Deconstruct time="5">
+    </Deconstruct>
+	<Fabricate suitablefabricators="fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="plastic" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="763,156,90,90" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="763,156,90,90" depth="0.55" origin="0.5,0.5" />
+    <Body width="26" height="50" density="30" />
+	<Holdable slots="Any,RightHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	</Holdable>
+	<RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
+	  <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="1" >
+	  <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+	  </StatusEffect>
+    </RangedWeapon>
+  </Item>
+  
+  <Item name="" identifier="deep_f1_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
+    <Body radius="20" height="10" density="30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
+      <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
+        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="60" />
+	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
+	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
+	    <Remove />
+	  </StatusEffect>
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_f1_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
+      <Containable items="deep_f1_ammo" hide="true" />
+    </ItemContainer>
+    <aitarget sightrange="500" soundrange="500" fadeouttime="3" />
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <SkillRequirementHint identifier="weapons" level="60" />
+  </Item>
+  
+  <Item name="" identifier="deep_f1_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
+    <Body width="38" height="15" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
+      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="3" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="600.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="300" />
+		  <Affliction identifier="Shrapnel_residue" strength="100" probability="0.8" />
+		  <Affliction identifier="explosiondamage" strength="100" />
+		  <Affliction identifier="explosiondamage" strength="100" probability="0.8" />
+          <Affliction identifier="bleeding" strength="400" />
+          <Affliction identifier="stun" strength="3" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_ied_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="weapon,explosive,demolitionsexpert,handgrenade,deep_ied" Scale="0.35" impactsoundtag="impact_light">
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
+    <Body width="35" height="100" density="10" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" launchimpulse="8.0" DoesStick="true" >
+    </Projectile>
+	<Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<StatusEffect type="OnNotContained" comparison="and" target="This" >
+	  <Conditional Condition="e 1" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="400" force="30" camerashake="100" ballastfloradamage="1000" structuredamage="400" itemdamage="1000" severlimbsprobability="1" smoke="false" playtinnitus="true" DistanceFalloff="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+          <Affliction identifier="Shrapnel_residue" strength="1200" />
+		  <Affliction identifier="Shrapnel_residue" strength="600" probability="0.8" />
+		  <Affliction identifier="explosiondamage" strength="400" />
+		  <Affliction identifier="explosiondamage" strength="200" probability="0.8" />
+          <Affliction identifier="stun" strength="20" />
+		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+	  <StatusEffect type="Always" target="This" Interval="1" setValue="true " condition="100" >
+	  </StatusEffect>
+	  <StatusEffect type="OnPicked" target="This" delay="0.5" >
+	  <Remove />
+	  </StatusEffect>
+	  <StatusEffect type="OnContained" target="Character" stackable="false" delay="0.4" >
+	  <SpawnItem identifiers="deep_ied" spawnposition="SameInventory" />
+	  </StatusEffect>
+	  <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
+        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="1.5" volume="0.75" />
+      </StatusEffect>
+	</Holdable>
+	<LightComponent LightColor="0,123,255,255" range="20" powerconsumption="0" IsOn="false" blinkfrequency="1.0" offset="0,16">
+    </LightComponent>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  
+  <Item name="" identifier="deep_rgo_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
+    <Body width="38" height="15" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" launchimpulse="17.0" sticktocharacters="false">
+      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="0" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="350.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="350" />
+		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  </Items>

@@ -1,0 +1,1004 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_pirate_exosuit" category="Diving,Equipment" tags="diving,deepdiving,deepdivinglarge,divinggear_wearableindoors,human" scale="0.605" fireproof="true" description="" isshootable="true" allowdroppingonswapwith="diving" impactsoundtag="impact_metal_heavy" botpriority="0.01" cargocontaineridentifier="">
+    <Deconstruct time="30">
+      <Item identifier="titaniumaluminiumalloy" />
+      <Item identifier="titaniumaluminiumalloy" />
+      <Item identifier="titaniumaluminiumalloy" />
+      <Item identifier="rubber" />
+      <Item identifier="rubber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="45" requiresrecipe="true">
+      <RequiredSkill identifier="mechanical" level="60" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="4" />
+      <RequiredItem identifier="rubber" amount="3" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/deep_exosuit.png" sourcerect="384,384,128,128" origin="0.5,0.5" />
+    <Sprite name="Exosuit Item" texture="%ModDir%/jobgear/armor/deep_exosuit.png" sourcerect="2,266,203,244" depth="0.55" origin="0.5,0.5" />
+    <Body width="150" height="230" density="30" />
+    <Wearable slots="OuterClothes" msg="ItemMsgEquipSelect" displaycontainedstatus="true" canbeselected="false" canbepicked="true" pickkey="Select" allowusewhenworn="true">
+      <sprite name="Exosuit Helmet Wearable" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="Head" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hideotherwearables="true" hidewearablesoftype="" sourcerect="0,0,1,1" origin="0.5,0.5" />
+      <sprite name="Exosuit Torso" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="Torso" scale="1.2" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.5,0.8" inheritlimbdepth="true" inheritsourcerect="false" sourcerect="167,1,203,193">
+        <LightComponent range="200.0" lightcolor="250,224,165,255" powerconsumption="10" IsOn="true" allowingameediting="false" offset="-50,-50">
+          <LightTexture texture="Content/Lights/divinghelmetlight.png" origin="0.05, 0.5" size="1.0,1.0" />          
+        </LightComponent>
+      </sprite>
+      <sprite name="Exosuit Right Hand" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" inheritlimbdepth="true" SourceRect="383,160,64,48" />
+      <sprite name="Exosuit Left Hand" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" SourceRect="447,160,64,48" />
+      <sprite name="Exosuit Right Upper Arm" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightArm" depthlimb="Head" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" inheritlimbdepth="true" SourceRect="383,0,64,96" />
+      <sprite name="Exosuit Left Upper Arm" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" SourceRect="447,0,64,96" />
+      <sprite name="Exosuit Right Forearm" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" inheritlimbdepth="true" SourceRect="383,96,64,64" />
+      <sprite name="Exosuit Left Forearm" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="false" SourceRect="447,96,64,64"  />
+      <sprite name="Exosuit Waist" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="Waist" hidelimb="true" scale="1.2" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.5,0.5" inheritsourcerect="false" inheritlimbdepth="true" sourcerect="182,196,178,53" />
+      <sprite name="Exosuit Right Thigh" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.5,0.5" inheritsourcerect="false" inheritlimbdepth="true" sourcerect="0,0,96,112" />
+      <sprite name="Exosuit Left Thigh" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.5,0.5" inheritsourcerect="false" sourcerect="0,0,96,112" />
+      <sprite name="Exosuit Right Leg" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritlimbdepth="true" inheritsourcerect="true" />
+      <sprite name="Exosuit Left Leg" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Exosuit Left Shoe" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="LeftFoot" sound="footstep_armor_heavy" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.2,0.5" inheritsourcerect="false" sourcerect="371,211,133,37" />
+      <sprite name="Exosuit Right Shoe" texture="%ModDir%/jobgear/armor/deep_exosuit.png" limb="RightFoot" sound="footstep_armor_heavy" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.2,0.5" inheritsourcerect="false" sourcerect="371,211,133,37" />
+      <StatusEffect type="OnWearing" target="Character" OxygenAvailable="-100.0" UseHullOxygen="false" />
+      <StatusEffect type="OnWearing" target="Character" LowPassMultiplier="0.2" HideFace="true" ObstructVisionAmount="0.5" PressureProtection="7000.0" setvalue="true" disabledeltatime="true">
+        <Sound file="Content/Items/Diving/DivingSuitLoop1.ogg" range="250" loop="true"/>
+        <Sound file="Content/Items/Diving/DivingSuitLoop2.ogg" range="250" loop="true"/>
+        <TriggerAnimation Type="Walk" FileName="HumanWalkExosuit" priority="1" ExpectedSpecies="Human" />
+        <TriggerAnimation Type="Run" FileName="HumanRunExosuit" priority="1" ExpectedSpecies="Human" />
+      </StatusEffect>
+      <!-- no HMG stun -->
+      <StatusEffect type="OnWearing" target="Character" interval="0.9" disabledeltatime="true">
+        <Affliction identifier="recoilstabilized" amount="1" />
+      </StatusEffect>
+      <!-- slow movement -->
+      <StatusEffect type="OnWearing" target="This,Character" setvalue="true" disabledeltatime="true">
+        <Conditional Voltage="gt 0.5" />
+      </StatusEffect>      
+      <StatusEffect type="OnWearing" target="Contained,Character" Condition="-0.05" interval="1" disabledeltatime="true" targetslot="1" comparison="Or">
+        <Conditional IsDead="false" />
+        <RequiredItem items="reactorfuel" targetslot="1" type="Contained" />
+      </StatusEffect>
+      <!-- 0 movement speed when out of fuel-->
+      <StatusEffect type="OnWearing" target="This,Character" SpeedMultiplier="-10.0" setvalue="true" disabledeltatime="true">
+        <Conditional Voltage="lte 0.5" />
+      </StatusEffect>
+	  <damagemodifier afflictiontypes="damage" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictiontypes="deep_gunwound" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.8" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="blunttrauma,gunshotwound,lacerations,explosiondamage" damagemultiplier="0.2" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="bitewounds, bleeding" damagemultiplier="0.1" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictiontypes="stun" damagemultiplier="0.5" probabilitymultiplier="0.25" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictiontypes="burn" damagemultiplier="0.5" damagesound="" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="radiationsickness" damagemultiplier="0.75" damagesound="ricochet"/>
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" probabilitymultiplier="0" damagesound="ricochet"/>
+      <sound file="Content/Items/Weapons/WEAPONS_chargeUp.ogg" type="OnWearing" range="500.0" volumeproperty="Speed" volume="0.2" loop="true" frequencymultiplier="0.5" />
+      <StatValue stattype="FlowResistance" value="0.9" />
+      <StatValue stattype="PropulsionSpeed" value="-0.75" />
+    </Wearable>
+    <ItemContainer capacity="0" hideitems="true" containedstateindicatorstyle="tank" containedstateindicatorslot="0">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="64,448,64,64" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="192,448,64,64" origin="0.5,0.5" />
+      <StatusEffect type="OnWearing" target="Contained" targetslot="0" playsoundonrequireditemfailure="true">
+        <RequiredItem items="oxygensource" type="Contained" targetslot="0" matchonempty="true" />
+        <Conditional condition="lte 0.0" />
+        <Sound file="Content/Items/WarningBeep.ogg" range="500" loop="true"/>
+      </StatusEffect>
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="oxygensource,weldingtoolfuel" />
+        <Containable items="oxygensource">
+          <StatusEffect type="OnWearing" target="Character" OxygenAvailable="1000.0" />
+          <StatusEffect type="OnWearing" target="Contained" Condition="-0.05" comparison="And">
+            <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" DecreasedOxygenConsumption="lt 99" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" NeedsAir="true" />
+          </StatusEffect>
+          <StatusEffect type="OnWearing" target="Contained">
+            <Conditional condition="lt 5.0" />
+            <Sound file="Content/Items/WarningBeepSlow.ogg" range="250" loop="true"/>
+          </StatusEffect>
+        </Containable>
+        <Containable items="oxygenitetank">
+          <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="1.2" setvalue="true" targetslot="0" comparison="And">
+            <Conditional IsDead="false" />
+            <Conditional DecreasedOxygenConsumption="lt 99" />
+            <Conditional NeedsAir="true" />
+          </StatusEffect>
+        </Containable>
+        <Containable items="weldingfueltank" blameequipperfordeath="true">
+          <StatusEffect type="OnWearing" target="Contained" Condition="-0.5" comparison="And">
+            <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" DecreasedOxygenConsumption="lt 99" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" NeedsAir="true" />
+          </StatusEffect>
+          <StatusEffect type="OnWearing" target="Character" OxygenAvailable="-100.0" Oxygen="-5.0" comparison="And">
+            <Conditional IsDead="false" />
+            <Conditional DecreasedOxygenConsumption="lt 99" />
+            <Conditional NeedsAir="true" />
+          </StatusEffect>
+        </Containable>
+        <Containable items="incendiumfueltank" blameequipperfordeath="true">
+          <StatusEffect type="OnWearing" target="Contained" Condition="-0.5" comparison="And">
+            <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" DecreasedOxygenConsumption="lt 99" />
+            <Conditional TargetContainer="true" TargetGrandparent="true" NeedsAir="true" />
+          </StatusEffect>
+          <StatusEffect type="OnWearing" target="Character" OxygenAvailable="-100.0" comparison="And" targetlimb="Torso">
+            <Affliction identifier="burn" amount="20.0"  />
+            <Conditional IsDead="false" />
+            <Conditional DecreasedOxygenConsumption="lt 99" />
+            <Conditional NeedsAir="true" />
+          </StatusEffect>
+        </Containable> 
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="reactorfuel">
+          <StatusEffect type="OnContaining" target="This,Character" Voltage="1.0" setvalue="true">
+            <Conditional IsDead="false" />
+          </StatusEffect>
+        </Containable>
+      </SubContainer>
+      <SubContainer capacity="10" maxstacksize="32">
+        <Containable items="smallitem" />
+      </SubContainer>
+    </ItemContainer>
+    <aitarget maxsightrange="1500" />
+  </Item>
+  
+  
+  <Item name="" identifier="deep_hpc" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Upgrade gameversion="0.9.3.0" scale="0.35" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="300">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="organicfiber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="39,275,167,192" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="464,347,132,170" depth="0.6" origin="0.5,0.35" />
+    <Body width="70" height="140" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="1.2" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_hpc_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_hpc_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_hpc_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.55,0.55" inheritsourcerect="false" sourcerect="464,347,132,170" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="20" />
+	  <SkillModifier skillidentifier="helm" skillvalue="5" />
+	  <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+	  <SkillModifier skillidentifier="electrical" skillvalue="5" />
+	  <SkillModifier skillidentifier="medical" skillvalue="5" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="thor" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Upgrade gameversion="0.9.3.0" scale="0.35" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="700">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="KEVLAR" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="185,24,151,175" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="293,340,131,190" depth="0.6" origin="0.5,0.35" />
+    <Body width="70" height="140" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_thor_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_thor_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_thor_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.8" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.3" damagesound="gear_damage" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations" armorsector="0.0,360.0" damagemultiplier="0.3" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.55,0.55" inheritsourcerect="false" sourcerect="293,340,131,190" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="6b13" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Upgrade gameversion="0.9.3.0" scale="0.35" />
+    <PreferredContainer secondary="wreckarmcab,abandonedarmcab,piratearmcab,outpostarmcab" amount="1" spawnprobability="0.05" />
+    <Price baseprice="1000">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="KEVLAR" amount="2" />
+	  <RequiredItem identifier="ballisticfiber" amount="4" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="34,9,141,226" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="5,320,138,252" depth="0.6" origin="0.5,0.35" />
+    <Body width="70" height="140" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.85" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_6b13_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_6b13_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_6b13_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.7" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.15" damagesound="gear_damage" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations" armorsector="0.0,360.0" damagemultiplier="0.15" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.5,0.5" inheritsourcerect="false" sourcerect="5,320,138,252" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Waist" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="-10" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_Guardian" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Price baseprice="1000">
+      <Price storeidentifier="merchantoutpost" sold="false" multiplier="1.3" />
+      <Price storeidentifier="merchantcity" multiplier="1.2" minavailable="1" sold="false" />
+      <Price storeidentifier="merchantresearch" sold="false" />
+      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="3" />
+      <Price storeidentifier="merchantmine" sold="false" />
+      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="3" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="ballisticfiber" amount="4" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="535,327,290,247" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="522,651,133,215" depth="0.6" origin="0.5,0.35" />
+    <Body width="70" height="140" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_6b13_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_6b13_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_6b13_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.7" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="gear_damage" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.5,0.5" inheritsourcerect="false" sourcerect="522,651,133,215" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Waist" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftArm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.57,0.65" inheritsourcerect="false" sourcerect="830,18,89,132" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightArm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.57,0.65" inheritsourcerect="false" sourcerect="830,18,89,132" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="-10" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  
+  <Item name="" identifier="gen4_heavy" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Upgrade gameversion="0.9.3.0" scale="0.35" />
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="4" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="KEVLAR" amount="6" />
+	  <RequiredItem identifier="ballisticfiber" amount="6" />
+	  <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="364,12,295,221" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="23,623,132,217" depth="0.6" origin="0.5,0.35" />
+    <Body width="150" height="240" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_gen4_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_gen4_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_gen4_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_arm" type="Contained"  />
+	  	  <Affliction identifier="deep_steel_arm" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.4" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="gear_damage" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.60" inheritorigin="false" origin="0.5,0.55" inheritsourcerect="false" sourcerect="23,623,132,217" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftArm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="465,11,95,134" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightArm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="465,11,95,134" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Waist" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="-20" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="380,119,47,61" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="steel_plate_arm" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  
+  <Item name="" identifier="deep_6b43" InvulnerabletoDamage="true" subcategory="deep_armor" category="Equipment" tags="smallitem,clothing" scale="0.35" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_soft">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="6" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="KEVLAR" amount="12" />
+	  <RequiredItem identifier="ballisticfiber" amount="6" />
+	  <RequiredItem identifier="deep_ssd" amount="2" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/armor/armor_icon.png" sourcerect="246,275,281,288" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/armor/armor.png" sourcerect="357,636,138,284" depth="0.6" origin="0.5,0.35" />
+    <Body width="150" height="240" density="25" />
+    <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_armor_talent" />
+	 </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+	  <!-- 钢制插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_1" type="Contained" />
+	  	  <Affliction identifier="deep_6b43_steel_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_2" type="Contained"  />
+	  	  <Affliction identifier="deep_6b43_steel_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_3" type="Contained"  />
+	  	  <Affliction identifier="deep_6b43_steel_3" strength="100" />
+		  <Affliction identifier="steel_plate_heavy_run" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_arm" type="Contained"  />
+	  	  <Affliction identifier="deep_steel_arm" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="steel_plate_groin" type="Contained"  />
+	  	  <Affliction identifier="deep_steel_groin" strength="100" />
+      </StatusEffect>
+	  
+	  <!-- 陶瓷插板 -->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1,ceramics_plate_2,ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="armor_ceramics" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_1" type="Contained" />
+	  	  <Affliction identifier="ceramics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_2" type="Contained" />
+	  	  <Affliction identifier="ceramics_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="ceramics_plate_3" type="Contained" />
+	  	  <Affliction identifier="ceramics_3" strength="100" />
+      </StatusEffect>
+	   <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="100" />
+		<ReduceAffliction type="bitewounds" amount="150" />
+		<ReduceAffliction type="lacerations" amount="150" />
+		<ReduceAffliction type="explosiondamage" amount="100" />
+		<ReduceAffliction type="Shrapnel_residue" amount="30" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="10" />
+        <RequiredItem items="ceramics_plate_1" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="200" />
+		<ReduceAffliction type="bitewounds" amount="300" />
+		<ReduceAffliction type="lacerations" amount="300" />
+		<ReduceAffliction type="explosiondamage" amount="200" />
+		<ReduceAffliction type="Shrapnel_residue" amount="50" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="15" />
+        <RequiredItem items="ceramics_plate_2" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-100" targetslot="0">
+        <ReduceAffliction type="gunshotwound" amount="300" />
+		<ReduceAffliction type="bitewounds" amount="450" />
+		<ReduceAffliction type="lacerations" amount="450" />
+		<ReduceAffliction type="explosiondamage" amount="300" />
+		<ReduceAffliction type="Shrapnel_residue" amount="70" />
+		<ReduceAffliction type="deep_headshot_deadly" amount="20" />
+        <RequiredItem items="ceramics_plate_3" type="Contained" targetslot="0" />
+        <Conditional gunshotwound="gt 0.0" />
+		<Conditional Shrapnel_residue="gt 0.0" />
+		<Conditional deep_headshot_deadly="gt 0.0" />
+		<Conditional bitewounds="gt 0.0" />
+		<Conditional lacerations="gt 0.0" />
+		<Conditional explosiondamage="gt 0.0" />
+      </StatusEffect>
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.3" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" damagemultiplier="0" damagesound="gear_damage" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
+      <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.60" inheritorigin="false" origin="0.5,0.4" inheritsourcerect="false" sourcerect="357,636,138,284" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftArm" hidelimb="false" inheritscale="true" scale="0.5" inheritorigin="false" origin="0.6,0.68" inheritsourcerect="false" sourcerect="723,24,92,118" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightArm" hidelimb="false" inheritscale="true" scale="0.5" inheritorigin="false" origin="0.6,0.68" inheritsourcerect="false" sourcerect="723,24,92,118" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftForearm" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="Waist" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="RightThigh" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" limb="LeftThigh" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="30,180,1,1" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="-30" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_ergonomics" type="Contained"  />
+	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
+	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
+	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
+	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="380,119,47,61" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="434,126,72,47" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="steel_plate_arm" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="steel_plate_groin" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_armor" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  </Items>

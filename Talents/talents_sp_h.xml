@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  <Talents>
+  <Talent identifier="deep_talent_separatists_soidier_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatists_soidier_hard">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 突击手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.4"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  
+  <Talent identifier="deep_talent_separatists_striker_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatists_striker_hard">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.4"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 强攻手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.7"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  
+  <Talent identifier="deep_talent_separatists_heavy_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatists_heavy_hard">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.3"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 重装 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  
+    <Talent identifier="deep_talent_separatist_leader_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatist_leader_hard">
+    </Description>
+	<!-- 多人游戏数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="AttackMultiplier" value="0.3"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.3"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.7"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 暴力军阀 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 复仇小队 -->
+	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character">
+              <Affliction identifier="deep_revengesquad_co_hard" amount="240"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+    
+  <Talent identifier="deep_talent_separatist_dreadnaught">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatist_dreadnaught">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.8"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 无畏者 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-2"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  
+  <Talent identifier="deep_talent_separatists_sniper_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatists_sniper_hard">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.7"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 狙击手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+  
+  <Talent identifier="deep_talent_separatists_blaster_hard">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_separatists_blaster_hard">
+    </Description>
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 爆破手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.9"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+</Talents>

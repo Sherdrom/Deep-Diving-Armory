@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="gssh01_headset" scale="0.5" subcategory="deep_headset" category="Equipment" tags="smallitem,mobileradio" allowasextracargo="true" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="311,6,118,88" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.6" sourcerect="432,10,83,64" origin="0.35,0.5" />
+    <Body radius="20" height="20" density="15" />
+    <Deconstruct time="10">
+      <Item identifier="plastic" amount="2" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="electrical" level="30" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="fpgacircuit" />
+    </Fabricate>
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+    <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect" displaycontainedstatus="true">
+	<StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headset" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="432,10,83,64" limb="Head" hidelimb="false" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hideotherwearables="false" origin="0.6,0.5" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+    </Wearable>
+  </Item>
+  
+  <Item name="" identifier="m32_headset" scale="0.5" subcategory="deep_headset" category="Equipment" tags="smallitem,mobileradio" allowasextracargo="true" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="447,6,125,119" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.6" sourcerect="451,95,74,74" origin="0.35,0.5" />
+    <Body radius="20" height="20" density="15" />
+    <Deconstruct time="10">
+      <Item identifier="plastic" amount="2" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="electrical" level="30" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="fpgacircuit" />
+    </Fabricate>
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+    <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect" displaycontainedstatus="true">
+	<StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headset" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="451,95,74,74" limb="Head" hidelimb="false" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hideotherwearables="false" origin="0.5,0.5" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+    </Wearable>
+  </Item>
+  
+  <Item name="" identifier="walker_headset" scale="0.5" subcategory="deep_headset" category="Equipment" tags="smallitem,mobileradio" allowasextracargo="true" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="578,6,110,103" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.6" sourcerect="453,183,40,47" origin="0.35,0.5" />
+    <Body radius="20" height="20" density="15" />
+    <Deconstruct time="10">
+      <Item identifier="plastic" amount="2" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="electrical" level="80" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="fpgacircuit" />
+	  <RequiredItem identifier="deep_ssd" />
+    </Fabricate>
+    <WifiComponent range="60000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <ItemContainer capacity="1" maxstacksize="1" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="antibloodloss1,antibloodloss2,opium,antidama1,antidama2,deusizine,teleportine,deep_medical_Hemostatic_agent" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
+		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
+		</Containable>
+		<Containable Items="chip_medic,chip_medic_2">
+          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+        </Containable>
+      </SubContainer>
+    </ItemContainer>
+    <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect" displaycontainedstatus="true">
+	<StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headset" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="453,183,40,47" limb="Head" hidelimb="false" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hideotherwearables="false" origin="0.8,0.3" />
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained"  />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  />
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  />
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained"  />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained"  />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained"  />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained"  />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+	  
+	  
+	  
+	  <!--生理盐水-->
+      <StatusEffect type="OnWearing" target="Character,Contained" condition="-10" targetslot="0">
+        <ReduceAffliction type="bloodloss" amount="2.5" />
+        <RequiredItem items="antibloodloss1" type="Contained" targetslot="0" />
+        <Conditional bloodloss="gt 5.0" />
+      </StatusEffect>
+      <!--血袋-->
+      <StatusEffect type="OnWearing" target="Character,Contained" condition="-5" targetslot="0">
+        <ReduceAffliction type="bloodloss" amount="6" />
+        <RequiredItem items="antibloodloss2" type="Contained" targetslot="0" />
+        <Conditional bloodloss="gt 5.0" />
+      </StatusEffect>
+	  <!--药用鸦片-->
+      <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-10" targetslot="0">
+        <ReduceAffliction type="damage" amount="2.5" />
+        <ReduceAffliction type="burn" amount="0.05" />
+        <RequiredItem items="opium" type="Contained" targetslot="0" />
+        <Conditional internaldamage="gt 0.0" />
+        <Conditional blunttrauma="gt 0.0" />
+        <Conditional lacerations="gt 0.0" />
+        <Conditional bitewounds="gt 0.0" />
+        <Conditional gunshotwound="gt 0.0" />
+        <Conditional organdamage="gt 0.0" />
+        <Conditional explosiondamage="gt 0.0" />
+        <Conditional concussion="gt 0.0" />
+      </StatusEffect>
+      <!--吗啡-->
+      <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-10" targetslot="0">
+        <ReduceAffliction type="damage" amount="5" />
+        <ReduceAffliction type="burn" amount="0.1" />
+        <RequiredItem items="antidama1" type="Contained" targetslot="0" />
+        <Conditional internaldamage="gt 0.0" />
+        <Conditional blunttrauma="gt 0.0" />
+        <Conditional lacerations="gt 0.0" />
+        <Conditional bitewounds="gt 0.0" />
+        <Conditional gunshotwound="gt 0.0" />
+        <Conditional organdamage="gt 0.0" />
+        <Conditional explosiondamage="gt 0.0" />
+        <Conditional concussion="gt 0.0" />
+      </StatusEffect>
+      <!--芬太尼-->
+      <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-20" targetslot="0">
+        <ReduceAffliction type="damage" amount="15" />
+        <ReduceAffliction type="burn" amount="1" />
+        <RequiredItem items="antidama2" type="Contained" targetslot="0" />
+        <Conditional internaldamage="gt 0.0" />
+        <Conditional blunttrauma="gt 0.0" />
+        <Conditional lacerations="gt 0.0" />
+        <Conditional bitewounds="gt 0.0" />
+        <Conditional gunshotwound="gt 0.0" />
+        <Conditional organdamage="gt 0.0" />
+        <Conditional explosiondamage="gt 0.0" />
+        <Conditional concussion="gt 0.0" />
+      </StatusEffect>
+      <!--神效剂-->
+      <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-5" targetslot="0">
+        <Affliction identifier="burn" amount="0.02" />
+        <ReduceAffliction type="damage" amount="3" />
+        <ReduceAffliction identifier="oxygenlow" amount="3" />
+        <ReduceAffliction identifier="bloodloss" amount="2" />
+        <RequiredItem items="deusizine" type="Contained" targetslot="0" />
+        <Conditional internaldamage="gt 0.0" />
+        <Conditional blunttrauma="gt 0.0" />
+        <Conditional lacerations="gt 0.0" />
+        <Conditional bitewounds="gt 0.0" />
+        <Conditional gunshotwound="gt 0.0" />
+        <Conditional organdamage="gt 0.0" />
+        <Conditional explosiondamage="gt 0.0" />
+        <Conditional concussion="gt 0.0" />
+        <Conditional bloodloss="gt 5.0" />
+        <Conditional oxygenlow="gt 50.0" />
+      </StatusEffect>
+	  <!--DOC止血剂-->
+      <StatusEffect type="OnWearing" target="Character,Contained" comparison="or" condition="-5" targetslot="0">
+        <ReduceAffliction type="bleeding" amount="50" />
+        <RequiredItem items="deep_medical_Hemostatic_agent" type="Contained" targetslot="0" />
+        <Conditional bleeding="gt 50.0" />
+      </StatusEffect>
+    </Wearable>
+  </Item>
+</Items>
