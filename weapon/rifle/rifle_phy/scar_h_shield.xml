@@ -37,15 +37,15 @@
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="5" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" selectionmode="Random" />
-      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" frequencymultiplier="0.95" />
-      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" frequencymultiplier="1.05" />
+      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" selectionmode="Random" volume="0.5"/>
+      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" frequencymultiplier="0.95" volume="0.5"/>
+      <Sound file="%ModDir%/weapon/ammo/762_1.ogg" type="OnUse" range="4000" frequencymultiplier="1.05" volume="0.5"/>
 	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
 	  <!-- <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" /> -->
 	  <StatusEffect type="OnBroken" target="This" stackable="false" delay="0.5" >
-        <sound file="%ModDir%/weapon/ammo/762_51re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/762_51re.ogg" type="OnUse" range="500.0" loop="false" volume="1.5" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="1" scalemin="1" scalemax="2" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">
