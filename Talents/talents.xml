@@ -22,7 +22,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 深潜枪在水中时，-60%伤害 -->
-	<AbilityGroupInterval  interval="0.1" >
+	<AbilityGroupInterval>
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect" />
 		<AbilityConditionInWater/>
@@ -59,12 +59,11 @@
 	<!-- 在水中时无法造成致死爆头-->
 	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
-        <AbilityConditionCharacter targettypes="Enemy,Ally"/>
 		<AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly" addedmultiplier="-1" />
-		<CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly_irresistible" addedmultiplier="-1" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly" addedmultiplier="-10" />
+		<CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly_irresistible" addedmultiplier="-10" />
       </Abilities>
     </AbilityGroupEffect>
   </Talent>
