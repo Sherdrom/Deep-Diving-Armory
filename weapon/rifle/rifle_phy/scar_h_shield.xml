@@ -33,10 +33,6 @@
 	
 	</Holdable>
     <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="110,-16" spread="4" unskilledspread="8" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
-     <!-- OnBroken (when condition is set to 0 from OnInserted status effects in Containable intended for reloading animation),
-      Proxy item's condition will be set to 0 and back to 100 after a delay. -->
-      <StatusEffect type="OnBroken" target="Contained" targetidentifiers="deep_reloading_762_51" delay="0.01" condition="0" setvalue="true" />
-      <StatusEffect type="OnBroken" target="Contained" targetidentifiers="deep_reloading_762_51" delay="2.1" condition="100" setvalue="true" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -144,10 +140,6 @@
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
-    </ItemContainer>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" drawinventory="false" spawnwithid="deep_reloading_556" removecontaineditemsondeconstruct="true">
-      <!-- RemoveContainedItemsOnDeconstruct removes proxy on deconstruction. -->
-      <Containable items="deep_reloading_762_51" hide="true" />
     </ItemContainer>
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
     <Quality>
