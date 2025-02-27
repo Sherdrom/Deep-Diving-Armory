@@ -72,12 +72,10 @@
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.5" setvalue="true" />
-        <!-- Makes the magazine invisible. -->
-        <StatusEffect type="OnInserted" target="This" hideitems="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-        <!-- Upon reloading, sets the condition to 0, triggering OnBroken status effect.
-        On top of that, triggers reload animations and blah blah blah.
-        Condition=0 is set with a delay to not cause any issues with OnRemoved status effects.
-		    Puts the hand on the magazine. -->
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255"  delay="0.5" setvalue="true" disabledeltatime="true" />
         <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="5,-30" disabledeltatime="true" delay="0.05" condition="0" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="26,-5" disabledeltatime="true" delay="0.3" setvalue="true" />
@@ -85,8 +83,6 @@
         <StatusEffect type="OnInserted" target="This" handle2="0,-40" holdangle="30" holdpos="15,-15" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.4" condition="0" setvalue="true" forceplaysounds="true">
           <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
-        <!-- Makes the magazine visible. -->
-        <StatusEffect type="OnInserted" target="This" hideitems="false" disabledeltatime="true" delay="0.5" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="65,3" holdangle="20" aimangle="0" handle2="0,-8" disabledeltatime="true" delay="1.5" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="65,3" holdangle="20" aimangle="0" handle2="-30,-8" disabledeltatime="true" delay="2" setvalue="true" />
