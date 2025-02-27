@@ -32,7 +32,6 @@
 	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
 	  <StatusEffect type="OnBroken" target="This">
         <sound file="%ModDir%/weapon/ammo/akre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -60,7 +59,39 @@
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="deep_5.56x45,deep_5.56x45_expansion" hide="false" itempos="-7,-6" setactive="true" rotation="0" />
+      <Containable items="deep_5.56x45,deep_5.56x45_expansion" hide="false" itempos="-7,-6" setactive="true" rotation="0" >
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="2" setvalue="true" />
+        <!-- Makes the magazine invisible. -->
+        <StatusEffect type="OnInserted" target="This" hideitems="true" delay="0.01" setvalue="true" />
+        <!-- Upon reloading, sets the condition to 0, triggering OnBroken status effect.
+        On top of that, triggers reload animations and blah blah blah.
+        Condition=0 is set with a delay to not cause any issues with OnRemoved status effects.
+		    Puts the hand on the magazine. -->
+        <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="5,-30" delay="0.01" condition="0" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-20,-5" delay="0.3" setvalue="true" />
+        <!-- Sets gun's and hand's position, makes a sound. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-40,-40" holdangle="40" holdpos="15,-15" aimangle="45" aimpos="25,0" delay="0.7" condition="0" setvalue="true" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- Makes the magazine visible. -->
+        <StatusEffect type="OnInserted" target="This" hideitems="false" delay="0.8" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="18,-8" delay="1.3" setvalue="true" />
+        <!-- Puts the hand on the eject port. -->
+        <StatusEffect type="OnInserted" target="This" handle1="1,10" delay="1.1" setvalue="true" />
+        <!-- Eject port work. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-30,10" delay="1.5" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- End. Sets everything to default values. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-55,-15" handle2="80,20" holdangle="-35" holdpos="40,-10" aimangle="0" aimpos="63,5" delay="2" setvalue="true" />
+        <!-- If the magazine is removed/swapped, sets the condition to 1. -->
+        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
