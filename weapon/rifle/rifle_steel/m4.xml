@@ -78,12 +78,11 @@
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2" setvalue="true" />
-        <!-- Makes the magazine invisible. -->
-        <StatusEffect type="OnInserted" target="This" hideitems="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-        <!-- Upon reloading, sets the condition to 0, triggering OnBroken status effect.
-        On top of that, triggers reload animations and blah blah blah.
-        Condition=0 is set with a delay to not cause any issues with OnRemoved status effects.
-		    Puts the hand on the magazine. -->
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
+
         <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="5,-30" disabledeltatime="true" delay="0.05" condition="0" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="26,-5" disabledeltatime="true" delay="0.3" setvalue="true" />
@@ -91,21 +90,12 @@
         <StatusEffect type="OnInserted" target="This" handle2="0,-40" holdangle="30" holdpos="15,-15" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.4" condition="0" setvalue="true" forceplaysounds="true">
           <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
-        <!-- Makes the magazine visible. -->
-        <StatusEffect type="OnInserted" target="This" hideitems="false" disabledeltatime="true" delay="0.5" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" holdpos="40,-10" aimpos="60,3" holdangle="10" aimangle="0" handle2="-45,-8" disabledeltatime="true" delay="0.8" setvalue="true" />
         <!-- Puts the hand on the eject port. -->
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" handle1="-45,-15" handle2="80,20" holdangle="-35" holdpos="40,-10" aimangle="0" aimpos="60,3" disabledeltatime="true" delay="2" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
-        <!-- If the magazine is removed/swapped, sets the condition to 1. -->
-        <!-- <StatusEffect type="OnRemoved" target="This" condition="1" delay="0.01" setvalue="true" forceplaysounds="true"> -->
-          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagDetach.ogg" type="OnUse" range="1000" /> -->
-        <!-- </StatusEffect> -->
-        <!-- <StatusEffect type="OnRemoved" target="This" delay="0.01" forceplaysounds="true"> -->
-          <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortOpen.ogg" type="OnUse" range="1000" /> -->
-        <!-- </StatusEffect> -->
 	  </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />

@@ -22,7 +22,7 @@
     <InventoryIcon texture="%ModDir%/weapon/pistol/pistol45.png" sourcerect="98,98,114,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/pistol/pistol.png" sourcerect="98,70,104,61" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-20,-7" handle2="-20,-7" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-35,-7" handle2="0,5" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="1.8" setvalue="true" >
 	  <Affliction identifier="deadeyes" strength="100" />
       </StatusEffect>
@@ -32,6 +32,7 @@
 	  <StatusEffect type="OnSecondaryUse" target="This" Condition="-1000" Interval="0.5" >
       </StatusEffect>
 	  <StatusEffect type="OnSecondaryUse" target="This" setvalue="true" >
+    <Conditional Condition="lt 95"/> 
 	  <sound file="%ModDir%/weapon/pistol/deadeyes.ogg" range="100.0" loop="false" volume="1" />
       </StatusEffect>
 	  <StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -49,7 +50,6 @@
       <Sound file="%ModDir%/weapon/ammo/44.ogg" type="OnUse" range="3000" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="5" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2.5" stackable="false" />
 	  <StatusEffect type="OnBroken" target="This">
         <sound file="%ModDir%/weapon/ammo/44re.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -68,7 +68,36 @@
       <RequiredSkill identifier="weapons" level="60" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" containedspritedepth="0.56">
-      <Containable items="deep_44mag" hide="true" setactive="true" itempos="0,-7" rotation="0" />
+      <Containable items="deep_44mag" hide="true" setactive="true" itempos="0,-7" rotation="0" >
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="2.5" setvalue="true" />
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
+
+        <StatusEffect type="OnInserted" target="This" holdpos="40,-30" holdangle="45" handle2="-20,-7" delay="0.01" condition="0" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-20,-5" delay="0.8" setvalue="true" />
+        <!-- Sets gun's and hand's position, makes a sound. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-40,-40" holdangle="-35" holdpos="50,-20" aimangle="45" delay="0.7" condition="0" setvalue="true" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="18,-8" delay="0.9" setvalue="true" />
+        <!-- Puts the hand on the eject port. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-40,0" aimpos="50,-20" delay="1.5" aimangle="-45" setvalue="true" />
+        <!-- Eject port work. -->
+        <StatusEffect type="OnInserted" target="This" handle2="0,0" delay="2" setvalue="true" >
+          <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- End. Sets everything to default values. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-35,-7" handle2="0,5" holdangle="-35" holdpos="80,-20" aimangle="0" aimpos="85,5" delay="2.5" setvalue="true" />
+        <!-- If the magazine is removed/swapped, sets the condition to 1. -->
+        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2.5" stackable="false" />
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
