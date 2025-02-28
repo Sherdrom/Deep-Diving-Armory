@@ -43,7 +43,7 @@
     <!-- 致死爆头 -->
 	<AbilityGroupEffect abilityeffecttype="OnAttack" >
       <Conditions>
-		<AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect" />
+      <AbilityConditionInWater invert="true" />
       </Conditions>
      <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -174,7 +174,7 @@
         </Abilities>
       </AbilityGroupEffect>
 	  	<!-- 拿着霰弹枪时-90%伤害 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval>
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
 		<AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
@@ -184,11 +184,11 @@
       </Abilities>
     </AbilityGroupInterval>
 	  <!-- 拿着霰弹枪附近有敌人时伤害正常 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval>
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
 		<AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.9"/>
