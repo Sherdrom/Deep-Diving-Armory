@@ -84,9 +84,9 @@
           </StatusEffect>
           <!-- Condition++ plus Sound. -->
           <StatusEffect type="OnInserted" target="This" disabledeltatime="true" delay="0.3" condition="1" forceplaysounds="true">
-            <Conditional condition="gt 92" />
             <!-- 音频文件暂时用这个代替，可以且一段下面的音频870re.Ogg -->
             <Sound file="%ModDir%/weapon/shotgun/ShotgunShellInsert.ogg" type="OnUse" range="500" volume="1.5" />
+            <LuaHook name="HandleShotgunReload" />
           </StatusEffect>
           <!-- Sets hand's position to default. -->
           <StatusEffect type="OnInserted" target="This" delay="0.4" handle2="80,25" setvalue="true" >
@@ -96,95 +96,10 @@
           <StatusEffect type="OnInserted" target="This" delay="0.5" holdpos="40,-10" aimpos="55,3" aimangle="0" setvalue="true">
             <Conditional condition="gt 92" />
           </StatusEffect>
-          <!-- 当子弹打空 -->
-          <!-- Condition++ plus Sound. -->
-          <StatusEffect type="OnInserted" target="This" condition ="0" disabledeltatime="true" delay="0.01"  setvalue="true">
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <StatusEffect type="OnInserted" target="This" condition ="92" disabledeltatime="true" delay="1.1" setvalue="true">
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!-- 时间要延后，否则Condition不会+1. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.2" disabledeltatime="true" condition="1">
-            <Conditional condition="eq 92" />
-          </StatusEffect> 
-          
-          <!-- 在这搓空仓动画时间为0.01-1.1 -->
-          <StatusEffect type="OnInserted" target="This" delay="0.5" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
+          <StatusEffect type="OnRemoved" target="This" condition="-1" disabledeltatime="true" >
+            <LuaHook name="HandleShotgunRemoved" />
           </StatusEffect>
 
-
-          <!--1 Sets hand's angle. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.1" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>          
-          <!--1 Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.25" handle2="20,-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--1 Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.4" handle2="80,25" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>      
-
-          <!--2 Sets hand's angle. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.7" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>          
-          <!--2 Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="1.85" handle2="20,-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--2 Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="2.0" handle2="80,25" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-
-          <!--3 Sets hand's angle. -->
-          <StatusEffect type="OnInserted" target="This" delay="2.3" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>          
-          <!--3 Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="2.45" handle2="20,-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--3 Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="2.6" handle2="80,25" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-
-          <!--4 Sets hand's angle. -->
-          <StatusEffect type="OnInserted" target="This" delay="2.9" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>          
-          <!--4 Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.05" handle2="20,-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--4 Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.2" handle2="80,25" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-
-          <!--5 Sets hand's angle. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.5" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>          
-          <!--5 Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.65" handle2="20,-10" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--5 Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.8" handle2="80,25" setvalue="true" >
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!--5 Sets everything to default numbers. Does not trigger for extended animation. -->
-          <StatusEffect type="OnInserted" target="This" delay="3.9" holdpos="40,-10" aimpos="55,3" aimangle="0" setvalue="true">
-            <Conditional condition="eq 92" />
-          </StatusEffect>
-          <!-- 每打一发/移除一发子弹扣1点耐久 -->
-          <StatusEffect type="OnRemoved" target="This" condition="-1"/>      
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
