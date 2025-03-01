@@ -86,7 +86,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     end
     
     local state = reloadStates[item.ID]
-    
+    item.IsShootable = false
     -- 终止无效装填
     if state.count >= state.maxReload then
         cancelReload(item.ID)
@@ -103,8 +103,14 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     state.timers[state.count] = Timer.Wait(function()
     -- Apply status effects
     applyEffects(item)
-    print("当前播放音频")
     RELOAD_CONFIG.Sound.sound.play(worldPosition, RELOAD_CONFIG.Sound.gain, 1)
+    print("目前的stat.count:"..state.count)
+
+    -- 锁住开火
+    Timer.Wait(function()
+        item.IsShootable = true
+    end, RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep * 1000)
+    
     -- 完成时清理
     if state.count >= state.maxReload then
         print("装填完成:"..state.count .. "开始清理")
