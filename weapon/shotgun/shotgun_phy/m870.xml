@@ -85,17 +85,17 @@
           <!-- Condition++ plus Sound. -->
           <StatusEffect type="OnInserted" target="This" disabledeltatime="true" delay="0.3" condition="1" forceplaysounds="true">
             <!-- 音频文件暂时用这个代替，可以且一段下面的音频870re.Ogg -->
-            <Sound file="%ModDir%/weapon/shotgun/ShotgunShellInsert.ogg" type="OnUse" range="500" volume="1.5" />
+            <!-- <Sound file="%ModDir%/weapon/shotgun/ShotgunShellInsert.ogg" type="OnUse" range="500" volume="1.5" /> -->
             <LuaHook name="HandleShotgunReload" />
           </StatusEffect>
           <!-- Sets hand's position to default. -->
-          <StatusEffect type="OnInserted" target="This" delay="0.4" handle2="80,25" setvalue="true" >
-            <Conditional condition="gt 92" />
-          </StatusEffect>
+          <!-- <StatusEffect type="OnInserted" target="This" delay="0.4" handle2="80,25" setvalue="true" > -->
+            <!-- <Conditional condition="gt 92" /> -->
+          <!-- </StatusEffect> -->
           <!-- Sets everything to default numbers. Does not trigger for extended animation. -->
-          <StatusEffect type="OnInserted" target="This" delay="0.5" holdpos="40,-10" aimpos="55,3" aimangle="0" setvalue="true">
-            <Conditional condition="gt 92" />
-          </StatusEffect>
+          <!-- <StatusEffect type="OnInserted" target="This" delay="0.5" holdpos="40,-10" aimpos="55,3" aimangle="0" setvalue="true"> -->
+            <!-- <Conditional condition="gt 92" /> -->
+          <!-- </StatusEffect> -->
           <StatusEffect type="OnRemoved" target="This" condition="-1" disabledeltatime="true" >
             <LuaHook name="HandleShotgunRemoved" />
           </StatusEffect>
