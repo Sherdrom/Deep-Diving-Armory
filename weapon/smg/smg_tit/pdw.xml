@@ -78,7 +78,7 @@
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="213,20,57,34" origin="0.5,0.5" />
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
 	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
@@ -89,11 +89,11 @@
         <Containable items="deep_laser" hide="false" itempos="37,7" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="10,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="10,16" setactive="true" >
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight" hide="false" itempos="10,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight" hide="false"  itempos="10,16" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
-		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
+		<Containable Items="thermalgoggles_sight">
           <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
         </Containable>
       </SubContainer>
