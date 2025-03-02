@@ -8,11 +8,12 @@ LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots'
 -- ===== 配置参数 =====
 local RELOAD_CONFIG = {
     Sound = {
-        sound = Game.SoundManager.LoadSound(... .. "/weapon/shotgun/ShotgunShellInsert.ogg"),
-        frequencymultiplier = 500,
+        sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Insert.ogg"),
+        frequencymultiplier = 1,
         gain = 1.5
     },
-    BaseDelay = 0.3,         -- 首次延迟
+    BaseDelay = 0.1,         -- 首次延迟
+    HangDelay = 1.3,         -- 空仓挂机延迟
     DelayStep = 0.5,          -- 步长时间
     ConditionPerShell = 1,
     AutoCleanDelay = 0.2        -- 超时清理
@@ -34,7 +35,7 @@ local function cancelReload(itemID)
     end
 end
 
--- ===== 修改装填完成处理 =====
+-- ===== 装填完成处理 =====
 local function onReloadComplete(itemID)
     local state = reloadStates[itemID]
     if state then
@@ -51,42 +52,65 @@ local function applyEffects(item)
     -- local animController = Character.AnimController
     local itemComponent = item.GetComponentString("Holdable")
     -- First status effect: Set hand's position and angle
-    Timer.Wait(function()
-        itemComponent.HoldPos=Vector2(30,0)
-        itemComponent.AimPos=Vector2(20,-10)
-        itemComponent.AimAngle=-10
-    end, 50) -- 0.05 seconds delay
+    itemComponent.HoldPos=Vector2(30,0)
+    itemComponent.AimPos=Vector2(20,-10)
+    itemComponent.AimAngle=-10
     -- Second status effect: Set handle position
     Timer.Wait(function()
-        itemComponent.Handle2=Vector2(20,-0)
-    end, 100) -- 0.2 seconds delay
+        itemComponent.Handle2=Vector2(20,0)
+    end, 50) -- 0.05 seconds delay
     -- Third status effect: Set handle position
     Timer.Wait(function()
         itemComponent.Handle2=Vector2(80,25)
-    end, 300) -- 0.4 seconds delay
+    end, 250) -- 0.25 seconds delay
+end
+
+-- ===== 枪械归位 =====
+local function resetAnimation(item)
+    -- holdpos="40,-10" aimpos="55,3" handle1="-50,-20" handle2="80,30" holdangle="-35"
+    local itemComponent = item.GetComponentString("Holdable")
+    itemComponent.HoldPos=Vector2(40,-10)
+    itemComponent.AimPos=Vector2(55,3)
+    itemComponent.AimAngle=0
+    itemComponent.Handle2=Vector2(80,30)
+    itemComponent.Handle1=Vector2(-50,-20)
+    itemComponent.HoldAngle=-35
 end
 
 -- ===== 核心逻辑 =====
 Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, deltaTime, item, targets, worldPosition, element)
-    -- local currentAmmoNumber = #item.OwnInventory.slots[1].items
     local maxAmmoStack = item.OwnInventory.Container.slotRestrictions[0].MaxStackSize
-    local currentAmmoNumber = item.condition
-    local maxAmmoStackSize = item.maxCondition
+    local currentAmmoNumber = #item.OwnInventory.slots[1].items
+    -- local currentAmmoCondition = item.Condition
+    -- local maxAmmoCondition = item.maxCondition
     -- 初始化状态
     if not reloadStates[item.ID] then
         reloadStates[item.ID] = {
             count = 0,
             timers = {},
-            maxReload = math.min(maxAmmoStackSize - currentAmmoNumber,maxAmmoStack),
-            completeTime = nil
+            maxReload = math.min(maxAmmoStack - currentAmmoNumber + 1 ,maxAmmoStack),
+            completeTime = nil,
+            item = item,
+            needHang = false    -- 是否需要空仓挂机
         }
-        print("maxAmmoStackSize:" .. maxAmmoStackSize)
+        print("maxAmmoStack:" .. maxAmmoStack)
         print("currentAmmoNumber:" .. currentAmmoNumber)
         print("maxReload:" .. reloadStates[item.ID].maxReload)
     end
-    
+    if currentAmmoNumber > maxAmmoStack then return end
+
     local state = reloadStates[item.ID]
-    item.IsShootable = false
+    state.item = item
+
+    -- 检查是否需要空仓上膛
+    if currentAmmoNumber == 1 then
+        state.needHang = true
+        state.maxReload = maxAmmoStack - 1
+        print("需要空仓上膛")
+        onReloadComplete(item.ID)
+        return
+    end
+
     -- 终止无效装填
     if state.count >= state.maxReload then
         cancelReload(item.ID)
@@ -99,17 +123,26 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
 
     -- 动态计算延迟时间
     local delay = RELOAD_CONFIG.BaseDelay + (state.count - 1) * RELOAD_CONFIG.DelayStep
-    
+    if state.needHang then
+        delay = delay + RELOAD_CONFIG.HangDelay
+    end
     state.timers[state.count] = Timer.Wait(function()
-    -- Apply status effects
+    -- 播放动作
     applyEffects(item)
-    RELOAD_CONFIG.Sound.sound.play(worldPosition, RELOAD_CONFIG.Sound.gain, 1)
+    -- 播放音效
+    RELOAD_CONFIG.Sound.sound.play(worldPosition, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
     print("目前的stat.count:"..state.count)
 
     -- 锁住开火
+    local disableShootTime = RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep
+    if state.needHang then
+        disableShootTime = disableShootTime + RELOAD_CONFIG.HangDelay - 2*RELOAD_CONFIG.DelayStep
+    end
     Timer.Wait(function()
         item.IsShootable = true
-    end, RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep * 1000)
+        -- 解锁开火同时枪械归位
+        resetAnimation(item)
+    end, disableShootTime * 1000)
     
     -- 完成时清理
     if state.count >= state.maxReload then
@@ -132,6 +165,14 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
     for itemID, state in pairs(reloadStates) do
         -- 检查已完成且超时的状态
         if state.completeTime and (currentTime - state.completeTime) >= RELOAD_CONFIG.AutoCleanDelay then
+            if state.needHang and state.count == 0 then
+                Timer.Wait(function()
+                    state.item.IsShootable = true
+                    resetAnimation(state.item)
+                    cancelReload(itemID)
+                end, RELOAD_CONFIG.HangDelay * 1000)      -- 空挂但只装一发的特殊处理，在这里设置空仓挂机的时间
+            end
+            if state.needHang then return end
             cancelReload(itemID)
             print("自动清理超时状态："..itemID)
         end
