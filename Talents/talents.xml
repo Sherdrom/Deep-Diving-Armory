@@ -56,6 +56,19 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
+    <!-- 获得致死爆头抗性 -->
+    <AbilityGroupEffect abilityeffecttype="None" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" >
+              <Affliction identifier="deep_headshot_deadly_onlyhead" strength="100.0" MultiplyByMaxVitality="true" />
+			        <Affliction identifier="deep_headshot_deadly_onlyhead_irresistible" strength="100.0" MultiplyByMaxVitality="true" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
 	<!-- 在水中时无法造成致死爆头-->
 	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
@@ -633,8 +646,8 @@
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+    <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.2"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
@@ -651,17 +664,23 @@
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.35"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.6"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 多人游戏血量动态调整 -->
+	<!-- 多人游戏动态抗性调整 -->
     <AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -669,7 +688,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -677,7 +702,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -685,23 +716,28 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="6"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -717,7 +753,7 @@
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
@@ -735,16 +771,22 @@
 		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.35"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 多人游戏血量动态调整 -->
+	<!-- 多人游戏动态抗性调整 -->
     <AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -752,7 +794,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -760,7 +808,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -768,23 +822,28 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="6"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -797,7 +856,7 @@
 	<!-- 多人游戏数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
@@ -811,23 +870,48 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装防御者 -->
+    <!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
+    <AbilityGroupInterval interval="0.1" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_heavy_pirate" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 重装近距离薄弱 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-3"/>
+        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-1"/>
 		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_heavy_pirate_near" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 多人游戏血量动态调整 -->
+	<!-- 多人游戏动态抗性调整 -->
     <AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -835,7 +919,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -843,7 +933,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -851,23 +947,28 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="6"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -880,10 +981,10 @@
 	<!-- 多人游戏数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.15"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
@@ -912,28 +1013,38 @@
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionAttackData weapontype="handheldranged" />
         <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 多人游戏血量动态调整 -->
+    <!-- 首领 -->
+    <!-- 首领活着时，全员获得10%移速，伤害加成,30%精度加成 -->
+    <AbilityGroupInterval interval="0.1">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="deep_talent_leader_alive" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 多人游戏动态抗性调整 -->
     <AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -941,7 +1052,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -949,7 +1066,13 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.1" >
@@ -957,23 +1080,28 @@
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="6"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
