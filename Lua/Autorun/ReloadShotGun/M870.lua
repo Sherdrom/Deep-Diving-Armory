@@ -41,8 +41,8 @@ local function onReloadComplete(itemID)
     if state then
         -- 标记完成时间（而不是立即清理）
         state.completeTime = Timer.GetTime()
-        print("装填完成，等待清理："..itemID)
-        print("state.completeTime:"..state.completeTime)
+        -- print("装填完成，等待清理："..itemID)
+        -- print("state.completeTime:"..state.completeTime)
     end
 end
 
@@ -93,9 +93,9 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
             item = item,
             needHang = false    -- 是否需要空仓挂机
         }
-        print("maxAmmoStack:" .. maxAmmoStack)
-        print("currentAmmoNumber:" .. currentAmmoNumber)
-        print("maxReload:" .. reloadStates[item.ID].maxReload)
+        -- print("maxAmmoStack:" .. maxAmmoStack)
+        -- print("currentAmmoNumber:" .. currentAmmoNumber)
+        -- print("maxReload:" .. reloadStates[item.ID].maxReload)
     end
     if currentAmmoNumber > maxAmmoStack then return end
 
@@ -106,7 +106,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     if currentAmmoNumber == 1 then
         state.needHang = true
         state.maxReload = maxAmmoStack - 1
-        print("需要空仓上膛")
+        -- print("需要空仓上膛")
         onReloadComplete(item.ID)
         return
     end
@@ -119,7 +119,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     
     -- 计算当前装填次序
     state.count = state.count + 1
-    print("调用"..state.count.."次")
+    -- print("调用"..state.count.."次")
 
     -- 动态计算延迟时间
     local delay = RELOAD_CONFIG.BaseDelay + (state.count - 1) * RELOAD_CONFIG.DelayStep
@@ -131,7 +131,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     applyEffects(item)
     -- 播放音效
     RELOAD_CONFIG.Sound.sound.play(worldPosition, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
-    print("目前的stat.count:"..state.count)
+    -- print("目前的stat.count:"..state.count)
 
     -- 锁住开火
     local disableShootTime = RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep
@@ -146,7 +146,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     
     -- 完成时清理
     if state.count >= state.maxReload then
-        print("装填完成:"..state.count .. "开始清理")
+        -- print("装填完成:"..state.count .. "开始清理")
         cancelReload(item.ID)
     end
     onReloadComplete(item.ID)
@@ -174,7 +174,7 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
             end
             if state.needHang then return end
             cancelReload(itemID)
-            print("自动清理超时状态："..itemID)
+            -- print("自动清理超时状态："..itemID)
         end
     end
 end, Hook.HookMethodType.After)
