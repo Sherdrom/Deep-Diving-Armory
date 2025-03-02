@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_m870" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun,deep_shotgun_3" Scale="0.5" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_m870" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun,deep_shotgun_3" Scale="0.23" impactsoundtag="impact_metal_light">
     <Deconstruct time="10">
     <Item identifier="physicorium" />
 	  <Item identifier="physicorium" />
@@ -13,11 +13,11 @@
 	  <RequiredItem identifier="glassfibre" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="16,359,174,139" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/shotgun/shotgun.png" sourcerect="2,118,194,62" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/shotgun/shotgun_phy/m870.png" sourcerect="11,5,489,156" depth="0.55" origin="0.5,0.5"/>
     <!-- 上膛贴图暂时用空白代替：在这换贴图↓↓ -->
-    <BrokenSprite texture="%ModDir%/weapon/shotgun/shotgun.png" sourcerect="367,458,484,500" depth="0.55" origin="0.5,0.5" maxcondition="50" />
+    <BrokenSprite texture="%ModDir%/weapon/shotgun/shotgun_phy/m870.png" sourcerect="11,172,489,156" depth="0.55" origin="0.5,0.5" maxcondition="50"/>
     <Body width="200" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,3" handle1="-12,-8" handle2="80,25" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,3" handle1="-50,-20" handle2="80,30" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	    <StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true" >
 	      <GiveTalentInfo giverandom="false" talentidentifiers="deep_shotgun,deep_shotgun_2,deep_shotgun_3,deep_headshot_3x_balance_talent" />
 	    </StatusEffect>
@@ -58,7 +58,7 @@
       <!-- 回归常规态 -->
       <StatusEffect type="OnUse" target="This" delay="0.7" setvalue="true" holdpos="40,-10" aimpos="55,3" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnUse" target="This" delay="0.7" condition="50" disabledeltatime="true"/>
-      <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" handle2="80,25" handle1="-12,-8" />
+      <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" handle2="80,30" handle1="-50,-20" />
 
 	    <StatusEffect type="NotInWater" target="This" >
 	      <Conditional Condition="lt 50" />
@@ -70,36 +70,49 @@
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="8" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
       <Containable items="shotgunammo" hide="true" setactive="true">
-          <!-- Locks the ammunition, preventing the person from adding more or removing. -->
-
-          <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-
-          <!-- Sets shotgun's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="0.05" holdpos="30,0" aimpos="20,-10" aimangle="-10" setvalue="true" >
-            <Conditional condition="gt 92" />
-          </StatusEffect>          
-          <!-- Sets hand's position. -->
-          <StatusEffect type="OnInserted" target="This" delay="0.2" handle2="20,-10" setvalue="true" >
-            <Conditional condition="gt 92" />
-          </StatusEffect>
-          <!-- Condition++ plus Sound. -->
-          <StatusEffect type="OnInserted" target="This" disabledeltatime="true" delay="0.3" condition="1" forceplaysounds="true">
-            <!-- 音频文件暂时用这个代替，可以且一段下面的音频870re.Ogg -->
-            <!-- <Sound file="%ModDir%/weapon/shotgun/ShotgunShellInsert.ogg" type="OnUse" range="500" volume="1.5" /> -->
-            <LuaHook name="HandleShotgunReload" />
-          </StatusEffect>
-          <!-- Sets hand's position to default. -->
-          <!-- <StatusEffect type="OnInserted" target="This" delay="0.4" handle2="80,25" setvalue="true" > -->
-            <!-- <Conditional condition="gt 92" /> -->
-          <!-- </StatusEffect> -->
-          <!-- Sets everything to default numbers. Does not trigger for extended animation. -->
-          <!-- <StatusEffect type="OnInserted" target="This" delay="0.5" holdpos="40,-10" aimpos="55,3" aimangle="0" setvalue="true"> -->
-            <!-- <Conditional condition="gt 92" /> -->
-          <!-- </StatusEffect> -->
-          <StatusEffect type="OnRemoved" target="This" condition="-1" disabledeltatime="true" >
-            <LuaHook name="HandleShotgunRemoved" />
-          </StatusEffect>
-
+        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <!-- 空仓挂机动画 -->
+        <StatusEffect type="OnInserted" target="This" setValue="true" holdpos="40,-10" aimpos="35,-9" holdangle="30" aimangle="30" disabledeltatime="true" forceplaysounds="true" >
+          <Conditional condition="eq 92" />
+          <Sound file="%ModDir%/weapon/ammo/m870Hang.ogg" type="OnUse" range="500" volume="1.5" /> -->
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" condition="-50" disabledeltatime="true">
+          <Conditional condition="eq 92" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.32" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <!-- handle1放入一颗子弹 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.53" handle1="20,0" setvalue="true" >
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <!-- handle1半归位 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.68" handle1="-11,-7" holdangle="-3" aimangle="10" setvalue="true" >
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <!-- handle1归位 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.83" handle1="-42,-14" setvalue="true" >
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <!-- 枪械回正 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.88" disabledeltatime="true" setValue="true" aimpos="20,-10" holdangle="-35" holdpos="30,0" aimangle="-10">
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="0.88" condition="50" disabledeltatime="true">
+          <Conditional condition="eq 42" />
+        </StatusEffect>
+        <!-- 手回正 -->
+        <StatusEffect type="OnInserted" target="This" delay="1.3" Handle1="-50,-20" handle2="80,25" setvalue="true" >
+          <Conditional condition="eq 92" />
+        </StatusEffect>
+        <!-- 进入lua脚本执行换弹. -->
+        <StatusEffect type="OnInserted" target="This" disabledeltatime="true" condition="1" IsShootable="false" >
+          <LuaHook name="HandleShotgunReload" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-1" disabledeltatime="true" >
+          <LuaHook name="HandleShotgunRemoved" />
+        </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
