@@ -2,8 +2,6 @@ if SERVER then return end
 
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.ItemContainer'], 'slotRestrictions')
-LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
--- LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.Holdable'], 'HoldPos')
 
 -- ===== 配置参数 =====
 local RELOAD_CONFIG = {
@@ -223,7 +221,9 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
         if state.completeTime and (currentTime - state.completeTime) >= RELOAD_CONFIG.AutoCleanDelay then
             if state.needHang and state.count == 0 then
                 Timer.Wait(function()
-                    state.item.IsShootable = true
+                    Timer.Wait(function()
+                        state.item.IsShootable = true
+                    end, 100)
                     resetAnimation(state.item)
                     cancelReload(itemID)
                 end, RELOAD_CONFIG.HangDelay * 1000)      -- 空挂但只装一发的特殊处理，在这里设置空仓挂机的时间
