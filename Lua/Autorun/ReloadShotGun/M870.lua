@@ -9,6 +9,7 @@ LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots'
 local RELOAD_CONFIG = {
     Sound = {
         sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Insert.ogg"),
+        hangSound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Hang.ogg"),
         frequencymultiplier = 1,
         gain = 1.5
     },
@@ -31,7 +32,7 @@ local function cancelReload(itemID)
             Timer.Cancel(timerID)
         end
         reloadStates[itemID] = nil
-        print("装填状态已重置")
+        -- print("装填状态已重置")
     end
 end
 
@@ -77,8 +78,51 @@ local function resetAnimation(item)
     itemComponent.HoldAngle=-35
 end
 
+local function hangAnimation(item)
+    local itemComponent = item.GetComponentString("Holdable")
+    RELOAD_CONFIG.Sound.hangSound.Play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    itemComponent.HoldPos=Vector2(40,-10)
+    itemComponent.AimPos=Vector2(35,-9)
+    itemComponent.AimAngle=30
+    itemComponent.HoldAngle=30
+    -- 更改贴图
+    item.Sprite.SourceRect=Rectangle(11,172,489,156)
+    Timer.Wait(function()
+        itemComponent.Handle2=Vector2(50,19)
+        itemComponent.Handle1=Vector2(-42,-14)
+    end, 320) -- 0.32 seconds delay
+    -- handle1放入一颗子弹
+    Timer.Wait(function()
+        itemComponent.Handle1=Vector2(20,0)
+    end, 530) -- 0.53 seconds delay
+    -- handle1半归位
+    Timer.Wait(function()
+        itemComponent.Handle1=Vector2(-11,-7)
+        itemComponent.HoldAngle=-3
+        itemComponent.AimAngle=10
+    end, 680) -- 0.68 seconds delay
+    -- handle1归位
+    Timer.Wait(function()
+        itemComponent.Handle1=Vector2(-42,-14)
+    end, 830) -- 0.83 seconds delay
+    -- 枪械回正
+    Timer.Wait(function()
+        itemComponent.AimPos=Vector2(20,-10)
+        itemComponent.AimAngle=-10
+        itemComponent.HoldAngle=-35
+        itemComponent.HoldPos=Vector2(30,0)
+        -- 再加一个贴图回正
+        item.Sprite.SourceRect=Rectangle(11,5,489,156)
+    end, 880) -- 0.88 seconds delay
+    -- 手回正
+    Timer.Wait(function()
+        itemComponent.Handle1=Vector2(-50,-20)
+        itemComponent.Handle2=Vector2(80,25)
+    end, 1300) -- 1.3 seconds delay
+end
+
 -- ===== 核心逻辑 =====
-Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, deltaTime, item, targets, worldPosition, element)
+Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, item, targets, worldPosition, element)
     local maxAmmoStack = item.OwnInventory.Container.slotRestrictions[0].MaxStackSize
     local currentAmmoNumber = #item.OwnInventory.slots[1].items
     -- local currentAmmoCondition = item.Condition
@@ -107,6 +151,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
         state.needHang = true
         state.maxReload = maxAmmoStack - 1
         -- print("需要空仓上膛")
+        hangAnimation(item)
         onReloadComplete(item.ID)
         return
     end
@@ -130,7 +175,7 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
     -- 播放动作
     applyEffects(item)
     -- 播放音效
-    RELOAD_CONFIG.Sound.sound.play(worldPosition, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    RELOAD_CONFIG.Sound.sound.play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
     -- print("目前的stat.count:"..state.count)
 
     -- 锁住开火
@@ -139,8 +184,10 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
         disableShootTime = disableShootTime + RELOAD_CONFIG.HangDelay - 2*RELOAD_CONFIG.DelayStep
     end
     Timer.Wait(function()
-        item.IsShootable = true
         -- 解锁开火同时枪械归位
+        Timer.Wait(function()
+            item.IsShootable = true
+        end, 100)
         resetAnimation(item)
     end, disableShootTime * 1000)
     
@@ -154,8 +201,17 @@ Hook.Add("HandleShotgunReload", "PrecisionReloadHandler", function(effect, delta
 end)
 
 -- ===== 当子弹被移除：开火、交换 =====
-Hook.Add("HandleShotgunRemoved", "ReloadCleanup", function(_, _, item)
+Hook.Add("M870Removed", "ReloadCleanup", function(_, _, item)
     cancelReload(item.ID)   --重置状态
+end)
+
+-- ===== 霰弹枪PumbIn =====
+Hook.Add("M870PumbInSprite", "M870PumbIn", function(_, _, item)
+    item.Sprite.SourceRect=Rectangle(11,172,489,156)
+end)
+
+Hook.Add("M870PumbOutSprite", "M870PumbOut", function(_, _, item)
+    item.Sprite.SourceRect=Rectangle(11,5,489,156)
 end)
 
 Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptable)
