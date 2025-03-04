@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_bosg" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun" Scale="0.5" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_bosg" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun" Scale="0.21" impactsoundtag="impact_metal_light">
     <Deconstruct time="10">
       <Item identifier="physicorium" />
 	  <Item identifier="physicorium" />
@@ -13,9 +13,9 @@
 	  <RequiredItem identifier="glassfibre" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="23,509,198,164" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/shotgun/shotgun.png" sourcerect="2,179,222,53" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/shotgun/shotgun_phy/shotgun_phy.png" sourcerect="15,369,531,115" depth="0.55" origin="0.5,0.5" />
     <Body width="200" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,3" handle1="-12,-8" handle2="80,25" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,9" handle1="-60,-15" handle2="60,30" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_shotgun,deep_shotgun_2,deep_headshot_3x_balance_talent" />
 	 </StatusEffect>
@@ -27,7 +27,7 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
 	</Holdable>
-    <RangedWeapon barrelpos="70,-8" weapondamagemodifier="2" reloadnoskill="0.5" reloadskillrequirement="100" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.2" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="140,-8" weapondamagemodifier="2" reloadnoskill="0.5" reloadskillrequirement="100" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.2" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -64,14 +64,14 @@
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight" hide="false" itempos="32,5" setactive="true" />
+        <Containable items="flashlight" hide="false" itempos="15,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="29,5" setactive="true" />
+        <Containable items="deep_laser" hide="false" itempos="15,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="8,13" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="8,13" setactive="true" >
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="6,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="6,15" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
 		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
