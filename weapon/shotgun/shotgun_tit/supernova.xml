@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_supernova" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun" Scale="0.5" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_supernova" subcategory="shotgun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_shotgun" Scale="0.21" impactsoundtag="impact_metal_light">
     <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.1" notcampaign="true" />
     <PreferredContainer secondary="outpostsecarmcab" amount="1" spawnprobability="0.1" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab,piratesecarmcab" amount="1" spawnprobability="0.1" />
@@ -25,9 +25,9 @@
 	  <RequiredItem identifier="glassfibre" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="267,208,211,188" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/shotgun/shotgun.png" sourcerect="251,59,259,48" depth="0.55" origin="0.5,0.25" />
+    <Sprite texture="%ModDir%/weapon/shotgun/shotgun_tit/shotgun_tit.png" sourcerect="19,235,650,114" depth="0.55" origin="0.5,0.25" />
     <Body width="200" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,5" handle1="-45,-16" handle2="26,0" holdangle="-40" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="65,12" handle1="-120,-35" handle2="60,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_shotgun,deep_shotgun_2,deep_headshot_3x_balance_talent" />
 	 </StatusEffect>
@@ -39,7 +39,7 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
 	</Holdable>
-    <RangedWeapon barrelpos="130,-8" weapondamagemodifier="1.5" reloadnoskill="1.6" reloadskillrequirement="70" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.7" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="160,-8" weapondamagemodifier="1.5" reloadnoskill="1.6" reloadskillrequirement="70" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.7" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -75,14 +75,14 @@
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="197,210,72,54" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight" hide="false" itempos="30,0" setactive="true" />
+        <Containable items="flashlight" hide="false" itempos="35,0" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="29,0" setactive="true" />
+        <Containable items="deep_laser" hide="false" itempos="35,0" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-12,7" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-12,7" setactive="true" >
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-15,8" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-15,8" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
 		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
@@ -90,7 +90,7 @@
         </Containable>
       </SubContainer>
 	   <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="shotgun_ammo_bag" hide="false" itempos="-15,0" setactive="true" />
+        <Containable items="shotgun_ammo_bag" hide="false" itempos="-23,0" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
