@@ -47,27 +47,62 @@
       <Sound file="%ModDir%/weapon/ammo/1887.ogg" type="OnUse" range="3000" selectionmode="Random" />
       <Sound file="%ModDir%/weapon/ammo/1887.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
       <Sound file="%ModDir%/weapon/ammo/1887.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
-	  <StatusEffect type="OnUse" target="This" Condition="-1300" />  
-	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
-	  <StatusEffect type="InWater" target="This" Condition="10"/>
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="5" stackable="false" />
-	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/1887re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
-	  <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="3" shockwave="false" smoke="false" flash="true" sparks="false" flames="false" underwaterbubble="false" camerashake="24" />
       </StatusEffect>
-	  <StatusEffect type="NotInWater" target="This" >
-	  <Conditional Condition="lt 50" />
-	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      <!-- ===========动画开始=========== -->
+      <!-- 上膛并抛壳 -->
+      <StatusEffect type="OnUse" target="This" delay="0.2" setValue="true" holdpos="40,-10" aimpos="55,12" holdangle="30" aimangle="30" disabledeltatime="true" />
+      <StatusEffect type="OnUse" target="This" delay="0.2" disabledeltatime="true">
+        <LuaHook name="M1887PumbInSprite" />
       </StatusEffect>
+      <!-- 抛壳特效(12号霰弹) -->
+      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+      	<ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <RequiredItems items="deep_12shell" type="Contained" targetslot="0"  />
+      </StatusEffect>
+      <!-- 抛壳特效(其他模组统一红色) -->
+      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+      	<ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Conditional Hastag="ne deep_shotgun_ammo" TargetContainedItem="true" />
+      </StatusEffect>
+      <!-- 抛壳特效(12号虎尾蛇) -->
+      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+      	<ParticleEmitter particle="deep_casingfirearm_12shell_tiger" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <RequiredItems items="deep_12shell_tigershark" type="Contained" targetslot="0"  />
+      </StatusEffect>
+      <!-- 抛壳特效(12号独头) -->
+      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+      	<ParticleEmitter particle="deep_casingfirearm_12shell_slug" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <RequiredItems items="deep_slug" type="Contained" targetslot="0"  />
+      </StatusEffect>
+      <!-- 抛壳特效(12号鸟弹) -->
+      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
+      	<ParticleEmitter particle="deep_casingfirearm_12shell_bird" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <RequiredItems items="deep_birdshot" type="Contained" targetslot="0"  />
+      </StatusEffect>
+
+      <!-- 回归常规态 -->
+      <StatusEffect type="OnUse" target="This" delay="0.7" setvalue="true" holdpos="40,-10" aimpos="55,12" holdangle="-35" aimangle="0" />
+      <StatusEffect type="OnUse" target="This" delay="0.7" disabledeltatime="true">
+        <LuaHook name="M1887PumbOutSprite" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" handle2="60,20" handle1="-90,-25" />
+      <!-- ===========动画结束=========== -->
+
       <RequiredItems items="shotgunammo" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="40" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="7" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="shotgunammo" hide="true" setactive="true" />
+      <Containable items="shotgunammo" hide="true" setactive="true" >
+      <!-- 进入lua脚本执行换弹. -->
+        <StatusEffect type="OnInserted" target="This" IsShootable="false" >
+          <LuaHook name="M1887Reload" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" >
+          <LuaHook name="M1887Removed" />
+        </StatusEffect>
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
