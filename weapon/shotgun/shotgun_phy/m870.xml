@@ -29,7 +29,7 @@
 	      <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
 	  </Holdable>
-    <RangedWeapon barrelpos="70,-8" weapondamagemodifier="1.8" reloadnoskill="1.6" reloadskillrequirement="70" spread="0.1" unskilledspread="3" combatPriority="80" reload="1" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="70,-8" weapondamagemodifier="1.8" reloadnoskill="1.6" reloadskillrequirement="70" spread="0.1" unskilledspread="3" combatPriority="80" reload="0.8" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -38,8 +38,8 @@
         <Sound file="%ModDir%/weapon/ammo/870.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
         <Sound file="%ModDir%/weapon/ammo/870.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
 	    <!-- <StatusEffect type="OnUse" target="This" Condition="-1" disabledeltatime="true" />   -->
-	    <StatusEffect type="NotInWater" target="This" Condition="10" disabledeltatime="true"/>
-	    <StatusEffect type="InWater" target="This" Condition="10" disabledeltatime="true"/>
+	    <!--<StatusEffect type="NotInWater" target="This" Condition="10" disabledeltatime="true"/> -->
+	    <!--<StatusEffect type="InWater" target="This" Condition="10" disabledeltatime="true"/> -->
 	    <!-- <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="4" stackable="false" /> -->
 	    <!-- <StatusEffect type="OnBroken" target="This">
         <sound file="%ModDir%/weapon/ammo/870re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
@@ -88,11 +88,7 @@
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" handle2="80,30" handle1="-50,-20" />
       <!-- ===========动画结束=========== -->
-
-	    <StatusEffect type="NotInWater" target="This" >
-	      <Conditional Condition="lt 50" />
-	      <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
+      
       <RequiredItems items="shotgunammo" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
 	    <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
