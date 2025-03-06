@@ -187,6 +187,7 @@ Hook.Add("M4_super90Reload", "PrecisionReloadHandler", function(effect, deltaTim
             item.IsShootable = true
         end, 100)
         resetAnimation(item)
+        cancelReload(item.ID)
     end, disableShootTime * 1000)
     
     -- 完成时清理
