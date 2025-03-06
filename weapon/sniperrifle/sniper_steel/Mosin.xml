@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_Mosin" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+  <Item name="" identifier="deep_Mosin" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.21" impactsoundtag="impact_metal_light" >
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="steel_barrel" amount="2" />
@@ -12,7 +12,8 @@
 	  <Item identifier="steel" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="13,528,224,196" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" sourcerect="62,531,281,49" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_steel/sniper_steel.png" sourcerect="6,11,576,87" depth="0.55" origin="0.5,0.5" />
+    <!--  拉栓贴图  <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_steel/sniper_steel.png" sourcerect="6,100,576,97" depth="0.55" origin="0.5,0.5" />  -->
     <Body width="250" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="20,-50" aimpos="60,0" handle1="-50,-5" handle2="-50,-5" holdangle="0" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />

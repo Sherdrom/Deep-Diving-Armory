@@ -85,6 +85,7 @@
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_healmet_talent">
     </Description>
+    <!-- 神射手-->
     <AbilityGroupInterval   interval="0.1"  >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_chip_marksman_1" />
@@ -96,6 +97,7 @@
 		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.1"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 突击手-->
 	<AbilityGroupInterval   interval="0.1" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_commando_1" />
@@ -107,6 +109,7 @@
 		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 蛙人训练-->
     <AbilityGroupInterval   interval="0.1" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="chip_frogman_1" />
@@ -120,6 +123,7 @@
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.75"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 重装防御者-->
     <AbilityGroupInterval   interval="0.1" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_chip_heavy_defender" />
@@ -152,6 +156,193 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 机枪手-->
+    <!-- 轻机-->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.08" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.08" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.08" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.08" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.08" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 重机-->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_machinegunner_heavy_attack_speed_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_machinegunner_heavy_attack_speed_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_machinegunner_heavy_attack_speed_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_machinegunner_heavy_attack_speed_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_machinegunner_heavy_attack_speed_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 爆头抗性-->
+    <AbilityGroupInterval interval="0.1" >
+      <Conditions>
+	    <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
+        <AbilityConditionCrouched/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 强攻手-->
+    <AbilityGroupInterval>
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
+        <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_chip_striker_nearby" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <AbilityGroupInterval>
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
+        <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_chip_striker_shotgun" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 爆破手-->
+    <AbilityGroupEffect abilityeffecttype="OnItemFabricatedIngredients">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_blaster" />
+        <AbilityConditionServerRandom randomChance="0.4" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityRemoveRandomIngredient>
+          <AbilityConditionItem tags="explosive,grenade"/>
+        </CharacterAbilityRemoveRandomIngredient>
+      </Abilities>
+    </AbilityGroupEffect>
   </Talent>
   
     <Talent identifier="deep_shotgun">
@@ -207,8 +398,6 @@
         <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.9"/>
       </Abilities>
     </AbilityGroupInterval>
-	
-	  
     </Talent>
 	
 	

@@ -26,6 +26,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="750.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
@@ -96,6 +104,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="1000.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.7" debris="true" decal="explosion" decalsize="2">
@@ -166,6 +182,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
@@ -234,6 +258,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="1200.0" ballastfloradamage="1000" structuredamage="0" levelwalldamage="500" itemdamage="1000" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
@@ -302,7 +334,11 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" >
+    <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      </Holdable>
     <RangedWeapon barrelpos="80,11" spread="1" unskilledspread="10" combatPriority="1000" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -355,6 +391,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="7" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="5" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
@@ -423,6 +467,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body width="26" height="50" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" />
         <!-- Effect without distance fall off to ensure some stun and flash effect -->
@@ -504,6 +556,14 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body width="26" height="50" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
+    <Conditional IsActive="false" />
+      </StatusEffect>
       <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true" >
 	  <Conditional Condition="lt 10" />
 	  <Affliction identifier="m18_smoke" strength="100" />
@@ -622,7 +682,11 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="876,148,99,98" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
     <Body width="26" height="50" density="30" />
-    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" >
+    <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true" >
+    <Conditional deep_chip_blaster="gt 0.0" />
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.2" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -634,7 +698,8 @@
 	  </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_ied_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
-      <Containable items="deep_ied_ammo" hide="true" />
+      <Containable items="deep_ied_ammo" hide="true" >
+      </Containable>
     </ItemContainer>
     <aitarget sightrange="1000" soundrange="3000" fadeouttime="3" />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -714,6 +779,10 @@
     <Body width="35" height="100" density="10" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="8.0" DoesStick="true" >
+    <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="12.0" >
+    <Conditional condition="e 50.0" />
+      </StatusEffect>
     </Projectile>
 	<Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnNotContained" comparison="and" target="This" >
@@ -729,7 +798,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-	  <StatusEffect type="Always" target="This" Interval="1" setValue="true " condition="100" >
+	  <StatusEffect type="OnNotContained" target="This" disableDeltaTime="true"  setValue="true " condition="100" >
+	  </StatusEffect>
+    <StatusEffect type="OnContained" target="This" disableDeltaTime="true"  setValue="true " condition="100" >
 	  </StatusEffect>
 	  <StatusEffect type="OnPicked" target="This" delay="0.5" >
 	  <Remove />
@@ -737,11 +808,11 @@
 	  <StatusEffect type="OnContained" target="Character" stackable="false" delay="0.4" >
 	  <SpawnItem identifiers="deep_ied" spawnposition="SameInventory" />
 	  </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
+	  <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="1.5" volume="0.75" />
       </StatusEffect>
 	</Holdable>
-	<LightComponent LightColor="0,123,255,255" range="20" powerconsumption="0" IsOn="false" blinkfrequency="1.0" offset="0,16">
+	<LightComponent LightColor="255,0,0,255" range="100" powerconsumption="0" IsOn="true" blinkfrequency="1.0" offset="0,16">
     </LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -751,7 +822,7 @@
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="17.0" sticktocharacters="false">
+    <Projectile characterusable="false" launchimpulse="12.0" sticktocharacters="false">
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="0" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="350.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="500" force="10" severlimbsprobability="0" debris="true" decal="explosion" decalsize="2">
@@ -761,6 +832,10 @@
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <!-- 有爆破手芯片时，增加投掷距离-->
+    <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="18" >
+    <Conditional condition="e 50.0" />
       </StatusEffect>
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />

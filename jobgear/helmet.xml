@@ -56,6 +56,18 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_machinegunner_detect" strength="100" />
+		<RequiredItems items="chip_machinegunner" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_striker" strength="100" />
+		<RequiredItems items="chip_striker" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
@@ -119,6 +131,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
@@ -184,6 +200,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
@@ -240,6 +260,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
 	  
 	  
@@ -334,7 +358,7 @@
     <Body radius="30" density="10" />
 	<WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
     <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
-	<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="false" />
+	<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="true" showdeadcharacters="false" showtexts="true" />
 	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent,deep_headset" />
 	  </StatusEffect>
@@ -370,6 +394,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
 	  
 	  
@@ -445,12 +473,7 @@
 	    <Containable tags="deep_head_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="chip_medic,chip_medic_2" hide="false"  itempos="-19,17" setactive="true" >
-		<StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="0.1" stackable="false" />
-		</Containable>
-		<Containable Items="chip_medic,chip_medic_2">
-          <StatusEffect type="OnWearing" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="25,255,0,100" thermalgoggles="false" showtexts="true" />
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
         </Containable>
       </SubContainer>
     </ItemContainer>
@@ -514,6 +537,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
 	  
 	  
@@ -654,6 +681,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -729,6 +760,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight"  relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -796,6 +831,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -860,6 +899,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
@@ -937,6 +980,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -1012,6 +1059,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -1084,6 +1135,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
@@ -1147,6 +1202,10 @@
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
       </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
@@ -1207,6 +1266,10 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
 		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
