@@ -130,6 +130,7 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         reloadStates[item.ID] = {
             count = 0,
             timers = {},
+            timerCount = 0,
             maxReload = math.min(maxAmmoStack - currentAmmoNumber + 1 ,maxAmmoStack),
             completeTime = nil,
             item = item,
@@ -170,6 +171,13 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         delay = delay + RELOAD_CONFIG.HangDelay
     end
     state.timers[state.count] = Timer.Wait(function()
+    local insertCountRestriction = state.count
+    state.timerCount = state.timerCount + 1
+    -- 检查是否有霰弹枪侧面弹药带
+    if item.ownInventory and item.ownInventory.FindItemByTag("shotgun_ammo_bag", true) then
+        insertCountRestriction = math.ceil(state.count/2)
+    end
+    if not (state.timerCount<=insertCountRestriction) then return end
     -- 播放动作
     applyEffects(item)
     -- 播放音效
@@ -177,7 +185,7 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
     -- print("目前的stat.count:"..state.count)
 
     -- 锁住开火
-    local disableShootTime = RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep
+    local disableShootTime = RELOAD_CONFIG.BaseDelay + insertCountRestriction* RELOAD_CONFIG.DelayStep
     if state.needHang then
         disableShootTime = disableShootTime + RELOAD_CONFIG.HangDelay - 2*RELOAD_CONFIG.DelayStep
     end
@@ -189,12 +197,7 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         resetAnimation(item)
         cancelReload(item.ID)
     end, disableShootTime * 1000)
-    
-    -- 完成时清理
-    if state.count >= state.maxReload then
-        -- print("装填完成:"..state.count .. "开始清理")
-        cancelReload(item.ID)
-    end
+    -- 保底使用定时器清理
     onReloadComplete(item.ID)
     end, delay * 1000)
 end)
