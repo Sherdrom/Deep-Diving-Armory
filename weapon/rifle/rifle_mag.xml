@@ -21,20 +21,18 @@
     <ItemContainer hideitems="true" capacity="1" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round" >
 	  </Containable>
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+	 <!--30发弹容，每发-3.22耐久，耐久为0打完-->
 	  <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true">
       </StatusEffect>
 	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" comparison="or" interval="1" disabledeltatime="false" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
+	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
 	  <Remove />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" comparison="and" disabledeltatime="true" stackable="false" >
-	  <SpawnItem identifiers="5.56x45round" SpawnIfCantBeContained="false" spawnposition="ThisInventory" Count="30" />
-    <Conditional count="lte 10" TargetContainedItem="true" />
+	  <StatusEffect type="OnActive" target="Contained" SpawnIfCantBeContained="false" disabledeltatime="true" >
+	  <SpawnItem identifiers="5.56x45round" SpawnIfCantBeContained="false" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -72,7 +70,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -110,7 +108,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -154,7 +152,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -195,7 +193,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -236,7 +234,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -272,7 +270,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -309,7 +307,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -347,7 +345,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -386,7 +384,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -425,7 +423,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -459,7 +457,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -496,7 +494,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -541,7 +539,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -582,7 +580,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -618,7 +616,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -656,7 +654,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -694,7 +692,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -733,7 +731,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -770,7 +768,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -815,7 +813,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -860,7 +858,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -905,7 +903,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -943,7 +941,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -982,7 +980,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1023,7 +1021,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1060,7 +1058,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1101,7 +1099,7 @@
       </StatusEffect>
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1139,7 +1137,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	  <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1176,7 +1174,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="30" />
+	  <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
