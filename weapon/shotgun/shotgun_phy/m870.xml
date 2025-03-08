@@ -60,10 +60,10 @@
       	<ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <RequiredItems items="deep_12shell" type="Contained" targetslot="0"  />
       </StatusEffect>
-      <!-- 抛壳特效(其他模组统一红色) -->
+      <!-- 抛壳特效(原版弹药红色) -->
       <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
       	<ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Conditional Hastag="ne deep_shotgun_ammo" TargetContainedItem="true" />
+        <RequiredItems items="shotgunshell,shotgunshellblunt,shotgunslugexplosive" type="Contained" targetslot="0"  />
       </StatusEffect>
       <!-- 抛壳特效(12号虎尾蛇) -->
       <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
@@ -96,7 +96,7 @@
     <ItemContainer capacity="1" maxstacksize="8" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
       <Containable items="shotgunammo" hide="true" setactive="true">
         <!-- 进入lua脚本执行换弹. -->
-        <StatusEffect type="OnInserted" target="This">
+        <StatusEffect type="OnInserted" target="This" >
           <LuaHook name="M870Reload" />
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" >
