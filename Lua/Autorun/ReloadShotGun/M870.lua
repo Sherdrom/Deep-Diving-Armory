@@ -9,7 +9,8 @@ local RELOAD_CONFIG = {
         sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Insert.ogg"),
         hangSound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Hang.ogg"),
         frequencymultiplier = 1,
-        gain = 1.5
+        gain = 1.5,
+        range = 10
     },
     BaseDelay = 0.1,         -- 首次延迟
     HangDelay = 1.3,         -- 空仓挂机延迟
@@ -78,7 +79,7 @@ end
 
 local function hangAnimation(item)
     local itemComponent = item.GetComponentString("Holdable")
-    RELOAD_CONFIG.Sound.hangSound.Play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    RELOAD_CONFIG.Sound.hangSound.Play(RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.range, RELOAD_CONFIG.Sound.frequencymultiplier, item.Position)
     itemComponent.HoldPos=Vector2(40,-10)
     itemComponent.AimPos=Vector2(35,-9)
     itemComponent.AimAngle=30
@@ -130,6 +131,7 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         reloadStates[item.ID] = {
             count = 0,
             timers = {},
+            timerCount = 0,
             maxReload = math.min(maxAmmoStack - currentAmmoNumber + 1 ,maxAmmoStack),
             completeTime = nil,
             item = item,
@@ -143,6 +145,7 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
 
     local state = reloadStates[item.ID]
     state.item = item
+    item.IsShootable = false
 
     -- 检查是否需要空仓上膛
     if currentAmmoNumber == 1 then
@@ -169,15 +172,24 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
     if state.needHang then
         delay = delay + RELOAD_CONFIG.HangDelay
     end
+
     state.timers[state.count] = Timer.Wait(function()
+    local insertCountRestriction = state.count
+    state.timerCount = state.timerCount + 1
+    -- 检查是否有霰弹枪侧面弹药带
+    if item.ownInventory and item.ownInventory.FindItemByTag("shotgun_ammo_bag", true) then
+        insertCountRestriction = math.ceil(state.count/2)
+    end
+    -- print("insertCountRestriction:"..insertCountRestriction)
+    -- print("state.timerCount:"..state.timerCount)
+    if not (state.timerCount<=insertCountRestriction) then return end
     -- 播放动作
     applyEffects(item)
     -- 播放音效
-    RELOAD_CONFIG.Sound.sound.play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    RELOAD_CONFIG.Sound.sound.play(RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.range, RELOAD_CONFIG.Sound.frequencymultiplier, item.Position)
     -- print("目前的stat.count:"..state.count)
-
     -- 锁住开火
-    local disableShootTime = RELOAD_CONFIG.BaseDelay + state.count* RELOAD_CONFIG.DelayStep
+    local disableShootTime = RELOAD_CONFIG.BaseDelay + insertCountRestriction* RELOAD_CONFIG.DelayStep
     if state.needHang then
         disableShootTime = disableShootTime + RELOAD_CONFIG.HangDelay - 2*RELOAD_CONFIG.DelayStep
     end
@@ -187,13 +199,16 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
             item.IsShootable = true
         end, 100)
         resetAnimation(item)
-    end, disableShootTime * 1000)
-    
-    -- 完成时清理
-    if state.count >= state.maxReload then
-        -- print("装填完成:"..state.count .. "开始清理")
+        -- 解锁开火视为装填完成，开始清理
         cancelReload(item.ID)
-    end
+    end, disableShootTime * 1000)  
+    -- -- 完成时清理
+    -- if state.count >= state.maxReload then
+    --     -- print("装填完成:"..state.count .. "开始清理")
+    --     cancelReload(item.ID)
+    -- end
+
+    -- 保底使用定时器清理
     onReloadComplete(item.ID)
     end, delay * 1000)
 end)
