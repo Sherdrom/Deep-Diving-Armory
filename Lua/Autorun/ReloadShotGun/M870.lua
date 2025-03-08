@@ -9,7 +9,8 @@ local RELOAD_CONFIG = {
         sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Insert.ogg"),
         hangSound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Hang.ogg"),
         frequencymultiplier = 1,
-        gain = 1.5
+        gain = 1.5,
+        range = 10
     },
     BaseDelay = 0.1,         -- 首次延迟
     HangDelay = 1.3,         -- 空仓挂机延迟
@@ -78,7 +79,7 @@ end
 
 local function hangAnimation(item)
     local itemComponent = item.GetComponentString("Holdable")
-    RELOAD_CONFIG.Sound.hangSound.Play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    RELOAD_CONFIG.Sound.hangSound.Play(RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.range, RELOAD_CONFIG.Sound.frequencymultiplier, item.Position)
     itemComponent.HoldPos=Vector2(40,-10)
     itemComponent.AimPos=Vector2(35,-9)
     itemComponent.AimAngle=30
@@ -144,6 +145,7 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
 
     local state = reloadStates[item.ID]
     state.item = item
+    item.IsShootable = false
 
     -- 检查是否需要空仓上膛
     if currentAmmoNumber == 1 then
@@ -184,7 +186,7 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
     -- 播放动作
     applyEffects(item)
     -- 播放音效
-    RELOAD_CONFIG.Sound.sound.play(item.Position, RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.frequencymultiplier)
+    RELOAD_CONFIG.Sound.sound.play(RELOAD_CONFIG.Sound.gain, RELOAD_CONFIG.Sound.range, RELOAD_CONFIG.Sound.frequencymultiplier, item.Position)
     -- print("目前的stat.count:"..state.count)
     -- 锁住开火
     local disableShootTime = RELOAD_CONFIG.BaseDelay + insertCountRestriction* RELOAD_CONFIG.DelayStep
