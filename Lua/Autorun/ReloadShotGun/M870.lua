@@ -1,4 +1,6 @@
 if SERVER then return end
+LuaUserData.RegisterType("Barotrauma.Items.Components.ItemContainer+SlotRestrictions")
+LuaUserData.RegisterType('System.Collections.Immutable.ImmutableArray`1[[Barotrauma.Items.Components.ItemContainer+SlotRestrictions, Barotrauma]]')
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.ItemContainer'], 'slotRestrictions')
 
@@ -197,12 +199,9 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
+                if Game.IsSingleplayer then
+                    item.IsShootable = true
                 end
-                item.IsShootable = true
             end, 100)
             resetAnimation(item)
             -- 解锁开火视为装填完成，开始清理
@@ -240,12 +239,9 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
                 state.executed = true
                 Timer.Wait(function()
                     Timer.Wait(function()
-                        if Game.IsMultiplayer then
-                            local message = Networking.Start("IsShootable")
-                            message.WriteString(state.item.ID)
-                            Networking.Send(message)
+                        if Game.IsSingleplayer then
+                            state.item.IsShootable = true
                         end
-                        state.item.IsShootable = true
                     end, 100)
                     resetAnimation(state.item)
                     cancelReload(itemID)
