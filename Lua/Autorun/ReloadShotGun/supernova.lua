@@ -198,9 +198,7 @@ Hook.Add("supernovaReload", "PrecisionReloadHandler", function(effect, deltaTime
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsSingleplayer then
-                    item.IsShootable = true
-                end
+                item.IsShootable = true
             end, 100)
             resetAnimation(item)
             -- 解锁开火视为装填完成，开始清理
@@ -238,9 +236,7 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
                 state.executed = true
                 Timer.Wait(function()
                     Timer.Wait(function()
-                        if Game.IsSingleplayer then
-                            state.item.IsShootable = true
-                        end
+                        state.item.IsShootable = true
                     end, 100)
                     resetAnimation(state.item)
                     cancelReload(itemID)
