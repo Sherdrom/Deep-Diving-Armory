@@ -190,14 +190,25 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
     if state.needHang then
         disableShootTime = disableShootTime + RELOAD_CONFIG.HangDelay - 2*RELOAD_CONFIG.DelayStep
     end
-    Timer.Wait(function()
-        -- 解锁开火同时枪械归位
+
+    -- 只执行一次
+    if state.timerCount == 1 then
         Timer.Wait(function()
-            item.IsShootable = true
-        end, 100)
-        resetAnimation(item)
-        cancelReload(item.ID)
-    end, disableShootTime * 1000)
+            -- 解锁开火同时枪械归位
+            Timer.Wait(function()
+                if Game.IsMultiplayer then
+                    local message = Networking.Start("IsShootable")
+                    message.WriteString(item.ID)
+                    Networking.Send(message)
+                end
+                item.IsShootable = true
+            end, 100)
+            resetAnimation(item)
+            -- 解锁开火视为装填完成，开始清理
+            cancelReload(item.ID)
+        end, disableShootTime * 1000)
+    end
+
     -- 保底使用定时器清理
     onReloadComplete(item.ID)
     end, delay * 1000)
@@ -224,9 +235,15 @@ Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptab
     for itemID, state in pairs(reloadStates) do
         -- 检查已完成且超时的状态
         if state.completeTime and (currentTime - state.completeTime) >= RELOAD_CONFIG.AutoCleanDelay then
-            if state.needHang and state.count == 0 then
+            if state.needHang and state.count == 0 and not state.executed then
+                state.executed = true
                 Timer.Wait(function()
                     Timer.Wait(function()
+                        if Game.IsMultiplayer then
+                            local message = Networking.Start("IsShootable")
+                            message.WriteString(state.item.ID)
+                            Networking.Send(message)
+                        end
                         state.item.IsShootable = true
                     end, 100)
                     resetAnimation(state.item)

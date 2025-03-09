@@ -96,7 +96,7 @@
     <ItemContainer capacity="1" maxstacksize="9" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="shotgunammo" hide="true" setactive="true" >
       <!-- 进入lua脚本执行换弹. -->
-        <StatusEffect type="OnInserted" target="This" >
+        <StatusEffect type="OnInserted" target="This" IsShootable="false">
           <LuaHook name="M590Reload" />
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" >
