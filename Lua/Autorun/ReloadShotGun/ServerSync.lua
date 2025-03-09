@@ -120,12 +120,9 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                -- if Game.IsMultiplayer then
-                --     local message = Networking.Start("IsShootable")
-                --     message.WriteString(item.ID)
-                --     Networking.Send(message)
-                -- end
-                item.IsShootable = true
+                item.Condition = 200
+                local property = item.SerializableProperties[Identifier("Condition")]
+                Networking.CreateEntityEvent(item, Item.ChangePropertyEventData(property, item))
             end, 100)
             -- 解锁开火视为装填完成，开始清理
             cancelReload(item.ID)
@@ -214,12 +211,9 @@ Hook.Add("M4_super90Reload", "PrecisionReloadHandler", function(effect, deltaTim
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                -- if Game.IsMultiplayer then
-                --     local message = Networking.Start("IsShootable")
-                --     message.WriteString(item.ID)
-                --     Networking.Send(message)
-                -- end
-                item.IsShootable = true
+                item.Condition = 200
+                local property = item.SerializableProperties[Identifier("Condition")]
+                Networking.CreateEntityEvent(item, Item.ChangePropertyEventData(property, item))
             end, 100)
             -- 解锁开火视为装填完成，开始清理
             cancelReload(item.ID)
@@ -308,12 +302,9 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                -- if Game.IsMultiplayer then
-                --     local message = Networking.Start("IsShootable")
-                --     message.WriteString(item.ID)
-                --     Networking.Send(message)
-                -- end
-                item.IsShootable = true
+                item.Condition = 200
+                local property = item.SerializableProperties[Identifier("Condition")]
+                Networking.CreateEntityEvent(item, Item.ChangePropertyEventData(property, item))
             end, 100)
             -- 解锁开火视为装填完成，开始清理
             cancelReload(item.ID)
@@ -402,12 +393,9 @@ Hook.Add("M1887Reload", "PrecisionReloadHandler", function(effect, deltaTime, it
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                -- if Game.IsMultiplayer then
-                --     local message = Networking.Start("IsShootable")
-                --     message.WriteString(item.ID)
-                --     Networking.Send(message)
-                -- end
-                item.IsShootable = true
+                item.Condition = 200
+                local property = item.SerializableProperties[Identifier("Condition")]
+                Networking.CreateEntityEvent(item, Item.ChangePropertyEventData(property, item))
             end, 100)
             -- 解锁开火视为装填完成，开始清理
             cancelReload(item.ID)
@@ -496,12 +484,9 @@ Hook.Add("supernovaReload", "PrecisionReloadHandler", function(effect, deltaTime
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                -- if Game.IsMultiplayer then
-                --     local message = Networking.Start("IsShootable")
-                --     message.WriteString(item.ID)
-                --     Networking.Send(message)
-                -- end
-                item.IsShootable = true
+                item.Condition = 200
+                local property = item.SerializableProperties[Identifier("Condition")]
+                Networking.CreateEntityEvent(item, Item.ChangePropertyEventData(property, item))
             end, 100)
             -- 解锁开火视为装填完成，开始清理
             cancelReload(item.ID)
@@ -533,7 +518,9 @@ Hook.Patch("Barotrauma.Character", "Control", function(instance, ptable)
                         --     message.WriteString(state.item.ID)
                         --     Networking.Send(message)
                         -- end
-                        state.item.IsShootable = true
+                        state.item.Condition = 200
+                        local property = state.item.SerializableProperties[Identifier("Condition")]
+                        Networking.CreateEntityEvent(state.item, Item.ChangePropertyEventData(property, state.item))
                     end, 100)
                     cancelReload(itemID)
                 end, RELOAD_CONFIG.HangDelay * 1000)      -- 空挂但只装一发的特殊处理，在这里设置空仓挂机的时间
