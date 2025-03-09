@@ -84,7 +84,7 @@
     <ItemContainer capacity="1" maxstacksize="7" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
       <Containable items="shotgunammo" hide="true" setactive="true" >
       <!-- 进入lua脚本执行换弹. -->
-        <StatusEffect type="OnInserted" target="This" IsShootable="false">
+        <StatusEffect type="OnInserted" target="This" Condition="0" setValue="true">
           <LuaHook name="M4_super90Reload" />
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" >
