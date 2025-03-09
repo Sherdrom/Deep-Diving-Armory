@@ -1,10 +1,10 @@
 if CLIENT then
-    Networking.Receive("IsShootable", function(message, client)
-        local itemID = tonumber(message.ReadString())
-        print(client.Name .. " sent " .. itemID)
-       local item = Entity.FindEntityByID(itemID)
-       item.IsShootable = true
-   end)
+--     Networking.Receive("IsShootable", function(message)
+--         local itemID = tonumber(message.ReadString())
+--         print("Server sent " .. itemID)
+--        local item = Entity.FindEntityByID(itemID)
+--        item.IsShootable = true
+--    end)
    return
 end
 
@@ -120,11 +120,11 @@ Hook.Add("M870Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
-                end
+                -- if Game.IsMultiplayer then
+                --     local message = Networking.Start("IsShootable")
+                --     message.WriteString(item.ID)
+                --     Networking.Send(message)
+                -- end
                 item.IsShootable = true
             end, 100)
             -- 解锁开火视为装填完成，开始清理
@@ -214,11 +214,11 @@ Hook.Add("M4_super90Reload", "PrecisionReloadHandler", function(effect, deltaTim
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
-                end
+                -- if Game.IsMultiplayer then
+                --     local message = Networking.Start("IsShootable")
+                --     message.WriteString(item.ID)
+                --     Networking.Send(message)
+                -- end
                 item.IsShootable = true
             end, 100)
             -- 解锁开火视为装填完成，开始清理
@@ -308,11 +308,11 @@ Hook.Add("M590Reload", "PrecisionReloadHandler", function(effect, deltaTime, ite
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
-                end
+                -- if Game.IsMultiplayer then
+                --     local message = Networking.Start("IsShootable")
+                --     message.WriteString(item.ID)
+                --     Networking.Send(message)
+                -- end
                 item.IsShootable = true
             end, 100)
             -- 解锁开火视为装填完成，开始清理
@@ -402,11 +402,11 @@ Hook.Add("M1887Reload", "PrecisionReloadHandler", function(effect, deltaTime, it
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
-                end
+                -- if Game.IsMultiplayer then
+                --     local message = Networking.Start("IsShootable")
+                --     message.WriteString(item.ID)
+                --     Networking.Send(message)
+                -- end
                 item.IsShootable = true
             end, 100)
             -- 解锁开火视为装填完成，开始清理
@@ -496,11 +496,11 @@ Hook.Add("supernovaReload", "PrecisionReloadHandler", function(effect, deltaTime
         Timer.Wait(function()
             -- 解锁开火同时枪械归位
             Timer.Wait(function()
-                if Game.IsMultiplayer then
-                    local message = Networking.Start("IsShootable")
-                    message.WriteString(item.ID)
-                    Networking.Send(message)
-                end
+                -- if Game.IsMultiplayer then
+                --     local message = Networking.Start("IsShootable")
+                --     message.WriteString(item.ID)
+                --     Networking.Send(message)
+                -- end
                 item.IsShootable = true
             end, 100)
             -- 解锁开火视为装填完成，开始清理
@@ -528,11 +528,11 @@ Hook.Patch("Barotrauma.Character", "Control", function(instance, ptable)
                 state.executed = true
                 Timer.Wait(function()
                     Timer.Wait(function()
-                        if Game.IsMultiplayer then
-                            local message = Networking.Start("IsShootable")
-                            message.WriteString(state.item.ID)
-                            Networking.Send(message)
-                        end
+                        -- if Game.IsMultiplayer then
+                        --     local message = Networking.Start("IsShootable")
+                        --     message.WriteString(state.item.ID)
+                        --     Networking.Send(message)
+                        -- end
                         state.item.IsShootable = true
                     end, 100)
                     cancelReload(itemID)
