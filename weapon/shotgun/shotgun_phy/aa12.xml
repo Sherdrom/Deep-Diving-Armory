@@ -59,12 +59,12 @@
 	   <StatusEffect type="OnUse" target="Contained">
         <Use />
       </StatusEffect>
-      <RequiredItems items="deep_aa12_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_aa12_mag,fkj_aa12_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="deep_aa12_mag" hide="false" itempos="-4,-8" setactive="true" rotation="0" >
+      <Containable items="deep_aa12_mag,fkj_aa12_mag" hide="false" itempos="-4,-8" setactive="true" rotation="0" >
       <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
