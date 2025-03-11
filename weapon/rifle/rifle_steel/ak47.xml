@@ -64,12 +64,12 @@
 	  <StatusEffect type="OnUse" Condition="-120" target="This" >
 	  <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_7.62x39,deep_762_expansion" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_7.62x39,deep_762_expansion,762mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="30" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="deep_7.62x39,deep_762_expansion" hide="false" itempos="0,-7" setactive="true" rotation="0" >
+      <Containable items="deep_7.62x39,deep_762_expansion,762mag" hide="false" itempos="0,-7" setactive="true" rotation="0" >
        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
