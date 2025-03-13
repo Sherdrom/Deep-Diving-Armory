@@ -2328,9 +2328,9 @@
     <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
     </Effect>
   </Affliction>
-  
+
   <Affliction
-    identifier="deep_machinegun_pressing"
+    identifier="deep_machinegun_pressing_light"
     description=""
 	isbuff="true"
     type="machinegun_pressing"
@@ -2340,10 +2340,28 @@
     showicontoothersthreshold="40"
     showinhealthscannerthreshold="20"
     karmachangeonapplied="0"
-    maxstrength="10"
+    maxstrength="2"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="10" strengthchange="-2" >
-	<StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.5" />
+    <Effect minstrength="0" maxstrength="2" strengthchange="-1" >
+	<StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.3" />
+    </Effect>
+  </Affliction>
+  
+  <Affliction
+    identifier="deep_machinegun_pressing_heavy"
+    description=""
+	isbuff="true"
+    type="machinegun_pressing"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="2"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="2" strengthchange="-1" >
+	<StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.6" />
     </Effect>
   </Affliction>
   
