@@ -14,8 +14,7 @@
 	  <Item identifier="elastin" />
     </Deconstruct>
     <SuitableTreatment type="damage" suitability="50" />
-	<SuitableTreatment type="Shrapnel_residue" suitability="50" />
-	<SuitableTreatment type="deep_headshot_deadly" suitability="50" />
+	<SuitableTreatment type="deep_gunwound" suitability="50" />
 	<SuitableTreatment type="bleeding" suitability="50" />
 	<SuitableTreatment type="burn" suitability="50" />
     <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="23,28,170,214" origin="0.5,0.5" />
@@ -27,15 +26,13 @@
         <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
       </StatusEffect>
       <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="25">
-        <ReduceAffliction type="Shrapnel_residue" amount="1" />
-		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+		<ReduceAffliction type="deep_gunwound" amount="1" />
 		<ReduceAffliction type="damage" amount="1" />
 		<ReduceAffliction type="bleeding" amount="1" />
         <ReduceAffliction type="burn" amount="1" />
       </StatusEffect>
       <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="25">
-	    <ReduceAffliction type="Shrapnel_residue" amount="0.5" />
-		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+		<ReduceAffliction type="deep_gunwound" amount="1" />
         <ReduceAffliction type="damage" amount="0.65" />
 		<ReduceAffliction type="bleeding" amount="1" />
         <ReduceAffliction type="burn" amount="0.15" />
@@ -61,8 +58,7 @@
 	  <Item identifier="plastic" />
 	  <Item identifier="zinc" />
     </Deconstruct>
-    <SuitableTreatment type="Shrapnel_residue" suitability="100" />
-	<SuitableTreatment type="deep_headshot_deadly" suitability="100" />
+    <SuitableTreatment type="deep_gunwound" suitability="100" />
     <InventoryIcon texture="%ModDir%/medical/med.png" sourcerect="211,24,231,227" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/medical/med.png" sourcerect="211,24,231,227" depth="0.6" origin="0.5,0.5" />
     <Body width="35" height="55" density="15" />
@@ -72,12 +68,10 @@
         <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
       </StatusEffect>
       <StatusEffect tags="medical" type="OnSuccess" target="UseTarget" duration="5">
-        <ReduceAffliction type="Shrapnel_residue" amount="5" />
-		<ReduceAffliction type="deep_headshot_deadly" amount="5" />
+		<ReduceAffliction type="deep_gunwound" amount="5" />
       </StatusEffect>
       <StatusEffect tags="medical" type="OnFailure" target="UseTarget" duration="25">
-	    <ReduceAffliction type="Shrapnel_residue" amount="0.5" />
-		<ReduceAffliction type="deep_headshot_deadly" amount="1" />
+		<ReduceAffliction type="deep_gunwound" amount="1" />
       </StatusEffect>
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnBroken" target="This">
