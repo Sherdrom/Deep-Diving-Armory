@@ -210,11 +210,11 @@
     showicontoothersthreshold="40"
     showinhealthscannerthreshold="20"
     karmachangeonapplied="0"
-    maxstrength="100"
+    maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="100" strengthchange="-80" multiplybymaxvitality="true"
+    <Effect minstrength="0" maxstrength="1" strengthchange="-5" multiplybymaxvitality="true"
       minvitalitydecrease="0"
-      maxvitalitydecrease="-100">
+      maxvitalitydecrease="-300">
 	  </Effect>
 	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="286,0,128,128" color="195,60,60,255" origin="0,0"/>
   </Affliction>
@@ -2519,6 +2519,23 @@
     maxstrength="1"
     affectmachines="false">
     <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="-1" maxresistance="-1" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_shot_three_shotgun"
+    description=""
+	isbuff="true"
+    type="deep_headshot"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="-1" maxresistance="-1" strengthchange="-1" >
     </Effect>
   </Affliction>
   
