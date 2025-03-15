@@ -344,13 +344,13 @@
   <Item name="" identifier="deep_three_mag" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_three_mag,three_reload" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1" >
       <RequiredSkill identifier="weapons" level="100" />
-      <RequiredItem identifier="deep_tungsten_phy" amount="1" />
+      <RequiredItem identifier="deep_tungsten" amount="1" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
 	  <RequiredItem identifier="glassfibre" />
     </Fabricate>
     <Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100"/>
-       <RequiredItem identifier="deep_tungsten_phy" amount="1" />
+       <RequiredItem identifier="deep_tungsten" amount="1" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
       <RequiredItem tag="deep_three_mag" mincondition="0.0" maxcondition="0.5"/>
     </Fabricate>
@@ -384,11 +384,12 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="30" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="20" >
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,177,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.1" targetforce="1" itemdamage="100" severlimbsprobability="0.8" penetration="0.8" >
-        <Affliction identifier="hollow_point" strength="20" />
-        <Affliction identifier="gunshotwound" strength="50" />
+      <Attack structuredamage="0.1" targetforce="5" itemdamage="100" severlimbsprobability="0.8" penetration="0.8" >
+        <Affliction identifier="deep_shot_three_shotgun" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="Shrapnel_residue" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="gunshotwound" strength="20" MultiplyByMaxVitality="true" />
         <Affliction identifier="bleeding" strength="10" />
         <Affliction identifier="stun" strength="0.5" />
       </Attack>
