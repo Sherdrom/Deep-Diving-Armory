@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_AWM" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+  <Item name="" identifier="deep_AWM" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.25" impactsoundtag="impact_metal_light" >
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titaniumaluminiumalloy_barrel" amount="3" />
@@ -12,9 +12,9 @@
       <Item identifier="titaniumaluminiumalloy" amount="4"/>
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="10,740,271,239" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" sourcerect="45,330,337,55" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_tit/sniper_tit.png" sourcerect="22,-9,737,132" depth="0.55" origin="0.5,0.5" />
     <Body width="300" height="70" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="80,0" handle1="-70,-5" handle2="100,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="80,0" handle1="-180,-40" handle2="100,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
 	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -24,18 +24,14 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
 	</Holdable>
-    <RangedWeapon reload="0.9" weapondamagemodifier="1" reloadnoskill="1.8" reloadskillrequirement="90" holdtrigger="true" barrelpos="120,3" spread="1" unskilledspread="1" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="1.4" weapondamagemodifier="1" reloadnoskill="1.8" reloadskillrequirement="90" holdtrigger="true" barrelpos="120,3" spread="1" unskilledspread="1" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/weapon/ammo/awm.ogg" type="OnUse" range="3000" selectionmode="Random" volume="2" />
-      <Sound file="%ModDir%/weapon/ammo/awm.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="2" />
-      <Sound file="%ModDir%/weapon/ammo/awm.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="2" />
-      <StatusEffect type="OnUse" target="This">
-	  <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Explosion range="150.0" force="4" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="100" />
-      </StatusEffect>
+      <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1" />
+      <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1" />
+      <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1" />
 	  <StatusEffect type="OnUse" target="This" Condition="-800" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
@@ -43,20 +39,100 @@
       <StatusEffect type="OnUse" target="Contained">
         <Use />
       </StatusEffect>
+    <StatusEffect type="OnUse" target="This">
+      <Explosion range="150.0" force="4" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="100" />
+    </StatusEffect>
+
+    <!-- ============== 拉栓动画开始 ================= -->
+    <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+    <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+    <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+    <StatusEffect type="OnUse" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1.4" setvalue="true" />
+    <!-- 拉 -->
+    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" forceplaysounds="true" disabledeltatime="true">
+      <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" type="OnUse" range="200" />
+    </StatusEffect>
+    <StatusEffect type="OnUse" target="This" delay="0.8" setValue="true" handle1="-190,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
+        <LuaHook name="AWMBoltOutSprite" />
+    </StatusEffect>
+    <!-- ================== 抛壳 ==================== -->
+    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
+	    <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+    </StatusEffect>
+    <!-- 推 -->
+    <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" forceplaysounds="true" disabledeltatime="true">
+      <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" type="OnUse" range="200" />
+    </StatusEffect>
+    <StatusEffect type="OnUse" target="This" delay="1.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="1.1" disabledeltatime="true">
+        <LuaHook name="AWMBoltInSprite" />
+    </StatusEffect>
+
+    <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" holdpos="70,-10" aimpos="80,0" holdangle="-35" aimangle="0" />
+    <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="100,20" handle1="-180,-40" />
+    <!-- ============== 拉栓动画结束 ================= -->
+
 	  <StatusEffect type="OnUse" Condition="-100" target="This" >
 	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_AWM_mag,86_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="90" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2.6" stackable="false" />
 	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/awmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
+        <!-- <sound file="%ModDir%/weapon/ammo/awmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" /> -->
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_AWM_mag,86_mag" hide="false" itempos="-22,1" setactive="true" rotation="0" />
+      <Containable items="deep_AWM_mag,86_mag" hide="false" itempos="-22,1" setactive="true" rotation="0">
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+      <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+      <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+      <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
+      <!-- ============== 换弹动画开始 ================= -->
+      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" Condition="0" />
+      <!-- 先拉栓 -->
+      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="70,10" holdangle="10" aimangle="10" disabledeltatime="true" />
+      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" range="200" />
+      </StatusEffect>
+      <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-190,30" handle2="100,-10" holdpos="70,-10" aimpos="70,10" holdangle="20" aimangle="20" disabledeltatime="true" />
+      <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
+          <LuaHook name="AWMBoltOutSprite" />
+      </StatusEffect>
+      <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-180,-40" />
+      <!-- 左手拿下弹匣 -->
+      <StatusEffect type="OnInserted" target="This" delay="0.8" setValue="true" handle2="40,-80">
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipout.ogg" range="200" />
+      </StatusEffect>
+      <!-- 隐藏弹匣 -->
+      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="0.8" setvalue="true" />
+      <!-- 左手放下 -->
+      <StatusEffect type="OnInserted" target="This" delay="0.9" setValue="true" handle2="-350,-100" />
+      <!-- 左手装弹匣 -->
+      <StatusEffect type="OnInserted" target="This" delay="1.6" setValue="true" handle2="40,-80">
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipin.ogg" range="200" />
+      </StatusEffect>
+      <!-- 显示弹匣 -->
+      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="1.6" setvalue="true" />
+      <!-- 左手归位 -->
+      <StatusEffect type="OnInserted" target="This" delay="1.9" setValue="true" holdangle="10" aimangle="10" handle2="100,-10" />
+      <!-- 再推栓 -->
+      <StatusEffect type="OnInserted" target="This" delay="2.1" setValue="true" handle1="-190,30">
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" range="200" />
+      </StatusEffect>
+      <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" handle1="-170,10" holdpos="70,-10" disabledeltatime="true" />
+      <StatusEffect type="OnInserted" target="This" delay="2.3" disabledeltatime="true">
+        <LuaHook name="AWMBoltInSprite" />
+      </StatusEffect>
+      <!-- 回归常态 -->
+      <StatusEffect type="OnInserted" target="This" delay="2.4" setvalue="true" holdpos="70,-10" aimpos="80,0" holdangle="-35" aimangle="0" />
+      <StatusEffect type="OnInserted" target="This" delay="2.5" setvalue="true" handle2="100,20" handle1="-180,-40" />
+      <!-- ============== 换弹动画结束 ================= -->
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
