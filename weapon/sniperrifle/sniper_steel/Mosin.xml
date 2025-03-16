@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_Mosin" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.21" impactsoundtag="impact_metal_light" >
+  <Item name="" identifier="deep_Mosin" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.23" impactsoundtag="impact_metal_light" >
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="steel_barrel" amount="2" />
@@ -55,9 +55,6 @@
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    <StatusEffect type="OnUse" target="This" holdpos="40,-30" aimpos="35,-15" delay="0.7" handle2="-5,-10" holdangle="-20" aimangle="-20" setvalue="true">
-          <Conditional targetcontainer="true" />
-    </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="deep_Mosin_mag" hide="true" itempos="-30,-2" setactive="true" rotation="0" />
