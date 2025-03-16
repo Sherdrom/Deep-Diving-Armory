@@ -42,7 +42,7 @@
   </Item>
   
   
-  <Item name="" identifier="deep_Mosin_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_Mosin_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="150" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
@@ -62,9 +62,6 @@
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="762x54Rround" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x54Rround" />
-	  <!--子弹打完，枪械进行换弹-->
-	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
-      </StatusEffect>
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
 	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
       </StatusEffect>
@@ -78,6 +75,11 @@
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
 	  <SpawnItem identifiers="762x54Rround" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--当弹匣在人的物品栏时，设置其能见度为255-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
+    <Conditional IsActive="false" />
+    <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
