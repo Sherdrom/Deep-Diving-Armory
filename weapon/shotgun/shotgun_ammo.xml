@@ -29,11 +29,11 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="0.1" itemdamage="10" severlimbsprobability="0.1" penetration="0.1" >
+      <Attack structuredamage="0.1" targetforce="0.1" itemdamage="10" severlimbsprobability="0.5" penetration="0.1" >
 		<Affliction identifier="deep_headshot_2" strength="100" />
         <Affliction identifier="gunshotwound" strength="12" />
         <Affliction identifier="bleeding" strength="6" />
-        <Affliction identifier="stun" strength="0.15" />
+        <Affliction identifier="stun" strength="0.08" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -131,11 +131,11 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="6" >
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="30" itemdamage="100" severlimbsprobability="0.8" penetration="0.4" >
-        <Affliction identifier="gunshotwound" strength="100" />
+      <Attack structuredamage="0.1" targetforce="10" itemdamage="100" severlimbsprobability="0.8" penetration="0.4" >
+        <Affliction identifier="gunshotwound" strength="80" />
 		<Affliction identifier="deep_headshot_2" strength="100" />
-        <Affliction identifier="bleeding" strength="40" />
-        <Affliction identifier="stun" strength="2" />
+        <Affliction identifier="bleeding" strength="100" />
+        <Affliction identifier="stun" strength="1.2" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -315,11 +315,11 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="6" >
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="30" itemdamage="100" severlimbsprobability="0.8" penetration="0.6" >
+      <Attack structuredamage="0.1" targetforce="10" itemdamage="100" severlimbsprobability="0.8" penetration="0.6" >
 		<Affliction identifier="deep_headshot_2" strength="100" />
-        <Affliction identifier="gunshotwound" strength="100" />
-        <Affliction identifier="bleeding" strength="40" />
-        <Affliction identifier="stun" strength="2" />
+        <Affliction identifier="gunshotwound" strength="80" />
+        <Affliction identifier="bleeding" strength="100" />
+        <Affliction identifier="stun" strength="1.2" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
