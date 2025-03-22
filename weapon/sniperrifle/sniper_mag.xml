@@ -15,13 +15,15 @@
     </Fabricate>
     <Deconstruct time="5">
     </Deconstruct>
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="564,230,73,75" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="608,185,49,50" depth="0.65" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="433,403,91,61" origin="0.5,0.5" />
+	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="555,404,38,60" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x63round" />
-	  <!--子弹打完，枪械进行换弹-->
-	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
+	  <!--叮——————-->
+      <StatusEffect type="OnBroken" target="This" >
+        <sound file="%ModDir%/Sound/Weapons/M1_GARAND/gunOther/m1_ding.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
 	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
@@ -36,6 +38,11 @@
 	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
 	  <SpawnItem identifiers="762x63round" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--当弹匣在人的物品栏时，设置其能见度为255-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
+    <Conditional IsActive="false" />
+    <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
