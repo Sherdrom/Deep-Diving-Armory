@@ -127,13 +127,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="2" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="20" targetforce="15" itemdamage="20" severlimbsprobability="0.5" penetration="0.2" >
-	    <Affliction identifier="hollow_point" strength="5" />
-        <Affliction identifier="gunshotwound" strength="20" />
-		<Affliction identifier="gunshotwound" strength="10" probability="0.5"/>
-        <Affliction identifier="bleeding" strength="20" />
-		<Affliction identifier="bleeding" strength="10" probability="0.5"/>
-        <Affliction identifier="stun" strength="0.2" />
+      <Attack structuredamage="20" targetforce="5" itemdamage="15" severlimbsprobability="0.3" penetration="0.2" >
+        <Affliction identifier="gunshotwound" strength="15" />
+        <Affliction identifier="bleeding" strength="5" />
+        <Affliction identifier="stun" strength="0.1" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -167,13 +164,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="2" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="30" targetforce="15" itemdamage="30" severlimbsprobability="0.5" penetration="0.5" >
-	    <Affliction identifier="hollow_point" strength="10" />
-        <Affliction identifier="gunshotwound" strength="50" />
-		<Affliction identifier="gunshotwound" strength="25" probability="0.5"/>
-        <Affliction identifier="bleeding" strength="50" />
-		<Affliction identifier="bleeding" strength="25" probability="0.5"/>
-        <Affliction identifier="stun" strength="0.3" />
+      <Attack structuredamage="28" targetforce="7" itemdamage="21" severlimbsprobability="0.4" penetration="0.5" >
+        <Affliction identifier="gunshotwound" strength="35" />
+        <Affliction identifier="bleeding" strength="15" />
+        <Affliction identifier="stun" strength="0.2" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
