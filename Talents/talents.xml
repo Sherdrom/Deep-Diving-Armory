@@ -22,7 +22,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 深潜枪在水中时，-60%伤害 -->
-	<AbilityGroupInterval>
+	<AbilityGroupInterval Interval="0.5" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect" />
 		<AbilityConditionInWater/>
@@ -31,7 +31,7 @@
 	  <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-0.6"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval>
+	<AbilityGroupInterval Interval="0.5" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect_chip" />
 		<AbilityConditionInWater/>
@@ -40,7 +40,7 @@
 	  <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 致死爆头 -->
+    <!-- 致死爆头（对人） -->
 	<AbilityGroupEffect abilityeffecttype="OnAttack" >
       <Conditions>
       <AbilityConditionInWater invert="true" />
@@ -48,7 +48,8 @@
      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" >
+            <StatusEffect type="OnAbility" target="Character" comparison="and" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" >
+            <Conditional ishuman="true" />
               <Affliction identifier="deep_headshot_deadly_onlyhead" strength="100.0" MultiplyByMaxVitality="true" />
 			        <Affliction identifier="deep_headshot_deadly_onlyhead_irresistible" strength="100.0" MultiplyByMaxVitality="true" />
             </StatusEffect>
@@ -56,8 +57,24 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
+    <!-- 致死爆头（对其他生物） -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+      <Conditions>
+      <AbilityConditionInWater invert="true" />
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" comparison="and" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" >
+            <Conditional ishuman="false" />
+              <Affliction identifier="deep_headshot_deadly_monster" strength="1.0" MultiplyByMaxVitality="true" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
     <!-- 获得致死爆头抗性 -->
-    <AbilityGroupInterval interval="0.5" >
+    <AbilityGroupInterval interval="1" >
      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
@@ -69,7 +86,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 在水中时无法造成致死爆头-->
+	<!-- 人在水中时无法造成致死爆头-->
 	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
 		<AbilityConditionInWater/>

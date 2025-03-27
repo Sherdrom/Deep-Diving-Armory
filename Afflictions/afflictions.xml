@@ -119,9 +119,9 @@
     showicontoothersthreshold="1000"
     showinhealthscannerthreshold="1000"
     karmachangeonapplied="0"
-    maxstrength="100"
+    maxstrength="1"
     affectmachines="true">
-    <Effect minstrength="0" maxstrength="100" resistancefor="deep_headshot_deadly_irresistible" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly_irresistible" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0" >
     </Effect>
   </Affliction>
   
@@ -135,9 +135,25 @@
     showicontoothersthreshold="1000"
     showinhealthscannerthreshold="1000"
     karmachangeonapplied="0"
-    maxstrength="100"
+    maxstrength="1"
     affectmachines="true">
-    <Effect minstrength="0" maxstrength="100" resistancefor="deep_headshot_deadly" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_headshot_deadly_monster"
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="1000"
+    showinhealthscannerthreshold="1000"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="true">
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly,deep_headshot_deadly_irresistible" minresistance="1" maxresistance="1" strengthchange="-0" >
     </Effect>
   </Affliction>
   
@@ -1606,7 +1622,7 @@
     identifier="chip_captain_1"
     description=""
 	isbuff="true"
-    type="chip_headset"
+    type="chip_captain"
     limbspecific="false"
     indicatorlimb="Head"
     showiconthreshold="1000"
@@ -1617,18 +1633,43 @@
     affectmachines="false">
     <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
 	  <StatValue stattype="HelmSkillGainSpeed" value="1" />
-	  <StatValue stattype="ReputationGainMultiplier" value="0.2" />
-	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.2" />
-	  <StatValue stattype="ExperienceGainMultiplier" value="0.2" />
+	  <StatValue stattype="ReputationGainMultiplier" value="0.1" />
+	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.1" />
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.1" />
 	  <StatValue stattype="ExtraMissionCount" value="1" />
 	  <StatValue stattype="ExtraSpecialSalesCount" value="3" />
-	  <StatValue stattype="StoreSellMultiplier" value="0.2" />
-	  <StatValue stattype="StoreBuyMultiplier" value="0.2" />
+	  <StatValue stattype="StoreSellMultiplier" value="0.1" />
+	  <StatValue stattype="StoreBuyMultiplier" value="0.1" />
     </Effect>
   </Affliction>
   
   <Affliction
     identifier="chip_captain_2"
+    description=""
+	isbuff="true"
+    type="chip_captain"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+	  <StatValue stattype="HelmSkillGainSpeed" value="2" />
+	  <StatValue stattype="ReputationGainMultiplier" value="0.2" />
+	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.2" />
+	  <StatValue stattype="ExperienceGainMultiplier" value="0.2" />
+	  <StatValue stattype="ExtraMissionCount" value="2" />
+	  <StatValue stattype="ExtraSpecialSalesCount" value="6" />
+	  <StatValue stattype="StoreSellMultiplier" value="0.2" />
+	  <StatValue stattype="StoreBuyMultiplier" value="0.2" />
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="chip_captain_only_one"
     description=""
 	isbuff="true"
     type="chip_headset"
@@ -1640,15 +1681,41 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
-	  <StatValue stattype="HelmSkillGainSpeed" value="2" />
-	  <StatValue stattype="ReputationGainMultiplier" value="0.4" />
-	  <StatValue stattype="MissionMoneyGainMultiplier" value="0.4" />
-	  <StatValue stattype="ExperienceGainMultiplier" value="0.4" />
-	  <StatValue stattype="ExtraMissionCount" value="2" />
-	  <StatValue stattype="ExtraSpecialSalesCount" value="6" />
-	  <StatValue stattype="StoreSellMultiplier" value="0.4" />
-	  <StatValue stattype="StoreBuyMultiplier" value="0.4" />
+    <Effect minstrength="0" maxstrength="1" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="chip_captain_talent_detect"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="chip_captain_talent_decrease"
+    description=""
+	isbuff="true"
+    type="chip_headset"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="chip_captain" maxresistance="10" minresistance="10" strengthchange="-1" >
     </Effect>
   </Affliction>
   
