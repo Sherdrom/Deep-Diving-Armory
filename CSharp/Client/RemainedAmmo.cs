@@ -24,7 +24,7 @@ namespace RemainedAmmo {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("RemainedAmmo");
-            LuaCsLogger.Log("RemainedAmmo Initialized!");
+            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo HUD Initialized!");
         }
  
         public void OnLoadCompleted()
@@ -32,7 +32,7 @@ namespace RemainedAmmo {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
             harmonyInstance.PatchAll();
-            LuaCsLogger.Log($"RemainedAmmo loaded!");
+            LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] RemainedAmmo HUD loaded!");
         }
  
         public void PreInitPatching()
@@ -44,7 +44,7 @@ namespace RemainedAmmo {
         {
             // Cleanup your plugin!
             harmonyInstance?.UnpatchAll();
-            LuaCsLogger.Log("RemainedAmmo disposed!");
+            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo HUD disposed!");
         }
 
         //patch DrawHUD
