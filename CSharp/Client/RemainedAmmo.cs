@@ -68,7 +68,7 @@ namespace RemainedAmmo {
                             new CodeInstruction(OpCodes.Ldarg_1),      // spriteBatch
                             new CodeInstruction(OpCodes.Call, typeof(RemainedAmmo).GetMethod("DrawMyString"))
                         };
-                        codes.InsertRange(i + 1, injectCode);
+                        codes.InsertRange(i + 2, injectCode);
                         break;
                     }
                 }
