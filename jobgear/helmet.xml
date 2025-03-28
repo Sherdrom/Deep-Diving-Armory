@@ -101,12 +101,12 @@
 		</StatusEffect>
 		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Thermal_Off" />
+        <LuaHook name="SixBFortySeven_Thermal_Off" />
 		<RequiredItems items="thermalgoggles_t7" type="Contained" />
       </StatusEffect>
 	    <!-- 检测到热成像开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Thermal_On" />
+        <LuaHook name="SixBFortySeven_Thermal_On" />
 		<RequiredItems items="thermalgoggles_t7" type="Contained" />
       </StatusEffect>
 	  <!-- 夜视仪开关 -->
@@ -115,12 +115,12 @@
           <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Night_Off" />
+        <LuaHook name="SixBFortySeven_Night_Off" />
 		<RequiredItems items="gpnvg_18" type="Contained" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Night_On" />
+        <LuaHook name="SixBFortySeven_Night_On" />
 		<RequiredItems items="gpnvg_18" type="Contained" />
       </StatusEffect>
 
@@ -135,12 +135,12 @@
 
 		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Health_Off" />
+        <LuaHook name="SixBFortySeven_Health_Off" />
 		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
       </StatusEffect>
 	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Health_On" />
+        <LuaHook name="SixBFortySeven_Health_On" />
 		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
       </StatusEffect>
 
@@ -150,11 +150,11 @@
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
 	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
-	  <sound file="%ModDir%/jobgear/sound/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
 	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
-        <LuaHook name="6B47_Origin" />
+        <LuaHook name="SixBFortySeven_Origin" />
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，确保所有显示关闭 -->
@@ -320,7 +320,6 @@
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
 	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
-	  <LuaHook name="FAST_Night_Off" />
 	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -491,7 +490,7 @@
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
 	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
-	  <sound file="%ModDir%/jobgear/sound/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
 	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
@@ -528,7 +527,7 @@
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
 	  </StatusEffect>
-	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" probabilitymultiplier="0.25" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" probabilitymultiplier="0.75" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -712,7 +711,7 @@
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
 	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
-	  <sound file="%ModDir%/jobgear/sound/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
 	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
