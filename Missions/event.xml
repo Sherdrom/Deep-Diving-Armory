@@ -18,38 +18,68 @@
       </StatusEffectAction>
     </ScriptedEvent>
 	
-     <ScriptedEvent identifier="deep_pigcat" commonness="200">
-      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat" targettag="deep_pigcat_captain" spawnlocation="Outpost" spawnpointtype="Path" targetmoduletags="crewmodule" />
+     <ScriptedEvent identifier="deep_pigcat_easy" commonness="200">
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_easy" targettag="deep_pigcat_easy_captain" spawnlocation="Outpost" spawnpointtype="Path" targetmoduletags="adminmodule" />
       <TagAction criteria="player" tag="player" />
-      <TriggerAction target1tag="deep_pigcat_captain" target2tag="player" applytotarget2="triggerer_player" radius="100" waitforinteraction="true"/>
-      <NPCWaitAction npctag="deep_pigcat_captain" wait="true" />
-      <ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat.c1" eventsprite="pigcat_1">
-        <Option text="EventText.deep_pigcat.mine">
+      <TriggerAction target1tag="deep_pigcat_easy_captain" target2tag="player" applytotarget2="triggerer_player" radius="100" waitforinteraction="true"/>
+      <NPCWaitAction npctag="deep_pigcat_easy_captain" wait="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_easy.c1" eventsprite="pigcat_1">
+        <Option text="EventText.deep_pigcat_easy.mine">
 		<MissionAction missionidentifier="deep_mine_saltpeter_mineral" />
 		<MissionAction missionidentifier="deep_mine_sulfur_mineral" />
-		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat.mine2">
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_easy.mine2">
 		</ConversationAction>
         </Option>
-        <Option text="EventText.deep_pigcat.money">
+        <Option text="EventText.deep_pigcat_easy.money">
 		<MissionAction missionidentifier="deep_clear_wreck" />
 		<MissionAction missionidentifier="deep_clear_husk_beacon" />
 		<MissionAction missionidentifier="deep_beacon_fight_1" />
-		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat.money2">
-		</ConversationAction>
-        </Option>
-		<Option text="EventText.deep_pigcat.wangdao">
-		<MissionAction missionidentifier="deep_beacon_fight_2" />
-		<MissionAction missionidentifier="deep_clear_husk_ruin" />
-		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat.wangdao2">
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_easy.money2">
 		</ConversationAction>
         </Option>
       </ConversationAction>
-      <NPCWaitAction npctag="deep_pigcat_captain" wait="false" />
+      <NPCWaitAction npctag="deep_pigcat_easy_captain" wait="false" />
     </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_medium" commonness="200">
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_medium" targettag="deep_pigcat_medium_captain" spawnlocation="Outpost" spawnpointtype="Path" targetmoduletags="adminmodule" />
+      <TagAction criteria="player" tag="player" />
+      <TriggerAction target1tag="deep_pigcat_medium_captain" target2tag="player" applytotarget2="triggerer_player" radius="100" waitforinteraction="true"/>
+      <NPCWaitAction npctag="deep_pigcat_medium_captain" wait="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_medium.c1" eventsprite="pigcat_1">
+        <Option text="EventText.deep_pigcat_medium.mine">
+		<MissionAction missionidentifier="deep_mine_saltpeter_mineral" />
+		<MissionAction missionidentifier="deep_mine_sulfur_mineral" />
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_medium.mine2">
+		</ConversationAction>
+        </Option>
+        <Option text="EventText.deep_pigcat_medium.money">
+		<MissionAction missionidentifier="deep_clear_wreck" />
+		<MissionAction missionidentifier="deep_clear_husk_beacon" />
+		<MissionAction missionidentifier="deep_beacon_fight_1" />
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_medium.money2">
+		</ConversationAction>
+        </Option>
+		<Option text="EventText.deep_pigcat_medium.wangdao">
+		<MissionAction missionidentifier="deep_beacon_fight_2" />
+		<MissionAction missionidentifier="deep_clear_husk_ruin" />
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_medium.wangdao2">
+		</ConversationAction>
+        </Option>
+      </ConversationAction>
+      <NPCWaitAction npctag="deep_pigcat_medium_captain" wait="false" />
+    </ScriptedEvent>
+
 	  </EventPrefabs>
-  <EventSet identifier="deep_outpost" leveltype="outpost"  locationtype="deep_mobile_city_typhoon,outpost,city,research,military,mine,colony,settlement,construction,camp,base,blockade,survey,extraction,study,lab,clinic,hospital,surgery,hydroponics,biosphere,nourishment,factory,shipyard,fusion,MilitaryForces,HuskChurch,SinkingCircus,PirateOutpost" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
-  <EventSet identifier="deep_pigcat_man" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" chooserandom="false" campaign="false" selectalways="true" additive="true" >
-    <ScriptedEvent identifier="deep_pigcat" commonness="100" probability="1" triggercooldown="false" />
+  <EventSet identifier="deep_outpost_mission_easy" leveltype="outpost"  locationtype="deep_mobile_city_typhoon,outpost,city,research,military,mine,colony,settlement,construction,camp,base,blockade,survey,extraction,study,lab,clinic,hospital,surgery,hydroponics,biosphere,nourishment,factory,shipyard,fusion,MilitaryForces,HuskChurch,SinkingCircus,PirateOutpost" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="14" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
+  <EventSet identifier="deep_pigcat_easy_man" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" chooserandom="false" campaign="false" selectalways="true" additive="true" >
+    <ScriptedEvent identifier="deep_pigcat_easy" commonness="100" probability="1" triggercooldown="false" />
+  </EventSet>
+      </EventSet>
+	  
+	  <EventSet identifier="deep_outpost_mission_medium" leveltype="outpost"  locationtype="deep_mobile_city_typhoon,outpost,city,research,military,mine,colony,settlement,construction,camp,base,blockade,survey,extraction,study,lab,clinic,hospital,surgery,hydroponics,biosphere,nourishment,factory,shipyard,fusion,MilitaryForces,HuskChurch,SinkingCircus,PirateOutpost" allowatstart="true" minleveldifficulty="15" maxleveldifficulty="100" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
+  <EventSet identifier="deep_pigcat_medium_man" allowatstart="true" minleveldifficulty="15" maxleveldifficulty="100" chooserandom="false" campaign="false" selectalways="true" additive="true" >
+    <ScriptedEvent identifier="deep_pigcat_medium" commonness="100" probability="1" triggercooldown="false" />
   </EventSet>
       </EventSet>
 	  
