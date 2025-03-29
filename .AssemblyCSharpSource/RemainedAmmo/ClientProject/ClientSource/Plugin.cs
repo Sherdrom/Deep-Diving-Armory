@@ -12,42 +12,12 @@ using Color = Microsoft.Xna.Framework.Color;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-// This is required so that the .NET runtime doesn't complain about you trying to access internal Types and Members
-[assembly: IgnoresAccessChecksTo("Barotrauma")]
-[assembly: IgnoresAccessChecksTo("BarotraumaCore")]
-[assembly: IgnoresAccessChecksTo("DedicatedServer")]
-namespace RemainedAmmo {
-    public class RemainedAmmo : IAssemblyPlugin {
-        public Harmony? harmonyInstance;
-        public void Initialize()
-        {
-            // When your plugin is loading, use this instead of the constructor
-            // Put any code here that does not rely on other plugins.
-            harmonyInstance = new Harmony("RemainedAmmo");
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo HUD Initialized!");
-        }
- 
-        public void OnLoadCompleted()
-        {
-            // After all plugins have loaded
-            // Put code that interacts with other plugins here.
-            harmonyInstance.PatchAll();
-            LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] RemainedAmmo HUD loaded!");
-        }
- 
-        public void PreInitPatching()
-        {
-            // Not yet supported: Called during the Barotrauma startup phase before vanilla content is loaded.
-        }
- 
-        public void Dispose()
-        {
-            // Cleanup your plugin!
-            harmonyInstance?.UnpatchAll();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo HUD disposed!");
-        }
-
-        //patch DrawHUD
+namespace RemainedAmmo
+{
+    public partial class RemainedAmmo : IAssemblyPlugin
+    {
+        // Client-specific code
+         //patch DrawHUD
         [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.DrawHUD))]
         static class RangedWeapon_DrawHUD_Patch
         {
