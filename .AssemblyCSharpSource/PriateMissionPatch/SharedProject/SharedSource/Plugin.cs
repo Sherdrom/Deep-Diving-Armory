@@ -9,7 +9,7 @@ using Barotrauma;
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 
-namespace MyModName
+namespace PriateMissionPatch
 {
     public partial class Plugin : IAssemblyPlugin
     {
