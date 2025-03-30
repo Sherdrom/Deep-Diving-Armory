@@ -27,9 +27,11 @@ namespace RemainedAmmo
                 bool foundInsertionPoint = false;
                 for (int i = 0; i < codes.Count; i++)
                 {
-                    if (codes[i].opcode == OpCodes.Ldarg_0 &&
-                        codes[i + 1].opcode == OpCodes.Ldfld &&
-                        codes[i + 1].operand.ToString().Contains("crossHairPosDirtyTimer"))
+                    if (codes[i].opcode == OpCodes.Call &&
+                        codes[i + 1].opcode == OpCodes.Ldarg_0 &&
+                        codes[i + 2].opcode == OpCodes.Ldfld &&
+                        codes[i + 2].operand.ToString().Contains("crosshairPointerSprite"))
+
                     {
                         foundInsertionPoint = true;
                         var injectCode = new List<CodeInstruction>
@@ -38,7 +40,7 @@ namespace RemainedAmmo
                             new CodeInstruction(OpCodes.Ldarg_1),      // spriteBatch
                             new CodeInstruction(OpCodes.Call, typeof(RemainedAmmo).GetMethod("DrawMyString"))
                         };
-                        codes.InsertRange(i + 2, injectCode);
+                        codes.InsertRange(i + 1, injectCode);
                         break;
                     }
                 }
