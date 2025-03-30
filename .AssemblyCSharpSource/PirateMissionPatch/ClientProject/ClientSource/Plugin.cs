@@ -7,7 +7,7 @@ using Barotrauma;
 
 namespace PriateMissionPatch
 {
-    public partial class Plugin : IAssemblyPlugin
+    public partial class PriateMissionPatch : IAssemblyPlugin
     {
         // Client-specific code
     }
