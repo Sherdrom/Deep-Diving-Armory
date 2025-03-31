@@ -18,7 +18,7 @@
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="KEVLAR" amount="2" />
     </Fabricate>
-    <Sprite texture="%ModDir%/jobgear/helmet/6B47.png" sourcerect="9,9,98,93" depth="0.6" origin="0.5,0.5" /> 
+    <Sprite texture="%ModDir%/jobgear/helmet/6B47.png" sourcerect="9,9,98,93" depth="0.5" origin="0.5,0.5" /> 
     <Body radius="30" density="10" />
     <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
 	<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
@@ -31,7 +31,7 @@
       <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
-	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="9,9,98,93"  origin="0.55,0.62" > 
+	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.5" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="9,9,98,93"  origin="0.55,0.62" > 
 	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
@@ -1668,6 +1668,68 @@
       <SkillModifier skillidentifier="weapons" skillvalue="-30" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <Affliction identifier="deep_maska_1" strength="100" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing,InWater" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+
+  <Item name="" identifier="deep_kiver_m" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="2" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="KEVLAR" amount="3" />
+	  <RequiredItem identifier="ballisticfiber" amount="2" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/helmet/KIVER_M.png" sourcerect="7,7,129,99" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/helmet/KIVER_M.png" sourcerect="7,7,129,99" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_healmet_talent" />
+	  </StatusEffect>
+	  <damagemodifier afflictionidentifiers="gunshotwound" armorsector="0.0,360.0" probabilitymultiplier="0.6" damagesound="ricochet" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.7" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/helmet/KIVER_M.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hidewearablesoftype="Hair" sourcerect="7,7,129,99" origin="0.5,0.59" /> 
+      <SkillModifier skillidentifier="weapons" skillvalue="-15" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  </StatusEffect>
 	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
