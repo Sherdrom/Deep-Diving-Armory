@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Barotrauma;
 
-namespace PriateMissionPatch
+namespace PirateMissionPatch
 {
-    public partial class PriateMissionPatch : IAssemblyPlugin
+    public partial class PirateMissionPatch : IAssemblyPlugin
     {
         // Client-specific code
     }
