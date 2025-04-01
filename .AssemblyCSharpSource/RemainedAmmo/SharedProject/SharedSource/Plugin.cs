@@ -23,7 +23,7 @@ namespace RemainedAmmo
         {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
-            harmonyInstance.PatchAll();
+            harmonyInstance?.PatchAll();
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo Loaded!");
         }
 

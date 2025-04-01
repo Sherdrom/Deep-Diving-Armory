@@ -99,8 +99,21 @@ namespace RemainedAmmo
             var scale = rangedWeapon.currentCrossHairScale;
             Color indicatorColor = new Color(230,26,18,255);
             Vector2 TextPos = rangedWeapon.crosshairPos;
+            // 如果是双持武器，且是左手武器，将数字放在左边
+            Character character = (Character)rangedWeapon.Item.ParentInventory.Owner;
+            CharacterInventory characterInventory = character.Inventory;
+            var leftItem = characterInventory.GetItemInLimbSlot(InvSlotType.LeftHand);
+            var rightItem =characterInventory.GetItemInLimbSlot(InvSlotType.RightHand);
+            if(leftItem!=null && rightItem!=null && rangedWeapon.Item.ID == leftItem.ID && leftItem.ID != rightItem.ID)
+            {
+                TextPos.X -= 15f * scale;
+            }
+            else
+            {
+                TextPos.X += 15f * scale;
+            }
             TextPos.Y += 65f * scale;
-            TextPos.X += 15f * scale;
+
             GUIStyle.LargeFont.DrawString(spriteBatch,ammoString,TextPos,indicatorColor);                        
         }
     }
