@@ -106,13 +106,13 @@ namespace RemainedAmmo
             var rightItem =characterInventory.GetItemInLimbSlot(InvSlotType.RightHand);
             if(leftItem!=null && rightItem!=null && rangedWeapon.Item.ID == leftItem.ID && leftItem.ID != rightItem.ID)
             {
-                TextPos.X -= 15f * scale;
+                TextPos.X -= 38f;
             }
             else
             {
-                TextPos.X += 15f * scale;
+                TextPos.X += 8f;
             }
-            TextPos.Y += 65f * scale;
+            TextPos.Y += 120f * scale * scale;
 
             GUIStyle.LargeFont.DrawString(spriteBatch,ammoString,TextPos,indicatorColor);                        
         }
