@@ -84,51 +84,50 @@ namespace PirateMissionPatch
             {
                 var enemySub = __instance.enemySub;
                 Vector2 patrolPos = Level.Loaded.EndPosition;
-                patrolPos.Y = patrolPos.Y - 300f;
+                patrolPos.Y = patrolPos.Y + 3000f;
                 patrolPos.X = patrolPos.X * 0.5f;;
                 Point subSize = enemySub.GetDockedBorders().Size;
-                preferredSpawnPos = patrolPos;
 
-                if (Level.Loaded.TryGetInterestingPosition(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialSpawnPos))
+                if (Level.Loaded.TryGetInterestingPosition(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.3f, out var potentialSpawnPos, awayPoint : Level.Loaded.EndPosition, minDistFromPoint : Level.Loaded.Size.X * 0.3f))
                 {
-                    preferredSpawnPos = potentialSpawnPos.Position.ToVector2();
+                    patrolPos = potentialSpawnPos.Position.ToVector2();
                 }
                 else
                 {
                     DebugConsole.ThrowError("Could not spawn pirate submarine in an interesting location! " + __instance,
                         contentPackage: __instance.Prefab.ContentPackage);
                 }
-                if (Level.Loaded.TryGetInterestingPositionAwayFromPoint(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialPatrolPos, preferredSpawnPos, minDistFromPoint: 10000f))
-                {
-                    patrolPos = potentialPatrolPos.Position.ToVector2();
-                }
-                else
-                {
-                    DebugConsole.ThrowError("Could not give pirate submarine an interesting location to patrol to! " + __instance,
-                        contentPackage: __instance.Prefab.ContentPackage);
-                }
+                // if (Level.Loaded.TryGetInterestingPositionAwayFromPoint(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialPatrolPos, preferredSpawnPos, minDistFromPoint: 10000f))
+                // {
+                //     patrolPos = potentialPatrolPos.Position.ToVector2();
+                // }
+                // else
+                // {
+                //     DebugConsole.ThrowError("Could not give pirate submarine an interesting location to patrol to! " + __instance,
+                //         contentPackage: __instance.Prefab.ContentPackage);
+                // }
 
                 patrolPos = enemySub.FindSpawnPos(patrolPos, subSize);
-
+                preferredSpawnPos = patrolPos;
                 __instance.patrolPositions.Add(patrolPos);
                 __instance.patrolPositions.Add(preferredSpawnPos);
 
-                if (!Mission.IsClient)
-                {
-                    PathFinder pathFinder = new PathFinder(WayPoint.WayPointList, false);
-                    var path = pathFinder.FindPath(ConvertUnits.ToSimUnits(patrolPos), ConvertUnits.ToSimUnits(preferredSpawnPos));
-                    if (!path.Unreachable)
-                    {
-                        var validNodes = path.Nodes.FindAll(n => !Level.Loaded.ExtraWalls.Any(w => w.Cells.Any(c => c.IsPointInside(n.WorldPosition))));
-                        if (validNodes.Any())
-                        {
-                            preferredSpawnPos = validNodes.GetRandomUnsynced().WorldPosition; // spawn the sub in a random point in the path if possible
-                        }
-                    }
+                // if (!Mission.IsClient)
+                // {
+                //     PathFinder pathFinder = new PathFinder(WayPoint.WayPointList, false);
+                //     var path = pathFinder.FindPath(ConvertUnits.ToSimUnits(patrolPos), ConvertUnits.ToSimUnits(preferredSpawnPos));
+                //     if (!path.Unreachable)
+                //     {
+                //         var validNodes = path.Nodes.FindAll(n => !Level.Loaded.ExtraWalls.Any(w => w.Cells.Any(c => c.IsPointInside(n.WorldPosition))));
+                //         if (validNodes.Any())
+                //         {
+                //             preferredSpawnPos = validNodes.GetRandomUnsynced().WorldPosition; // spawn the sub in a random point in the path if possible
+                //         }
+                //     }
 
-                    int graceDistance = 500; // the sub still spawns awkwardly close to walls, so this helps. could also be given as a parameter instead
-                    preferredSpawnPos = enemySub.FindSpawnPos(preferredSpawnPos, new Point(subSize.X + graceDistance, subSize.Y + graceDistance));
-                }
+                //     int graceDistance = 500; // the sub still spawns awkwardly close to walls, so this helps. could also be given as a parameter instead
+                //     preferredSpawnPos = enemySub.FindSpawnPos(preferredSpawnPos, new Point(subSize.X + graceDistance, subSize.Y + graceDistance));
+                // }
             }
             static bool Prefix(PirateMission __instance, Level level)
             {
