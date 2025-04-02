@@ -84,32 +84,31 @@ namespace PirateMissionPatch
             {
                 var enemySub = __instance.enemySub;
                 Vector2 patrolPos = Level.Loaded.EndPosition;
-                patrolPos.Y = patrolPos.Y - 300f;
+                patrolPos.Y = patrolPos.Y + 3000f;
                 patrolPos.X = patrolPos.X * 0.5f;;
                 Point subSize = enemySub.GetDockedBorders().Size;
-                preferredSpawnPos = patrolPos;
 
-                if (Level.Loaded.TryGetInterestingPosition(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialSpawnPos))
+                if (Level.Loaded.TryGetInterestingPosition(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.3f, out var potentialSpawnPos, awayPoint : Level.Loaded.EndPosition, minDistFromPoint : Level.Loaded.Size.X * 0.3f))
                 {
-                    preferredSpawnPos = potentialSpawnPos.Position.ToVector2();
+                    patrolPos = potentialSpawnPos.Position.ToVector2();
                 }
                 else
                 {
                     DebugConsole.ThrowError("Could not spawn pirate submarine in an interesting location! " + __instance,
                         contentPackage: __instance.Prefab.ContentPackage);
                 }
-                if (Level.Loaded.TryGetInterestingPositionAwayFromPoint(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialPatrolPos, preferredSpawnPos, minDistFromPoint: 10000f))
-                {
-                    patrolPos = potentialPatrolPos.Position.ToVector2();
-                }
-                else
-                {
-                    DebugConsole.ThrowError("Could not give pirate submarine an interesting location to patrol to! " + __instance,
-                        contentPackage: __instance.Prefab.ContentPackage);
-                }
+                // if (Level.Loaded.TryGetInterestingPositionAwayFromPoint(true, Level.PositionType.MainPath, Level.Loaded.Size.X * 0.2f, out var potentialPatrolPos, preferredSpawnPos, minDistFromPoint: 10000f))
+                // {
+                //     patrolPos = potentialPatrolPos.Position.ToVector2();
+                // }
+                // else
+                // {
+                //     DebugConsole.ThrowError("Could not give pirate submarine an interesting location to patrol to! " + __instance,
+                //         contentPackage: __instance.Prefab.ContentPackage);
+                // }
 
                 patrolPos = enemySub.FindSpawnPos(patrolPos, subSize);
-
+                preferredSpawnPos = patrolPos;
                 __instance.patrolPositions.Add(patrolPos);
                 __instance.patrolPositions.Add(preferredSpawnPos);
 
