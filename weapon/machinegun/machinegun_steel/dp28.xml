@@ -23,11 +23,10 @@
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="0,-15" aimpos="60,0" handle1="-30,-5" holdangle="170" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
 	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.4" setvalue="true" >
-		  <GiveTalentInfo giverandom="false" talentidentifiers="deep_machinegun_shot" />
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
-	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_headshot_3x_balance_talent" />
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
 	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
