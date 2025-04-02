@@ -113,22 +113,22 @@ namespace PirateMissionPatch
                 __instance.patrolPositions.Add(patrolPos);
                 __instance.patrolPositions.Add(preferredSpawnPos);
 
-                if (!Mission.IsClient)
-                {
-                    PathFinder pathFinder = new PathFinder(WayPoint.WayPointList, false);
-                    var path = pathFinder.FindPath(ConvertUnits.ToSimUnits(patrolPos), ConvertUnits.ToSimUnits(preferredSpawnPos));
-                    if (!path.Unreachable)
-                    {
-                        var validNodes = path.Nodes.FindAll(n => !Level.Loaded.ExtraWalls.Any(w => w.Cells.Any(c => c.IsPointInside(n.WorldPosition))));
-                        if (validNodes.Any())
-                        {
-                            preferredSpawnPos = validNodes.GetRandomUnsynced().WorldPosition; // spawn the sub in a random point in the path if possible
-                        }
-                    }
+                // if (!Mission.IsClient)
+                // {
+                //     PathFinder pathFinder = new PathFinder(WayPoint.WayPointList, false);
+                //     var path = pathFinder.FindPath(ConvertUnits.ToSimUnits(patrolPos), ConvertUnits.ToSimUnits(preferredSpawnPos));
+                //     if (!path.Unreachable)
+                //     {
+                //         var validNodes = path.Nodes.FindAll(n => !Level.Loaded.ExtraWalls.Any(w => w.Cells.Any(c => c.IsPointInside(n.WorldPosition))));
+                //         if (validNodes.Any())
+                //         {
+                //             preferredSpawnPos = validNodes.GetRandomUnsynced().WorldPosition; // spawn the sub in a random point in the path if possible
+                //         }
+                //     }
 
-                    int graceDistance = 500; // the sub still spawns awkwardly close to walls, so this helps. could also be given as a parameter instead
-                    preferredSpawnPos = enemySub.FindSpawnPos(preferredSpawnPos, new Point(subSize.X + graceDistance, subSize.Y + graceDistance));
-                }
+                //     int graceDistance = 500; // the sub still spawns awkwardly close to walls, so this helps. could also be given as a parameter instead
+                //     preferredSpawnPos = enemySub.FindSpawnPos(preferredSpawnPos, new Point(subSize.X + graceDistance, subSize.Y + graceDistance));
+                // }
             }
             static bool Prefix(PirateMission __instance, Level level)
             {
