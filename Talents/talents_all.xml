@@ -655,5 +655,24 @@
     </AbilityGroupInterval>
 
 
+
+    <!--灰熊衣服-->
+      <AbilityGroupInterval interval="0.1" >
+        <Conditions>
+		  <AbilityConditionHasAffliction afflictionidentifier="deep_steel_arm" />
+      <AbilityConditionHasAffliction afflictionidentifier="deep_grizzlies_suit_detect" />
+        </Conditions>
+        <Abilities>
+          <CharacterAbilityApplyStatusEffects>
+            <StatusEffects>
+              <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+                <Affliction identifier="deep_steel_arm_grizzlies_suit" amount="1.0" />
+              </StatusEffect>
+            </StatusEffects>
+          </CharacterAbilityApplyStatusEffects>
+        </Abilities>
+      </AbilityGroupInterval>
+
+
     </Talent>
 </Talents>
