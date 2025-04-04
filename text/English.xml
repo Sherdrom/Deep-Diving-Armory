@@ -422,7 +422,6 @@ This model is the Marine Corps special issue version, your reliable sidearm.
 <entityname.deep_glock18c>Glock 18C (Automatic Pistol)</entityname.deep_glock18c>
 <entitydescription.deep_glock18c>The Glock 18C is an improved model of the Glock 17, using 9x19mm ammunition. Features a full-auto mode, providing significantly more firepower.
 Its extremely high rate of fire can empty the magazine in an instant. Using an extended magazine is recommended.
-‖color:gui.red‖(When holding a pistol with health below 50%, triggers Mozambique Drill: +50% Damage, +10% Rate of Fire)‖end‖
 (Reload: 2s, Spread: 3, Damage: 1, Rate of Fire: 1000 RPM)</entitydescription.deep_glock18c>
 <entityname.deep_18c_buttstock>Glock 18C Stock</entityname.deep_18c_buttstock>
 <entitydescription.deep_18c_buttstock>A stock modification for the Glock 18C, reducing the recoil of the automatic pistol to some extent.
@@ -572,6 +571,7 @@ Also known as the "Chicago Typewriter". Equipped with a large drum magazine, the
 <entityname.deep_ntw20>NTW-20 Anti-Materiel Sniper Rifle</entityname.deep_ntw20>
 <entitydescription.deep_ntw20>The NTW-20 uses massive 20x110mm anti-materiel rounds. It features three recoil suppression components: an internal hydraulic buffer, a buffer spring, and a muzzle brake, effectively reducing recoil.
 Warning: Do not use this behemoth without seasoned weapon handling experience. Consequences are your own.
+‖color:gui.red‖(Heavy Anti-Materiel Penalty: The lower your health, the lower the damage and accuracy.)‖end‖
 (Spread: 30, Damage: 1, Rate of Fire: 3, -60% Movement Speed)
 (Movement is nearly impossible while aiming)</entitydescription.deep_ntw20>
 <entityname.ntw_20mm>20x110mm Anti-Materiel Round</entityname.ntw_20mm>
@@ -755,6 +755,7 @@ Warning: Do not use this behemoth without seasoned weapon handling experience. C
 <entitydescription.deep_ptrd>The PTRD-41 uses a rotating bolt action, manual loading, and automatic ejection. Simple structure, low manufacturing cost, suitable for mass production.
 Uses 14.5x114mm anti-materiel rounds, undeniable power. Downsides include slow single-shot loading, massive recoil, and noise.
 Warning: Do not use this behemoth without seasoned weapon handling experience. Consequences are your own.
+‖color:gui.red‖(Heavy Anti-Materiel Penalty: The lower your health, the lower the damage and accuracy.)‖end‖
 (The trigger is heavy, requires holding LMB for 0.5s to fire)
 (Spread: 40, Damage: 1, Reload: 3s, -60% Movement Speed, 0.5s Charge Time)</entitydescription.deep_ptrd>
 <entityname.ptrd_145mm>14.5x114mm Anti-Materiel Round</entityname.ptrd_145mm>
@@ -922,8 +923,8 @@ Equipped with a tactical minimap to better understand enemy distribution in outp
 <talentdescription.deep_shotgun_3>Nobody on Europa handles a shotgun better than you. When attacking close-range enemies with a Physicorium shotgun, rate of fire increases!</talentdescription.deep_shotgun_3>
 <entityname.deep_doublebarrel>Old Double-Barrel Shotgun</entityname.deep_doublebarrel>
 <entitydescription.deep_doublebarrel>This old relic dates back to the early 19th century. Even now on Europa, people still use this simple and reliable old friend.
-(Reload: 2s, Spread: 0.1, Damage: 1.6, Rate of Fire: 0.2)
-(Provides "Shotgun Basics" talent)</entitydescription.deep_doublebarrel>
+‖color:gui.red‖(Gain 50 XP for each enemy killed with this shotgun.)‖end‖
+(Reload: 2s, Spread: 0.1, Damage: 1.6, Rate of Fire: 0.2)</entitydescription.deep_doublebarrel>
 <entityname.deep_12shell>12 Gauge Buckshot</entityname.deep_12shell>
 <entitydescription.deep_12shell>Shotgun shell loaded with 12 lead pellets. Deadly at close range.
 ‖color:gui.red‖(Significant damage falloff against distant enemies)‖end‖
@@ -948,8 +949,8 @@ Due to the severe wounds it inflicts, it's nicknamed "Tigershark" by the Separat
 <entitydescription.deep_1887>The M1887 shotgun is designed for single-shot lever-action, capable of firing powerful 12 gauge shells. Made of iron and wood, it weighs about 3.6 kg and is about 1.2 meters long.
 It holds five rounds and uses a lever action to load a new round and eject the spent shell.
 The lever-action mechanism was a significant innovation at the time, although slower to operate than later pump-action or semi-automatic firearms.
-(Reload: 5s, Spread: 0.1, Damage: 1.4, Rate of Fire: 0.8)
-(Provides "Shotgun Basics" talent)</entitydescription.deep_1887>
+‖color:gui.red‖(Gain 50 XP for each enemy killed with this shotgun.)‖end‖
+(Reload: 5s, Spread: 0.1, Damage: 1.4, Rate of Fire: 0.8)</entitydescription.deep_1887>
 <entityname.deep_m1_garand>M1 Garand Semi-Automatic Rifle</entityname.deep_m1_garand>
 <entitydescription.deep_m1_garand>The M1 Garand rifle uses a gas-operated system and a rotating bolt locking mechanism.
 Its feeding system is distinctive: an 8-round en-bloc clip is loaded from the top into the internal magazine. When the last round is fired, the bolt locks open, and the clip is automatically ejected by the ejector, making a characteristic "ping" sound, reminding the soldier to reload.
@@ -1094,36 +1095,43 @@ Equipped with a 20-round magazine, it's one of the most popular weapons among se
 <entitydescription.deep_dp28>The DP machine gun has a simple structure with only 65 parts, low manufacturing requirements.
 It uses a gas-operated system with forward impact firing mode, fed by a pan magazine. The pan magazine consists of upper and lower discs clamped together; the upper disc rotates via a spring, continuously feeding bullets to the feed port.
 Uses 7.62x54mm rifle rounds, providing reliable firepower.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 4s, Spread: 18, Damage: 1, Rate of Fire: 600 RPM, -60% Movement Speed)
 (Bipod Deployment Time: 2s)</entitydescription.deep_dp28>
 <entityname.deep_rpk>RPK Light Machine Gun</entityname.deep_rpk>
 <entitydescription.deep_rpk>Developed from the AKM assault rifle as a squad automatic weapon. Uses a 75-round drum magazine. Empty weight 5.6 kg, sight radius 560 mm.
 Easy to manufacture, durable, reliable, low failure rate, usable under various harsh conditions, simple weapon operation, rapid sustained fire.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 3s, Spread: 16, Damage: 1.2, Rate of Fire: 600 RPM, -30% Movement Speed)
 (Bipod Deployment Time: 1s)</entitydescription.deep_rpk>
 <entityname.deep_m60>M60 General Purpose Machine Gun</entityname.deep_m60>
 <entitydescription.deep_m60>The M60 machine gun is chambered in 7.62mm, uses a gas-operated system and rotating bolt locking mechanism. The M60 features low weight, compact structure, high firepower, good accuracy, and wide application.
 Its rate of fire is not high, but accuracy is relatively good, with strong sustained firepower.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 6s, Spread: 16, Damage: 1.5, Rate of Fire: 550 RPM, -60% Movement Speed)
 (Bipod Deployment Time: 2s)</entitydescription.deep_m60>
 <entityname.deep_rpk16>RPK-16 Light Machine Gun</entityname.deep_rpk16>
 <entitydescription.deep_rpk16>The RPK-16 combines the length of an assault rifle with the firepower of a light machine gun. Its heavy barrel can withstand prolonged continuous fire, providing excellent fire suppression capability.
 Stable, reliable, resistant to overheating, stable firing.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 3s, Spread: 15, Damage: 1.3, Rate of Fire: 700 RPM, -20% Movement Speed)
 (Bipod Deployment Time: 1s)</entitydescription.deep_rpk16>
 <entityname.deep_m249>M249 Light Machine Gun</entityname.deep_m249>
 <entitydescription.deep_m249>The M249 uses a new hydraulic-pneumatic recoil buffer to reduce recoil. Features a rotating gas regulator suitable for different firing environments.
 Fires 5.56x45 ammunition, featuring high rate of fire and high mobility.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 5s, Spread: 12, Damage: 1.3, Rate of Fire: 800 RPM, -20% Movement Speed)
 (Bipod Deployment Time: 1s)</entitydescription.deep_m249>
 <entityname.deep_pkp>PKP General Purpose Machine Gun</entityname.deep_pkp>
 <entitydescription.deep_pkp>The PKP GPMG uses a new heavy barrel with longitudinal cooling fins covered by a metal shroud with an integrated carrying handle. This forced air cooling barrel cannot be quickly changed.
 This design improves barrel cooling efficiency and reduces the probability of PKP malfunction. This machine gun uses 7.62x54R rifle rounds, delivering high damage.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 8s, Spread: 14, Damage: 1.5, Rate of Fire: 600 RPM, -50% Movement Speed)
 (Bipod Deployment Time: 2s)</entitydescription.deep_pkp>
 <entityname.deep_mg42>MG42 General Purpose Machine Gun</entityname.deep_mg42>
 <entitydescription.deep_mg42>The MG-42 GPMG is chambered in 7.92mm, firing 7.92x57mm Mauser rifle rounds. Overall length 1219mm, barrel length 533mm.
 This machine gun has an extremely fast rate of fire. Its tearing sound is the most feared sound by enemies.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 (Reload: 4s, Spread: 18, Damage: 1, Rate of Fire: 1200 RPM, -50% Movement Speed)
 (Bipod Deployment Time: 2s)</entitydescription.deep_mg42>
 <entityname.deep_dp28_mag>DP Machine Gun Pan Magazine</entityname.deep_dp28_mag>
@@ -1190,33 +1198,33 @@ Compared to the Bizon SMG, its reliability is greatly improved.
 <entitydescription.mg42_design>A very rare blueprint, allows crafting the MG42.</entitydescription.mg42_design>
 <entityname.deep_short_doublebarrel>Sawed-Off Double-Barrel Shotgun</entityname.deep_short_doublebarrel>
 <entitydescription.deep_short_doublebarrel>This simple and brutal little guy can fire 12 gauge shells. And you can dual wield them!
-(Reload: 2s, Spread: 0.1, Damage: 1, Rate of Fire: 0.2)
-(Provides "Shotgun Basics" talent)</entitydescription.deep_short_doublebarrel>
+‖color:gui.red‖(Gain 50 XP for each enemy killed with this shotgun.)‖end‖
+(Reload: 2s, Spread: 0.1, Damage: 1, Rate of Fire: 0.2)</entitydescription.deep_short_doublebarrel>
 <entityname.deep_m590>M590 Shotgun</entityname.deep_m590>
 <entitydescription.deep_m590>The M590 excels in accuracy, reliability, and handling. It provides stable and precise shooting performance, whether in long-range or close-range combat.
 Its pump-action feeding makes rapid loading and operation more convenient, ensuring continuous firepower output.
-(Reload: 4s, Spread: 0.1, Damage: 1.6, Rate of Fire: 0.8)
-(Provides "Shotgun Basics", "Shotgun Specialist" talents)</entitydescription.deep_m590>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
+(Reload: 4s, Spread: 0.1, Damage: 1.6, Rate of Fire: 0.8)</entitydescription.deep_m590>
 <entityname.deep_m870>M870 Shotgun</entityname.deep_m870>
 <entitydescription.deep_m870>As a pump-action shotgun, the M870 offers extremely high performance during building entry assaults or defense.
 It incorporates many new processes and accessories, such as phosphate surface treatment, ramped front sight, adjustable notch rear sight, and is equipped with an extended tubular magazine holding 7 rounds.
 Favored by assault soldiers.
-(Reload: 4s, Spread: 0.1, Damage: 1.8, Rate of Fire: 0.8, +15% Movement Speed)
-(Provides "Shotgun Basics", "Shotgun Specialist", "Shotgun Savior" talents)</entitydescription.deep_m870>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun. +20% Rate of Fire near enemies.)‖end‖
+(Reload: 4s, Spread: 0.1, Damage: 1.8, Rate of Fire: 0.8, +15% Movement Speed)</entitydescription.deep_m870>
 <entityname.deep_bosg>BOSG Break-Action Shotgun</entityname.deep_bosg>
 <entitydescription.deep_bosg>The BOSG uses a break-action mechanism, holding 2 shotgun shells. Extremely high burst damage at close range. After mastering the reload interval, this shotgun becomes a highly threatening weapon.
-(Reload: 2s, Spread: 0.1, Damage: 2, Rate of Fire: 0.2)
-(Provides "Shotgun Basics", "Shotgun Specialist")</entitydescription.deep_bosg>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
+(Reload: 2s, Spread: 0.1, Damage: 2, Rate of Fire: 0.2)</entitydescription.deep_bosg>
 <entityname.deep_m4_super90>M4 Super90 Shotgun</entityname.deep_m4_super90>
 <entitydescription.deep_m4_super90>The M4 Super90 shotgun features a new design called "Auto-Regulating Gas-Operated" (ARGO). Its design includes two symmetrical small stainless steel gas pistons covered by shrouds, greatly enhancing firearm reliability.
 The Super90 can switch between semi-automatic and pump-action modes, convenient for soldiers accustomed to different firing methods.
-(Reload: 4s, Spread: 0.1, Damage: 1.4, Rate of Fire: 0.5)
-(Provides "Shotgun Basics", "Shotgun Specialist")</entitydescription.deep_m4_super90>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
+(Reload: 4s, Spread: 0.1, Damage: 1.4, Rate of Fire: 0.5)</entitydescription.deep_m4_super90>
 <entityname.deep_aa12>AA-12 Automatic Shotgun</entityname.deep_aa12>
 <entitydescription.deep_aa12>This big guy fires 12 gauge shells, uses an open-bolt operating mode, provides sustained firepower, fast rate of fire, and low recoil.
 These features make the AA-12 a devastating weapon for indoor CQB.
-(Reload: 3s, Spread: 0.1, Damage: 1.5, Rate of Fire: 0.3, -40% Movement Speed)
-(Provides "Shotgun Basics", "Shotgun Specialist")</entitydescription.deep_aa12>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
+(Reload: 3s, Spread: 0.1, Damage: 1.5, Rate of Fire: 0.3, -40% Movement Speed)</entitydescription.deep_aa12>
 <entityname.deep_aa12_12shell>AA-12 Drum Magazine (Buckshot)</entityname.deep_aa12_12shell>
 <entitydescription.deep_aa12_12shell>Contains 25 rounds of 12 gauge buckshot. Deadly at close range.
 ‖color:gui.red‖(Significant damage falloff against distant enemies)‖end‖
@@ -1305,6 +1313,9 @@ Hold your breath, steady your aim, fire.</entitydescription.m82a1_blackice>
 <entitydescription.brown_combat_suit>Standard issue combat suit for Coalition soldiers. Lightweight and comfortable, equipped with 4 pockets for placing combat supplies.</entitydescription.brown_combat_suit>
 <entityname.ghost_suit>"Ghost" Combat Suit</entityname.ghost_suit>
 <entitydescription.ghost_suit>Custom combat suit for the Ghost Squad. Features high mobility and storage space. Ghost Squad members often wear this suit for infiltration operations.</entitydescription.ghost_suit>
+<entityname.grizzlies_suit>"Grizzly" Combat Suit</entityname.grizzlies_suit>
+<entitydescription.grizzlies_suit>Grizzly Squad custom combat suit. Made with highly waterproof fabric and features additional soft armor inserts, providing ample protection for the Grizzly Squad.
+‖color:gui.red‖(When wearing the Grizzly Combat Suit and arm plates are equipped in the body armor, the arms gain an additional 10% damage resistance)‖end‖</entitydescription.grizzlies_suit>
 <entityname.6b13>6B13 Plate Carrier Vest</entityname.6b13>
 <entitydescription.6b13>The 6B13 is an assault body armor vest with high protection area. The vest has 2 ballistic compartments.
 From the front chest area, two rear ballistic compartments for placing armor plates, a ballistic collar, and the width of the vest can be adjusted via side straps.
@@ -1547,8 +1558,8 @@ The double-layer ballistic face shield provides good protection against small ca
 <entityname.deep_supernova>SUPERNOVA "Supernova" Suppressed Shotgun</entityname.deep_supernova>
 <entitydescription.deep_supernova>A specially modified shotgun equipped with a suppressor. 7-round magazine capacity, fires 12 gauge shells.
 Knocks down enemies at close range while making minimal noise.
-(Reload: 4s, Spread: 0.1, Damage: 1.5, Rate of Fire: 0.7)
-(Provides "Shotgun Basics", "Shotgun Specialist" talents)</entitydescription.deep_supernova>
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
+(Reload: 4s, Spread: 0.1, Damage: 1.5, Rate of Fire: 0.7)</entitydescription.deep_supernova>
 <entityname.deep_vhs_d3_baka>‖color:gui.blue‖"Law and Ordnance" VHS-D3‖end‖ Bullpup Assault Rifle</entityname.deep_vhs_d3_baka>
 <entitydescription.deep_vhs_d3_baka>Baka's exclusive weapon, from Battlefield 2042. The elusive Baka used this gun to collect numerous dog tags.
 (Reload: 1.2s, Spread: 1, Damage: 1.1, Penetration Multiplier: 1.5, Rate of Fire: 0.075)
@@ -1557,7 +1568,11 @@ Knocks down enemies at close range while making minimal noise.
 (Equipped with tactical minimap)</entitydescription.deep_vhs_d3_baka>
 <entityname.deep_wuchuan>‖color:gui.blue‖Wuchuan‖end‖</entityname.deep_wuchuan>
 <entitydescription.deep_wuchuan>MiaoMiao's exclusive weapon. The powerful MiaoMiao used the 'Parry Stick Flow' to flawlessly defeat Teacher Yin Hu, obtaining this copper-poured, iron-cast great blade.
-(Skill details see Wuchuan talent)</entitydescription.deep_wuchuan>
+‖color:gui.blue‖(When the Wuchuan (Dark Wind) rises, retreat to survive, advance to conquer. Can block with the blade, or dash forward like the wind.
+Right-click to charge stance. Enemy attacks on Wuchuan accelerate the charge. When the charge bar is full, activate Swift Step (Sata).
+Swift Step: 90% Stun Resistance, +70% Movement Speed, 100% Water Current Resistance, +200% Melee Damage, +100% Melee Speed. Effect diminishes over time.
+Ride the Wind (Chengfeng): While crouching, +300% Melee Speed, 80% Damage Resistance.
+Leaf Concealment (Yeyin): When health is below 50% while crouching, gain Concealment. Monsters cannot detect you.)‖end‖</entitydescription.deep_wuchuan>
 <entityname.deep_Gauss_Benzoyl_Peroxide>‖color:gui.blue‖Gauss Rifle‖end‖</entityname.deep_Gauss_Benzoyl_Peroxide>
 <entitydescription.deep_Gauss_Benzoyl_Peroxide>Benzoyl Peroxide's exclusive weapon, from S.T.A.L.K.E.R. 2. This Gauss Rifle from the Zone will pierce all armor.
 (Reload: 3s, Spread: 0, Damage: 1, Charge Time: 2.5s)
@@ -1567,6 +1582,7 @@ Knocks down enemies at close range while making minimal noise.
 A large-caliber shotgun with three barrels. Its exaggerated projectile design and recoil that completely disregards the wrist seem to indicate this weapon exists solely to tear apart enemies in front of it.
 Numerous dents and scratches on the exterior speak of past hellish combat environments, but the internal structure is surprisingly well-maintained, without any signs of operational issues.
 Garganta is a nightmare of the past, but now, can I entrust my life to you once more?
+‖color:gui.red‖(Gain 100 XP and 20 Mark for each enemy killed with this shotgun.)‖end‖
 (Reload: 2s, Spread: 10, Damage: 1, Rate of Fire: 1, -40% Movement Speed)</entitydescription.deep_pigcat_three_shotgun>
 <entityname.deep_three_mag>Triple-Barrel Shotgun Magazine</entityname.deep_three_mag>
 <entitydescription.deep_three_mag>Exclusive magazine for the Triple-Barrel Shotgun. Delivers devastating impact to close-range targets.
@@ -1576,6 +1592,7 @@ Garganta is a nightmare of the past, but now, can I entrust my life to you once 
 <entityname.deep_rpd_thesun>‖color:gui.blue‖"Cloudburst"‖end‖ RPD Light Machine Gun</entityname.deep_rpd_thesun>
 <entitydescription.deep_rpd_thesun>YaoYang's exclusive weapon, from COD.
 An RPD with a rapid-cooling barrel, delivering strong fire suppression to enemies.
+‖color:gui.red‖(-70% Spread while crouched with a machine gun.)‖end‖
 ‖color:gui.red‖(Exclusive cooling barrel, no reload penalty)‖end‖
 (Jam Clear: 6s, Spread: 8, Damage: 1, Rate of Fire: 700 RPM, -20% Movement Speed)</entitydescription.deep_rpd_thesun>
 <entityname.deep_rpd_mag_sun>"Cloudburst" RPD Drum Magazine</entityname.deep_rpd_mag_sun>
@@ -2182,7 +2199,13 @@ Swift Step: 90% Stun Resistance, +70% Movement Speed, 100% Water Current Resista
 Ride the Wind: When crouching, +300% Melee Speed, 80% Damage Resistance.
 Leaf Concealment: When health less than 50% and crouching, gain Concealment, enemies cannot detect you.</talentdescription.deep_wuchuan>
 <talentname.deep_talent_all>Deep Diving Armory Talent Collection</talentname.deep_talent_all>
-<talentdescription.deep_talent_all>Collection of all Deep Diving Armory talents, integrated into one talent to reduce lag.</talentdescription.deep_talent_all>
+<talentdescription.deep_talent_all>(Collection of all Deep Diving Armory talents, consolidated into one talent to reduce lag.)
+Features Deep Diving Armory's unique numerical balance:
+- Vanilla and other modded firearms deal 4x headshot damage and +30% gun damage when outside of water.
+- You are able to fight using firearms from other mods.
+- When underwater, Deep Diving firearms suffer a -60% damage penalty due to water resistance (This can be offset by installing 'Underwater Drag Optimization').
+Lethal Headshot is a crucial mechanic in Deep Diving combat, allowing you to 'cheese' high-tier enemies with low-tier weapons.
+Lethal Headshot only affects humans and is ineffective against other creatures.</talentdescription.deep_talent_all>
 <talentname.deep_chip_talent>Weapon Upgrade</talentname.deep_chip_talent>
 <talentdescription.deep_chip_talent>Weapon Upgrade connected. Insert different chips to activate different effects.</talentdescription.deep_chip_talent>
 <talentname.deep_melee_talent>Melee Guidance</talentname.deep_melee_talent>
