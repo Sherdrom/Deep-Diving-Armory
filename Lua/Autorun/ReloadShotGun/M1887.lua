@@ -7,8 +7,8 @@ LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.ItemCon
 -- ===== 配置参数 =====
 local RELOAD_CONFIG = {
     Sound = {
-        sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/M870Insert.ogg"),
-        hangSound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/M870Hang.ogg"),
+        sound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Insert.ogg"),
+        hangSound = Game.SoundManager.LoadSound(... .. "/weapon/ammo/m870Hang.ogg"),
         frequencymultiplier = 1,
         gain = 1.5,
         range = 500
