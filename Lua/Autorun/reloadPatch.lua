@@ -1,3 +1,4 @@
+if SERVER then return end
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
 
 local MagState={}
