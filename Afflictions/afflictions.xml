@@ -973,6 +973,24 @@
       <StatValue stattype="TeamAttackMultiplier" value="-1" />
     </Effect>
   </Affliction>
+
+  <Affliction
+    identifier="deep_enemy_no_friendlyfire"
+    description=""
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    <StatValue stattype="TeamAttackMultiplier" value="1" />
+    </Effect>
+  </Affliction>
   
   
   <Affliction
@@ -2228,7 +2246,7 @@
     treatmentthreshold="1000"
     iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
     <Effect minstrength="0" maxstrength="240" strengthchange="-2" 
-            resistancefor="damage" 
+            resistancefor="damage,deep_gunwound" 
             minresistance="0.3" 
             maxresistance="0.3">
     </Effect>
@@ -3389,7 +3407,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
@@ -3406,7 +3424,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
@@ -3423,7 +3441,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
@@ -3440,7 +3458,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
@@ -3457,7 +3475,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="0.1" maxresistance="0.1" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.1" maxresistance="0.1" strengthchange="-1" >
     </Effect>
   </Affliction>
 
