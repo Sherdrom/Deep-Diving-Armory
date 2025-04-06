@@ -1,4 +1,3 @@
-if SERVER then return end
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
 
 local MagState={}
@@ -9,7 +8,9 @@ local function reInputMag(handItem, character)
     local handInv = handItem.OwnInventory
     local itemContainer = handInv.Container
     local handInvSlots = handInv.slots
-    local index = math.max(itemContainer.ContainedStateIndicatorSlot + 1 , 1)   -- 准确定位弹匣的slot
+    -- local index = math.max(itemContainer.ContainedStateIndicatorSlot + 1 , 1)   -- 准确定位弹匣的slot
+    local index = 1
+    for _ in itemContainer.slotRestrictions do
     local Mag = handInvSlots[index].items[1]
     if (not Mag) or (Mag and not Mag.OwnInventory) then return end
     if not MagState[handItem.ID] then
@@ -19,11 +20,17 @@ local function reInputMag(handItem, character)
         -- print("Mag ConditionIncreasedRecently")
         MagState[handItem.ID].isExecuted = true
         MagState[handItem.ID].Mag = Mag
-        handItem.OwnInventory.TryPutItem(Mag, index-1, true, true, character, true, true)
+        -- if Game.IsMultiplayer then
+        --     unloadMag(Mag, character)
+        -- end
+        handItem.OwnInventory.TryPutItem(Mag, index-1, true, false, character, true, false)
+        -- itemContainer.OnItemContained(Mag)
+    end
+    index = index + 1
     end
 end
 
-Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptable)
+Hook.Patch("Barotrauma.Character", "Control", function(instance, ptable)
     local character = instance
     if not character or not character.Inventory then return end
     local rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
