@@ -6,8 +6,9 @@ local function reInputMag(handItem, character)
     if not handItem then return end
     if not handItem.HasTag("weapon") then return end
     local handInv = handItem.OwnInventory
+    if not handInv then return end
     local itemContainer = handInv.Container
-    if itemContainer == nil then return end
+    if not itemContainer then return end
     local handInvSlots = handInv.slots
     -- local index = math.max(itemContainer.ContainedStateIndicatorSlot + 1 , 1)   -- 准确定位弹匣的slot
     local index = 1
