@@ -35,7 +35,7 @@ namespace RemainedAmmo
         public void Dispose()
         {
             // Cleanup your plugin!
-            harmonyInstance?.UnpatchAll();
+            harmonyInstance?.UnpatchSelf();
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo Disposed!");
         }
     }
