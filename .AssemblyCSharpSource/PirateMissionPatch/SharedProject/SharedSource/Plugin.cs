@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
 using System.Text;
+using System.Runtime.CompilerServices;
 using Barotrauma;
-using Barotrauma.Extensions;
-using Barotrauma.Items.Components;
-using FarseerPhysics;
 using HarmonyLib;
 using Microsoft.Xna.Framework;
 
@@ -45,7 +42,7 @@ namespace PirateMissionPatch
         public void Dispose()
         {
             // Cleanup your plugin!
-            harmonyInstance?.UnpatchAll();
+            harmonyInstance?.UnpatchSelf();
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] PirateMissionPatch Disposed!");
         }
 
