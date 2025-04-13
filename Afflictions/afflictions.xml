@@ -156,6 +156,22 @@
     <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly,deep_headshot_deadly_irresistible" minresistance="1" maxresistance="1" strengthchange="-0" >
     </Effect>
   </Affliction>
+
+  <Affliction
+    identifier="deep_headshot_deadly_monster_huge"
+	isbuff="true"
+    type="sight"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="1000"
+    showinhealthscannerthreshold="1000"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="true">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,bleeding" minresistance="0.9" maxresistance="0.9" strengthchange="-1" >
+    </Effect>
+  </Affliction>
   
   <Affliction
     identifier="deep_bodyshot_30"
@@ -3407,7 +3423,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
@@ -3424,7 +3440,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 

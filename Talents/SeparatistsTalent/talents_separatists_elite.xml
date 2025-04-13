@@ -5,42 +5,42 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_soidier">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中伤害3倍 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
 	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="10" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到5倍伤害，方便补刀 -->
-	<AbilityGroupInterval interval="0.1" >
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
-	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人扎堆时，伤害降低 -->
@@ -49,7 +49,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
       </Abilities>
     </AbilityGroupEffect>
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
@@ -57,15 +57,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
@@ -111,7 +103,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
 		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
@@ -119,7 +111,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -129,7 +121,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -143,7 +135,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
@@ -157,7 +149,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
@@ -171,7 +163,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
@@ -186,7 +178,7 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 附近有5名敌人时，精英怪获得90%伤害，致死爆头抗性,伤害可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
@@ -208,43 +200,42 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_scout">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中伤害3倍 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
 	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="10" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到5倍伤害，方便补刀 -->
-	<AbilityGroupInterval interval="0.1" >
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
-	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人扎堆时，伤害降低 -->
@@ -253,7 +244,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
       </Abilities>
     </AbilityGroupEffect>
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
@@ -261,15 +252,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
@@ -314,7 +297,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
 		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
@@ -322,7 +305,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 强攻手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -331,7 +314,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -345,7 +328,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
@@ -359,7 +342,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
@@ -373,7 +356,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
@@ -388,7 +371,7 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
@@ -409,43 +392,42 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_heavy">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中伤害3倍 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
 	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="10" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到5倍伤害，方便补刀 -->
-	<AbilityGroupInterval interval="0.1" >
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
-	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人扎堆时，伤害降低 -->
@@ -454,7 +436,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
       </Abilities>
     </AbilityGroupEffect>
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
@@ -462,15 +444,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
@@ -514,7 +488,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
 		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
@@ -522,7 +496,7 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
-    <AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.9" >
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
@@ -534,7 +508,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 重装近距离薄弱 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -551,7 +525,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -565,7 +539,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
@@ -579,7 +553,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
@@ -593,7 +567,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
@@ -608,7 +582,7 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>
@@ -628,43 +602,42 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_leader_normal">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中伤害3倍 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
 	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="10" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到5倍伤害，方便补刀 -->
-	<AbilityGroupInterval interval="0.1" >
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
-	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人扎堆时，伤害降低 -->
@@ -673,7 +646,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
       </Abilities>
     </AbilityGroupEffect>
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
@@ -681,15 +654,7 @@
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
@@ -735,7 +700,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
 		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
@@ -766,7 +731,7 @@
     </AbilityGroupEffect>
     <!-- 首领 -->
     <!-- 首领活着时，全员获得10%移速，伤害加成,30%精度加成 -->
-    <AbilityGroupInterval interval="0.1">
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
           <StatusEffects>
@@ -778,7 +743,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -792,7 +757,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
       </Conditions>
@@ -806,7 +771,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
       </Conditions>
@@ -820,7 +785,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
       </Conditions>
@@ -835,7 +800,7 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
       </Conditions>

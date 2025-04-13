@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+ <!-- UNIFORMS START -->
+  <Item name="" identifier="103_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" amount="1" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="organicfiber" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/103_suit.png" sourcerect="163,16,95,182" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/103_suit.png" limb="Torso" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightHand" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftHand" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftForearm" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightForearm" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftArm" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightArm" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/103_suit.png" limb="Waist" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightThigh" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftThigh" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightLeg" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftLeg" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/103_suit.png" limb="RightFoot" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/103_suit.png" limb="LeftFoot" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="15" />
+	  <SkillModifier skillidentifier="helm" skillvalue="5" />
+	  <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+	  <SkillModifier skillidentifier="electrical" skillvalue="5" />
+	  <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+	<ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+</Items>
