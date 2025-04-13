@@ -1,0 +1,1505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  <Talents>
+  <Talent identifier="deep_talent_coalition_soidier_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 突击手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.2"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_striker_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_striker_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 强攻手天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.8"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 强攻手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_heavy_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_heavy_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 重装天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 重装防御者 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-3"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_sniper_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_sniper_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 狙击手天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.8"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 狙击手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.2"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 特种部队 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="Turret" invert="true"/>
+        <AbilityConditionCharacter targettype="Enemy">
+          <Conditional WasFullHealth="true"/>
+        </AbilityConditionCharacter>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="1" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_heavy_gunner_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_heavy_gunner_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 重炮手天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.8"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 重炮手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 增强快枪手（80%） -->
+	<AbilityGroupInterval interval="1">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+              <Affliction identifier="quickdrawing" amount="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="quickdrawing" minimumpercentage="1.0"/>
+        <AbilityConditionAttackData tags="pistolammoitem"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.8"/>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnUseRangedWeapon">
+      <Conditions>
+        <AbilityConditionItem tags="pistolitem"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <!-- small delay so we don't remove the affliction before the attack is applied -->
+            <StatusEffect type="OnAbility" target="This" delay="0.05" stackable="false" disabledeltatime="true">
+              <ReduceAffliction identifier="quickdrawing" strength="8"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="DualWieldingPenaltyReduction" value="0.5"/>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_leader_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_leader_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 首领天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 复仇小队 -->
+	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character">
+              <Affliction identifier="deep_revengesquad_co_hard" amount="240"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+  <Talent identifier="deep_talent_coalition_blaster_elite">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_blaster_elite">
+    </Description>
+    <!-- 敌人基础调整 -->
+    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <AbilityGroupInterval interval="5" >
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
+      <Abilities>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="10" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 敌人开枪无法压制玩家-->
+	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionCharacter targettypes="Enemy"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-10" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人扎堆时，伤害降低 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 敌人攻击玩家四肢时，降低25%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack" >
+    <Conditions>
+        <AbilityConditionCharacter targettypes="Monster"/>
+      </Conditions>
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_enemy_no_friendlyfire" strength="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+
+
+    <!-- 爆破手天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 爆破手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1.2"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 多人游戏动态抗性调整 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+
+
+</Talents>
