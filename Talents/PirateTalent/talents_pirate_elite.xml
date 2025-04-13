@@ -178,7 +178,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%伤害，致死爆头抗性,伤害可被碎甲芯片削减 -->
+    <!-- 附近有5名敌人时，精英怪获得90%伤害，50%致死爆头抗性,伤害可被碎甲芯片削减 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
@@ -714,8 +714,8 @@
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character">
-              <Affliction identifier="deep_revengesquad_co_hard" amount="240"/>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_revengesquad_pirate" amount="120"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
@@ -728,7 +728,7 @@
         <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.1" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
       </Abilities>
     </AbilityGroupEffect>
     <!-- 首领 -->
@@ -737,8 +737,8 @@
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="deep_talent_leader_alive" amount="10.0"/>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_talent_pirate_leader_alive" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>

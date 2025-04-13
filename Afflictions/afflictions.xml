@@ -2251,6 +2251,38 @@
     </Effect>
     <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="4,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0"/>
   </Affliction>
+
+  <Affliction
+    identifier="deep_revengesquad_pirate"
+    type="talentbuff"
+    isbuff="true"
+    limbspecific="false"
+    maxstrength="120"
+    treatmentthreshold="1000"
+    iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="120" strengthchange="-1" 
+            resistancefor="damage,deep_gunwound"
+            minresistance="0.3" 
+            maxresistance="0.3">
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0"/>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_revengesquad_sp_hard"
+    type="talentbuff"
+    isbuff="true"
+    limbspecific="false"
+    maxstrength="180"
+    treatmentthreshold="1000"
+    iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
+    <Effect minstrength="0" maxstrength="180" strengthchange="-1" 
+            resistancefor="damage,deep_gunwound"
+            minresistance="0.3" 
+            maxresistance="0.3">
+    </Effect>
+    <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0"/>
+  </Affliction>
   
   <Affliction
     identifier="deep_revengesquad_co_hard"
@@ -3513,6 +3545,23 @@
   </Affliction>
 
   <Affliction
+    identifier="deep_enemy_resistance_heavy_sp"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="0.3" maxresistance="0.3" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
     identifier="deep_enemy_resistance_heavy_separatists"
     description=""
 	isbuff="true"
@@ -3528,9 +3577,43 @@
     <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="0.4" maxresistance="0.4" strengthchange="-1" >
     </Effect>
   </Affliction>
+  
+  <Affliction
+    identifier="deep_enemy_resistance_heavy_separatists_elite"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="0.45" maxresistance="0.45" strengthchange="-1" >
+    </Effect>
+  </Affliction>
 
   <Affliction
     identifier="deep_enemy_resistance_heavy_pirate_near"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="-0.3" maxresistance="-0.3" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_enemy_resistance_heavy_sp_near"
     description=""
 	isbuff="true"
     type="deep_armor"
@@ -3562,10 +3645,27 @@
     <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="-0.4" maxresistance="-0.4" strengthchange="-1" >
     </Effect>
   </Affliction>
+  
+  <Affliction
+    identifier="deep_enemy_resistance_heavy_separatists_near_elite"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="-0.45" maxresistance="-0.45" strengthchange="-1" >
+    </Effect>
+  </Affliction>
 
 
   <Affliction
-    identifier="deep_talent_leader_alive"
+    identifier="deep_talent_pirate_leader_alive"
     description=""
 	isbuff="true"
     type="sight"
