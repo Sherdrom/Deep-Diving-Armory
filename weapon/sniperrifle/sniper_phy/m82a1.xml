@@ -34,15 +34,17 @@
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="387,23,409,109" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.4,0.7" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>
-    <RangedWeapon reload="1" weapondamagemodifier="1" holdtrigger="true" barrelpos="250,13" spread="2" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="1" weapondamagemodifier="1" holdtrigger="true" barrelpos="205,20" spread="2" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="10" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/weapon/ammo/127x99.ogg" type="OnUse" range="5000" />
+      <Sound file="%ModDir%/weapon/ammo/127x99.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/127x99.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/127x99.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
       <StatusEffect type="OnUse" target="This">
 	  <ParticleEmitter particle="deep_casingfirearm_127_99" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Explosion range="300.0" force="8" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="200" />
+        <Explosion range="300.0" force="4" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="200" />
       </StatusEffect>
 	  <StatusEffect type="OnUse" target="Character" disabledeltatime="true" comparison="and" targetlimbs="Head,LeftHand,RightHand">
         <Conditional skillrequirement="true" weapons="lt 90" />
@@ -62,14 +64,43 @@
       <RequiredItems items="deep_m82a1_mag,tsm_127ammo_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
 	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
-	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/akre.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_m82a1_mag,tsm_127ammo_mag" hide="false" itempos="-30,-2" setactive="true" rotation="0" />
+      <Containable items="deep_m82a1_mag,tsm_127ammo_mag" hide="false" itempos="-30,-2" setactive="true" rotation="0" >
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="3" setvalue="true" />
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="1" setvalue="true" disabledeltatime="true" />
+
+        <StatusEffect type="OnInserted" target="This" holdpos="55,-15" holdangle="10" handle2="-100,-60" delay="0.01" condition="0" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-70,-5" delay="0.8" setvalue="true" />
+        <!-- Sets gun's and hand's position, makes a sound. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-50,-40" holdangle="20" holdpos="45,-15" aimangle="45" aimpos="25,0" delay="1.2" condition="0" setvalue="true" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="45,10" delay="1.5" setvalue="true" />
+        <!-- Puts the hand on the eject port. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-50,10" delay="1.6" setvalue="true" />
+        <!-- Eject port work. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-75,10" delay="2" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- End. Sets everything to default values. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-105,-15" handle2="100,20" holdangle="-35" holdpos="100,-10" aimangle="0" aimpos="100,0" delay="3" setvalue="true" />
+        <!-- If the magazine is removed/swapped, sets the condition to 1. -->
+        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
+        <sound file="%ModDir%/weapon/ammo/gm6_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        </StatusEffect>
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
