@@ -30,13 +30,6 @@ function DDA_AAS.Main.getArmor(character,targetlimb)
     return outeritem,inneritem                                                  --Return armor(item)
 end
 
-function DDA_AAS.Main.getPen(item)
-    if item == nil then return nil end
-    local projectile = item.GetComponentString("Projectile")                    --Get projectile component
-    if projectile == nil then return nil end
-    return math.floor(projectile.penetration*10)                                --Caculate and return pen level
-end
-
 local function clamp(input,min,max)
     if input <= min then return min end
     if input >= max then return max end
