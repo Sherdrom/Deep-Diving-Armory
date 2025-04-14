@@ -561,9 +561,6 @@
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="sr25_762x51round" />
-	  <!--子弹打完，枪械进行换弹-->
-	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
-      </StatusEffect>
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
 	  <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
       </StatusEffect>
