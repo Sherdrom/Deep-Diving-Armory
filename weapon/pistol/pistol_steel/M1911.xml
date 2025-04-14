@@ -41,10 +41,6 @@
       <Sound file="%ModDir%/weapon/ammo/m1911.ogg" type="OnUse" range="3000" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/m1911re.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="1" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="8.0" />
         <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
@@ -79,6 +75,10 @@
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" handle1="-20,-7" handle2="-20,-7" holdangle="45" holdpos="30,-20" aimangle="0" aimpos="85,5" disabledeltatime="true" delay="1" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="1" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" >
+        <sound file="%ModDir%/weapon/ammo/m1911re.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />

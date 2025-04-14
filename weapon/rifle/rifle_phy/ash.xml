@@ -40,10 +40,6 @@
 	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
-	  <StatusEffect type="OnBroken" target="This" >
-        <sound file="%ModDir%/weapon/ammo/7.62x51re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
 	  <ParticleEmitter particle="deep_casingfirearm_127_55" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="0.8" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
@@ -96,6 +92,10 @@
         <StatusEffect type="OnInserted" target="This" handle1="5,-15" handle2="80,20" holdangle="-35" holdpos="40,-10" aimangle="0" aimpos="45,3" delay="2.5" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2.5" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" >
+        <sound file="%ModDir%/weapon/ammo/7.62x51re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />

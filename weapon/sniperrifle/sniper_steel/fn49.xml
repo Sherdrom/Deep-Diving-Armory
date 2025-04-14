@@ -35,9 +35,6 @@
 	  <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="2" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/Sound/Weapons/FN49/gunOther/fn49_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-      </StatusEffect>
 	  <StatusEffect type="OnUse" target="This" Condition="-150" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
 	  <StatusEffect type="InWater" target="This" Condition="100"/>
@@ -95,6 +92,9 @@
         <StatusEffect type="OnInserted" target="This" delay="3" disabledeltatime="true">
         <LuaHook name="FN49BoltInSprite" />
       </StatusEffect>
+      <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" >
+      <sound file="%ModDir%/Sound/Weapons/FN49/gunOther/fn49_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
