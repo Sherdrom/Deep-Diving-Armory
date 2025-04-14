@@ -32,7 +32,7 @@
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="45,714,369,82" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.5,0.9" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>
-    <RangedWeapon reload="3" MaxChargeTime="2" weapondamagemodifier="1" reloadnoskill="5" reloadskillrequirement="100" holdtrigger="true" barrelpos="180,-15" spread="0" unskilledspread="0" combatPriority="100" drawhudwhenequipped="true" crosshairscale="1">
+    <RangedWeapon reload="3" MaxChargeTime="2" weapondamagemodifier="1" reloadnoskill="5" reloadskillrequirement="100" holdtrigger="true" barrelpos="180,0" spread="0" unskilledspread="0" combatPriority="100" drawhudwhenequipped="true" crosshairscale="1">
 	  <ChargeSound file="%ModDir%/weapon/ammo/gauss_charge.ogg" range="3000" forceplaysounds="true" />
 	  <ParticleEmitterCharge particle="chargenucleargun" particlespersecond="30" scalemultiplier="0.75,0.75" scalemin="1.0" scalemax="1.0" anglemax="360" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
@@ -60,16 +60,30 @@
     </RangedWeapon>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" containedspritedepth="0.56">
       <Containable items="deep_gauss_mag" hide="false" setactive="true" itempos="-25.5,-9">
-        <StatusEffect type="OnInserted" target="This" targetslot="0" disabledeltatime="true" delay="3" condition="100" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" targetslot="0" disabledeltatime="true" condition="-100" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" targetslot="0" disabledeltatime="true" delay="0.1" stackable="false" comparison="or">
-          <Conditional EntityType="eq character" TargetContainer="True" />
-          <Conditional EntityType="eq null" TargetContainer="True" />
-          <sound file="%ModDir%/weapon/ammo/gauss_reload.ogg" type="OnUse" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="3" setvalue="true" />
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255"  delay="0.5" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="60,-20" holdangle="10" handle2="-20,-60" disabledeltatime="true" delay="0.05" condition="0" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="0,-20" disabledeltatime="true" delay="0.3" setvalue="true" />
+        <!-- Sets gun's and hand's position, makes a sound. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-40,0" holdangle="30" holdpos="50,-15" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.4" condition="0" setvalue="true" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
-        <StatusEffect type="OnInserted" target="This" targetslot="0" disabledeltatime="true" delay="1.15" stackable="false" comparison="or">
-          <Conditional EntityType="eq character" TargetContainer="True" />
-          <Conditional EntityType="eq null" TargetContainer="True" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" holdpos="60,-10" aimpos="65,3" holdangle="20" aimangle="0" handle2="0,-10" disabledeltatime="true" delay="1.5" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="60,-10" aimpos="65,3" holdangle="20" aimangle="0" handle2="-30,-10" disabledeltatime="true" delay="2" setvalue="true" />
+        <!-- Puts the hand on the eject port. -->
+        <!-- End. Sets everything to default values. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-85,-8" handle2="100,20" holdangle="-35" holdpos="70,-10" aimangle="0" aimpos="90,5" disabledeltatime="true" delay="3" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
+          <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" >
+          <sound file="%ModDir%/weapon/ammo/gauss_reload.ogg" type="OnUse" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
