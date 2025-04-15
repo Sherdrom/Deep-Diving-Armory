@@ -60,7 +60,7 @@ local function DoChance(probability)
     return false
 end
 
-function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affliction)
+function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affliction,char,limb)
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
     if penlevel >= data.level + 2 then ricochet = false end                                 --Overwhelming pen, no ricochet :)
@@ -80,6 +80,14 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
     else
         item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
     end
+
+    if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
+        local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]
+        local strength = affliction.Strength * data.correctionmultiplier
+        local correctaffliction = prefab.Instantiate(strength, nil)
+        char.CharacterHealth.ApplyAffliction(limb,correctaffliction,false,false)
+    end
+
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
         ptable.PreventExecution = true
         return
@@ -140,12 +148,12 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     local damagemultiplier = 1.0
 
     if executeplate then
-        DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction)
+        DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
     end
 
     --Note: Basically we are doing what we did again.
     if executecloth then
-        DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction)
+        DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
     end
 
     --Damage stuff
