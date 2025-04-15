@@ -61,12 +61,13 @@ local function DoChance(probability)
 end
 
 function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affliction,char,limb)
+    local continue = true
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
     if penlevel >= data.level + 2 then ricochet = false end                                 --Overwhelming pen, no ricochet :)
 
     if ricochet then                                                                        --Jackpot
-        ptable.PreventExecution = false
+        continue = false
         return
     end
 
@@ -85,17 +86,19 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
         local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]
         local strength = affliction.Strength * data.correctionmultiplier
         local correctaffliction = prefab.Instantiate(strength, nil)
-        char.CharacterHealth.ApplyAffliction(limb,correctaffliction,false,false)
+        char.CharacterHealth.ApplyAffliction(limb,correctaffliction,true,false,false)
     end
 
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
-        ptable.PreventExecution = true
+        continue = false
         return
     else
-        local penlevel = penlevel - math.floor(data.level * data.penresistance)             --Reamining pen
+        penlevel = penlevel - math.floor(data.level * data.penresistance)                   --Reamining pen
     end
 
-    damagemultiplier =  damagemultiplier * data.aftereffectmultiplier                       --Damage caculation thing, work after everything is done
+    damagemultiplier = damagemultiplier * data.aftereffectmultiplier
+
+    return damagemultiplier,penlevel,continue                                               --Damage caculation thing, work after everything is done
 end
 
 --Main stuff
@@ -146,19 +149,29 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     if not executecloth and not executeplate then return end                                                    --Did u mean run even if unnecessary?
 
     local damagemultiplier = 1.0
+    local continue = true
 
     if executeplate then
-        DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        ptable.PreventExecution = not continue
+        if not continue then return end
     end
 
     --Note: Basically we are doing what we did again.
     if executecloth then
-        DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        ptable.PreventExecution = not continue
+        if not continue then return end
     end
 
     --Damage stuff
-    for i,v in pairs(ptable["attack"].Afflictions) do
-        i.Strength = clamp(i.Strength * damagemultiplier,0,math.huge)
-    end
+
+    -- Note: These codes may cause F3 Errors but they wont lead to actual issues
+    --local originpen = math.floor(ptable["penetration"]*10)
+    --local penperc = penetrationlevel/originpen
+    --ptable["penetration"] = ptable["penetration"] * penperc
+    -- End Note
+
+    ptable["attack"].DamageMultiplier = ptable["attack"].DamageMultiplier * damagemultiplier
 
 end, Hook.HookMethodType.Before)
