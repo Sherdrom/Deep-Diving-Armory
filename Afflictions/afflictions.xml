@@ -3155,7 +3155,7 @@
    </Affliction>
    
   <Affliction
-    identifier="deep_enemy_four_limbs_balance"
+    identifier="deep_enemy_up_limbs_balance"
     description=""
 	isbuff="true"
     type="deep_armor"
@@ -3167,7 +3167,24 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.25" maxresistance="0.25" strengthchange="-2" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.25" maxresistance="0.25" strengthchange="-1" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_enemy_down_limbs_balance"
+    description=""
+	isbuff="true"
+    type="deep_armor"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Waist,LeftFrearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.5" maxresistance="0.5" strengthchange="-1" >
     </Effect>
   </Affliction>
 
