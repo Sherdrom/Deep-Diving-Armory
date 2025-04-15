@@ -29,12 +29,13 @@ namespace DeepVisionPatch
 
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
+            if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
             float leftHandSpread = 0;
             float rightHandSpread = 0;
-            if (rightHand != null) leftHandSpread = (float)Traverse.Create(rightHand.GetComponent<RangedWeapon>()).Method("GetSpread", character).GetValue();
-            if (leftHand != null) rightHandSpread = (float)Traverse.Create(leftHand.GetComponent<RangedWeapon>()).Method("GetSpread",character).GetValue();
-            FieldOfView = MathF.Max(leftHandSpread,rightHandSpread)*10;
+            if (rightHand != null) rightHandSpread = (float)Traverse.Create(rightHand.GetComponent<RangedWeapon>()).Method("GetSpread", character).GetValue();
+            if (leftHand != null) leftHandSpread = (float)Traverse.Create(leftHand.GetComponent<RangedWeapon>()).Method("GetSpread",character).GetValue();
+            FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
 
             graphics.SetRenderTarget(__instance.LosTexture);
 
@@ -47,15 +48,15 @@ namespace DeepVisionPatch
                 //the visible area stretches to the maximum when the cursor is this far from the character
                 const float MaxOffset = 256.0f;
                 // Texture2D texture = new CreateViewTexture().CreateSectorTexture(graphics,256,FieldOfView,Color.Black);
-                DeepVisionPatch.viewTexture.UpdateSectorTexture(FieldOfView, new Color(255,255,255,128));
+                DeepVisionPatch.viewTexture.UpdateSectorTexture(FieldOfView, new Color(255,255,255,30));
                 Texture2D texture = DeepVisionPatch.viewTexture.GetTexture();
                 //the magic numbers here are just based on experimentation
-                float MinHorizontalScale = MathHelper.Lerp(5f, 1.5f, __instance.ObstructVisionAmount);
+                float MinHorizontalScale = MathHelper.Lerp(5f, 1.5f, 0);
                 float MaxHorizontalScale = MinHorizontalScale * 5f;
-                float VerticalScale = MathHelper.Lerp(4.0f, 1.25f, __instance.ObstructVisionAmount);
+                float VerticalScale = MathHelper.Lerp(4.0f, 1.25f, 0);
 
                 //Starting point and scale-based modifier that moves the point of origin closer to the edge of the texture if the player moves their mouse further away, or vice versa.
-                float relativeOriginStartPosition = 0.101f; //Increasing this value moves the origin further behind the character
+                float relativeOriginStartPosition = 0.1f; //Increasing this value moves the origin further behind the character
                 float originStartPosition = texture.Width * relativeOriginStartPosition * MinHorizontalScale;
                 // float relativeOriginLookAtPosModifier = -0.055f; //Increase this value increases how much the vision changes by moving the mouse
                 // float originLookAtPosModifier = texture.Width * relativeOriginLookAtPosModifier;
