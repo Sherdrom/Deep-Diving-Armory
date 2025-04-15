@@ -64,11 +64,18 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
     local continue = true
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
-    if penlevel >= data.level + 2 then ricochet = false end                                 --Overwhelming pen, no ricochet :)
+    if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
+        local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]
+        local strength = affliction.Strength * data.correctionmultiplier
+        local correctaffliction = prefab.Instantiate(strength, nil)
+        char.CharacterHealth.ApplyAffliction(limb,correctaffliction,true,false,false)
+    end
+
+    if penlevel - data.level >= 2 then ricochet = false end                                 --Overwhelming pen, no ricochet :)
 
     if ricochet then                                                                        --Jackpot
         continue = false
-        return
+        return nil, nil, continue
     end
 
     --Plate damage stuff
@@ -82,16 +89,9 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
         item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
     end
 
-    if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
-        local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]
-        local strength = affliction.Strength * data.correctionmultiplier
-        local correctaffliction = prefab.Instantiate(strength, nil)
-        char.CharacterHealth.ApplyAffliction(limb,correctaffliction,true,false,false)
-    end
-
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
         continue = false
-        return
+        return nil, nil, continue
     else
         penlevel = penlevel - math.floor(data.level * data.penresistance)                   --Reamining pen
     end
