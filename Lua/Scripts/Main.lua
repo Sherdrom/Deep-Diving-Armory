@@ -115,14 +115,14 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     --find plate carrier data, if any
     if outercloth ~= nil then 
         clothdata = DDA_AAS.Armors[outercloth.Prefab.Identifier.Value]
-        if (clothdata ~= nil and clothdata.type == "custom") or clothdata.targetidentifier == "Any" then
+        if (clothdata ~= nil and clothdata.type == "custom") or clothdata.targetidentifier == "Any" then        --Do override if custom or using "Any"
             outertargetid = clothdata.targetidentifier
         end
     end
     --find plate data, if any
     if innerplate ~= nil then
         platedata = DDA_AAS.Armors[innerplate.Prefab.Identifier.Value]
-        if (platedata ~= nil and platedata.type == "custom") or clothdata.targetidentifier == "Any" then
+        if (platedata ~= nil and platedata.type == "custom") or clothdata.targetidentifier == "Any" then        --Do override if custom or using "Any"
             innertargetid = platedata.targetidentifier
         end
     end
@@ -133,7 +133,7 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     local clothaffliction = {}
     local plateaffliction = {}
 
-    if outertargetid == "Any" then executecloth = true end
+    if outertargetid == "Any" then executecloth = true end                                                      --Force override in "Any" case
     if innertargetid == "Any" then executeplate = true end
 
     --let's find out if it is a valid attack
@@ -146,11 +146,11 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
             plateaffliction = i
             executeplate = true
         end
-        if outertargetid == "Any" then
-            clothaffliction.Strength = clothaffliction.Strength + i.Strength
-        end
-        if innertargetid == "Any" then
-            plateaffliction.Strength = plateaffliction.Strength + i.Strength
+        if outertargetid == "Any" then                                                                          --Here we add up all strength for "Any" case
+            clothaffliction.Strength = clothaffliction.Strength + i.Strength                                    --We actually trick our own codes. Makesure
+        end                                                                                                     --you wont use anything else than Strength
+        if innertargetid == "Any" then                                                                          --in "Any" case. This var only contains
+            plateaffliction.Strength = plateaffliction.Strength + i.Strength                                    --Strength in that case.
         end
     end
 
@@ -159,7 +159,7 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
 
     local damagemultiplier = 1.0
     local continue = true
-
+    --A "little" bit tooooooooooo long :(
     if executeplate then
         damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
