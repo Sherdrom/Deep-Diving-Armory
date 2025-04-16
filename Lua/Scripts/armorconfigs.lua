@@ -14,7 +14,8 @@ DDA_AAS.Armors={
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
         ignoredamage = false,                       --Take damage or not.
         --custom stuff, only work if custom type
-        targetidentifier = "gunshotwound",          --Decide what damage this will decide a valid shot
+        targetidentifier = "gunshotwound",          --Decide what damage this will decide a valid shot. default gunshotwound.
+                                                    --Use "Any" if you want to define a full-protection armor(Also work for pre-defined types)
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,

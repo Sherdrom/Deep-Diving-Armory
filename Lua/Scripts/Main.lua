@@ -115,14 +115,14 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     --find plate carrier data, if any
     if outercloth ~= nil then 
         clothdata = DDA_AAS.Armors[outercloth.Prefab.Identifier.Value]
-        if clothdata ~= nil and clothdata.type == "custom" then
+        if (clothdata ~= nil and clothdata.type == "custom") or clothdata.targetidentifier == "Any" then
             outertargetid = clothdata.targetidentifier
         end
     end
     --find plate data, if any
     if innerplate ~= nil then
         platedata = DDA_AAS.Armors[innerplate.Prefab.Identifier.Value]
-        if platedata ~= nil and platedata.type == "custom" then
+        if (platedata ~= nil and platedata.type == "custom") or clothdata.targetidentifier == "Any" then
             innertargetid = platedata.targetidentifier
         end
     end
@@ -130,8 +130,11 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     local executecloth = false
     local executeplate = false
 
-    local clothaffliction = nil
-    local plateaffliction = nil
+    local clothaffliction = {}
+    local plateaffliction = {}
+
+    if outertargetid == "Any" then executecloth = true end
+    if innertargetid == "Any" then executeplate = true end
 
     --let's find out if it is a valid attack
     for i,v in pairs(attackdata.Afflictions) do
@@ -142,6 +145,12 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
         if platedata~= nil and not executeplate and i.identifier == innertargetid then
             plateaffliction = i
             executeplate = true
+        end
+        if outertargetid == "Any" then
+            clothaffliction.Strength = clothaffliction.Strength + i.Strength
+        end
+        if innertargetid == "Any" then
+            plateaffliction.Strength = plateaffliction.Strength + i.Strength
         end
     end
 
