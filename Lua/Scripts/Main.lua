@@ -115,14 +115,14 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     --find plate carrier data, if any
     if outercloth ~= nil then 
         clothdata = DDA_AAS.Armors[outercloth.Prefab.Identifier.Value]
-        if (clothdata ~= nil and clothdata.type == "custom") or clothdata.targetidentifier == "Any" then        --Do override if custom or using "Any"
+        if clothdata ~= nil and (clothdata.type == "custom" or clothdata.targetidentifier == "Any") then        --Do override if custom or using "Any"
             outertargetid = clothdata.targetidentifier
         end
     end
     --find plate data, if any
     if innerplate ~= nil then
         platedata = DDA_AAS.Armors[innerplate.Prefab.Identifier.Value]
-        if (platedata ~= nil and platedata.type == "custom") or clothdata.targetidentifier == "Any" then        --Do override if custom or using "Any"
+        if platedata ~= nil and (platedata.type == "custom" or clothdata.targetidentifier == "Any") then        --Do override if custom or using "Any"
             innertargetid = platedata.targetidentifier
         end
     end
@@ -130,8 +130,8 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     local executecloth = false
     local executeplate = false
 
-    local clothaffliction = {}
-    local plateaffliction = {}
+    local clothaffliction = {Strength = 0}
+    local plateaffliction = {Strength = 0}
 
     if outertargetid == "Any" then executecloth = true end                                                      --Force override in "Any" case
     if innertargetid == "Any" then executeplate = true end

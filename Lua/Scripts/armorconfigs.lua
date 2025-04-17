@@ -27,16 +27,16 @@ DDA_AAS.Armors={
         type = "composite",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
         level = 4,                                  --Bulletproof level, range 0-10
-        aftereffectmultiplier  = 0.6,               --Define damage multiplier if pen
+        aftereffectmultiplier  = 0.0,               --Define damage multiplier if pen
         correctionaffliction = "blunttrauma",                 --Define affliction if non-pen, TODO: Use table instead of single string
-        correctionmultiplier = 0.2,                 --Define how many damage should pass to player
+        correctionmultiplier = 0.0,                 --Define how many damage should pass to player
         enablecorrection = true,                   --Define should give non-pen affliction
         penresistance = 0.8,                        --Define pen resistance, will use to caculate remaining pen
         maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
         ignoredamage = true,                       --Take damage or not.
         --custom stuff, only work if custom type
-        targetidentifier = "gunshotwound",          --Decide what damage this will decide a valid shot
+        targetidentifier = "Any",          --Decide what damage this will decide a valid shot
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
