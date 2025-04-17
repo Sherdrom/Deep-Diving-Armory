@@ -1,22 +1,19 @@
 DDA_AAS.Main = {}
 
 -- Limb convertion stuff
-local limbtoslot = {}
-limbtoslot[LimbType.Head] = {InvSlotType.Head,0}
---Torso and waist
-limbtoslot[LimbType.Torso] = {InvSlotType.OuterClothes,0}
-limbtoslot[LimbType.Waist] = {InvSlotType.OuterClothes,0}
---Entire left arm
-limbtoslot[LimbType.LeftArm] = {InvSlotType.OuterClothes,1}
-limbtoslot[LimbType.LeftForearm] = {InvSlotType.OuterClothes,1}
-limbtoslot[LimbType.LeftHand] = {InvSlotType.OuterClothes,1}
---Entire right arm
-limbtoslot[LimbType.RightArm] = {InvSlotType.OuterClothes,1}
-limbtoslot[LimbType.RightForearm] = {InvSlotType.OuterClothes,1}
-limbtoslot[LimbType.RightHand] = {InvSlotType.OuterClothes,1}
---Thigh
-limbtoslot[LimbType.LeftThigh] = {InvSlotType.OuterClothes,2}
-limbtoslot[LimbType.RightThigh] = {InvSlotType.OuterClothes,2}
+local limbtoslot = {
+    [LimbType.Head] = {InvSlotType.Head,0},
+    [LimbType.Torso] = {InvSlotType.OuterClothes,0},
+    [LimbType.Waist] = {InvSlotType.OuterClothes,0},
+    [LimbType.LeftArm] = {InvSlotType.OuterClothes,1},
+    [LimbType.LeftForearm] = {InvSlotType.OuterClothes,1},
+    [LimbType.LeftHand] = {InvSlotType.OuterClothes,1},
+    [LimbType.RightArm] = {InvSlotType.OuterClothes,1},
+    [LimbType.RightForearm] = {InvSlotType.OuterClothes,1},
+    [LimbType.RightHand] = {InvSlotType.OuterClothes,1},
+    [LimbType.LeftThigh] = {InvSlotType.OuterClothes,2},
+    [LimbType.RightThigh] = {InvSlotType.OuterClothes,2}
+}
 
 --Functions
 function DDA_AAS.Main.getArmor(character,targetlimb)
@@ -93,11 +90,12 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
         continue = false
         return nil, nil, continue
-    else
+    end
+    if item.Condition > 0 then
         penlevel = penlevel - math.floor(data.level * data.penresistance)                   --Reamining pen
+        damagemultiplier = damagemultiplier * data.aftereffectmultiplier
     end
 
-    damagemultiplier = damagemultiplier * data.aftereffectmultiplier
 
     return damagemultiplier,penlevel,continue                                               --Damage caculation thing, work after everything is done
 end
@@ -175,12 +173,10 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
 
     --Damage stuff
 
-    -- Note: These codes may cause F3 Errors but they wont lead to actual issues
-    --local originpen = math.floor(ptable["penetration"]*10)
-    --local penperc = penetrationlevel/originpen
-    --ptable["penetration"] = ptable["penetration"] * penperc
-    -- End Note
+    local decreasedpen = ptable["penetration"] - (penetrationlevel / 10)
+    ptable["penetration"] = Single(ptable["penetration"] - decreasedpen)
 
-    ptable["attack"].DamageMultiplier = ptable["attack"].DamageMultiplier * damagemultiplier
+    ptable["damageMultiplier"] = Single(ptable["damageMultiplier"] * damagemultiplier)
+
 
 end, Hook.HookMethodType.Before)
