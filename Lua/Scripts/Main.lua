@@ -2,7 +2,7 @@ DDA_AAS.Main = {}
 
 -- Limb convertion stuff
 local limbtoslot = {}
-limbtoslot[LimbType.Head] = {InvSlotType.Head}
+limbtoslot[LimbType.Head] = {InvSlotType.Head,0}
 --Torso and waist
 limbtoslot[LimbType.Torso] = {InvSlotType.OuterClothes,0}
 limbtoslot[LimbType.Waist] = {InvSlotType.OuterClothes,0}
@@ -23,6 +23,7 @@ function DDA_AAS.Main.getArmor(character,targetlimb)
     if character == nil or targetlimb == nil then return nil,nil end
     local characterInv = character.Inventory                                    --Get character inv
     local targetinv = limbtoslot[targetlimb.type]                               --Get corresponding limb and its slot
+    if targetinv == nil then return nil,nil end
     local outeritem = characterInv.GetItemInLimbSlot(targetinv[1])              --Get outer cloth(item)
     if outeritem == nil then return nil,nil end
     if outeritem.OwnInventory == nil then return outeritem,nil end
@@ -102,10 +103,10 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
 end
 
 --Main stuff
-Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
-    local targetlimb = ptable["targetLimb"]
+Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--ApplyAttack
+    local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
-    local attackdata = ptable["attack"]
+    local afflictions = ptable["afflictions"]
     local penetrationlevel = math.floor(ptable["penetration"]*10)
     local targetcharacter = targetlimb.character
     local outercloth,innerplate = DDA_AAS.Main.getArmor(targetcharacter,targetlimb)
@@ -137,7 +138,7 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
     if innertargetid == "Any" then executeplate = true end
 
     --let's find out if it is a valid attack
-    for i,v in pairs(attackdata.Afflictions) do
+    for i in afflictions do
         if clothdata ~= nil and not executecloth and i.identifier == outertargetid then
             clothaffliction = i
             executecloth = true
@@ -165,9 +166,8 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance, ptable)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
-
     --Note: Basically we are doing what we did again.
-    if executecloth then
+    if executecloth and clothdata.protectionarea[targetlimb.type] then
         damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
