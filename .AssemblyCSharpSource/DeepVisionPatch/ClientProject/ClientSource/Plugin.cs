@@ -19,6 +19,7 @@ namespace DeepVisionPatch
         public static bool Prefix(LightManager __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, Camera cam, ref Vector2 lookAtPosition)
         {
             Character character = Character.Controlled;
+            if (character == null) return true;
             // 检查玩家是否在使用枪械物品并按住右键
             // if (Character.Controlled.SelectedItem?.GetComponent<Holdable>() == null) return;
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);

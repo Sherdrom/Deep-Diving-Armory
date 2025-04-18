@@ -29,7 +29,7 @@ namespace DeepVisionPatch
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
-            viewTexture.Initialize(GameMain.Instance.GraphicsDevice, 256);
+            viewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Loaded!");
         }
 
