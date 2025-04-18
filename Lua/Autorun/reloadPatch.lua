@@ -1,4 +1,6 @@
+LuaUserData.RegisterType("Barotrauma.Items.Components.ItemContainer+SlotRestrictions")
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
+LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.ItemContainer'], 'slotRestrictions')
 
 local MagState={}
 -- 按R换弹补丁，使换弹动画始终生效
