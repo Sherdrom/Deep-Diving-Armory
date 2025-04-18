@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_dp28" subcategory="machinegun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+<Item name="" identifier="deep_dp28" subcategory="machinegun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.28" impactsoundtag="impact_metal_light" >
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
     <Price baseprice="2000" minleveldifficulty="30" sold="true">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
@@ -18,11 +18,11 @@
 	  <Item identifier="steel" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/machinegun/machinegun45.png" sourcerect="10,8,212,190" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/machinegun/machinegun.png" sourcerect="26,158,266,54" depth="0.55" origin="0.5,0.5" />
-    <Body width="270" height="70" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="0,-15" aimpos="60,0" handle1="-30,-5" holdangle="170" msg="ItemMsgPickUpSelect" >
+    <Sprite texture="%ModDir%/weapon/machinegun/machinegun_steel/Sprite/DP28.png" sourcerect="7,5,467,87" depth="0.55" origin="0.5,0.5" />
+    <Body width="470" height="90" density="10" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-80,-8" handle2="10,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.4" setvalue="true" >
+	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -34,10 +34,10 @@
      </StatusEffect>
 	</Holdable>
 	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
-      <sprite texture="%ModDir%/weapon/machinegun/machinegun.png" canbehiddenbyotherwearables="false" sourcerect="26,158,266,54" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.5,0.9" />
+      <sprite texture="%ModDir%/weapon/machinegun/machinegun_steel/Sprite/DP28.png" canbehiddenbyotherwearables="false" sourcerect="7,5,467,87" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.28" origin="0.5,0.9" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>
-    <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="130,3" spread="18" unskilledspread="36" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="233,20" spread="18" unskilledspread="36" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -49,13 +49,9 @@
 	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
 	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="4" stackable="false" />
-	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/dpre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
 	  <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Explosion range="150.0" force="0" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+        <Explosion range="150.0" force="0.8" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
       </StatusEffect>
 	  <StatusEffect type="NotInWater" target="This" >
 	  <Conditional Condition="lt 50" />
@@ -80,7 +76,39 @@
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="deep_dp28_mag" hide="false" setactive="true" itempos="8,9" rotation="0" />
+      <Containable items="deep_dp28_mag" hide="false" setactive="true" itempos="6,9" rotation="0" >
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="3" setvalue="true" />
+        <!-- 弹匣隐藏 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <!-- 弹匣显示 -->
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="1" setvalue="true" disabledeltatime="true" />
+
+        <StatusEffect type="OnInserted" target="This" holdpos="40,-20" holdangle="10" handle2="5,0" delay="0.01" condition="0" setvalue="true" />
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-20,25" delay="0.8" setvalue="true" />
+        <!-- Sets gun's and hand's position, makes a sound. -->
+        <StatusEffect type="OnInserted" target="This" handle2="-40,-5" holdangle="40" holdpos="25,-15" aimangle="45" aimpos="25,0" delay="1.2" condition="0" setvalue="true" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- Puts the hand back. -->
+        <StatusEffect type="OnInserted" target="This" handle2="18,-8" delay="1.8" setvalue="true" />
+        <!-- Puts the hand on the eject port. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-20,10" delay="1.6" setvalue="true" />
+        <!-- Eject port work. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-60,10" delay="2" forceplaysounds="true">
+          <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
+        </StatusEffect>
+        <!-- End. Sets everything to default values. -->
+        <StatusEffect type="OnInserted" target="This" handle1="-80,-8" handle2="10,20" holdangle="-35" holdpos="45,-15" aimangle="0" aimpos="70,8" delay="3" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.5" >
+        <sound file="%ModDir%/weapon/ammo/dpre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        </StatusEffect>
+      </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
@@ -93,8 +121,8 @@
         <Containable items="deep_laser" hide="false" itempos="37,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-17,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-17,14" setactive="true" >
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-20,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-20,14" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
 		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
