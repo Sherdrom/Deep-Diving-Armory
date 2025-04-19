@@ -81,14 +81,16 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
     end
 
     --Plate damage stuff
-    if data.type == "ceramic" then
-        item.Condition = CaculateCeramicDamage(item,affliction,data)
-    elseif data.type == "composite" then
-        item.Condition = CaculateCompositeDamage(item,affliction,data)
-    elseif data.type == "metal" and not data.ignoredamage then
-        item.Condition = CaculateMetalDamage(item,affliction,data)
-    else
-        item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
+    if not data.ignoredamage then
+        if data.type == "ceramic" then
+            item.Condition = CaculateCeramicDamage(item,affliction,data)
+        elseif data.type == "composite" then
+            item.Condition = CaculateCompositeDamage(item,affliction,data)
+        elseif data.type == "metal" then
+            item.Condition = CaculateMetalDamage(item,affliction,data)
+        else
+            item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
+        end
     end
 
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
