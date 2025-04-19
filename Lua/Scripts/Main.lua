@@ -12,7 +12,11 @@ local limbtoslot = {
     [LimbType.RightForearm] = {InvSlotType.OuterClothes,1},
     [LimbType.RightHand] = {InvSlotType.OuterClothes,1},
     [LimbType.LeftThigh] = {InvSlotType.OuterClothes,2},
-    [LimbType.RightThigh] = {InvSlotType.OuterClothes,2}
+    [LimbType.LeftLeg] = {InvSlotType.OuterClothes,nil},
+    [LimbType.LeftFoot] = {InvSlotType.OuterClothes,nil},
+    [LimbType.RightThigh] = {InvSlotType.OuterClothes,2},
+    [LimbType.RightLeg] = {InvSlotType.OuterClothes,nil},
+    [LimbType.RightFoot] = {InvSlotType.OuterClothes,nil},
 }
 
 --Functions
@@ -23,7 +27,7 @@ function DDA_AAS.Main.getArmor(character,targetlimb)
     if targetinv == nil then return nil,nil end
     local outeritem = characterInv.GetItemInLimbSlot(targetinv[1])              --Get outer cloth(item)
     if outeritem == nil then return nil,nil end
-    if outeritem.OwnInventory == nil then return outeritem,nil end
+    if outeritem.OwnInventory == nil or targetinv[2] == nil then return outeritem,nil end
     local inneritem = outeritem.OwnInventory.GetItemAt(targetinv[2])            --Get contained plate(item)
     return outeritem,inneritem                                                  --Return armor(item)
 end
@@ -145,10 +149,10 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
             plateaffliction = i
             executeplate = true
         end
-        if outertargetid == "Any" then                                                                          --Here we add up all strength for "Any" case
+        if clothdata ~= nil and outertargetid == "Any" then                                                                          --Here we add up all strength for "Any" case
             clothaffliction.Strength = clothaffliction.Strength + i.Strength                                    --We actually trick our own codes. Makesure
         end                                                                                                     --you wont use anything else than Strength
-        if innertargetid == "Any" then                                                                          --in "Any" case. This var only contains
+        if platedata ~= nil and innertargetid == "Any" then                                                                          --in "Any" case. This var only contains
             plateaffliction.Strength = plateaffliction.Strength + i.Strength                                    --Strength in that case.
         end
     end
