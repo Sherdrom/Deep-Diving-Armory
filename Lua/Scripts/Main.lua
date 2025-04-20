@@ -114,20 +114,21 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
     local penetrationlevel = math.floor(ptable["penetration"]*10)
     local targetcharacter = targetlimb.character
     local outercloth,innerplate = DDA_AAS.Main.getArmor(targetcharacter,targetlimb)
-    local outertargetid = "gunshotwound"
-    local innertargetid = "gunshotwound"
+    local outertargetid,innertargetid
     local clothdata, platedata = nil,nil
     --find plate carrier data, if any
     if outercloth ~= nil then 
         clothdata = DDA_AAS.Armors[outercloth.Prefab.Identifier.Value]
-        if clothdata ~= nil and (clothdata.type == "custom" or clothdata.targetidentifier == "Any") then        --Do override if custom or using "Any"
+        if clothdata ~= nil then
             outertargetid = clothdata.targetidentifier
+        else
+            return                                                                                              --Not valid. Bye.
         end
     end
     --find plate data, if any
     if innerplate ~= nil then
         platedata = DDA_AAS.Armors[innerplate.Prefab.Identifier.Value]
-        if platedata ~= nil and (platedata.type == "custom" or clothdata.targetidentifier == "Any") then        --Do override if custom or using "Any"
+        if platedata ~= nil then
             innertargetid = platedata.targetidentifier
         end
     end
@@ -151,14 +152,13 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
             plateaffliction = i
             executeplate = true
         end
-        if clothdata ~= nil and outertargetid == "Any" then                                                                          --Here we add up all strength for "Any" case
+        if clothdata ~= nil and outertargetid == "Any" then                                                     --Here we add up all strength for "Any" case
             clothaffliction.Strength = clothaffliction.Strength + i.Strength                                    --We actually trick our own codes. Makesure
         end                                                                                                     --you wont use anything else than Strength
-        if platedata ~= nil and innertargetid == "Any" then                                                                          --in "Any" case. This var only contains
+        if platedata ~= nil and innertargetid == "Any" then                                                     --in "Any" case. This var only contains
             plateaffliction.Strength = plateaffliction.Strength + i.Strength                                    --Strength in that case.
         end
     end
-
 
     if not executecloth and not executeplate then return end                                                    --Did u mean run even if unnecessary?
 

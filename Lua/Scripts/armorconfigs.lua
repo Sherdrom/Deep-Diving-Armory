@@ -1,6 +1,7 @@
 DDA_AAS.Armors={
 
     itemid = {
+        isEmpty = true,                             --Is this a placeholder? If true then related code will not work.
         name = "something",                         --Name, not actually used in game
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
@@ -25,9 +26,9 @@ DDA_AAS.Armors={
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        --custom stuff, only work if custom type
         targetidentifier = "gunshotwound",          --Decide what damage this will decide a valid shot. default gunshotwound.
                                                     --Use "Any" if you want to define a full-protection armor(Also work for pre-defined types)
+        --custom stuff, only work if custom type
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
@@ -89,7 +90,9 @@ DDA_AAS.Armors={
 
     },  --Note: Test item
 
-
+    someitem = {
+        isEmpty = true,
+    }
 }
 
 -- penlevel = floor(pen*10)
