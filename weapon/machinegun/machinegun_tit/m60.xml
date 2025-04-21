@@ -20,6 +20,8 @@
     <Sprite texture="%ModDir%/weapon/machinegun/machinegun_tit/Sprite/M60.png" sourcerect="8,4,460,136" depth="0.55" origin="0.5,0.5" />
     <Body width="270" height="70" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-65,-30" handle2="60,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
+    </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
 	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
@@ -85,7 +87,7 @@
         <!-- 弹匣显示 -->
         <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="4.1" setvalue="true" disabledeltatime="true" />
         <!-- 放平机枪 -->
-        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" delay="0.01" setvalue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" condition="0" delay="0.01" setvalue="true" disabledeltatime="true" >
         </StatusEffect>
         <!-- 打开机枪盖子1 -->
         <StatusEffect type="OnInserted" target="This" handle2="-80,20" delay="0.5" setvalue="true" disabledeltatime="true" >
