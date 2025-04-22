@@ -78,7 +78,12 @@
     <Effect minstrength="0" maxstrength="25" strengthchange="-0.2" multiplybymaxvitality="true"
       minvitalitydecrease="0"
       maxvitalitydecrease="1.2"
-      dialogflag="damage" />
+      dialogflag="damage" >
+    <StatusEffect target="Limb" disabledeltatime="true" >
+        <Conditional LimbType="neq Head"/>
+        <ReduceAffliction identifier="deep_headshot_deadly" amount="114514"/>
+      </StatusEffect>
+      </Effect>
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0"/>
   </InternalDamage>
   
@@ -105,7 +110,12 @@
     <Effect minstrength="0" maxstrength="40" strengthchange="-0.1" multiplybymaxvitality="true"
       minvitalitydecrease="0"
       maxvitalitydecrease="2"
-      dialogflag="damage" />
+      dialogflag="damage" >
+      <StatusEffect target="Limb" disabledeltatime="true" >
+        <Conditional LimbType="neq Head"/>
+        <ReduceAffliction identifier="deep_headshot_deadly_irresistible" amount="114514"/>
+      </StatusEffect>
+      </Effect>
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0"/>
   </InternalDamage>
   
