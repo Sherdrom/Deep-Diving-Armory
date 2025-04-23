@@ -347,7 +347,7 @@
 	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.3"/>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="0.5"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
@@ -369,7 +369,7 @@
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
     <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
@@ -379,8 +379,6 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-
-    
   </Talent>
 
   <Talent identifier="deep_talent_separatists_sniper_moderate">
@@ -498,11 +496,9 @@
 		<AbilityConditionNearbyCharacterCount distance="600" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1"/>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
       </Abilities>
     </AbilityGroupInterval>
-
-    
   </Talent>
 
   <Talent identifier="deep_talent_separatists_blaster_moderate">
@@ -722,7 +718,7 @@
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.6"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="5"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
