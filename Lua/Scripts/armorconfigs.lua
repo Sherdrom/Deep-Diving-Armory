@@ -99,8 +99,8 @@ DDA_AAS.Armors={
 -- overwhelming pen : penlevel - level >= 2
 -- Non-pen correction: correctionaffliction = targetaffliction * correctionmultiplier
 
--- composite armor condition = condition - (gunshotwound / 100) * (maxcondition / maxhits)
--- ceramic armor condition = condition - (gunshotwound / 100) * (maxcondition / condition) * (maxcondition / maxhits)
+-- composite armor condition = condition - (gunshotwound / 100 or 1(min)) * (maxcondition / maxhits)
+-- ceramic armor condition = condition - (gunshotwound / 100 or 1(min)) * (maxcondition / condition) * (maxcondition / maxhits)
 -- metal armor condition = condition - (maxcondition / maxhits), only available if allowdamage is true
 -- remaining penlevel = penlevel - floor(level * penresistance)
 
