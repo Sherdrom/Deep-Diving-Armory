@@ -62,7 +62,7 @@ local function DoChance(probability)
     return false
 end
 
-function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affliction,char,limb)
+function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
@@ -108,6 +108,7 @@ end
 
 --Main stuff
 Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--ApplyAttack
+    if ptable["penetration"] == 0 then return end
     local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
     local afflictions = ptable["afflictions"]
@@ -166,13 +167,13 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
     local continue = true
     --A "little" bit tooooooooooo long :(
     if executeplate then
-        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
     --Note: Basically we are doing what we did again.
     if executecloth and clothdata.protectionarea[targetlimb.type] then
-        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
