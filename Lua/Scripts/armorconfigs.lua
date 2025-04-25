@@ -53,8 +53,8 @@ DDA_AAS.Armors={
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "Any",          --Decide what damage this will decide a valid shot
-        customexpression = function(item,affliction,data)         --expression to caculate plate damage
+        targetidentifier = "Any",
+        customexpression = function(item,affliction,data)
             return 100
         end,
 
