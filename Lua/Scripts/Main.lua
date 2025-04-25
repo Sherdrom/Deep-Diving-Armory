@@ -133,6 +133,8 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
         end
     end
 
+    if outertargetid == nil and innertargetid == nil then return end
+
     local executecloth = false
     local executeplate = false
 
@@ -167,10 +169,14 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     --A "little" bit tooooooooooo long :(
     if executeplate then
         damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        ptable.PreventExecution = not continue
+        if not continue then return end
     end
     --Note: Basically we are doing what we did again.
     if executecloth and clothdata.protectionarea[targetlimb.type] then
         damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        ptable.PreventExecution = not continue
+        if not continue then return end
     end
 
     --Damage stuff
@@ -179,8 +185,5 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     ptable["penetration"] = Single(ptable["penetration"] - decreasedpen)
 
     ptable["damageMultiplier"] = Single(ptable["damageMultiplier"] * damagemultiplier)
-
-    ptable.PreventExecution = not continue
-    if not continue then return end
 
 end, Hook.HookMethodType.Before)
