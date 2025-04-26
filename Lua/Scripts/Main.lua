@@ -68,7 +68,7 @@ function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,c
 
     if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
         local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]
-        local strength = affliction.Strength * data.correctionmultiplier
+        local strength = affliction.Strength * data.correctionmultiplier * damagemultiplier
         local correctaffliction = prefab.Instantiate(strength, nil)
         char.CharacterHealth.ApplyAffliction(limb,correctaffliction,true,false,false)
     end
