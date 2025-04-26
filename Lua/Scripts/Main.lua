@@ -40,13 +40,13 @@ end
 
 local function CaculateCeramicDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - (affliction.Strength / 100) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
+    condition = condition - clamp(affliction.Strength / 100,1,math.huge) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
     return condition
 end
 
 local function CaculateCompositeDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
+    condition = condition - clamp(affliction.Strength / 100,1,math.huge) * (data.maxcondition / data.maxhits)
     return condition
 end
 
@@ -62,7 +62,7 @@ local function DoChance(probability)
     return false
 end
 
-function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affliction,char,limb)
+function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
@@ -77,11 +77,11 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
 
     if ricochet then                                                                        --Jackpot
         continue = false
-        return nil, nil, continue
+        return 0, 0, continue
     end
 
     --Plate damage stuff
-    if not data.ignoredamage then
+    if not data.ignoredamage and penlevel ~= 0 then
         if data.type == "ceramic" then
             item.Condition = CaculateCeramicDamage(item,affliction,data)
         elseif data.type == "composite" then
@@ -95,7 +95,7 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
 
     if penlevel < data.level and item.Condition > 0 then                                    --No Pen, good condition
         continue = false
-        return nil, nil, continue
+        return 0, 0, continue
     end
     if item.Condition > 0 then
         penlevel = penlevel - math.floor(data.level * data.penresistance)                   --Reamining pen
@@ -107,7 +107,7 @@ function DDA_AAS.Main.PlateMain(data,item,ptable,penlevel,damagemultiplier,affli
 end
 
 --Main stuff
-Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--ApplyAttack
+Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
     local afflictions = ptable["afflictions"]
@@ -132,6 +132,8 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
             innertargetid = platedata.targetidentifier
         end
     end
+
+    if outertargetid == nil and innertargetid == nil then return end
 
     local executecloth = false
     local executeplate = false
@@ -166,13 +168,13 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
     local continue = true
     --A "little" bit tooooooooooo long :(
     if executeplate then
-        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,ptable,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
     --Note: Basically we are doing what we did again.
     if executecloth and clothdata.protectionarea[targetlimb.type] then
-        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,ptable,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
@@ -183,6 +185,5 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)--App
     ptable["penetration"] = Single(ptable["penetration"] - decreasedpen)
 
     ptable["damageMultiplier"] = Single(ptable["damageMultiplier"] * damagemultiplier)
-
 
 end, Hook.HookMethodType.Before)

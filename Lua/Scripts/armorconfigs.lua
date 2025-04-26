@@ -1,7 +1,7 @@
 DDA_AAS.Armors={
 
     itemid = {
-        isEmpty = true,                             --Is this a placeholder? If true then related code will not work.
+        isEmpty = true,                             --Is this a placeholder? Doesn't really do anything
         name = "something",                         --Name, not actually used in game
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
@@ -33,74 +33,502 @@ DDA_AAS.Armors={
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
 
-    },  --Note: this is Sample, do not delete it
+    },  --Note: Sample.
+
+    --陶瓷
+    deep_plate_ceramic_4 = {
+        name = "氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.9,
+        maxhits = 30,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_6 = {
+        name = "碳化硅",
+        type = "ceramic",
+        ricochetchance = 0.0,
+        level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.9,
+        maxhits = 40,
+        maxcondition = 150,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_8 = {
+        name = "碳化硼",
+        type = "ceramic",
+        ricochetchance = 0.0,
+        level = 8,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.95,
+        maxhits = 50,
+        maxcondition = 200,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_10 = {
+        name = "刚化钨",
+        type = "ceramic",
+        ricochetchance = 0.0,
+        level = 10,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 60,
+        maxcondition = 300,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    --金属
+    deep_plate_metal_3 = {
+        name = "铝板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_4 = {
+        name = "铁板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_5 = {
+        name = "轻质钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 5,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_6 = {
+        name = "45钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 6,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_7 = {
+        name = "复合钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 7,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_8 = {
+        name = "刚素板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 8,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_9 = {
+        name = "超重钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 9,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_10 = {
+        name = "复合钨钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 10,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    --内衬
+    thor = {
+        name = "THOR",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.9,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
 
     deep_tactec = {
-        name = "something",                         --Name, not actually used in game
-        type = "composite",                          --Armorplate type, available: "metal","composite","ceramic","custom"
-        ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
-        level = 3,                                  --Bulletproof level, range 0-10
-        aftereffectmultiplier  = 1.0,               --Define damage multiplier if pen
-        correctionaffliction = "blunttrauma",                 --Define affliction if non-pen, TODO: Use table instead of single string
-        correctionmultiplier = 0.0,                 --Define how many damage should pass to player
-        enablecorrection = true,                   --Define should give non-pen affliction
-        penresistance = 1.0,                        --Define pen resistance, will use to caculate remaining pen
-        maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
-        maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
-        ignoredamage = true,                       --Take damage or not.
-        protectionarea = {                          --Define areas of protection, only for plate carriers.
-        [LimbType.Torso] = true,
-        [LimbType.Waist] = true,
-        --[[[LimbType.LeftArm] = true,
-        [LimbType.LeftForearm] = true,
-        [LimbType.LeftHand] = true,
-        [LimbType.RightArm] = true,
-        [LimbType.RightForearm] = true,
-        [LimbType.RightHand] = true,
-        [LimbType.LeftThigh] = true,
-        [LimbType.RightThigh] = true,]]
+        name = "TACTEC",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.9,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
         },
-        --custom stuff, only work if custom type
-        targetidentifier = "Any",          --Decide what damage this will decide a valid shot
-        customexpression = function(item,affliction,data)         --expression to caculate plate damage
-            return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
         end,
+    },
 
-    },  --Note: Test item
-    
-    ceramics_plate_1 = {
-        name = "something",                         --Name, not actually used in game
-        type = "ceramic",                          --Armorplate type, available: "metal","composite","ceramic","custom"
-        ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
-        level = 4,                                  --Bulletproof level, range 0-10
-        aftereffectmultiplier  = 0.4,               --Define damage multiplier if pen
-        correctionaffliction = "blunttrauma",                 --Define affliction if non-pen, TODO: Use table instead of single string
-        correctionmultiplier = 0.0,                 --Define how many damage should pass to player
-        enablecorrection = true,                   --Define should give non-pen affliction
-        penresistance = 0.3,                        --Define pen resistance, will use to caculate remaining pen
-        maxhits = 20,                                --Define how many hits this armorplate can take, use to caculate condition
-        maxcondition = 100,                           --Define max condition for this armorplate, use to caculate condition
-        ignoredamage = false,                       --Take damage or not.
-        protectionarea = {},                          --Define areas of protection, only for plate carriers.
-        --custom stuff, only work if custom type
-        targetidentifier = "Any",          --Decide what damage this will decide a valid shot
-        customexpression = function(item,affliction,data)         --expression to caculate plate damage
-            return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
+    deep_m1 = {
+        name = "M1",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
         end,
+    },
 
-    },  --Note: Test item
+    --Lv 3
+    deep_6b13 = { --WARN: 6B13 is not a valid id.
+        name = "6B13",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
 
-    someitem = {
-        isEmpty = true,
-    }
+    deep_Guardian = {
+        name = "Guardian",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.9,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_osprey = {
+        name = "Osprey",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_Obsidian = {
+        name = "Obsidian",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.7,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    gen4_heavy = {
+        name = "Gen 4 Heavy",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.7,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    --Lv 4
+    deep_6b43 = {
+        name = "6B43",
+        type = "composite",
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 0.7,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 1.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
 }
 
 -- penlevel = floor(pen*10)
 -- overwhelming pen : penlevel - level >= 2
 -- Non-pen correction: correctionaffliction = targetaffliction * correctionmultiplier
 
--- composite armor condition = condition - (gunshotwound / 100) * (maxcondition / maxhits)
--- ceramic armor condition = condition - (gunshotwound / 100) * (maxcondition / condition) * (maxcondition / maxhits)
+-- composite armor condition = condition - (gunshotwound / 100 or 1(min)) * (maxcondition / maxhits)
+-- ceramic armor condition = condition - (gunshotwound / 100 or 1(min)) * (maxcondition / condition) * (maxcondition / maxhits)
 -- metal armor condition = condition - (maxcondition / maxhits), only available if allowdamage is true
 -- remaining penlevel = penlevel - floor(level * penresistance)
 
