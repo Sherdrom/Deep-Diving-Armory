@@ -144,6 +144,8 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     if outertargetid == "Any" then executecloth = true end                                                      --Force override in "Any" case
     if innertargetid == "Any" then executeplate = true end
 
+    if not clothdata.isPlateCarrier then executeplate = false end                                               --Not a valid carrier, dont execute plate
+
     --let's find out if it is a valid attack
     for i in afflictions do
         if clothdata ~= nil and not executecloth and i.identifier == outertargetid then
