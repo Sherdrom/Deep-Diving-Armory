@@ -162,6 +162,8 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
         end
     end
 
+    if executeplate and (not clothdata.isPlateCarrier) then executeplate = false end                            --Not a valid carrier, dont execute plate
+
     if not executecloth and not executeplate then return end                                                    --Did u mean run even if unnecessary?
 
     local damagemultiplier = 1.0
