@@ -40,13 +40,13 @@ end
 
 local function CaculateCeramicDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - clamp(affliction.Strength / 100,1,math.huge) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
+    condition = condition - clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
     return condition
 end
 
 local function CaculateCompositeDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - clamp(affliction.Strength / 100,1,math.huge) * (data.maxcondition / data.maxhits)
+    condition = condition - clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / data.maxhits)
     return condition
 end
 
