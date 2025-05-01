@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_m32" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
+  <Item name="" identifier="deep_m32" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon" Scale="0.26" impactsoundtag="impact_metal_light" >
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
@@ -13,7 +13,7 @@
 	  <Item identifier="physicorium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/grenadelauncher/grenadelauncher45.png" sourcerect="808,13,183,177" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/grenadelauncher/grenadelauncher.png" sourcerect="10,418,222,77" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/M32.png" sourcerect="10,9,299,98" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="70" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-10" aimpos="57,0" handle1="-35,-12" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
@@ -37,15 +37,17 @@
 	  <StatusEffect type="OnUse" target="This" Condition="-1400" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
 	  <StatusEffect type="InWater" target="This" Condition="10"/>
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="8" stackable="false" />
-	  <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/m32re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+	  <!-- <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="8" stackable="false" /> -->
+	  <StatusEffect type="OnBroken" target="This" delay="1">
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
 		<ParticleEmitter particle="deep_casingfirearm_40mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="This">
-        <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
-      </StatusEffect>
+    </StatusEffect>
+    <StatusEffect type="OnBroken" target="This" delay="1.7">
+      <sound file="%ModDir%/Sound/Weapons/M32/gunOther/grenadeShell.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+    </StatusEffect>
+    <StatusEffect type="OnUse" target="This">
+      <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
+    </StatusEffect>
 	  <StatusEffect type="NotInWater" target="This" >
 	  <Conditional Condition="lt 50" />
 	  <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -61,8 +63,16 @@
       <RequiredSkill identifier="weapons" level="100" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
-    <ItemContainer capacity="6" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
-      <Containable items="grenade" hide="true" itempos="8,9" rotation="0" />
+    <ItemContainer capacity="6" maxstacksize="1" hideitems="false" ShowTotalStackCapacityInContainedStateIndicator="true" containedstateindicatorstyle="bullet" >
+      <Containable items="grenade" hide="true" itempos="8,9" rotation="0">
+      <!-- 进入lua脚本执行换弹. -->
+      <StatusEffect type="OnInserted" target="This" Condition="0" setValue="true">
+        <LuaHook name="M32Reload" />
+      </StatusEffect>
+      <StatusEffect type="OnRemoved" target="This" >
+        <LuaHook name="M32Removed" />
+      </StatusEffect>
+      </Containable>     
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
 	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
