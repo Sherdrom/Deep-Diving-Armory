@@ -15,7 +15,7 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="10,150,58,28" depth="0.55" origin="0.5,0.5" />
     <Body width="60" height="30" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="15.0" sticktocharacters="false">
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="false">
       <Attack structuredamage="0.5" penetration="0.5" severlimbsprobability="5">
         <Affliction identifier="explosiondamage" strength="200" />
       </Attack>
@@ -57,8 +57,6 @@
     <Body width="40" height="50" density="25" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="40mm_meteorite" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="40mm_meteorite" />
-	  <StatusEffect type="OnBroken" target="Parent" Condition="-3000" >
-      </StatusEffect>
       <!--Spawn an SMG round on use. Condition -4.8 -> 21 shots per magazine.-->
       <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
         <SpawnItem identifiers="40mm_meteorite" spawnposition="ThisInventory" />
