@@ -24,9 +24,10 @@ namespace DeepVisionPatch
             // if (Character.Controlled.SelectedItem?.GetComponent<Holdable>() == null) return;
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);
             Item leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand);
-            if (rightHand == null && leftHand == null){ return true; }
-            if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")))){return true;}
-            if (character == null || !character.IsKeyDown(InputType.Aim) || !character.CanAim) { return true;}
+            Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
+            if (rightHand == null && leftHand == null && headItem == null){ return true; }
+            if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
+            if (character == null || (!character.IsKeyDown(InputType.Aim)&&!headItem.HasTag("ObstructVision"))|| !character.CanAim) { return true;}
 
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
@@ -36,7 +37,9 @@ namespace DeepVisionPatch
             float rightHandSpread = 0;
             if (rightHand != null) rightHandSpread = (float)Traverse.Create(rightHand.GetComponent<RangedWeapon>()).Method("GetSpread", character).GetValue();
             if (leftHand != null) leftHandSpread = (float)Traverse.Create(leftHand.GetComponent<RangedWeapon>()).Method("GetSpread",character).GetValue();
-            FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
+            if(headItem.HasTag("ObstructVision"))
+                FieldOfView = MathF.PI/6 ;
+            else FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
 
             graphics.SetRenderTarget(__instance.LosTexture);
 
