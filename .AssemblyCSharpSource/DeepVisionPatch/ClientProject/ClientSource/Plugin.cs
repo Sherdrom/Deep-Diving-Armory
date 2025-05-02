@@ -16,6 +16,11 @@ namespace DeepVisionPatch
     public static class Patch_LightManager_UpdateObstructVision
     {
         public static float FieldOfView { get; set; } = MathF.PI / 6 ; // Default to 30 degrees
+        public static readonly Dictionary<string,float> ObstructVision = new Dictionary<string, float>
+        {
+            ["ObstructVision_30"]=MathF.PI/6,
+            ["ObstructVision_45"]=MathF.PI/4
+        };
         public static bool Prefix(LightManager __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, Camera cam, ref Vector2 lookAtPosition)
         {
             Character character = Character.Controlled;
@@ -27,7 +32,7 @@ namespace DeepVisionPatch
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
             if (rightHand == null && leftHand == null && headItem == null){ return true; }
             if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
-            if (character == null || (!character.IsKeyDown(InputType.Aim)&&!headItem.HasTag("ObstructVision"))|| !character.CanAim) { return true;}
+            if (character == null || (!character.IsKeyDown(InputType.Aim)&&(headItem == null || !headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
 
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
@@ -37,8 +42,13 @@ namespace DeepVisionPatch
             float rightHandSpread = 0;
             if (rightHand != null) rightHandSpread = (float)Traverse.Create(rightHand.GetComponent<RangedWeapon>()).Method("GetSpread", character).GetValue();
             if (leftHand != null) leftHandSpread = (float)Traverse.Create(leftHand.GetComponent<RangedWeapon>()).Method("GetSpread",character).GetValue();
-            if(headItem.HasTag("ObstructVision"))
-                FieldOfView = MathF.PI/6 ;
+            if(headItem != null && headItem.HasTag("ObstructVision"))
+            {
+                foreach(KeyValuePair<string,float> kvp in ObstructVision)
+                {
+                    if(headItem.HasTag(kvp.Key)) FieldOfView = kvp.Value;
+                }
+            }
             else FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
 
             graphics.SetRenderTarget(__instance.LosTexture);
