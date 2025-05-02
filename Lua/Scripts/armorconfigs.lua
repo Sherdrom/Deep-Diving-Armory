@@ -459,6 +459,30 @@ DDA_AAS.Armors={
     },
 
     --内衬
+    deep_hpc = {
+        name = "hpc插板背心",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 0,
+        aftereffectmultiplier  = 1,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.1,
+        enablecorrection = false,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
     thor = {
         name = "THOR",
         type = "composite",
