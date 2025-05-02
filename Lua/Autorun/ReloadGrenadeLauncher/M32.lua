@@ -1,18 +1,10 @@
 LuaUserData.RegisterType("Barotrauma.Items.Components.ItemContainer+SlotRestrictions")
-LuaUserData.RegisterType('System.Collections.Immutable.ImmutableArray`1[[Barotrauma.Items.Components.ItemContainer+SlotRestrictions, Barotrauma]]')
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.ItemInventory'], 'slots')
 LuaUserData.MakeFieldAccessible(Descriptors['Barotrauma.Items.Components.ItemContainer'], 'slotRestrictions')
 
 -- ===== 配置参数 =====
 local RELOAD_CONFIG = {
-    Sound = {
-        sound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/Insert.ogg"),
-        OpenChamberSound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/OpenChamber.ogg"),
-        CloseChamberSound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/CloseChamber.ogg"),
-        frequencymultiplier = 1,
-        gain = 1.5,
-        range = 500
-    },
+    Sound = {},
     BaseDelay = 0.1,         -- 首次延迟
     OpenChamberDelay = 1.3,  -- 开仓延迟
     CloseChamberDelay = 0.5, -- 关仓延迟
@@ -20,6 +12,16 @@ local RELOAD_CONFIG = {
     ConditionPerShell = 1,
     AutoCleanDelay = 0.2        -- 超时清理
 }
+if not SERVER then
+    RELOAD_CONFIG.Sound = {
+            sound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/Insert.ogg"),
+            OpenChamberSound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/OpenChamber.ogg"),
+            CloseChamberSound = Game.SoundManager.LoadSound(... .. "/Sound/Weapons/M32/gunOther/CloseChamber.ogg"),
+            frequencymultiplier = 1,
+            gain = 1.5,
+            range = 500
+        }
+end
 
 -- ===== 状态跟踪器 =====
 local reloadStates = {} -- 结构: { [itemID] = { count = N, timers = { ... } } }
@@ -222,7 +224,7 @@ Hook.Add("M32Removed", "ReloadCleanup", function(_, _, item)
     cancelReload(item.ID)   --重置状态
 end)
 
-Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptable)
+Hook.Patch("Barotrauma.Character", "Control", function(instance, ptable)
     if not reloadStates then return end
     local currentTime = Timer.GetTime()
     
