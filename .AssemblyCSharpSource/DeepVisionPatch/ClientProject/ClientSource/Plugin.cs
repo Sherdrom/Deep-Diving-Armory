@@ -15,7 +15,7 @@ namespace DeepVisionPatch
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {
-        public static float FieldOfView { get; set; } = 8*MathF.PI/9 ; // Default to 8/9 PI degrees
+        public static float FieldOfView { get; set; } = MathF.PI * 8/9; // Default to 8/9 PI degrees
         public static readonly Dictionary<string,float> ObstructVision = new Dictionary<string, float>
         {
             ["ObstructVision_30"]=MathF.PI/6,
@@ -32,6 +32,7 @@ namespace DeepVisionPatch
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
             if (rightHand == null && leftHand == null && headItem == null){ return true; }
             if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
+            if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory")){return true;}
             if (character == null || (!character.IsKeyDown(InputType.Aim)&&(headItem == null || !headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
 
             // Custom logic for reduced vision cone
@@ -60,7 +61,7 @@ namespace DeepVisionPatch
             else 
             {   
                 if(!(rightHandSpread == 0 && leftHandSpread == 0))
-                    FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
+                    FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6, MathF.PI * 8/9);
             }
 
             graphics.SetRenderTarget(__instance.LosTexture);
