@@ -15,7 +15,7 @@ namespace DeepVisionPatch
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {
-        public static float FieldOfView { get; set; } = MathF.PI / 6 ; // Default to 30 degrees
+        public static float FieldOfView { get; set; } = MathF.PI / 4 ; // Default to 45 degrees
         public static readonly Dictionary<string,float> ObstructVision = new Dictionary<string, float>
         {
             ["ObstructVision_30"]=MathF.PI/6,
@@ -40,8 +40,16 @@ namespace DeepVisionPatch
             if (LightManager.ViewTarget == null) { return false; }
             float leftHandSpread = 0;
             float rightHandSpread = 0;
-            if (rightHand != null) rightHandSpread = (float)Traverse.Create(rightHand.GetComponent<RangedWeapon>()).Method("GetSpread", character).GetValue();
-            if (leftHand != null) leftHandSpread = (float)Traverse.Create(leftHand.GetComponent<RangedWeapon>()).Method("GetSpread",character).GetValue();
+            if (rightHand != null) 
+                rightHandSpread = (float?)Traverse.Create(rightHand?
+                                                     .GetComponent<RangedWeapon>())?
+                                                     .Method("GetSpread", character)?
+                                                     .GetValue() ?? 0f;
+            if (leftHand != null) 
+                leftHandSpread = (float?)Traverse.Create(leftHand?
+                                                        .GetComponent<RangedWeapon>())?
+                                                        .Method("GetSpread",character)?
+                                                        .GetValue() ?? 0f;
             if(headItem != null && headItem.HasTag("ObstructVision"))
             {
                 foreach(KeyValuePair<string,float> kvp in ObstructVision)
@@ -49,7 +57,11 @@ namespace DeepVisionPatch
                     if(headItem.HasTag(kvp.Key)) FieldOfView = kvp.Value;
                 }
             }
-            else FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
+            else 
+            {   
+                if(!(rightHandSpread == 0 && leftHandSpread == 0))
+                    FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6,8*MathF.PI/9);
+            }
 
             graphics.SetRenderTarget(__instance.LosTexture);
 
