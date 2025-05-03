@@ -62,6 +62,8 @@ namespace DeepVisionPatch
             {   
                 if(!(rightHandSpread == 0 && leftHandSpread == 0))
                     FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6, MathF.PI * 8/9);
+                else
+                    FieldOfView = MathF.PI * 8/9;
             }
 
             graphics.SetRenderTarget(__instance.LosTexture);
