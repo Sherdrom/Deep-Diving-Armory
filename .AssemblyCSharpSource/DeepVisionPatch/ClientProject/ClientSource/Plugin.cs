@@ -15,7 +15,7 @@ namespace DeepVisionPatch
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {
-        public static float FieldOfView { get; set; } = MathF.PI / 4 ; // Default to 45 degrees
+        public static float FieldOfView { get; set; } = 8*MathF.PI/9 ; // Default to 8/9 PI degrees
         public static readonly Dictionary<string,float> ObstructVision = new Dictionary<string, float>
         {
             ["ObstructVision_30"]=MathF.PI/6,
