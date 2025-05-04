@@ -6,6 +6,7 @@ namespace DeepVisionPatch;
 public class CreateViewTexture
 {        
     private Texture2D _texture;
+    private Texture2D _textureCircle;
     private Color[] _pixelBuffer;
     private float[,] _distanceTable;
     private float[,] _angleTable;
@@ -19,23 +20,34 @@ public class CreateViewTexture
     {
         _textureSize = radius * 2;
         _texture = new Texture2D(graphicsDevice, _textureSize, _textureSize);
+        _textureCircle = new Texture2D(graphicsDevice, _textureSize, _textureSize);
         _pixelBuffer = new Color[_textureSize * _textureSize];
         _center = new Vector2(radius, radius);
         
         // 预计算距离和角度表
         _distanceTable = new float[_textureSize, _textureSize];
         _angleTable = new float[_textureSize, _textureSize];
+
+        // 初始化白色圆形纹理
+        Color[] circlePixels = new Color[_textureSize * _textureSize];
+        float circleRadius = radius; // 中心圆半径
         
         Parallel.For(0, _textureSize, y =>
         {
             for (int x = 0; x < _textureSize; x++)
             {
                 Vector2 pixelPos = new Vector2(x, y);
+                float distance = Vector2.Distance(pixelPos, _center);
                 _distanceTable[x, y] = Vector2.Distance(pixelPos, _center);
                 float angle = MathF.Atan2(pixelPos.Y - _center.Y, pixelPos.X - _center.X);
                 _angleTable[x, y] = (angle + MathHelper.TwoPi) % MathHelper.TwoPi;
+
+                // 初始化白色圆形
+                int index = y * _textureSize + x;
+                circlePixels[index] = distance <= circleRadius ? Color.White : Color.Transparent;
             }
         });
+        _textureCircle.SetData(circlePixels);
     }
 
     /// <summary>
@@ -82,7 +94,7 @@ public class CreateViewTexture
     /// 获取当前纹理（每帧渲染时使用）
     /// </summary>
     public Texture2D GetTexture() => _texture;
-
+    public Texture2D GetTextureCircle() => _textureCircle;
     /// <summary>
     /// 释放资源
     /// </summary>
