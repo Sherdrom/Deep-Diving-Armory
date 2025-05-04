@@ -735,6 +735,43 @@ DDA_AAS.Armors={
         end,
     },
 
+    --EXO Pirate
+    deep_pirate_exosuit = {
+        name = "海盗外骨骼",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 0.9,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0,
+        enablecorrection = false,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+            [LimbType.LeftFoot] = true,
+            [LimbType.RightFoot] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
 }
 
 -- penlevel = floor(pen*10)
