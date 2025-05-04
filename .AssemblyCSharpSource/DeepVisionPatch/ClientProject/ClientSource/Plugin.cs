@@ -39,18 +39,18 @@ namespace DeepVisionPatch
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
-            float leftHandSpread = 0;
-            float rightHandSpread = 0;
+            float leftHandSpread = -1;
+            float rightHandSpread = -1;
             if (rightHand != null) 
                 rightHandSpread = (float?)Traverse.Create(rightHand?
                                                      .GetComponent<RangedWeapon>())?
                                                      .Method("GetSpread", character)?
-                                                     .GetValue() ?? 0f;
+                                                     .GetValue() ?? -1f;
             if (leftHand != null) 
                 leftHandSpread = (float?)Traverse.Create(leftHand?
                                                         .GetComponent<RangedWeapon>())?
                                                         .Method("GetSpread",character)?
-                                                        .GetValue() ?? 0f;
+                                                        .GetValue() ?? -1f;
             if(headItem != null && headItem.HasTag("ObstructVision"))
             {
                 foreach(KeyValuePair<string,float> kvp in ObstructVision)
@@ -60,7 +60,9 @@ namespace DeepVisionPatch
             }
             else 
             {   
-                if(!(rightHandSpread == 0 && leftHandSpread == 0))
+                if(rightHandSpread == -1 && leftHandSpread == -1)
+                    FieldOfView = MathF.PI * 8/9;
+                else
                     FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6, MathF.PI * 8/9);
             }
 
