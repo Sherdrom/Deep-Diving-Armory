@@ -52,6 +52,28 @@
       minvitalitydecrease="0"
       maxvitalitydecrease="0.20"
       dialogflag="damage" />
+    <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="724,0,128,128" color="195,60,60,255" origin="0,0"/>
+  </InternalDamage>
+
+  <InternalDamage
+    name="deep_bullet_injury"
+    identifier="deep_bullet_injury"
+    type="deep_gunwound"
+    causeofdeathdescription="deep_bullet_injury"
+    selfcauseofdeathdescription="You have died of deep_bullet_injury"
+    limbspecific="true"
+    maxstrength="40"
+    karmachangeonapplied="-1"
+    damageoverlayalpha="2"
+    WeaponsSkillGain="1">
+    <Description
+      textidentifier="afflictiondescription.deep_bullet_injury"
+      minstrength="0"
+      maxstrength="40"/>
+    <Effect minstrength="0" maxstrength="40" strengthchange="-0.2" multiplybymaxvitality="true"
+      minvitalitydecrease="0"
+      maxvitalitydecrease="0.40"
+      dialogflag="damage" />
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0"/>
   </InternalDamage>
   
@@ -3499,7 +3521,7 @@
     karmachangeonapplied="0"
     maxstrength="1"
     affectmachines="false">
-    <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-1" >
     </Effect>
   </Affliction>
 
