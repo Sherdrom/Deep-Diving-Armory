@@ -11,6 +11,7 @@ using System.Reflection.Emit;
 using Color = Microsoft.Xna.Framework.Color;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using static Barotrauma.Inventory;
 
 namespace RemainedAmmo
 {
@@ -60,6 +61,20 @@ namespace RemainedAmmo
             }
             return null; // 如果没有找到 Condition，返回 null
         }
+        public static int CurrentAmmoNumber(Item item, ItemContainer itemContainer)
+        {
+            int currentAmmoNumber = 0;
+            int maxAmmoStack = itemContainer.MainContainerCapacity;
+            for(int i = 0; i < maxAmmoStack; i++)
+            {
+                ItemSlot weaponSlot = item.OwnInventory.slots[i];
+                if(weaponSlot != null && weaponSlot.items!=null)
+                {
+                    currentAmmoNumber = currentAmmoNumber + weaponSlot.items.Count;
+                }
+            }
+            return currentAmmoNumber;
+        }
         public static void DrawMyString(RangedWeapon rangedWeapon, SpriteBatch spriteBatch)
         {
             if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != "Deep Diving Armory"){return;}
@@ -71,9 +86,9 @@ namespace RemainedAmmo
             if (targetSlot >= ItemContainer.Inventory.Capacity){return;}
             // 获取RemainedAmmo
             IEnumerable<Item> itemsAt = ItemContainer.Inventory.GetItemsAt(targetSlot);
-            if (itemsAt == null) {goto drawRemained;}
-            if(itemsAt.FirstOrDefault() == null) {goto drawRemained;}
-            if(itemsAt.FirstOrDefault().ownInventory == null) { remainedAmmo = itemsAt.Count();}
+            // if (itemsAt == null) {goto drawRemained;}
+            // if(itemsAt.FirstOrDefault() == null) {goto drawRemained;}
+            if(itemsAt == null || itemsAt.FirstOrDefault() == null || itemsAt.FirstOrDefault().ownInventory == null) { remainedAmmo = CurrentAmmoNumber(rangedWeapon.Item,ItemContainer);}
             else
             {
                 float? conditionValue = 1.0f;

@@ -277,6 +277,126 @@ DDA_AAS.Armors={
         end,
     },
 
+    deep_plate_metal_arm_4 = {
+        name = "手臂铁板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_arm_6 = {
+        name = "手臂45钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 6,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_arm_8 = {
+        name = "手臂刚素板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 8,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_4 = {
+        name = "腹股沟铁板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_6 = {
+        name = "腹股沟45钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 6,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_8 = {
+        name = "腹股沟刚素板",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 8,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "gunshotwound",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
       --复合插板
     deep_plate_composite_6 = {
         name = "凯夫拉+氧化铝",
@@ -339,6 +459,30 @@ DDA_AAS.Armors={
     },
 
     --内衬
+    deep_hpc = {
+        name = "hpc插板背心",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 0,
+        aftereffectmultiplier  = 1,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.1,
+        enablecorrection = false,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = "gunshotwound",
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
     thor = {
         name = "THOR",
         type = "composite",
