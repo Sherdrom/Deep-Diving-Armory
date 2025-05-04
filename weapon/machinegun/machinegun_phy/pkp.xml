@@ -33,6 +33,14 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
     <Affliction identifier="deep_machinegunner_heavy_detect" strength="100" />
      </StatusEffect>
+     <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
+    <Conditional chip_bodyshot_detect="gt 10.0" />
+      </StatusEffect>
+     <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
+    <Conditional chip_bodyshot_detect="lt 10.0" />
+      </StatusEffect>
 	</Holdable>
 	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
       <sprite texture="%ModDir%/weapon/machinegun/machinegun_phy/Sprite/PKP.png" canbehiddenbyotherwearables="false" sourcerect="10,6,492,90" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.3" origin="0.5,0.9" />

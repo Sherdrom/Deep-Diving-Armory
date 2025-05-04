@@ -34,6 +34,14 @@
 	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
+     <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
+    <Conditional chip_bodyshot_detect="gt 10.0" />
+      </StatusEffect>
+     <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
+    <Conditional chip_bodyshot_detect="lt 10.0" />
+      </StatusEffect>
 	</Holdable>
     <RangedWeapon reload="0.11" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="90,2" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />

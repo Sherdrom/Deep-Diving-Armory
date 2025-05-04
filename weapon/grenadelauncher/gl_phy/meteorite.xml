@@ -23,6 +23,14 @@
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
+   <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
+    <Conditional chip_bodyshot_detect="gt 10.0" />
+      </StatusEffect>
+     <!-- 有碎甲芯片时，增加1级穿甲-->
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
+    <Conditional chip_bodyshot_detect="lt 10.0" />
+      </StatusEffect>
 	</Holdable>
 	<!--可以背背上-->
 	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
