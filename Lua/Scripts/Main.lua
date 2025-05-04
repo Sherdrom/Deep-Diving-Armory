@@ -23,6 +23,7 @@ local limbtoslot = {
 function DDA_AAS.Main.getArmor(character,targetlimb)
     if character == nil or targetlimb == nil then return nil,nil end
     local characterInv = character.Inventory                                    --Get character inv
+    if characterInv == nil then return nil,nil end
     local targetinv = limbtoslot[targetlimb.type]                               --Get corresponding limb and its slot
     if targetinv == nil then return nil,nil end
     local outeritem = characterInv.GetItemInLimbSlot(targetinv[1])              --Get outer cloth(item)
@@ -113,6 +114,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local afflictions = ptable["afflictions"]
     local penetrationlevel = math.floor(ptable["penetration"]*10)
     local targetcharacter = targetlimb.character
+    if not targetcharacter.IsHumanoid then return end
     local outercloth,innerplate = DDA_AAS.Main.getArmor(targetcharacter,targetlimb)
     local outertargetid,innertargetid
     local clothdata, platedata = nil,nil
