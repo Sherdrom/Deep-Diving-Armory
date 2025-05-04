@@ -79,6 +79,7 @@ namespace DeepVisionPatch
                 // Texture2D texture = new CreateViewTexture().CreateSectorTexture(graphics,256,FieldOfView,Color.Black);
                 DeepVisionPatch.viewTexture.UpdateSectorTexture(FieldOfView, new Color(255,255,255,30));
                 Texture2D texture = DeepVisionPatch.viewTexture.GetTexture();
+                Texture2D textureCircle = DeepVisionPatch.viewTexture.GetTextureCircle();
                 //the magic numbers here are just based on experimentation
                 float MinHorizontalScale = MathHelper.Lerp(5f, 1.5f, 0);
                 float MaxHorizontalScale = MinHorizontalScale * 5f;
@@ -101,6 +102,8 @@ namespace DeepVisionPatch
                 spriteBatch.Begin(SpriteSortMode.Deferred, transformMatrix: cam.Transform * Matrix.CreateScale(new Vector3(GameSettings.CurrentConfig.Graphics.LightMapScale, GameSettings.CurrentConfig.Graphics.LightMapScale, 1.0f)));
                 spriteBatch.Draw(texture, new Vector2(headPosition.X, -headPosition.Y), null, Color.White, rotation,
                     new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(textureCircle, new Vector2(headPosition.X, -headPosition.Y + 70f), null, Color.White, 0f,
+                    new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f,0.45f), SpriteEffects.None, 0.0f);
                 spriteBatch.End();
                         
             //--------------------------------------
