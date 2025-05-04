@@ -221,6 +221,40 @@
     <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="-0.3" maxresistance="-0.3" strengthchange="-1" >
     </Effect>
   </Affliction>
+
+  <Affliction
+    identifier="deep_lie_down"
+    description=""
+	  isbuff="true"
+    type="deep_lie_down_resistance"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue" minresistance="0.9" maxresistance="0.9" strengthchange="-2" >
+    </Effect>
+  </Affliction>
+
+  <Affliction
+    identifier="deep_lie_down_stun"
+    description=""
+	  isbuff="true"
+    type="deep_lie_down_resistance"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="40"
+    showinhealthscannerthreshold="20"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" resistancefor="stun,blind,blind_hard" minresistance="2.9" maxresistance="2.9" strengthchange="-2" >
+    </Effect>
+  </Affliction>
   
   <Affliction
     identifier="m18_smoke"
@@ -229,11 +263,10 @@
     limbspecific="false"
     hideiconafterdelay="true"
     maxstrength="1">
-    <Effect minstrength="0" maxstrength="1" strengthchange="-2" >
+    <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly,gunshotwound" minresistance="0.5" maxresistance="0.5" strengthchange="-2" >
 	  <StatValue stattype="SoundRangeMultiplier" value="-1" />
       <StatValue stattype="SightRangeMultiplier" value="-1" />
-	  <StatValue stattype="RangedSpreadReduction" value="-0.5" />
-	  <StatValue stattype="MaximumHealthMultiplier" value="1" />
+	  <StatValue stattype="RangedSpreadReduction" value="-0.25" />
     </Effect>
 	  <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="422,0,128,128" color="195,60,60,255" origin="0,0"/>
   </Affliction>
