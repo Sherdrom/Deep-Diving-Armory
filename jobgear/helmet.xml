@@ -1600,7 +1600,9 @@
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
-	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hidewearablesoftype="Hair" sourcerect="453,165,118,96" origin="0.52,0.59" /> 
+	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hidewearablesoftype="Hair" sourcerect="453,165,118,96" origin="0.52,0.59" >
+	  <LightComponent LightColor="255,255,255,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  </sprite>
       <SkillModifier skillidentifier="weapons" skillvalue="-20" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deep_altyn_1" strength="100" />
@@ -1634,6 +1636,18 @@
 		<RequiredItems items="chip_blaster" type="Contained"  />
       </StatusEffect>
     </Wearable>
+	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="面罩开关" >
+	    <!-- 开启面罩 -->
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true" >
+		</StatusEffect>
+
+		<!-- 关闭面罩 -->
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive" >
+		</StatusEffect>
+      </TickBox>
+    </CustomInterface>
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
@@ -1767,6 +1781,7 @@
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
     </ItemContainer>
   </Item>
+  
   
   <Item name="" identifier="deep_Fearless_Vanguard" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
     <Deconstruct time="10">
