@@ -32,7 +32,7 @@ namespace DeepVisionPatch
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
             if (rightHand == null && leftHand == null && headItem == null){ return true; }
             if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
-            if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory")){return true;}
+            if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory" )){return true;}
             if (character == null || (!character.IsKeyDown(InputType.Aim)&&(headItem == null || !headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
 
             // Custom logic for reduced vision cone
