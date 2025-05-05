@@ -132,72 +132,15 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_3_new_ghost" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -339,72 +282,15 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_3_new_ghost" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -547,72 +433,15 @@
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_3_new_ghost" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -767,72 +596,15 @@
       </Abilities>
     </AbilityGroupEffect>
     <!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_3_new_ghost" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -977,72 +749,15 @@
       </Abilities>
     </AbilityGroupEffect>
     <!-- 多人游戏动态抗性调整 -->
-    <AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 附近有5名敌人时，精英怪获得90%枪伤抗性,可被碎甲芯片削减 -->
-	<AbilityGroupInterval interval="0.9" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_3_new_ghost" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
