@@ -11,9 +11,6 @@ namespace SpritePatch
         // 存储所有物品的独立Sprite实例
         private static readonly Dictionary<Item, Sprite> itemSprites = new Dictionary<Item, Sprite>();
 
-        // 存储原始Sprite引用（用于恢复）
-        private static readonly Dictionary<Item, Sprite> originalSprites = new Dictionary<Item, Sprite>();
-
         /// <summary>
         /// 物品更新时确保初始化独立Sprite
         /// </summary>
@@ -21,35 +18,15 @@ namespace SpritePatch
         [HarmonyPostfix]
         private static void EnsureSpriteInitialized(Item __instance)
         {
+            //只有深潜武装生效
+            if(!(__instance!= null && __instance.HasTag("weapon")&&__instance.Prefab.ContentPackage?.Name == "Deep Diving Armory")) return;
             if (__instance.Sprite == null || itemSprites.ContainsKey(__instance)) return;
-
-            originalSprites[__instance] = __instance.Sprite;
             itemSprites[__instance] = CloneSprite(__instance.Sprite);
         }
 
-        /// <summary>
-        /// 拦截Sprite设置
-        /// </summary>
-        [HarmonyPatch(typeof(Sprite), nameof(Sprite.SourceRect), MethodType.Setter)]
-        [HarmonyPrefix]
-        private static bool BeforeSetSourceRect(Sprite __instance, Rectangle value)
-        {
-            // 查找关联物品
-            foreach (var kvp in itemSprites)
-            {
-                if (kvp.Value == __instance)
-                {
-                    // 允许修改独立Sprite
-                    return true;
-                }
-            }
-            // 非受控Sprite放行修改
-            return true;
-        }
-
-        /// <summary>
-        /// 强制使用独立Sprite
-        /// </summary>
+        // /// <summary>
+        // /// 强制使用独立Sprite
+        // /// </summary>
         [HarmonyPatch(typeof(Item), nameof(Item.SetActiveSprite))]
         [HarmonyPrefix]
         private static bool OverrideActiveSprite(Item __instance)

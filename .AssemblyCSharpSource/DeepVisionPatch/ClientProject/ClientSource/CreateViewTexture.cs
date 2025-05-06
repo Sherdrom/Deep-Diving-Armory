@@ -11,6 +11,7 @@ public class CreateViewTexture
     private float[,] _distanceTable;
     private float[,] _angleTable;
     private Vector2 _center;
+    private float lastDegrees = -1f;
     private int _textureSize;
 
     /// <summary>
@@ -55,6 +56,8 @@ public class CreateViewTexture
     /// </summary>
     public void UpdateSectorTexture(float gapDegrees, Color sectorColor)
     {
+        if(gapDegrees==lastDegrees) return;
+        lastDegrees = gapDegrees;
         float halfGap = gapDegrees / 2;
         float gapStart = -halfGap;
         float gapEnd = halfGap;
