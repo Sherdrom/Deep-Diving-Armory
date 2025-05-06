@@ -1,7 +1,7 @@
 DDA_AAS.Armors={
 
     itemid = {
-        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth
+        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
         name = "something",                         --Name, not actually used in game
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
@@ -14,6 +14,7 @@ DDA_AAS.Armors={
         maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
         ignoredamage = false,                       --Take damage or not.
+        isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
         protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
             [LimbType.Torso] = true,                --Only add true items.
             [LimbType.Waist] = true,
@@ -771,6 +772,28 @@ DDA_AAS.Armors={
             return 100
         end,
     },
+
+    --头盔
+    deep_zsh_1_2_m = {
+        isPlateCarrier = false,
+        name = "ZSH-1-2M",
+        type = "typename",
+        ricochetchance = 0.0,
+        level = 10,
+        aftereffectmultiplier  = 0.0,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = true,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = "gunshotwound",
+    },--Sample
 
 }
 
