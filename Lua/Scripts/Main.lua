@@ -66,7 +66,7 @@ end
 function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
 
-    if data.isHelmet and not item.Components["LightComponent"].IsOn then                    --If target is a masked helmet and mask was raised
+    if data.isHelmet and not item.GetComponentString("LightComponent").IsOn then                    --If target is a masked helmet and mask was raised
         return damagemultiplier, penlevel, continue                                         --We are out, mask raised = no protection
     end
     

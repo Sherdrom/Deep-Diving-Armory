@@ -1,7 +1,7 @@
 DDA_AAS.Armors={
 
     itemid = {
-        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth
+        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
         name = "something",                         --Name, not actually used in game
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
@@ -772,6 +772,28 @@ DDA_AAS.Armors={
             return 100
         end,
     },
+
+    --头盔
+    deep_zsh_1_2_m = {
+        isPlateCarrier = false,
+        name = "ZSH-1-2M",
+        type = "typename",
+        ricochetchance = 0.0,
+        level = 10,
+        aftereffectmultiplier  = 0.0,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = true,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = "gunshotwound",
+    },--Sample
 
 }
 
