@@ -65,6 +65,11 @@ end
 
 function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
+
+    if data.isHelmet and not item.Components["LightComponent"].IsOn then                    --If target is a masked helmet and mask was raised
+        return damagemultiplier, penlevel, continue                                         --We are out, mask raised = no protection
+    end
+    
     local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
 
     if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
