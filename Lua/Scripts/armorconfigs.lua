@@ -774,16 +774,58 @@ DDA_AAS.Armors={
     },
 
     --头盔
-    deep_zsh_1_2_m = {
+    deep_kiver_m = {
         isPlateCarrier = false,
-        name = "ZSH-1-2M",
-        type = "typename",
-        ricochetchance = 0.0,
-        level = 10,
-        aftereffectmultiplier  = 0.0,
-        correctionaffliction = nil,
-        correctionmultiplier = 0.0,
-        enablecorrection = false,
+        name = "deep_kiver_m",
+        type = "composite",
+        ricochetchance = 0.4,
+        level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury_head",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = "gunshotwound",
+    },--Sample
+
+    deep_fast_helmet_ghost = {
+        isPlateCarrier = false,
+        name = "deep_fast_helmet_ghost",
+        type = "composite",
+        ricochetchance = 0.5,
+        level = 5,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury_head",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = "gunshotwound",
+    },
+
+    deep_altyn = {
+        isPlateCarrier = false,
+        name = "deep_altyn",
+        type = "composite",
+        ricochetchance = 0.7,
+        level = 7,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury_head",
+        correctionmultiplier = 0.2,
+        enablecorrection = true,
         penresistance = 0.0,
         maxhits = 0,
         maxcondition = 0,
@@ -793,7 +835,28 @@ DDA_AAS.Armors={
             [LimbType.Head] = true,
         },
         targetidentifier = "gunshotwound",
-    },--Sample
+    },
+
+    deep_maska = {
+        isPlateCarrier = false,
+        name = "deep_maska",
+        type = "composite",
+        ricochetchance = 0.8,
+        level = 7,
+        aftereffectmultiplier  = 0.5,
+        correctionaffliction = "deep_bullet_injury_head",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = true,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = "gunshotwound",
+    },
 
 }
 
