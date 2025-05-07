@@ -20,7 +20,7 @@ namespace DeepVisionPatch
         {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
-            harmonyInstance = new Harmony("PirateMissionPatch");
+            harmonyInstance = new Harmony("DeepVisionPatch");
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Initialized!");
         }
 
