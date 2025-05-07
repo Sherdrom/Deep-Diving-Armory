@@ -34,13 +34,21 @@ namespace DeepVisionPatch
             if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
             if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory" )){return true;}
             if (character == null || (!character.IsKeyDown(InputType.Aim)&&(headItem == null || !headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
-
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
             float leftHandSpread = -1;
             float rightHandSpread = -1;
+            foreach(KeyValuePair<ushort,bool> maskStatus in HelmetMaskPatch.MaskStatus)
+            {
+                if(headItem.ID == maskStatus.Key)
+                {
+                    //若面罩打开且不是瞄准状态，则视为正常状态
+                    if(maskStatus.Value && !character.IsKeyDown(InputType.Aim)) return true;
+                    if(maskStatus.Value) headItem = null;
+                }
+            }
             if (rightHand != null) 
                 rightHandSpread = (float?)Traverse.Create(rightHand?
                                                      .GetComponent<RangedWeapon>())?
@@ -194,56 +202,4 @@ namespace DeepVisionPatch
             return false;
         }
     }
-
-    // public class CreateViewTexture
-    // {
-    //     public Texture2D CreateSectorTexture(GraphicsDevice graphicsDevice, int radius, float gapDegrees, Color color)
-    //     {
-    //         int textureSize = radius * 2;
-    //         Texture2D texture = new Texture2D(graphicsDevice, textureSize, textureSize);
-    //         Color[] pixels = new Color[textureSize * textureSize];
-
-    //         Vector2 center = new Vector2(radius, radius);
-    //         float gapStart = -MathHelper.ToRadians(gapDegrees/2); // 缺口起始角度（0度）
-    //         float gapEnd = MathHelper.ToRadians(gapDegrees/2); // 缺口结束角度（30度→弧度）
-
-    //         for (int y = 0; y < textureSize; y++)
-    //         {
-    //             for (int x = 0; x < textureSize; x++)
-    //             {
-    //                 Vector2 pixelPos = new Vector2(x, y);
-    //                 float angle = MathF.Atan2(pixelPos.Y - center.Y, pixelPos.X - center.X);
-
-    //                 // 确保角度在 [0, 2π] 范围内
-    //                 if (angle < 0) angle += MathHelper.TwoPi;
-
-    //                 // 判断是否在扇形内且不在缺口范围内
-    //                 if (IsAngleBetween(angle, gapStart, gapEnd))
-    //                 {
-    //                     pixels[y * textureSize + x] = Color.White;
-    //                 }
-    //                 else
-    //                 {
-    //                     pixels[y * textureSize + x] = color;
-    //                 }
-    //             }
-    //         }
-
-    //         texture.SetData(pixels);
-    //         return texture;
-    //     }
-
-    //     // 辅助方法：检查角度是否在 [start, end] 范围内（处理跨0点情况）
-    //     private bool IsAngleBetween(float angle, float start, float end)
-    //     {
-    //         angle = (angle + MathHelper.TwoPi) % MathHelper.TwoPi;
-    //         start = (start + MathHelper.TwoPi) % MathHelper.TwoPi;
-    //         end = (end + MathHelper.TwoPi) % MathHelper.TwoPi;
-            
-    //         if (start <= end) 
-    //             return angle >= start && angle <= end;
-    //         else 
-    //             return angle >= start || angle <= end;
-    //     }
-    // }
 }

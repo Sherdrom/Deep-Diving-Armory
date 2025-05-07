@@ -960,12 +960,12 @@
       <TickBox text="升起面罩" >
 	    <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true" >
-		<LuaHook name="ALTYN_Open" />
+		<Hook name="ALTYN_Open" />
 		</StatusEffect>
 
 		<!-- 升起面罩 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive" >
-		<LuaHook name="ALTYN_Origin" />
+		<Hook name="ALTYN_Origin" />
 		</StatusEffect>
       </TickBox>
     </CustomInterface>
