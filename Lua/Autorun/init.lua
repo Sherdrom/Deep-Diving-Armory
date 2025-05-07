@@ -7,3 +7,4 @@ if SERVER or not Game.IsMultiplayer then
     dofile(DDA_AAS.Path .. "/Lua/Scripts/Main.lua")
 
 end
+dofile(DDA_AAS.Path .. "/Lua/Scripts/AirBurst.lua")
