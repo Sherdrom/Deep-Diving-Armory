@@ -70,10 +70,15 @@
       textidentifier="afflictiondescription.deep_bullet_injury"
       minstrength="0"
       maxstrength="40"/>
-    <Effect minstrength="0" maxstrength="40" strengthchange="-0.2" multiplybymaxvitality="true"
+    <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true"
       minvitalitydecrease="0"
       maxvitalitydecrease="0.40"
-      dialogflag="damage" />
+      dialogflag="damage" >
+      <StatusEffect target="Limb" disabledeltatime="true" >
+        <Conditional LimbType="neq Torso"/>
+        <ReduceAffliction identifier="deep_headshot_deadly" amount="114514"/>
+      </StatusEffect>
+      </Effect>
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0"/>
   </InternalDamage>
 
@@ -84,17 +89,17 @@
     causeofdeathdescription="deep_bullet_injury_head"
     selfcauseofdeathdescription="You have died of deep_bullet_injury_head"
     limbspecific="true"
-    maxstrength="110"
+    maxstrength="70"
     karmachangeonapplied="-1"
     damageoverlayalpha="2"
     WeaponsSkillGain="1">
     <Description
       textidentifier="afflictiondescription.deep_bullet_injury_head"
       minstrength="0"
-      maxstrength="110"/>
-    <Effect minstrength="0" maxstrength="110" strengthchange="-0.2" multiplybymaxvitality="true"
+      maxstrength="70"/>
+    <Effect minstrength="0" maxstrength="70" strengthchange="-0.2" multiplybymaxvitality="true"
       minvitalitydecrease="0"
-      maxvitalitydecrease="1.1"
+      maxvitalitydecrease="0.70"
       dialogflag="damage" />
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0"/>
   </InternalDamage>
@@ -123,10 +128,6 @@
       minvitalitydecrease="0"
       maxvitalitydecrease="1.2"
       dialogflag="damage" >
-    <StatusEffect target="Limb" disabledeltatime="true" >
-        <Conditional LimbType="neq Head"/>
-        <ReduceAffliction identifier="deep_headshot_deadly" amount="114514"/>
-      </StatusEffect>
       </Effect>
     <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0"/>
   </InternalDamage>

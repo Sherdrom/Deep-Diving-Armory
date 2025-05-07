@@ -914,7 +914,7 @@
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.4" damagesound="LimbArmor" deflectprojectiles="true" />
-	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -995,7 +995,7 @@
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.3" damagesound="LimbArmor" deflectprojectiles="true" />
-	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -1057,7 +1057,7 @@
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="LimbArmor" deflectprojectiles="true" />
-	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.7" />
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.2" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -1121,7 +1121,7 @@
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
-	  <damagemodifier afflictionidentifiers="hollow_point" armorsector="0.0,360.0" damagemultiplier="0.4" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.4" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.6" />
       <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -1129,6 +1129,69 @@
 	  <sprite texture="%ModDir%/jobgear/armor/armor.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.6" hidewearablesoftype="Hair" sourcerect="711,305,122,104" origin="0.55,0.59" /> 
       <SkillModifier skillidentifier="weapons" skillvalue="-25" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_cqb_1" strength="100" />
+		<RequiredItems items="chip_cqb" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_marksman_1" strength="100" />
+		<RequiredItems items="chip_marksman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_commando_1" strength="100" />
+		<RequiredItems items="chip_commando" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_doc_1" strength="100" />
+		<RequiredItems items="chip_doc" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing,InWater" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="chip_frogman_1" strength="100" />
+		<RequiredItems items="chip_frogman" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_chip_blaster" strength="100" />
+		<RequiredItems items="chip_blaster" type="Contained"  />
+      </StatusEffect>
+    </Wearable>
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
+      <Containable tags="deep_head_chip" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+
+  <Item name="" identifier="deep_zsh_1_2_m" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325">
+    <Deconstruct time="10">
+      <Item identifier="ballisticfiber" amount="2" />
+	  <Item identifier="physicorium" amount="1" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="KEVLAR" amount="4" />
+	  <RequiredItem identifier="physicorium" amount="2" />
+	  <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+	<InventoryIcon texture="%ModDir%/jobgear/helmet/ZSH_1_2M.png" sourcerect="2,3,135,111" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/helmet/ZSH_1_2M.png" sourcerect="2,3,135,111" depth="0.6" origin="0.5,0.5" /> 
+    <Body radius="30" density="10" />
+    <Wearable slots="Any,Head+Headset" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+	<StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="LimbArmor" deflectprojectiles="true" />
+	  <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.6" />
+      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound,bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
+      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
+	  <sprite texture="%ModDir%/jobgear/helmet/ZSH_1_2M.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.57" hidewearablesoftype="Hair" sourcerect="2,3,135,111" origin="0.5,0.55" /> 
+      <SkillModifier skillidentifier="weapons" skillvalue="-15" />
+	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" LowPassMultiplier="0" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  </StatusEffect>
 	  <StatusEffect type="OnWearing" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
