@@ -117,7 +117,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
     local afflictions = ptable["afflictions"]
-    local penetrationlevel = math.floor(ptable["penetration"]*10)
+    local penetrationlevel = math.floor((ptable["penetration"]+0.00001)*10)
     local targetcharacter = targetlimb.character
     if not targetcharacter.IsHuman then return end
     local outercloth,innerplate = DDA_AAS.Main.getArmor(targetcharacter,targetlimb)
@@ -188,11 +188,10 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
         if not continue then return end
     end
 
-    --Damage stuff
+    --Damage stuffs
 
     local decreasedpen = ptable["penetration"] - (penetrationlevel / 10)
-    ptable["penetration"] = Single(ptable["penetration"] - decreasedpen)
-
+    ptable["penetration"] = Single(ptable["penetration"] + 0.00001 - decreasedpen)
     ptable["damageMultiplier"] = Single(ptable["damageMultiplier"] * damagemultiplier)
 
 end, Hook.HookMethodType.Before)
