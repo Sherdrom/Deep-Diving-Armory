@@ -40,7 +40,7 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
             end
             local CursorPosition = User.CursorWorldPosition
             local StartingPoint = Projectile.Launcher.WorldPosition
-            local FuseDistance = math.abs(PointDistance(User.CursorWorldPosition, Projectile.Launcher.WorldPosition))
+            local FuseDistance = PointDistance(User.CursorWorldPosition, Projectile.Launcher.WorldPosition)
             if CLIENT and Game.IsMultiplayer then
                 local message = Networking.Start("Fuse")
                 message.WriteDouble(FuseDistance)
