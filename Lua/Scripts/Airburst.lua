@@ -9,7 +9,7 @@ local function PointDistance(V1, V2)
 end
 
 local function VectorVelocity(V)
-    return math.sqrt(V.X * V.X + V.Y * V.Y)
+    return math.sqrt(V.X ^ 2 + V.Y ^ 2)
 end
 
 Hook.Add("Deep_AirBurstBound", "Deep_AirBurstBound",
@@ -40,7 +40,7 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
             end
             local CursorPosition = User.CursorWorldPosition
             local StartingPoint = Projectile.Launcher.WorldPosition
-            local FuseDistance = math.abs(PointDistance(User.CursorWorldPosition, Projectile.Launcher.WorldPosition))
+            local FuseDistance = PointDistance(User.CursorWorldPosition, Projectile.Launcher.WorldPosition)
             if CLIENT and Game.IsMultiplayer then
                 local message = Networking.Start("Fuse")
                 message.WriteDouble(FuseDistance)
@@ -65,29 +65,21 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
 
 Hook.Add("think", "Deep_AirBurstUpdate", function() -- Projectile update
     for item, data in pairs(UpdateAmmo) do
-        if data == nil then
-            break
-        end
-        local itemvelocity = item.body.LinearVelocity
-        if item.WorldPosition == nil or data.StartingPoint == nil or data.FuseDistance == nil then
-            UpdateAmmo[item] = nil
-            return
-        end
-        if PointDistance(item.WorldPosition, data.StartingPoint) >= data.FuseDistance then
-            item.Condition = 0
-            UpdateAmmo[item] = nil
-            return
-        end
-        if VectorVelocity(itemvelocity) <= 5 then -- Consider a projectile is dead if moving way too slow
-            UpdateAmmo[item] = nil
-            return
+        if data ~= nil then
+            local itemvelocity = item.body.LinearVelocity
+            if item.WorldPosition == nil or data.StartingPoint == nil or data.FuseDistance == nil or VectorVelocity(itemvelocity) <= 5 then
+                UpdateAmmo[item] = nil
+                return
+            end  -- remove data if item does not have correct data or velocity is too low
+            if PointDistance(item.WorldPosition, data.StartingPoint) >= data.FuseDistance then
+                item.Condition = 0
+                UpdateAmmo[item] = nil
+                return
+            end
         end
     end
 end)
 
 Hook.Add("item.removed", "Deep_RoundsRemoved", function(item) -- Removed projectiles
-    if not item.HasTag("xm25round") then
-        return
-    end
-    UpdateAmmo[item] = nil
+    if item.HasTag("xm25round") then UpdateAmmo[item] = nil end
 end)

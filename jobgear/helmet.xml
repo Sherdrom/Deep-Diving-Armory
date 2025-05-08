@@ -961,11 +961,13 @@
 	    <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true" >
 		<Hook name="ALTYN_Open" />
+		<LuaHook name="ALTYN_Open_Lua" />
 		</StatusEffect>
 
 		<!-- 升起面罩 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive" >
 		<Hook name="ALTYN_Origin" />
+		<LuaHook name="ALTYN_Origin_Lua" />
 		</StatusEffect>
       </TickBox>
     </CustomInterface>

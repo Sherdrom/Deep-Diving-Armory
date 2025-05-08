@@ -42,11 +42,16 @@ namespace DeepVisionPatch
             float rightHandSpread = -1;
             foreach(KeyValuePair<ushort,bool> maskStatus in HelmetMaskPatch.MaskStatus)
             {
-                if(headItem.ID == maskStatus.Key)
+                if(headItem!=null && headItem.ID == maskStatus.Key)
                 {
                     //若面罩打开且不是瞄准状态，则视为正常状态
                     if(maskStatus.Value && !character.IsKeyDown(InputType.Aim)) return true;
-                    if(maskStatus.Value) headItem = null;
+                    if(maskStatus.Value) 
+                    {
+                        headItem = null;
+                        if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) )){return true;}
+                        if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" )){return true;}
+                    }
                 }
             }
             if (rightHand != null) 
