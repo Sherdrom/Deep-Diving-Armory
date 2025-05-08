@@ -25,5 +25,22 @@ public class HelmetMaskPatch
             MaskStatus[item.ID] = true;     //面罩打开为true
             return null;
         });
+
+        GameMain.LuaCs.Hook.Add("MASKA_Origin", (object[] args) =>
+        {
+            Item item =(Item)args[2];
+            if(item == null) return null;
+            if(!(!MaskStatus.TryGetValue(item.ID, out _) || (MaskStatus.TryGetValue(item.ID, out bool status) && status))) return null;
+            MaskStatus[item.ID] = false;    //面罩关闭为false
+            return null;
+        });
+        GameMain.LuaCs.Hook.Add("MASKA_Open", (object[] args) =>
+        {
+            Item item =(Item)args[2];
+            if(item == null) return null;
+            if(!(!MaskStatus.TryGetValue(item.ID, out _) ||(MaskStatus.TryGetValue(item.ID, out bool status)&&!status))) return null;
+            MaskStatus[item.ID] = true;     //面罩打开为true
+            return null;
+        });
     }
 }

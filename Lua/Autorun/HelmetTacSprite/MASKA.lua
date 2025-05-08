@@ -4,46 +4,36 @@ LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.Wearabl
 
 local WEAR_CONFIG = {
     Sound = {
-            nightSound = {  turnOn = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Night/nightOn.ogg"),
+            OpenSound = {  sound = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Mask/MaskOpen.ogg"),
                             frequencyMultiplier = 1,
                             gain = 1,
                             range = 500},
-            -- thermalSound = { sound = Game.SoundManager.LoadSound(... .. "/jobgear/sound/thermal.ogg"),
-            --                 frequencymultiplier = 1,
-            --                 gain = 1,
-            --                 range = 500},
-            -- healthSound = { sound = Game.SoundManager.LoadSound(... .. "/jobgear/sound/health.ogg"),
-            --                 frequencymultiplier = 1,
-            --                 gain = 1,
-            --                 range = 500}
+            CloseSound = { sound = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Mask/MaskClose.ogg"),
+                            frequencyMultiplier = 1,
+                            gain = 1,
+                            range = 500}
     }
 }
 
 -- 所有的OnUse Hook应该只执行一次，而不是一直执行
 local isExecuted={}
 
-Hook.Add("MASKA_Origin", function(_, _, item)
+Hook.Add("MASKA_Origin_Lua", function(_, _, item)
+    if not isExecuted[item.ID] then return end
     local itemComponent = item.GetComponentString("Wearable")
     if itemComponent.wearableSprites[1].Sprite == nil then return end
-    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(9,6,128,108)
-    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.52,0.59)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        for i, _ in pairs(executed) do
-            executed[i] = false
-        end
-    end
+        SoundPlayer.PlaySound(WEAR_CONFIG.Sound.CloseSound.sound, item.WorldPosition, WEAR_CONFIG.Sound.CloseSound.gain, WEAR_CONFIG.Sound.CloseSound.range, WEAR_CONFIG.Sound.CloseSound.frequencyMultiplier)
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(6,4,101,111)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.59)
+    isExecuted[item.ID] = false
 end)
 
-Hook.Add("MASKA_Open", function(_, _, item)
-    if isExecuted[item.ID] and isExecuted[item.ID].MASKA_Open then return end
+Hook.Add("MASKA_Open_Lua", function(_, _, item)
+    if isExecuted[item.ID] then return end
     local itemComponent = item.GetComponentString("Wearable")
     if itemComponent.wearableSprites[1].Sprite == nil then return end
-    SoundPlayer.PlaySound(WEAR_CONFIG.Sound.nightSound.turnOn, item.WorldPosition, WEAR_CONFIG.Sound.nightSound.gain, WEAR_CONFIG.Sound.nightSound.range, WEAR_CONFIG.Sound.nightSound.frequencyMultiplier)
-    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(9,118,140,121)
+    SoundPlayer.PlaySound(WEAR_CONFIG.Sound.OpenSound.sound, item.WorldPosition, WEAR_CONFIG.Sound.OpenSound.gain, WEAR_CONFIG.Sound.OpenSound.range, WEAR_CONFIG.Sound.OpenSound.frequencyMultiplier)
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(6,129,112,115)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.52,0.63)
-    isExecuted[item.ID] = {
-        MASKA_Open = true,
-        MASKA_Origin = false
-        }
+    isExecuted[item.ID] = true
 end)
