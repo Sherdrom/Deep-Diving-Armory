@@ -61,8 +61,8 @@
     <Item identifier="xm25round_he_ab" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,xm25round" impactsoundtag="None" hideinmenus="true" scale="0.5">
         <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
         <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
-        <Body width="40" height="14" density="30" />
-        <Projectile characterusable="false" hitscan="false" launchImpulse="30" penetration="0.0" MaxTargetsToHit="99" spread="0.1" DamageDoors="true">
+        <Body width="40" height="14" density="30" gravityscale="0.1"/>
+        <Projectile characterusable="false" hitscan="false" launchImpulse="15" penetration="0.0" MaxTargetsToHit="99" spread="0.1" DamageDoors="true">
             <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="80" velocitymax="100" colormultiplier="255,0,0,175" scalemultiplier="1,0.6" />
             <Attack structuredamage="2" targetforce="3" itemdamage="18" severlimbsprobability="0.0" />
             <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1.2">
