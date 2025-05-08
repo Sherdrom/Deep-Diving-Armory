@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using HarmonyLib;
 using Barotrauma;
-using Microsoft.Xna.Framework;
 
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
