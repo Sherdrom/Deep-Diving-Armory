@@ -6,666 +6,616 @@
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="433,403,91,61" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="555,404,38,60" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="555,404,38,60" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x63round" />
-	  <!--叮——————-->
-      <StatusEffect type="OnBroken" target="This" >
+      <!--叮——————-->
+      <StatusEffect type="OnBroken" target="This">
         <sound file="%ModDir%/Sound/Weapons/M1_GARAND/gunOther/m1_ding.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x63round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x63round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_sks_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload,sks_mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_sks_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload,sks_mag,762mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="432,468,93,139" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="554,469,80,139" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="554,469,80,139" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_sks" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x39round_sks" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_sks" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_56ban_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload,sks_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="432,613,93,139" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="554,469,80,139" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="554,469,80,139" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_sks" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x39round_sks" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_sks" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_m14_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="8,19,116,104" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="599,4,68,77" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_m14" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x51round_m14" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_m14" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_fn49_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="438,763,106,77" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,768,19,70" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,768,19,70" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="792x57round_fn49" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="792x57round_fn49" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="792x57round_fn49" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_gew43_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="9,128,116,104" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="611,103,94,46" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="792x57round_gew43" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="792x57round_gew43" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="792x57round_gew43" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
   <Item name="" identifier="deep_Mosin_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="595,70,82,73" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="689,73,22,72" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="689,73,22,72" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x54Rround" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x54Rround" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x54Rround" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_M1903_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="429,4,96,68" origin="0.5,0.5" />
-	<BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="530,4,10,68" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="530,4,10,68" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x63round_m1903" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="762x63round_m1903" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x63round_m1903" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_Lee_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="428,80,113,72" origin="0.5,0.5" />
-	  <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="558,76,36,75" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="558,76,36,75" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="77round_lee" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-    </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="77round_lee" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="77round_lee" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_type_38_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="431,161,93,69" origin="0.5,0.5" />
-	  <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="561,160,19,68" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="561,160,19,68" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="65round_38" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-    </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="65round_38" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="65round_38" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_98k_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload,792_57_sniper_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="433,235,93,68" origin="0.5,0.5" />
-	  <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,236,11,68" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,236,11,68" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="792round_98k" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-    </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="792round_98k" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="792round_98k" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_zhongzheng_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.12" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_lead_reload,792_57_sniper_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="iron" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="433,321,93,68" origin="0.5,0.5" />
-	  <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,320,11,68" depth="0.65" />
+    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="565,320,11,68" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="792round_98k" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-    </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="792round_98k" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="792round_98k" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255" >
-    <Conditional IsActive="false" />
-    <Conditional EntityType="eq character" TargetContainer="True" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" spritecolor="255,255,255,255">
+        <Conditional IsActive="false" />
+        <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  <Item name="" identifier="deep_AWM_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2" >
+  <Item name="" identifier="deep_AWM_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload_heavy,86_mag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="titanium" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="152,18,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="336,7,88,101" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="awm_338_round" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="awm_338_round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
   <Item name="" identifier="deep_sr25_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="titanium" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="152,126,119,108" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="443,16,79,80" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="sr25_762x51round" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="sr25_762x51round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="sr25_762x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  <Item name="" identifier="deep_m82a1_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,sniper_phy_ful_reload_2" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_m82a1_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,sniper_phy_ful_reload_2,tsm_127ammo_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="1000" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="physicorium" />
-      <RequiredItem identifier="gun_powder_fulgurium"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="294,18,119,108" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="465,6,75,78" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x99round" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="127x99round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="127x99round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  <Item name="" identifier="deep_gm6_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,sniper_phy_ful_reload_2" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_gm6_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,sniper_phy_ful_reload_2,tsm_127_108_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="1000" displaynonempty="true" minleveldifficulty="15">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="2" sold="false" />
       <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="4" />
       <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="4" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="physicorium" />
-      <RequiredItem identifier="gun_powder_fulgurium"  />
-	  <RequiredItem identifier="copper" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="294,128,119,108" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="528,9,93,104" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x99round" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="127x99round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="127x99round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-    <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_tungsten_phy" />
-      <RequiredItem identifier="gun_powder_fulgurium" amount="2"/>
+      <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
       <RequiredItem identifier="copper" />
     </Fabricate>
     <Deconstruct time="5">
       <Item identifier="copper" />
-	  <Item identifier="fulgurium" />
-	  <Item identifier="physicorium" />
+      <Item identifier="fulgurium" />
+      <Item identifier="physicorium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="474,108,76,81" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="563,164,102,20" origin="0.5,0.5" />
@@ -674,9 +624,9 @@
     <Projectile characterusable="false" hitscan="true" maxtargetstohit="10" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="1" targetforce="50" itemdamage="200" severlimbsprobability="1" penetration="1">
-		<Affliction identifier="deep_headshot_3" strength="100" />
-		<Affliction identifier="deep_shot_gauss" strength="100" />
-		<Affliction identifier="deep_headshot_deadly_irresistible" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_3" strength="100" />
+        <Affliction identifier="deep_shot_gauss" strength="100" />
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="20" MultiplyByMaxVitality="true" />
         <Affliction identifier="bleeding" strength="150" />
         <Affliction identifier="gunshotwound" strength="250" />
         <Affliction identifier="explosiondamage" strength="100" />
@@ -686,11 +636,11 @@
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
         <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -700,8 +650,6 @@
       </StatusEffect>
     </Projectile>
   </Item>
-  
-  
   <Item name="" identifier="ptrd_145mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
     <Price baseprice="600" displaynonempty="true" minleveldifficulty="48">
       <Price storeidentifier="merchantcity" multiplier="1" minavailable="2" sold="true" />
@@ -711,12 +659,12 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder" amount="1"/>
+      <RequiredItem identifier="gun_powder" amount="1" />
       <RequiredItem identifier="copper" />
     </Fabricate>
     <Deconstruct time="5">
       <Item identifier="copper" />
-	  <Item identifier="lead" />
+      <Item identifier="lead" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_2.png" sourcerect="8,123,70,70" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" sourcerect="79,171,92,23" origin="0.5,0.5" />
@@ -725,8 +673,8 @@
     <Projectile characterusable="false" hitscan="true" maxtargetstohit="3" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.5">
-	  <Affliction identifier="deep_headshot_3" strength="100" />
-	  <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_3" strength="100" />
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
         <Affliction identifier="bleeding" strength="120" />
         <Affliction identifier="gunshotwound" strength="200" />
         <Affliction identifier="stun" strength="3" />
@@ -735,11 +683,11 @@
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
         <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -749,47 +697,43 @@
       </StatusEffect>
     </Projectile>
   </Item>
-  
-    <Item name="" identifier="deep_gauss_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1" >
+  <Item name="" identifier="deep_gauss_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
-	  <RequiredSkill identifier="electrical" level="100" />
+      <RequiredSkill identifier="electrical" level="100" />
       <RequiredItem identifier="deep_tungsten_phy" amount="5" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="5" />
-	  <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="fulguriumbatterycell" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="fulguriumbatterycell" />
     </Fabricate>
-	<Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+    <Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
-	  <RequiredSkill identifier="electrical" level="100" />
+      <RequiredSkill identifier="electrical" level="100" />
       <RequiredItem identifier="deep_tungsten_phy" amount="5" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="5" />
-	  <RequiredItem identifier="fulguriumbatterycell" />
+      <RequiredItem identifier="fulguriumbatterycell" />
       <RequiredItem identifier="deep_gauss_mag" mincondition="0.0" maxcondition="0.5" usecondition="false" defaultitem="deep_gauss_mag" />
-      </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_3.png" sourcerect="652,41,88,86" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="652,41,88,86" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="gauss_round" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-      </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false" >
-	  <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+        <Remove />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="gauss_round" spawnposition="ThisInventory" Count="2" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="gauss_round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  </Items>
+</Items>
