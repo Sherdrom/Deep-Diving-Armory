@@ -95,16 +95,17 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
 		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+    <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
@@ -122,13 +123,14 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+	        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.2"/>
+            <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+		    <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="-0.8"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -229,7 +231,7 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
@@ -237,7 +239,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
@@ -255,7 +257,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 强攻手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -368,10 +370,10 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.7"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 攻击时降低玩家25%伤害抗性 -->
@@ -513,7 +515,7 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
@@ -522,7 +524,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
@@ -540,7 +542,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 狙击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="600" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -645,16 +647,16 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
 		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.7"/>
@@ -664,7 +666,7 @@
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
@@ -673,10 +675,10 @@
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.3" />
       </Abilities>
     </AbilityGroupEffect>
     <!-- 攻击时降低玩家25%伤害抗性 -->
@@ -814,16 +816,16 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
@@ -846,7 +848,7 @@
 		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1.2"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1.4"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>

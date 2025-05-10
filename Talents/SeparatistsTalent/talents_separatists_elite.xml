@@ -113,13 +113,13 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 攻击时降低玩家25%伤害抗性 -->
+	<!-- 攻击时降低玩家40%伤害抗性 -->
 	<AbilityGroupEffect abilityeffecttype="OnAttack" >
      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
-              <Affliction identifier="deep_gunwound_reduce_25" strength="1.0"/>
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -265,13 +265,13 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 攻击时降低玩家25%伤害抗性 -->
+	<!-- 攻击时降低玩家40%伤害抗性 -->
 	<AbilityGroupEffect abilityeffecttype="OnAttack" >
      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
-              <Affliction identifier="deep_gunwound_reduce_25" strength="1.0"/>
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -413,6 +413,18 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
     <!-- 重装远距离抗伤，45%枪伤与致命爆头抗性 -->
     <AbilityGroupInterval interval="0.9" >
       <Abilities>
@@ -570,8 +582,20 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
 	<!-- 狙击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -719,6 +743,18 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
     <!-- 爆破手 -->
 	<AbilityGroupInterval interval="0.1" >
       <Conditions>
@@ -857,6 +893,18 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 攻击时降低玩家40%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_40" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
 	<!-- 首领 -->
 	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
       <Abilities>

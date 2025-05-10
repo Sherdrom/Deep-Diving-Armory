@@ -98,8 +98,9 @@
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.3"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
 		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+    <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 攻击时降低玩家45%伤害抗性 -->
@@ -115,7 +116,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
 		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
@@ -123,12 +124,14 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
+	        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.35"/>
+            <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.35"/>
+		    <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="-0.8"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
@@ -248,7 +251,6 @@
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 攻击时降低玩家45%伤害抗性 -->
@@ -264,7 +266,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
 		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.8"/>
@@ -273,12 +275,12 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 强攻手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="400" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="1.8"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
@@ -414,7 +416,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
@@ -422,14 +424,33 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装防御者 -->
-	<AbilityGroupInterval interval="0.1" >
+	<!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_heavy_sp" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 重装近距离薄弱 -->
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
+    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_enemy_resistance_heavy_sp_near" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
@@ -549,7 +570,7 @@
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1.3"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 攻击时降低玩家45%伤害抗性 -->
@@ -565,7 +586,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
 		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.8"/>
@@ -574,12 +595,11 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 狙击手 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.2"/>
 		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupInterval>
@@ -712,7 +732,7 @@
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.7"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 攻击时降低玩家45%伤害抗性 -->
@@ -728,7 +748,7 @@
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+	<AbilityGroupInterval interval="5" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
 		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
@@ -736,18 +756,50 @@
 		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 复仇小队 -->
+	<!-- 首领 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+    <!-- 首领 -->
 	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character">
-              <Affliction identifier="deep_revengesquad_co_hard" amount="240"/>
+              <Affliction identifier="deep_revengesquad_sp_hard" amount="180"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupEffect>
+    <!-- 首领 -->
+    <!-- 首领活着时，全员获得10%移速，伤害加成,30%精度加成 -->
+    <AbilityGroupInterval interval="0.9">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
+              <Affliction identifier="deep_talent_pirate_leader_alive" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
     <!-- 多人游戏动态抗性调整 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
