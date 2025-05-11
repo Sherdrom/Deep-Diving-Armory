@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-    <Item name="XM-25 ABAW" identifier="xm25_P" subcategory="Berra Group" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.23" impactsoundtag="impact_metal_light">
+    <Item name="XM-25 ABAW" identifier="deep_xm25" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.23" impactsoundtag="impact_metal_light">
         <InventoryIcon texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" origin="0.5,0.5" />
         <Sprite texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" depth="0.55" origin="0.5,0.5" />
         <Body width="400" height="70" density="52" />
@@ -41,7 +41,7 @@
         <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
     </Item>
 
-    <Item name="XM-25编程高爆破片弹弹匣" identifier="xm25_mag_he" subcategory="Berra Group" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="2" health="8" scale="0.23" cargocontaineridentifier="metalcrate" tags="smallitem,tes20mag" impactsoundtag="impact_metal_light">
+    <Item name="XM-25编程高爆破片弹弹匣" identifier="deep_xm25_abhe" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="2" health="8" scale="0.23" cargocontaineridentifier="metalcrate" tags="smallitem,tes20mag" impactsoundtag="impact_metal_light">
         <InventoryIcon texture="%ModDir%/testfiles/XM25/XM25_HE.png" sourcerect="0,0,72,90" />
         <Sprite texture="%ModDir%/testfiles/XM25/XM25_HE.png" depth="0.56" sourcerect="0,0,72,90" origin="0.5,0.5" />
         <Body width="72" height="90" density="25" />
@@ -50,15 +50,15 @@
             <Item identifier="steel" mincondition="0.5" outcondition="0.6" />
             <Item identifier="plastic" outcondition="0.8" />
         </Deconstruct>
-        <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="xm25round_he_ab" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-            <Containable items="xm25round_he_ab" />
+        <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="deep_xm25round_abhe" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+            <Containable items="deep_xm25round_abhe" />
             <StatusEffect type="OnUse" target="This" condition="-1" disabledeltatime="true">
-                <SpawnItem identifiers="xm25round_he_ab" spawnposition="ThisInventory" />
+                <SpawnItem identifiers="deep_xm25round_abhe" spawnposition="ThisInventory" />
             </StatusEffect>
         </ItemContainer>
         <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
     </Item>
-    <Item identifier="xm25round_he_ab" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,xm25round" impactsoundtag="None" hideinmenus="true" scale="0.5">
+    <Item identifier="deep_xm25round_abhe" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,xm25round" impactsoundtag="None" hideinmenus="true" scale="0.5">
         <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
         <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
         <Body width="40" height="14" density="30" gravityscale="0.1"/>
