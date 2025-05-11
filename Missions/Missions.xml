@@ -217,6 +217,7 @@
     </Characters>
     <message header="missionheader0.deep_destory_coalition_base_hard" text="missionmessage0.deep_destory_coalition_base_hard" />
 	<OverrideMusic state="0" type="deep_coalition_hard" />
+  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
 </OutpostDestroyMission>
 
 <OutpostDestroyMission identifier="deep_destory_ghost_base_hard" minleveldifficulty="35" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_ghost_base_hard" type="OutpostDestroy" reward="25000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_ghost_base_hard">
@@ -243,7 +244,37 @@
 	  <Character identifier="deep_ghost_leader_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
     </Characters>
     <message header="missionheader0.deep_destory_ghost_base_hard" text="missionmessage0.deep_destory_ghost_base_hard" />
-	<OverrideMusic state="0" type="deep_coalition_hard" />
+	<OverrideMusic state="0" type="deep_ghost" />
+  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
+</OutpostDestroyMission>
+
+<OutpostDestroyMission identifier="deep_destory_grizzlies_base_hard" minleveldifficulty="50" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_grizzlies_base_hard" type="OutpostDestroy" reward="40000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_grizzlies_base_hard">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="14,490,264,235" />
+    <LocationType identifier="deep_outpost_fight" />
+    <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="0,1" cooldownafterchange="2" />
+    <Reputation identifier="separatists" amount="-30" />
+	<Reputation identifier="coalition" amount="30" />
+    <Characters>
+	  <Character identifier="deep_grizzlies_team_juggernaut" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_team_juggernaut" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_political_commissar" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_machinegun_fort" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_heavy_gunner" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_heavy_gl" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_leader" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_machinegun_fort" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_heavy_gunner" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_heavy_gl" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+	  <Character identifier="deep_grizzlies_team_juggernaut_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_grizzlies_political_commissar_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_grizzlies_machinegun_fort_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_grizzlies_heavy_gunner_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+	  <Character identifier="deep_grizzlies_heavy_gl_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    <Character identifier="deep_grizzlies_leader_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    </Characters>
+    <message header="missionheader0.deep_destory_grizzlies_base_hard" text="missionmessage0.deep_destory_grizzlies_base_hard" />
+	<OverrideMusic state="0" type="deep_grizzlies" />
+  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
 </OutpostDestroyMission>
   
   <EliminateTargetsMission
