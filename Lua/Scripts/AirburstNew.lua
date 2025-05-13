@@ -4,6 +4,16 @@ local rounds = {
 }
 local GlobalLauncher = {}
 
+local function clamp(value, min, max)
+    if value < min then
+        return min
+    elseif value > max then
+        return max
+    else
+        return value
+    end
+end
+
 local function PointDistance(V1, V2)
     local dx = V2.X - V1.X
     local dy = V2.Y - V1.Y
@@ -14,17 +24,12 @@ local function VectorVelocity(V)
     return math.sqrt(V.X ^ 2 + V.Y ^ 2)
 end
 
-local function finalSpeed(range, initspeed)
-    if range == nil or initspeed == nil then return 0 end
-    return 0.001 * range + initspeed
-end
-
 local function SetTimedFuse(launcheritem, projectileitem, range)
     local velocity = VectorVelocity(launcheritem.body.LinearVelocity) + rounds[projectileitem.Prefab.Identifier.Value]
-    local fvelocity = finalSpeed(range, velocity)
-    local time = math.round(2 * range / (velocity + fvelocity) * 10)
+    local time = range / velocity * 8.6
     Timer.Wait(function()
         projectileitem.Condition = 0
+        print(VectorVelocity(projectileitem.body.LinearVelocity))
     end,time)
 end
 
