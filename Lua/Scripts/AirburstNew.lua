@@ -14,7 +14,8 @@ end
 
 local function SetTimedFuse(launcheritem, projectileitem, range)
     local velocity = VectorVelocity(launcheritem.body.LinearVelocity) + rounds[projectileitem.Prefab.Identifier.Value]
-    local time = range / velocity / TimeSpan.TicksPerMillisecond
+    local time = range / velocity * (1000/120)
+    print(time)
     Timer.Wait(function()
         projectileitem.Condition = 0
     end,time)
