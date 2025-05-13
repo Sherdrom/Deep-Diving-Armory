@@ -1,18 +1,6 @@
 SetFuse = nil
-local rounds = {
-    deep_xm25round_abhe = 15,
-}
+local rounds = {deep_xm25round_abhe = 15,}
 local GlobalLauncher = {}
-
-local function clamp(value, min, max)
-    if value < min then
-        return min
-    elseif value > max then
-        return max
-    else
-        return value
-    end
-end
 
 local function PointDistance(V1, V2)
     local dx = V2.X - V1.X
@@ -29,7 +17,6 @@ local function SetTimedFuse(launcheritem, projectileitem, range)
     local time = range / velocity / TimeSpan.TicksPerMillisecond
     Timer.Wait(function()
         projectileitem.Condition = 0
-        print(VectorVelocity(projectileitem.body.LinearVelocity))
     end,time)
 end
 
