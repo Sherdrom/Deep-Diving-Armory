@@ -8,4 +8,4 @@ if SERVER or not Game.IsMultiplayer then
 
 end
 
-dofile(DDA_AAS.Path .. "/Lua/Scripts/AirBurst.lua")
+dofile(DDA_AAS.Path .. "/Lua/Scripts/AirBurstNew.lua")
