@@ -1,4 +1,4 @@
-DDA_AAS.Armors={
+Deep_Lua.Armors={
 
     itemid = {
         isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
