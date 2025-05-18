@@ -19,6 +19,15 @@ local limbtoslot = {
     [LimbType.RightFoot] = {InvSlotType.OuterClothes,nil},
 }
 
+local RicochetSound = {
+    Sound = {
+            ricochet = Game.SoundManager.LoadSound(DDA_AAS.Path .. "/jobgear/sound/ricochet.ogg"),
+                            frequencyMultiplier = 1,
+                            gain = 1,
+                            range = 3000,
+    }
+}
+
 --Functions
 function DDA_AAS.Main.getArmor(character,targetlimb)
     if character == nil or targetlimb == nil then return nil,nil end
