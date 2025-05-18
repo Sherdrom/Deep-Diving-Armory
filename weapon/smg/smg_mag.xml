@@ -22,7 +22,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -30,7 +33,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_9mm_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_9mm_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -52,7 +55,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -60,7 +66,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_9mm_round_tit" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_9mm_round_tit" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -82,7 +88,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -90,7 +99,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_9mm_round_phy" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_9mm_round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -117,7 +126,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -125,7 +137,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_1143_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_1143_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -152,7 +164,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -160,7 +175,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_mac_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_mac_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -187,7 +202,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -195,7 +213,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_ump45_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_ump45_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -217,7 +235,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -225,7 +246,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_ump45_round_tit" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_ump45_round_tit" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -247,7 +268,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -255,7 +279,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_ump45_round_phy" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_ump45_round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -282,7 +306,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -290,7 +317,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_vector_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_vector_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -317,7 +344,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -325,7 +355,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_57mm_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_57mm_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -352,7 +382,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -360,7 +393,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_46mm_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_46mm_round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -387,7 +420,10 @@
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true"></StatusEffect>
       <!--每隔5s删除子弹-->
-      <StatusEffect type="Always" target="Contained" interval="60" disabledeltatime="false" stackable="false">
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -395,7 +431,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
       <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="smg_9mm_round_pp19" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_9mm_round_pp19" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
