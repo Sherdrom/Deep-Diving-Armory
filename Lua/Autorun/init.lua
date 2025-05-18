@@ -1,11 +1,13 @@
-DDA_AAS = {}
-DDA_AAS.Path = ...
+Deep_Lua = {}
+Deep_Lua.Path = ...
 
 if SERVER or not Game.IsMultiplayer then
 
-    dofile(DDA_AAS.Path .. "/Lua/Scripts/armorconfigs.lua")
-    dofile(DDA_AAS.Path .. "/Lua/Scripts/armorMain.lua")
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/armorconfigs.lua")--Armor configs
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/armorMain.lua")--Armor Main
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/missileconfigs.lua")--Missile configs, will load before missileframework
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/missileframework.lua")--Missile Main, will be override if Framework is already exist
 
 end
 
-dofile(DDA_AAS.Path .. "/Lua/Scripts/AirBurstNew.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AirBurst.lua")--Airburst stuff, work both side

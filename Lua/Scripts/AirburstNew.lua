@@ -1,7 +1,4 @@
 SetFuse = nil
-local rounds = {
-    deep_xm25round_abhe = 15,
-}
 local GlobalLauncher = {}
 
 local function PointDistance(V1, V2)
@@ -14,15 +11,9 @@ local function VectorVelocity(V)
     return math.sqrt(V.X ^ 2 + V.Y ^ 2)
 end
 
-local function finalSpeed(range, initspeed)
-    if range == nil or initspeed == nil then return 0 end
-    return 0.001 * range + initspeed
-end
-
-local function SetTimedFuse(launcheritem, projectileitem, range)
-    local velocity = VectorVelocity(launcheritem.body.LinearVelocity) + rounds[projectileitem.Prefab.Identifier.Value]
-    local fvelocity = finalSpeed(range, velocity)
-    local time = math.round(2 * range / (velocity + fvelocity) * 10)
+local function SetTimedFuse(projectileitem, range, speedvector)
+    local velocity = VectorVelocity(speedvector)
+    local tick = range / velocity * 8.333  -- Cant determine what this multiplier is, help required.
     Timer.Wait(function()
         projectileitem.Condition = 0
     end,time)
@@ -66,7 +57,8 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
             end)
         end
         FuseDistance = SetFuse or FuseDistance
+        print(FuseDistance)
         SetFuse = nil
         if FuseDistance == nil then return end
-        SetTimedFuse(Launcher, ProjectileItem, FuseDistance)
+        SetTimedFuse(Launcher, ProjectileItem, FuseDistance, ProjectileItem.body.LinearVelocity)
     end)

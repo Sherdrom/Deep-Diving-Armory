@@ -1,4 +1,4 @@
-DDA_AAS.Main = {}
+Deep_Lua.Main = {}
 
 -- Limb convertion stuff
 local limbtoslot = {
@@ -29,7 +29,7 @@ local RicochetSound = {
 }
 
 --Functions
-function DDA_AAS.Main.getArmor(character,targetlimb)
+function Deep_Lua.Main.getArmor(character,targetlimb)
     if character == nil or targetlimb == nil then return nil,nil end
     local characterInv = character.Inventory                                    --Get character inv
     if characterInv == nil then return nil,nil end
@@ -72,7 +72,7 @@ local function DoChance(probability)
     return false
 end
 
-function DDA_AAS.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
+function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
 
     if data.isHelmet and item.GetComponentString("LightComponent").IsOn then                --If target is a masked helmet and mask was raised
@@ -129,12 +129,12 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local penetrationlevel = math.floor((ptable["penetration"]+0.00001)*10)
     local targetcharacter = targetlimb.character
     if not targetcharacter.IsHuman then return end
-    local outercloth,innerplate = DDA_AAS.Main.getArmor(targetcharacter,targetlimb)
+    local outercloth,innerplate = Deep_Lua.Main.getArmor(targetcharacter,targetlimb)
     local outertargetid,innertargetid
     local clothdata, platedata = nil,nil
     --find plate carrier data, if any
     if outercloth ~= nil then 
-        clothdata = DDA_AAS.Armors[outercloth.Prefab.Identifier.Value]
+        clothdata = Deep_Lua.Armors[outercloth.Prefab.Identifier.Value]
         if clothdata ~= nil then
             outertargetid = clothdata.targetidentifier
         else
@@ -143,7 +143,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     end
     --find plate data, if any
     if innerplate ~= nil then
-        platedata = DDA_AAS.Armors[innerplate.Prefab.Identifier.Value]
+        platedata = Deep_Lua.Armors[innerplate.Prefab.Identifier.Value]
         if platedata ~= nil then
             innertargetid = platedata.targetidentifier
         end
@@ -186,13 +186,13 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local continue = true
     --A "little" bit tooooooooooo long :(
     if executeplate then
-        damagemultiplier,penetrationlevel,continue = DDA_AAS.Main.PlateMain(platedata,innerplate,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue = Deep_Lua.Main.PlateMain(platedata,innerplate,penetrationlevel,damagemultiplier,plateaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
     --Note: Basically we are doing what we did again.
     if executecloth and clothdata.protectionarea[targetlimb.type] then
-        damagemultiplier,penetrationlevel,continue =  DDA_AAS.Main.PlateMain(clothdata,outercloth,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
+        damagemultiplier,penetrationlevel,continue =  Deep_Lua.Main.PlateMain(clothdata,outercloth,penetrationlevel,damagemultiplier,clothaffliction,targetcharacter,targetlimb)
         ptable.PreventExecution = not continue
         if not continue then return end
     end
