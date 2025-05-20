@@ -1,4 +1,4 @@
-Deep_Lua.Armors={
+Deep_Lua.Armors = {
 
     itemid = {
         isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
@@ -33,6 +33,11 @@ Deep_Lua.Armors={
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
+
+        protected = true,                           --Protected or not
+        override = true,                            --Override control parameter
+        forceoverride = false,                      --Force override control parameter
+                                                    --Be aware what are u doing before using this parameter!
 
     },  --Note: Sample.
 
@@ -1066,3 +1071,19 @@ Deep_Lua.Armors={
 -- remaining penlevel = penlevel - floor(level * penresistance)
 
 -- All pre-defined type will only decide damage with gunshot wound is valid.
+
+function Deep_Lua.Armors:AddtoMain(configtable)
+    for id,config in pairs(configtable) do
+        if self[id] == nil then goto goodend end
+        if config.override ~= true then
+            print("Warning: Config for " .. id .. " is already exist. Please use override control parameter.")
+            goto loopend
+        elseif self[id].protected == true and config.forceoverride ~= true then
+            print("Error: Config for " .. id .. " is protected. Skipping...")
+            goto loopend
+        end
+        ::goodend::--end of the loop
+        self[id] = config
+        ::loopend::
+    end
+end
