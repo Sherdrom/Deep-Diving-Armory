@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_AK205" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" Scale="0.38" impactsoundtag="impact_metal_light" >
+  <Price baseprice="600" minleveldifficulty="35" sold="true" >
+      <Price storeidentifier="merchantcity" multiplier="2.5" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="2.5" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="2.5" minavailable="1" />
+    </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="physicorium_barrel" />
