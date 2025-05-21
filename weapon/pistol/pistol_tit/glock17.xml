@@ -1,6 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_glock17" subcategory="pistol" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,pistolitem,gunsmith,mountableweapon" Scale="0.25" impactsoundtag="impact_metal_light">
+  <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
+    <Price baseprice="400" minleveldifficulty="15" sold="true" >
+      <Price storeidentifier="merchantcity" multiplier="2" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="2" minavailable="1" />
+      <Price storeidentifier="merchantarmory" multiplier="2" minavailable="1" />
+    </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
