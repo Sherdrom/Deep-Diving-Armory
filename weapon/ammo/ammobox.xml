@@ -100,6 +100,27 @@
       </StatusEffect>
     </Holdable>
   </Item>
+
+  <Item name="" identifier="ammobox_tun_ful" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" outcondition="0.25" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="4" />
+      <RequiredItem identifier="gun_powder_fulgurium" amount="4"/>
+      <RequiredItem identifier="copper" amount="4" />
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="deep_tungsten_phy" mincondition="0.99" amount="16"/>
+	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="775,10,99,156" depth="0.55" origin="0.5,0.5" />
+    <Body width="220" height="120" density="20" />
+	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+      <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
   
   <Item name="" identifier="ammobox_du" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
 	<Price baseprice="10000" minleveldifficulty="30" sold="true">
