@@ -1166,7 +1166,8 @@
 	  </StatusEffect>
     <StatusEffect type="OnContained" target="This" disableDeltaTime="true"  setValue="true " condition="100" >
 	  </StatusEffect>
-	  <StatusEffect type="OnPicked" target="This" delay="0.5" >
+	  <StatusEffect type="OnContained" target="This" comparison="and" delay="0.5" >
+    <Conditional EntityType="eq character" TargetContainer="True" />
 	  <Remove />
 	  </StatusEffect>
 	  <StatusEffect type="OnContained" target="Character" stackable="false" delay="0.4" >
