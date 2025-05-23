@@ -98,7 +98,7 @@
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
+		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
     <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
       </Abilities>
@@ -126,13 +126,13 @@
 	<!-- 多人游戏动态抗性调整 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3_new_pirate" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_2_new_pirate" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -264,13 +264,13 @@
 	<!-- 多人游戏动态抗性调整 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3_new_pirate" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_2_new_pirate" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -407,6 +407,7 @@
       </Conditions>
       <Abilities>
 		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
+    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.3"/>
     <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
@@ -419,13 +420,13 @@
 	<!-- 多人游戏动态抗性调整 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3_new_pirate" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_2_new_pirate" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -583,13 +584,13 @@
 	<!-- 多人游戏动态抗性调整 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="3"/>
+		<AbilityConditionNearbyCharacterCount distance="1500" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3_new_pirate" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_balance_2_new_pirate" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>

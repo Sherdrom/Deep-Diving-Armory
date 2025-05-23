@@ -18,7 +18,7 @@
       <RequiredItem identifier="gun_powder"  />
 	  <RequiredItem identifier="plastic" />
     </Fabricate>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="313,12,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -28,12 +28,12 @@
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
-      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.5" />
       <Attack structuredamage="0.1" targetforce="0.1" itemdamage="10" severlimbsprobability="0.5" penetration="0.1" >
-		<Affliction identifier="deep_headshot_2" strength="100" />
+		    <Affliction identifier="deep_legshot_shotgun_100" strength="100" />
         <Affliction identifier="gunshotwound" strength="12" />
         <Affliction identifier="bleeding" strength="6" />
-        <Affliction identifier="stun" strength="0.08" />
+        <Affliction identifier="stun" strength="0.2" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -74,6 +74,7 @@
       <RequiredItem identifier="gun_powder"  />
 	  <RequiredItem identifier="plastic" />
     </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="458,124,115,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -82,12 +83,102 @@
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="25">
-      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="0.5" itemdamage="10" severlimbsprobability="0.1" penetration="0.3" >
-		<Affliction identifier="deep_headshot_2" strength="100" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="0.5" itemdamage="10" severlimbsprobability="0.7" penetration="0.3" >
+		    <Affliction identifier="deep_legshot_shotgun_150" strength="100" />
         <Affliction identifier="gunshotwound" strength="12" />
-        <Affliction identifier="bleeding" strength="6" />
+        <Affliction identifier="bleeding" strength="10" />
+        <Affliction identifier="stun" strength="0.25" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_12shell_boneshark" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" amount="6" >
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+	    <RequiredItem identifier="copper" />
+      <RequiredItem identifier="gun_powder"  />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="592,237,115,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
+    <Body width="23" height="10" density="15" />
+	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character">
+	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      </StatusEffect>
+    </Holdable>
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="0.5" itemdamage="10" severlimbsprobability="0.8" penetration="0.5" >
+		    <Affliction identifier="deep_legshot_shotgun_150" strength="100" />
+        <Affliction identifier="gunshotwound" strength="12" />
+        <Affliction identifier="bleeding" strength="10" />
+        <Affliction identifier="stun" strength="0.25" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_12shell_arrow" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" amount="6" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+	    <RequiredItem identifier="copper" />
+      <RequiredItem identifier="gun_powder_fulgurium"  />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="167,121,115,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="18,189,82,100" depth="0.55" origin="0.5,0.5" />
+    <Body width="23" height="10" density="15" />
+	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character">
+	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      </StatusEffect>
+    </Holdable>
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="10">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="0.5" itemdamage="10" severlimbsprobability="0.8" penetration="0.7" >
+		    <Affliction identifier="deep_legshot_shotgun_150" strength="100" />
+        <Affliction identifier="gunshotwound" strength="12" />
+        <Affliction identifier="bleeding" strength="10" />
         <Affliction identifier="stun" strength="0.25" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
@@ -125,17 +216,98 @@
       <RequiredItem identifier="gun_powder"  />
 	  <RequiredItem identifier="plastic" />
     </Fabricate>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="724,216,84,86" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="459,12,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="724,216,84,86" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="6" >
-      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="10" itemdamage="100" severlimbsprobability="0.8" penetration="0.5" >
-        <Affliction identifier="gunshotwound" strength="80" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-        <Affliction identifier="bleeding" strength="100" />
-        <Affliction identifier="stun" strength="1.2" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2" >
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="5" itemdamage="100" severlimbsprobability="0.8" penetration="0.5" >
+        <Affliction identifier="gunshotwound" strength="90" />
+        <Affliction identifier="deep_headshot_deadly" strength="6" MultiplyByMaxVitality="true" />
+		    <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="bleeding" strength="70" />
+        <Affliction identifier="stun" strength="0.25" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_slug_phy" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" amount="6" >
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder"  />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="592,12,115,106" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="724,216,84,86" depth="0.55" origin="0.5,0.5" />
+    <Body width="23" height="10" density="15" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2" >
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="5" itemdamage="100" severlimbsprobability="0.8" penetration="0.7" >
+        <Affliction identifier="gunshotwound" strength="90" />
+        <Affliction identifier="deep_headshot_deadly" strength="7" MultiplyByMaxVitality="true" />
+		    <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="bleeding" strength="70" />
+        <Affliction identifier="stun" strength="0.25" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+	  <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_slug_AP" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" amount="6" >
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium"  />
+	  <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="167,234,115,106" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="19,289,84,100" depth="0.55" origin="0.5,0.5" />
+    <Body width="23" height="10" density="15" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="1" >
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.5" />
+      <Attack structuredamage="0.1" targetforce="5" itemdamage="100" severlimbsprobability="0.8" penetration="0.8" >
+        <Affliction identifier="gunshotwound" strength="90" />
+        <Affliction identifier="deep_headshot_deadly" strength="8" MultiplyByMaxVitality="true" />
+		    <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="bleeding" strength="70" />
+        <Affliction identifier="stun" strength="0.25" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -172,14 +344,14 @@
       <RequiredItem identifier="gun_powder"  />
 	  <RequiredItem identifier="plastic" />
     </Fabricate>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="723,122,86,86" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="313,127,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="723,122,86,86" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="77" removeonhit="true" spread="40">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
       <Attack structuredamage="0.1" targetforce="0" itemdamage="1" severlimbsprobability="0.01" penetration="0.1" >
-        <Affliction identifier="gunshotwound" strength="1" />
+        <Affliction identifier="gunshotwound" strength="2" />
         <Affliction identifier="bleeding" strength="0.5" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
