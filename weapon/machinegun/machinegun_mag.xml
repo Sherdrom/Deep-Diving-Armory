@@ -156,6 +156,77 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
+
+  <Item name="" identifier="deep_rpk16_mag_phy" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.18" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_rpk16_mag,machinegun_light_phy,545mag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_machinegun.png" sourcerect="310,605,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="138,22,88,130" origin="0.5,0.5" />
+    <Body width="80" height="130" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="545x39round_phy_rpk16" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1.05" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="545x39round_phy_rpk16" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_rpk16_mag_du" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.18" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,machinegun_light_du,545mag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_machinegun.png" sourcerect="596,133,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="409,283,88,130" origin="0.5,0.5" />
+    <Body width="80" height="130" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="545x39round_du_rpk16" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1.05" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="545x39round_du_rpk16" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+
   <Item name="" identifier="deep_m60_mag" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,machinegun_heavy_tit,lm_762_51_mgmag" impactsoundtag="impact_metal_light">
     <Price baseprice="1000" displaynonempty="true" minleveldifficulty="15" sold="true">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" sold="true" />
@@ -194,6 +265,77 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
+
+  <Item name="" identifier="deep_m60_mag_du" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,machinegun_heavy_du,lm_762_51_mgmag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="depletedfuel" amount="2" />
+      <RequiredItem identifier="gun_powder" amount="2" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="copper" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_machinegun.png" sourcerect="596,21,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="309,247,94,179" origin="0.5,0.5" />
+    <Body width="90" height="180" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="762x51round_m60_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_m60_du" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_m60_mag_phy" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m60_mag,machinegun_heavy_phy,lm_762_51_mgmag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" amount="2" />
+      <RequiredItem identifier="gun_powder" amount="2" />
+      <RequiredItem identifier="copper" amount="2" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_machinegun.png" sourcerect="310,495,119,108" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="13,11,94,179" origin="0.5,0.5" />
+    <Body width="90" height="180" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="762x51round_m60_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_m60_phy" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+
   <Item name="" identifier="deep_pkp_mag" subcategory="machinegun_mag" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.14" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,machinegun_heavy_phy,fkj_pkp_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="2000" displaynonempty="true" minleveldifficulty="15" sold="true">
       <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" sold="true" />

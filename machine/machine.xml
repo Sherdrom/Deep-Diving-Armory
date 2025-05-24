@@ -67,7 +67,7 @@
         <Affliction identifier="stun" strength="4" />
       </StatusEffect>
     </Repairable>
-    <ItemContainer capacity="6" canbeselected="true" hideitems="true" slotsperrow="6" uilabel="" allowuioverlap="true"/>
+    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true"/>
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true"/>
   </Item>
   
@@ -125,7 +125,7 @@
         <Affliction identifier="stun" strength="4" />
       </StatusEffect>
     </Repairable>
-    <ItemContainer capacity="6" canbeselected="true" hideitems="true" slotsperrow="6" uilabel="" allowuioverlap="true"/>
+    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true"/>
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true"/>
   </Item>
   
@@ -401,6 +401,18 @@
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="4" />
       </StatusEffect>
       </Containable>
+      <!--贫铀通用机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+            <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="4" />
+      </StatusEffect>
+      </Containable>
+	  <!--贫铀轻机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+            <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="4" />
+      </StatusEffect>
+      </Containable>
       </SubContainer>
 	  
 	  
@@ -641,6 +653,18 @@
 	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
 	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="5" />
+      </StatusEffect>
+      </Containable>
+      <!--贫铀通用机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+            <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="5" />
+      </StatusEffect>
+      </Containable>
+	  <!--贫铀轻机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+            <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="5" />
       </StatusEffect>
       </Containable>
       </SubContainer>
@@ -884,6 +908,18 @@
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="6" />
       </StatusEffect>
       </Containable>
+      <!--贫铀通用机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+            <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="6" />
+      </StatusEffect>
+      </Containable>
+	  <!--贫铀轻机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+            <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="6" />
+      </StatusEffect>
+      </Containable>
       </SubContainer>
 	  
 	  
@@ -1125,6 +1161,18 @@
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="7" />
       </StatusEffect>
       </Containable>
+      <!--贫铀通用机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+            <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="7" />
+      </StatusEffect>
+      </Containable>
+	  <!--贫铀轻机枪-->
+	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
+	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+            <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="7" />
+      </StatusEffect>
+      </Containable>
       </SubContainer>
 	  
 	  
@@ -1161,7 +1209,7 @@
       </StatusEffect>
       </Containable>
 	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2" excludebroken="false" excludefullcondition="false" >
+	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
 	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
             <Requireditem items="ammobox_du" type="Contained" targetslot="0" />
       </StatusEffect>
@@ -1201,7 +1249,7 @@
       </StatusEffect>
       </Containable>
 	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2" excludebroken="false" excludefullcondition="false" >
+	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
 	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
             <Requireditem items="ammobox_du" type="Contained" targetslot="1" />
       </StatusEffect>
@@ -1241,7 +1289,7 @@
       </StatusEffect>
       </Containable>
 	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2" excludebroken="false" excludefullcondition="false" >
+	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
 	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
             <Requireditem items="ammobox_du" type="Contained" targetslot="2" />
       </StatusEffect>
@@ -1281,7 +1329,7 @@
       </StatusEffect>
       </Containable>
 	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2" excludebroken="false" excludefullcondition="false" >
+	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
 	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
             <Requireditem items="ammobox_du" type="Contained" targetslot="3" />
       </StatusEffect>

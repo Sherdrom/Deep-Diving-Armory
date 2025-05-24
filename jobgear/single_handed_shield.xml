@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="deep_single_handed_shield" subcategory="deep_shield" category="Equipment" tags="mediumitem" health="300" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="false" scale="0.5" allowasextracargo="true">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="1" />
+      <RequiredItem identifier="ballisticfiber" amount="2" />
+    </Fabricate>
+	  <Deconstruct time="5">
+	    <Item identifier="steel" amount="2"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/shield/shield_icon.png" sourcerect="10,256,179,295" />
+    <Sprite texture="%ModDir%/jobgear/shield/shield.png" sourcerect="271,4,38,274" depth="0.65" origin="0.5,0.5"/>
+    <Body height="275" width="45" density="11" />
+    <Holdable slots="LeftHand" aimpos="65,-25" holdpos="35,-30" handle2="-10,10" controlpose="true" blocksplayers="true" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" >
+      </StatusEffect>
+
+      <StatusEffect type="OnActive" target="This" comparison="and" setvalue="true" >
+      <Conditional speed="gte 3" />
+      <Conditional speed="lte 4" />
+      <sound file="%ModDir%/jobgear/sound/shield_run.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.7" >
+      </sound>
+      </StatusEffect>
+
+      <StatusEffect type="OnActive" target="This" comparison="and" setvalue="true" >
+      <Conditional speed="gt 4" />
+      <Conditional speed="lte 5" />
+      <sound file="%ModDir%/jobgear/sound/shield_run.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.85" >
+      </sound>
+      </StatusEffect>
+
+      <StatusEffect type="OnActive" target="This" comparison="and" setvalue="true" >
+      <Conditional speed="gt 5" />
+      <sound file="%ModDir%/jobgear/sound/shield_run.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="1" >
+      </sound>
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This" >
+      <particleemitter particle="shrapnel" drawontop="true" particleamount="30" velocitymin="100" velocitymax="500" anglemin="0" anglemax="360" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" />
+      <Sound file="%ModDir%/jobgear/sound/armor_de.ogg" range="2000" forcePlaySounds="true"/>
+      <dropcontaineditems />
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnDamaged" target="This" disabledeltatime="true" >
+        <particleemitter particle="weldspark" drawontop="true" particleamount="10" velocitymin="100" velocitymax="500" anglemin="-45" anglemax="45" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" copyentityangle="true" />
+        <Sound file="%ModDir%/jobgear/sound/ricochet.ogg" range="2000" forcePlaySounds="true"/>
+      </StatusEffect>
+    </Holdable>
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" setvalue="true" >
+    </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="347,4,38,274" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Torso" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Head" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Waist" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <damagemodifier afflictionidentifiers="Shrapnel_residue,deep_headshot_deadly" armorsector="0.0,-180.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="blunttrauma,gunshotwound,lacerations,explosiondamage" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="bitewounds,bleeding" damagemultiplier="0.1" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictiontypes="stun" damagemultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="10" disabledeltatime="true" targetslot="0" >
+      <Conditional condition="lt 300.0" />
+	        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-10" disabledeltatime="true" targetslot="0" >
+	        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="20" disabledeltatime="true" targetslot="0" >
+      <Conditional condition="lt 300.0" />
+	        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-5" disabledeltatime="true" targetslot="0" >
+	        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="30" disabledeltatime="true" targetslot="0" >
+      <Conditional condition="lt 300.0" />
+	        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-3.33" disabledeltatime="true" targetslot="0" >
+	        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="50" disabledeltatime="true" targetslot="0" >
+      <Conditional condition="lt 300.0" />
+	        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained"  />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-2" disabledeltatime="true" targetslot="0" >
+	        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained"  />
+      </StatusEffect>
+
+    </Wearable>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <Containable tags="deep_mobile_shield_fix" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="308,403,82,92" origin="0.5,0.5" />
+    </ItemContainer>
+  </Item>
+</Items>
