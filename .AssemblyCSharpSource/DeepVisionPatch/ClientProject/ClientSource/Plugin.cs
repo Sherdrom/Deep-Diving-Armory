@@ -38,8 +38,8 @@ namespace DeepVisionPatch
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
-            float leftHandSpread = -1;
-            float rightHandSpread = -1;
+            // float leftHandSpread = -1;
+            // float rightHandSpread = -1;
             foreach(KeyValuePair<ushort,bool> maskStatus in HelmetMaskPatch.MaskStatus)
             {
                 if(headItem!=null && headItem.ID == maskStatus.Key)
@@ -54,16 +54,16 @@ namespace DeepVisionPatch
                     }
                 }
             }
-            if (rightHand != null) 
-                rightHandSpread = (float?)Traverse.Create(rightHand?
-                                                     .GetComponent<RangedWeapon>())?
-                                                     .Method("GetSpread", character)?
-                                                     .GetValue() ?? -1f;
-            if (leftHand != null) 
-                leftHandSpread = (float?)Traverse.Create(leftHand?
-                                                        .GetComponent<RangedWeapon>())?
-                                                        .Method("GetSpread",character)?
-                                                        .GetValue() ?? -1f;
+            // if (rightHand != null) 
+            //     rightHandSpread = (float?)Traverse.Create(rightHand?
+            //                                          .GetComponent<RangedWeapon>())?
+            //                                          .Method("GetSpread", character)?
+            //                                          .GetValue() ?? -1f;
+            // if (leftHand != null) 
+            //     leftHandSpread = (float?)Traverse.Create(leftHand?
+            //                                             .GetComponent<RangedWeapon>())?
+            //                                             .Method("GetSpread",character)?
+            //                                             .GetValue() ?? -1f;
             if(headItem != null && headItem.HasTag("ObstructVision"))
             {
                 foreach(KeyValuePair<string,float> kvp in ObstructVision)
@@ -72,11 +72,17 @@ namespace DeepVisionPatch
                 }
             }
             else 
-            {   
-                if(rightHandSpread == -1 && leftHandSpread == -1)
-                    FieldOfView = MathF.PI * 8/9;
-                else
-                    FieldOfView = MathHelper.Clamp(MathF.Max(leftHandSpread,rightHandSpread)*50*MathF.PI/9,MathF.PI/6, MathF.PI * 8/9);
+            {
+                // if (rightHandSpread == -1 && leftHandSpread == -1)
+                //     FieldOfView = MathF.PI * 8 / 9;
+                // else
+                    float offsetMin = 256f;
+                    float offsetMax = 540f;
+                    float neededOffset = MathHelper.Clamp(Screen.Selected.Cam.OffsetAmount, offsetMin, offsetMax);
+                    float minFov = MathF.PI / 6;
+                    float maxFov = MathF.PI * 8 / 9;
+                    float t = MathHelper.Clamp((neededOffset - offsetMin) / (offsetMax - offsetMin), 0f, 1f);
+                    FieldOfView = maxFov - (maxFov - minFov) * t ; 
             }
 
             graphics.SetRenderTarget(__instance.LosTexture);
