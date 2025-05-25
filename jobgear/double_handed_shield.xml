@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+<Item name="" identifier="deep_double_handed_shield_heavy" subcategory="deep_shield" category="Equipment" tags="mediumitem" health="500" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="true" scale="0.58" allowasextracargo="true" >
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="steel" amount="6" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="4" />
+      <RequiredItem identifier="ballisticfiber" amount="4" />
+      <RequiredItem identifier="KEVLAR" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
+    </Fabricate>
+    <Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
+      <RequiredItem identifier="ballisticfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+      <RequiredItem identifier="deep_double_handed_shield_heavy" mincondition="0.0" maxcondition="0.8" usecondition="false" defaultitem="deep_double_handed_shield_heavy" />
+    </Fabricate>
+	  <Deconstruct time="5">
+	    <Item identifier="steel" amount="2"/>
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/shield/shield_icon.png" sourcerect="511,600,178,339" />
+    <Sprite texture="%ModDir%/jobgear/shield/shield.png" sourcerect="597,348,73,335" depth="0" origin="0.5,0.5"/>
+    <Body height="335" width="75" density="11" />
+    <Holdable slots="LeftHand+RightHand" aimpos="30,-40" holdpos="25,-40" handle1="-20,5" handle2="0,0" controlpose="true" blocksplayers="true" msg="ItemMsgPickUpSelect" >
+      <StatusEffect type="OnActive" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_shield_resistance_70" strength="10" />
+      <Affliction identifier="deep_shield_heavy_move" strength="10" />
+      </StatusEffect>
+
+      <StatusEffect type="OnActive" target="This" setvalue="true" InvulnerabletoDamage="true" >
+      </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="This" setvalue="true" InvulnerabletoDamage="false" >
+      </StatusEffect>
+
+      <StatusEffect type="OnActive" target="This" comparison="and" setvalue="true" >
+      <Conditional speed="gt 0.2" />
+      <sound file="%ModDir%/jobgear/sound/bigshield.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.8" >
+      </sound>
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="This" >
+      <particleemitter particle="shrapnel" drawontop="true" particleamount="30" velocitymin="100" velocitymax="500" anglemin="0" anglemax="360" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" />
+      <Sound file="%ModDir%/jobgear/sound/armor_de.ogg" range="2000" forcePlaySounds="true"/>
+      <dropcontaineditems />
+        <Remove />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="This" disabledeltatime="true" >
+        <particleemitter particle="weldspark" drawontop="true" particleamount="10" velocitymin="100" velocitymax="500" anglemin="-45" anglemax="45" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" copyentityangle="true" />
+        <Sound file="%ModDir%/jobgear/sound/ricochet.ogg" range="2000" forcePlaySounds="true"/>
+      </StatusEffect>
+    </Holdable>
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.6" setvalue="true" >
+    </StatusEffect>
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="692,348,73,335" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Torso" depthlimb="RightForearm" ignorelimbscale="true" scale="0.58" origin="0.8,0.4" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Head" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Waist" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="RightThigh" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="LeftThigh" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="RightLeg" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="LeftLeg" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="RightFoot" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="LeftFoot" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <damagemodifier afflictionidentifiers="Shrapnel_residue,deep_headshot_deadly" armorsector="0.0,-180.0" damagemultiplier="0" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="blunttrauma,gunshotwound,lacerations,explosiondamage" damagemultiplier="0" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="bitewounds,bleeding" damagemultiplier="0" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,-180.0" afflictiontypes="stun" damagemultiplier="0.4" damagesound="ricochet" deflectprojectiles="true" />
+      
+    </Wearable>
+  </Item>
+</Items>

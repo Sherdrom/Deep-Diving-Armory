@@ -16,7 +16,8 @@
     </Body>
     <Holdable slots="RightHand+LeftHand" msg="ItemMsgPickUpSelect" aimpos="50,-30" holdpos="35,-30" handle1="-20,-8" handle2="-20,-8" controlpose="true" blocksplayers="true" >
     <!-- 拿手上时，收起护盾 -->
-    <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" >
+    <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <Affliction identifier="deep_shield_resistance_50" strength="10" />
     <LuaHook name="DeepMobileShieldWithDraw" />
     </StatusEffect>
     <!-- 放地上时，展开护盾 -->
@@ -36,7 +37,7 @@
       </StatusEffect>
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
-    <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.7" setvalue="true" >
+    <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" setvalue="true" >
     </StatusEffect>
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="131,317,65,280" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Torso" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Head" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
@@ -49,7 +50,7 @@
       <damagemodifier armorsector="0.0,-180.0" afflictiontypes="stun" damagemultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
 
       <StatusEffect type="NotInWater" target="This" comparison="and" condition="10" disabledeltatime="true" targetslot="0" >
-      <Conditional condition="lt 300.0" />
+      <Conditional condition="lt 400.0" />
 	        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained"  />
       </StatusEffect>
 
@@ -58,7 +59,7 @@
       </StatusEffect>
 
       <StatusEffect type="NotInWater" target="This" comparison="and" condition="20" disabledeltatime="true" targetslot="0" >
-      <Conditional condition="lt 300.0" />
+      <Conditional condition="lt 400.0" />
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained"  />
       </StatusEffect>
 
@@ -67,7 +68,7 @@
       </StatusEffect>
 
       <StatusEffect type="NotInWater" target="This" comparison="and" condition="30" disabledeltatime="true" targetslot="0" >
-      <Conditional condition="lt 300.0" />
+      <Conditional condition="lt 400.0" />
 	        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained"  />
       </StatusEffect>
 
@@ -76,7 +77,7 @@
       </StatusEffect>
 
       <StatusEffect type="NotInWater" target="This" comparison="and" condition="50" disabledeltatime="true" targetslot="0" >
-      <Conditional condition="lt 300.0" />
+      <Conditional condition="lt 400.0" />
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained"  />
       </StatusEffect>
 

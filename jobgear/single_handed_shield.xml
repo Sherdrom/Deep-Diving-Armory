@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_single_handed_shield" subcategory="deep_shield" category="Equipment" tags="mediumitem" health="300" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="false" scale="0.5" allowasextracargo="true">
+<Item name="" identifier="deep_single_handed_shield" subcategory="deep_shield" category="Equipment" tags="mediumitem,ObstructVision_30" health="300" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="true" scale="0.5" allowasextracargo="true">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="titaniumaluminiumalloy" amount="1" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
       <RequiredItem identifier="ballisticfiber" amount="2" />
     </Fabricate>
 	  <Deconstruct time="5">
@@ -14,13 +14,14 @@
     <Sprite texture="%ModDir%/jobgear/shield/shield.png" sourcerect="271,4,38,274" depth="0.65" origin="0.5,0.5"/>
     <Body height="275" width="45" density="11" />
     <Holdable slots="LeftHand" aimpos="65,-25" holdpos="35,-30" handle2="-10,10" controlpose="true" blocksplayers="true" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" >
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_shield_resistance_50" strength="10" />
       </StatusEffect>
 
       <StatusEffect type="OnActive" target="This" comparison="and" setvalue="true" >
       <Conditional speed="gte 3" />
       <Conditional speed="lte 4" />
-      <sound file="%ModDir%/jobgear/sound/shield_run.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.7" >
+      <sound file="%ModDir%/jobgear/sound/shield_run.ogg" type="OnActive" range="1200.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.65" >
       </sound>
       </StatusEffect>
 
@@ -54,6 +55,8 @@
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="347,4,38,274" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Torso" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Head" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Waist" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="RightThigh" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
+      <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="LeftThigh" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <damagemodifier afflictionidentifiers="Shrapnel_residue,deep_headshot_deadly" armorsector="0.0,-180.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="blunttrauma,gunshotwound,lacerations,explosiondamage" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="bitewounds,bleeding" damagemultiplier="0.1" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
