@@ -30,27 +30,27 @@ namespace DeepVisionPatch
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);
             Item leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand);
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
-            if (rightHand == null && leftHand == null && headItem == null){ return true; }
-            if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) || headItem != null && headItem.HasTag("ObstructVision"))){return true;}
-            if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory" )){return true;}
-            if (character == null || (!character.IsKeyDown(InputType.Aim)&&(headItem == null || !headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
+            if (rightHand == null && leftHand == null && headItem == null) { return true; }
+            if (!((rightHand != null && (rightHand.HasTag("weapon")||rightHand.HasTag("ObstructVision")))|| (leftHand != null && (leftHand.HasTag("weapon")||leftHand.HasTag("ObstructVision"))) || headItem != null && headItem.HasTag("ObstructVision"))) { return true; }
+            if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
+            if (character == null || (!character.IsKeyDown(InputType.Aim)&& !((rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")) || headItem != null && headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
             // float leftHandSpread = -1;
             // float rightHandSpread = -1;
-            foreach(KeyValuePair<ushort,bool> maskStatus in HelmetMaskPatch.MaskStatus)
+            foreach (KeyValuePair<ushort, bool> maskStatus in HelmetMaskPatch.MaskStatus)
             {
-                if(headItem!=null && headItem.ID == maskStatus.Key)
+                if (headItem != null && headItem.ID == maskStatus.Key && !((rightHand != null && rightHand.HasTag("ObstructVision")) || (leftHand != null && leftHand.HasTag("ObstructVision"))))
                 {
                     //若面罩打开且不是瞄准状态，则视为正常状态
-                    if(maskStatus.Value && !character.IsKeyDown(InputType.Aim)) return true;
-                    if(maskStatus.Value) 
+                    if (maskStatus.Value && !character.IsKeyDown(InputType.Aim)) return true;
+                    if (maskStatus.Value)
                     {
                         headItem = null;
-                        if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")) )){return true;}
-                        if(!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" )){return true;}
+                        if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")))) { return true; }
+                        if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
                     }
                 }
             }
@@ -64,11 +64,20 @@ namespace DeepVisionPatch
             //                                             .GetComponent<RangedWeapon>())?
             //                                             .Method("GetSpread",character)?
             //                                             .GetValue() ?? -1f;
-            if(headItem != null && headItem.HasTag("ObstructVision"))
+            if(headItem != null && headItem.HasTag("ObstructVision") || (rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")))
             {
-                foreach(KeyValuePair<string,float> kvp in ObstructVision)
+                float minVal = MathF.PI;
+                foreach (KeyValuePair<string, float> kvp in ObstructVision)
                 {
-                    if(headItem.HasTag(kvp.Key)) FieldOfView = kvp.Value;
+                    if (headItem != null && headItem.HasTag(kvp.Key))
+                    {
+                        if (kvp.Value < minVal) minVal = kvp.Value;
+                    }
+                    if ((rightHand != null && rightHand.HasTag(kvp.Key)) || (leftHand != null && leftHand.HasTag(kvp.Key)))
+                    {
+                        if (kvp.Value < minVal) minVal = kvp.Value;
+                    }
+                    FieldOfView = minVal;
                 }
             }
             else 
