@@ -112,6 +112,17 @@
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
+        </StatusEffect>
+        </Containable>
+
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
+        </StatusEffect>
+        </Containable>
+
 		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-19,15" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>

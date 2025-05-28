@@ -35,6 +35,12 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!--6倍镜-->
+      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="6x_sight" strength="10" />
+      <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
+      </StatusEffect>
 	</Holdable>
     <RangedWeapon reload="0.4" weapondamagemodifier="1" holdtrigger="true" barrelpos="300,25" spread="2" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
@@ -55,6 +61,24 @@
       <StatusEffect type="OnUse" target="Contained">
         <Use />
       </StatusEffect>
+
+      <!--6倍镜-->
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="6x_sight_reduce" strength="4" />
+      <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <ReduceAffliction identifier="6x_sight_reduce" strength="0.8" />
+      <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Conditional speed="gt 3" />
+      <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
+      <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
+      </StatusEffect>
+
 	  <StatusEffect type="OnUse" Condition="-100" target="This" >
 	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>
@@ -112,7 +136,28 @@
         <Containable items="deep_laser" hide="false" itempos="16,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-20,12.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-20,12.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+
+        <Containable items="8x_sight" hide="false" itempos="20,12.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="1.2" setValue="true" >
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
+        </StatusEffect>
+        </Containable>
+
+        <Containable items="3x_sight" hide="false" itempos="20,12.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true" >
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
+        </StatusEffect>
+        </Containable>
+
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="20,12.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true" >
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
+        </StatusEffect>
+        </Containable>
 		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-20,12.5" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
