@@ -3,7 +3,7 @@
     <Item name="" identifier="steel_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="steel" amount="2"/>
       <RequiredItem identifier="carbon" />
     </Fabricate>
@@ -43,10 +43,9 @@
   </Item>
   
   <Item name="" identifier="physicorium_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
-    <PreferredContainer primary="secarmcab" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.01" />
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="2"/>
       <RequiredItem identifier="dementonite" />
     </Fabricate>
@@ -67,7 +66,7 @@
     <Item name="" identifier="steel_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.05" />
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="steel" amount="4"/>
       <RequiredItem identifier="carbon" amount="2" />
 	  <RequiredItem identifier="aluminium"  />
@@ -116,7 +115,7 @@
   <Item name="" identifier="physicorium_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.01" />
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="4"/>
       <RequiredItem identifier="dementonite" amount="2" />
 	  <RequiredItem identifier="aluminium"  />
@@ -539,7 +538,9 @@
   </Item>
   
   <Item name="" identifier="deep_ssd" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
-  <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.01" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.01" />
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="100" />
       <RequiredItem identifier="deep_gold" amount="1"/>
 	  <RequiredItem identifier="fpgacircuit" amount="1"/>

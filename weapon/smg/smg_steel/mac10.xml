@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_mac10" subcategory="smg" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light" >
-    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.05" notcampaign="true" />
-    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.05" />
-    <Price baseprice="200" minleveldifficulty="10" sold="true">
-      <Price storeidentifier="merchantcity" multiplier="1.25" minavailable="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="0.9" minavailable="1" />
-      <Price storeidentifier="merchantarmory" multiplier="0.9" minavailable="1" />
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
+    <Price baseprice="180" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="40" />
