@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_f1" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade" >
+  <Item name="" identifier="deep_f1" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -25,19 +25,19 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="750.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="400" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
@@ -76,7 +76,7 @@
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_m67" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
@@ -102,19 +102,19 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="1000.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.7" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
-		  <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="explosiondamage" strength="250" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
@@ -153,8 +153,8 @@
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
-    <Item name="" identifier="deep_RGD5" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+
+  <Item name="" identifier="deep_RGD5" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
     <Price baseprice="280" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -179,19 +179,19 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
@@ -230,7 +230,7 @@
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_Cluster" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <Price baseprice="400" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -254,19 +254,19 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="3">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="1200.0" penetration="0" ballastfloradamage="1000" structuredamage="0" levelwalldamage="500" itemdamage="500" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="800" />
-		  <Affliction identifier="explosiondamage" strength="400" />
+          <Affliction identifier="explosiondamage" strength="400" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="10" />
         </Explosion>
@@ -305,9 +305,9 @@
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_RGO" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.4" impactsoundtag="impact_grenade">
-  <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
     <Price baseprice="420" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -323,29 +323,29 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="steel" />
-	  <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="uex" amount="1" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" >
-    <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30">
+      <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      </Holdable>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" spread="1" unskilledspread="10" combatPriority="1000" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_rgo_ammo" canbeselected="false" removecontaineditemsondeconstruct="true" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_rgo_ammo" hide="true" />
@@ -353,13 +353,13 @@
     <aitarget sightrange="500" soundrange="500" fadeouttime="3" />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="80" />
-	<Quality>
+    <Quality>
       <QualityStat stattype="ExplosionRadius" value="0.1" />
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
-      <Item name="" identifier="deep_m24" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
+
+  <Item name="" identifier="deep_m24" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
     <Price baseprice="280" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -376,7 +376,7 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="iron" />
-	  <RequiredItem identifier="carbon" />
+      <RequiredItem identifier="carbon" />
       <RequiredItem identifier="uex" amount="1" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
@@ -385,19 +385,19 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body radius="20" height="10" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="7" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="7">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="5" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="5">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="350" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
@@ -434,8 +434,8 @@
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
-    <Item name="" identifier="deep_stun_grenade" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.5" impactsoundtag="impact_grenade">
+
+  <Item name="" identifier="deep_stun_grenade" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.5" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.2.0" scale="0.5" />
     <Price baseprice="320" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -460,13 +460,13 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body width="26" height="50" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" />
@@ -475,22 +475,22 @@
           <Affliction identifier="stun" strength="10" />
           <Affliction identifier="blind" strength="15" />
           <Affliction identifier="sensoryoverload" strength="15" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
         </Explosion>
-        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1" >
+        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1">
           <Affliction identifier="stun" strength="20" />
           <Affliction identifier="blind" strength="25" />
           <Affliction identifier="sensoryoverload" strength="30" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-      <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
         <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
           <Affliction identifier="explosiondamage" strength="10" />
           <Affliction identifier="blind_hard" strength="10" />
-		  <Affliction identifier="stun" strength="40" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-      <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+          <Affliction identifier="stun" strength="40" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
       </StatusEffect>
@@ -524,7 +524,7 @@
       <QualityStat stattype="ExplosionRadius" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_m18" subcategory="deep_grenade" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="4" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.5" impactsoundtag="impact_grenade">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Upgrade gameversion="0.9.2.0" scale="0.5" />
@@ -550,35 +550,35 @@
     <BrokenSprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" maxcondition="99.9" />
     <Body width="26" height="50" density="30" />
     <Throwable characterusable="false" slots="Any,RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
       <!-- 人物未装备手雷时，恢复-->
-      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3" >
-    <Conditional IsActive="false" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true" >
-	  <Conditional Condition="lt 10" />
-	  <Affliction identifier="m18_smoke" strength="100" />
+      <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true">
+        <Conditional Condition="lt 10" />
+        <Affliction identifier="m18_smoke" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" stackable="false" comparison="and" AllowWhenBroken="true" Range="600" setvalue="true" >
-	  <Conditional Condition="lt 10" />
-          <ParticleEmitter particle="deep_smoke_grenade" anglemin="0" anglemax="360" particlespersecond="3" velocitymin="25" velocitymax="100" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" comparison="and" AllowWhenBroken="true" Range="600" setvalue="true">
+        <Conditional Condition="lt 10" />
+        <ParticleEmitter particle="deep_smoke_grenade" anglemin="0" anglemax="360" particlespersecond="3" velocitymin="25" velocitymax="100" />
       </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" delay="15" AllowWhenBroken="true" stackable="false" >
-	  <Conditional Condition="lt 10" />
-	   <Remove />
+      <StatusEffect type="OnNotContained" target="This" delay="15" AllowWhenBroken="true" stackable="false">
+        <Conditional Condition="lt 10" />
+        <Remove />
       </StatusEffect>
-	  <StatusEffect type="OnBroken" target="This" >
+      <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/smoke.ogg" type="OnUse" range="3000" volume="1" forcePlaySounds="true" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
+      <StatusEffect type="OnUse" targettype="This" Condition="0" setvalue="true" comparison="OR">
         <Conditional HasTag="detonator" targetcontainer="true" />
         <Conditional HasTag="railgunammo" targetcontainer="true" />
         <Conditional HasTag="depthchargeammo" targetcontainer="true" />
       </StatusEffect>
-	  <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
+      <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" checkconditionalalways="true">
         <Conditional IsActive="false" targetitemcomponent="ItemComponent" />
         <Use />
       </StatusEffect>
@@ -601,7 +601,7 @@
       <QualityStat stattype="ExplosionRadius" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_claymore" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade">
     <Upgrade gameversion="0.9.3.0" scale="0.5" />
     <Price baseprice="400" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -618,52 +618,52 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="titaniumaluminiumalloy" />
-	  <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="uex" amount="2" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="802,33,90,94" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="30,261,256,93" depth="0.55" origin="0.5,0.5" />
     <Body width="256" height="93" density="10" />
-	<Holdable blocksplayers="true" selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="100,-60" handle1="-100,0" attachable="true" aimable="false">
+    <Holdable blocksplayers="true" selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="100,-60" handle1="-100,0" attachable="true" aimable="false">
       <StatusEffect type="OnActive" target="This" condition="100" setvalue="true" Interval="0.5" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="400.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
     </Holdable>
-	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关" >
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false" >
-      </StatusEffect>
+      <TickBox text="阔剑地雷开关">
+        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false">
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
-	<MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-        <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
-		  <Conditional Condition="lte 99" />
-          <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-        </StatusEffect>
+    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
+      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
+        <Conditional Condition="lte 99" />
+        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+      </StatusEffect>
     </MotionSensor>
-	<MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
-        <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
-		  <Conditional Condition="lte 99" />
-          <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-        </StatusEffect>
+    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
+      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
+        <Conditional Condition="lte 99" />
+        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+      </StatusEffect>
     </MotionSensor>
     <Quality>
       <QualityStat stattype="ExplosionRadius" value="0.1" />
       <QualityStat stattype="ExplosionDamage" value="0.1" />
     </Quality>
   </Item>
-  
+
   <Item name="" identifier="deep_ied" subcategory="deep_grenade" category="Weapon" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.35" impactsoundtag="impact_metal_light">
-  <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -682,9 +682,9 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="876,148,99,98" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
     <Body width="26" height="50" density="30" />
-    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30" >
-    <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true" >
-    <Conditional deep_chip_blaster="gt 0.0" />
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30">
+      <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.2" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
@@ -692,22 +692,22 @@
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <RequiredItems items="deep_ied_ammo" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_ied_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
-      <Containable items="deep_ied_ammo" hide="true" >
+      <Containable items="deep_ied_ammo" hide="true">
       </Containable>
     </ItemContainer>
     <aitarget sightrange="1000" soundrange="3000" fadeouttime="3" />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />
   </Item>
-  
+
   <Item name="" identifier="deep_ied_remote" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" cargocontaineridentifier="explosivecrate" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.2" impactsoundtag="impact_grenade">
-  <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -716,7 +716,7 @@
     </Price>
     <Deconstruct time="5">
     </Deconstruct>
-	<Fabricate suitablefabricators="fabricator" requiredtime="5">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="plastic" amount="1" />
@@ -724,17 +724,17 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="763,156,90,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="763,156,90,90" depth="0.55" origin="0.5,0.5" />
     <Body width="26" height="50" density="30" />
-	<Holdable slots="Any,RightHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
-	</Holdable>
-	<RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="1" drawhudwhenequipped="true" crosshairscale="0.2">
-	  <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="1" >
-	  <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-	  </StatusEffect>
+    <Holdable slots="Any,RightHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="1" drawhudwhenequipped="true" crosshairscale="0.2">
+      <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="1">
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
     </RangedWeapon>
   </Item>
-  
+
   <Item name="" identifier="deep_f1_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -748,15 +748,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_f1_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_f1_ammo" hide="true" />
@@ -767,7 +767,7 @@
   </Item>
 
   <Item name="" identifier="deep_m67_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -781,15 +781,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_m67_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_m67_ammo" hide="true" />
@@ -800,7 +800,7 @@
   </Item>
 
   <Item name="" identifier="deep_rgd5_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="230" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="230" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -814,15 +814,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_rgd5_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_rgd5_ammo" hide="true" />
@@ -833,7 +833,7 @@
   </Item>
 
   <Item name="" identifier="deep_cluster_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -847,15 +847,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_cluster_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_cluster_ammo" hide="true" />
@@ -866,7 +866,7 @@
   </Item>
 
   <Item name="" identifier="deep_m24_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="230" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="230" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -880,15 +880,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_m24_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_m24_ammo" hide="true" />
@@ -899,7 +899,7 @@
   </Item>
 
   <Item name="" identifier="deep_stun_grenade_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -913,15 +913,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_stun_grenade_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_stun_grenade_ammo" hide="true" />
@@ -932,7 +932,7 @@
   </Item>
 
   <Item name="" identifier="deep_m18_weapon" hideinmenus="true" subcategory="deep_grenade" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
-  <Price baseprice="240" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="240" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -946,15 +946,15 @@
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.6" holdtrigger="true" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
-        <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
-        <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
+      <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
+      <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
       <RequiredItems items="grenade" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />  
-	  <StatusEffect type="OnBroken" target="This" disabledeltatime="true" >
-	    <Remove />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" Condition="-3000" disabledeltatime="true" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <Remove />
+      </StatusEffect>
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" SpawnWithId="deep_m18_ammo" drawinventory="false" hideitems="true" ShowTotalStackCapacityInContainedStateIndicator="true" containedspritedepth="0.56">
       <Containable items="deep_m18_ammo" hide="true" />
@@ -963,7 +963,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />
   </Item>
-  
+
   <Item name="" identifier="deep_f1_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
@@ -978,14 +978,14 @@
         <Explosion range="750.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
           <!-- 10%的概率，敌人手雷爆炸即死-->
-		  <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="400" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1000,7 +1000,7 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="4" disabledeltatime="true">
@@ -1008,14 +1008,14 @@
         <Explosion range="1000.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
           <!-- 10%的概率，敌人手雷爆炸即死-->
-		  <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
-		  <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
+          <Affliction identifier="explosiondamage" strength="250" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1030,7 +1030,7 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="10.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="7" disabledeltatime="true">
@@ -1038,14 +1038,14 @@
         <Explosion range="1200.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="800" />
           <!-- 10%的概率，敌人手雷爆炸即死-->
-		  <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
-		  <Affliction identifier="explosiondamage" strength="400" />
+          <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
+          <Affliction identifier="explosiondamage" strength="400" />
           <Affliction identifier="bleeding" strength="400" />
           <Affliction identifier="stun" strength="10" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1060,7 +1060,7 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
@@ -1068,14 +1068,14 @@
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
           <!-- 10%的概率，敌人手雷爆炸即死-->
-		  <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1090,7 +1090,7 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="16.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
@@ -1098,14 +1098,14 @@
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="350" />
           <!-- 10%的概率，敌人手雷爆炸即死-->
-		  <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="Shrapnel_residue" strength="1000" MultiplyByMaxVitality="true" probability="0.1" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1120,7 +1120,7 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
@@ -1129,26 +1129,26 @@
           <Affliction identifier="stun" strength="10" />
           <Affliction identifier="blind" strength="15" />
           <Affliction identifier="sensoryoverload" strength="15" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
         </Explosion>
-        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1" >
+        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1">
           <Affliction identifier="stun" strength="20" />
           <Affliction identifier="blind" strength="25" />
           <Affliction identifier="sensoryoverload" strength="30" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-      <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
         <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
           <Affliction identifier="explosiondamage" strength="10" />
           <Affliction identifier="blind_hard" strength="10" />
-		  <Affliction identifier="stun" strength="40" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-      <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+          <Affliction identifier="stun" strength="40" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1163,27 +1163,27 @@
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="0" disabledeltatime="true">
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true" >
-	  <Conditional Condition="lt 10" />
-	  <Affliction identifier="m18_smoke" strength="100" />
+      <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true">
+        <Conditional Condition="lt 10" />
+        <Affliction identifier="m18_smoke" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" stackable="false" comparison="and" AllowWhenBroken="true" Range="600" setvalue="true" >
-	  <Conditional Condition="lt 10" />
-          <ParticleEmitter particle="deep_smoke_grenade" anglemin="0" anglemax="360" particlespersecond="3" velocitymin="25" velocitymax="100" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" comparison="and" AllowWhenBroken="true" Range="600" setvalue="true">
+        <Conditional Condition="lt 10" />
+        <ParticleEmitter particle="deep_smoke_grenade" anglemin="0" anglemax="360" particlespersecond="3" velocitymin="25" velocitymax="100" />
       </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" delay="15" AllowWhenBroken="true" stackable="false" >
-	  <Conditional Condition="lt 10" />
-	   <Remove />
+      <StatusEffect type="OnNotContained" target="This" delay="15" AllowWhenBroken="true" stackable="false">
+        <Conditional Condition="lt 10" />
+        <Remove />
       </StatusEffect>
-	  <StatusEffect type="OnBroken" target="This" >
+      <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/smoke.ogg" type="OnUse" range="3000" volume="1" forcePlaySounds="true" />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
       </StatusEffect>
     </Projectile>
@@ -1191,51 +1191,51 @@
     </LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="deep_ied_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="weapon,explosive,demolitionsexpert,handgrenade,deep_ied" Scale="0.35" impactsoundtag="impact_light">
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
     <Body width="35" height="100" density="10" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="8.0" DoesStick="true" >
-    <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="12.0" >
-    <Conditional condition="e 50.0" />
+    <Projectile characterusable="false" launchimpulse="8.0" DoesStick="true">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="12.0">
+        <Conditional condition="e 50.0" />
       </StatusEffect>
     </Projectile>
-	<Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
-	<StatusEffect type="OnNotContained" comparison="and" target="This" >
-	  <Conditional Condition="e 1" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnNotContained" comparison="and" target="This">
+        <Conditional Condition="e 1" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="400" penetration="0" force="30" camerashake="100" ballastfloradamage="1000" structuredamage="400" itemdamage="500" severlimbsprobability="1" smoke="false" playtinnitus="true" DistanceFalloff="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
           <Affliction identifier="Shrapnel_residue" strength="1200" />
-		  <Affliction identifier="Shrapnel_residue" strength="600" probability="0.8" />
-		  <Affliction identifier="explosiondamage" strength="400" />
-		  <Affliction identifier="explosiondamage" strength="200" probability="0.8" />
+          <Affliction identifier="Shrapnel_residue" strength="600" probability="0.8" />
+          <Affliction identifier="explosiondamage" strength="400" />
+          <Affliction identifier="explosiondamage" strength="200" probability="0.8" />
           <Affliction identifier="stun" strength="20" />
-		  <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
         </Explosion>
         <Remove />
       </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" disableDeltaTime="true"  setValue="true " condition="100" >
-	  </StatusEffect>
-    <StatusEffect type="OnContained" target="This" disableDeltaTime="true"  setValue="true " condition="100" >
-	  </StatusEffect>
-	  <StatusEffect type="OnContained" target="This" comparison="and" delay="0.5" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-	  <Remove />
-	  </StatusEffect>
-	  <StatusEffect type="OnContained" target="Character" stackable="false" delay="0.4" >
-	  <SpawnItem identifiers="deep_ied" spawnposition="SameInventory" />
-	  </StatusEffect>
-	  <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true" >
+      <StatusEffect type="OnNotContained" target="This" disableDeltaTime="true" setValue="true " condition="100">
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" disableDeltaTime="true" setValue="true " condition="100">
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" comparison="and" delay="0.5">
+        <Conditional EntityType="eq character" TargetContainer="True" />
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="Character" stackable="false" delay="0.4">
+        <SpawnItem identifiers="deep_ied" spawnposition="SameInventory" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
         <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="1.5" volume="0.75" />
       </StatusEffect>
-	</Holdable>
-	<LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="1.0" offset="0,16">
+    </Holdable>
+    <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="1.0" offset="0,16">
     </LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="deep_rgo_ammo" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
@@ -1246,17 +1246,19 @@
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="350.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="350" />
-		  <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
       </StatusEffect>
       <!-- 有爆破手芯片时，增加投掷距离-->
-    <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="18" >
-    <Conditional condition="e 50.0" />
+      <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="18">
+        <Conditional condition="e 50.0" />
       </StatusEffect>
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  </Items>
+
+  <!--Launchers-->
+</Items>
