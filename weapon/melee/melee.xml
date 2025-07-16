@@ -35,7 +35,7 @@
         <sound file="%ModDir%/weapon/melee/sound/wuchuan_sata.ogg" type="OnUse" range="500.0" loop="false" volume="2" />
       </StatusEffect>
 	  <StatusEffect type="OnBroken" target="This" delay="2" disabledeltatime="true" >
-        <sound file="%ModDir%/weapon/melee/sound/wuchuan_bgm.ogg" type="OnUse" range="100.0" loop="false" volume="2" />
+        <sound file="%ModDir%/weapon/melee/sound/wuchuan_bgm.ogg" type="OnUse" stream="true" range="100.0" loop="false" volume="2" />
       </StatusEffect>
 	  <StatusEffect type="OnBroken" target="This" delay="1" Condition="3000" Duration="120" disabledeltatime="true" >
 	  		<ParticleEmitter particle="deep_plasmaspark" particlespersecond="30" anglemin="0" anglemax="360" velocitymin="100" velocitymax="800" />
@@ -74,6 +74,13 @@
   </Item>
   
   <Item name="" identifier="deep_knife" subcategory="deep_melee" category="Weapon" Tags="smallitem,weapon,gunsmith,mountableweapon,sharptool" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" RequireAimToUse="True">
+  <Price baseprice="100" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
     <Deconstruct time="10">
       <Item identifier="titanium" />
     </Deconstruct>
