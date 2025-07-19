@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+  <Items>
+  <Item name="地狱火“清扫者”" identifier="aha_chemthrowerspitter" subcategory="annalittleitems" description="" category="Weapon" Tags="mediumitem,weapon,gun,mountableweapon" cargocontaineridentifier="metalcrate" Scale="0.2" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="%ModDir%/Texture/hellfire.png" sourcerect="0,0,800,350" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/Texture/hellfire.png" sourcerect="0,0,800,350" depth="0.55" origin="0.3,0.5" />
+    <Deconstruct time="10">
+      <Item identifier="steel" />
+      <Item identifier="aluminium" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="20" requiresrecipe="false">
+      <RequiredSkill identifier="mechanical" level="40" />
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="flamer" />
+    </Fabricate>
+    <Body width="150" height="77" density="25" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="12,-30" holdangle="60" aimpos="60,0" handle1="-42,-12" handle2="12,-8" msg="ItemMsgPickUpSelect" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite name="wornchemthrower" texture="%ModDir%/Texture/hellfire.png" sourcerect="0,0,800,350" canbehiddenbyotherwearables="false" rotation="270" inheritlimbdepth="false" depth="0.6" limb="Torso" scale="0.2" origin="0.5,0.1" />
+    </Wearable>
+    <RangedWeapon barrelpos="54,4" reload="2" maxchargetime="0.5" spread="30" weapondamagemodifier="1.25" holdtrigger="true">
+      <RequiredItems msg="ItemmsgAmmoRequired" type="Contained" tags="chemfuel" />
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+        <Explosion range="150.0" force="1.2" shockwave="false" smoke="false" flash="false" sparks="false" flames="false" underwaterbubble="false" camerashake="4.0" />
+      </StatusEffect>
+    </RangedWeapon>
+    <RepairTool firedamage="100.0" targetforce="80" structurefixamount="0" range="800" barrelpos="54,4" fireprobability="0" repairmultiple="true" repairthroughwalls="false" repairthroughholes="true" combatpriority="90" spread="40" >
+      <!-- the item must contain a welding fuel tank for it to work -->
+      <RequiredItems items="chemfuel" type="Contained" msg="ItemMsgWeldingFuelRequired" />
+      <RequiredSkill identifier="weapons" level="50" />
+      <ParticleEmitterHitCharacter particle="fleshsmoke" particlespersecond="3" anglemin="-5" anglemax="5" velocitymin="50" velocitymax="500" />
+      <ParticleEmitter particle="ahaflamethrower" particlespersecond="150" DistanceMax="600" anglemin="0" anglemax="0" velocitymin="1000" velocitymax="1500" highqualitycollisiondetection="true" />
+      <sound file="Content/Items/Weapons/FlameThrowerLoop.ogg" type="OnUse" range="750.0" loop="true" />
+      <!-- when using, the contained welding fuel tank will detoriate (= lose fuel) -->
+      <StatusEffect type="OnUse" targettype="Contained" Condition="-1.0" />
+      <!-- do burn damage to characters -->
+      <StatusEffect type="OnSuccess" target="Limb" disabledeltatime="true" >
+        <Conditional EntityType="eq Limb" />
+        <Affliction identifier="burn" amount="16" />
+        <Affliction identifier="stun" amount="5" />
+        <Affliction identifier="huangS" amount="16" />
+        <Affliction identifier="oxygenlow" amount="10" />
+      </StatusEffect>
+      <LightComponent LightColor="255,174,121,255" Flicker="0.5" Range="500">
+        <sprite texture="Content/Items/Electricity/lightsprite.png" origin="-0.8,0.55" />
+      </LightComponent>
+    </RepairTool>
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" itempos="-90,30" itemrotation="-90" containedspritedepth="0.54" containedstateindicatorstyle="tank" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="64,448,64,64" origin="0.5,0.5" />
+      <Containable items="chemfuel" />
+    </ItemContainer>
+    <aitarget sightrange="5000" soundrange="500" fadeouttime="5" />
+    <SkillRequirementHint identifier="weapons" level="50" />
+  </Item>
+  <Item name="地狱火燃料罐" identifier="bighotflamer_fuel" scale="0.5" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" subcategory="annalittleitems" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,bighotflamerfuel,weldingfuel,chemfuel" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="30" requiresrecipe="false">
+      <RequiredItem identifier="aluminium" amount="2" />
+      <RequiredItem identifier="titaniumaluminiumalloy" />
+    </Fabricate>
+    <Deconstruct time="10">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/Texture/bigfuel_inv.png" sourcerect="0,0,243,243" />
+    <Sprite texture="%ModDir%/Texture/bigfuel.png" depth="0.54" sourcerect="0,0,26,60" origin="0.5,0.5" />
+    <Body width="30" height="70" density="40" />
+    <ItemContainer hideitems="true" capacity="1" itemrotation="90" drawinventory="false" canbeselected="false" SpawnWithId="aha_fireball" removecontaineditemsondeconstruct="true" showcontainedstateindicator="false">
+      <Containable items="aha_fireball" />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="aha_fireball" spawnposition="ThisInventory" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true">
+         <Affliction identifier="huang_buff" strength="50" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="aha_fireball" identifier="aha_fireball" category="Weapon" maxstacksize="8" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,grenade" Scale="0.5" impactsoundtag="impact_metal_light" hideinmenus="true">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="704,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/TurretsAndDepthCharges.png" sourcerect="0,0,1,1" depth="0.55" />
+    <Body width="170" height="10" density="10" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-50" handle1="-10,0" handle2="10,0" aimable="false" />
+    <Projectile characterusable="false" launchimpulse="10" >
+      <Attack structuredamage="30" penetration="1" itemdamage="30">
+        <Affliction identifier="burn" strength="5" />
+        <Affliction identifier="stun" strength="10" />
+      </Attack>
+      <!--Grenade launcher ammo explodes on impact-->
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="ahaflame" distancemin="0" distancemax="0" anglemin="0" anglemax="360" particleamount="15" velocitymin="0" velocitymax="0" scalemin="1" scalemax="1" />
+        <ParticleEmitter particle="ahaflame" distancemin="10" distancemax="20" anglemin="0" anglemax="360" particleamount="25" velocitymin="0" velocitymax="15" scalemin="1" scalemax="1" />
+        <ParticleEmitter particle="FlareBubbles" emitacrossrayinterval="50" scalemin="2.0" scalemax="2.0" />
+      </StatusEffect>
+      <!--Destroy this after exploding-->
+      <StatusEffect type="OnImpact" target="This" condition="-100" />
+      <StatusEffect type="OnBroken" target="This">
+        <Explosion range="50.0" structuredamage="100" force="30.0" >
+          <Affliction identifier="burn" strength="50" />
+          <Affliction identifier="oxygenlow" strength="50" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="6" />
+        </Explosion>
+        <SpawnItem identifier="ahaflameaftereffectemitter" spawnposition="This" />
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="液体火发生器" identifier="ahaflameaftereffectemitter" Scale="0.5" health="20" tags="" sonarsize="0" hideinmenus="true">
+    <Sprite texture="Content/Items/InventoryIconAtlas.png" sourcerect="0,0,2,2" depth="0.55" origin="0.5,0.5" />
+    <Body width="100" radius="25" density="30" />
+    <ItemComponent>
+      <StatusEffect type="Always" target="This" Condition="-1">
+        <ParticleEmitter particle="ahaflame" AngleMin="-10" AngleMax="10" DistanceMin="-150" DistanceMax="150" VelocityMin="-200" VelocityMax="200" ScaleMultiplier="0.5,0.5" ParticlesPerSecond="60" ColorMultiplier="255,255,255,255" />
+      </StatusEffect>
+      <StatusEffect type="Always" target="NearbyCharacters" range="200" interval="0.5" disabledeltatime="true">
+        <Affliction identifier="oxygenlow" strength="20" />
+        <Affliction identifier="burn" strength="8" />
+        <Affliction identifier="huangS" strength="24" multiplybymaxvitality="true"/>
+      </StatusEffect>
+        <StatusEffect type="OnBroken" target="This">
+          <Remove />
+        </StatusEffect>
+      </ItemComponent>
+  </Item>
+  </Items>

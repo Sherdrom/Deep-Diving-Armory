@@ -1168,4 +1168,169 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
+
+  <Item name="" identifier="deep_ar15_50_mag_du" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.27" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_ar15_50_mag,rifle_du_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="250" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="315,246,113,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" depth="0.65" sourcerect="485,116,52,104" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_ar15_50_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="deep_ar15_50_round_du" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_ar15_50_mag_phy" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.27" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_ar15_50_mag,rifle_phy_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="450" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="294,455,113,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="636,166,51,103" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_ar15_50_round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="deep_ar15_50_round_phy" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_ar15_50_mag_fu" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.27" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_ar15_50_mag,sniper_phy_ful_reload_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="11,238,113,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="636,166,51,103" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_ar15_50_round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="deep_ar15_50_round_fu" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_ar15_50_mag_ap" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.27" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_ar15_50_mag,rifle_tun_ful_heavy_reload_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="800" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="162,255,113,106" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="636,166,51,103" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_ar15_50_round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true"></StatusEffect>
+      <!--每隔5s删除子弹-->
+      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+        <Remove />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
+      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
+        <SpawnItem identifiers="deep_ar15_50_round_phy" spawnposition="ThisInventory" Count="3" />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
 </Items>
