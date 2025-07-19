@@ -77,7 +77,7 @@ namespace RemainedAmmo
         }
         public static void DrawMyString(RangedWeapon rangedWeapon, SpriteBatch spriteBatch)
         {
-            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != "Deep Diving Armory"){return;}
+            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != "Deep Diving Armory" || rangedWeapon.Item.HasTag("noammocount")){return;}
             int remainedAmmo = 0;
             var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (ItemContainer == null) { return; }
