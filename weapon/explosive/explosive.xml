@@ -1386,7 +1386,7 @@
       <StatusEffect type="OnActive" target="This" lifetime="2">
         <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This" Condition="-100" stackable="false" delay="0.02" OneShot="true">
+      <StatusEffect type="OnImpact" target="This" Condition="-100" stackable="false" delay="0.02" OneShot="true">
         <Explosion range="200.0" ballastfloradamage="300" structuredamage="300" itemdamage="300" force="50" severlimbsprobability="1" debris="false" decal="explosion" decalsize="0.5" penetration="1">
           <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="false" />
           <Affliction identifier="stun" strength="8" />
@@ -1451,7 +1451,7 @@
       <StatusEffect type="OnNotContained" target="This" condition="-100" OneShot="true" setvalue="true" delay="1.5"/>
       <StatusEffect type="OnBroken" target="This">
         <Explosion range="100.0" ballastfloradamage="100" structuredamage="150" itemdamage="500" force="15" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5" penetration="0.5">
-          <Affliction identifier="explosiondamage" strength="80" dividebylimbcount="true"/>
+          <Affliction identifier="explosiondamage" strength="50" dividebylimbcount="false"/>
           <Affliction identifier="burn" strength="15" probability="0.2" dividebylimbcount="false"/>
           <Affliction identifier="bleeding" strength="40" probability="0.05" dividebylimbcount="false"/>
           <Affliction identifier="stun" strength="7" />
