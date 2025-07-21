@@ -1335,7 +1335,7 @@
       </StatusEffect>
       <RequiredItems items="deep_clustermsl_sp" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
     </RangedWeapon>
-    <RepairTool RepairMultiple="true" usablein="Both" range="500" barrelpos="100,-10" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+    <RepairTool RepairMultiple="true" usablein="Both" range="500" barrelpos="90,-5" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" spread="30" BarrelRotation="180" TargetForce="25">
       <RequiredItems items="deep_clustermsl_sp" type="Contained" />
       <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
       <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
@@ -1345,11 +1345,10 @@
         <Affliction identifier="bleeding" amount="4" />
         <Affliction identifier="stun" amount="8" />
       </StatusEffect>
-      <StatusEffect type="OnUse" targettype="Contained" targets="mk153_shell" condition="-100" disabledeltatime="true" />
     </RepairTool>
     <!--BACKBLAST-->
     <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" containedstateindicatorslot="0" removecontaineditemsondeconstruct="false" containedstateindicatorstyle="bullet">
-      <Containable items="deep_clustermsl_sp" itempos="-78,10" depth="0.55" />
+      <Containable items="deep_clustermsl_sp" />
     </ItemContainer>
     <CustomInterface canbeselected="true" drawhudwhenequipped="true">
       <GuiFrame relativesize="0.1,0.1" anchor="BottomLeft" absoluteoffset="20,20" style="ItemUI" />
@@ -1417,7 +1416,7 @@
         <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true">
+      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
         <Conditional maxtargetstohit="1"/>
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" OneShot="true" gravityscale="0" setvalue="true">

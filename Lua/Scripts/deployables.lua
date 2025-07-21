@@ -20,29 +20,12 @@ Hook.Add("Deep_DeployableControl", "Deep_DeployableControl",
     end
 )
 
-local function CheckValidExplosion(item)                                                        --bloody hell this is shit i am sorry
-    for _, component in pairs(item.Components) do
-        if component.statusEffectLists then
-            for __, statusEffectList in pairs(component.statusEffectLists) do
-                for ___, statusEffect in pairs(statusEffectList) do
-                    local SEs = Util.ConvertIEnumerableToDictionary(statusEffect)
-                    for _____, explosion in pairs(SEs) do
-                        if explosion and explosion.Attack and explosion.Attack.Range >= 50 then
-                            return true
-                        end
-                    end
-                end
-            end
-        end
-    end
-    return false
-end
 
 Hook.Add("Deep_APS", "Deep_APS",
     function(effect, deltaTime, item, targets, worldPosition)
         for target in targets do
             if target.GetComponentString("Throwable") or target.GetComponentString("Projectile") then
-                if CheckValidExplosion(target) then
+                if item.body.Height * item.body.Width >= 200 and item.body.LinearVelocity >= 10 then                    --Ah fuck those explosion based detection. We only care about speed and size
                     target.Health = -100
                     item.Health = 0
                 end
