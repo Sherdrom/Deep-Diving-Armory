@@ -27,12 +27,18 @@ Deep_Lua.Armors = {
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        targetidentifier = "gunshotwound",          --Decide what damage this will decide a valid shot. default gunshotwound.
-                                                    --Use "Any" if you want to define a full-protection armor(Also work for pre-defined types)
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        --targetidentifier = "Any" if you want to define a full-protection armor(Also work for pre-defined types)
+        --Decide what damage this will decide a valid shot. usually gunshotwound.
         --custom stuff, only work if custom type
+
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
+
+        --Third-Party Support
 
         protected = true,                           --Protected or not
         override = true,                            --Override control parameter
@@ -56,7 +62,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -76,7 +84,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -96,7 +106,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -116,7 +128,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -137,7 +151,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -157,7 +173,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -177,7 +195,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -197,7 +217,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -217,7 +239,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -237,7 +261,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -257,7 +283,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -277,7 +305,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -297,7 +327,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -317,7 +349,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -337,7 +371,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -357,7 +393,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -377,7 +415,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -397,7 +437,9 @@ Deep_Lua.Armors = {
         maxcondition = 0,
         ignoredamage = true,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -418,7 +460,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -438,7 +482,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -458,7 +504,9 @@ Deep_Lua.Armors = {
         maxcondition = 100,
         ignoredamage = false,
         protectionarea = {},
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -483,7 +531,9 @@ Deep_Lua.Armors = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -507,7 +557,9 @@ Deep_Lua.Armors = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -531,7 +583,9 @@ Deep_Lua.Armors = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -555,7 +609,9 @@ Deep_Lua.Armors = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -580,7 +636,9 @@ Deep_Lua.Armors = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -610,7 +668,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -640,7 +700,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -670,7 +732,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -700,7 +764,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -732,7 +798,9 @@ Deep_Lua.Armors = {
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -764,7 +832,9 @@ Deep_Lua.Armors = {
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -794,7 +864,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -827,7 +899,9 @@ Deep_Lua.Armors = {
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -859,7 +933,9 @@ Deep_Lua.Armors = {
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -889,7 +965,9 @@ Deep_Lua.Armors = {
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -926,7 +1004,9 @@ Deep_Lua.Armors = {
             [LimbType.LeftFoot] = true,
             [LimbType.RightFoot] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -951,7 +1031,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },--Sample
 
     deep_zsh_1_2_m = {
@@ -972,7 +1054,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },
 
     deep_fast_helmet_ghost = {
@@ -993,7 +1077,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },
 
     deep_Fearless_Vanguard = {
@@ -1014,7 +1100,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },
 
     deep_altyn = {
@@ -1035,7 +1123,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },
 
     deep_maska = {
@@ -1056,7 +1146,9 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Head] = true,
         },
-        targetidentifier = "gunshotwound",
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
     },
 
 }
@@ -1072,18 +1164,26 @@ Deep_Lua.Armors = {
 
 -- All pre-defined type will only decide damage with gunshot wound is valid.
 
-function Deep_Lua.Armors:AddtoMain(configtable)
+
+
+-- WARN: YOU SHOULD MAKE SURE YOUR CONFIG IS CORRECT BEFORE LOADING INTO MAIN CONFIG!
+function Deep_Lua.Armors.AddtoMain(configtable)
     for id,config in pairs(configtable) do
-        if self[id] == nil then goto goodend end
+        if Deep_Lua.Armors[id] == nil then goto goodend end
         if config.override ~= true then
-            print("Warning: Config for " .. id .. " is already exist. Please use override control parameter.")
+            print("‖color:gui.yellow‖Warning: Config for " .. id .. " is already exist. Please use override control parameter.‖end‖")
             goto loopend
-        elseif self[id].protected == true and config.forceoverride ~= true then
-            print("Error: Config for " .. id .. " is protected. Skipping...")
+        elseif Deep_Lua.Armors[id].protected == true and config.forceoverride ~= true then
+            print("‖color:gui.yellow‖Warning: Config for " .. id .. " is protected. Skipping...‖end‖")
             goto loopend
         end
-        ::goodend::--end of the loop
-        self[id] = config
-        ::loopend::
+        ::goodend::                     --Green Light. All clear to go. NO VALIDATION CHECK.
+        Deep_Lua.Armors[id] = config
+        ::loopend::                     --Red Light. Next.
     end
 end
+
+
+--local TestArmors = {}
+
+--Deep_Lua.Armors.AddtoMain(TestArmors)
