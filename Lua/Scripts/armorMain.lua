@@ -33,21 +33,15 @@ function Deep_Lua.Main.getArmor(character,targetlimb)
     return outeritem,inneritem                                                  --Return armor(item)
 end
 
-local function clamp(input,min,max)
-    if input <= min then return min end
-    if input >= max then return max end
-    return input
-end
-
 local function CaculateCeramicDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
+    condition = condition - Deep_Lua.HF.clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / condition) * (data.maxcondition / data.maxhits)
     return condition
 end
 
 local function CaculateCompositeDamage(item,affliction,data)
     local condition = item.Condition
-    condition = condition - clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / data.maxhits)
+    condition = condition - Deep_Lua.HF.clamp(affliction.Strength / 20,1,math.huge) * (data.maxcondition / data.maxhits)
     return condition
 end
 
@@ -57,11 +51,6 @@ local function CaculateMetalDamage(item,affliction,data)
     return condition
 end
 
-local function DoChance(probability)
-    local probability = clamp(probability,0,1) * 100
-    if probability - math.random(1,100) >= 0 then return true end
-    return false
-end
 
 function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,char,limb)
     local continue = true
@@ -70,7 +59,7 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
         return damagemultiplier, penlevel, continue                                         --We are out, mask raised = no protection
     end
     
-    local ricochet = DoChance(data.ricochetchance)                                          --Roll the dice
+    local ricochet = Deep_Lua.HF.DoChance(data.ricochetchance)                                          --Roll the dice
 
     if data.enablecorrection == true and data.correctionaffliction ~= nil then              --Corrections
         local prefab = AfflictionPrefab.Prefabs[data.correctionaffliction]

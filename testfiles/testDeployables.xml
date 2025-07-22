@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
+  <Item identifier="deep_APS" category="Weapon" Scale="0.5" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" depth="0.55" origin="0.5,0.5" />
+    <Body width="50" height="50" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" >
+      <StatusEffect target="NearbyItems" type="OnNotContained" range="200">
+        <LuaHook name="Deep_APS"/>
+      </StatusEffect>
+    </Pickable>
+  </Item>
 </Items>
