@@ -112,6 +112,24 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
     return damagemultiplier,penlevel,continue                                               --Damage caculation thing, work after everything is done
 end
 
+local function checkid(input, required)                                                     --2025/7/21 qol update
+    if type(required) == "string" then                                                      --Legacy:    
+        if input == required then                                                           --Old define method, compare against strings
+            return true
+        else
+            return false
+        end
+    end
+
+    if type(required) == "table" then                                                       --Standard:    
+        if required[input] then                                                             --New define method, checks if "greenlight table" contains input
+            return true
+        else
+            return false
+        end
+    end
+end
+
 --Main stuff
 Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local targetlimb = ptable["hitLimb"]
@@ -153,12 +171,12 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
 
     --let's find out if it is a valid attack
     for i in afflictions do
-        if clothdata ~= nil and not executecloth and i.identifier == outertargetid then
-            clothaffliction = i
+        if clothdata ~= nil and not executecloth and checkid(tostring(i.identifier), outertargetid) then
+            if i.Strength > clothaffliction.Strength then clothaffliction = i end
             executecloth = true
         end
-        if platedata~= nil and not executeplate and i.identifier == innertargetid then
-            plateaffliction = i
+        if platedata~= nil and not executeplate and checkid(tostring(i.identifier), innertargetid) then
+            if i.Strength > plateaffliction.Strength then plateaffliction = i end
             executeplate = true
         end
         if clothdata ~= nil and outertargetid == "Any" then                                                     --Here we add up all strength for "Any" case
@@ -172,7 +190,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     if executeplate and (not clothdata.isPlateCarrier) then executeplate = false end                            --Not a valid carrier, dont execute plate
 
     if not executecloth and not executeplate then return end                                                    --Did u mean run even if unnecessary?
-
+    
     local damagemultiplier = 1.0
     local continue = true
     --A "little" bit tooooooooooo long :(
