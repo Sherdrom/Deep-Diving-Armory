@@ -92,8 +92,10 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
         continue = false
         return 0, 0, continue
     end
+
     if item.Condition > 0 then
         penlevel = penlevel - math.floor(data.level * data.penresistance)                   --Reamining pen
+                                                                                            --Note: This is not an issue, the remain pen is caculated as shown.
         damagemultiplier = damagemultiplier * data.aftereffectmultiplier
     end
 
