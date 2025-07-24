@@ -2,6 +2,7 @@
 <Randomevents>
   <EventSprites>
   <Sprite identifier="pigcat_1" texture="%ModDir%/Missions/icon/pigcat.png" sourcerect="9,8,252,223" origin="0.5,0.5"/>
+  <Sprite identifier="pirate_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" origin="0.5,0.5"/>
     </EventSprites>
   <EventPrefabs>
   <ScriptedEvent identifier="deep_abandoned_indestructible">
@@ -70,31 +71,49 @@
       <NPCWaitAction npctag="deep_pigcat_medium_captain" wait="false" />
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pirate_reinforce_easy" commonness="150">
+    <ScriptedEvent identifier="deep_pirate_reinforce_easy_end" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_pirate_reinforce_easy.c1" dialogtype="Small" eventsprite="officeinside"/>
+      <ConversationAction text="EventText.deep_pirate_reinforce_easy_end.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
+      <WaitAction time="10" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_rookie"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction combatmode="Offensive" npctag="reinforce" enemytag="player" isinstigator="true" guardreaction="Offensive" witnessreaction="Offensive"/>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pirate_reinforce_easy_12min" commonness="150">
+      <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <ConversationAction text="EventText.deep_pirate_reinforce_easy_12min.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
+      <WaitAction time="590" />
+      <ConversationAction text="EventText.deep_pirate_reinforce_easy_12min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
+      <WaitAction time="10" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_easy"   TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction combatmode="Offensive" npctag="reinforce" enemytag="player" isinstigator="true" guardreaction="Offensive" witnessreaction="Offensive"/>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pigcatman_reinforce" commonness="150">
       <TagAction criteria="player" tag="player" />
+      <RNGAction chance="1">
+      <Success>
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_pigcatman_reinforce.c1" dialogtype="Small" eventsprite="pigcat_1"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_medium"   TeamID="1"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
-      <WaitAction time="1" />
-      <NPCFollowAction NPCTag="reinforce" TargetTag="player" Follow="true"  />
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_medium" TeamID="1"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      </Success>
+      </RNGAction>
     </ScriptedEvent>
 
 	  </EventPrefabs>
-
-    <EventSet identifier="deep_outpost_pirate_reinforce_easy" leveltype="outpost"  locationtype="deep_outpost_fight" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
-  <EventSet identifier="deep_pirate_reinforce_easy_1" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" chooserandom="false" campaign="false" selectalways="true" additive="true" >
-    <ScriptedEvent identifier="deep_pigcatman_reinforce" commonness="100" probability="1" triggercooldown="false" />
-  </EventSet>
-      </EventSet>
 
   <EventSet identifier="deep_outpost_mission_easy" leveltype="outpost"  locationtype="deep_mobile_city_typhoon,outpost,city,research,military,mine,colony,settlement,construction,camp,base,blockade,survey,extraction,study,lab,clinic,hospital,surgery,hydroponics,biosphere,nourishment,factory,shipyard,fusion,MilitaryForces,HuskChurch,SinkingCircus" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="15" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
   <EventSet identifier="deep_pigcat_easy_man" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" chooserandom="false" campaign="false" selectalways="true" additive="true" >
