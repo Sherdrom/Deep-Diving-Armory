@@ -178,24 +178,5 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
     </Holdable>
-  </Item>
--->
-  <Item name="接触-5爆炸反应装甲(测试)" identifier="era_plate_kontakt5" subcategory="plate" category="Equipment" maxstacksize="1" Tags="smallitem,deep_plate" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
-    <Deconstruct time="5">
-      <Item identifier="steel" amount="3" />
-    </Deconstruct>
-    <InventoryIcon texture="%ModDir%/jobgear/plate/plate.png" sourcerect="12,5,170,204" />
-    <Sprite texture="%ModDir%/jobgear/plate/plate.png" sourcerect="12,5,170,204" depth="0.6" origin="0.5,0.5" />
-    <Body width="30" height="50" density="20" />
-    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnBroken" target="This">
-        <Explosion range="750.0" ballastfloradamage="150" structuredamage="300" itemdamage="1000" force="20" severlimbsprobability="2" debris="true" decal="explosion" decalsize="0.75" penetration="0.5">
-          <Affliction identifier="explosiondamage" strength="250" />
-          <Affliction identifier="burn" strength="15" probability="0.2" dividebylimbcount="false"/>
-          <Affliction identifier="bleeding" strength="40" probability="0.05" dividebylimbcount="false"/>
-          <Affliction identifier="stun" strength="10" />
-        </Explosion>
-      </StatusEffect>
-    </Holdable>
-  </Item>
+  </Item>-->
 </Items>

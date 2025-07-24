@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+
+  <!--
+    Well , don't ask me why all RLs uses the same sound... That's my fault and i will fix it soon.
+    For now, i will leave them there. Too many fuckin works here.
+    2025/7/24
+  -->
+
+  <!--Reloadable Launchers-->
+  <Item identifier="deep_mk153" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.155" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" sourcerect="360,0,635,315" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" sourcerect="360,0,635,315" depth="0.55" origin="0.5,0.5" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite name="Mk153 Worn" texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" canbehiddenbyotherwearables="false" sourcerect="360,0,635,315" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,0.7" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="50,5" aimpos="48,5" handle1="-120,-110" handle2="120,-30" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="Contained" checkconditionalalways="true" Delay="1.2">
+        <Condition Condition="lte 10" />
+        <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153unload.ogg" range="300" />
+        <Dropitem />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="300,75" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="mk153_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      </Propulsion>
+      <RequiredItems items="mk153_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="600" barrelpos="100,-10" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <RequiredItems items="mk153_shell" type="Contained" />
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" targettype="Contained" targets="mk153_shell" condition="-100" disabledeltatime="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="false" capacity="1" maxstacksize="1" drawinventory="true" containedstateindicatorslot="0" removecontaineditemsondeconstruct="false" containedstateindicatorstyle="bullet">
+      <Containable items="mk153_shell" itempos="-78,10" depth="0.55" />
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+
+  <!--Disposable Launchers-->
+  <Item identifier="deep_m72a6" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.13" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,0,778,214" depth="0.55" origin="0.5,0.5" maxcondition="99.99" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" canbehiddenbyotherwearables="false" sourcerect="12,219,778,214" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,0.7" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,20" aimpos="38,20" handle1="-7,41" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="350,0" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="400" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_m72a6_shell,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="m72_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+  <Item identifier="deep_m72e8" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.13" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,0,778,214" depth="0.55" origin="0.5,0.5" maxcondition="99.99" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" canbehiddenbyotherwearables="false" sourcerect="12,219,778,214" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,0.7" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,20" aimpos="38,20" handle1="-7,41" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="350,0" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="200" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="6" />
+        <Affliction identifier="lacerations" amount="2" />
+        <Affliction identifier="bleeding" amount="2" />
+        <Affliction identifier="stun" amount="4" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_m72a6_shell,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="m72_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+  <Item identifier="deep_m72e10" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.13" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,219,778,214" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" sourcerect="12,0,778,214" depth="0.55" origin="0.5,0.5" maxcondition="99.99" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72.png" canbehiddenbyotherwearables="false" sourcerect="12,219,778,214" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,0.7" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,20" aimpos="38,20" handle1="-7,41" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="350,0" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="200" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="6" />
+        <Affliction identifier="lacerations" amount="2" />
+        <Affliction identifier="bleeding" amount="2" />
+        <Affliction identifier="stun" amount="4" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_m72e10_shell,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="m72_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+  <Item identifier="deep_m136cs" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.30" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m136/m136.png" sourcerect="0,0,500,95" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m136/m136.png" sourcerect="0,0,500,95" depth="0.55" origin="0.5,0.5" />
+    <Body width="500" height="95" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m136/m136.png" canbehiddenbyotherwearables="false" sourcerect="0,0,500,95" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.25" origin="0.5,1.35" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,18" aimpos="35,18" handle1="15,-22" handle2="150,-20" holdangle="-50" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="200,-10" LaunchImpulse="5" spread="1" unskilledspread="25" combatPriority="100" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="30" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" range="3000" />
+      <Propulsion force="-30" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m136_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m136_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="360" barrelpos="50,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="15" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <Affliction identifier="burn" amount="5" />
+        <Affliction identifier="lacerations" amount="6" />
+        <Affliction identifier="bleeding" amount="3" />
+        <Affliction identifier="stun" amount="6" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55" />
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" containedstateindicatorslot="0" SpawnWithId="deep_m136cs_shell,deep_backblast_exec" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="m136_shell" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="30" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+  <Item identifier="deep_m141" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.23" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,244,779,179" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,244,779,179" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,10,779,179" depth="0.55" origin="0.5,0.5" maxcondition="99.99" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" canbehiddenbyotherwearables="false" sourcerect="11,244,779,179" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,1" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,20" aimpos="40,20" handle1="-0,10" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="350,0" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="400" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_mk153_bdm_warhead,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="m141_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+
+  <Item identifier="deep_fgm172" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.23" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,244,779,179" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,244,779,179" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" sourcerect="11,10,779,179" depth="0.55" origin="0.5,0.5" maxcondition="99.99" />
+    <Body width="550" height="140" density="60" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/m141/m141.png" canbehiddenbyotherwearables="false" sourcerect="11,244,779,179" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,1" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,20" aimpos="40,20" handle1="-0,10" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+    </Holdable>
+    <RangedWeapon reload="0.2" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="350,0" LaunchImpulse="0" spread="1" unskilledspread="25" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.2">
+      <RequiredSkill identifier="weapons" level="80" />
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
+      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+        <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </Propulsion>
+      <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="400" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="1" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-0.01">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_mk153_bdm_warhead,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="m141_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <SkillRequirementHint identifier="weapons" level="50" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item><!--Well this is a placeholder for now, not 1,but 2-->
+
+
+  <!--Launcher Mags-->
+  <Item identifier="deep_mk153_bdm" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.155" tags="mediumitem,mk153_shell,tubeitem" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" sourcerect="475,1357,460,100" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" depth="0.56" sourcerect="475,1357,460,100" origin="0.5,0.5" />
+    <Body width="30" height="58" density="50" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/mk153/mk153smaw.png" canbehiddenbyotherwearables="false" sourcerect="475,1357,460,100" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.155" origin="0.5,0.7" />
+    </Wearable>
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="deep_mk153_bdm_warhead" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_mk153_bdm_warhead" />
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <!--Launcher Ammos-->
+  <Item identifier="deep_mk153_bdm_warhead" category="Weapon" cargocontaineridentifier="metalcrate" tags="m141_shell,smallitem" impactsoundtag="None" hideinmenus="true" scale="0.5" impacttolerance="0">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="20" Mass="0" BodyType="Kinematic" gravityscale="0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="30" damagedoors="true">
+      <StatusEffect type="OnActive" target="This" lifetime="2">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" stackable="false" delay="0.02" OneShot="true">
+        <Explosion range="200.0" ballastfloradamage="300" structuredamage="300" itemdamage="300" force="50" severlimbsprobability="1" debris="false" decal="explosion" decalsize="0.5" penetration="1">
+          <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <Explosion range="400.0" force="10" severlimbsprobability="0.3" debris="false" decal="explosion" interactthroughwalls="false" decalsize="0.5" penetration="0.6">
+          <Affliction identifier="explosiondamage" strength="40" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="20" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="4" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" delay="1.3" />
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+
+  <Item identifier="deep_m72a6_shell" category="Weapon" cargocontaineridentifier="metalcrate" tags="m72_shell,smallitem" impactsoundtag="None" hideinmenus="true" scale="0.5" impacttolerance="0">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="20" Mass="0" gravityscale="0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="1" damagedoors="true">
+      <StatusEffect type="OnActive" target="This" lifetime="2">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" stackable="false" OneShot="true" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" delay="1.3" />
+      <StatusEffect type="OnBroken" target="This">
+        <Explosion range="200.0" ballastfloradamage="300" structuredamage="300" itemdamage="300" force="50" severlimbsprobability="1" debris="false" decal="explosion" decalsize="0.5" penetration="1">
+          <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <SpawnItem identifier="sr25_762x51round_M993" spawnposition="This" count="1" aimspread="0" rotationtype="Collider" rotation="0" />
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+
+  <Item identifier="deep_m72e10_shell" category="Weapon" cargocontaineridentifier="metalcrate" tags="m72_shell,smallitem" impactsoundtag="None" hideinmenus="true" scale="0.5" impacttolerance="0">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="20" Mass="0" gravityscale="0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="30" damagedoors="true">
+      <StatusEffect type="OnActive" target="This" lifetime="2">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" stackable="false" OneShot="true" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" delay="1.3" />
+      <StatusEffect type="OnBroken" target="This">
+        <Explosion range="200.0" ballastfloradamage="300" structuredamage="300" itemdamage="300" force="50" severlimbsprobability="1" debris="false" decal="explosion" decalsize="0.5" penetration="1">
+          <Affliction identifier="explosiondamage" strength="100" />
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <Explosion range="800.0" force="10" severlimbsprobability="0.3" debris="false" decal="explosion" interactthroughwalls="false" decalsize="0.5" penetration="0.6">
+          <Affliction identifier="lacerations" strength="60" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="20" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="4" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+
+  <Item identifier="deep_m136cs_shell" category="Weapon" cargocontaineridentifier="metalcrate" tags="m136_shell,smallitem" impactsoundtag="None" hideinmenus="true" scale="0.5" impacttolerance="0">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="20" Mass="0" gravityscale="0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="1" damagedoors="true">
+      <StatusEffect type="OnActive" target="This" lifetime="2">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" stackable="false" OneShot="true" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" delay="1.3" />
+      <StatusEffect type="OnBroken" target="This">
+        <Explosion range="200.0" ballastfloradamage="300" structuredamage="300" itemdamage="300" force="50" severlimbsprobability="1" debris="false" decal="explosion" decalsize="0.5" penetration="1">
+          <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <SpawnItem identifier="sr25_762x51round_M993" spawnposition="This" count="1" aimspread="0" rotationtype="Collider" rotation="0" />
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+
+  <!--Launcher Misc-->
+
+  <Item identifier="deep_safetypin" category="Weapon" Scale="0.02" hideinmenus="true">
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" depth="0.55" origin="0.5,0.5" />
+    <Body width="10" height="5" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+</Items>
