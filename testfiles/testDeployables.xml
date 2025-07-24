@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item identifier="deep_APS" category="Weapon" Scale="0.5" hideinmenus="false">
-    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/explosive/launchers/universal/safety_pin.png" sourcerect="49,93,296,124" depth="0.55" origin="0.5,0.5" />
-    <Body width="50" height="50" density="30" />
+  <Item identifier="deep_APS" category="Weapon" Scale="0.4" hideinmenus="false">
+    <InventoryIcon texture="%ModDir%/testfiles/APS.png" sourcerect="152,62,205,400" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/testfiles/APS.png" sourcerect="152,62,205,400" depth="0.55" origin="0.5,0.5" />
+    <Body width="205" height="380" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <LightComponent lightcolor="0,255,0,255" range="200.0" IsOn="true" castshadows="true" alphablend="true" allowingameediting="false">
+    <LightComponent lightcolor="0,255,0,180" range="300.0" IsOn="true" castshadows="true" alphablend="true" allowingameediting="false">
       <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
-      <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="480,960,96,16" />
       <StatusEffect target="This" type="OnBroken" IsOn="false" setvalue="true"/>
-      <StatusEffect target="NearbyItems" type="OnActive" range="200">
+      <StatusEffect target="NearbyItems" type="OnActive" range="300">
         <LuaHook name="Deep_APS"/>
+      </StatusEffect>
+      <StatusEffect target="This" type="OnContained" IsOn="false" setvalue="true">
+        <Conditional condition="gt 0"/>
+      </StatusEffect>
+      <StatusEffect target="This" type="OnNotContained" IsOn="true" setvalue="true">
+        <Conditional condition="gt 0"/>
       </StatusEffect>
     </LightComponent>
   </Item>

@@ -25,7 +25,7 @@ Hook.Add("Deep_APS", "Deep_APS",
     function(effect, deltaTime, item, targets, worldPosition)
         local apsinfo = Deep_Lua.APS[item.Prefab.Identifier.Value] or Deep_Lua.APS.defaultAPS
         for target in targets do
-            if LuaUserData.IsTargetType(target, "Barotrauma.Item") and target.Condition > 0 then
+            if LuaUserData.IsTargetType(target, "Barotrauma.Item") and target.Condition > 0 and target.ParentInventory == nil then
                 if target.GetComponentString("Throwable") or target.GetComponentString("Projectile") then
                     if target.body.Height * target.body.Width >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then                    --Ah fuck those explosion based detection. We only care about speed and size
                         if Submarine.CheckVisibility(item.SimPosition,target.SimPosition,false,false,true,true,true) == nil then
