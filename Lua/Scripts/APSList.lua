@@ -19,7 +19,7 @@ Deep_Lua.APS = {
             if Deep_Lua.HF.DoChance(activeapsdata.probability) then
                 Entity.Spawner.AddItemToRemoveQueue(activeapsdata.apstarget)
             end
-            if (not activeapsdata.triggered == true) then
+            if activeapsdata.triggered ~= true then
                 activeapsdata.triggered = true
                 Timer.Wait(function()
                     activeapsdata.apsitem.Condition = 0
