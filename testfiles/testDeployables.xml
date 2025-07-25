@@ -19,11 +19,11 @@
       </StatusEffect>
       <StatusEffect target="This" type="OnNotContained" Interval="2.5" Comparison="And">
         <Conditional condition="gt 0"/>
-        <Conditional Rotation="neq 1"/>
+        <Conditional pulseAmount="neq 1"/>
         <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="0.5" loop="true"/>
       </StatusEffect>
       <StatusEffect target="This" type="Always">
-        <Conditional Rotation="eq 1"/>
+        <Conditional pulseAmount="eq 1"/>
         <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1" loop="true"/>
       </StatusEffect>
     </LightComponent>
