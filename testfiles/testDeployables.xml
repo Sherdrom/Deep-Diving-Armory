@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item identifier="deep_APS" category="Weapon" Scale="0.4" hideinmenus="false">
-    <InventoryIcon texture="%ModDir%/testfiles/APS.png" sourcerect="152,62,205,400" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/testfiles/APS.png" sourcerect="152,62,205,400" depth="0.55" origin="0.5,0.5" />
-    <Body width="205" height="380" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <InventoryIcon texture="%ModDir%/testfiles/APS/APS.png" sourcerect="155,64,205,400" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/testfiles/APS/APS.png" sourcerect="155,64,205,400" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/testfiles/APS/APS.png" sourcerect="155,496,205,400" depth="0.55" origin="0.5,0.5" maxcondition="1"/>
+    <Body width="205" height="375" density="30" />
+    <Holdable slots="LeftHand+RightHand" holdpos="80,-30" handle1="-40,-30" handle2="-40,40" msg="ItemMsgPickUpSelect" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/testfiles/APS/APS.png" sourcerect="155,928,205,400" canbehiddenbyotherwearables="false" Scale="0.4" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="0" origin="0.75,0.5" />
+    </Wearable>
     <LightComponent lightcolor="0,255,0,100" range="300.0" IsOn="true" castshadows="true" alphablend="true" allowingameediting="false">
       <LightTexture texture="Content/Lights/visioncircle.png" origin="0.5,0.5" />
       <StatusEffect target="This" type="OnBroken" IsOn="false" setvalue="true"/>
