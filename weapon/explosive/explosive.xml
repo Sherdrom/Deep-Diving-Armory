@@ -1263,8 +1263,18 @@
 
   <!--Following items are here temperorarily. Will move to launchers.xml after they are done.-->
 
-  <Item identifier="deep_saintpredator" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.3" impactsoundtag="impact_metal_light" hideinmenus="false">
-    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,58,518,169" origin="0.5,0.5" />
+  <Item identifier="deep_saintpredator" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.3" impactsoundtag="impact_metal_light" hideinmenus="false">
+  <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium_part" amount="4"/>
+      <RequiredItem identifier="deep_tungsten_phy" amount="6"/>
+      <RequiredItem identifier="engineeringplastic" amount="4"/>
+	    <RequiredItem identifier="saintpredator_design" amount="1"/>
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" amount="6" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers_45.png" sourcerect="5,7,187,190" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,58,518,169" depth="0.55" origin="0.5,0.5" />
     <Body width="550" height="140" density="60" />
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
@@ -1324,6 +1334,16 @@
   </Item>
 
   <Item identifier="deep_clustermsl_sp" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.3" tags="mediumitem,mk153_shell,tubeitem" impactsoundtag="impact_metal_light" hideinmenus="false">
+  <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="c4block" amount="4"/>
+      <RequiredItem identifier="fpgacircuit" amount="2"/>
+      <RequiredItem identifier="deep_tungsten_phy" amount="2"/>
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten_phy" amount="1" />
+    </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,325,500,50" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,325,500,50" depth="0.55" origin="0.5,0.5" />
     <Body width="500" height="20" Mass="0" gravityscale="1" />
@@ -1356,8 +1376,9 @@
     <Body width="170" height="10" density="20" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-50" handle1="-10,0" handle2="10,0" aimable="false" />
     <Projectile characterusable="false" launchimpulse="20.0" impulsespread="1" damagedoors="true" DamageUser="true">
-      <Attack structuredamage="20" itemdamage="10" severlimbsprobability="1" penetration="0.1">
+      <Attack structuredamage="20" itemdamage="10" severlimbsprobability="1" penetration="1">
         <Affliction identifier="explosiondamage" strength="3" />
+        <Affliction identifier="Shrapnel_residue" strength="10" />
         <Affliction identifier="bleeding" strength="2" />
         <Affliction identifier="stun" strength="0.75" />
       </Attack>
@@ -1367,8 +1388,9 @@
       <StatusEffect type="OnImpact" target="This" condition="-100" stackable="false" />
       <StatusEffect type="OnNotContained" target="This" condition="-100" OneShot="true" setvalue="true" delay="1.5" />
       <StatusEffect type="OnBroken" target="This">
-        <Explosion range="100.0" ballastfloradamage="100" structuredamage="150" itemdamage="500" force="15" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5" penetration="0.5">
+        <Explosion range="100.0" ballastfloradamage="100" structuredamage="150" itemdamage="500" force="15" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5" penetration="1">
           <Affliction identifier="explosiondamage" strength="50" dividebylimbcount="false" />
+          <Affliction identifier="Shrapnel_residue" strength="25" MultiplyByMaxVitality="true" />
           <Affliction identifier="burn" strength="15" probability="0.2" dividebylimbcount="false" />
           <Affliction identifier="bleeding" strength="40" probability="0.05" dividebylimbcount="false" />
           <Affliction identifier="stun" strength="7" />
