@@ -31,7 +31,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="mk153_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
       </Propulsion>
       <RequiredItems items="mk153_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
@@ -67,7 +67,7 @@
     <Deconstruct time="10">
       <Item identifier="physicorium" amount="6" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers_45.png" sourcerect="5,7,187,190" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/universal/launchers_45.png" sourcerect="5,7,187,190" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,58,518,169" depth="0.55" origin="0.5,0.5" />
     <Body width="550" height="140" density="60" />
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
@@ -84,11 +84,11 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="0.4" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
-        <RequiredItems items="deep_clustermsl_sp" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
-      </Propulsion>
       <StatusEffect type="OnUse" target="Character">
         <LuaHook name="Deep_AirBurstBound" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This">
+        <Explosion range="200.0" force="-5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
       </StatusEffect>
       <RequiredItems items="deep_clustermsl_sp" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
     </RangedWeapon>
@@ -101,14 +101,16 @@
         <Affliction identifier="bleeding" amount="4" />
         <Affliction identifier="stun" amount="8" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true">
+      </StatusEffect>
       <RequiredItems items="deep_backblast_exec" type="Contained" />
     </RepairTool>
     <!--BACKBLAST-->
     <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" containedstateindicatorslot="0" removecontaineditemsondeconstruct="false" containedstateindicatorstyle="bullet">
       <Containable items="deep_clustermsl_sp">
-        <StatusEffect type="OnInserted" target="This">
+        <StatusEffect type="OnContaining" target="This">
           <SpawnItem identifiers="deep_backblast_exec" spawnposition="ThisInventory" />
+          <Conditional ReloadTimer="lte 0.1"/>
         </StatusEffect>
       </Containable>
     </ItemContainer>
@@ -149,7 +151,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </Propulsion>
@@ -211,7 +213,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </Propulsion>
@@ -273,7 +275,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="m72_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </Propulsion>
@@ -386,7 +388,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </Propulsion>
@@ -448,7 +450,7 @@
       <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
       <ParticleEmitter particle="flamethrower" particleamount="2" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
       <Sound file="%ModDir%/weapon/explosive/launchers/mk153/mk153.ogg" type="OnUse" volume="2" range="3000" />
-      <Propulsion force="-20" usablein="both" ApplyToHands="true">
+      <Propulsion force="20" usablein="both" ApplyToHands="true">
         <RequiredItems items="m141_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </Propulsion>
@@ -533,7 +535,7 @@
     </Projectile>
   </Item>
 
-  <Item identifier="deep_clustermsl_sp" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.3" tags="mediumitem,mk153_shell,tubeitem" impactsoundtag="impact_metal_light" hideinmenus="false">
+  <Item identifier="deep_clustermsl_sp" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.3" tags="mediumitem" impactsoundtag="impact_metal_light" hideinmenus="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredSkill identifier="electrical" level="100" />
@@ -547,7 +549,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,325,500,50" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/launchers/saint_predator/saint_predator.png" sourcerect="50,325,500,50" depth="0.55" origin="0.5,0.5" />
     <Body width="500" height="20" Mass="0" />
-    <Projectile characterusable="false" hitscan="false" launchimpulse="30.0" maxtargetstohit="30" damagedoors="true">
+    <Projectile characterusable="false" hitscan="false" launchimpulse="20.0" maxtargetstohit="30" damagedoors="true">
       <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
         <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
         <Remove />
@@ -555,15 +557,16 @@
       <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
         <Conditional maxtargetstohit="1" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="This" OneShot="true" gravityscale="0" setvalue="true">
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <LuaHook name="Deep_RocketEngine" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" OneShot="true">
         <Conditional maxtargetstohit="30" />
         <LuaHook name="Deep_AirBurstControl" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" delay="1.3" />
+      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" duration="5"/>
       <StatusEffect type="Always" target="This" checkconditionalalways="true">
-        <Conditional gravityscale="eq 0" />
+        <Conditional Condition="lt 100" />
         <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
       </StatusEffect>
     </Projectile>
@@ -650,7 +653,7 @@
     <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="143,414,113,9" depth="0.55" />
     <Body width="170" height="10" density="20" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-50" handle1="-10,0" handle2="10,0" aimable="false" />
-    <Projectile characterusable="false" launchimpulse="10.0" impulsespread="1" damagedoors="true" DamageUser="true">
+    <Projectile characterusable="false" launchimpulse="5.0" impulsespread="1" damagedoors="true" DamageUser="true">
       <Attack structuredamage="20" itemdamage="10" severlimbsprobability="1" penetration="0.1">
         <Affliction identifier="explosiondamage" strength="3" />
         <Affliction identifier="bleeding" strength="2" />
