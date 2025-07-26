@@ -204,7 +204,7 @@
     <ScriptedEvent identifier="deep_ghost_reinforce_end" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="coalition_reinforce"/>
+      <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_Fearless_Vanguard"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -228,7 +228,7 @@
     <ScriptedEvent identifier="deep_grizzlies_reinforce_end" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="coalition_reinforce"/>
+      <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_team_juggernaut"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -356,9 +356,9 @@
     <ScriptedEvent identifier="deep_coalition_reinforce_hard_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_coalition_reinforce_20min.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_coalition_reinforce_20min.c1" dialogtype="Small" eventsprite="coalition_reinforce"/>
       <WaitAction time="1190" />
-      <ConversationAction text="EventText.deep_coalition_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_coalition_reinforce_20min.c2" dialogtype="Small" eventsprite="coalition_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -378,9 +378,9 @@
     <ScriptedEvent identifier="deep_ghost_reinforce_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_ghost_reinforce_20min.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_ghost_reinforce_20min.c1" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="1190" />
-      <ConversationAction text="EventText.deep_ghost_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_ghost_reinforce_20min.c2" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -400,9 +400,9 @@
     <ScriptedEvent identifier="deep_grizzlies_reinforce_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c1" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <WaitAction time="1190" />
-      <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
+      <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c2" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -419,14 +419,16 @@
       <CombatAction combatmode="Offensive" npctag="reinforce" enemytag="player" isinstigator="true" guardreaction="Offensive" witnessreaction="Offensive"/>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcatman_reinforce" commonness="150">
+    <ScriptedEvent identifier="deep_pigcatman_reinforce_easy" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <RNGAction chance="1">
+      <RNGAction chance="0.5">
       <Success>
-      <WaitAction time="5" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_pigcatman_reinforce_call.c1" dialogtype="Small" eventsprite="pigcat_1"/>
+      <WaitAction time="300" />
       <ConversationAction text="EventText.deep_pigcatman_reinforce.c1" dialogtype="Small" eventsprite="pigcat_1"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_medium" LootingIsStealing="true" TeamID="1"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       </Success>
       </RNGAction>
     </ScriptedEvent>
