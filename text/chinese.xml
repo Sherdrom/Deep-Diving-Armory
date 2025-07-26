@@ -725,6 +725,8 @@ AK-201的改进涉及材料和制造工艺，以及一些设计上的调整，�
 <entitydescription.gm6_design>一张十分稀有的GM6"山猫"设计图，可用于制作其原型枪械</entitydescription.gm6_design>
 <entityname.whiteeagle_design>白鹰设计图</entityname.whiteeagle_design>
 <entitydescription.whiteeagle_design>一张十分稀有的白鹰设计图，可用于制作其原型枪械</entitydescription.whiteeagle_design>
+<entityname.saintpredator_design>圣徒设计图</entityname.saintpredator_design>
+<entitydescription.saintpredator_design>一张十分稀有的圣徒设计图，可用于制作其原型枪械</entitydescription.saintpredator_design>
 <entityname.deep_44Magnum>.44马格南（手枪）</entityname.deep_44Magnum>
 <entitydescription.deep_44Magnum>一把使用.44马格南弹药的左轮手枪，肉伤很高，在举起枪时将开启"居合"，将6发子弹倾泻给眼前的敌人
 （换弹2.5s,散布8,伤害倍率1,射速0.1）
@@ -2387,6 +2389,8 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 <missiondescription.deep_destory_pirate_base_easy>"最近海盗活动频发，根据侦察部队的情报，在[location1]发现了海盗活动踪迹，征召附近船队进行清剿，联盟将重建哨站，不要使用舰炮摧毁哨站，违者必遭严惩！
 你们要在海盗站点发展前，将其扼杀在摇篮中，木卫二联盟不会亏待完成任务的船队，行动吧，附近的船队！"
 ‖color:gui.red‖敌方情报‖end‖：8人，1名首领，2名士兵，2名突击手，3名新兵
+‖color:gui.red‖多人游戏情报‖end‖：额外增加1名重装
+‖color:gui.red‖杀死所有人后有1波增援，任务开始20分钟后有1波强力增援‖end‖
 使用二战武器+低穿弹
 少数人配置防弹衣（无插板）+防弹头盔
 ‖color:gui.red‖请勿重新对接打哨站，因为原版机制，敌人会直接冲家‖end‖
@@ -2399,6 +2403,8 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 <missiondescription.deep_destory_pirate_base_normal>"根据最新情报，在[location1]发现了海盗站点，征召附近船队进行清剿，联盟将重建哨站，不要使用舰炮摧毁哨站，违者必遭严惩！
 这个站点是海盗们的中继站，摧毁它，木卫二联盟不会亏待完成任务的船队，行动吧，附近的船队！"
 ‖color:gui.red‖敌方情报（多人游戏中出现额外精英敌人）‖end‖：6人，2名首领，2名叛变士兵，2名突击手
+‖color:gui.red‖多人游戏情报‖end‖：额外增加3名精英敌人
+‖color:gui.red‖杀死所有人后有1波增援，任务开始20分钟后有1波强力增援‖end‖
 大部分使用钢制枪械，包括步枪，狙击枪，霰弹枪
 大部分配置防弹衣（无插板）+防弹头盔
 ‖color:gui.red‖请勿重新对接打哨站，因为原版机制，敌人会直接冲家‖end‖
@@ -2411,7 +2417,9 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 （可能遇到的Debuff：夜图）</missionname.deep_destory_pirate_base_hard>
 <missiondescription.deep_destory_pirate_base_hard>"根据最新情报，在[location1]发现了盘踞已久的海盗要塞，征召附近船队进行清剿，联盟将重建哨站，不要使用舰炮摧毁哨站，违者必遭严惩！
 这个站点是海盗们的老巢，摧毁它，削弱附近的海盗势力，木卫二联盟不会亏待完成任务的船队，行动吧，附近的船队！"
-‖color:gui.red‖敌方情报（多人游戏中出现额外精英敌人）‖end‖：10人，3名首领，2名重装，2名突击手，3名叛变士兵
+‖color:gui.red‖敌方情报（多人游戏中出现额外精英敌人）‖end‖：6人，1名首领，2名重装，2名叛变士兵，1名突击手
+‖color:gui.red‖多人游戏情报‖end‖：额外增加3名精英敌人
+‖color:gui.red‖杀死所有人后有1波增援，任务开始20分钟后有1波强力增援‖end‖
 大部分使用钢制枪械，请注意对方的大口径武器，可能有反器材
 大部分配置防弹衣（有插板）+防弹头盔，少部分装备外骨骼
 ‖color:gui.red‖请勿重新对接打哨站，因为原版机制，敌人会直接冲家‖end‖
@@ -2542,6 +2550,13 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 ‖color:gui.green‖卧倒：按住空格卧倒，获得90%眩晕,闪光抗性‖end‖
 （按下E进行温雷）
 （引信2s，投掷距离中，爆炸范围中）</entitydescription.deep_stun_grenade>
+<eventtext.deep_pirate_reinforce_easy_end.c1>"不要掉以轻心，还有敌人即将进入哨站，准备接敌！"</eventtext.deep_pirate_reinforce_easy_end.c1>
+<eventtext.deep_pirate_reinforce_easy_20min.c1>"根据联盟情报，敌方海盗增援将在20分钟后加入战场，速战速决！"</eventtext.deep_pirate_reinforce_easy_20min.c1>
+<eventtext.deep_pirate_reinforce_easy_20min.c2>"报告长官，敌方增援还有10s进入哨站！"</eventtext.deep_pirate_reinforce_easy_20min.c2>
+<eventtext.deep_separatists_reinforce_normal_end.c1>"分离主义部队增援将在20分钟后加入战场，速战速决！"</eventtext.deep_separatists_reinforce_normal_end.c1>
+<eventtext.deep_separatists_reinforce_normal_end.c2>"报告长官，敌方增援还有10s进入哨站！"</eventtext.deep_separatists_reinforce_normal_end.c2>
+<eventtext.deep_pigcatman_reinforce.c1>"撑住孩子们，我来支援你们！"</eventtext.deep_pigcatman_reinforce.c1>
+<eventtext.deep_sp.c1>"去死吧，联盟的走狗们！"</eventtext.deep_sp.c1>
 <eventtext.deep_pigcat_easy.mine>"最近有点缺火药"</eventtext.deep_pigcat_easy.mine>
 <eventtext.deep_pigcat_easy.mine2>"附近有硝石和硫磺的矿点，去挖10个甚至9个吧"</eventtext.deep_pigcat_easy.mine2>
 <eventtext.deep_pigcat_easy.money>"最近有点缺钱"</eventtext.deep_pigcat_easy.money>
@@ -3109,6 +3124,8 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 ‖color:gui.green‖拦截范围: 3m‖end‖
 ‖color:gui.green‖可拦截速度区间: 5-30‖end‖
 ‖color:gui.red‖拦截概率: 95%‖end‖
-‖color:gui.red‖冷却时间: 8s‖end‖</entitydescription.deep_APS>
+‖color:gui.red‖工作时间:5s‖end‖
+‖color:gui.red‖拦截冷却时间:15s‖end‖
+</entitydescription.deep_APS>
 
 </infotexts>
