@@ -4145,7 +4145,33 @@
       strengthchange="-2">
     </Effect>
   </Affliction>
-  
-  
+
+  <Affliction
+    name="Temporary Reinforcement"
+    identifier="deep_temporary_reinforcement"
+    isbuff="true"
+    description="Temporary Reinforcement."
+    limbspecific="false"
+    indicatorlimb="Torso"
+    showiconthreshold="0"
+    showinhealthscannerthreshold="5"
+    karmachangeonapplied="-1"
+    treatmentthreshold="0"
+    maxstrength="26"
+    affectmachines="false"
+    grainburst="3">
+    <Description
+      textidentifier="afflictiondescription.deep_temporary_reinforcement.self"
+      target="Self"
+      minstrength="0"
+      maxstrength="26"/>
+      <Effect minstrength="0" maxstrength="26" strengthchange="-0.016">
+      <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+      <Conditional deep_temporary_reinforcement="eq 1" />
+        <RemoveCharacter />
+      </StatusEffect>
+    </Effect>
+    <icon texture="%ModDir%/NPC/icon/icon.png" sourcerect="4,4,135,135" color="0,255,27,255" origin="0,0"/>
+    </Affliction>
         </Override>
 </Afflictions>
