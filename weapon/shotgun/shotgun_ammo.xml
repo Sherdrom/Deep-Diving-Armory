@@ -412,27 +412,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_3.png" sourcerect="34,236,104,186" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="34,236,73,186" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_aa12" />
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+      <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+        <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false" >
-	  <Remove />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
 	<Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
 	  <StatusEffect type="OnActive" target="Character">
 	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
-      </StatusEffect>
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -458,30 +452,24 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_3.png" sourcerect="170,236,104,186" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="170,236,73,186" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_slug_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_slug_aa12" />
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+      <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
+        <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false" >
-	  <Remove />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-    <Item name="" identifier="deep_12shell_aa12" category="Weapon" maxstacksize="3" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <Item name="" identifier="deep_12shell_aa12" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
@@ -518,7 +506,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-    <Item name="" identifier="deep_slug_aa12" hideinmenus="true" maxstacksize="3" subcategory="shotgun_ammo" category="Weapon" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" Scale="0.5" impactsoundtag="impact_metal_light">
+    <Item name="" identifier="deep_slug_aa12" hideinmenus="true" maxstacksize="1" subcategory="shotgun_ammo" category="Weapon" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" Scale="0.5" impactsoundtag="impact_metal_light">
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
@@ -569,30 +557,24 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="166,10,115,107" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" depth="0.65" sourcerect="20,102,75,77" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_three" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_three" />
 	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-	  <StatusEffect type="OnUse" target="This" condition="-50" disabledeltatime="true">
+      <StatusEffect type="OnUse" target="This" condition="-50" disabledeltatime="true">
+        <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-	  <!--每隔5s删除子弹-->
-	  <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false" >
-	  <Remove />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	<!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-	  <StatusEffect type="OnActive" target="Contained" disabledeltatime="true" >
-	  <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_12shell_three" category="Weapon" maxstacksize="3" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+  <Item name="" identifier="deep_12shell_three" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
