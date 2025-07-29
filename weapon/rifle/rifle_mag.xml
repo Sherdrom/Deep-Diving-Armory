@@ -19,23 +19,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="7,2,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="11,0,61,91" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet" >
       <Containable items="5.56x45round"></Containable>
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" SpawnIfCantBeContained="false" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round" SpawnIfCantBeContained="false" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -58,23 +53,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="140,3,118,107" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="8,6,64,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -97,23 +87,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,465,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="76,3,73,93" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -137,23 +122,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,10,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="79,693,59,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_M995" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_M995" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -177,23 +157,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,121,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="146,695,57,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_SSA_AP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_SSA_AP" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -218,26 +193,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,459,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -261,26 +231,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="137,593,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -304,26 +269,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="278,812,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -351,24 +311,18 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,8,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="723,5,78,98" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -396,24 +350,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="574,9,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="569,163,58,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_depleted_uranium" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="10" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -436,24 +385,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,232,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="218,3,60,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -476,24 +420,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,119,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="231,10,61,93" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -516,24 +455,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,236,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="324,11,61,90" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -557,24 +491,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,123,114,104" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="300,142,69,92" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="545x39round_BS" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="545x39round_BS" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -599,24 +528,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,10,115,104" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="300,142,69,92" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_7n39" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_7n39" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -644,24 +568,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="585,135,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="634,163,55,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="545x39round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="545x39round_depleted_uranium" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="10" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -684,26 +603,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,575,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -727,26 +641,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="136,706,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -770,26 +679,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="418,11,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -813,24 +717,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,691,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="815,25,95,95" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_lead" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -853,24 +752,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,353,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="282,3,72,95" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -893,24 +787,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,579,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="510,9,72,97" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -934,25 +823,20 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,236,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="111,923,81,98" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_BP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_BP" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
-    </Holdable>
+   </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
@@ -975,24 +859,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,246,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="200,922,84,101" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_MAI_AP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_MAI_AP" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1022,24 +901,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,254,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="692,161,87,96" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_depleted_uranium" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.22" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="10" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1062,26 +936,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,807,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_lead" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1106,26 +975,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="140,470,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1149,26 +1013,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="435,380,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1192,24 +1051,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,236,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="147,2,46,80" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1232,24 +1086,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,692,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1273,24 +1122,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,349,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_M61" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_M61" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1314,24 +1158,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="9,371,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_M993" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_M993" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1355,26 +1194,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="428,130,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="162,5,79,116" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1403,24 +1237,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,366,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="788,157,45,80" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_depleted_uranium" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="10" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -1443,26 +1272,21 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="428,260,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="162,5,79,116" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
-      </StatusEffect>
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="3" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -1486,24 +1310,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="275,121,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="754,12,97,180" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="12.7x55round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="12.7x55round" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
       <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
     </StatusEffect>
     </Holdable>
@@ -1529,24 +1348,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,462,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="754,12,97,180" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="127x55round_PS12B" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x55round_PS12B" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
-        <Remove />
+       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
       <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
     </StatusEffect>
     </Holdable>
@@ -1578,24 +1392,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,479,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="864,12,97,180" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="127x55round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x55round_depleted_uranium" />
-      <!--30发弹容，每发-5耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true"></StatusEffect>
-      <!--每隔5s删除子弹-->
-      <StatusEffect type="OnContained" target="Contained" interval="10" disabledeltatime="false" stackable="false">
-        <Remove />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
-        <Remove />
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <!--玩家手持装有弹匣的枪时，持续生成子弹用于射击-->
-      <StatusEffect type="OnActive" target="Contained" disabledeltatime="true">
-        <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="3" />
-      </StatusEffect>
       <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
     </StatusEffect>
     </Holdable>
