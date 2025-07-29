@@ -22,19 +22,20 @@
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到8倍伤害，方便补刀 -->
+	<!-- 敌人倒地后，受到10倍伤害，方便补刀 -->
 	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="8"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="8"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="8"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="10"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="10"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="10"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="10"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="10"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
