@@ -1177,11 +1177,11 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="162,255,113,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="636,166,51,103" origin="0.5,0.5" />
     <Body width="70" height="70" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_ar15_50_round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="deep_ar15_50_round_phy" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_ar15_50_round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="deep_ar15_50_round_ap" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
-        <SpawnItem identifiers="deep_ar15_50_round_phy" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="deep_ar15_50_round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
       <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >

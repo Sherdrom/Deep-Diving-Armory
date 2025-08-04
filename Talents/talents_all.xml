@@ -45,7 +45,7 @@
 		<AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-	  <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-0.6"/>
+	  <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.6"/>
       </Abilities>
     </AbilityGroupInterval>
 	<AbilityGroupInterval Interval="0.9" >
@@ -54,7 +54,7 @@
 		<AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-	  <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+	  <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.6"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 致死爆头（对人） -->
@@ -110,7 +110,7 @@
 		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.7"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-0.7"/>
 		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="-0.8"/>
 		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.1"/>
       </Abilities>
@@ -122,7 +122,7 @@
 		<AbilityConditionNearbyCharacterCount distance="700" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.2"/>
 		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
 		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.1"/>
       </Abilities>
@@ -134,7 +134,7 @@
 		<AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.1"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.1"/>
 		<CharacterAbilityModifyStat stattype="SwimmingSpeed" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="FlowResistance" value="0.5"/>
 		<CharacterAbilityModifyStat stattype="HoldBreathMultiplier" value="0.5"/>
@@ -383,25 +383,25 @@
           <CharacterAbilityGivePermanentStat statidentifier="token" value="1" />
         </Abilities>
       </AbilityGroupEffect>
-	  	<!-- 拿着霰弹枪时-90%伤害 -->
-	<AbilityGroupInterval interval="0.5" >
+	  	<!-- 拿着霰弹枪时-95%伤害 -->
+	<AbilityGroupInterval interval="0.9" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
 		<AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.9"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.95"/>
       </Abilities>
     </AbilityGroupInterval>
 	  <!-- 拿着霰弹枪附近有敌人时伤害正常 -->
-	<AbilityGroupInterval interval="0.5" >
+	<AbilityGroupInterval interval="0.1" >
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
-		<AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
+		    <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
+		    <AbilityConditionNearbyCharacterCount distance="900" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.9"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.95"/>
       </Abilities>
     </AbilityGroupInterval>
 
