@@ -38,7 +38,7 @@
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 	</Holdable>
-    <RangedWeapon reload="0.086" weapondamagemodifier="1.2" holdtrigger="true" barrelpos="105,4" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="0.086" weapondamagemodifier="1.2" holdtrigger="true" barrelpos="105,4" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -109,7 +109,7 @@
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="213,20,57,34" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="278,22,56,32" origin="0.5,0.5" />
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
 	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
@@ -120,7 +120,7 @@
         <Containable items="deep_laser" hide="false" itempos="47,9" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight" hide="false" itempos="10,19" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="10,19" setactive="true" containedspritedepth="0.45" depth="0.55" />
 		<Containable tags="thermalgoggles_sight" hide="false"  itempos="10,19" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
