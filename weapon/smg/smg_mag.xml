@@ -153,7 +153,7 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
-      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
       <RequiredItem identifier="copper" />
@@ -189,7 +189,7 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
-      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
       <RequiredItem identifier="copper" />
@@ -392,6 +392,44 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
+
+  <Item name="" identifier="deep_smg_vector_du" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_vector,smallitem,smg_du_reload,tsm_45_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="140" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="544,362,118,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="70,471,64,87" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_vector_round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_vector_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="smg_vector_round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
   <Item name="" identifier="deep_smg_vector" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_tit_reload,tsm_45_smgmag" impactsoundtag="impact_metal_light">
     <Price baseprice="120" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -411,11 +449,11 @@
     <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="241,707,118,109" />
     <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="11,208,64,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_vector_round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="smg_vector_round" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_vector_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_vector_round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-        <SpawnItem identifiers="smg_vector_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_vector_round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
       <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
@@ -427,7 +465,43 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_smg_p90" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_tit_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
+
+  <Item name="" identifier="deep_smg_vector_rip" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_vector,smallitem,smg_rip_reload,tsm_45_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="100" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="copper" amount="2" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg_2.png" sourcerect="254,6,118,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="11,208,64,87" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_vector_round_rip" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_vector_round_rip" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="smg_vector_round_rip" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_p90" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_p90,smallitem,smg_tit_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
     <Price baseprice="150" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -446,11 +520,11 @@
     <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="225,458,123,109" />
     <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="249,212,147,18" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="smg_57mm_round" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round_tit" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
-        <SpawnItem identifiers="smg_57mm_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_57mm_round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
       <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
@@ -462,7 +536,190 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_smg_mp7" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_phy_reload,tsm_46_smgmag" impactsoundtag="impact_metal_light">
+
+  <Item name="" identifier="deep_smg_p90_du" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_p90,smallitem,smg_du_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="544,475,123,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="195,534,147,18" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+        <SpawnItem identifiers="smg_57mm_round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_p90_phy" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_p90,smallitem,smg_phy_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="421,817,123,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="249,212,147,18" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+        <SpawnItem identifiers="smg_57mm_round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_p90_fu" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_p90,smallitem,smg_phy_ful_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="110" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg_2.png" sourcerect="133,119,114,104" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="249,212,147,18" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+        <SpawnItem identifiers="smg_57mm_round_fu" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_p90_ap" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.34" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_p90,smallitem,smg_tun_ful_reload,tsm_57_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg_2.png" sourcerect="8,124,123,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="249,212,147,18" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_57mm_round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_57mm_round_ap" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
+        <SpawnItem identifiers="smg_57mm_round_ap" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+<Item name="" identifier="deep_smg_mp7_du" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_mp7,smallitem,smg_du_reload,tsm_46_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="160" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="545,701,118,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="446,489,53,91" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_46mm_round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_46mm_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+        <SpawnItem identifiers="smg_46mm_round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_mp7" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_mp7,smallitem,smg_phy_reload,tsm_46_smgmag" impactsoundtag="impact_metal_light">
     <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -481,11 +738,11 @@
     <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg.png" sourcerect="510,10,118,109" />
     <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="417,210,53,91" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_46mm_round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="smg_46mm_round" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_46mm_round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_46mm_round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
-        <SpawnItem identifiers="smg_46mm_round" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_46mm_round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
       <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
@@ -497,8 +754,118 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
+
+<Item name="" identifier="deep_smg_mp7_fu" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_mp7,smallitem,smg_phy_ful_reload,tsm_46_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="110" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg_2.png" sourcerect="133,232,118,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="417,210,53,91" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_46mm_round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_46mm_round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+        <SpawnItem identifiers="smg_46mm_round_fu" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_mp7_ap" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_mp7,smallitem,smg_tun_ful_reload,tsm_46_smgmag" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir:3159849099%/weapon/ammo/ammo_smg_2.png" sourcerect="8,242,118,109" />
+    <Sprite texture="%ModDir:3159849099%/weapon/ammo/ammo.png" depth="0.56" sourcerect="417,210,53,91" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_46mm_round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_46mm_round_ap" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
+        <SpawnItem identifiers="smg_46mm_round_ap" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_pp19_du" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_pp19,smallitem,smg_du_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="543,588,116,104" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.56" sourcerect="189,562,156,47" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_9mm_round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true">
+        <SpawnItem identifiers="smg_9mm_round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
   <Item name="" identifier="deep_smg_pp19" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,smg_phy_reload" impactsoundtag="impact_metal_light">
-    <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -516,11 +883,83 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg.png" sourcerect="423,705,122,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="245,248,156,47" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_9mm_round_pp19" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="smg_9mm_round_pp19" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_9mm_round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_phy" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true">
-        <SpawnItem identifiers="smg_9mm_round_pp19" spawnposition="ThisInventory" Count="2" />
+        <SpawnItem identifiers="smg_9mm_round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_pp19_fu" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_pp19,smallitem,smg_phy_ful_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="250" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="110" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg_2.png" sourcerect="131,345,116,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="245,248,156,47" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_9mm_round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true">
+        <SpawnItem identifiers="smg_9mm_round_fu" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_smg_pp19_ap" subcategory="smg_mag" maxstacksize="32" maxstacksizecharacterinventory="16" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="deep_smg_pp19,smallitem,smg_tun_ful_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="12" maxamount="12" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="6">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_smg_2.png" sourcerect="7,360,116,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.56" sourcerect="245,248,156,47" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="smg_9mm_round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="smg_9mm_round_ap" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-1.56" disabledeltatime="true">
+        <SpawnItem identifiers="smg_9mm_round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
       <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
