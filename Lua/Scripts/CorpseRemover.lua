@@ -9,7 +9,7 @@ end, nil, false)
 Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", function()
     for __,character in pairs(Character.CharacterList) do
         if character.isDead then 
-            if character.Removed or c.AnimController.Limbs == nil then return end
+            if character.Removed or character.AnimController.Limbs == nil then return end
             character.EnableDespawn = true
             character.DespawnNow(true) 
         end
