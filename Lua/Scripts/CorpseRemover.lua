@@ -9,6 +9,7 @@ end, nil, false)
 Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", function()
     for __,character in pairs(Character.CharacterList) do
         if character.isDead then 
+            if character.Removed then return end
             character.EnableDespawn = true
             character.DespawnNow(true) 
         end
@@ -18,6 +19,7 @@ end, nil, false)
 
 Hook.Add("character.death", "Deep_CR_AddtoList", function(c)
     if (not c.IsHuman) and (not forceremove) then return end
+    if c.Removed then return end
     c.EnableDespawn = true
     c.DespawnNow(true)
 end)
