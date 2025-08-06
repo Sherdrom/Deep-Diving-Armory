@@ -16,7 +16,7 @@ Deep_Lua.APS = {
                 Networking.CreateEntityEvent(activeapsdata.apsitem, Item.ChangePropertyEventData(pulseAmount, light))
                 Networking.CreateEntityEvent(activeapsdata.apsitem, Item.ChangePropertyEventData(pulseFrequency, light))
             end
-            if not activeapsdata.prevtarget[activeapsdata.apstarget] then
+            if not activeapsdata.prevtarget[activeapsdata.apstarget] == true then
                 activeapsdata.prevtarget[activeapsdata.apstarget] = true
                 Game.Explode(activeapsdata.apstarget.WorldPosition, 50, 30, 50, 50, 50, 0, 0)
             end
