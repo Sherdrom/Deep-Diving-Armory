@@ -8,7 +8,10 @@ Game.AddCommand("DisableForceCorpseRemove", "Only Human will remove after death 
 end, nil, false)
 Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", function()
     for __,character in pairs(Character.CharacterList) do
-        if character.isDead then character.DespawnNow(true) end
+        if character.isDead then 
+            character.EnableDespawn = true
+            character.DespawnNow(true) 
+        end
     end
 end, nil, false)
 
