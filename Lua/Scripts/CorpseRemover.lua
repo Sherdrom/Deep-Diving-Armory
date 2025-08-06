@@ -19,5 +19,5 @@ end, nil, false)
 Hook.Add("character.death", "Deep_CR_AddtoList", function(c)
     if (not c.IsHuman) and (not forceremove) then return end
     c.EnableDespawn = true
-    Timer.Wait(function() c.DespawnNow(true) end,5000)
+    c.DespawnNow(true)
 end)
