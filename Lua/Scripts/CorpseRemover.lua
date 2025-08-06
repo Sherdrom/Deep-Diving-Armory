@@ -1,9 +1,9 @@
 local forceremove = false
 
-Game.AddCommand("EnableForceCorpseRemove", "Force ALL characters to remove after death in 5s.", function()
+Game.AddCommand("EnableForceCorpseRemove", "Force ALL characters to remove after death", function()
     forceremove = true
 end, nil, false)
-Game.AddCommand("DisableForceCorpseRemove", "Only Human will remove after death in 5s", function()
+Game.AddCommand("DisableForceCorpseRemove", "Only Human will remove after death", function()
     forceremove = false
 end, nil, false)
 Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", function()
