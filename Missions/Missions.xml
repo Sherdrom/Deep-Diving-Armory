@@ -93,6 +93,7 @@
   <OverrideMusic state="1" type="deep_reinforce" />
   <TriggerEvent state="1" delay="0" eventidentifier="deep_pirate_reinforce_easy_end" campaignonly="true"/>
   <TriggerEvent state="0" delay="0" eventidentifier="deep_pirate_reinforce_easy_20min" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_pigcatman_reinforce_easy" campaignonly="true"/>
   </OutpostDestroyMission>
   
   
@@ -118,9 +119,10 @@
   <OverrideMusic state="1" type="deep_reinforce" />
   <TriggerEvent state="1" delay="0" eventidentifier="deep_pirate_reinforce_normal_end" campaignonly="true"/>
   <TriggerEvent state="0" delay="0" eventidentifier="deep_pirate_reinforce_normal_20min" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_pigcatman_reinforce_easy" campaignonly="true"/>
   </OutpostDestroyMission>
   
-  <OutpostDestroyMission identifier="deep_destory_pirate_base_hard" minleveldifficulty="0" maxleveldifficulty="15" tags="deep_outpost_fight" textidentifier="deep_destory_pirate_base_hard" type="OutpostDestroy" reward="10000" difficulty="4" commonness="100" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_pirate_base_hard">
+  <OutpostDestroyMission identifier="deep_destory_pirate_base_hard" minleveldifficulty="0" maxleveldifficulty="35" tags="deep_outpost_fight" textidentifier="deep_destory_pirate_base_hard" type="OutpostDestroy" reward="10000" difficulty="4" commonness="60" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_pirate_base_hard">
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="214,50,48" />
     <LocationType identifier="deep_outpost_fight" />
     <LocationTypeChange from="deep_outpost_fight" to="Outpost" requireddurationrange="0,1" cooldownafterchange="2" />
@@ -141,6 +143,7 @@
   <OverrideMusic state="1" type="deep_reinforce" />
   <TriggerEvent state="1" delay="0" eventidentifier="deep_pirate_reinforce_hard_end" campaignonly="true"/>
   <TriggerEvent state="0" delay="0" eventidentifier="deep_pirate_reinforce_hard_20min" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_pigcatman_reinforce_easy" campaignonly="true"/>
   </OutpostDestroyMission>
   
   <OutpostDestroyMission identifier="deep_destory_separatist_base_normal" minleveldifficulty="15" maxleveldifficulty="50" tags="deep_outpost_fight" textidentifier="deep_destory_separatist_base_normal" type="OutpostDestroy" reward="10000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_separatist_base_normal">
@@ -153,6 +156,7 @@
       <Character identifier="deep_separatist_soldier_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_striker_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_heavy_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+    <Character identifier="deep_separatist_heavy_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_sniper_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_grenadier_moderate" from="deep_separatists_moderate" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_soldier_elite" from="deep_separatists_elite" moduleflags="crewmodule" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
@@ -175,24 +179,22 @@
     <Reputation identifier="coalition" amount="12" />
 	<Reputation identifier="separatists" amount="-10" />
     <Characters>
-	  <Character identifier="deep_separatist_dreadnaught" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_blaster_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
-	  <Character identifier="deep_separatist_soldier_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_grenadier_hard" from="deep_separatists_hard" moduleflags="engineeringmodule" requirekill="true" />
 	  <Character identifier="deep_separatist_striker_hard" from="deep_separatists_hard" moduleflags="crewmodule" requirekill="true" />
-	  <Character identifier="deep_separatist_striker_hard" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
-	  <Character identifier="deep_separatist_blaster_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
-	  <Character identifier="deep_separatist_sniper_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
 	  <Character identifier="deep_separatist_heavy_hard" from="deep_separatists_hard" moduleflags="crewmodule" requirekill="true" />
-	  <Character identifier="deep_separatist_heavy_hard" from="deep_separatists_hard" moduleflags="researchmodule" requirekill="true" />
-	  <Character identifier="deep_separatist_heavy_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
 	  <Character identifier="deep_separatist_sniper_hard" from="deep_separatists_hard" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
 	  <Character identifier="deep_separatist_leader_hard" from="deep_separatists_hard" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
 	  <Character identifier="deep_separatist_leader_elite" from="deep_separatists_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
+    <Character identifier="deep_separatist_blaster_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
+    <Character identifier="deep_separatist_sniper_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
+    <Character identifier="deep_separatist_heavy_elite" from="deep_separatists_elite" moduleflags="engineeringmodule" requirekill="true" multiplayeronly="true" />
     </Characters>
     <message header="missionheader0.deep_destory_separatist_base_hard" text="missionmessage0.deep_destory_separatist_base_hard" />
 	<OverrideMusic state="0" type="deep_sp_normal" />
-  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
+  <OverrideMusic state="1" type="deep_reinforce" />
+  <TriggerEvent state="1" delay="0" eventidentifier="deep_separatists_reinforce_hard_end" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_separatists_reinforce_hard_20min" campaignonly="true"/>
   </OutpostDestroyMission>
   
   <OutpostDestroyMission identifier="deep_destory_coalition_base_hard" minleveldifficulty="15" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_coalition_base_hard" type="OutpostDestroy" reward="15000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_coalition_base_hard">
@@ -204,12 +206,8 @@
     <Characters>
 	  <Character identifier="deep_co_soldier" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_co_blaster" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_co_striker" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_co_striker" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_co_heavy" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_co_heavy" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_co_sniper" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_co_grenadier" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_co_grenadier" from="deep_co" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_co_leader" from="deep_co" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" />
 	  <Character identifier="deep_co_sniper_elite" from="deep_co_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
@@ -219,7 +217,9 @@
     </Characters>
     <message header="missionheader0.deep_destory_coalition_base_hard" text="missionmessage0.deep_destory_coalition_base_hard" />
 	<OverrideMusic state="0" type="deep_coalition_hard" />
-  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
+  <OverrideMusic state="1" type="deep_reinforce" />
+  <TriggerEvent state="1" delay="0" eventidentifier="deep_coalition_reinforce_hard_end" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_coalition_reinforce_hard_20min" campaignonly="true"/>
 </OutpostDestroyMission>
 
 <OutpostDestroyMission identifier="deep_destory_ghost_base_hard" minleveldifficulty="35" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_ghost_base_hard" type="OutpostDestroy" reward="25000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_ghost_base_hard">
@@ -229,14 +229,10 @@
     <Reputation identifier="separatists" amount="20" />
 	<Reputation identifier="coalition" amount="-20" />
     <Characters>
-	  <Character identifier="deep_ghost_soldier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_ghost_soldier_2" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_ghost_striker" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+    <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
+    <Character identifier="deep_ghost_grenadier" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_ghost_Fearless_Vanguard" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_ghost_Fearless_Vanguard" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_ghost_sniper" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_ghost_sniper" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_ghost_leader" from="deep_ghost" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_ghost_grenadier_elite" from="deep_ghost_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
@@ -246,7 +242,9 @@
     </Characters>
     <message header="missionheader0.deep_destory_ghost_base_hard" text="missionmessage0.deep_destory_ghost_base_hard" />
 	<OverrideMusic state="0" type="deep_ghost" />
-  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
+  <OverrideMusic state="1" type="deep_reinforce" />
+  <TriggerEvent state="1" delay="0" eventidentifier="deep_ghost_reinforce_end" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_ghost_reinforce_20min" campaignonly="true"/>
 </OutpostDestroyMission>
 
 <OutpostDestroyMission identifier="deep_destory_grizzlies_base_hard" minleveldifficulty="50" maxleveldifficulty="100" tags="deep_outpost_fight" textidentifier="deep_destory_grizzlies_base_hard" type="OutpostDestroy" reward="40000" difficulty="4" commonness="1000" allowretry="true" sonarlabel="target" unhideentitysubcategories="abandonedhuman" achievementidentifier="deep_destory_grizzlies_base_hard">
@@ -257,15 +255,11 @@
 	<Reputation identifier="coalition" amount="30" />
     <Characters>
 	  <Character identifier="deep_grizzlies_team_juggernaut" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_grizzlies_team_juggernaut" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_political_commissar" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_grizzlies_machinegun_fort" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_heavy_gunner" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_heavy_gl" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_leader" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_machinegun_fort" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_grizzlies_heavy_gunner" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
-	  <Character identifier="deep_grizzlies_heavy_gl" from="deep_grizzlies" moduleflags="crewmodule,seccrewmodule,engineeringmodule,adminmodule,MedicalModule,researchmodule,clownmodule,huskmodule" requirekill="true" />
 	  <Character identifier="deep_grizzlies_machinegun_fort_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
 	  <Character identifier="deep_grizzlies_heavy_gunner_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
 	  <Character identifier="deep_grizzlies_heavy_gl_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
@@ -273,7 +267,9 @@
     </Characters>
     <message header="missionheader0.deep_destory_grizzlies_base_hard" text="missionmessage0.deep_destory_grizzlies_base_hard" />
 	<OverrideMusic state="0" type="deep_grizzlies" />
-  <OverrideMusic state="1" type="deep_mobile_city_typhoon" />
+  <OverrideMusic state="1" type="deep_reinforce" />
+  <TriggerEvent state="1" delay="0" eventidentifier="deep_grizzlies_reinforce_end" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_grizzlies_reinforce_20min" campaignonly="true"/>
 </OutpostDestroyMission>
   
   <EliminateTargetsMission
@@ -408,4 +404,24 @@
     <message header="missionheader1.deep_beacon_fight_2" text="missionmessage1.deep_beacon_fight_2"/>
 	<OverrideMusic state="1" type="deep_pir_normal" />
   </PirateMission>
+
+  <BeaconMission
+    identifier="deep_beacon_fight_pirate"
+    textidentifier="deep_beacon_fight_pirate"
+    achievementidentifier="deep_beacon_fight_pirate"
+    tags="deep_beacon_fight_new"
+    type="Beacon"
+    difficulty="4"
+    reward="1500"
+    minleveldifficulty="0"
+    maxleveldifficulty="35"
+    sideobjective="false">
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
+    <message header="missionheader0.deep_beacon_fight_1" text="missionmessage0.deep_beacon_fight_1"/>
+    <message header="missionheader1.deep_beacon_fight_1" text="missionmessage1.deep_beacon_fight_1"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_normal" campaignonly="true"/>
+  </BeaconMission>
+
+
 </Missions>

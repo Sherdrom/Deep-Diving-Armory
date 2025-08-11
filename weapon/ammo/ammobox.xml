@@ -156,6 +156,34 @@
       </StatusEffect>
     </Holdable>
   </Item>
+
+  <Item name="" identifier="ammobox_rip" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
+	<Price baseprice="2200" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="5" outcondition="0.25" >
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="copper" amount="8" />
+      <RequiredItem identifier="gun_powder" amount="4"/>
+    </Fabricate>
+	<Deconstruct time="5">
+	<Item identifier="copper" mincondition="0.99" amount="16"/>
+	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="775,178,99,156" depth="0.55" origin="0.5,0.5" />
+    <Body width="220" height="120" density="20" />
+	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+      <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
   
   
   </Items>

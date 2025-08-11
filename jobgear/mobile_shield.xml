@@ -16,7 +16,7 @@
     </Body>
     <Holdable slots="RightHand+LeftHand" msg="ItemMsgPickUpSelect" aimpos="50,-30" holdpos="35,-30" handle1="-20,-8" handle2="-20,-8" controlpose="true" blocksplayers="true" >
     <!-- 拿手上时，收起护盾 -->
-    <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.9" setvalue="true" multiplyafflictionsbymaxvitality="true" >
     <Affliction identifier="deep_shield_resistance_50" strength="10" />
     <LuaHook name="DeepMobileShieldWithDraw" />
     </StatusEffect>
@@ -54,7 +54,7 @@
 	        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained"  />
       </StatusEffect>
 
-      <StatusEffect type="OnDamaged" target="Contained" condition="-10" disabledeltatime="true" targetslot="0" >
+      <StatusEffect type="OnDamaged" target="Contained" condition="-5" disabledeltatime="true" targetslot="0" >
 	        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained"  />
       </StatusEffect>
 
@@ -63,7 +63,7 @@
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained"  />
       </StatusEffect>
 
-      <StatusEffect type="OnDamaged" target="Contained" condition="-5" disabledeltatime="true" targetslot="0" >
+      <StatusEffect type="OnDamaged" target="Contained" condition="-3.33" disabledeltatime="true" targetslot="0" >
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained"  />
       </StatusEffect>
 
@@ -72,7 +72,7 @@
 	        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained"  />
       </StatusEffect>
 
-      <StatusEffect type="OnDamaged" target="Contained" condition="-3.33" disabledeltatime="true" targetslot="0" >
+      <StatusEffect type="OnDamaged" target="Contained" condition="-2.5" disabledeltatime="true" targetslot="0" >
 	        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained"  />
       </StatusEffect>
 
@@ -81,7 +81,7 @@
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained"  />
       </StatusEffect>
 
-      <StatusEffect type="OnDamaged" target="Contained" condition="-2" disabledeltatime="true" targetslot="0" >
+      <StatusEffect type="OnDamaged" target="Contained" condition="-1.66" disabledeltatime="true" targetslot="0" >
 	        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained"  />
       </StatusEffect>
 

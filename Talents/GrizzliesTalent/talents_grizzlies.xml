@@ -8,13 +8,13 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
-    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+    <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 攻击时降低玩家45%伤害抗性 -->
@@ -38,10 +38,10 @@
 	<!-- 突击手 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
       </Abilities>
     </AbilityGroupInterval>
@@ -56,12 +56,12 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
+    <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.5"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
       </Abilities>
     </AbilityGroupEffect>
@@ -118,12 +118,12 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
 		<CharacterAbilityModifyStat stattype="MovementSpeed" value="0.3"/>
-    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
+    <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
       </Abilities>
     </AbilityGroupEffect>
@@ -148,11 +148,10 @@
 	<!-- 机枪手 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.3"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -166,11 +165,11 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
       </Abilities>
@@ -196,10 +195,10 @@
 	<!-- 狙击手 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-0.7"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -212,11 +211,11 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="1"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1"/>
 		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
       </Abilities>
@@ -242,10 +241,10 @@
 	<!-- 爆破手 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="700" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-1.9"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-1.5"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -259,11 +258,11 @@
 	<!-- 数值调整 -->
 	<AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.8"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
 		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
 		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.7"/>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.7"/>
     <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="200"/>
       </Abilities>
     </AbilityGroupEffect>
@@ -285,49 +284,25 @@
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 首领 -->
+	<!-- 暴力军阀 -->
 	<AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
       </Abilities>
     </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="3"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.3" />
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
       </Abilities>
     </AbilityGroupEffect>
-    <!-- 首领 -->
-	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character">
-              <Affliction identifier="deep_revengesquad_sp_hard" amount="180"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupEffect>
-    <!-- 首领 -->
-    <!-- 首领活着时，全员获得10%移速，伤害加成,30%精度加成 -->
-    <AbilityGroupInterval interval="0.9">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="deep_talent_pirate_leader_alive" amount="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
   </Talent>
 </Talents>
