@@ -166,5 +166,23 @@
       </Abilities>
     </AbilityGroupInterval>
 
+    <!--增援敌人删尸体-->
+    <AbilityGroupInterval >
+      <Conditions>
+		<AbilityConditionHasAffliction afflictionidentifier="deep_removebody_reinforce_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="3" >
+            <Conditional health="lte -80" />
+              <RemoveCharacter />
+              <dropcontaineditems />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
   </Talent>
 </Talents>
