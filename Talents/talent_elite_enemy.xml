@@ -5,15 +5,14 @@
 	 <Description tag="talentdescription.deep_talent_elite_enemy">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <!-- 小惩罚机制：敌人在水中5s后，+50%伤害 -->
     <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
@@ -85,7 +84,8 @@
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_1" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_damage_balance_1" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_headshot_balance_1" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -100,7 +100,8 @@
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_2" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_damage_balance_2" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_headshot_balance_2" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -115,7 +116,8 @@
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_3" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_damage_balance_3" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_headshot_balance_3" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -130,7 +132,8 @@
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_4" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_damage_balance_4" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_headshot_balance_4" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -145,7 +148,8 @@
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
-              <Affliction identifier="deep_enemy_resistance_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_damage_balance_5" amount="10.0"/>
+              <Affliction identifier="deep_enemy_resistance_headshot_balance_5" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -159,6 +163,24 @@
        </Conditions>
       <Abilities>
 		     <CharacterAbilityModifyResistance resistanceid="damage" multiplier="1.5"/>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!--增援敌人删尸体-->
+    <AbilityGroupInterval >
+      <Conditions>
+		<AbilityConditionHasAffliction afflictionidentifier="deep_removebody_reinforce_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="3" >
+            <Conditional health="lte -80" />
+              <RemoveCharacter />
+              <dropcontaineditems />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 
