@@ -17,24 +17,42 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="10" >
+	<AbilityGroupInterval interval="1" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
     <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+    <CharacterAbilityModifyResistance resistanceid="arterialcut" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到10倍伤害，方便补刀 -->
+	<!-- 敌人倒地后，受到6倍伤害，方便补刀 -->
 	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="10"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="10"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="6"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="6"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 敌人倒地后，抗性-100，方便补刀 -->
+	<AbilityGroupInterval interval="0.5" >
+	  <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+              <Affliction identifier="deep_elite_resistance_health_0" strength="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
@@ -183,6 +201,44 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!--一次性高伤害减免-->
+    <AbilityGroupInterval interval="1">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+              <Affliction identifier="deep_protect_high_damage" amount="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+    <AbilityGroupEffect abilityeffecttype="OnAttacked">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_protect_high_damage" minimumpercentage="1.0"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.7" />
+        <CharacterAbilityApplyStatusEffectsToAttacker>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" targetlimb="Torso" delay="0.1" disabledeltatime="true">
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAttacker>
+      </Abilities>
+    </AbilityGroupEffect>
+    <AbilityGroupEffect abilityeffecttype="OnAttackedResult">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This">
+              <ReduceAffliction identifier="deep_protect_high_damage" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
 
   </Talent>
 </Talents>

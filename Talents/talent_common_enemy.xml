@@ -5,15 +5,14 @@
 	 <Description tag="talentdescription.deep_talent_common_enemy">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中5s后，造成3倍伤害，免疫物理伤害 -->
+    <!-- 小惩罚机制：敌人在水中5s后，+50%伤害 -->
     <AbilityGroupInterval interval="5" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="2.0"/>
+	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.5"/>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-    <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
@@ -25,17 +24,17 @@
     <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到10倍伤害，方便补刀 -->
+	<!-- 敌人倒地后，受到6倍伤害，方便补刀 -->
 	<AbilityGroupInterval interval="0.5" >
 	  <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="10"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="10"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="10"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="6"/>
+    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="6"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="6"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
