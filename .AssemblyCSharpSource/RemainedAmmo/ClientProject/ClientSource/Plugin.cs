@@ -77,7 +77,7 @@ namespace RemainedAmmo
         }
         public static void DrawMyString(RangedWeapon rangedWeapon, SpriteBatch spriteBatch)
         {
-            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != "Deep Diving Armory" || rangedWeapon.Item.HasTag("noammocount")){return;}
+            if(rangedWeapon.Item.Prefab.ContentPackage == null || !rangedWeapon.Item.Prefab.ContentPackage.Name.Contains("Deep Diving Armory") || rangedWeapon.Item.HasTag("noammocount")) {return;}
             int remainedAmmo = 0;
             var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (ItemContainer == null) { return; }
@@ -107,7 +107,7 @@ namespace RemainedAmmo
                 remainedAmmo = (int)Math.Floor(containedIndicatorState*100 / Math.Abs(conditionValue.GetValueOrDefault()));              
             }
             // 绘制相关图像
-            drawRemained:
+            // drawRemained:
             string ammoString = "00";
             if(remainedAmmo<10){ammoString = "0" + remainedAmmo;}
             else {ammoString = remainedAmmo.ToString();}
