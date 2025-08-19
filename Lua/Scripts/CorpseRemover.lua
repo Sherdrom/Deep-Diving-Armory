@@ -8,13 +8,13 @@ end, nil, false)
 Game.AddCommand("DisableForceCorpseRemove", "Only Human will remove after death", function()
     forceremove = false
 end, nil, false)
+
 Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", function()
     for __,character in pairs(Character.CharacterList) do
         if character.isDead then 
             if character.Removed then return end
             character.EnableDespawn = true
-            if character.Removed then return end
-            character.DespawnNow(true) 
+            character.Despawn()
         end
     end
 end, nil, false)
@@ -22,7 +22,7 @@ end, nil, false)
 
 Hook.Add("character.death", "Deep_CR", function(c)
     if c.Removed then return end
-    if (not c.IsHuman) and (not forceremove) then return end
+    if (not c.IsDead or (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil ) or ((not c.IsHuman) and (not forceremove)) or (c.TeamID == CharacterTeamType.Team1)) then return end
     c.EnableDespawn = true
     if c.Removed then return end
     c.Despawn()

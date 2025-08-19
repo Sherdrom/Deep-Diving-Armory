@@ -56,13 +56,12 @@
   </Item>
 
   <Item name="" identifier="deep_thermal_interference" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light" >
+  <Deconstruct time="5">
+  <Item identifier="copper" amount="1"/>
+  </Deconstruct>
     <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="171,15,151,133" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
 	  <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
-      <StatusEffect type="OnContained" target="nearbyitems" TargetItemComponent="StatusHUD" thermalgoggles="false" Range="2000" disableDeltaTime="true" setValue="true" >
-	    </StatusEffect>
-      <StatusEffect type="OnContained" target="nearbyitems" TargetItemComponent="StatusHUD" thermalgoggles="true" Range="2000" delay="10" setValue="true ">
-	    </StatusEffect>
     </Holdable>
   </Item>
 </Items>

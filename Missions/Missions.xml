@@ -406,21 +406,41 @@
   </PirateMission>
 
   <BeaconMission
-    identifier="deep_beacon_fight_pirate"
-    textidentifier="deep_beacon_fight_pirate"
-    achievementidentifier="deep_beacon_fight_pirate"
+    identifier="deep_beacon_fight_pirate_normal"
+    textidentifier="deep_beacon_fight_pirate_normal"
+    achievementidentifier="deep_beacon_fight_pirate_normal"
     tags="deep_beacon_fight_new"
     type="Beacon"
+    allowretry="false"
     difficulty="4"
-    reward="1500"
+    reward="6000"
     minleveldifficulty="0"
-    maxleveldifficulty="35"
+    maxleveldifficulty="100"
     sideobjective="false">
+    <Reputation identifier="coalition" amount="3" />
+    <Reputation identifier="separatists" amount="3" />
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
-    <message header="missionheader0.deep_beacon_fight_1" text="missionmessage0.deep_beacon_fight_1"/>
-    <message header="missionheader1.deep_beacon_fight_1" text="missionmessage1.deep_beacon_fight_1"/>
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_normal" campaignonly="true"/>
+  </BeaconMission>
+
+  <BeaconMission
+    identifier="deep_beacon_fight_pirate_hard"
+    textidentifier="deep_beacon_fight_pirate_hard"
+    achievementidentifier="deep_beacon_fight_pirate_hard"
+    tags="deep_beacon_fight_new"
+    type="Beacon"
+    allowretry="false"
+    difficulty="4"
+    reward="8000"
+    minleveldifficulty="0"
+    maxleveldifficulty="100"
+    sideobjective="false">
+    <Reputation identifier="coalition" amount="5" />
+    <Reputation identifier="separatists" amount="5" />
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_hard" campaignonly="true"/>
   </BeaconMission>
 
 
