@@ -1,7 +1,6 @@
 local forceremove = false
 
 LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.Character"], "Despawn")
-LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.AICharacter"], "Despawn")
 
 Game.AddCommand("EnableForceCorpseRemove", "Force ALL characters to remove after death", function()
     forceremove = true
@@ -25,5 +24,6 @@ Hook.Add("character.death", "Deep_CR", function(c)
     if c.Removed then return end
     if (not c.IsDead or (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil ) or ((not c.IsHuman) and (not forceremove)) or (c.TeamID == CharacterTeamType.Team1)) then return end
     c.EnableDespawn = true
+    if c.Removed then return end
     c.Despawn()
 end)
