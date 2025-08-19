@@ -1882,6 +1882,438 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
+  <Item name="" identifier="deep_sv98_mag_tit" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.22" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_sv98_mag,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="153,236,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="632,291,69,68" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="sv98_762_54_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="sv98_762_54_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
+        <SpawnItem identifiers="sv98_762_54_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_sv98_mag_du" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.22" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_sv98_mag,rifle_du_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="314,361,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" depth="0.65" sourcerect="580,123,69,68" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="sv98_762_54_round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="sv98_762_54_round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
+        <SpawnItem identifiers="sv98_762_54_round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_sv98_mag_phy" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.22" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_sv98_mag,rifle_phy_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="293,564,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="632,291,69,68" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="sv98_762_54_round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="sv98_762_54_round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
+        <SpawnItem identifiers="sv98_762_54_round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_sv98_mag_7n37" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.22" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_sv98_mag,rifle_tun_ful_heavy_reload_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="161,377,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="632,291,69,68" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="sv98_762_54_round_7n37" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="sv98_762_54_round_7n37" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
+        <SpawnItem identifiers="sv98_762_54_round_7n37" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_m700_mag_tit" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="152,345,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="634,374,67,79" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_m700_mag_du" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,rifle_du_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="313,477,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" depth="0.65" sourcerect="478,234,67,79" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_m700_mag_phy" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,rifle_phy_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="294,676,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="634,374,67,79" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_m700_mag_m993" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,rifle_tun_ful_heavy_reload_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="161,500,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="634,374,67,79" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_r93_mag_tit" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_r93_mag,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="152,454,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="631,476,75,64" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_r93_mag_du" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_r93_mag,rifle_du_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="313,593,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" depth="0.65" sourcerect="577,239,75,64" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_r93_mag_phy" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_r93_mag,rifle_phy_reload_heavy_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" sourcerect="293,790,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="631,476,75,64" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_r93_mag_m993" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_r93_mag,rifle_tun_ful_heavy_reload_2" impactsoundtag="impact_metal_light">
+  <Price baseprice="240" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_sniperrifle_2.png" sourcerect="160,623,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_sniperrifle.png" depth="0.65" sourcerect="631,476,75,64" origin="0.5,0.5" />
+    <Body width="70" height="70" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="awm_338_round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="awm_338_round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
+        <SpawnItem identifiers="awm_338_round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
 
   <Item name="" identifier="deep_sr25_mag" subcategory="sniper_ammo" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_sr25_mag,rifle_tit_reload_heavy" impactsoundtag="impact_metal_light">
   <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="6" maxamount="6" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
