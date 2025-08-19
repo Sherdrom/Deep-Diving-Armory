@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item identifier="deep_APS" category="Equipment" subcategory="deep_tac" tags="deep_tac_heavy,mobilecontainer" Scale="0.4" hideinmenus="false">
-    <Price baseprice="1000" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Price baseprice="1000" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredSkill identifier="electrical" level="100" />
-      <RequiredItem identifier="engineeringplastic" amount="2" />
-      <RequiredItem identifier="fpgacircuit" amount="2" />
-      <RequiredItem identifier="deep_ssd" amount="4" />
+      <RequiredItem identifier="engineeringplastic" amount="2"/>
+      <RequiredItem identifier="fpgacircuit" amount="2"/>
+	    <RequiredItem identifier="deep_ssd" amount="4"/>
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="fpgacircuit" amount="2" />
@@ -21,34 +21,34 @@
     <InventoryIcon texture="%ModDir%/testfiles/APS/APS.png" sourcerect="174,132,166,329" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/testfiles/APS/APS.png" sourcerect="174,132,166,329" depth="0.55" origin="0.5,0.5" />
     <Body width="166" height="329" density="30" />
-    <Holdable canbecombined="false" slots="LeftHand+RightHand" holdpos="45,-25" handle1="-30,-5" holdangle="0" aimable="false" msg="ItemMsgPickUpSelect">
+    <Holdable canbecombined="false" slots="LeftHand+RightHand"  holdpos="45,-25" handle1="-30,-5" holdangle="0" aimable="false" msg="ItemMsgPickUpSelect">
       <!-- slow down the character when holding the item -->
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
       <sprite texture="%ModDir%/testfiles/APS.png" sourcerect="174,132,166,329" canbehiddenbyotherwearables="false" rotation="0" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.4" origin="0.7,0.5" />
-      <StatValue stattype="MovementSpeed" value="-0.2" />
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>
     <LightComponent lightcolor="0,255,0,100" range="300.0" IsOn="true" castshadows="true" alphablend="true" allowingameediting="false">
       <LightTexture texture="Content/Lights/visioncircle.png" origin="0.5,0.5" />
-      <StatusEffect target="This" type="OnBroken" IsOn="false" setvalue="true" />
+      <StatusEffect target="This" type="OnBroken" IsOn="false" setvalue="true"/>
       <StatusEffect target="NearbyItems" type="OnActive" range="300">
-        <LuaHook name="Deep_APS" />
+        <LuaHook name="Deep_APS"/>
       </StatusEffect>
       <StatusEffect target="This" type="OnContained" IsOn="false" setvalue="true">
-        <Conditional condition="gt 0" />
+        <Conditional condition="gt 0"/>
       </StatusEffect>
       <StatusEffect target="This" type="OnNotContained" IsOn="true" setvalue="true">
-        <Conditional condition="gt 0" />
+        <Conditional condition="gt 0"/>
       </StatusEffect>
       <StatusEffect target="This" type="OnNotContained" Interval="2.5" Comparison="And">
-        <Conditional condition="gt 0" />
-        <Conditional pulseAmount="neq 1" />
-        <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="0.5" loop="true" />
+        <Conditional condition="gt 0"/>
+        <Conditional pulseAmount="neq 1"/>
+        <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="0.5" loop="true"/>
       </StatusEffect>
       <StatusEffect target="This" type="Always">
-        <Conditional pulseAmount="eq 1" />
-        <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1" loop="true" />
+        <Conditional pulseAmount="eq 1"/>
+        <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1" loop="true"/>
       </StatusEffect>
     </LightComponent>
   </Item>
