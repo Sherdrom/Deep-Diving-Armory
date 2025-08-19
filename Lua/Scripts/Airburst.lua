@@ -1,4 +1,5 @@
 SetFuse = nil
+local UpdateAmmo = {}
 local GlobalLauncher = {}
 
 local function PointDistance(V1, V2)
@@ -9,25 +10,6 @@ end
 
 local function VectorVelocity(V)
     return math.sqrt(V.X ^ 2 + V.Y ^ 2)
-end
-
-local function SetTimedFuse(projectileitem, fuse)
-    Timer.Wait(function()
-        projectileitem.Condition = 0
-    end,fuse)
-end
-
-local function CalculateFlyingTime(distance, initialVelocity, linearDamping)
-    local tick = 0
-    if linearDamping == 0 then
-        -- No damping, use basic kinematic equation
-        tick = distance / initialVelocity
-    else
-        -- With damping, solve for time using the velocity decay formula
-        local decayFactor = math.exp(-linearDamping * distance / initialVelocity)
-        tick = (1 - decayFactor) / linearDamping
-    end
-    return tick/60*500
 end
 
 Hook.Add("Deep_AirBurstBound", "Deep_AirBurstBound",
@@ -46,14 +28,18 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
         if Projectile == nil then
             return
         end
-            Timer.Wait(function()
-            local Launcher = Projectile.Launcher
-            if Launcher == nil then return end
+        local Launcher = Projectile.Launcher
+        if Launcher == nil then
+            return
+        end
+        Timer.Wait(function()
             local User = GlobalLauncher[Launcher]
             GlobalLauncher[Launcher] = nil
-            if User == nil then return end
+            if User == nil then
+                return
+            end
             local CursorPosition = User.CursorWorldPosition
-            local StartingPoint = Projectile.Launcher.WorldPosition --+ Projectile.Launcher.GetComponentString("RangedWeapon").barrelPos + Projectile.Launcher.GetComponentString("Holdable").AimPos
+            local StartingPoint = Projectile.Launcher.WorldPosition
             local FuseDistance = PointDistance(User.CursorWorldPosition, Projectile.Launcher.WorldPosition)
             if CLIENT and Game.IsMultiplayer then
                 local message = Networking.Start("Fuse")
@@ -70,10 +56,30 @@ Hook.Add("Deep_AirBurstControl", "Deep_AirBurstControl",
             end
             FuseDistance = SetFuse or FuseDistance
             SetFuse = nil
-            if FuseDistance == nil then return end
-            local fuse = CalculateFlyingTime(FuseDistance, ProjectileItem.body.LinearVelocity.Length(), ProjectileItem.body.FarseerBody.LinearDamping, ProjectileItem.body.FarseerBody.GravityScale)
-            SetTimedFuse(ProjectileItem, fuse)
-        end,1)
-    end
-)
+            UpdateAmmo[ProjectileItem] = {
+                FuseDistance = FuseDistance,
+                StartingPoint = StartingPoint
+            }
+        end, 1)
+    end)
 
+Hook.Add("think", "Deep_AirBurstUpdate", function() -- Projectile update
+    for item, data in pairs(UpdateAmmo) do
+        if data ~= nil then
+            local itemvelocity = item.body.LinearVelocity
+            if item.WorldPosition == nil or data.StartingPoint == nil or data.FuseDistance == nil or VectorVelocity(itemvelocity) <= 5 then
+                UpdateAmmo[item] = nil
+                return
+            end  -- remove data if item does not have correct data or velocity is too low
+            if PointDistance(item.WorldPosition, data.StartingPoint) >= data.FuseDistance then
+                item.Condition = 0
+                UpdateAmmo[item] = nil
+                return
+            end
+        end
+    end
+end)
+
+Hook.Add("item.removed", "Deep_RoundsRemoved", function(item) -- Removed projectiles
+    if item.HasTag("xm25round") then UpdateAmmo[item] = nil end
+end)

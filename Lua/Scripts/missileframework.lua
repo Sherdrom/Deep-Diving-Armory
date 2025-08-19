@@ -63,7 +63,7 @@ Hook.Patch("Barotrauma.Items.Components.Projectile", "Launch",function(instance,
 	local aimarget = nil
 	local newMissile = Missile:getMissile(projectile, instance.Launcher, aimarget, false)
 	table.insert(ActiveMissiles, newMissile)
-end,Hook.HookMethodType.Before)--Add projectile to upd table when launched, for handholds
+end,Hook.HookMethodType.After)--Add projectile to upd table when launched, for handholds
 -- Very fair, turret launch doesn't counts for projectile launch :)
 
 Hook.Patch("Barotrauma.Items.Components.Turret", "Launch", function(instance,ptable)
@@ -140,18 +140,27 @@ Hook.Add("think", "CBRN_SACLOS_Guide", function ()
 			missileVelocity = missile.item.body.LinearVelocity
 			missileDirection = getDirection(missileVelocity)
 
+			if missile.tick < GameTickRate * missile.msldata.GUIDENCE_DELAY then --Prevent missiles from accept guidence while in safety
+				missile.tick = missile.tick + 1
+				return
+			end
+
 			propulsionForce = radToVec(missileDirection) * missile.msldata.MAX_ACCELERATION
 			missile.item.body.ApplyLinearImpulse(propulsionForce)
 
 			if missile.isTurretLaunched then
 				WeaponDirection = missile.launcher.targetRotation
 			else
-				if missile.launcher.ParentInventory.Owner == nil then return end
-				WeaponDirection = -getDirection(missile.launcher.ParentInventory.Owner.CursorPosition-missile.launcher.ParentInventory.Owner.Position)
+				WeaponDirection = -missile.launcher.body.Rotation
+			end
+			if missile.isAuto then
+				if missile.destarget == nil then return end
+				WeaponDirection = -1 * getDirection(missile.destarget.WorldPosition - missile.launcher.item.WorldPosition)
 			end
 			--math works related to weapon directions
 			WeaponDirection = sign(WeaponDirection) * ( math.pi - math.abs(WeaponDirection))
 			WeaponDirection = WeaponDirection - math.floor(WeaponDirection / 2.0 / math.pi) * 2.0 * math.pi - math.pi
+
 
 			steeringForce = (radToVec(WeaponDirection) - radToVec(missileDirection)) / missile.msldata.TOLERANCE * missile.msldata.MAX_STEERING_FORCE
 
