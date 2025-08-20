@@ -15,6 +15,7 @@ if CLIENT and Game.IsMultiplayer then
         if character then
             -- 角色已存在，立即应用
             character.Params.HideInThermalGoggles = shouldHide
+            print("[CLIENT]HideInThermalGoggles set to true for " .. character.Name)
         else
             -- 角色还未创建（或消息先到），先将更新任务放入队列
             pendingUpdates[characterID] = {
@@ -32,13 +33,14 @@ if CLIENT and Game.IsMultiplayer then
         for characterID, updateData in pairs(pendingUpdates) do
             if currentTime > updateData.expiryTime then
                 pendingUpdates[characterID] = nil -- 任务过期，移除
-                return
-            end
-
-            local character = Entity.FindEntityByID(characterID)
-            if character then
-                character.Params.HideInThermalGoggles = updateData.shouldHide
-                pendingUpdates[characterID] = nil -- 任务完成，移除
+                print("[CLIENT]HideInThermalGoggles for " .. characterID .. " expired")
+            else
+                local character = Entity.FindEntityByID(characterID)
+                if character then
+                    character.Params.HideInThermalGoggles = updateData.shouldHide
+                    print("[CLIENT]HideInThermalGoggles set to true for " .. character.Name)
+                    pendingUpdates[characterID] = nil -- 任务完成，移除
+                end
             end
         end
     end)
@@ -53,7 +55,7 @@ function NPCHideInThermalGoggles(character)
                 message.WriteUInt16(character.ID)
                 message.WriteBoolean(character.Params.HideInThermalGoggles)
                 Networking.Send(message)
-                print("HideInThermalGoggles set to true for " .. character.Name)
+                print("[SERVER]HideInThermalGoggles set to true for " .. character.Name)
             end
         end
         if CLIENT and Game.IsSingleplayer then
