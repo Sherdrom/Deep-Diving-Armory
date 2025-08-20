@@ -16,7 +16,7 @@
     </Body>
     <Holdable slots="RightHand+LeftHand" msg="ItemMsgPickUpSelect" aimpos="50,-30" holdpos="35,-30" handle1="-20,-8" handle2="-20,-8" controlpose="true" blocksplayers="true" >
     <!-- 拿手上时，收起护盾 -->
-    <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.9" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnActive" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
     <Affliction identifier="deep_shield_resistance_50" strength="10" />
     <LuaHook name="DeepMobileShieldWithDraw" />
     </StatusEffect>
@@ -35,10 +35,10 @@
         <particleemitter particle="weldspark" drawontop="true" particleamount="10" velocitymin="100" velocitymax="500" anglemin="-45" anglemax="45" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" copyentityangle="true" />
         <Sound file="%ModDir%/jobgear/sound/ricochet.ogg" range="2000" forcePlaySounds="true"/>
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
-    <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" setvalue="true" >
-    </StatusEffect>
+    <StatValue stattype="MovementSpeed" value="-0.1" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="131,317,65,280" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Torso" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Head" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />
       <sprite texture="%ModDir%/jobgear/shield/shield.png" canbehiddenbyotherwearables="false" sourcerect="0,0,1,1" rotation="0" inheritlimbdepth="true" depth="0.6" limb="Waist" ignorelimbscale="true" scale="0.47" origin="1.1,0.5" />

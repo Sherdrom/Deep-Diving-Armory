@@ -27,7 +27,7 @@
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" >
+	<StatusEffect type="OnActive" target="Character" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -45,6 +45,7 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.2" />
 	</Holdable>
     <RangedWeapon reload="0.1" weapondamagemodifier="1.4" holdtrigger="true" barrelpos="220,14" spread="16" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />

@@ -17,7 +17,7 @@
     <Body width="260" height="70" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="63,5" handle1="-130,-25" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" >
+	<StatusEffect type="OnActive" target="Character" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -35,8 +35,9 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.2" />
 	</Holdable>
-    <RangedWeapon reload="0.085" weapondamagemodifier="1" holdtrigger="true" barrelpos="200,3" spread="8" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" >
+    <RangedWeapon reload="0.085" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="200,3" spread="8" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" >
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />

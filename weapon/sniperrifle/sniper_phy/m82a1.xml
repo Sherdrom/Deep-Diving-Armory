@@ -28,7 +28,7 @@
 	 </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" >
 	</StatusEffect>
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.6" setvalue="true" />	
+	<StatusEffect type="OnActive" target="Character" setvalue="true" />	
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
@@ -49,11 +49,12 @@
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.4" />
       
 	</Holdable>
 	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="387,23,409,109" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.4,0.7" />
-	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>
     <RangedWeapon reload="1" weapondamagemodifier="1" holdtrigger="true" barrelpos="205,20" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />

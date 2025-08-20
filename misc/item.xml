@@ -28,7 +28,7 @@
     </ItemContainer>
   </Item>
   
-  <Item name="" identifier="deep_trash_can" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_trash_can" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="" scale="0.45" impactsoundtag="impact_metal_light">
   <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
@@ -42,6 +42,8 @@
 	<StatusEffect type="OnNotContained" target="contained" delay="0.1" setvalue="true" stackable="false">
 		<remove />
     </StatusEffect>
+    <StatusEffect type="OnContained" target="Character" SpeedMultiplier="0.2"  setvalue="true" stackable="false">
+    </StatusEffect>
     </Holdable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
@@ -51,7 +53,7 @@
         </StatusEffect>
       </Button>      
     </CustomInterface>
-    <ItemContainer capacity="16" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
+    <ItemContainer capacity="1" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
 	</ItemContainer>
   </Item>
 

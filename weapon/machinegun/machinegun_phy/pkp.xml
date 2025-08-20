@@ -30,7 +30,7 @@
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" >
+	<StatusEffect type="OnActive" target="Character" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
@@ -48,10 +48,11 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.3" />
 	</Holdable>
 	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
       <sprite texture="%ModDir%/weapon/machinegun/machinegun_phy/Sprite/PKP.png" canbehiddenbyotherwearables="false" sourcerect="10,6,492,90" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.3" origin="0.5,0.9" />
-	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+	  <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>
     <RangedWeapon reload="0.1" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="246,17" spread="14" unskilledspread="28" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />

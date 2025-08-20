@@ -56,9 +56,6 @@
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="2.5" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="50" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" target="This" Condition="-800" />  
-	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
-	  <StatusEffect type="InWater" target="This" Condition="1000"/>
       <!--"Use" contained magazine to spawn projectiles.-->
       <StatusEffect type="OnUse" target="Contained">
         <Use />
@@ -98,9 +95,6 @@
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-	  <StatusEffect type="OnUse" Condition="-100" target="This" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
-      </StatusEffect>
       <!-- ============== 拉栓动画开始 ================= -->
     <!-- Locks the ammunition, preventing the person from adding more or removing. -->
     <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
@@ -132,7 +126,7 @@
     <!-- ============== 拉栓动画结束 ================= -->
       <RequiredItems items="deep_sv98_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
+	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2.5" stackable="false" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
