@@ -9,7 +9,7 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10" >
-      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredSkill identifier="weapons" level="80" />
        <RequiredItem identifier="titaniumaluminiumalloy_barrel" amount="3" />
 	     <RequiredItem identifier="titaniumaluminiumalloy_part" amount="3" />	  
 	     <RequiredItem identifier="glassfibre" amount="2"/>
@@ -18,10 +18,10 @@
     <Deconstruct time="10">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="462,798,231,190" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_steel/sniper_steel.png" sourcerect="6,211,556,106" depth="0.55" origin="0.5,0.5" />
-    <Body width="250" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="60,-20" aimpos="70,0" handle1="-120,-5" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="1457,1263,238,201" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_tit/sniper_tit.png" sourcerect="777,17,632,129" depth="0.55" origin="0.5,0.5" />
+    <Body width="632" height="129" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="60,-20" aimpos="77,7" handle1="-125,-5" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
@@ -43,24 +43,39 @@
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.2" />
 	</Holdable>
-    <RangedWeapon reload="1.7" weapondamagemodifier="1" holdtrigger="true" barrelpos="278,29" spread="1" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="0.9" weapondamagemodifier="1" holdtrigger="true" barrelpos="316,44" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" >
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/Sound/Weapons/M1903/gunFire/m1903_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.5" />
-      <Sound file="%ModDir%/Sound/Weapons/M1903/gunFire/m1903_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.5" />
-      <Sound file="%ModDir%/Sound/Weapons/M1903/gunFire/m1903_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.5" />
+      <Sound file="%ModDir%/Sound/Weapons/R93/gunFire/r93_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.8" />
+      <Sound file="%ModDir%/Sound/Weapons/R93/gunFire/r93_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.8" />
+      <Sound file="%ModDir%/Sound/Weapons/R93/gunFire/r93_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.8" />
       <StatusEffect type="OnUse" target="This">
-        <Explosion range="150.0" force="3" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="70" />
+        <Explosion range="150.0" force="2.5" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="50" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" target="This" Condition="-800" />  
-	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
-	  <StatusEffect type="InWater" target="This" Condition="1000"/>
       <!--"Use" contained magazine to spawn projectiles.-->
       <StatusEffect type="OnUse" target="Contained">
         <Use />
+      </StatusEffect>
+
+      <!--8倍镜-->
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="8x_sight_reduce" strength="3.3" />
+      <RequiredItems items="8x_sight" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <ReduceAffliction identifier="8x_sight_reduce" strength="1.7" />
+      <RequiredItems items="8x_sight" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Conditional speed="gt 0.5" />
+      <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
+      <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
       <!--6倍镜-->
@@ -70,7 +85,7 @@
       </StatusEffect>
 
       <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
-      <ReduceAffliction identifier="6x_sight_reduce" strength="1.8" />
+      <ReduceAffliction identifier="6x_sight_reduce" strength="1.5" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
@@ -80,45 +95,42 @@
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-	  <StatusEffect type="OnUse" Condition="-100" target="This" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
-      </StatusEffect>
       <!-- ============== 拉栓动画开始 ================= -->
     <!-- Locks the ammunition, preventing the person from adding more or removing. -->
     <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
     <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-    <StatusEffect type="OnUse" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1.4" setvalue="true" />
+    <StatusEffect type="OnUse" target="Contained" NonInteractable="false" disabledeltatime="true" delay="0.9" setvalue="true" />
     <!-- 拉 -->
-    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" forceplaysounds="true" disabledeltatime="true">
-      <Sound file="%ModDir%/Sound/Weapons/M1903/gunOther/m1903_bolt.ogg" type="OnUse" range="200" volume="0.5" />
+    <StatusEffect type="OnUse" target="This" delay="0.2" setValue="true" handle1="-120,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="0.2" setValue="true" forceplaysounds="true" disabledeltatime="true">
+      <Sound file="%ModDir%/Sound/Weapons/LEE/gunOther/lee_bolt.ogg" type="OnUse" range="200" volume="1" />
     </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="0.8" setValue="true" handle1="-150,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
-        <LuaHook name="M1903BoltOutSprite" />
+    <StatusEffect type="OnUse" target="This" delay="0.4" setValue="true" handle1="-150,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="0.4" disabledeltatime="true">
+        <LuaHook name="R93BoltOutSprite" />
     </StatusEffect>
     <!-- ================== 抛壳 ==================== -->
-    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
+    <StatusEffect type="OnUse" target="This" delay="0.4" disabledeltatime="true">
 	    <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
     </StatusEffect>
     <!-- 推 -->
-    <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" forceplaysounds="true" disabledeltatime="true">
-      <Sound file="%ModDir%/Sound/Weapons/M1903/gunOther/m1903_bolt_forward.ogg" type="OnUse" range="200" volume="0.5" />
+    <StatusEffect type="OnUse" target="This" delay="0.5" setValue="true" forceplaysounds="true" disabledeltatime="true">
+      <Sound file="%ModDir%/Sound/Weapons/LEE/gunOther/lee_bolt_forward.ogg" type="OnUse" range="200" volume="1" />
     </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="1.1" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="1.1" disabledeltatime="true">
-        <LuaHook name="M1903BoltInSprite" />
+    <StatusEffect type="OnUse" target="This" delay="0.7" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+    <StatusEffect type="OnUse" target="This" delay="0.7" disabledeltatime="true">
+        <LuaHook name="R93BoltInSprite" />
     </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
-    <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="80,-5" handle1="-120,-5" />
+    <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" holdpos="60,-20" aimpos="77,7" holdangle="-35" aimangle="0" />
+    <StatusEffect type="OnUse" target="This" delay="0.9" setvalue="true" handle2="80,20" handle1="-125,-5" />
     <!-- ============== 拉栓动画结束 ================= -->
-      <RequiredItems items="deep_M1903_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_r93_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
 	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_M1903_mag" hide="false" itempos="-15,13" setactive="true" rotation="0" >
+      <Containable items="deep_r93_mag" hide="false" itempos="-17,-3" setactive="true" rotation="0" >
       <!-- Locks the ammunition, preventing the person from adding more or removing. -->
       <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
       <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -128,11 +140,11 @@
       <!-- 先拉栓 -->
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-120,-5" holdpos="60,-10" aimpos="70,10" holdangle="15" aimangle="10" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/M1903/gunOther/m1903_bolt.ogg" range="200" volume="0.5" />
+        <Sound file="%ModDir%/Sound/Weapons/R93/gunOther/r93_bolt.ogg" range="200" volume="0.5" />
       </StatusEffect>
       <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-150,20" handle2="100,-10" holdpos="60,-10" aimpos="70,10" holdangle="35" aimangle="20" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
-          <LuaHook name="M1903BoltOutSprite" />
+          <LuaHook name="R93BoltOutSprite" />
       </StatusEffect>
       <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-100,-10" />
       <!-- 左手拿下弹匣 -->
@@ -147,64 +159,59 @@
       </StatusEffect>
       <!-- 显示弹匣 -->
       <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="2.1" setvalue="true" />
-      <!-- 隐藏弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="2.4" setvalue="true" />
-      <!-- 拔出弹匣恢复255 -->
-      <StatusEffect type="OnRemoved" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" setvalue="true" />
       <!-- 左手归位 -->
       <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" holdangle="35" aimangle="10" handle2="-50,20" />
       <!-- 再推栓 -->
       <StatusEffect type="OnInserted" target="This" delay="2.5" setValue="true" handle1="-100,30">
-        <Sound file="%ModDir%/Sound/Weapons/M1903/gunOther/m1903_bolt_forward.ogg" range="200" volume="0.5" />
       </StatusEffect>
       <StatusEffect type="OnInserted" target="This" delay="2.7" setValue="true" handle1="-100,-5" holdpos="60,-20" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="2.7" disabledeltatime="true">
-        <LuaHook name="M1903BoltInSprite" />
+        <LuaHook name="R93BoltInSprite" />
       </StatusEffect>
       <!-- 回归常态 -->
-      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
-      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" handle2="40,-5" handle1="-120,-5" />
+      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" holdpos="60,-20" aimpos="77,7" holdangle="-35" aimangle="0" />
+      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" handle2="80,20" handle1="-125,-5" />
       <!-- ============== 换弹动画结束 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="1.7" setValue="true" disabledeltatime="true" >
-      <sound file="%ModDir%/Sound/Weapons/M1903/gunOther/m1903_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
+      <StatusEffect type="OnInserted" target="This" delay="1.6" setValue="true" disabledeltatime="true" >
+      <sound file="%ModDir%/Sound/Weapons/R93/gunOther/r93_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
 	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="342,20,57,36" origin="0.5,0.5" />
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="29,7" setactive="true" />
+        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="19,6" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="29,7" setactive="true" />
+        <Containable items="deep_laser" hide="false" itempos="19,6" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-2,14.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-5,19.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
-        <Containable items="8x_sight" hide="false" itempos="-2,14.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <Containable items="8x_sight" hide="false" itempos="-5,19.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
         <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="1.2" setValue="true" >
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
         </StatusEffect>
         </Containable>
 
-        <Containable items="3x_sight" hide="false" itempos="-2,14.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <Containable items="3x_sight" hide="false" itempos="-5,19.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
         <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true" >
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
         </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-2,14.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-5,19.5" setactive="true" containedspritedepth="0.45" depth="0.55" >
         <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true" >
         </StatusEffect>
         <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true" >
         </StatusEffect>
         </Containable>
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-2,14.5" setactive="true" >
+		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-5,19.5" setactive="true" >
 		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
 		</Containable>
 		<Containable Items="thermalgoggles_sight,thermalgoggles_sight_6x">
@@ -216,7 +223,7 @@
       </SubContainer>
     </ItemContainer>
     <Quality>
-      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
     </Quality>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />

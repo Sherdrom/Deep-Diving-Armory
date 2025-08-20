@@ -18,7 +18,6 @@
     <Body width="260" height="130" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,15" handle1="-25,-35" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect" blocksplayers="true" >
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.3" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
@@ -33,6 +32,7 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.5" />
 	</Holdable>
     <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="110,-16" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
