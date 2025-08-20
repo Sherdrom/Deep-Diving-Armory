@@ -9,8 +9,6 @@ if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/armorMain.lua")--Armor Main
     dofile(Deep_Lua.Path .. "/Lua/Scripts/deployables.lua")--Deployables
     dofile(Deep_Lua.Path .. "/Lua/Scripts/APSList.lua")--APSList
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/Rocket.lua")--Rocket stuff
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/RocketConfig.lua")--Rocket stuff
     dofile(Deep_Lua.Path .. "/Lua/Scripts/CorpseRemover.lua")--CR
     --dofile(Deep_Lua.Path .. "/Lua/Scripts/RocketConfig.lua")--Rockets
     dofile(Deep_Lua.Path .. "/Lua/Scripts/missileconfigs.lua")--Missile configs, will load before missileframework
