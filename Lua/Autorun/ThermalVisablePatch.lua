@@ -33,14 +33,14 @@ if CLIENT and Game.IsMultiplayer then
         for characterID, updateData in pairs(pendingUpdates) do
             if currentTime > updateData.expiryTime then
                 pendingUpdates[characterID] = nil -- 任务过期，移除
-                return
-            end
-
-            local character = Entity.FindEntityByID(characterID)
-            if character then
-                character.Params.HideInThermalGoggles = updateData.shouldHide
-                print("[CLIENT]HideInThermalGoggles set to true for " .. character.Name)
-                pendingUpdates[characterID] = nil -- 任务完成，移除
+                print("[CLIENT]HideInThermalGoggles for " .. characterID .. " expired")
+            else
+                local character = Entity.FindEntityByID(characterID)
+                if character then
+                    character.Params.HideInThermalGoggles = updateData.shouldHide
+                    print("[CLIENT]HideInThermalGoggles set to true for " .. character.Name)
+                    pendingUpdates[characterID] = nil -- 任务完成，移除
+                end
             end
         end
     end)
