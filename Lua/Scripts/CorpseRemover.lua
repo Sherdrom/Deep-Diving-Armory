@@ -1,6 +1,7 @@
 local forceremove = false
 
 LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.Character"], "Despawn")
+LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.AICharacter"], "Despawn")
 
 Game.AddCommand("EnableForceCorpseRemove", "Force ALL characters to remove after death", function()
     forceremove = true
