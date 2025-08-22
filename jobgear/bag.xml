@@ -107,8 +107,12 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="30" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+      <Containable items="weapon" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="93,274,94,84" origin="0.5,0.5" />
+      <SubContainer capacity="29" maxstacksize="32">
+        <Containable tags="smallitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -134,8 +138,12 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="30" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+      <Containable items="weapon" />
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="93,274,94,84" origin="0.5,0.5" />
+      <SubContainer capacity="29" maxstacksize="32">
+        <Containable tags="smallitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -165,8 +173,16 @@
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
-    <ItemContainer capacity="30" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem,mediumitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="8,333,66,64" origin="0.5,0.5" />
+    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui2.png" sourcerect="10,268,62,50" origin="0.5,0.5" />
+      <Containable items="diving" excludeditems="deepdivinglarge" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="tool" excludedidentifiers="largemobilecontainer" />
+      </SubContainer>
+      <SubContainer capacity="28" maxstacksize="32">
+        <Containable tags="smallitem,mediumitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag,deep_rig" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -189,7 +205,7 @@
     <Sprite texture="%ModDir%/jobgear/bag/bag.png" sourcerect="255,65,97,220" depth="0.6" />
     <Body width="140" height="160" density="15" />
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
-	  <StatValue stattype="MovementSpeed" value="-0.5" />
+	  <StatValue stattype="MovementSpeed" value="-0.4" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="-40" />
       <sprite CanBeHiddenByOtherWearables="false" CanBeHiddenByItem="deepdivinglarge" texture="%ModDir%/jobgear/bag/bag.png" sourcerect="255,65,97,220" limb="Torso" depthlimb="Waist" inherittexturescale="true" origin="1,0.6" />
     </Wearable>
@@ -197,6 +213,7 @@
     <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <ItemContainer capacity="36" maxstacksize="32" depth="0.5" >
+    <!--<Containable tags="smallitem,mediumitem,diving,ammobox,railgunammo,containershell,depthchargeammo" excludedidentifiers="deep_6sh118" />-->
     </ItemContainer>
   </Item>
   

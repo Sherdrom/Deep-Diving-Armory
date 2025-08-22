@@ -75,23 +75,18 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!--增援敌人删尸体-->
-    <!-- <AbilityGroupInterval >
-      <Conditions>
-		<AbilityConditionHasAffliction afflictionidentifier="deep_removebody_reinforce_detect" />
-      </Conditions>
+    <!--敌人插板移速调整-->
+     <AbilityGroupInterval interval="0.9" >
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="3" >
-            <Conditional health="lte -80" />
-              <RemoveCharacter />
-              <dropcontaineditems />
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
+            <Affliction identifier="deep_enemy_resistance_plate_speed" strength="5.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval> -->
+    </AbilityGroupInterval> 
 
   </Talent>
 </Talents>

@@ -101,10 +101,10 @@
       <RequiredItem identifier="groundglass" amount="3" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="1" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+	    <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
 	<Deconstruct time="5">
-	  <Item identifier="fpgacircuit"/>
+	    <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,202,184,70" />
@@ -113,7 +113,8 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="3x_sight" strength="1" />
+	          <Affliction identifier="3x_sight" strength="1" />
+            <Affliction identifier="deep_no_6x_8x_sight_detect" strength="2" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -191,7 +192,7 @@
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="2" />
 	  <RequiredItem identifier="fulgurium" amount="3" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+	  <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
 	<Deconstruct time="5">
       <Item identifier="fpgacircuit" />
@@ -203,6 +204,7 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
 	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="thermalgoggles_sight_6x" strength="1" />
+    <Affliction identifier="deep_no_6x_8x_sight_detect" strength="2" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -220,7 +222,7 @@
       <RequiredItem identifier="groundglass" amount="4" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="2" />
-	  <RequiredItem identifier="deep_ssd" amount="1" />
+	    <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
 	<Deconstruct time="5">
 	  <Item identifier="fpgacircuit"/>
@@ -233,6 +235,7 @@
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="8x_sight" strength="1" />
+    <Affliction identifier="deep_no_6x_8x_sight_detect" strength="2" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -250,7 +253,7 @@
       <RequiredItem identifier="groundglass" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
       <RequiredItem identifier="glassfibre" amount="1" />
-	  <RequiredItem identifier="deep_ssd" amount="1" />
+	    <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
 	<Deconstruct time="5">
 	  <Item identifier="fpgacircuit"/>

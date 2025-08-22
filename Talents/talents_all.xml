@@ -695,6 +695,45 @@
         </Abilities>
       </AbilityGroupInterval>
 
+      <!-- 巡回结束时，确保合约效果清除 -->
+      <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
+        <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+              <Affliction identifier="deep_contract_resistance" amount="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+      </AbilityGroupEffect>
+
+      <!-- 中距离作战合约 -->
+    <AbilityGroupInterval interval="0.9">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_6x_8x_sight_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+              <Affliction identifier="deep_contract_no_6x_8x_sight_detect" amount="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_6x_8x_sight_detect" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_no_6x_8x_sight_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="-1" />
+      </Abilities>
+    </AbilityGroupEffect>
+
 
     </Talent>
 </Talents>

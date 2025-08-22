@@ -23,6 +23,15 @@
       </StatusEffectAction>
     </ScriptedEvent>
 
+    <ScriptedEvent identifier="deep_contract_nonInteractable_false">
+      <!-- 确保合约门解锁 -->
+      <TagAction criteria="itemidentifier:windoweddoorwbuttons" tag="targetdoor" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemidentifier:hatchwbuttons" tag="targetdoor" submarinetype="outpost" continueifnotargetsfound="true" />
+      <StatusEffectAction targettag="targetwall">
+        <StatusEffect target="This" NonInteractable="false" />
+      </StatusEffectAction>
+    </ScriptedEvent>
+
     <ScriptedEvent identifier="deep_beaconstation_indestructible">
       <!-- 信标站无敌 -->
       <TagAction criteria="structureidentifier:ff_x_wall" tag="targetwall" submarinetype="beaconstation" continueifnotargetsfound="true" />

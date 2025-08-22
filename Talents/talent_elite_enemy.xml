@@ -184,61 +184,18 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!--增援敌人删尸体-->
-    <!-- <AbilityGroupInterval >
-      <Conditions>
-		<AbilityConditionHasAffliction afflictionidentifier="deep_removebody_reinforce_detect" />
-      </Conditions>
+    <!--敌人插板移速调整-->
+     <AbilityGroupInterval interval="0.9" >
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="3" >
-            <Conditional health="lte -80" />
-              <RemoveCharacter />
-              <dropcontaineditems />
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
+            <Affliction identifier="deep_enemy_resistance_plate_speed" strength="5.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval> -->
-
-    <!--一次性高伤害减免-->
-    <AbilityGroupInterval interval="1">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
-              <Affliction identifier="deep_protect_high_damage" amount="1.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupEffect abilityeffecttype="OnAttacked">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_protect_high_damage" minimumpercentage="1.0"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.7" />
-        <CharacterAbilityApplyStatusEffectsToAttacker>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" targetlimb="Torso" delay="0.1" disabledeltatime="true">
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAttacker>
-      </Abilities>
-    </AbilityGroupEffect>
-    <AbilityGroupEffect abilityeffecttype="OnAttackedResult">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This">
-              <ReduceAffliction identifier="deep_protect_high_damage" strength="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupInterval> 
 
   </Talent>
 </Talents>
