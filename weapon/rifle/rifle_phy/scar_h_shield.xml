@@ -17,6 +17,11 @@
     <!-- <BrokenSprite texture="%ModDir%/weapon/rifle/rifle.png" sourcerect="1074,18,259,132" depth="0.55" origin="0.5,0.5" maxcondition="50" /> -->
     <Body width="260" height="130" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="55,15" handle1="-25,-35" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect" blocksplayers="true" >
+	<!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.3" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />

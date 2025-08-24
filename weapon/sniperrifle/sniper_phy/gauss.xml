@@ -15,6 +15,11 @@
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" sourcerect="45,714,369,82" depth="0.55" origin="0.5,0.5" />
     <Body width="370" height="80" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="90,5" handle1="-85,-8" handle2="100,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<!-- 禁用狙击合约-->
       <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sniper_detect="gt 0.0" />

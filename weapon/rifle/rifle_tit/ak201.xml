@@ -24,6 +24,11 @@
     <Sprite texture="%ModDir%/weapon/rifle/rifle_2.png" sourcerect="363,179,331,76" depth="0.55" origin="0.5,0.5" />
     <Body width="330" height="75" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="63,5" handle1="-55,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />

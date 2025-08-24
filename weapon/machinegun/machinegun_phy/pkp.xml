@@ -27,6 +27,11 @@
         <Conditional deep_contract_no_machinegun_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
+	  <!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     <!--弹箱打空时，回归原始贴图-->
     <StatusEffect type="OnActive" target="Contained" comparison="and" setvalue="true" >
     <Conditional condition="eq 0" />

@@ -22,6 +22,11 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_2.png" sourcerect="16,10,272,106" depth="0.55" origin="0.5,0.5" />
     <Body width="85" height="50" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,15" handle1="-90,-7" handle2="-90,-7"       msg="ItemMsgPickUpSelect" >
+	<!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
 	  <Affliction identifier="deep_fn57_mute" strength="100" />

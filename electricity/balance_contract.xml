@@ -391,4 +391,34 @@
     </Holdable>
   </Item>
 
+  <Item name="" identifier="deep_balance_contract_wwt" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1" >
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
+    <Body width="36" height="40" density="20" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="3500" disableDeltaTime="true" setValue="true " condition="0"   >
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
+      </StatusEffect>
+	    <StatusEffect type="OnUse" target="this" delay="0.5" >
+	      <remove/>
+      </StatusEffect>
+
+      <StatusEffect type="NotInwater" target="this" condition="-20"  >
+      </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="3500" disableDeltaTime="true" setValue="true " condition="0"   >
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
+      </StatusEffect>
+	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
+	      <remove/>
+      </StatusEffect>
+    </Holdable>
+  </Item>
+
 </Items>
