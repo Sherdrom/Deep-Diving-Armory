@@ -15,7 +15,12 @@
     <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="1177,6,497,482" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" sourcerect="1700,29,655,120" depth="0.55" origin="0.5,0.5" />
     <Body width="140" height="60" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="150,-120" aimpos="160,-8" handle1="-190,-8" handle2="50,5" holdangle="0" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="150,-120" aimpos="160,-8" handle1="-190,-8" handle2="50,5" holdangle="0" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 禁用狙击合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_sniper_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <Affliction identifier="deep_sniper_aim_heavy" strength="100"/>
 	 </StatusEffect>
@@ -43,7 +48,7 @@
       </StatusEffect>
       <StatValue stattype="MovementSpeed" value="-0.6" />
 	</Holdable>
-	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="1700,29,655,120" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.4" origin="0.4,0.6" />
 	  <StatValue stattype="MovementSpeed" value="-0.3" />
     </Wearable>

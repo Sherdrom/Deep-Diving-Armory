@@ -15,7 +15,12 @@
     <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="731,401,188,183" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/shotgun/shotgun_phy/shotgun_phy.png" sourcerect="606,217,604,166" depth="0.55" origin="0.5,0.5" />
     <Body width="200" height="50" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-40,-15" handle2="80,25" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-40,-15" handle2="80,25" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 禁用霰弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_shotgun_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="0.6" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
@@ -35,7 +40,7 @@
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 	</Holdable>
-  <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+  <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/shotgun/shotgun_phy/shotgun_phy.png" canbehiddenbyotherwearables="false" sourcerect="606,217,604,166" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.21" origin="0.5,0.85" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>

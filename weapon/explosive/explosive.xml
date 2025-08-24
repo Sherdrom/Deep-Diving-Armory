@@ -33,6 +33,11 @@
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2">
         <Conditional IsActive="false" />
       </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="750.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
@@ -109,6 +114,11 @@
       <!-- 人物未装备手雷时，恢复-->
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
         <Conditional IsActive="false" />
+      </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
@@ -187,6 +197,11 @@
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
         <Conditional IsActive="false" />
       </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
@@ -261,6 +276,11 @@
       <!-- 人物未装备手雷时，恢复-->
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="2">
         <Conditional IsActive="false" />
+      </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
@@ -393,6 +413,11 @@
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="5">
         <Conditional IsActive="false" />
       </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" penetration="0" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
@@ -467,6 +492,11 @@
       <!-- 人物未装备手雷时，恢复-->
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
         <Conditional IsActive="false" />
+      </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" />
@@ -558,6 +588,11 @@
       <StatusEffect type="OnContained" targettype="This" setvalue="true" throwforce="3">
         <Conditional IsActive="false" />
       </StatusEffect>
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnNotContained" target="NearbyCharacters,This" disabledeltatime="true" AllowWhenBroken="true" comparison="and" Range="600" setvalue="true">
         <Conditional Condition="lt 10" />
         <Affliction identifier="m18_smoke" strength="100" />
@@ -625,6 +660,11 @@
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="30,261,256,93" depth="0.55" origin="0.5,0.5" />
     <Body width="256" height="93" density="10" />
     <Holdable blocksplayers="true" selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="100,-60" handle1="-100,0" attachable="true" aimable="false">
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnActive" target="This" condition="100" setvalue="true" Interval="0.5" />
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
@@ -683,6 +723,11 @@
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
     <Body width="26" height="50" density="30" />
     <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,30">
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
       <StatusEffect type="OnActive" targettype="Contained,Character" condition="50" comparison="and" setvalue="true">
         <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
@@ -725,6 +770,11 @@
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="763,156,90,90" depth="0.55" origin="0.5,0.5" />
     <Body width="26" height="50" density="30" />
     <Holdable slots="Any,RightHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="1" drawhudwhenequipped="true" crosshairscale="0.2">
       <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="1">
@@ -744,7 +794,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -777,7 +833,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="257,10,88,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -810,7 +872,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="483,10,79,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -843,7 +911,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="585,6,98,122" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -876,7 +950,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -909,7 +989,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="132,6,89,85" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -942,7 +1028,13 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="362,9,96,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30" >
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.6" holdtrigger="true" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />

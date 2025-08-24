@@ -24,6 +24,11 @@
     <Sprite texture="%ModDir%/weapon/machinegun/machinegun_steel/Sprite/RPK.png" sourcerect="7,7,439,83" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-90,-15" handle2="80,30" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<!-- 禁用机枪合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_machinegun_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />

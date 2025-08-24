@@ -24,6 +24,11 @@
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_steel/sniper_steel.png" sourcerect="6,211,556,106" depth="0.55" origin="0.5,0.5" />
     <Body width="250" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="60,-20" aimpos="70,0" handle1="-120,-5" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<!-- 禁用狙击合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_sniper_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />

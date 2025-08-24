@@ -25,6 +25,11 @@
     <BrokenSprite texture="%ModDir%/weapon/grenadelauncher/gl_tit/Sprite/GL40.png" sourcerect="14,125,284,74" depth="0.55" origin="0.5,0.5" maxcondition="0" />
     <Body width="170" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="55,-10" aimpos="45,0" handle1="-15,-12" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
+	<!-- 禁用榴弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_gl_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />

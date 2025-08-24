@@ -23,7 +23,12 @@
     <InventoryIcon texture="%ModDir%/weapon/machinegun/machinegun45.png" sourcerect="265,358,222,213" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/machinegun/machinegun_tit/Sprite/M60.png" sourcerect="8,4,460,136" depth="0.55" origin="0.5,0.5" />
     <Body width="270" height="70" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-65,-30" handle2="60,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-65,-30" handle2="60,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 禁用机枪合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_machinegun_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
@@ -47,7 +52,7 @@
       </StatusEffect>
       <StatValue stattype="MovementSpeed" value="-0.4" />
 	</Holdable>
-	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/machinegun/machinegun_tit/Sprite/M60.png" canbehiddenbyotherwearables="false" sourcerect="8,4,460,136" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.3" origin="0.5,0.9" />
 	  <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>

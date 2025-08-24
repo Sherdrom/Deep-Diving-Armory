@@ -1841,6 +1841,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2023,6 +2028,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2168,6 +2178,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2313,6 +2328,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2458,6 +2478,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2569,7 +2594,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_high_penetration" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
   <Price baseprice="2000" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -2591,7 +2616,13 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="474,108,76,81" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="563,164,102,20" origin="0.5,0.5" />
     <Body width="80" height="20" density="40" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
+    </Holdable>
     <Projectile characterusable="false" hitscan="true" maxtargetstohit="10" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="1" targetforce="50" itemdamage="200" severlimbsprobability="1" penetration="1">
@@ -2621,7 +2652,7 @@
       </StatusEffect>
     </Projectile>
   </Item>
-  <Item name="" identifier="ptrd_145mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ptrd_145mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -2711,6 +2742,11 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+	<!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>

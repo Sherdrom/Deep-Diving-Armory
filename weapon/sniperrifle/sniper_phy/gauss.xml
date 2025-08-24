@@ -14,7 +14,12 @@
     <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="419,426,353,347" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" sourcerect="45,714,369,82" depth="0.55" origin="0.5,0.5" />
     <Body width="370" height="80" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="90,5" handle1="-85,-8" handle2="100,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="90,5" handle1="-85,-8" handle2="100,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 禁用狙击合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_sniper_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
 	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
 	<StatusEffect type="OnActive" target="This" Interval="0.5" >
@@ -36,7 +41,7 @@
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 	</Holdable>
-	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" >
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="45,714,369,82" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.5,0.9" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>

@@ -24,7 +24,12 @@
     <Sprite texture="%ModDir%/weapon/grenadelauncher/gl_steel/Sprite/M79.png" sourcerect="8,5,355,81" depth="0.55" origin="0.5,0.5" />
     <BrokenSprite texture="%ModDir%/weapon/grenadelauncher/gl_steel/Sprite/M79.png" sourcerect="8,132,352,117" depth="0.55" origin="0.5,0.5" maxcondition="0"/>
     <Body width="220" height="45" density="10" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="60,0" handle1="-25,-25" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="60,0" handle1="-25,-25" handle2="80,10" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
+	<!-- 禁用榴弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_no_gl_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
     <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
@@ -41,7 +46,7 @@
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 	</Holdable>
-	<Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/grenadelauncher/gl_steel/Sprite/M79.png" canbehiddenbyotherwearables="false" sourcerect="8,5,355,81" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.3" origin="0.5,1.3" />
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="1" setvalue="true" />
     </Wearable>
