@@ -18,6 +18,11 @@
 	  <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="1" setvalue="true" />
     </Wearable>
     <MeleeWeapon slots="RightHand+LeftHand" blocksplayers="true" controlpose="true" holdpos="-20,-15" aimpos="40,-60" handle1="-70,-20" handle2="0,-20" holdangle="200" reload="1.2" range="800" combatPriority="10" msg="ItemMsgPickUpSelect">
+	<!-- 二战老兵合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_contract_wwt_detect="gt 0.0" />
+        <dropitem/>
+      </StatusEffect>
 	<StatusEffect type="NotInWater" target="This" Condition="5" disabledeltatime="true" />
 	<StatusEffect type="InWater" target="This" Condition="5" disabledeltatime="true" />
 	<StatusEffect type="Onactive" target="Character" setvalue="true" >
