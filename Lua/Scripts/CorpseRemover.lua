@@ -23,10 +23,9 @@ end, nil, false)
 
 Hook.Add("character.death", "Deep_CR", function(c)
     if c.Removed then return end
-    if     forceremove
-        or (
-                not c.IsDead 
-            or (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
+    if      (not forceremove)
+        and (
+               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
             or (not c.IsHuman)
             or c.TeamID == CharacterTeamType.Team1 
             or c.TeamID == CharacterTeamType.None
