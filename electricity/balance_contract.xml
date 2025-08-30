@@ -32,7 +32,7 @@
 	  <StatusEffect type="OnUse" target="NearbyItems" targettags="contract" Range="1500" disableDeltaTime="true" setValue="true " NonInteractable="true"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_ssd_relaycomponent" Range="4000" disableDeltaTime="true" setValue="true "   >
+      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_ssd_relaycomponent" Range="2000" disableDeltaTime="true" setValue="true "   >
         <remove/>
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
@@ -52,7 +52,7 @@
 	    <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_ssd_relaycomponent" Range="4000" disableDeltaTime="true" setValue="true "   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_ssd_relaycomponent" Range="2000" disableDeltaTime="true" setValue="true "   >
         <remove/>
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
@@ -64,7 +64,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -77,7 +77,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -85,6 +85,10 @@
       </StatusEffect>
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
+      </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_6x_8x_sight_detect" strength="1" />
       </StatusEffect>
 
 
@@ -96,7 +100,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -109,7 +113,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -118,6 +122,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_sight_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -126,7 +135,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -139,7 +148,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -148,6 +157,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_sniper_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -156,7 +170,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -169,7 +183,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -178,6 +192,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_shotgun_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -186,7 +205,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -199,7 +218,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -208,6 +227,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_machinegun_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -216,7 +240,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -229,7 +253,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -238,6 +262,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_gl_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -246,7 +275,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -259,7 +288,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -268,6 +297,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_high_penetration_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -276,7 +310,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -289,7 +323,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -298,6 +332,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_explosive_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -306,7 +345,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -319,7 +358,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -328,6 +367,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_travel_light_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -336,7 +380,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -349,7 +393,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -358,6 +402,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_neither_painful_nor_itching_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
   
@@ -366,7 +415,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -379,7 +428,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -388,6 +437,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_no_dealth_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -396,7 +450,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -409,7 +463,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -418,6 +472,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -426,7 +485,7 @@
     <Sprite texture="contract.png" sourcerect="1,0,60,61" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0"  msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+	  <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -439,7 +498,7 @@
       <StatusEffect type="NotInwater" target="this" condition="-20"  >
       </StatusEffect>
 
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="4000" disableDeltaTime="true" setValue="true " condition="0"   >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="2000" disableDeltaTime="true" setValue="true " condition="0"   >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
@@ -448,6 +507,11 @@
 	  <StatusEffect type="OnBroken" target="this" delay="0.5" >
 	      <remove/>
       </StatusEffect>
+
+      <StatusEffect type="OnNotContained" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_contract_blitzkrieg_detect" strength="0.016" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 

@@ -4635,6 +4635,28 @@
       </StatusEffect>
     </Effect>
   </Affliction>
+
+  <Affliction
+    identifier="deep_gun_condition_100"
+    description=""
+	  isbuff="true"
+    type="deep_gun_condition"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="100"
+    showinhealthscannerthreshold="100"
+    karmachangeonapplied="0"
+    maxstrength="1"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="1" strengthchange="-1" >
+      <StatusEffect target="NearbyItems" targettags="deep_condition_100" range="200" setValue="true" condition="1000" NonInteractable="false" disabledeltatime="true" delay="1" >
+      </StatusEffect>
+
+      <StatusEffect target="NearbyItems" targettags="deep_nonInteractable" range="200" setValue="true" NonInteractable="false" disabledeltatime="true" delay="1" >
+      </StatusEffect>
+    </Effect>
+  </Affliction>
     
         </Override>
 </Afflictions>
