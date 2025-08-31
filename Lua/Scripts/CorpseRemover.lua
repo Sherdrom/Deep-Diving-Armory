@@ -28,8 +28,9 @@ Hook.Add("character.death", "Deep_CR", function(c)
         and (
                (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
             or c.CauseOfDeath.Type == CauseOfDeathType.Unknown
+            or c.IsHuskInfected
             or (not c.IsHuman)
-            or c.TeamID == CharacterTeamType.Team1
+            or (c.TeamID == CharacterTeamType.Team1 and GameMain.GameSession.Campaign ~= nil)
         ) then
         return
     end
