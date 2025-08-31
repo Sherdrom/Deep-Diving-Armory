@@ -1,6 +1,5 @@
 Deep_Lua.Armors = {
-
-    itemid = {
+    sampleitemid = {
         isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
         name = "something",                         --Name, not actually used in game
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
@@ -17,7 +16,7 @@ Deep_Lua.Armors = {
         isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
         protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
             [LimbType.Torso] = true,                --Only add true items.
-            [LimbType.Waist] = true,
+            [LimbType.Waist] = true,                --Note: This list may not up-to-date so please note we accept any limbs here. Use custom limbs at your own risk
             [LimbType.LeftArm] = true,
             [LimbType.LeftForearm] = true,
             [LimbType.LeftHand] = true,
@@ -26,6 +25,10 @@ Deep_Lua.Armors = {
             [LimbType.RightHand] = true,
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+            [LimbType.LeftFoot] = true,
+            [LimbType.RightFoot] = true,
         },
         targetidentifier = {
             ["gunshotwound"] = true
@@ -45,7 +48,7 @@ Deep_Lua.Armors = {
         forceoverride = false,                      --Force override control parameter
                                                     --Be aware what are u doing before using this parameter!
 
-    },  --Note: Sample.
+    },
 
     --陶瓷
     deep_plate_ceramic_4 = {
