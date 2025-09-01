@@ -721,6 +721,19 @@
       </Abilities>
       </AbilityGroupEffect>
 
+      <!-- 巡回结束时，确保合约效果清除，二次保险 -->
+      <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
+        <Abilities>
+          <CharacterAbilityApplyStatusEffects>
+            <StatusEffects>
+              <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+                <Affliction identifier="deep_contract_resistance" amount="10.0" />
+              </StatusEffect>
+            </StatusEffects>
+          </CharacterAbilityApplyStatusEffects>
+        </Abilities>
+      </AbilityGroupEffect>
+
       <!-- 中距离作战合约 -->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
