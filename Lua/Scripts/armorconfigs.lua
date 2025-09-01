@@ -1,23 +1,23 @@
 Deep_Lua.Armors = {
-
-    itemid = {
-        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet
-        name = "something",                         --Name, not actually used in game
+    sampleitemid = {
+        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet.
+        name = "something",                         --Name, not actually used in game. Optional, you can remove this if you know what is what.
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
-        level = 0,                                  --Bulletproof level, range 0-10
-        aftereffectmultiplier  = 0.0,               --Define damage multiplier if pen
-        correctionaffliction = nil,                 --Define affliction if non-pen, TODO: Use table instead of single string
-        correctionmultiplier = 0.0,                 --Define how many damage should pass to player
+        level = 0,                                  --Bulletproof level, range 0-10, 10+ is also possible.(I dont think that will be useful, really)
+        aftereffectmultiplier  = 0.0,               --Define damage multiplier if pen-ed
+        correctionaffliction = nil,                 --Define affliction applied to user if non-pen, TODO: Use table instead of single string(Low Prior)
+        correctionmultiplier = 0.0,                 --Define how many damage should pass to user
         enablecorrection = false,                   --Define should give non-pen affliction
         penresistance = 0.8,                        --Define pen resistance, will use to caculate remaining pen
         maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
-        ignoredamage = false,                       --Take damage or not.
+        ignoredamage = false,                       --Will the item take damage or not.
         isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
+                                                    --Use this ONLY when you want to define a helmet with a mask. Otherwise keep this false, = a standard armor for your head.
         protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
             [LimbType.Torso] = true,                --Only add true items.
-            [LimbType.Waist] = true,
+            [LimbType.Waist] = true,                --Note: This list may not up-to-date so please note we accept any limbs here. Use custom limbs at your own risk
             [LimbType.LeftArm] = true,
             [LimbType.LeftForearm] = true,
             [LimbType.LeftHand] = true,
@@ -26,26 +26,28 @@ Deep_Lua.Armors = {
             [LimbType.RightHand] = true,
             [LimbType.LeftThigh] = true,
             [LimbType.RightThigh] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+            [LimbType.LeftFoot] = true,
+            [LimbType.RightFoot] = true,
         },
-        targetidentifier = {
+        targetidentifier = {                        --Define what damage will this plate/helmet/armor protect against. For most cases gunshotwound.
             ["gunshotwound"] = true
         },
         --targetidentifier = "Any" if you want to define a full-protection armor(Also work for pre-defined types)
-        --Decide what damage this will decide a valid shot. usually gunshotwound.
-        --custom stuff, only work if custom type
 
+        --Custom stuff, only work if custom type
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
 
         --Third-Party Support
-
         protected = true,                           --Protected or not
         override = true,                            --Override control parameter
         forceoverride = false,                      --Force override control parameter
                                                     --Be aware what are u doing before using this parameter!
 
-    },  --Note: Sample.
+    },
 
     --陶瓷
     deep_plate_ceramic_4 = {

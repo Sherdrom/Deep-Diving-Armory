@@ -1,4 +1,4 @@
-SetFuse = nil
+local SetFuse = nil
 local GlobalLauncher = {}
 
 local function PointDistance(V1, V2)
