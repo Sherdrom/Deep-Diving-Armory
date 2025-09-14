@@ -13,7 +13,7 @@ if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/missileconfigs.lua")--Missile configs, will load before missileframework
     dofile(Deep_Lua.Path .. "/Lua/Scripts/missileframework.lua")--Missile Main, will be override if Framework is already exist
     dofile(Deep_Lua.Path .. "/Lua/Scripts/LockFix.lua")--Locked Item Fixer
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachine.lua")--Reload Machine stuff, to replace 1500+ lines XML
+    --dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachine.lua")--Reload Machine stuff, to replace 1500+ lines XML
     dofile(Deep_Lua.Path .. "/Lua/Scripts/RefreshTool.lua")--Refresh tool
     
 end

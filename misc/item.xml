@@ -69,9 +69,14 @@
     <Body width="110" height="160" density="20" />
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"/>
     <ItemContainer capacity="1" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
-        <StatusEffect target="This" type="OnInserted">
+      <SlotIcon slotindex="0" texture="Content/UI/SettingsMenuAtlas.png" sourcerect="193,0,63,64" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="Content/UI/SettingsMenuAtlas.png" sourcerect="193,64,63,64" origin="0.5,0.5" />
+      <Containable targetslot="0" items="smallitem,mediumitem,largeitem">
+        <StatusEffect target="Contained" type="OnContaining" Interval="2">
           <LuaHook name="Deep_RefreshItem" />
         </StatusEffect>
+      </Containable >
+      <SubContainer capacity="1" maxstacksize="32"/>
     </ItemContainer>
   </Item>
 

@@ -1,13 +1,19 @@
+local RemoveList = {}
+
 Hook.Add("Deep_RefreshItem", "Deep_RefreshItem",
     function(effect, deltaTime, item, targets, worldPosition)
-        local olditems = item.OwnInventory.GetItemsAt(0)
-        local Prefab = olditems[1].Prefab
-        local Condition = olditems[1].Condition
-        local Quality = olditems[1].Quality
-        for removeneededitem in olditems do 
-            print(removeneededitem.Name)
-            removeneededitem.Remove()
-            Entity.Spawner.AddItemToSpawnQueue(Prefab, item.OwnInventory, Condition, Quality, nil, true, true, 0)
+        for olditem in targets do
+            if LuaUserData.IsTargetType(olditem, "Barotrauma.Item") then
+                local Prefab = olditem.Prefab
+                local Condition = olditem.Condition
+                local Quality = olditem.Quality
+                Entity.Spawner.AddItemToSpawnQueue(Prefab, item.OwnInventory, Condition, Quality,
+                function(spawned)
+                    item.OwnInventory.RemoveItem(olditem)
+                    item.OwnInventory.TryPutItem(spawned, 1, false, true, nil, true, true)
+                    item.OwnInventory.TryPutItem(spawned, 1, false, true, nil, true, true)
+                end,true,true, 1)
+            end
         end
     end
 )
