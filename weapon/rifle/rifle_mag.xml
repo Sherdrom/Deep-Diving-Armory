@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_5.56x45" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56" impactsoundtag="impact_metal_light">
+
+<!--556*45 NATO-->
+  <Item name="" identifier="deep_5.56x45" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56,lead,rifle" impactsoundtag="impact_metal_light">
     <Price baseprice="75" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -34,7 +36,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.56x45_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45_tit" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,ti,rifle" impactsoundtag="impact_metal_light">
     <Price baseprice="150" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -68,7 +70,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.56x45_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45_phy" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy,rifle" impactsoundtag="impact_metal_light">
     <Price baseprice="225" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -102,8 +104,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_556x45_M995" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_M995" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,thu,rifle" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -137,8 +138,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_556x45_SSA_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_SSA_AP" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,tung,rifle" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -174,6 +174,82 @@
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_556x45_du" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,DU,rifle" impactsoundtag="impact_metal_light">
+    <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="574,9,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="569,163,58,89" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="556x45round_depleted_uranium" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+
+  <Item name="" identifier="deep_556x45_vhs" subcategory="deep_rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy,rifle" impactsoundtag="impact_metal_light">
+    <Price baseprice="225" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="physicorium" mincondition="0.95" outcondition="0.25" />
+      <Item identifier="copper" mincondition="0.95" outcondition="0.25" />
+      <Item identifier="plastic" outcondition="0.25" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,8,118,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="723,5,78,98" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="5.56x45round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -293,82 +369,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_vhs" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_phy_reload,556mag" impactsoundtag="impact_metal_light">
-    <Price baseprice="225" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
-      <RequiredSkill identifier="weapons" level="100" />
-      <RequiredItem identifier="physicorium" />
-      <RequiredItem identifier="gun_powder" />
-      <RequiredItem identifier="copper" />
-      <RequiredItem identifier="plastic" />
-    </Fabricate>
-    <Deconstruct time="10">
-      <Item identifier="physicorium" mincondition="0.95" outcondition="0.25" />
-      <Item identifier="copper" mincondition="0.95" outcondition="0.25" />
-      <Item identifier="plastic" outcondition="0.25" />
-    </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,8,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="723,5,78,98" origin="0.5,0.5" />
-    <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round_phy" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
-      </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
-      </StatusEffect>
-    </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
-    <Upgrade gameversion="0.10.0.0" scale="0.5" />
-  </Item>
-  <Item name="" identifier="deep_556x45_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_du_reload,556mag" impactsoundtag="impact_metal_light">
-    <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
-      <RequiredSkill identifier="weapons" level="70" />
-      <RequiredItem identifier="depletedfuel" />
-      <RequiredItem identifier="gun_powder" />
-      <RequiredItem identifier="fpgacircuit" />
-      <RequiredItem identifier="copper" />
-      <RequiredItem identifier="plastic" />
-    </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="574,9,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="569,163,58,89" origin="0.5,0.5" />
-    <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="556x45round_depleted_uranium" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-        <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
-      </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
-      </StatusEffect>
-    </ItemContainer>
-    <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
-    <Upgrade gameversion="0.10.0.0" scale="0.5" />
-  </Item>
-  <Item name="" identifier="deep_5.45x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_lead_reload,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.45x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="70" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -403,7 +404,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.45x39_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_tit_reload,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.45x39_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="140" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -438,7 +439,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.45x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_phy_reload,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.45x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="210" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -473,8 +474,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_545x39_BS" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_phy_ful_reload_4,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_545x39_BS" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="280" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -511,7 +511,7 @@
   </Item>
 
 
-  <Item name="" identifier="deep_5.45x39_103" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_tun_ful_reload,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.45x39_103" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -551,7 +551,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_545x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_du_reload,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_545x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -588,7 +588,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.45x39_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,drums_lead,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.45x39_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="140" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -626,7 +626,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_545x39_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,drums_tit,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_545x39_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="280" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -664,7 +664,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_545x39_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,drums_phy,545mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_545x39_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39" impactsoundtag="impact_metal_light">
     <Price baseprice="420" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -702,7 +702,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_762x39_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_lead_reload,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x39_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="70" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -737,7 +737,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_7.62x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_tit_reload,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_7.62x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="140" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -772,7 +772,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_7.62x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_phy_reload,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_7.62x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="210" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -808,7 +808,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762x39_BP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_phy_ful_reload_4,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x39_BP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -844,7 +844,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762x39_MAI_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_tun_ful_reload,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x39_MAI_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="375" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -886,7 +886,7 @@
   </Item>
 
 
-  <Item name="" identifier="deep_762x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_du_reload,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -923,7 +923,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_762_expansion_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,drums_lead,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762_expansion_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="140" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -962,7 +962,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,drums_tit,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1000,7 +1000,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_762_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,drums_phy,762mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39" impactsoundtag="impact_metal_light">
     <Price baseprice="420" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1038,7 +1038,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_7.62x51" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_tit_reload,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_7.62x51" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1073,7 +1073,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_7.62x51_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_phy_reload,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_7.62x51_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="255" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1109,7 +1109,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762x51_M61" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_phy_ful_reload_4,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_M61" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="340" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1145,7 +1145,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762x51_M993" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_tun_ful_reload,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_M993" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="425" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1186,7 +1186,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_762x51_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,drums_tit,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1224,7 +1224,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_762x51_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_du_reload,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1261,7 +1261,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_762x51_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,drums_phy,762_51mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51" impactsoundtag="impact_metal_light">
     <Price baseprice="510" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1299,7 +1299,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_12.7x55" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55,rifle_phy_reload,127_55mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_12.7x55" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1337,7 +1337,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_127x55_PS12B" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55,rifle_phy_ful_reload_4,127_55mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_127x55_PS12B" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1376,7 +1376,7 @@
   </Item>
 
 
-  <Item name="" identifier="deep_127x55_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55,rifle_du_reload,127_55mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_127x55_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55" impactsoundtag="impact_metal_light">
     <Price baseprice="230" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1416,7 +1416,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_tit_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="165" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1451,7 +1451,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_du_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="195" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1489,7 +1489,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_phy_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="250" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1524,7 +1524,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1559,7 +1559,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag" impactsoundtag="impact_metal_light">
     <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1599,7 +1599,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_fu_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_fu_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao" impactsoundtag="impact_metal_light">
     <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1634,7 +1634,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_qbz95_mag_ap_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_qbz95_mag_ap_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao" impactsoundtag="impact_metal_light">
     <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
