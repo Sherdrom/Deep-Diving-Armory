@@ -25,6 +25,18 @@ function Deep_Lua.Main.getArmor(character,targetlimb)
     local characterInv = character.Inventory                                    --Get character inv
     if characterInv == nil then return nil,nil end
     local targetinv = limbtoslot[targetlimb.type]                               --Get corresponding limb and its slot
+    
+    if targetlimb.type == LimbType.Head then
+        if characterInv.GetItemInLimbSlot(InvSlotType.OuterClothes) ~= nil then --2025/9/15 Update: Fixed an issue with bodyarmor covering head
+            local item = characterInv.GetItemInLimbSlot(InvSlotType.OuterClothes)
+            if Deep_Lua.Armors[item.Prefab.Identifier.Value] ~= nil then
+                if Deep_Lua.Armors[item.Prefab.Identifier.Value].protectionarea[LimbType.Head] then
+                    targetinv = limbtoslot[LimbType.Torso]
+                end
+            end
+        end
+    end
+
     if targetinv == nil then return nil,nil end
     local outeritem = characterInv.GetItemInLimbSlot(targetinv[1])              --Get outer cloth(item)
     if outeritem == nil then return nil,nil end
@@ -84,7 +96,7 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
         elseif data.type == "metal" then
             item.Condition = CaculateMetalDamage(item,affliction,data)
         else
-            item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
+            item.Condition = data.customexpression(item,affliction,data)                    --Require custom expression
         end
     end
 
