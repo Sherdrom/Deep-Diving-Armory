@@ -1,5 +1,3 @@
-local RemoveList = {}
-
 Hook.Add("Deep_RefreshItem", "Deep_RefreshItem",
     function(effect, deltaTime, item, targets, worldPosition)
         for olditem in targets do
