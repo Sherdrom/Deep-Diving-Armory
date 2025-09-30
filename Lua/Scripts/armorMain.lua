@@ -140,7 +140,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local afflictions = ptable["afflictions"]
     local penetrationlevel = math.floor((ptable["penetration"]+0.00001)*10)
     local targetcharacter = targetlimb.character
-    if not targetcharacter.IsHuman then return end
+    --if not targetcharacter.IsHuman then return end
     local outercloth,innerplate = Deep_Lua.Main.getArmor(targetcharacter,targetlimb)
     local outertargetid,innertargetid
     local clothdata, platedata = nil,nil
