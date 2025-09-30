@@ -1,11 +1,11 @@
+LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.ItemContainer"], "slotRestrictions")
+
 --[[
 Magazine Rework
 
 Ammotype tag:  CASE SENSITIVE
 lead,ti,phy,thu,tung,DU,cop
   0  1   2   3   4   5   6
-magazine type tag:  CASE SENSITIVE
-rifle,smg,pistol,drum,mg
 
 ]]
 
@@ -19,8 +19,7 @@ local ammotype = {
     ["cop"] = 6,
 }
 
-local totalslots = 8
-local slots = totalslots / 2
+
 local ActiveMachines = {}
 
 local function identifyAmmoType(item)
@@ -32,12 +31,11 @@ end
 
 Hook.Add("Deep_UpdateReloadMachine", "Deep_UpdateReloadMachine",
     function(effect, deltaTime, item, targets, worldPosition)
-        ActiveMachines[item] = {
-            identifyAmmoType(item.OwnInventory.GetItemAt(0)),
-            identifyAmmoType(item.OwnInventory.GetItemAt(1)),
-            identifyAmmoType(item.OwnInventory.GetItemAt(2)),
-            identifyAmmoType(item.OwnInventory.GetItemAt(3))
-        }
+        local slotrestrictions = item.OwnInventory.SlotRestrictions
+        local availableammo = {}
+        for index = 0, #slotrestrictions / 2, 1 do
+            availableammo[index] = identifyAmmoType(item.OwnInventory.GetItemAt(index))
+        end
     end
 )
 
