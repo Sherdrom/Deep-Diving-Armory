@@ -4,26 +4,29 @@
 ---@class System.Reflection.MemberInfo : System.Object
 ---@class System.ValueType : System.Object
 ---@class System.Char : System.ValueType
+---@class System.Byte-ref
+---@class System.IntPtr : System.ValueType
+---@class System.Byte-ptr
+---@class System.Text.Encoding : System.Object
 ---@class System.StringComparison : System.Enum
 ---@class System.Enum : System.ValueType
 ---@class System.Globalization.CultureInfo : System.Object
----@class System.Globalization.CompareInfo : System.Object
 ---@class System.Globalization.CompareOptions : System.Enum
 ---@class System.ReadOnlySpan*1System*Char : System.ValueType, {[System.Int32]:System.Char-ref}
----@class System.ReadOnlySpan*1System*Int32 : System.ValueType, {[System.Int32]:System.Int32-ref}
----@class System.Int32-ref
----@class System.StringSplitOptions : System.Enum
----@class System.String-arr : System.Array
----@class System.Array : System.Object, {[System.Int32]:System.Object}
 ---@class System.Char-arr : System.Array
----@class System.Collections.Generic.ValueListBuilder
----@class System.Text.TrimType : System.Enum
+---@class System.Array : System.Object, {[System.Int32]:System.Object}
 ---@class System.Char-ptr
----@class System.UInt32-ptr
----@class System.Char-ref
----@class System.Byte-ptr
----@class System.Text.Encoding : System.Object
+---@class System.SByte-ptr
+---@class System.String.TState : System.Object
+---@class System.Buffers.SpanAction*1System*Char*1System*String*TState : System.MulticastDelegate
+---@class System.MulticastDelegate : System.Delegate
+---@class System.Delegate : System.Object
+---@class System.Span*1System*Char : System.ValueType, {[System.Int32]:System.Char-ref}
 ---@class System.IFormatProvider
+---@class System.Runtime.CompilerServices.DefaultInterpolatedStringHandler-ref
+---@class System.ReadOnlySpan
+---@class System.Char-ref
+---@class System.UInt16-ref
 ---@class System.CharEnumerator : System.Object
 ---@class System.Text.StringRuneEnumerator : System.ValueType
 ---@class System.TypeCode : System.Enum
@@ -32,7 +35,18 @@
 ---@class System.Collections.Generic.IEnumerable*1System*String*T
 ---@class System.String.T : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*String
----@class System.ParamsArray : System.ValueType, {[System.Int32]:System.Object}
+---@class System.String-arr : System.Array
+---@class System.Text.CompositeFormat : System.Object
+---@class System.String.TArg0 : System.Object
+---@class System.String.TArg0 : System.Object
+---@class System.String.TArg1 : System.Object
+---@class System.String.TArg0 : System.Object
+---@class System.String.TArg1 : System.Object
+---@class System.String.TArg2 : System.Object
+---@class System.ReadOnlySpan*1System*Object : System.ValueType, {[System.Int32]:System.Object-ref}
+---@class System.String.TArg0 : System.Object
+---@class System.String.TArg1 : System.Object
+---@class System.String.TArg2 : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*String*T
 ---@class System.String.T : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*String*T
@@ -40,28 +54,92 @@
 ---@class System.Collections.Generic.IEnumerable*1System*String*T
 ---@class System.String.T : System.Object
 ---@class System.ReadOnlySpan*1System*String : System.ValueType, {[System.Int32]:System.String-ref}
----@class System.Byte-ref
----@class System.IntPtr : System.ValueType
----@class System.SByte-ptr
----@class System.String.TState : System.Object
----@class System.Buffers.SpanAction*1System*Char*1System*String*TState : System.MulticastDelegate
----@class System.MulticastDelegate : System.Delegate
----@class System.Delegate : System.Object
----@class System.Span*1System*Char : System.ValueType, {[System.Int32]:System.Char-ref}
----@class System.Runtime.CompilerServices.DefaultInterpolatedStringHandler-ref
----@class System.ReadOnlySpan
+---@class System.Globalization.CompareInfo : System.Object
+---@class System.ReadOnlySpan*1System*Int32 : System.ValueType, {[System.Int32]:System.Int32-ref}
+---@class System.Int32-ref
+---@class System.StringSplitOptions : System.Enum
+---@class System.Collections.Generic.ValueListBuilder
+---@class System.Text.TrimType : System.Enum
 ---@class System.Boolean-ref
+---@class System.Span*1System*Byte : System.ValueType, {[System.Int32]:System.Byte-ref}
 ---@class System.Globalization.NumberStyles : System.Enum
----@class System.Globalization.NumberFormatInfo : System.Object
+---@class System.ReadOnlySpan*1System*Byte : System.ValueType, {[System.Int32]:System.Byte-ref}
 ---@class System.SByte-ref
+---@class System.ValueTuple*1System*SByte*1System*SByte : System.ValueType, {[System.Int32]:System.Object}
+---@class System.SByte.TOther : System.Object
+---@class System.SByte.TOther : System.Object
+---@class System.SByte.TOther : System.Object
+---@class System.SByte.TOther : System.Object
+---@class System.SByte.TOther : System.Object
+---@class System.SByte.TOther : System.Object
+---@class System.ValueTuple*1System*Byte*1System*Byte : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Byte.TOther : System.Object
+---@class System.Byte.TOther : System.Object
+---@class System.Byte.TOther : System.Object
+---@class System.Byte.TOther : System.Object
+---@class System.Byte.TOther : System.Object
+---@class System.Byte.TOther : System.Object
 ---@class System.Int16-ref
----@class System.UInt16-ref
+---@class System.ValueTuple*1System*Int16*1System*Int16 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Int16.TOther : System.Object
+---@class System.Int16.TOther : System.Object
+---@class System.Int16.TOther : System.Object
+---@class System.Int16.TOther : System.Object
+---@class System.Int16.TOther : System.Object
+---@class System.Int16.TOther : System.Object
+---@class System.ValueTuple*1System*UInt16*1System*UInt16 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.UInt16.TOther : System.Object
+---@class System.UInt16.TOther : System.Object
+---@class System.UInt16.TOther : System.Object
+---@class System.UInt16.TOther : System.Object
+---@class System.UInt16.TOther : System.Object
+---@class System.UInt16.TOther : System.Object
+---@class System.ValueTuple*1System*Int32*1System*Int32 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Int32.TOther : System.Object
+---@class System.Int32.TOther : System.Object
+---@class System.Int32.TOther : System.Object
+---@class System.Int32.TOther : System.Object
+---@class System.Int32.TOther : System.Object
 ---@class System.Int32.TOther : System.Object
 ---@class System.UInt32-ref
+---@class System.ValueTuple*1System*UInt32*1System*UInt32 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.UInt32.TOther : System.Object
+---@class System.UInt32.TOther : System.Object
+---@class System.UInt32.TOther : System.Object
+---@class System.UInt32.TOther : System.Object
+---@class System.UInt32.TOther : System.Object
+---@class System.UInt32.TOther : System.Object
 ---@class System.Int64-ref
+---@class System.ValueTuple*1System*Int64*1System*Int64 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Int64.TOther : System.Object
+---@class System.Int64.TOther : System.Object
+---@class System.Int64.TOther : System.Object
+---@class System.Int64.TOther : System.Object
+---@class System.Int64.TOther : System.Object
+---@class System.Int64.TOther : System.Object
 ---@class System.UInt64-ref
+---@class System.ValueTuple*1System*UInt64*1System*UInt64 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.UInt64.TOther : System.Object
+---@class System.UInt64.TOther : System.Object
+---@class System.UInt64.TOther : System.Object
+---@class System.UInt64.TOther : System.Object
+---@class System.UInt64.TOther : System.Object
+---@class System.UInt64.TOther : System.Object
 ---@class System.Single-ref
+---@class System.MidpointRounding : System.Enum
+---@class System.Single.TOther : System.Object
+---@class System.Single.TOther : System.Object
+---@class System.Single.TOther : System.Object
+---@class System.Single.TOther : System.Object
+---@class System.TOther-ref
+---@class System.ValueTuple*1System*Single*1System*Single : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Double-ref
+---@class System.Double.TOther : System.Object
+---@class System.Double.TOther : System.Object
+---@class System.Double.TOther : System.Object
+---@class System.Double.TOther : System.Object
+---@class System.TOther-ref
+---@class System.ValueTuple*1System*Double*1System*Double : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Globalization.TimeSpanStyles : System.Enum
 ---@class System.TimeSpan-ref
 ---@class System.IO.TextReader : System.MarshalByRefObject
@@ -73,11 +151,10 @@
 ---@class System.Runtime.InteropServices.PosixSignalRegistration : System.Object
 ---@class System.Runtime.CompilerServices.StrongBox*1System*Boolean : System.Object
 ---@class System.ConsoleColor : System.Enum
----@class System.Decimal : System.ValueType
----@class System.Runtime.InteropServices.PosixSignalContext : System.Object
 ---@class System.ConsoleKeyInfo : System.ValueType
 ---@class System.IO.Stream : System.MarshalByRefObject
----@class System.ValueTuple*1System*Int32*1System*Int32 : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Decimal : System.ValueType
+---@class System.Runtime.InteropServices.PosixSignalContext : System.Object
 ---@class System.Reflection.MethodBase : System.Reflection.MemberInfo
 ---@class System.Collections.IDictionary : {[System.Object]:System.Object}
 ---@class System.Byte-arr : System.Array
@@ -92,13 +169,13 @@
 ---@class System.Exception.DispatchState : System.ValueType
 ---@class System.Runtime.Serialization.SerializationInfo : System.Object
 ---@class Microsoft.Xna.Framework.Matrix-ref
----@class System.Single-arr : System.Array
 ---@class System.Nullable*1Microsoft*Xna*Framework*Vector3 : System.ValueType
 ---@class Microsoft.Xna.Framework.Vector3-ref
 ---@class Microsoft.Xna.Framework.Quaternion : System.ValueType
 ---@class Microsoft.Xna.Framework.Quaternion-ref
 ---@class Microsoft.Xna.Framework.Plane : System.ValueType
 ---@class Microsoft.Xna.Framework.Plane-ref
+---@class System.Single-arr : System.Array
 ---@class Microsoft.Xna.Framework.Vector2-ref
 ---@class Microsoft.Xna.Framework.Vector2-arr : System.Array
 ---@class Microsoft.Xna.Framework.Vector3-arr : System.Array
@@ -361,21 +438,13 @@
 ---@class System.Collections.Generic.List*1Microsoft*Xna*Framework*Vector2-arr : System.Object, {[System.Int32]:(Microsoft.Xna.Framework.Vector2-arr)|(Microsoft.Xna.Framework.Vector2[])}, {[System.Int32]:System.Object}
 ---@class System.Nullable*1Microsoft*Xna*Framework*Rectangle : System.ValueType
 ---@class System.Collections.Generic.List*1Microsoft*Xna*Framework*Rectangle : System.Object, {[System.Int32]:Microsoft.Xna.Framework.Rectangle}, {[System.Int32]:System.Object}
----@class System.Double-arr : System.Array
----@class System.MidpointRounding : System.Enum
----@class System.Math.T : System.Object
----@class System.ValueTuple*1System*Double*1System*Double : System.ValueType, {[System.Int32]:System.Object}
+---@class Microsoft.Xna.Framework.Vector2[,] : System.Array
+---@class System.ReadOnlySpan*1System*Double : System.ValueType, {[System.Int32]:System.Double-ref}
 ---@class System.Double-ptr
----@class System.ValueTuple*1System*SByte*1System*SByte : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*Byte*1System*Byte : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*Int16*1System*Int16 : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*UInt16*1System*UInt16 : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*UInt32*1System*UInt32 : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*Int64*1System*Int64 : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*UInt64*1System*UInt64 : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.ValueTuple*1System*IntPtr*1System*IntPtr : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.ValueTuple*1System*UIntPtr*1System*UIntPtr : System.ValueType, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*Single*1System*Single : System.ValueType, {[System.Int32]:System.Object}
+---@class System.Math.T : System.Object
+---@class System.ReadOnlySpan*1System*Single : System.ValueType, {[System.Int32]:System.Single-ref}
 ---@class System.Single-ptr
 ---@class System.Collections.Generic.Queue*1System*Double : System.Object
 ---@class System.Collections.Generic.Dictionary*1System*String*1System*Collections*Generic*Queue*2System*Int64 : System.Object, {[System.String]:(System.Collections.Generic.Queue*1System*Int64)|(fun():(System.Int64))}, {[System.Object]:System.Object}
@@ -434,6 +503,8 @@
 ---@class Barotrauma.TextManager.SpeciallyHandledCharCategory : System.Enum
 ---@class System.Collections.Immutable.ImmutableDictionary*1Barotrauma*TextManager*SpeciallyHandledCharCategory*1System*Collections*Immutable*ImmutableArray*2Barotrauma*Range*3System*Int32 : System.Object, {[Barotrauma.TextManager.SpeciallyHandledCharCategory]:(System.Collections.Immutable.ImmutableArray*1Barotrauma*Range*2System*Int32)|(Barotrauma.Range*1System*Int32[])}, {[Barotrauma.TextManager.SpeciallyHandledCharCategory]:(System.Collections.Immutable.ImmutableArray*1Barotrauma*Range*2System*Int32)|(Barotrauma.Range*1System*Int32[])}, {[System.Object]:System.Object}
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*Range*2System*Int32 : System.ValueType, {[System.Int32]:Barotrauma.Range*1System*Int32}, {[System.Int32]:Barotrauma.Range*1System*Int32}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.Range*1System*Int32}
+---@class System.Collections.Generic.Dictionary*1System*String*1Barotrauma*TextManager*CachedCategory : System.Object, {[System.String]:Barotrauma.TextManager.CachedCategory}, {[System.Object]:System.Object}
+---@class Barotrauma.TextManager.CachedCategory : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*LanguageIdentifier
 ---@class System.Text.Unicode.UnicodeRange-arr : System.Array
 ---@class System.Text.Unicode.UnicodeRange : System.Object
@@ -460,8 +531,7 @@
 ---@class System.UInt16-arr : System.Array
 ---@class System.Net.Sockets.AddressFamily : System.Enum
 ---@class System.Net.IPAddress-ref
----@class System.Span*1System*Byte : System.ValueType, {[System.Int32]:System.Byte-ref}
----@class System.ReadOnlySpan*1System*Byte : System.ValueType, {[System.Int32]:System.Byte-ref}
+---@class System.Span*1System*Net*IPAddress*TChar : System.ValueType, {[System.Int32]:System.Net.TChar-ref}
 ---@class System.ReadOnlySpan*1System*UInt16 : System.ValueType, {[System.Int32]:System.UInt16-ref}
 ---@class Barotrauma.Option*1Barotrauma*Networking*Address : System.ValueType
 ---@class Barotrauma.Option*1Barotrauma*Networking*LidgrenAddress : System.ValueType
@@ -481,10 +551,14 @@
 ---@class Barotrauma.Result*1Barotrauma*ContentFile*1Barotrauma*ContentPackage*LoadError : System.Object
 ---@class System.Action*1Barotrauma*Sprite : System.MulticastDelegate
 ---@class Barotrauma.Option*1Barotrauma*SerializableDateTime : System.ValueType
+---@class System.Collections.Generic.HashSet*1Steamworks*Data*PublishedFileId : System.Object
+---@class Barotrauma.ContentPackage.UgcStatus : System.Enum
+---@class Barotrauma.Option*1Steamworks*Ugc*Item : System.ValueType
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*ContentFile : System.ValueType, {[System.Int32]:Barotrauma.ContentFile}, {[System.Int32]:Barotrauma.ContentFile}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.ContentFile}
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*ContentPackage*LoadError : System.ValueType, {[System.Int32]:Barotrauma.ContentPackage.LoadError}, {[System.Int32]:Barotrauma.ContentPackage.LoadError}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.ContentPackage.LoadError}
 ---@class Barotrauma.ContentPackage.LoadError : System.ValueType
 ---@class Barotrauma.Option*1Barotrauma*ContentPackageManager*LoadProgress*Error : System.ValueType
+---@class System.Collections.Generic.IEnumerable*1Steamworks*Data*PublishedFileId
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*ContentPackage*T
 ---@class Barotrauma.ContentPackage.T : Barotrauma.ContentFile
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*ContentFile
@@ -492,6 +566,10 @@
 ---@class Barotrauma.ContentPackage.LoadResult : System.Enum
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*ContentPackageManager*LoadProgress
 ---@class Barotrauma.ContentPackageManager.LoadProgress : System.ValueType
+---@class System.Action*1System*String : System.MulticastDelegate
+---@class System.Action*1Steamworks*Data*PublishedFileId-arr : System.MulticastDelegate
+---@class System.Action*1System*Nullable*2Steamworks*Ugc*Item : System.MulticastDelegate
+---@class System.Nullable*1Steamworks*Ugc*Item : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*CorePackage
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*RegularPackage
 ---@class System.Predicate*1System*String : System.MulticastDelegate
@@ -503,7 +581,9 @@
 ---@class System.Collections.Generic.IReadOnlyCollection*1Barotrauma*ContentPackage
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*ContentXElement
 ---@class System.Collections.Generic.IEnumerable*1System*Xml*Linq*XAttribute
+---@class System.Nullable*1System*Int32 : System.ValueType, integer
 ---@class System.Int32-arr : System.Array
+---@class System.Nullable*1System*Single : System.ValueType, number
 ---@class Microsoft.Xna.Framework.Color-ref
 ---@class Microsoft.Xna.Framework.Color-arr : System.Array
 ---@class Barotrauma.T-ref
@@ -582,12 +662,12 @@
 ---@class System.ValueTuple*1Barotrauma*XMLExtensions*T1*1Barotrauma*XMLExtensions*T2 : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Func*1System*Xml*Linq*XAttribute*1System*Boolean : System.MulticastDelegate
 ---@class System.Xml.XmlNodeType : System.Enum
----@class System.Xml.Linq.LoadOptions : System.Enum
 ---@class System.Threading.Tasks.Task*1System*Xml*Linq*XElement : System.Threading.Tasks.Task
 ---@class System.Xml.Linq.SaveOptions : System.Enum
 ---@class System.Xml.XmlWriter : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*Xml*Linq*XNode
 ---@class System.Xml.Linq.XNamespace : System.Object
+---@class System.Xml.Linq.LoadOptions : System.Enum
 ---@class System.Xml.Linq.XStreamingElement : System.Object
 ---@class System.Xml.Linq.XElement.AsyncConstructionSentry : System.ValueType
 ---@class System.Text.StringBuilder : System.Object, {[System.Int32]:System.Char}
@@ -624,8 +704,6 @@
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Networking*ServerLog*MessageType*1System*String : System.Object, {[Barotrauma.Networking.ServerLog.MessageType]:System.String}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.Queue*1Barotrauma*Networking*ServerLog*LogMessage : System.Object
 ---@class Barotrauma.Networking.ServerLog.LogMessage : System.ValueType
----@class System.Boolean-arr : System.Array
----@class System.Nullable*1System*Single : System.ValueType, number
 ---@class Barotrauma.WorldHostilityOption : System.Enum
 ---@class Barotrauma.PropertyConditional.LogicalOperatorType : System.Enum
 ---@class System.Predicate*1System*Xml*Linq*XAttribute : System.MulticastDelegate
@@ -706,8 +784,11 @@
 ---@class System.Collections.Generic.List*1Barotrauma*Mission : System.Object, {[System.Int32]:Barotrauma.Mission}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Option*2Barotrauma*Networking*AccountId*1System*Int32 : System.Object, {[Barotrauma.Option*1Barotrauma*Networking*AccountId]:System.Int32}, {[System.Object]:System.Object}
 ---@class System.Nullable*1Barotrauma*CharacterTeamType : System.ValueType
+---@class System.Collections.Generic.HashSet*1System*ValueTuple*2Barotrauma*CharacterTeamType*2Barotrauma*Identifier : System.Object
+---@class System.ValueTuple*1Barotrauma*CharacterTeamType*1Barotrauma*Identifier : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Mission
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Character
+---@class System.Collections.Generic.IEnumerable*1System*ValueTuple*2Barotrauma*CharacterTeamType*2Barotrauma*Identifier
 ---@class Barotrauma.CampaignDataPath : System.ValueType
 ---@class Barotrauma.CampaignSettings : System.Object
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*MissionPrefab
@@ -719,7 +800,6 @@
 ---@class System.Collections.Generic.IList*1System*String : {[System.Int32]:System.String}
 ---@class Barotrauma.Option*1Barotrauma*SubmarineInfo : System.ValueType
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Identifier*1System*Object : System.Object, {[Barotrauma.Identifier]:System.Object}, {[System.Object]:System.Object}
----@class System.Nullable*1System*Int32 : System.ValueType, integer
 ---@class System.Func*1Barotrauma*AfflictionPrefab*1System*Boolean : System.MulticastDelegate
 ---@class Barotrauma.FactionAffiliation : System.Enum
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*FactionPrefab*HireableCharacter : System.ValueType, {[System.Int32]:Barotrauma.FactionPrefab.HireableCharacter}, {[System.Int32]:Barotrauma.FactionPrefab.HireableCharacter}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.FactionPrefab.HireableCharacter}
@@ -811,15 +891,17 @@
 ---@class System.Collections.Generic.List*1Barotrauma*Mission*DelayedTriggerEvent : System.Object, {[System.Int32]:Barotrauma.Mission.DelayedTriggerEvent}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Mission.DelayedTriggerEvent : System.Object
 ---@class System.Action*1Barotrauma*Mission : System.MulticastDelegate
+---@class System.Collections.Generic.Dictionary*1Barotrauma*Character*1System*Collections*Generic*List*2Barotrauma*Item : System.Object, {[Barotrauma.Character]:(System.Collections.Generic.List*1Barotrauma*Item)|(Barotrauma.Item[])}, {[System.Object]:System.Object}
 ---@class System.Collections.Immutable.ImmutableList*1Barotrauma*MissionPrefab*ReputationReward : System.Object, {[System.Int32]:Barotrauma.MissionPrefab.ReputationReward}, {[System.Int32]:Barotrauma.MissionPrefab.ReputationReward}, {[System.Int32]:Barotrauma.MissionPrefab.ReputationReward}, {[System.Int32]:System.Object}
 ---@class Barotrauma.MissionPrefab.ReputationReward : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*ValueTuple*2Barotrauma*LocalizedString*2Microsoft*Xna*Framework*Vector2
 ---@class System.ValueTuple*1Barotrauma*LocalizedString*1Microsoft*Xna*Framework*Vector2 : System.ValueType, {[System.Int32]:System.Object}
 ---@class Barotrauma.MTRandom : System.Random
+---@class Barotrauma.SpawnAction.SpawnLocationType : System.Enum
 ---@class Barotrauma.MissionPrefab.TriggerEvent : System.Object
 ---@class Barotrauma.Option*1System*Int32 : System.ValueType
 ---@class System.ValueTuple*1System*Int32*1System*Int32*1System*Single : System.ValueType, {[System.Int32]:System.Object}
----@class System.Collections.Generic.Dictionary*1Barotrauma*Character*1System*Collections*Generic*List*2Barotrauma*Item : System.Object, {[Barotrauma.Character]:(System.Collections.Generic.List*1Barotrauma*Item)|(Barotrauma.Item[])}, {[System.Object]:System.Object}
+---@class System.Func*1Barotrauma*SubmarineInfo*1System*Boolean : System.MulticastDelegate
 ---@class System.Reflection.ConstructorInfo : System.Reflection.MethodBase
 ---@class System.Collections.Generic.List*1System*ValueTuple*2Barotrauma*Identifier*2System*Object*2Barotrauma*SetDataAction*OperationType : System.Object, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1System*Object*1Barotrauma*SetDataAction*OperationType}, {[System.Int32]:System.Object}
 ---@class System.ValueTuple*1Barotrauma*Identifier*1System*Object*1Barotrauma*SetDataAction*OperationType : System.ValueType, {[System.Int32]:System.Object}
@@ -838,6 +920,7 @@
 ---@class System.Collections.Generic.List*1System*ValueTuple*2Barotrauma*ContentXElement*2Barotrauma*Items*Components*ItemContainer : System.Object, {[System.Int32]:System.ValueTuple*1Barotrauma*ContentXElement*1Barotrauma*Items*Components*ItemContainer}, {[System.Int32]:System.Object}
 ---@class System.ValueTuple*1Barotrauma*ContentXElement*1Barotrauma*Items*Components*ItemContainer : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*CargoMission : System.Object, {[System.Int32]:Barotrauma.CargoMission}, {[System.Int32]:System.Object}
+---@class System.Boolean-arr : System.Array
 ---@class System.Collections.Generic.List : System.Array
 ---@class System.Collections.Generic.List*1Barotrauma*CombatMission*KillCount : System.Object, {[System.Int32]:Barotrauma.CombatMission.KillCount}, {[System.Int32]:System.Object}
 ---@class Barotrauma.CombatMission.KillCount : System.Object
@@ -939,6 +1022,7 @@
 ---@class System.Action*1Barotrauma*LocationConnection*1System*Collections*Generic*IEnumerable*2Barotrauma*Mission : System.MulticastDelegate
 ---@class Barotrauma.NamedEvent*1Barotrauma*Map*LocationChangeInfo : System.Object
 ---@class System.Collections.Generic.List*1Barotrauma*Location : System.Object, {[System.Int32]:Barotrauma.Location}, {[System.Int32]:System.Object}
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*Biome
 ---@class System.Collections.Generic.IReadOnlyList*1Barotrauma*Location : {[System.Int32]:Barotrauma.Location}
 ---@class System.Collections.Generic.List*1Barotrauma*LocationConnection : System.Object, {[System.Int32]:Barotrauma.LocationConnection}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.IEnumerable*1System*Int32
@@ -951,11 +1035,12 @@
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*Sprite : System.ValueType, {[System.Int32]:Barotrauma.Sprite}, {[System.Int32]:Barotrauma.Sprite}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.Sprite}
 ---@class System.Collections.Immutable.ImmutableArray*1System*ValueTuple*2Barotrauma*Identifier*2System*Single*2System*Boolean : System.ValueType, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1System*Single*1System*Boolean}, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1System*Single*1System*Boolean}, {[System.Int32]:System.Object}, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1System*Single*1System*Boolean}
 ---@class System.ValueTuple*1Barotrauma*Identifier*1System*Single*1System*Boolean : System.ValueType, {[System.Int32]:System.Object}
----@class System.Collections.Generic.Dictionary*1System*Int32*1System*Single : System.Object, {[System.Int32]:System.Single}, {[System.Object]:System.Object}
----@class System.Collections.Generic.Dictionary*1System*Int32*1System*Int32 : System.Object, {[System.Int32]:System.Int32}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*LocationTypeChange : System.Object, {[System.Int32]:Barotrauma.LocationTypeChange}, {[System.Int32]:System.Object}
+---@class System.Collections.Generic.List*1Barotrauma*LocationType*AreaSettingData : System.Object, {[System.Int32]:Barotrauma.LocationType.AreaSettingData}, {[System.Int32]:System.Object}
+---@class Barotrauma.LocationType.AreaSettingData : System.Object
 ---@class System.Nullable*1System*Collections*Immutable*ImmutableArray*2Barotrauma*Identifier : System.ValueType
 ---@class System.Nullable*1System*Collections*Immutable*ImmutableArray*2System*String : System.ValueType
+---@class Barotrauma.LocationType.BiomeGateSetting : System.Enum
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*JobPrefab
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Location
 ---@class System.Func*1Barotrauma*LocationType*1System*Boolean : System.MulticastDelegate
@@ -991,6 +1076,8 @@
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*EventSet*SubEventPrefab : System.ValueType, {[System.Int32]:Barotrauma.EventSet.SubEventPrefab}, {[System.Int32]:Barotrauma.EventSet.SubEventPrefab}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.EventSet.SubEventPrefab}
 ---@class Barotrauma.EventSet.SubEventPrefab : System.ValueType
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*EventSet : System.ValueType, {[System.Int32]:Barotrauma.EventSet}, {[System.Int32]:Barotrauma.EventSet}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.EventSet}
+---@class System.Collections.Generic.Dictionary*1Barotrauma*Identifier*1Barotrauma*EventPrefab : System.Object, {[Barotrauma.Identifier]:Barotrauma.EventPrefab}, {[System.Object]:System.Object}
+---@class System.Collections.Generic.IEnumerable*1Barotrauma*EventPrefab
 ---@class System.Func*1Barotrauma*MonsterEvent*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.IReadOnlyList*1Barotrauma*Character : {[System.Int32]:Barotrauma.Character}
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Identifier*1System*Collections*Generic*List*2Barotrauma*ScriptedEvent*TargetPredicate : System.Object, {[Barotrauma.Identifier]:(System.Collections.Generic.List*1Barotrauma*ScriptedEvent*TargetPredicate)|(Barotrauma.ScriptedEvent.TargetPredicate[])}, {[System.Object]:System.Object}
@@ -1033,6 +1120,7 @@
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*ItemPrefab : System.ValueType
 ---@class System.Collections.Generic.HashSet*1Barotrauma*ContentFile : System.Object
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*ItemPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*ItemPrefab
 ---@class Barotrauma.ItemPrefab-ref
 ---@class System.Predicate*1Barotrauma*ItemPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*ItemPrefab
@@ -1041,6 +1129,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*JobPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*JobPrefab)|(fun():(Barotrauma.JobPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*JobPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*JobPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*JobPrefab
 ---@class Barotrauma.JobPrefab-ref
 ---@class System.Predicate*1Barotrauma*JobPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*JobPrefab
@@ -1049,6 +1138,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*CharacterPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*CharacterPrefab)|(fun():(Barotrauma.CharacterPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*CharacterPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*CharacterPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*CharacterPrefab
 ---@class Barotrauma.CharacterPrefab-ref
 ---@class System.Predicate*1Barotrauma*CharacterPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*CharacterPrefab
@@ -1057,6 +1147,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*HumanPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*HumanPrefab)|(fun():(Barotrauma.HumanPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*HumanPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*HumanPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*HumanPrefab
 ---@class Barotrauma.HumanPrefab-ref
 ---@class System.Predicate*1Barotrauma*HumanPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*HumanPrefab
@@ -1065,6 +1156,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*AfflictionPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*AfflictionPrefab)|(fun():(Barotrauma.AfflictionPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*AfflictionPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*AfflictionPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*AfflictionPrefab
 ---@class Barotrauma.AfflictionPrefab-ref
 ---@class System.Predicate*1Barotrauma*AfflictionPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*AfflictionPrefab
@@ -1073,6 +1165,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*TalentPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*TalentPrefab)|(fun():(Barotrauma.TalentPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*TalentPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*TalentPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*TalentPrefab
 ---@class Barotrauma.TalentPrefab-ref
 ---@class System.Predicate*1Barotrauma*TalentPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*TalentPrefab
@@ -1081,6 +1174,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*TalentTree : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*TalentTree)|(fun():(Barotrauma.TalentTree))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*TalentTree : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*TalentTree
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*TalentTree
 ---@class Barotrauma.TalentTree-ref
 ---@class System.Predicate*1Barotrauma*TalentTree : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*TalentTree
@@ -1089,6 +1183,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*OrderPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*OrderPrefab)|(fun():(Barotrauma.OrderPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*OrderPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*OrderPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*OrderPrefab
 ---@class Barotrauma.OrderPrefab-ref
 ---@class System.Predicate*1Barotrauma*OrderPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*OrderPrefab
@@ -1097,6 +1192,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*LevelGenerationParams : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*LevelGenerationParams)|(fun():(Barotrauma.LevelGenerationParams))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*LevelGenerationParams : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*LevelGenerationParams
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*LevelGenerationParams
 ---@class Barotrauma.LevelGenerationParams-ref
 ---@class System.Predicate*1Barotrauma*LevelGenerationParams : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*LevelGenerationParams
@@ -1105,6 +1201,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*LocationType : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*LocationType)|(fun():(Barotrauma.LocationType))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*LocationType : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*LocationType
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*LocationType
 ---@class Barotrauma.LocationType-ref
 ---@class System.Predicate*1Barotrauma*LocationType : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*LocationType
@@ -1113,6 +1210,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*EventPrefab : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*EventPrefab)|(fun():(Barotrauma.EventPrefab))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*EventPrefab : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*EventPrefab
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*EventPrefab
 ---@class Barotrauma.EventPrefab-ref
 ---@class System.Predicate*1Barotrauma*EventPrefab : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*EventPrefab
@@ -1121,6 +1219,7 @@
 ---@class System.Collections.Concurrent.ConcurrentDictionary*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*EventSet : System.Object, {[Barotrauma.Identifier]:(Barotrauma.PrefabSelector*1Barotrauma*EventSet)|(fun():(Barotrauma.EventSet))}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Identifier*1Barotrauma*PrefabSelector*2Barotrauma*EventSet : System.ValueType
 ---@class System.Collections.Generic.IEnumerable*1System*Collections*Generic*KeyValuePair*2Barotrauma*Identifier*2Barotrauma*PrefabSelector*3Barotrauma*EventSet
+---@class System.Linq.IOrderedEnumerable*1Barotrauma*EventSet
 ---@class Barotrauma.EventSet-ref
 ---@class System.Predicate*1Barotrauma*EventSet : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*EventSet
@@ -1135,6 +1234,7 @@
 ---@class System.Collections.Generic.List*1Barotrauma*SkillSettings : System.Object, {[System.Int32]:Barotrauma.SkillSettings}, {[System.Int32]:System.Object}
 ---@class System.Action*1Barotrauma*SkillSettings : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerator*1Barotrauma*SkillSettings
+---@class Barotrauma.BotStatus : System.Enum
 ---@class System.Collections.Generic.List*1Barotrauma*WearableSprite : System.Object, {[System.Int32]:Barotrauma.WearableSprite}, {[System.Int32]:System.Object}
 ---@class System.Collections.Immutable.ImmutableArray*1System*ValueTuple*2Microsoft*Xna*Framework*Color*2System*Single : System.ValueType, {[System.Int32]:System.ValueTuple*1Microsoft*Xna*Framework*Color*1System*Single}, {[System.Int32]:System.ValueTuple*1Microsoft*Xna*Framework*Color*1System*Single}, {[System.Int32]:System.Object}, {[System.Int32]:System.ValueTuple*1Microsoft*Xna*Framework*Color*1System*Single}
 ---@class System.ValueTuple*1Microsoft*Xna*Framework*Color*1System*Single : System.ValueType, {[System.Int32]:System.Object}
@@ -1144,13 +1244,13 @@
 ---@class System.Collections.Immutable.ImmutableDictionary*1Barotrauma*Identifier*1Barotrauma*StatTypes : System.Object, {[Barotrauma.Identifier]:Barotrauma.StatTypes}, {[Barotrauma.Identifier]:Barotrauma.StatTypes}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*Order : System.Object, {[System.Int32]:Barotrauma.Order}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.IReadOnlyList*1Barotrauma*ContentXElement : {[System.Int32]:Barotrauma.ContentXElement}
+---@class System.Nullable*1Barotrauma*WearableType : System.ValueType
+---@class System.Collections.Immutable.ImmutableArray
+---@class System.Collections.Generic.IEnumerable*1System*Single
 ---@class Barotrauma.Order-arr : System.Array
 ---@class System.Collections.Generic.List*1Barotrauma*LinkedSubmarine : System.Object, {[System.Int32]:Barotrauma.LinkedSubmarine}, {[System.Int32]:System.Object}
 ---@class Barotrauma.LinkedSubmarine : Barotrauma.MapEntity
 ---@class System.Collections.Generic.IReadOnlyCollection*1Barotrauma*Character
----@class System.Nullable*1Barotrauma*WearableType : System.ValueType
----@class System.Collections.Immutable.ImmutableArray
----@class System.Collections.Generic.IEnumerable*1System*Single
 ---@class Barotrauma.Either*1Barotrauma*Job*1Barotrauma*JobPrefab : System.Object
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*CharacterInfo*HeadPreset : System.ValueType, {[System.Int32]:Barotrauma.CharacterInfo.HeadPreset}, {[System.Int32]:Barotrauma.CharacterInfo.HeadPreset}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.CharacterInfo.HeadPreset}
 ---@class System.Collections.Immutable.ImmutableDictionary*1Barotrauma*Identifier*1System*Collections*Immutable*ImmutableHashSet*2Barotrauma*Identifier : System.Object, {[Barotrauma.Identifier]:(System.Collections.Immutable.ImmutableHashSet*1Barotrauma*Identifier)|(Barotrauma.Identifier[])}, {[Barotrauma.Identifier]:(System.Collections.Immutable.ImmutableHashSet*1Barotrauma*Identifier)|(Barotrauma.Identifier[])}, {[System.Object]:System.Object}
@@ -1186,7 +1286,6 @@
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Character*Attacker
 ---@class Barotrauma.AnimController.Animation : System.Enum
 ---@class System.Collections.Generic.IReadOnlyCollection*1Barotrauma*CharacterTalent
----@class System.Collections.Generic.IEnumerable*1Barotrauma*AttackContext
 ---@class System.Nullable*1Barotrauma*InvSlotType : System.ValueType
 ---@class System.Func*1Barotrauma*InvSlotType*1System*Boolean : System.MulticastDelegate
 ---@class System.ValueTuple
@@ -1197,6 +1296,7 @@
 ---@class System.Func*1Barotrauma*Order*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Affliction
 ---@class Barotrauma.Limb-ref
+---@class System.Collections.Generic.IEnumerable*1Barotrauma*AttackContext
 ---@class System.Collections.Generic.List*1Barotrauma*CharacterHealth*LimbHealth : System.Object, {[System.Int32]:Barotrauma.CharacterHealth.LimbHealth}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Affliction*1Barotrauma*CharacterHealth*LimbHealth : System.Object, {[Barotrauma.Affliction]:Barotrauma.CharacterHealth.LimbHealth}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.HashSet*1Barotrauma*Affliction : System.Object
@@ -1204,11 +1304,11 @@
 ---@class System.ValueTuple*1Barotrauma*CharacterHealth*LimbHealth*1Barotrauma*Affliction : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1System*Collections*Generic*KeyValuePair*2Barotrauma*Affliction*2Barotrauma*CharacterHealth*LimbHealth : System.Object, {[System.Int32]:System.Collections.Generic.KeyValuePair*1Barotrauma*Affliction*1Barotrauma*CharacterHealth*LimbHealth}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.KeyValuePair*1Barotrauma*Affliction*1Barotrauma*CharacterHealth*LimbHealth : System.ValueType
----@class System.ValueTuple*1Barotrauma*CauseOfDeathType*1Barotrauma*Affliction : System.ValueType, {[System.Int32]:System.Object}
----@class System.Func*1Barotrauma*Affliction*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.IReadOnlyCollection*1Barotrauma*Affliction
+---@class System.Func*1Barotrauma*Affliction*1System*Boolean : System.MulticastDelegate
 ---@class Barotrauma.CharacterHealth.T : Barotrauma.Affliction
 ---@class System.Nullable*1Barotrauma*ActionType : System.ValueType
+---@class System.ValueTuple*1Barotrauma*CauseOfDeathType*1Barotrauma*Affliction : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*InvSlotType : System.Object, {[System.Int32]:Barotrauma.InvSlotType}, {[System.Int32]:System.Object}
 ---@class Barotrauma.InvSlotType-arr : System.Array
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*AbilityEffectType*1System*Collections*Generic*List*2Barotrauma*Abilities*CharacterAbilityGroupEffect : System.Object, {[Barotrauma.AbilityEffectType]:(System.Collections.Generic.List*1Barotrauma*Abilities*CharacterAbilityGroupEffect)|(Barotrauma.Abilities.CharacterAbilityGroupEffect[])}, {[System.Object]:System.Object}
@@ -1251,11 +1351,11 @@
 ---@class Barotrauma.MapCreatures.Behavior.BallastFloraStateMachine : System.Object
 ---@class System.Collections.Generic.List*1Barotrauma*MapCreatures*Behavior*BallastFloraBehavior : System.Object, {[System.Int32]:Barotrauma.MapCreatures.Behavior.BallastFloraBehavior}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*MapCreatures*Behavior*BallastFloraBehavior
+---@class Barotrauma.MapCreatures.Behavior.BallastFloraBehavior.IEventData
+---@class Barotrauma.MapCreatures.Behavior.BallastFloraBehavior.InfectEventData.InfectState : System.Enum
 ---@class Barotrauma.Items.Components.TileSide : System.Enum
 ---@class System.Collections.Generic.List
 ---@class Barotrauma.MapCreatures.Behavior.BallastFloraBehavior.AttackType : System.Enum
----@class Barotrauma.MapCreatures.Behavior.BallastFloraBehavior.IEventData
----@class Barotrauma.MapCreatures.Behavior.BallastFloraBehavior.InfectEventData.InfectState : System.Enum
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Items*Components*TileSide*1Barotrauma*MapCreatures*Behavior*BallastFloraBranch : System.Object, {[Barotrauma.Items.Components.TileSide]:Barotrauma.MapCreatures.Behavior.BallastFloraBranch}, {[System.Object]:System.Object}
 ---@class Barotrauma.Items.Components.VineTileType : System.Enum
 ---@class System.Nullable*1Barotrauma*Items*Components*FoliageConfig : System.ValueType
@@ -1301,11 +1401,11 @@
 ---@class Barotrauma.HumanAIController.FindItemState : System.Enum
 ---@class Barotrauma.MentalStateManager : System.Object
 ---@class Barotrauma.ShipCommandManager : System.Object
----@class System.Func*1Barotrauma*HumanAIController*1System*Boolean : System.MulticastDelegate
 ---@class System.Func*1Barotrauma*AIObjective*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerable
 ---@class Barotrauma.HumanAIController.T2 : System.Object
 ---@class Barotrauma.HumanAIController.T2 : System.Object
+---@class System.Func*1Barotrauma*HumanAIController*1System*Boolean : System.MulticastDelegate
 ---@class System.Func*1Barotrauma*Character*1System*Boolean : System.MulticastDelegate
 ---@class System.Action*1Barotrauma*HumanAIController : System.MulticastDelegate
 ---@class Barotrauma.AITarget.TargetType : System.Enum
@@ -1333,9 +1433,9 @@
 ---@class Barotrauma.AIObjective.T : Barotrauma.AIObjective
 ---@class Barotrauma.AIObjectiveLoop*1Barotrauma*Items*Components*PowerContainer : Barotrauma.AIObjective
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Items*Components*PowerContainer
+---@class Barotrauma.AIObjectiveMoveItem : Barotrauma.AIObjective
 ---@class Barotrauma.AIObjectiveLoop*1Barotrauma*Item : Barotrauma.AIObjective
 ---@class System.Collections.Generic.HashSet*1Barotrauma*Items*Components*ItemComponent : System.Object
----@class System.Collections.Generic.IEnumerable*1FarseerPhysics*Dynamics*Body
 ---@class System.Func*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Items*Components*ItemComponent
 ---@class System.Collections.Generic.ICollection*1Barotrauma*Items*Components*ItemComponent
@@ -1362,9 +1462,10 @@
 ---@class Barotrauma.Direction : System.Enum
 ---@class System.Collections.Generic.List*1Barotrauma*DamageModifier : System.Object, {[System.Int32]:Barotrauma.DamageModifier}, {[System.Int32]:System.Object}
 ---@class FarseerPhysics.Dynamics.Joints.WeldJoint : FarseerPhysics.Dynamics.Joints.Joint
+---@class System.Collections.Generic.Queue*1Barotrauma*PosInfo : System.Object
+---@class Barotrauma.AttackResult-ref
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*LimbJoint
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Limb
----@class Barotrauma.AttackResult-ref
 ---@class Barotrauma.RagdollParams.JointParams : Barotrauma.RagdollParams.SubParam
 ---@class FarseerPhysics.Dynamics.Joints.RevoluteJoint : FarseerPhysics.Dynamics.Joints.Joint
 ---@class System.Collections.Generic.Queue*1Barotrauma*Ragdoll*Impact : System.Object
@@ -1375,6 +1476,7 @@
 ---@class System.Collections.Generic.List*1Barotrauma*PhysicsBody : System.Object, {[System.Int32]:Barotrauma.PhysicsBody}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*LimbJoint : System.Object, {[System.Int32]:Barotrauma.LimbJoint}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*Ragdoll : System.Object, {[System.Int32]:Barotrauma.Ragdoll}, {[System.Int32]:System.Object}
+---@class System.Collections.Generic.IEnumerable*1FarseerPhysics*Dynamics*Body
 ---@class Barotrauma.PhysicsBody-ref
 ---@class System.Func*1Barotrauma*Limb*1System*Boolean : System.MulticastDelegate
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*AnimationType*1Barotrauma*AnimController*AnimSwap : System.Object, {[Barotrauma.AnimationType]:Barotrauma.AnimController.AnimSwap}, {[System.Object]:System.Object}
@@ -1408,8 +1510,10 @@
 ---@class Barotrauma.AnimationParams.T : Barotrauma.AnimationParams
 ---@class Barotrauma.AnimationParams.T : Barotrauma.AnimationParams
 ---@class Barotrauma.AnimationParams.T : Barotrauma.AnimationParams
+---@class System.Collections.Generic.Dictionary*1System*Int32*1System*Single : System.Object, {[System.Int32]:System.Single}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Identifier*1Barotrauma*Skill : System.Object, {[Barotrauma.Identifier]:Barotrauma.Skill}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Skill
+---@class System.Func*1Barotrauma*JobPrefab*JobItem*1System*Boolean : System.MulticastDelegate
 ---@class Barotrauma.JobPrefab.JobItem : System.Object
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*JobPrefab*JobItem
 ---@class Barotrauma.Skill-arr : System.Array
@@ -1448,7 +1552,7 @@
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*ItemAssemblyPrefab*DisplayEntity : System.ValueType, {[System.Int32]:Barotrauma.ItemAssemblyPrefab.DisplayEntity}, {[System.Int32]:Barotrauma.ItemAssemblyPrefab.DisplayEntity}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.ItemAssemblyPrefab.DisplayEntity}
 ---@class Barotrauma.ItemAssemblyPrefab.DisplayEntity : System.ValueType
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Networking*Client*1Barotrauma*CampaignMode*InteractionType : System.Object, {[Barotrauma.Networking.Client]:Barotrauma.CampaignMode.InteractionType}, {[System.Object]:System.Object}
----@class System.Collections.Generic.Dictionary*1System*Type*1Barotrauma*Items*Components*ItemComponent : System.Object, {[System.Type]:Barotrauma.Items.Components.ItemComponent}, {[System.Object]:System.Object}
+---@class System.Collections.Generic.Dictionary*1System*Type*1System*Collections*Generic*List*2Barotrauma*Items*Components*ItemComponent : System.Object, {[System.Type]:(System.Collections.Generic.List*1Barotrauma*Items*Components*ItemComponent)|(Barotrauma.Items.Components.ItemComponent[])}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*ItemComponent : System.Object, {[System.Int32]:Barotrauma.Items.Components.ItemComponent}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*IDrawableComponent : System.Object, {[System.Int32]:Barotrauma.Items.Components.IDrawableComponent}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Items.Components.IDrawableComponent
@@ -1465,10 +1569,9 @@
 ---@class System.Collections.Immutable.ImmutableArray*1System*ValueTuple*2Barotrauma*Identifier*2Barotrauma*Identifier : System.ValueType, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1Barotrauma*Identifier}, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1Barotrauma*Identifier}, {[System.Int32]:System.Object}, {[System.Int32]:System.ValueTuple*1Barotrauma*Identifier*1Barotrauma*Identifier}
 ---@class FarseerPhysics.BodyType : System.Enum
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*Connection : System.Object, {[System.Int32]:Barotrauma.Items.Components.Connection}, {[System.Int32]:System.Object}
----@class System.Collections.Generic.List*1System*ValueTuple*2System*Object*2Barotrauma*SerializableProperty : System.Object, {[System.Int32]:System.ValueTuple*1System*Object*1Barotrauma*SerializableProperty}, {[System.Int32]:System.Object}
----@class System.ValueTuple*1System*Object*1Barotrauma*SerializableProperty : System.ValueType, {[System.Int32]:System.Object}
----@class Barotrauma.Option*1System*UInt16 : System.ValueType
----@class System.Collections.Generic.Dictionary*1Barotrauma*Item*1Barotrauma*ItemPrefab : System.Object, {[Barotrauma.Item]:Barotrauma.ItemPrefab}, {[System.Object]:System.Object}
+---@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
+---@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
+---@class Barotrauma.Items.Components.ItemComponent.IEventData
 ---@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Item*T
 ---@class Barotrauma.Item.T : System.Object
@@ -1486,9 +1589,10 @@
 ---@class System.Collections.Generic.List*1Barotrauma*Item*T : System.Object, {[System.Int32]:Barotrauma.Item.T}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
 ---@class Barotrauma.Items.Components.Controller-ref
----@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
----@class Barotrauma.Item.T : Barotrauma.Items.Components.ItemComponent
----@class Barotrauma.Items.Components.ItemComponent.IEventData
+---@class System.Collections.Generic.List*1System*ValueTuple*2System*Object*2Barotrauma*SerializableProperty : System.Object, {[System.Int32]:System.ValueTuple*1System*Object*1Barotrauma*SerializableProperty}, {[System.Int32]:System.Object}
+---@class System.ValueTuple*1System*Object*1Barotrauma*SerializableProperty : System.ValueType, {[System.Int32]:System.Object}
+---@class Barotrauma.Option*1System*UInt16 : System.ValueType
+---@class System.Collections.Generic.Dictionary*1Barotrauma*Item*1Barotrauma*ItemPrefab : System.Object, {[Barotrauma.Item]:Barotrauma.ItemPrefab}, {[System.Object]:System.Object}
 ---@class Barotrauma.RelatedItem.RelationType : System.Enum
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*RelatedItem*RelationType*1System*Collections*Generic*List*2Barotrauma*RelatedItem : System.Object, {[Barotrauma.RelatedItem.RelationType]:(System.Collections.Generic.List*1Barotrauma*RelatedItem)|(Barotrauma.RelatedItem[])}, {[System.Object]:System.Object}
 ---@class System.Collections.Immutable.ImmutableDictionary*1Barotrauma*StatTypes*1System*Single : System.Object, {[Barotrauma.StatTypes]:System.Single}, {[Barotrauma.StatTypes]:System.Single}, {[System.Object]:System.Object}
@@ -1521,6 +1625,7 @@
 ---@class Barotrauma.Items.Components.Sonar.ActivePing : System.Object
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*Sonar*ConnectedTransducer : System.Object, {[System.Int32]:Barotrauma.Items.Components.Sonar.ConnectedTransducer}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Items.Components.Sonar.ConnectedTransducer : System.Object
+---@class System.Collections.Generic.List*1Barotrauma*Items*Components*Sonar : System.Object, {[System.Int32]:Barotrauma.Items.Components.Sonar}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.Dictionary*1System*String*1System*Collections*Generic*List*2Barotrauma*Character : System.Object, {[System.String]:(System.Collections.Generic.List*1Barotrauma*Character)|(Barotrauma.Character[])}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*Items*Components*SonarTransducer
 ---@class System.Collections.Generic.IEnumerable*1Barotrauma*AITarget
@@ -1582,9 +1687,9 @@
 ---@class System.Collections.Generic.List*1Barotrauma*Skill : System.Object, {[System.Int32]:Barotrauma.Skill}, {[System.Int32]:System.Object}
 ---@class System.Action*1System*Boolean : System.MulticastDelegate
 ---@class Barotrauma.NamedEvent*1Barotrauma*Items*Components*ItemComponent*ItemUseInfo : System.Object
+---@class Barotrauma.Skill-ref
 ---@class Barotrauma.Items.Components.ItemComponent.T : System.Object
 ---@class Barotrauma.Items.Components.T-ref
----@class Barotrauma.Skill-ref
 ---@class Barotrauma.NamedEvent*1Barotrauma*Items*Components*ItemContainer : System.Object
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*ItemContainer*ActiveContainedItem : System.Object, {[System.Int32]:Barotrauma.Items.Components.ItemContainer.ActiveContainedItem}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Items.Components.ItemContainer.ActiveContainedItem : System.ValueType
@@ -1602,15 +1707,17 @@
 ---@class Barotrauma.Items.Components.Projectile.Impact : System.ValueType
 ---@class System.Collections.Generic.HashSet*1FarseerPhysics*Dynamics*Body : System.Object
 ---@class System.Collections.Immutable.ImmutableArray*1System*Single : System.ValueType, {[System.Int32]:System.Single}, {[System.Int32]:System.Single}, {[System.Int32]:System.Object}, {[System.Int32]:System.Single}
----@class FarseerPhysics.Dynamics.Fixture-ref
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*Projectile*HitscanResult : System.Object, {[System.Int32]:Barotrauma.Items.Components.Projectile.HitscanResult}, {[System.Int32]:System.Object}
 ---@class Barotrauma.Items.Components.Projectile.HitscanResult : System.ValueType
+---@class FarseerPhysics.Dynamics.Fixture-ref
 ---@class System.Collections.Generic.Dictionary*1Barotrauma*Items*Components*Quality*StatType*1System*Single : System.Object, {[Barotrauma.Items.Components.Quality.StatType]:System.Single}, {[System.Object]:System.Object}
 ---@class Barotrauma.Items.Components.Repairable.FixActions : System.Enum
 ---@class System.Action*1Barotrauma*Items*Components*Scanner : System.MulticastDelegate
 ---@class System.Collections.Generic.List*1System*ValueTuple*2Barotrauma*Sprite*2Microsoft*Xna*Framework*Vector2 : System.Object, {[System.Int32]:System.ValueTuple*1Barotrauma*Sprite*1Microsoft*Xna*Framework*Vector2}, {[System.Int32]:System.Object}
 ---@class System.ValueTuple*1Barotrauma*Sprite*1Microsoft*Xna*Framework*Vector2 : System.ValueType, {[System.Int32]:System.Object}
 ---@class Barotrauma.Items.Components.Turret.ChargingState : System.Enum
+---@class System.Nullable*1Barotrauma*Items*Components*Turret*TeamType : System.ValueType
+---@class Barotrauma.Items.Components.Turret.TeamType : System.Enum
 ---@class System.Collections.Generic.List*1Barotrauma*Items*Components*Projectile : System.Object, {[System.Int32]:Barotrauma.Items.Components.Projectile}, {[System.Int32]:System.Object}
 ---@class Barotrauma.ContentXElement-arr : System.Array
 ---@class Barotrauma.WearableSprite-arr : System.Array
@@ -1667,14 +1774,6 @@
 ---@class System.Collections.Generic.IReadOnlyList*1Barotrauma*WayPoint : {[System.Int32]:Barotrauma.WayPoint}
 ---@class Barotrauma.WreckAI : Barotrauma.SubmarineTurretAI
 ---@class Barotrauma.SubmarineTurretAI : System.Object
----@class System.Collections.Generic.List*1Barotrauma*Gap : System.Object, {[System.Int32]:Barotrauma.Gap}, {[System.Int32]:System.Object}
----@class System.Collections.Generic.List*1Barotrauma*Structure : System.Object, {[System.Int32]:Barotrauma.Structure}, {[System.Int32]:System.Object}
----@class System.Collections.Generic.List*1Barotrauma*Submarine*T : System.Object, {[System.Int32]:Barotrauma.Submarine.T}, {[System.Int32]:System.Object}
----@class Barotrauma.Submarine.T : Barotrauma.MapEntity
----@class System.Collections.Generic.IEnumerable*1Barotrauma*Submarine*T
----@class Barotrauma.Submarine.T : Barotrauma.MapEntity
----@class System.Collections.Generic.List*1System*ValueTuple*2Barotrauma*Items*Components*ItemContainer*2System*Int32 : System.Object, {[System.Int32]:System.ValueTuple*1Barotrauma*Items*Components*ItemContainer*1System*Int32}, {[System.Int32]:System.Object}
----@class System.ValueTuple*1Barotrauma*Items*Components*ItemContainer*1System*Int32 : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*DisembarkPerkPrefab : System.ValueType, {[System.Int32]:Barotrauma.DisembarkPerkPrefab}, {[System.Int32]:Barotrauma.DisembarkPerkPrefab}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.DisembarkPerkPrefab}
 ---@class Barotrauma.DisembarkPerkPrefab : Barotrauma.PrefabWithUintIdentifier
 ---@class System.Collections.Immutable.ImmutableArray*1Barotrauma*PerkBehaviors*SubItemSwapPerk : System.ValueType, {[System.Int32]:Barotrauma.PerkBehaviors.SubItemSwapPerk}, {[System.Int32]:Barotrauma.PerkBehaviors.SubItemSwapPerk}, {[System.Int32]:System.Object}, {[System.Int32]:Barotrauma.PerkBehaviors.SubItemSwapPerk}
@@ -1683,6 +1782,14 @@
 ---@class System.Nullable*1Microsoft*Xna*Framework*Point : System.ValueType
 ---@class System.Nullable*1FarseerPhysics*Dynamics*Category : System.ValueType
 ---@class System.Predicate*1FarseerPhysics*Dynamics*Fixture : System.MulticastDelegate
+---@class System.Collections.Generic.List*1Barotrauma*Gap : System.Object, {[System.Int32]:Barotrauma.Gap}, {[System.Int32]:System.Object}
+---@class System.Collections.Generic.List*1Barotrauma*Structure : System.Object, {[System.Int32]:Barotrauma.Structure}, {[System.Int32]:System.Object}
+---@class System.Collections.Generic.List*1Barotrauma*Submarine*T : System.Object, {[System.Int32]:Barotrauma.Submarine.T}, {[System.Int32]:System.Object}
+---@class Barotrauma.Submarine.T : Barotrauma.MapEntity
+---@class System.Collections.Generic.IEnumerable*1Barotrauma*Submarine*T
+---@class Barotrauma.Submarine.T : Barotrauma.MapEntity
+---@class System.Collections.Generic.List*1System*ValueTuple*2Barotrauma*Items*Components*ItemContainer*2System*Int32 : System.Object, {[System.Int32]:System.ValueTuple*1Barotrauma*Items*Components*ItemContainer*1System*Int32}, {[System.Int32]:System.Object}
+---@class System.ValueTuple*1Barotrauma*Items*Components*ItemContainer*1System*Int32 : System.ValueType, {[System.Int32]:System.Object}
 ---@class System.Func*1Barotrauma*Submarine*1System*Collections*Generic*List*2Barotrauma*MapEntity : System.MulticastDelegate
 ---@class System.Collections.Generic.List*1FarseerPhysics*Dynamics*Contacts*Contact : System.Object, {[System.Int32]:FarseerPhysics.Dynamics.Contacts.Contact}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*PosInfo : System.Object, {[System.Int32]:Barotrauma.PosInfo}, {[System.Int32]:System.Object}
@@ -1777,11 +1884,11 @@
 ---@class Barotrauma.PhysicsBody.T : Barotrauma.PosInfo
 ---@class System.Collections.Generic.List*1Barotrauma*EntityGrid : System.Object, {[System.Int32]:Barotrauma.EntityGrid}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.List*1Barotrauma*BackgroundSection : System.Object, {[System.Int32]:Barotrauma.BackgroundSection}, {[System.Int32]:System.Object}
----@class System.Collections.Generic.IEnumerable*1Barotrauma*BackgroundSection
 ---@class Barotrauma.BackgroundSectionsEventData-ref
 ---@class Barotrauma.NetworkFireSource-arr-ref
 ---@class System.Action*1Barotrauma*Hull*BackgroundSectionNetworkUpdate : System.MulticastDelegate
 ---@class Barotrauma.Hull.BackgroundSectionNetworkUpdate : System.ValueType
+---@class System.Collections.Generic.IEnumerable*1Barotrauma*BackgroundSection
 ---@class Voronoi2.Site-arr : System.Array
 ---@class Voronoi2.CellType : System.Enum
 ---@class Barotrauma.RagdollParams.SpriteParams : Barotrauma.RagdollParams.SubParam
@@ -1840,6 +1947,7 @@
 ---@class System.Collections.Generic.List*1Barotrauma*Networking*ChatMessage : System.Object, {[System.Int32]:Barotrauma.Networking.ChatMessage}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.Dictionary*1System*UInt16*1System*Double : System.Object, {[System.UInt16]:System.Double}, {[System.Object]:System.Object}
 ---@class System.Collections.Generic.Queue*1Barotrauma*Entity : System.Object
+---@class System.WeakReference*1Barotrauma*Character : System.Object
 ---@class System.Collections.Generic.HashSet*1Barotrauma*DebugConsole*Command : System.Object
 ---@class System.Collections.Generic.List*1Barotrauma*JobVariant : System.Object, {[System.Int32]:Barotrauma.JobVariant}, {[System.Int32]:System.Object}
 ---@class System.Collections.Generic.IReadOnlyList*1Barotrauma*Networking*Client : {[System.Int32]:Barotrauma.Networking.Client}
@@ -1869,10 +1977,10 @@
 ---@class System.Collections.Generic.Queue*1Barotrauma*Networking*ChatMessage : System.Object
 ---@class Barotrauma.Networking.ModSender : System.Object
 ---@class Barotrauma.Networking.PeerDisconnectPacket : System.ValueType
+---@class Barotrauma.PerkCollection-ref
 ---@class Barotrauma.Networking.OrderChatMessage : Barotrauma.Networking.ChatMessage
 ---@class Barotrauma.Networking.FileSender.FileTransferOut : System.Object
 ---@class Barotrauma.AchievementStat : System.Enum
----@class Barotrauma.PerkCollection-ref
 ---@class Barotrauma.Networking.ServerPeer.Callbacks : System.ValueType
 ---@class Barotrauma.Networking.ServerPeer*1Barotrauma*Networking*LidgrenConnection : Barotrauma.Networking.ServerPeer
 ---@class Lidgren.Network.NetPeerConfiguration : System.Object
@@ -1932,6 +2040,7 @@
 ---@class System.Func*1System*String-arr-arr : System.MulticastDelegate
 ---@class System.String-arr-arr : System.Array
 ---@class System.Collections.Immutable.ImmutableList*1Barotrauma*TextPack : System.Object, {[System.Int32]:Barotrauma.TextPack}, {[System.Int32]:Barotrauma.TextPack}, {[System.Int32]:Barotrauma.TextPack}, {[System.Int32]:System.Object}
+---@class System.Net.TChar-ref
 ---@class Barotrauma.PrefabSelector*1Barotrauma*ItemPrefab : System.Object
 ---@class Barotrauma.PrefabSelector*1Barotrauma*JobPrefab : System.Object
 ---@class Barotrauma.PrefabSelector*1Barotrauma*CharacterPrefab : System.Object
