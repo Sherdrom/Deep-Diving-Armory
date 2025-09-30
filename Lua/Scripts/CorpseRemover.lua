@@ -23,6 +23,7 @@ end, nil, false)
 
 
 Hook.Add("character.death", "Deep_CR", function(c)
+    if not forceremove then forceremove = false end
     if c.Removed then return end
     if      (not forceremove)
         and (
