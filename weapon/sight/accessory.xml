@@ -18,7 +18,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
@@ -45,7 +45,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" depth="0.549" origin="0.5,0.6" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
@@ -72,7 +72,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
@@ -99,7 +99,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,470,256,157" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,460,256,164" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,460,256,164" depth="0.549" origin="0.5,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" OnlyInside="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
@@ -155,7 +155,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" depth="0.549" origin="0.5,0.65" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
@@ -194,29 +194,54 @@
         <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
       </LightComponent>
     </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="focusingflashlight_L" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
+	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
+      </Wearable>
+  </Item>
+
+  <Item name="" identifier="focusingflashlight_L" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
+	<Deconstruct time="5">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" depth="0.551" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" holdpos="80,-50" aimpos="80,0" handle1="-20,0" msg="ItemMsgPickUpSelect">
+	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" Flicker="0" range="1500" powerconsumption="10" IsOn="true">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
+      </LightComponent>
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" range="1500" powerconsumption="10" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
+      </LightComponent>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="focusingflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
 	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
       </Wearable>
   </Item>
   
   
-  <Item name="" identifier="focusingflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
-    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
-	  <RequiredItem identifier="groundglass" />
-      <RequiredItem identifier="uranium" />
-      <RequiredItem identifier="glassfibre" />
-    </Fabricate>
-	<Deconstruct time="5">
-      <Item identifier="plastic" />
-    </Deconstruct>
+  <Item name="" identifier="focusingflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light" hideinmenus="true" >
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,575,112,51" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,575,112,51" depth="0.65" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
@@ -251,7 +276,7 @@
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" depth="0.54" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand,Head"  msg="ItemMsgPickUpSelect">
 	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
@@ -260,29 +285,52 @@
       <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
     </LightComponent>
     </Holdable>
+        <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="spreadflashlight_L" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
+	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
+      </Wearable>
+  </Item>
+
+  <Item name="" identifier="spreadflashlight_L" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+	<Deconstruct time="5">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" depth="0.551" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head"  msg="ItemMsgPickUpSelect">
+	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent lightcolor="1.0,1.0,1.0,0.2" range="1200.0" powerconsumption="0">
+      <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
+      <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
+    </LightComponent>
+    </Holdable>
+        <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="spreadflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
 	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
       </Wearable>
   </Item>
   
   
-  <Item name="" identifier="spreadflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
-    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
-      <RequiredItem identifier="groundglass" />
-      <RequiredItem identifier="uranium" />
-      <RequiredItem identifier="glassfibre" />
-    </Fabricate>
-	<Deconstruct time="5">
-      <Item identifier="plastic" />
-    </Deconstruct>
+  <Item name="" identifier="spreadflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light" hideinmenus="true" >
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="47,630,112,60" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="47,630,112,60" depth="0.65" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
@@ -908,13 +956,49 @@
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="453,534,134,88" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.56" origin="0.07,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.551" origin="0.07,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand"  msg="ItemMsgPickUpSelect">
 	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deep_laser_1" strength="1" />
       </StatusEffect>
     </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="deep_laser_R" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
+  </Item>
+
+  <Item name="" identifier="deep_laser_R" setactive="true" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+	<Deconstruct time="5">
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="453,534,134,88" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.549" origin="0.07,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand"  msg="ItemMsgPickUpSelect">
+	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="deep_laser_1" strength="1" />
+      </StatusEffect>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+		        <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+        <SpawnItem identifiers="deep_laser" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>      
+    </CustomInterface>
   </Item>
   
   <Item name="" identifier="deep_18c_buttstock" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_18c_stock" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.4" impactsoundtag="impact_metal_light">
