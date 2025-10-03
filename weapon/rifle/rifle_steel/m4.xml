@@ -46,12 +46,30 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+       <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="257,24" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_short_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="317,24" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_long_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 无枪口件时，恢复枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="227,24" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_none_detect="lte 0.0" />
+      </StatusEffect>
+
 	</Holdable>
     <RangedWeapon reload="0.075" weapondamagemodifier="1" holdtrigger="true" barrelpos="227,24" spread="7" unskilledspread="14" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5"  >
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
 	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="3" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+    <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" />
+    <!--
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" >
 	  <RequiredItems items="114" matchonempty="true" type="Contained" targetslot="4" />
 	  <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" />
@@ -60,6 +78,7 @@
 	  <RequiredItems items="deep_muffler" type="Contained" targetslot="4" />
 	  <Sound file="%ModDir%/weapon/ammo/5.56_2.ogg" type="OnUse" range="3000" />
 	  </StatusEffect>
+    -->
 	  <StatusEffect type="OnUse" target="This" Condition="-100" />  
 	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
 	  <StatusEffect type="InWater" target="This" Condition="1000"/>
@@ -136,7 +155,9 @@
         </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_muzzle,deep_muzzle_short" hide="false" itempos="58,6" setactive="true" containedspritedepth="0.1" depth="0.1" />
+        <!-- 枪口件，增加枪口距离 -->
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="58,6" setactive="true" containedspritedepth="0.1" depth="0.1">
+        </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
 	    <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

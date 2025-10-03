@@ -46,6 +46,22 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="235,16" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_short_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="295,16" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_long_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 无枪口件时，恢复枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="205,16" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_none_detect="lte 0.0" />
+      </StatusEffect>
+
 	</Holdable>
     <RangedWeapon reload="0.089" weapondamagemodifier="1" holdtrigger="true" barrelpos="205,16" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
@@ -140,7 +156,9 @@
         </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_muzzle,deep_muzzle_short" hide="false" itempos="53,4" setactive="true" containedspritedepth="0.1" depth="0.1" />
+        <!-- 枪口件，增加枪口距离 -->
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="53,4" setactive="true" containedspritedepth="0.1" depth="0.1">
+        </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

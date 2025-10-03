@@ -22,8 +22,6 @@
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle45.png" sourcerect="1301,289,259,239" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/rifle/rifle_2.png" sourcerect="18,327,331,73" depth="0.55" origin="0.5,0.5" />
-    <!-- Broken sprite used for animation via changing gun's condition. 暂时和满状态一致-->
-    <BrokenSprite texture="%ModDir%/weapon/rifle/rifle_2.png" sourcerect="18,327,331,73" depth="0.55" origin="0.5,0.5" maxcondition="50" />
     <Body width="200" height="65" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="65,3" handle1="-60,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<!-- 二战老兵合约-->
@@ -46,8 +44,24 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="180,17" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_short_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="208,17" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_long_detect="gte 1.0" />
+      </StatusEffect>
+
+      <!-- 无枪口件时，恢复枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="166,17" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_none_detect="lte 0.0" />
+      </StatusEffect>
+
 	</Holdable>
-    <RangedWeapon reload="0.1" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="120,3" spread="10" unskilledspread="20" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5"  >
+    <RangedWeapon reload="0.1" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="166,17" spread="10" unskilledspread="20" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5"  >
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -105,12 +119,15 @@
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
-	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
-	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="6,2,110,113" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
 	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+    	  <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="18,0" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="36,6" setactive="true" />
       </SubContainer>
@@ -127,10 +144,9 @@
         </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_grip" hide="false" itempos="18,0" setactive="true" containedspritedepth="0.45" depth="0.55" />
-      </SubContainer>
-	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_muzzle,deep_muzzle_short" hide="false" itempos="63,6" setactive="true" containedspritedepth="0.1" depth="0.1" />
+        <!-- 短枪口件，增加枪口距离 -->
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="61,6" setactive="true" containedspritedepth="0.1" depth="0.1" >
+        </Containable>
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

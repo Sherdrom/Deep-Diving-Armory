@@ -564,7 +564,7 @@
     </Holdable>
   </Item>
   
-  <Item name="" identifier="extended_barrel" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="extended_barrel" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle,deep_muzzle_long" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="800" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -583,11 +583,16 @@
       <Item identifier="physicorium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="39,340,259,43" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="39,340,259,43" depth="0.54" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="127,221,207,29" depth="0.54" origin="0.18,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="extended_barrel" strength="1" />
+	      <Affliction identifier="extended_barrel" strength="1" />
+      </StatusEffect>
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	      <Affliction identifier="deep_muzzle_long_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -617,6 +622,11 @@
 	      <Affliction identifier="flash_hider" strength="1" />
 	      <Conditional speed="gte 1" />
       </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	      <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
+      </StatusEffect>
     </Holdable>
   </Item>
   
@@ -638,12 +648,17 @@
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" depth="0.54" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" depth="0.54" origin="0.4,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	      <Affliction identifier="deep_compensator" strength="1" />
 	      <Conditional speed="lt 1" />
+      </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	      <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -672,10 +687,15 @@
       <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deep_muzzle_brake" strength="1" />
       </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	      <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
+      </StatusEffect>
     </Holdable>
   </Item>
   
-  <Item name="" identifier="deep_muffler" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_muffler" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle,deep_muzzle_long" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
   <Price baseprice="900" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -693,9 +713,14 @@
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" depth="0.54" origin="0.3,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" depth="0.54" origin="0.2,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	      <Affliction identifier="deep_muzzle_long_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
+      </StatusEffect>
     </Holdable>
   </Item>
   
