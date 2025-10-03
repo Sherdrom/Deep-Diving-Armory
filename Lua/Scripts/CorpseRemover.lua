@@ -21,21 +21,38 @@ Game.AddCommand("RemoveAllCorpses", "Force remove all corpses immediately", func
     end
 end, nil, false)
 
+-- 创建延迟删除函数
+local function DelayedDespawn(character)
+    Timer.Wait(function()
+        if character ~= nil and not character.Removed then
+            character.EnableDespawn = true
+            character.Despawn()
+        end
+    end, 30000) -- 30000毫秒 = 30秒
+end
 
 Hook.Add("character.death", "Deep_CR", function(c)
     if not forceremove then forceremove = false end
     if c.Removed then return end
+    
+    -- 安全地检查 CauseOfDeath
+    local causeOfDeathType = nil
+    if c.CauseOfDeath ~= nil then
+        causeOfDeathType = c.CauseOfDeath.Type
+    end
+    
+    -- 如果是队友且不在战役中，或者满足其他条件，则不删除
     if      (not forceremove)
         and (
-               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
-            or c.CauseOfDeath.Type == CauseOfDeathType.Unknown
+               (causeOfDeathType == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
+            or causeOfDeathType == CauseOfDeathType.Unknown
             or c.IsHuskInfected
             or (not c.IsHuman)
             or (c.TeamID == CharacterTeamType.Team1 and GameMain.GameSession.Campaign ~= nil)
         ) then
         return
     end
-    c.EnableDespawn = true
-    if c.Removed then return end
-    c.Despawn()
+    
+    -- 使用延迟删除而不是立即删除
+    DelayedDespawn(c)
 end)
