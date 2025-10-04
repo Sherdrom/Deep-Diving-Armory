@@ -23,19 +23,18 @@ end, nil, false)
 
 
 Hook.Add("character.death", "Deep_CR", function(c)
-    if forceremove == nil then forceremove = false end
     if c.Removed then return end
     if      (not forceremove)
         and (
-               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
+               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and Game.GameSession.Campaign ~= nil )
             or c.CauseOfDeath.Type == CauseOfDeathType.Unknown
             or c.IsHuskInfected
             or (not c.IsHuman)
-            or (c.TeamID == CharacterTeamType.Team1 and GameMain.GameSession.Campaign ~= nil)
+            or (c.TeamID == CharacterTeamType.Team1 and Game.GameSession.Campaign ~= nil)
         ) then
         return
     end
     c.EnableDespawn = true
     if c.Removed then return end
-    Timer.Wait(c.Despawn(),3000)
+    Timer.Wait(function() c.Despawn() end,3000)
 end)
