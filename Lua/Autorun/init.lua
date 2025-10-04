@@ -17,3 +17,4 @@ if SERVER or not Game.IsMultiplayer then
 end
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Airburst.lua")--Airburst stuff, work both side
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/Alter_NVG.lua")
