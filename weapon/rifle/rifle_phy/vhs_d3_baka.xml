@@ -15,7 +15,7 @@
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle45.png" sourcerect="1024,590,192,184" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy.png" sourcerect="1300,3,463,163" depth="0.55" origin="0.5,0.5" />
     <Body width="185" height="70" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="52,5" handle1="0,-35" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect">
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="52,8" handle1="0,-35" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect">
     <StatusEffect type="OnActive" target="This" Scale="0.22" setvalue="true">
       </StatusEffect>
       <!-- 二战老兵合约-->
@@ -55,7 +55,7 @@
       <StatusEffect type="InWater" target="This" Condition="1000" />
       <StatusEffect type="OnUse" target="This">
         <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+        <Explosion range="150.0" force="0.3" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
       </StatusEffect>
       <StatusEffect type="NotInWater" target="This">
         <Conditional Condition="lt 50" />
@@ -96,7 +96,7 @@
         <StatusEffect type="OnInserted" target="This" holdpos="40,-10" aimpos="60,3" holdangle="10" aimangle="0" handle2="-45,-8" disabledeltatime="true" delay="1.0" setvalue="true" />
         <!-- Puts the hand on the eject port. -->
         <!-- End. Sets everything to default values. -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="52,5" handle1="0,-35" handle2="80,10" holdangle="-35" aimangle="0" disabledeltatime="true" delay="1.2" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="52,8" handle1="0,-35" handle2="80,10" holdangle="-35" aimangle="0" disabledeltatime="true" delay="1.2" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="1.2" stackable="false" />
         <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
           <sound file="%ModDir%/weapon/ammo/5.56re_2.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
