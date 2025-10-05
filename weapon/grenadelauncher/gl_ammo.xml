@@ -29,8 +29,8 @@
       <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnImpact" range="3000" volume="2" forcePlaySounds="true" />
       <!--Grenade launcher ammo explodes on impact-->
       <StatusEffect type="OnImpact" target="This" Condition="-100.0" disabledeltatime="true">
-        <Explosion range="500.0" ballastfloradamage="300" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5">
-		  <Affliction identifier="Shrapnel_residue" strength="350" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="300" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.5">
+		      <Affliction identifier="Shrapnel_residue" strength="350" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
@@ -89,7 +89,7 @@
       <!--Grenade launcher ammo explodes on impact-->
       <StatusEffect type="OnImpact" target="This" Condition="-100.0" disabledeltatime="true">
         <sound file="Content/Items/Weapons/ExplosionDebris2.ogg" range="2000" />
-        <Explosion range="600.0" ballastfloradamage="500" structuredamage="0.5" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="0.6">
+        <Explosion range="600.0" penetration="1" ballastfloradamage="500" structuredamage="0.5" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="0.6">
           <Affliction identifier="burn" strength="150" />
 		  <Affliction identifier="Shrapnel_residue" strength="80" />
 		  <Affliction identifier="explosiondamage" strength="150" />

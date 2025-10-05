@@ -69,10 +69,9 @@
                 <Remove />
             </StatusEffect>
             <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
-                <Explosion range="80.0" ballastfloradamage="45" structuredamage="45" itemdamage="45" force="10" severlimbsprobability="0.3" decal="explosion" interactthroughwalls="false" decalsize="0.5" penetration="0.4">
-                    <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="true" />
-                    <Affliction identifier="burn" strength="10" probability="0.7" dividebylimbcount="false" />
-                    <Affliction identifier="stun" strength="0.03" />
+                <Explosion range="80.0" penetration="1" ballastfloradamage="45" structuredamage="45" itemdamage="45" force="10" severlimbsprobability="0.3" decal="explosion" interactthroughwalls="false" decalsize="0.5" >
+                    <Affliction identifier="Shrapnel_residue" strength="350" />
+                    <Affliction identifier="stun" strength="5" />
                 </Explosion>
                 <Explosion range="200.0" force="10" severlimbsprobability="0.3" debris="true" decal="" interactthroughwalls="false" decalsize="0.5" penetration="0.5">
                     <Affliction identifier="lacerations" strength="250" probability="0.8" />
@@ -82,6 +81,7 @@
             <StatusEffect type="OnUse" target="This" OneShot="true">
                 <LuaHook name="Deep_AirBurstControl" />
             </StatusEffect>
+            <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnBroken" range="3000" volume="2" forcePlaySounds="true" />
         </Projectile>
         <Upgrade gameversion="0.10.0.0" scale="0.5" />
     </Item>
