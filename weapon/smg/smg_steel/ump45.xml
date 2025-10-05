@@ -51,8 +51,22 @@
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="204,20" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_short_detect="gte 1.0" />
+      </StatusEffect>
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="264,20" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_long_detect="gte 1.0" />
+      </StatusEffect>
+      <!-- 无枪口件时，恢复枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="174,20" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_none_detect="lte 0.0" />
+      </StatusEffect>
+
     </Holdable>
-    <RangedWeapon reload="0.1" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="90,-2" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="0.1" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="174,20" spread="5" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -86,7 +100,7 @@
       <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_smg_ump45,tsm_45_smgmag" hide="false" setactive="true" itempos="14,-8" rotation="0">
+      <Containable items="deep_smg_ump45,tsm_45_smgmag" hide="false" setactive="true" itempos="17,-10" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -95,7 +109,7 @@
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.8" setvalue="true" disabledeltatime="true" />
-        <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="25,-30" delay="0.01" condition="0" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="40,-70" delay="0.01" condition="0" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="0,-5" delay="0.3" setvalue="true" />
         <!-- Sets gun's and hand's position, makes a sound. -->
@@ -105,9 +119,9 @@
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="18,-8" delay="0.9" setvalue="true" />
         <!-- Puts the hand on the eject port. -->
-        <StatusEffect type="OnInserted" target="This" handle2="0,20" delay="1" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" handle2="80,20" delay="1" setvalue="true" />
         <!-- Eject port work. -->
-        <StatusEffect type="OnInserted" target="This" handle2="60,20" delay="1.2" forceplaysounds="true">
+        <StatusEffect type="OnInserted" target="This" handle2="150,20" delay="1.2" forceplaysounds="true">
           <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
         <!-- End. Sets everything to default values. -->
@@ -120,21 +134,24 @@
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
-      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="278,22,56,32" origin="0.5,0.5" />
-      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="23,170,60,66" origin="0.5,0.5" />
-      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
-      <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="30,5" setactive="true" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="6,2,110,113" origin="0.5,0.5" />
+	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
+	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
+	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+    <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_grip" hide="false" itempos="30,-3" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="35,5" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="30,5" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="5,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable tags="thermalgoggles_sight" hide="false" itempos="5,16" setactive="true">
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="35,5" setactive="true" />
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="5,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable tags="thermalgoggles_sight" hide="false" itempos="5,15" setactive="true">
           <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
         </Containable>
         <Containable Items="thermalgoggles_sight">
@@ -142,11 +159,8 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_grip" hide="false" itempos="30,-2" setactive="true" containedspritedepth="0.45" depth="0.55" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_muzzle" hide="false" itempos="51,5.5" setactive="true" />
-        <Containable tags="deep_muzzle_short" hide="false" itempos="43,5.5" setactive="true" />
+        <!-- 枪口件，增加枪口距离 -->
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="45,4.5" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
