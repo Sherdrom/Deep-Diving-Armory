@@ -433,5 +433,17 @@
 		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
       </Abilities>
     </AbilityGroupInterval>
+    <!-- 先辈不受合约影响 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_contract_resistance_reinforce" amount="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
   </Talent>
 </Talents>

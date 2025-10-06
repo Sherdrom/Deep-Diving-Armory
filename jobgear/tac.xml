@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="thermalgoggles_t7" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="thermalgoggles_t7" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
@@ -20,7 +20,7 @@
   </Item>
   
   
-  <Item name="" identifier="gpnvg_18" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="gpnvg_18" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
@@ -39,7 +39,7 @@
     </Holdable>
   </Item>
 
-  <Item name="" identifier="deep_healthscan_helmet" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_tac_health,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_healthscan_helmet" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_health,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="medical" level="50" />
       <RequiredItem identifier="fpgacircuit" />
@@ -55,14 +55,22 @@
     </Holdable>
   </Item>
   
-  <Item name="" identifier="deep_8x_telescope" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_tac,zoom1-8x,weapon" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_8x_telescope" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac,zoom1-8x,weapon" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
+  <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="60" />
-      <RequiredItem identifier="groundglass" amount="2" />
-	  <RequiredItem identifier="glassfibre" />
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="groundglass" amount="1" />
+	    <RequiredItem identifier="plastic" />
     </Fabricate>
 	<Deconstruct time="5">
-      <Item identifier="glassfibre" />
+      <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="16,231,156,114" />
     <Sprite texture="%ModDir%/jobgear/tac/tac.png" sourcerect="33,417,72,33" depth="0.65" />

@@ -4634,6 +4634,27 @@
   </Affliction>
 
   <Affliction
+    identifier="deep_contract_resistance_reinforce"
+    description=""
+	  isbuff="true"
+    type="deep_contract"
+    limbspecific="false"
+    indicatorlimb="Head"
+    showiconthreshold="1000"
+    showicontoothersthreshold="100"
+    showinhealthscannerthreshold="100"
+    karmachangeonapplied="0"
+    maxstrength="5"
+    affectmachines="false">
+    <Effect minstrength="0" maxstrength="5" resistancefor="deep_contract_detect" minresistance="10" maxresistance="10" strengthchange="-0" >
+      <StatusEffect target="Character" comparison="and" disabledeltatime="true" >
+      <Conditional ishuman="true" />
+        <ReduceAffliction type="deep_contract_detect" amount="20"/>
+      </StatusEffect>
+    </Effect>
+  </Affliction>
+
+  <Affliction
     identifier="deep_gun_condition_100"
     description=""
 	  isbuff="true"
