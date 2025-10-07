@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-    <Item name="XM-25 ABAW" identifier="deep_xm25" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.23" impactsoundtag="impact_metal_light">
-    <!--
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
-      <RequiredSkill identifier="weapons" level="80" />
-      <RequiredItem identifier="physicorium_barrel" amount="4" />
-	  <RequiredItem identifier="physicorium_part" amount="4" />
-	  <RequiredItem identifier="engineeringplastic" amount="3"/>
-	  <RequiredItem identifier="deep_tungsten_phy" amount="4"/>
-      <RequiredItem identifier="deep_xm25_design" amount="1"/>
-    </Fabricate>
-    <Deconstruct time="10">
-        <Item identifier="physicorium" />
-	    <Item identifier="physicorium" />
-    </Deconstruct> -->
-        <InventoryIcon texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" origin="0.5,0.5" />
-        <Sprite texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" depth="0.55" origin="0.5,0.5" />
+    <Item identifier="deep_xm25" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.15" impactsoundtag="impact_metal_light">
+        <Fabricate suitablefabricators="fabricator" requiredtime="10">
+            <RequiredSkill identifier="weapons" level="80" />
+            <RequiredItem identifier="physicorium_barrel" amount="4" />
+            <RequiredItem identifier="physicorium_part" amount="4" />
+            <RequiredItem identifier="engineeringplastic" amount="3" />
+            <RequiredItem identifier="deep_tungsten_phy" amount="4" />
+            <RequiredItem identifier="deep_xm25_design" amount="1" />
+        </Fabricate>
+        <Deconstruct time="10">
+            <Item identifier="physicorium" />
+            <Item identifier="physicorium" />
+        </Deconstruct>
+        <InventoryIcon texture="%ModDir%/weapon/grenadelauncher/grenadelauncher45.png" sourcerect="448,220,153,153" origin="0.5,0.5" />
+        <Sprite texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/XM25.png" sourcerect="40,80,630,280" depth="0.55" origin="0.5,0.5" />
         <Body width="400" height="70" density="52" />
         <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="45,0" aimpos="52,5" handle1="-20,-60" handle2="80,10" holdangle="-50" msg="ItemMsgPickUpSelect">
             <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.9" setvalue="true" />
@@ -23,13 +22,13 @@
             <StatusEffect type="OnUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
         </Holdable>
         <RangedWeapon reload="1.5" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="200,15" spread="8" unskilledspread="16" combatPriority="200" drawhudwhenequipped="true" crosshairscale="0.2">
-        <StatusEffect type="OnUse" target="This">
+            <StatusEffect type="OnUse" target="This">
                 <Explosion range="150.0" force="1.5" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
-        </StatusEffect>
+            </StatusEffect>
             <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
             <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
             <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
-	        <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+            <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
             <Sound file="%ModDir%/testfiles/XM25/XM25_Fire.ogg" type="OnUse" range="3000" />
             <StatusEffect type="OnUse" target="Contained">
                 <Use />
@@ -38,11 +37,11 @@
                 <LuaHook name="Deep_AirBurstBound" />
             </StatusEffect>
             <StatusHUD range="3000" ThermalGoggles="true" ShowTexts="false" OverlayColor="0,255,0,0" drawhudwhenequipped="true" />
-            <RequiredItems items="tes20mag" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+            <RequiredItems items="deep_xm25_mag" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
         </RangedWeapon>
         <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorstyle="bullet" containedstateindicatorslot="0">
             <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="256,448,64,64" origin="0.5,0.5" />
-            <Containable items="tes20mag" hide="false" itempos="-23,-10" rotation="-5" depth="0.56">
+            <Containable items="deep_xm25_mag" hide="false" itempos="-23,-13" rotation="-5" depth="0.56">
                 <StatusEffect type="OnInserted" target="This" holdpos="10,-25" holdangle="70" maxchargetime="999" setvalue="true" />
                 <StatusEffect type="OnInserted" target="This" setvalue="true">
                     <Conditional isActive="eq true" />
