@@ -10,8 +10,7 @@
     <Deconstruct time="5">
       <Item identifier="steel" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,8,172,70" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,8,172,70" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="635,44,100,108" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
@@ -30,8 +29,7 @@
     <Deconstruct time="5">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="11,95,176,79" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="11,95,176,79" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="631,166,106,112" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
@@ -50,8 +48,26 @@
     <Deconstruct time="5">
       <Item identifier="physicorium" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,191,175,101" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="13,191,175,101" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="606,285,161,163" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="tungsten_phy_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="150" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+      <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="incendium" amount="2" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="physicorium" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="592,447,186,182" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
@@ -73,8 +89,7 @@
       <Item identifier="carbon" amount="1" mincondition="0.95" />
       <Item identifier="aluminium" mincondition="0.95" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="217,5,132,129" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="217,5,132,129" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="229,27,128,129" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
@@ -97,8 +112,7 @@
       <Item identifier="titanium" amount="1" mincondition="0.95" />
       <Item identifier="aluminium" mincondition="0.95" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="215,140,135,130" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="215,140,135,130" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="228,158,128,129" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
@@ -120,8 +134,29 @@
       <Item identifier="dementonite" amount="1" mincondition="0.95" />
       <Item identifier="aluminium" mincondition="0.95" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/part/barrel.png" sourcerect="216,285,135,130" />
-    <Sprite texture="%ModDir%/weapon/part/barrel.png" sourcerect="216,285,135,130" depth="0.55" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="411,11,185,187" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="tungsten_phy_part" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="8" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="150" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="4" />
+      <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="incendium" amount="2" />
+      <RequiredItem identifier="aluminium" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="physicorium" amount="2" mincondition="0.95" />
+      <Item identifier="dementonite" amount="1" mincondition="0.95" />
+      <Item identifier="aluminium" mincondition="0.95" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="404,197,186,188" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
