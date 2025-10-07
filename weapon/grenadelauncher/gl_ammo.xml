@@ -38,9 +38,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
-  <Item name="" identifier="deep_meteorite_mag" subcategory="gl_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.15" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_phy_reload,explosive" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_meteorite_mag" subcategory="deep_gl_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.15" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,rifle_phy_reload,explosive" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
@@ -57,8 +55,7 @@
       <RequiredItem identifier="copper" mincondition="0.5" />
       <RequiredItem identifier="deep_meteorite_mag" mincondition="0.0" maxcondition="0.2" usecondition="false" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_2.png" sourcerect="377,137,159,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="377,137,159,106" origin="0.5,0.5" />
     <Body width="40" height="50" density="25" />
@@ -73,8 +70,6 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
   <Item name="" identifier="40mm_meteorite" hideinmenus="true" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,grenade,explosive" Scale="0.5" impactsoundtag="impact_metal_light">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" depth="0.55" origin="0.5,0.5" />
@@ -91,7 +86,7 @@
         <sound file="Content/Items/Weapons/ExplosionDebris2.ogg" range="2000" />
         <Explosion range="600.0" penetration="1" ballastfloradamage="500" structuredamage="0.5" levelwalldamage="300" itemdamage="400" force="10.0" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="0.6">
           <Affliction identifier="burn" strength="150" />
-          <Affliction identifier="Shrapnel_residue" strength="80" />
+          <Affliction identifier="Shrapnel_residue" strength="200" />
           <Affliction identifier="explosiondamage" strength="150" />
           <Affliction identifier="bleeding" strength="100" probability="1" />
           <Affliction identifier="stun" strength="8" />
@@ -101,10 +96,23 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item identifier="deep_xm25_abhe_mag" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="2" health="8" scale="0.15" cargocontaineridentifier="metalcrate" tags="smallitem,deep_xm25_mag" impactsoundtag="impact_metal_light">
-    <InventoryIcon texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/XM25.png" sourcerect="150,400,120,160" />
-    <Sprite texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/XM25.png" depth="0.56" sourcerect="150,400,120,160" origin="0.5,0.5" />
+  <Item identifier="deep_xm25_abhe_mag" category="Weapon" subcategory="deep_gl_ammo" maxstacksize="8" maxstacksizecharacterinventory="2" health="8" scale="0.32" cargocontaineridentifier="metalcrate" tags="smallitem,deep_xm25_mag" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="1">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+      <RequiredItem identifier="gun_powder_fulgurium" amount="2"/>
+      <RequiredItem identifier="c4block" amount="2" />
+      <RequiredItem identifier="engineeringplastic" />
+    </Fabricate>
+    <Fabricate suitablefabricators="fabricator" displayname="recycleitem" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+      <RequiredItem identifier="gun_powder_fulgurium" amount="2"/>
+      <RequiredItem identifier="c4block" amount="2" />
+      <RequiredItem identifier="deep_xm25_abhe_mag" mincondition="0.0" maxcondition="0.2" usecondition="false" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/XM25.png" sourcerect="23,179,71,84" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/grenadelauncher/gl_phy/Sprite/XM25.png" depth="0.56" sourcerect="24,180,69,83" origin="0.5,0.5" />
     <Body width="72" height="90" density="25" />
     <Deconstruct time="18">
       <Item identifier="c4block" mincondition="0.5" outcondition="0.2" />
@@ -126,13 +134,13 @@
     <Body width="40" height="14" density="30" gravityscale="0.0" linearDamping="0.0" />
     <Projectile characterusable="false" hitscan="false" launchImpulse="30" penetration="0.0" MaxTargetsToHit="99" spread="0.1" DamageDoors="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="80" velocitymax="100" colormultiplier="255,0,0,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="2" targetforce="3" itemdamage="18" severlimbsprobability="0.0" />
+      <Attack structuredamage="0.5" targetforce="3" itemdamage="100" severlimbsprobability="0.0" />
       <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1.2">
         <Remove />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
-        <Explosion range="80.0" penetration="1" ballastfloradamage="45" structuredamage="45" itemdamage="45" force="10" severlimbsprobability="0.3" decal="explosion" interactthroughwalls="false" decalsize="0.5">
-          <Affliction identifier="Shrapnel_residue" strength="350" />
+        <Explosion  range="80.0" penetration="1" ballastfloradamage="200" structuredamage="0.5" itemdamage="100" force="10" severlimbsprobability="0.3" decal="explosion" interactthroughwalls="false" decalsize="0.5">
+          <Affliction identifier="Shrapnel_residue" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Explosion range="200.0" force="10" severlimbsprobability="0.3" debris="true" decal="" interactthroughwalls="false" decalsize="0.5" penetration="0.5">
