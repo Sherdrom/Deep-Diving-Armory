@@ -20,7 +20,7 @@ Deep_Lua.Armors = {
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
         ignoredamage = false,                       --Will the item take damage or not.
 
-        --Carrier Specific
+        --Carrier/Helmet with extra armor plate Specific
         isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet.
         protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
             [LimbType.Torso] = true,                --Only add true items.
@@ -43,7 +43,7 @@ Deep_Lua.Armors = {
         isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
                                                     --Use this ONLY when you want to define a helmet with a mask. Otherwise keep this false, = a standard armor for your head.
 
-        --Custom stuff, only work if custom type
+        --Custom stuff, only work if type "custom"
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
             return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
         end,
