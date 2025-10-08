@@ -1,6 +1,6 @@
 Deep_Lua.Armors = {
     sampleitemid = {
-        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet.
+        --Universal
         name = "something",                         --Name, not actually used in game. Optional, you can remove this if you know what is what.
         type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
         ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
@@ -10,11 +10,18 @@ Deep_Lua.Armors = {
         correctionmultiplier = 0.0,                 --Define how many damage should pass to user
         enablecorrection = false,                   --Define should give non-pen affliction
         penresistance = 0.8,                        --Define pen resistance, will use to caculate remaining pen
+        targetidentifier = {                        --Define what damage will this plate/helmet/armor protect against. For most cases gunshotwound.
+            ["gunshotwound"] = true
+        },
+        --targetidentifier = "Any" if you want to define a full-protection armor(Also work for pre-defined types)
+
+        --Condition caculation
         maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
         maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
         ignoredamage = false,                       --Will the item take damage or not.
-        isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
-                                                    --Use this ONLY when you want to define a helmet with a mask. Otherwise keep this false, = a standard armor for your head.
+
+        --Carrier Specific
+        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet.
         protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
             [LimbType.Torso] = true,                --Only add true items.
             [LimbType.Waist] = true,                --Note: This list may not up-to-date so please note we accept any limbs here. Use custom limbs at your own risk
@@ -31,10 +38,10 @@ Deep_Lua.Armors = {
             [LimbType.LeftFoot] = true,
             [LimbType.RightFoot] = true,
         },
-        targetidentifier = {                        --Define what damage will this plate/helmet/armor protect against. For most cases gunshotwound.
-            ["gunshotwound"] = true
-        },
-        --targetidentifier = "Any" if you want to define a full-protection armor(Also work for pre-defined types)
+
+        --Masked Helmet Specific
+        isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
+                                                    --Use this ONLY when you want to define a helmet with a mask. Otherwise keep this false, = a standard armor for your head.
 
         --Custom stuff, only work if custom type
         customexpression = function(item,affliction,data)         --expression to caculate plate damage
