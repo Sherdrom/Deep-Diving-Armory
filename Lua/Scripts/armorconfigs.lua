@@ -1173,7 +1173,7 @@ function Deep_Lua.Armors.AddtoMain(configtable)
     for id,config in pairs(configtable) do
         if Deep_Lua.Armors[id] == nil then goto goodend end
         if config.override ~= true then
-            print("‖color:gui.yellow‖Warning: Config for " .. id .. " is already exist. Please use override control parameter.‖end‖")
+            print("‖color:gui.yellow‖Warning: Config for " .. id .. " already exists. Please use override control parameter.‖end‖")
             goto loopend
         elseif Deep_Lua.Armors[id].protected == true and config.forceoverride ~= true then
             print("‖color:gui.yellow‖Warning: Config for " .. id .. " is protected. Skipping...‖end‖")
