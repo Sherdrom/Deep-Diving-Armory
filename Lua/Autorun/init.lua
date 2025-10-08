@@ -14,8 +14,10 @@ if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/missileframework.lua")--Missile Main, will be override if Framework is already exist
     dofile(Deep_Lua.Path .. "/Lua/Scripts/LockFix.lua")--Locked Item Fixer
     dofile(Deep_Lua.Path .. "/Lua/Scripts/RefreshTool.lua")--Item Refresh Tool
-    
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/NotLuaMissing.lua")--Not Lua Missing
+
 end
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Airburst.lua")--Airburst stuff, work both side
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/Alter_NVG.lua")
+
