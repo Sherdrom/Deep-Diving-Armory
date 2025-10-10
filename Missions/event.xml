@@ -724,6 +724,22 @@
       <ConversationAction text="EventText.deep_beacon_fight_pirate.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
     </ScriptedEvent>
 
+    <ScriptedEvent identifier="deep_meet_on_the_battleground_sp" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <WaitAction time="0" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="BeaconStation" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="0" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="BeaconStation" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="0" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="BeaconStation" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="0" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="BeaconStation" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="0" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="BeaconStation" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="5" />
+      <ConversationAction text="EventText.deep_beacon_fight_pirate.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
+    </ScriptedEvent>
+
 	  </EventPrefabs>
 
   <EventSet identifier="deep_outpost_mission_easy" leveltype="outpost"  locationtype="deep_mobile_city_typhoon,outpost,city,research,military,mine,colony,settlement,construction,camp,base,blockade,survey,extraction,study,lab,clinic,hospital,surgery,hydroponics,biosphere,nourishment,factory,shipyard,fusion,MilitaryForces,HuskChurch,SinkingCircus" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="15" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true"> 
