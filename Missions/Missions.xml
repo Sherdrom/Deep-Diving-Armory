@@ -417,7 +417,8 @@
     identifier="deep_beacon_fight_pirate_normal"
     textidentifier="deep_beacon_fight_pirate_normal"
     achievementidentifier="deep_beacon_fight_pirate_normal"
-    tags="deep_beacon_fight_new"
+    tags="deep_close_combat"
+    beaconTags="deep_close_combat_pirate"
     type="Beacon"
     allowretry="false"
     difficulty="4"
@@ -428,7 +429,7 @@
     <Reputation identifier="coalition" amount="3" />
     <Reputation identifier="separatists" amount="3" />
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
-    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <!--<TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>-->
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_normal" campaignonly="true"/>
   </BeaconMission>
 
@@ -436,7 +437,8 @@
     identifier="deep_beacon_fight_pirate_hard"
     textidentifier="deep_beacon_fight_pirate_hard"
     achievementidentifier="deep_beacon_fight_pirate_hard"
-    tags="deep_beacon_fight_new"
+    tags="deep_close_combat"
+    beaconTags="deep_close_combat_pirate"
     type="Beacon"
     allowretry="false"
     difficulty="4"
@@ -447,7 +449,27 @@
     <Reputation identifier="coalition" amount="5" />
     <Reputation identifier="separatists" amount="5" />
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
-    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <!--<TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>-->
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_hard" campaignonly="true"/>
+  </BeaconMission>
+
+  <BeaconMission
+    identifier="deep_meet_on_the_battleground"
+    textidentifier="deep_meet_on_the_battleground"
+    achievementidentifier="deep_meet_on_the_battleground"
+    tags="deep_meet_on_the_battleground"
+    beaconTags="deep_meet_on_the_battleground"
+    type="Beacon"
+    allowretry="false"
+    difficulty="4"
+    reward="12000"
+    minleveldifficulty="0"
+    maxleveldifficulty="100"
+    sideobjective="false">
+    <Reputation identifier="coalition" amount="15" />
+    <Reputation identifier="separatists" amount="-10" />
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_meet_on_the_battleground_sp" campaignonly="true"/>
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_hard" campaignonly="true"/>
   </BeaconMission>
 
