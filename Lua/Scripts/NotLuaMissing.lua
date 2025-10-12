@@ -6,6 +6,6 @@ Hook.Add("Deep_NotLuaMissing", "Deep_NotLuaMissing",
             if CharacterHealth.GetAfflictionStrengthByIdentifier("deep_missing_Lua", true) > 0 then
                 CharacterHealth.ReduceAfflictionOnAllLimbs("deep_missing_Lua", 1, nil, nil)
             end
-        end, 50)
+        end, 1000)
     end
 )
