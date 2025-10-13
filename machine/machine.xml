@@ -1,48 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item
-		name=""
-    identifier="chemicalreactionchamber"
-    tags="chemicalfabricator,donttakeitems,dontsellitems"
-	subcategory="deep_machine"
-    category="Machine"
-		linkable="true"
-    allowedlinks="deconstructor,locker"
-    description=""
-    scale="0.5" 
-    damagedbyexplosions="true" 
-    explosiondamagemultiplier="0.2">
-	  <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="electrical" level="20" />
-      <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="6" />
-      <RequiredItem identifier="fpgacircuit" amount="2"/>
-      <RequiredItem identifier="plastic" amount="4" />
-    </Fabricate>
-    <Deconstruct time="10">
-      <Item identifier="steel" amount="6" />
-      <Item identifier="fpgacircuit" amount="2" />
-      <Item identifier="plastic" amount="4" />
-    </Deconstruct>
-
+  <Item name="" identifier="chemicalreactionchamber" hideinmenus="true" tags="chemicalfabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2">
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
-    <Sprite texture="%ModDir%/machine/machine.png" sourcerect="34,13,219,254" depth="0.8"/>
-    <BrokenSprite texture="%ModDir%/machine/machine.png" sourcerect="281,13,220,253" depth="0.8" maxcondition="60" fadein="true" />    
-	<Body width="220" height="250" density="40" />
+    <Sprite texture="%ModDir%/machine/machine.png" sourcerect="34,13,219,254" depth="0.8" />
+    <BrokenSprite texture="%ModDir%/machine/machine.png" sourcerect="281,13,220,253" depth="0.8" maxcondition="60" fadein="true" />
+    <Body width="220" height="250" density="40" />
     <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
-      <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
-        <Conditional attached="false" />
+      <StatusEffect type="Always" target="This" disabledeltatime="true" setvalue="true">
+        <SpawnItem identifiers="deep_generalfabricator" spawnposition="ThisInventory" Count="1" />
+        <dropcontaineditems />
+        <remove />
       </StatusEffect>
     </Holdable>
-	<Fabricator canbeselected="true" powerconsumption="500.0" msg="ItemMsgInteractSelect" fabricationspeed="1">
+    <Fabricator canbeselected="true" powerconsumption="500.0" msg="ItemMsgInteractSelect" fabricationspeed="1">
       <GuiFrame relativesize="0.4,0.45" style="ItemUI" anchor="Center" />
-      <sound file="%ModDir%/machine/bubble.ogg" type="OnActive" range="100.0" volumeproperty="RelativeVoltage" loop="true"/>
+      <sound file="%ModDir%/machine/bubble.ogg" type="OnActive" range="100.0" volumeproperty="RelativeVoltage" loop="true" />
       <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
       <StatusEffect type="InWater" target="This" condition="-0.5" />
     </Fabricator>
     <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
-      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel"/>
+      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
       <RequiredSkill identifier="electrical" level="55" />
       <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
         <Sound file="Content/Sounds/Damage/Electrocution1.ogg" range="1000" />
@@ -50,12 +28,12 @@
         <Affliction identifier="stun" strength="4" />
         <Affliction identifier="burn" strength="5" />
       </StatusEffect>
-      <RequiredItem items="screwdriver" type="Equipped"/>
-      <input name="power_in" displayname="connection.powerin"/>
+      <RequiredItem items="screwdriver" type="Equipped" />
+      <input name="power_in" displayname="connection.powerin" />
       <output name="condition_out" displayname="connection.conditionout" />
     </ConnectionPanel>
     <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
-      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI"/>
+      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI" />
       <RequiredSkill identifier="mechanical" level="55" />
       <RequiredItem items="wrench" type="Equipped" />
       <ParticleEmitter particle="damagebubbles" particlespersecond="2" scalemin="0.5" scalemax="1.5" anglemax="360" velocitymin="-10" velocitymax="10" mincondition="0.0" maxcondition="50.0" />
@@ -67,30 +45,81 @@
         <Affliction identifier="stun" strength="4" />
       </StatusEffect>
     </Repairable>
-    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true"/>
-    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true"/>
+    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
+    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
   </Item>
-  
-  <Item
-		name=""
-    identifier="ore_refining_machine"
-    tags="ore_refining_machine,donttakeitems,dontsellitems"
-	subcategory="deep_machine"
-    category="Machine"
-    linkable="true"
-    allowedlinks="deconstructor,locker"
-    description=""
-    scale="0.5" 
-    damagedbyexplosions="true" 
-    explosiondamagemultiplier="0.2">
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="deep_general_fabricator" tags="deep_general_fabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.4" damagedbyexplosions="true" explosiondamagemultiplier="0.2">
+  <Upgrade gameversion="0.10.4.0">
+      <Repairable Msg="ItemMsgRepairWrench" />
+    </Upgrade>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="electrical" level="20" />
+      <RequiredSkill identifier="mechanical" level="30" />
+      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="fpgacircuit" amount="1" />
+      <RequiredItem identifier="plastic" amount="2" />
+      <RequiredItem identifier="uranium" amount="1" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" amount="2" />
+      <Item identifier="fpgacircuit" amount="1" />
+      <Item identifier="plastic" amount="2" />
+    </Deconstruct>
+    <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
+    <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="372,13,335,277" depth="0.8" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/machine/machine_2.png" sourcerect="374,333,335,277" depth="0.8" maxcondition="60" fadein="true" origin="0.5,0.5" />
+    <Body width="220" height="250" density="40" />
+    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
+        <Conditional attached="false" />
+      </StatusEffect>
+    </Holdable>
+    <Fabricator canbeselected="true" powerconsumption="0.0" msg="ItemMsgInteractSelect" fabricationspeed="1" CreateButtonText="true" >
+      <GuiFrame relativesize="0.4,0.6" style="ItemUI" anchor="Center" />
+      <sound file="Content/Items/Fabricators/Fabricator.ogg" type="OnActive" range="1000.0" volumeproperty="RelativeVoltage" loop="true" />
+      <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
+      <StatusEffect type="InWater" target="This" condition="-0.5" />
+    </Fabricator>
+    <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
+      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
+      <RequiredSkill identifier="electrical" level="55" />
+      <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
+        <Sound file="Content/Sounds/Damage/Electrocution1.ogg" range="1000" />
+        <Explosion range="100.0" force="1.0" flames="false" shockwave="false" sparks="true" underwaterbubble="false" />
+        <Affliction identifier="stun" strength="4" />
+        <Affliction identifier="burn" strength="5" />
+      </StatusEffect>
+      <RequiredItem items="screwdriver" type="Equipped" />
+      <input name="power_in" displayname="connection.powerin" />
+      <output name="condition_out" displayname="connection.conditionout" />
+    </ConnectionPanel>
+    <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
+      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI" />
+      <RequiredSkill identifier="mechanical" level="55" />
+      <RequiredItem items="wrench" type="Equipped" />
+      <ParticleEmitter particle="damagebubbles" particlespersecond="2" scalemin="0.5" scalemax="1.5" anglemax="360" velocitymin="-10" velocitymax="10" mincondition="0.0" maxcondition="50.0" />
+      <ParticleEmitter particle="smoke" particlespersecond="2" scalemin="1" scalemax="2.5" anglemax="360" velocitymin="-50" velocitymax="50" mincondition="15.0" maxcondition="50.0" />
+      <ParticleEmitter particle="heavysmoke" particlespersecond="2" scalemin="1.0" scalemax="2.5" anglemax="360" distancemax="60" mincondition="0.0" maxcondition="15.0" />
+      <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
+        <Sound file="Content/Items/MechanicalRepairFail.ogg" range="1000" />
+        <Affliction identifier="lacerations" strength="5" />
+        <Affliction identifier="stun" strength="4" />
+      </StatusEffect>
+    </Repairable>
+    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
+    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
+  </Item>
+
+  <Item name="" identifier="ore_refining_machine" tags="ore_refining_machine,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2">
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="100" />
       <RequiredSkill identifier="mechanical" level="100" />
       <RequiredItem identifier="steel" amount="6" />
-      <RequiredItem identifier="fpgacircuit" amount="2"/>
+      <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="plastic" amount="4" />
-	  <RequiredItem identifier="deep_ssd" amount="3" />
-	  <RequiredItem identifier="deep_nuclear_battery" />
+      <RequiredItem identifier="deep_ssd" amount="3" />
+      <RequiredItem identifier="deep_nuclear_battery" />
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" amount="6" />
@@ -98,22 +127,22 @@
       <Item identifier="plastic" amount="4" />
     </Deconstruct>
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
-    <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="72,11,237,259" depth="0.8"/>
-	<Body width="220" height="250" density="40" />
+    <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="72,11,237,259" depth="0.8" />
+    <Body width="220" height="250" density="40" />
     <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
       <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
         <Conditional attached="false" />
       </StatusEffect>
     </Holdable>
-	<Fabricator canbeselected="true" powerconsumption="0" msg="ItemMsgInteractSelect" fabricationspeed="1">
+    <Fabricator canbeselected="true" powerconsumption="0" msg="ItemMsgInteractSelect" fabricationspeed="1">
       <GuiFrame relativesize="0.4,0.45" style="ItemUI" anchor="Center" />
-      <sound file="Content/Items/Fabricators/Deconstructor.ogg" type="OnActive" range="1000.0" volumeproperty="RelativeVoltage" loop="true"/>
+      <sound file="Content/Items/Fabricators/Deconstructor.ogg" type="OnActive" range="1000.0" volumeproperty="RelativeVoltage" loop="true" />
       <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
       <StatusEffect type="InWater" target="This" condition="-0.5" />
     </Fabricator>
     <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
-      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI"/>
+      <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI" />
       <RequiredSkill identifier="mechanical" level="55" />
       <RequiredItem items="wrench" type="Equipped" />
       <ParticleEmitter particle="damagebubbles" particlespersecond="2" scalemin="0.5" scalemax="1.5" anglemax="360" velocitymin="-10" velocitymax="10" mincondition="0.0" maxcondition="50.0" />
@@ -125,17 +154,15 @@
         <Affliction identifier="stun" strength="4" />
       </StatusEffect>
     </Repairable>
-    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true"/>
-    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true"/>
+    <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
+    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
   </Item>
-  
-  
-    <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5">
+  <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
       <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="fpgacircuit" amount="1"/>
+      <RequiredItem identifier="fpgacircuit" amount="1" />
       <RequiredItem identifier="plastic" amount="4" />
     </Fabricate>
     <Deconstruct time="10">
@@ -144,7 +171,7 @@
       <Item identifier="plastic" amount="4" />
     </Deconstruct>
     <Sprite name="ammoreloadmachine" texture="%ModDir%/machine/machine.png" sourcerect="534,12,220,274" depth="0.74" origin="0.5,0.5" />
-      <Body width="280" height="210" density="40" />
+    <Body width="280" height="210" density="40" />
     <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
       <RequiredItem identifier="wrench" type="Equipped" />
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" />
@@ -155,1527 +182,1466 @@
     <ItemContainer capacity="0" maxstacksize="1" slotsperrow="4" hideitems="true" itempos="48,-175" canbeselected="true">
       <GuiFrame relativesize="0.2,0.5" anchor="Center" style="ItemUI" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-	  <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-	  <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-	  <!--1个弹药箱，64个步枪弹匣，96个冲锋枪弹匣，128个手枪弹匣，32个弹鼓，16个机枪弹箱-->
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制步枪，狙击弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
+      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
+      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
+      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <!--1个弹药箱，64个步枪弹匣，96个冲锋枪弹匣，128个手枪弹匣，32个弹鼓，16个机枪弹箱-->
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制步枪，狙击弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制冲锋枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制冲锋枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制手枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制手枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_lead" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="drums_tom_lead" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制通用机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制通用机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_lead" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制轻机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制轻机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_lead" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--钛制弹药箱-->
-	  <!--钛制步枪，狙击弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹药箱-->
+        <!--钛制步枪，狙击弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_tit_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制冲锋枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制冲锋枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_tit_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制手枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制手枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_tit_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_tit" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制通用机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制通用机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tit" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制轻机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制轻机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_tit" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25">
             <Requireditem items="aa12_tit_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="rifle_tit_reload_heavy" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--刚素弹药箱-->
-	  <!--刚素步枪，狙击弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹药箱-->
+        <!--刚素步枪，狙击弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_phy_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素冲锋枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素冲锋枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_phy_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素手枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素手枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_phy_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_phy" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素通用机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素通用机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素轻机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素轻机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_phy" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25">
             <Requireditem items="aa12_phy_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="rifle_phy_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--反器材reload，1个弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--反器材reload，1个弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="rifle_phy_reload_heavy_1" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  
-	  <!--雷刚弹药箱-->
-	  <!--雷刚步枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹药箱-->
+        <!--雷刚步枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_phy_ful_reload_4" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚狙击弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚狙击弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="sniper_phy_ful_reload_2" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚冲锋枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚冲锋枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚手枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚手枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹鼓-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹鼓-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_phy_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚通用机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚通用机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚轻机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚轻机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_phy_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--雷刚大狙，2个弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚大狙，2个弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="rifle_phy_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-
-      <!--钨刚弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚冲锋枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚冲锋枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚手枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚手枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚弹鼓-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹鼓-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_tun_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚通用机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚通用机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tun_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚轻机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚轻机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_tun_ful" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚大狙，2个弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚大狙，2个弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="rifle_tun_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--mg42-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-37.45" >
+          </StatusEffect>
+        </Containable>
+        <!--mg42-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-37.45">
             <Requireditem items="machinegun_heavy_tun_ful_mg42" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--贫铀弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_du_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--冲锋枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--冲锋枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_du_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--大狙弹匣，2个-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--大狙弹匣，2个-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-      <!--贫铀通用机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀通用机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀轻机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀轻机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-
-      <!--铜制步枪，狙击弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制步枪，狙击弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="rifle_rip_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制冲锋枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制冲锋枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417">
             <Requireditem items="smg_rip_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制手枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制手枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125">
             <Requireditem items="pistol_rip_reload" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125">
             <Requireditem items="drums_rip" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625">
             <Requireditem items="drums_tom_rip" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制通用机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制通用机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5">
             <Requireditem items="machinegun_heavy_rip" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制轻机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制轻机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-6.25">
             <Requireditem items="machinegun_light_rip" excludefullcondition="true" type="Contained" targetslot="4" />
-      </StatusEffect>
-      </Containable>
-
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制步枪，狙击弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制步枪，狙击弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_lead_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制冲锋枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制冲锋枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_lead_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制手枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制手枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_lead_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_lead" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="drums_tom_lead" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制通用机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制通用机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_lead" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制轻机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制轻机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_lead" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--钛制弹药箱-->
-	  <!--钛制步枪，狙击弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹药箱-->
+        <!--钛制步枪，狙击弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_tit_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制冲锋枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制冲锋枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_tit_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制手枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制手枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_tit_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_tit" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制通用机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制通用机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tit" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制轻机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制轻机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_tit" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25">
             <Requireditem items="aa12_tit_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="rifle_tit_reload_heavy" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--刚素弹药箱-->
-	  <!--刚素步枪，狙击弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹药箱-->
+        <!--刚素步枪，狙击弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_phy_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素冲锋枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素冲锋枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_phy_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素手枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素手枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_phy_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_phy" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素通用机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素通用机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素轻机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素轻机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_phy" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25">
             <Requireditem items="aa12_phy_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="rifle_phy_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--反器材reload，1个弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--反器材reload，1个弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="rifle_phy_reload_heavy_1" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  
-	  <!--雷刚弹药箱-->
-	  <!--雷刚步枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹药箱-->
+        <!--雷刚步枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_phy_ful_reload_4" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚狙击弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚狙击弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="sniper_phy_ful_reload_2" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚冲锋枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚冲锋枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚手枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚手枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹鼓-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹鼓-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_phy_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚通用机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚通用机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚轻机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚轻机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_phy_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--雷刚大狙，2个弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚大狙，2个弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="rifle_phy_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-
-      <!--钨刚弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚冲锋枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚冲锋枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚手枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚手枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚弹鼓-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹鼓-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_tun_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚通用机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚通用机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tun_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚轻机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚轻机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_tun_ful" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚大狙，2个弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚大狙，2个弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="rifle_tun_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--mg42-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-37.45" >
+          </StatusEffect>
+        </Containable>
+        <!--mg42-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-37.45">
             <Requireditem items="machinegun_heavy_tun_ful_mg42" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--贫铀弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_du_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--冲锋枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--冲锋枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_du_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--大狙弹匣，2个-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--大狙弹匣，2个-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-      <!--贫铀通用机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀通用机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀轻机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀轻机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-
-      <!--铜制步枪，狙击弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制步枪，狙击弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="rifle_rip_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制冲锋枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制冲锋枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.0417">
             <Requireditem items="smg_rip_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制手枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制手枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-0.78125">
             <Requireditem items="pistol_rip_reload" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-3.125">
             <Requireditem items="drums_rip" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-1.5625">
             <Requireditem items="drums_tom_rip" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制通用机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制通用机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-12.5">
             <Requireditem items="machinegun_heavy_rip" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制轻机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制轻机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-6.25">
             <Requireditem items="machinegun_light_rip" excludefullcondition="true" type="Contained" targetslot="5" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制步枪，狙击弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制步枪，狙击弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制冲锋枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制冲锋枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制手枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制手枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="drums_tom_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制通用机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制通用机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制轻机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制轻机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--钛制弹药箱-->
-	  <!--钛制步枪，狙击弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹药箱-->
+        <!--钛制步枪，狙击弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_tit_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制冲锋枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制冲锋枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_tit_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制手枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制手枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_tit_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_tit" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制通用机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制通用机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tit" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制轻机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制轻机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_tit" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25">
             <Requireditem items="aa12_tit_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="rifle_tit_reload_heavy" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--刚素弹药箱-->
-	  <!--刚素步枪，狙击弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹药箱-->
+        <!--刚素步枪，狙击弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_phy_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素冲锋枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素冲锋枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_phy_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素手枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素手枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_phy_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_phy" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素通用机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素通用机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素轻机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素轻机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_phy" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25">
             <Requireditem items="aa12_phy_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="rifle_phy_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--反器材reload，1个弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--反器材reload，1个弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="rifle_phy_reload_heavy_1" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  
-	  <!--雷刚弹药箱-->
-	  <!--雷刚步枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹药箱-->
+        <!--雷刚步枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_phy_ful_reload_4" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚狙击弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚狙击弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="sniper_phy_ful_reload_2" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚冲锋枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚冲锋枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚手枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚手枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹鼓-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹鼓-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_phy_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚通用机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚通用机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚轻机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚轻机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_phy_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--雷刚大狙，2个弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚大狙，2个弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="rifle_phy_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-
-      <!--钨刚弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚冲锋枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚冲锋枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚手枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚手枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚弹鼓-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹鼓-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_tun_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚通用机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚通用机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tun_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚轻机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚轻机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_tun_ful" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚大狙，2个弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚大狙，2个弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="rifle_tun_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--mg42-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-37.45" >
+          </StatusEffect>
+        </Containable>
+        <!--mg42-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-37.45">
             <Requireditem items="machinegun_heavy_tun_ful_mg42" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--贫铀弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_du_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--冲锋枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--冲锋枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_du_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--大狙弹匣，2个-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--大狙弹匣，2个-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-      <!--贫铀通用机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀通用机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀轻机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀轻机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-
-      <!--铜制步枪，狙击弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制步枪，狙击弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_rip_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制冲锋枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制冲锋枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_rip_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制手枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制手枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_rip_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_rip" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="drums_tom_rip" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制通用机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制通用机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_rip" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制轻机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制轻机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_rip" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制步枪，狙击弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制步枪，狙击弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="rifle_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制冲锋枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制冲锋枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.0417">
             <Requireditem items="smg_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制手枪弹匣-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制手枪弹匣-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-0.78125">
             <Requireditem items="pistol_lead_reload" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-3.125">
             <Requireditem items="drums_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊弹鼓-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊弹鼓-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-1.5625">
             <Requireditem items="drums_tom_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制通用机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制通用机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-12.5">
             <Requireditem items="machinegun_heavy_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  <!--铅制轻机枪-->
-	  <Containable items="ammobox1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铅制轻机枪-->
+        <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-6.25">
             <Requireditem items="machinegun_light_lead" excludefullcondition="true" type="Contained" targetslot="6" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--钛制弹药箱-->
-	  <!--钛制步枪，狙击弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹药箱-->
+        <!--钛制步枪，狙击弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_tit_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制冲锋枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制冲锋枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_tit_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制手枪弹匣-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制手枪弹匣-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125">
             <Requireditem items="pistol_tit_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="drums_tit" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制通用机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制通用机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tit" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制轻机枪-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制轻机枪-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_tit" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12钛制弹鼓-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12钛制弹鼓-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25">
             <Requireditem items="aa12_tit_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="rifle_tit_reload_heavy" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--刚素弹药箱-->
-	  <!--刚素步枪，狙击弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹药箱-->
+        <!--刚素步枪，狙击弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_phy_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素冲锋枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素冲锋枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_phy_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素手枪弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素手枪弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125">
             <Requireditem items="pistol_phy_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="drums_phy" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素通用机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素通用机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素轻机枪-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素轻机枪-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_phy" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--AA12刚素弹鼓-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25" >
+          </StatusEffect>
+        </Containable>
+        <!--AA12刚素弹鼓-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25">
             <Requireditem items="aa12_phy_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--重狙reload-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--重狙reload-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="rifle_phy_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--反器材reload，1个弹匣-->
-	  <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--反器材reload，1个弹匣-->
+        <Containable items="ammobox_12.7" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="rifle_phy_reload_heavy_1" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  
-	  <!--雷刚弹药箱-->
-	  <!--雷刚步枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹药箱-->
+        <!--雷刚步枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_phy_ful_reload_4" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚狙击弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚狙击弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="sniper_phy_ful_reload_2" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚冲锋枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚冲锋枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚手枪弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚手枪弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125">
             <Requireditem items="pistol_phy_ful_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹鼓-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹鼓-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="drums_phy_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚通用机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚通用机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_phy_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚轻机枪-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚轻机枪-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_phy_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--雷刚大狙，2个弹匣-->
-	  <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚大狙，2个弹匣-->
+        <Containable items="ammobox_phy_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="rifle_phy_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-
-      <!--钨刚弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚冲锋枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚冲锋枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚手枪弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚手枪弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125">
             <Requireditem items="pistol_tun_ful_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚弹鼓-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹鼓-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="drums_tun_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚通用机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚通用机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_tun_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--钨刚轻机枪-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚轻机枪-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_tun_ful" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚大狙，2个弹匣-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚大狙，2个弹匣-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="rifle_tun_ful_heavy_reload_2" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--mg42-->
-	  <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-37.45" >
+          </StatusEffect>
+        </Containable>
+        <!--mg42-->
+        <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-37.45">
             <Requireditem items="machinegun_heavy_tun_ful_mg42" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  
-	  
-	  <!--贫铀弹药箱-->
-	  <!--步枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹药箱-->
+        <!--步枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_du_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--冲锋枪弹匣-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--冲锋枪弹匣-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_du_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--大狙弹匣，2个-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--大狙弹匣，2个-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="rifle_du_reload_heavy_2" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-      <!--贫铀通用机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀通用机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_du" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀轻机枪-->
-	  <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀轻机枪-->
+        <Containable items="ammobox_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_du" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-
-      <!--铜制步枪，狙击弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制步枪，狙击弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="rifle_rip_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制冲锋枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制冲锋枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.0417">
             <Requireditem items="smg_rip_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制手枪弹匣-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制手枪弹匣-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-0.78125">
             <Requireditem items="pistol_rip_reload" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-3.125">
             <Requireditem items="drums_rip" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--汤姆逊铜制弹鼓-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625" >
+          </StatusEffect>
+        </Containable>
+        <!--汤姆逊铜制弹鼓-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-1.5625">
             <Requireditem items="drums_tom_rip" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制通用机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制通用机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-12.5">
             <Requireditem items="machinegun_heavy_rip" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
-	  <!--铜制轻机枪-->
-	  <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制轻机枪-->
+        <Containable items="ammobox_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-6.25">
             <Requireditem items="machinegun_light_rip" excludefullcondition="true" type="Contained" targetslot="7" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制弹-->
-	  <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制弹-->
+        <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox1" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹-->
-	  <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹-->
+        <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_7.62" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹-->
-	  <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹-->
+        <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_12.7" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹-->
-	  <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹-->
+        <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_phy_ful" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚弹-->
-	  <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹-->
+        <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_tun_ful" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹-->
+        <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_du" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
-      <!--铜制弹-->
-	  <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹-->
+        <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
             <Requireditem items="ammobox_rip" type="Contained" targetslot="0" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制弹-->
-	  <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制弹-->
+        <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox1" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹-->
-	  <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹-->
+        <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_7.62" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹-->
-	  <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹-->
+        <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_12.7" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹-->
-	  <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹-->
+        <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_phy_ful" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚弹-->
-	  <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹-->
+        <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_tun_ful" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹-->
+        <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_du" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
-      <!--铜制弹-->
-	  <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹-->
+        <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
             <Requireditem items="ammobox_rip" type="Contained" targetslot="1" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制弹-->
-	  <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制弹-->
+        <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox1" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹-->
-	  <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹-->
+        <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_7.62" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹-->
-	  <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹-->
+        <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_12.7" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹-->
-	  <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹-->
+        <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_phy_ful" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚弹-->
-	  <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹-->
+        <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_tun_ful" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹-->
+        <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_du" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
-      <!--铜制弹-->
-	  <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹-->
+        <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
             <Requireditem items="ammobox_rip" type="Contained" targetslot="2" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
-	  
-	  
-	  <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true" >
-	  <!--铅制弹-->
-	  <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <!--铅制弹-->
+        <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox1" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-	  <!--钛制弹-->
-	  <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钛制弹-->
+        <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_7.62" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-	  <!--刚素弹-->
-	  <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--刚素弹-->
+        <Containable items="rifle_phy_reload,smg_phy_reload,pistol_phy_reload,drums_phy,machinegun_heavy_phy,machinegun_light_phy,aa12_phy_reload,rifle_phy_reload_heavy_2,rifle_phy_reload_heavy_1" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_12.7" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-	  <!--雷刚弹-->
-	  <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--雷刚弹-->
+        <Containable items="rifle_phy_ful_reload_4,sniper_phy_ful_reload_2,smg_phy_ful_reload,pistol_phy_ful_reload,drums_phy_ful,machinegun_heavy_phy_ful,machinegun_light_phy_ful,rifle_phy_ful_heavy_reload_2" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_phy_ful" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-      <!--钨刚弹-->
-	  <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--钨刚弹-->
+        <Containable items="rifle_tun_ful_reload,smg_tun_ful_reload,pistol_tun_ful_reload,drums_tun_ful,machinegun_heavy_tun_ful,machinegun_light_tun_ful,rifle_tun_ful_heavy_reload_2,machinegun_heavy_tun_ful_mg42" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_tun_ful" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-	  <!--贫铀弹-->
-	  <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--贫铀弹-->
+        <Containable items="rifle_du_reload,smg_du_reload,rifle_du_reload_heavy_2,machinegun_heavy_du,machinegun_light_du" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_du" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
-      <!--铜制弹-->
-	  <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false" >
-	  <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100" >
+          </StatusEffect>
+        </Containable>
+        <!--铜制弹-->
+        <Containable items="rifle_rip_reload,smg_rip_reload,pistol_rip_reload,drums_rip,drums_tom_rip,machinegun_heavy_rip,machinegun_light_rip" excludebroken="false" excludefullcondition="false">
+          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
             <Requireditem items="ammobox_rip" type="Contained" targetslot="3" />
-      </StatusEffect>
-      </Containable>
+          </StatusEffect>
+        </Containable>
       </SubContainer>
     </ItemContainer>
   </Item>
-  </Items>
+</Items>
