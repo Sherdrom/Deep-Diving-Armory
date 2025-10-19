@@ -88,15 +88,16 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
         continue = false
         if Game.IsMultiplayer then
             local message = Networking.Start("PlayRicochetSound")
-            message.WriteInt16(1)
+            message.WriteInt16(item.WorldPosition.X)
+            message.WriteInt16(item.WorldPosition.Y)
             --for client in Client.ClientList do
             --    Networking.Send(message, client.Connection)    --abadoned due to potential to kill the server networ :(
             --end
             local client = Util.FindClientCharacter(char)
             Networking.Send(message, client.Connection)
-        else
-            SoundPlayer.PlaySound(RicochetSound, item.WorldPosition, 100, 100, 1)
-            print("1")
+        end
+        if not Game.IsMultiplayer then
+            SoundPlayer.PlaySound(RicochetSound, item.WorldPosition, 1, 5000, 1)
         end
         return 0, 0, continue
     end

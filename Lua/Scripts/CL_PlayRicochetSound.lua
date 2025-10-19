@@ -2,5 +2,7 @@ local RicochetSound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/jobgear/sou
 
 
 Networking.Receive("PlayRicochetSound", function(message)
-        SoundPlayer.PlaySound(RicochetSound, item.WorldPosition, 1, 100, 1)
+        local x = message.ReadInt16()
+        local y = message.ReadInt16()
+        SoundPlayer.PlaySound(RicochetSound, Vector2(x, y), 1, 5000, 1)
     end)
