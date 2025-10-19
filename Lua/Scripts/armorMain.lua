@@ -1,5 +1,7 @@
 Deep_Lua.Main = {}
 
+local RicochetSound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg")
+
 -- Limb convertion stuff
 local limbtoslot = {
     [LimbType.Head] = {InvSlotType.Head,0},
@@ -84,6 +86,18 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
 
     if ricochet then                                                                        --Jackpot
         continue = false
+        if Game.IsMultiplayer then
+            local message = Networking.Start("PlayRicochetSound")
+            message.WriteInt16(1)
+            --for client in Client.ClientList do
+            --    Networking.Send(message, client.Connection)    --abadoned due to potential to kill the server networ :(
+            --end
+            local client = Util.FindClientCharacter(char)
+            Networking.Send(message, client.Connection)
+        else
+            SoundPlayer.PlaySound(RicochetSound, item.WorldPosition, 100, 100, 1)
+            print("1")
+        end
         return 0, 0, continue
     end
 
@@ -184,9 +198,11 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
         end
         if clothdata ~= nil and outertargetid == "Any" then                                                     --Here we add up all strength for "Any" case
             clothaffliction.Strength = clothaffliction.Strength + i.Strength                                    --We actually trick our own codes. Makesure
+            executecloth = true
         end                                                                                                     --you wont use anything else than Strength
         if platedata ~= nil and innertargetid == "Any" then                                                     --in "Any" case. This var only contains
             plateaffliction.Strength = plateaffliction.Strength + i.Strength                                    --Strength in that case.
+            executeplate = true
         end
     end
 
