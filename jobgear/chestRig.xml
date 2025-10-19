@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="tanzan_m22" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="tanzan_m22" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light" >
   <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -14,12 +14,13 @@
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
     <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Torso" hidelimb="false" inheritscale="true" scale="0.68" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="11,177,151,177" />
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Torso" hidelimb="false" inheritscale="true" scale="0.68" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="11,177,151,177" >
+      </sprite>
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
     <StatValue stattype="MovementSpeed" value="0.1" />
     </Wearable>
@@ -42,7 +43,7 @@
       <Item identifier="organicfiber" amount="2" />
 	  <Item identifier="ballisticfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="70" />
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
@@ -70,7 +71,7 @@
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
@@ -98,7 +99,7 @@
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
@@ -126,7 +127,7 @@
       <Item identifier="organicfiber" amount="2" />
 	  <Item identifier="ballisticfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="70" />
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
@@ -154,7 +155,7 @@
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
@@ -182,7 +183,7 @@
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
@@ -210,7 +211,7 @@
       <Item identifier="organicfiber" amount="2" />
 	  <Item identifier="ballisticfiber" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="70" />
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
@@ -238,7 +239,7 @@
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
@@ -265,7 +266,7 @@
     <Deconstruct time="10">
       <Item identifier="ballisticfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="organicfiber" amount="2" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
@@ -380,7 +381,7 @@
     <Deconstruct time="10">
       <Item identifier="ballisticfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="organicfiber" amount="2" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
@@ -494,7 +495,7 @@
     <Deconstruct time="10">
       <Item identifier="KEVLAR" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
@@ -631,7 +632,7 @@
     <Deconstruct time="10">
       <Item identifier="KEVLAR" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="6" />
@@ -768,7 +769,7 @@
     <Deconstruct time="10">
       <Item identifier="KEVLAR" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="8" />
