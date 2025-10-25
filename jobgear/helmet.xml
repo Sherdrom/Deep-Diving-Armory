@@ -35,10 +35,10 @@
 	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Affliction identifier="deep_gpnvg18" amount="1" />
         <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
       </StatusEffect>
-      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" disabledeltatime="true" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
 		<RequiredItems items="gpnvg_18" type="Contained" />
       </StatusEffect>
@@ -78,6 +78,22 @@
 		<Affliction identifier="deep_chip_striker" strength="100" />
 		<RequiredItems items="chip_striker" type="Contained"  />
       </StatusEffect>
+
+      <!-- 戴上战术设备时，启动面板-->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.9" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
+		<RequiredItems tags="deep_helmet_tac" type="Contained"  />
+      </StatusEffect>
+
+	  <!-- 因甲鱼的大手，不得不走aff -->
+      <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="gte 1.0" />
+      </StatusEffect>
+
+	  <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="lt 1.0" />
+      </StatusEffect>
+
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -149,12 +165,12 @@
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
-	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnInserted" target="This"  disabledeltatime="true" setValue="true" >
 	  <LuaHook name="SixBFortySeven_Night_Off" />
 	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
-	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Origin" />
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
@@ -209,7 +225,7 @@
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Affliction identifier="deep_gpnvg18" amount="1" />
         <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
@@ -252,6 +268,22 @@
 		<Affliction identifier="deep_chip_striker" strength="100" />
 		<RequiredItems items="chip_striker" type="Contained"  />
       </StatusEffect>
+
+	        <!-- 戴上战术设备时，启动面板-->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.9" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
+		<RequiredItems tags="deep_helmet_tac" type="Contained"  />
+      </StatusEffect>
+
+	  <!-- 因甲鱼的大手，不得不走aff -->
+      <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="gte 1.0" />
+      </StatusEffect>
+
+	  <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="lt 1.0" />
+      </StatusEffect>
+
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -323,12 +355,12 @@
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
-	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnInserted" target="This" disabledeltatime="true" setValue="true" >
 	  <LuaHook name="FAST_Night_Off" />
 	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
-	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Origin" />
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
@@ -383,7 +415,7 @@
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Affliction identifier="deep_gpnvg18" amount="1" />
         <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
@@ -426,6 +458,22 @@
 		<Affliction identifier="deep_chip_striker" strength="100" />
 		<RequiredItems items="chip_striker" type="Contained"  />
       </StatusEffect>
+
+	        <!-- 戴上战术设备时，启动面板-->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.9" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
+		<RequiredItems tags="deep_helmet_tac" type="Contained"  />
+      </StatusEffect>
+
+	  <!-- 因甲鱼的大手，不得不走aff -->
+      <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="gte 1.0" />
+      </StatusEffect>
+
+	  <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="lt 1.0" />
+      </StatusEffect>
+
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -497,12 +545,12 @@
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
-	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnInserted" target="This" disabledeltatime="true" setValue="true" >
 	  <LuaHook name="FAST_BLACK_Night_Off" />
 	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
-	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Origin" />
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
@@ -559,7 +607,7 @@
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-        <Affliction identifier="deep_gpnvg18" amount="100" />
+        <Affliction identifier="deep_gpnvg18" amount="1" />
         <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
@@ -675,6 +723,21 @@
 	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
       </StatusEffect>
 	  
+	        <!-- 戴上战术设备时，启动面板-->
+	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.9" multiplyafflictionsbymaxvitality="true">
+		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
+		<RequiredItems tags="deep_helmet_tac" type="Contained"  />
+      </StatusEffect>
+
+	  <!-- 因甲鱼的大手，不得不走aff -->
+      <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="gte 1.0" />
+      </StatusEffect>
+
+	  <StatusEffect type="OnWearing" targettype="This,Character" interval="0.9" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
+        <Conditional deep_helmet_tac_detect="lt 1.0" />
+      </StatusEffect>
+
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -747,12 +810,12 @@
 	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" autoinject="true" >
       <Containable tags="deep_helmet_tac" hide="false" itempos="19,0" rotation="0" setactive="true" >
 	  <!-- 插入战术设备时，启动面板 -->
-	  <StatusEffect type="OnInserted" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="true" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnInserted" target="This" disabledeltatime="true" setValue="true" >
 	  <LuaHook name="GHOST_Night_Off" />
 	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
-	  <StatusEffect type="OnRemoved" target="This" TargetItemComponent="CustomInterface" drawhudwhenequipped="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Origin" />
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
