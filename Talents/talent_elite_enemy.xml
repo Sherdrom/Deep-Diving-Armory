@@ -19,6 +19,7 @@
 	<!-- 抗性 -->
 	<AbilityGroupInterval interval="1" >
       <Abilities>
+    <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
 		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
     <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
@@ -94,7 +95,8 @@
     </AbilityGroupEffect>
     
     <!-- 多人游戏动态抗性调整，20米范围内有敌人时，增加战斗能力，附近5人时达到最大 -->
-	<AbilityGroupInterval interval="0.9" >
+
+	<!--<AbilityGroupInterval interval="0.9" >
       <Conditions>
         <AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
       </Conditions>
@@ -108,7 +110,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
     <AbilityGroupInterval interval="0.9" >
       <Conditions>
