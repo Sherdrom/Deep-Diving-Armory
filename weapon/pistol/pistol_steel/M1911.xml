@@ -24,15 +24,15 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_steel/pistol_steel.png" sourcerect="11,10,112,76" depth="0.55" origin="0.5,0.5" />
     <Body width="80" height="50" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-30,-7" handle2="-20,-7" msg="ItemMsgPickUpSelect">
-    <StatusEffect type="OnActive" target="This" Scale="0.32" setvalue="true" >
+    <StatusEffect type="OnActive" interval="5" target="This" Scale="0.32" setvalue="true" >
     </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
       </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="3" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
@@ -59,18 +59,16 @@
 
     </Holdable>
     <RangedWeapon barrelpos="56,27" spread="3" unskilledspread="6" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.2" holdtrigger="true" >
-      <StatusEffect type="NotInWater" target="This" Condition="10" />
-      <StatusEffect type="InWater" target="This" Condition="20" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <Sound file="%ModDir%/weapon/ammo/m1911.ogg" type="OnUse" range="3000" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
       <ParticleEmitter particle="deep_plasmaspark" particlespersecond="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <StatusEffect type="OnUse" target="This">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" >
         <Explosion range="150.0" force="1" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="8.0" />
         <ParticleEmitter particle="deep_casingfirearm_45acp" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Contained">
+      <StatusEffect type="OnUse" target="Contained" disableDeltaTime="true" >
         <Use />
       </StatusEffect>
       <RequiredItems items="deep_.45acpmag" type="Contained" msg="ItemMsgAmmoRequired" />
@@ -116,7 +114,7 @@
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-4,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable tags="thermalgoggles_sight" hide="false" itempos="-4,15" setactive="true">
+        <Containable Items="thermalgoggles_sight" hide="false" itempos="-4,15" setactive="true">
           <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
         </Containable>
         <Containable Items="thermalgoggles_sight">

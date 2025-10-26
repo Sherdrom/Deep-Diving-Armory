@@ -24,8 +24,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="holographic_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="holographic_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -53,11 +53,11 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="2x_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="2x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -87,11 +87,11 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="2.5x_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="2.5x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -121,16 +121,16 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,202,184,70" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	          <Affliction identifier="3x_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	          <Affliction identifier="3x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -161,8 +161,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="red_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="red_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -191,8 +191,8 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="182,3,90,67" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="thermalgoggles_sight" strength="1" />
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="thermalgoggles_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
@@ -220,16 +220,16 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="284,276,226,59" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="thermalgoggles_sight_6x" strength="1" />
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="thermalgoggles_sight_6x" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -260,16 +260,16 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	        <Affliction identifier="8x_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	        <Affliction identifier="8x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -300,11 +300,11 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="1_3x_sight" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	  <Affliction identifier="1_3x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>

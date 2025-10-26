@@ -21,19 +21,19 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_phy/pistol_phy.png" sourcerect="13,197,109,109" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-35,5" handle2="-35,5" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="This" Scale="0.32" setvalue="true"></StatusEffect>
+      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
       </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="3" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->

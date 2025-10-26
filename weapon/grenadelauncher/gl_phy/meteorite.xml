@@ -19,18 +19,18 @@
 	<!--双手拿-->
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="60,0" handle1="-55,-12" handle2="80,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
 	<!-- 禁用榴弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_gl_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	  <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
 	<StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	<StatusEffect type="Onactive" interval="3" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
    <!-- 有碎甲芯片时，增加1级穿甲-->
@@ -59,18 +59,9 @@
 	  <ParticleEmitter particle="deep_casingfirearm_127_99" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="2" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="100" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" target="This" Condition="-200" />  
-	  <StatusEffect type="NotInWater" target="This" Condition="5"/>
-	  <StatusEffect type="InWater" target="This" Condition="130"/>
       <!--"Use" contained magazine to spawn projectiles.-->
       <StatusEffect type="OnUse" target="Contained">
         <Use />
-      </StatusEffect>
-	  <StatusEffect type="OnUse" Condition="-80" target="This" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
-      </StatusEffect>
-	  <StatusEffect type="OnUse" Condition="-120" target="This" >
-	  <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_meteorite_mag,tsm_grenade_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />

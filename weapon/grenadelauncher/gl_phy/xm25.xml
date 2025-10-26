@@ -17,12 +17,12 @@
     <Body width="400" height="70" density="52" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="45,0" aimpos="52,5" handle1="-20,-30" handle2="80,10" holdangle="-50" msg="ItemMsgPickUpSelect">
     <!-- 禁用榴弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_gl_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	  <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>

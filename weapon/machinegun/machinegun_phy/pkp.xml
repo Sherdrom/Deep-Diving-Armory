@@ -23,30 +23,30 @@
     <Body width="340" height="70" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="73,8" handle1="-90,-30" handle2="60,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
 	<!-- 禁用机枪合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_machinegun_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	  <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     <!--弹箱打空时，回归原始贴图-->
-    <StatusEffect type="OnActive" target="Contained" comparison="and" setvalue="true" >
+    <StatusEffect type="OnActive" interval="0.9" target="Contained" comparison="and" setvalue="true" >
     <Conditional condition="eq 0" />
     <LuaHook name="PKPOriginSprite" />
     </StatusEffect>
-    <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
+    <StatusEffect type="OnActive" interval="3" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" setvalue="true" >
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
-	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	<StatusEffect type="Onactive" interval="3" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
-	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	 <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
     <Affliction identifier="deep_machinegunner_heavy_detect" strength="100" />
      </StatusEffect>

@@ -19,13 +19,13 @@
     </Wearable>
     <MeleeWeapon slots="RightHand+LeftHand" blocksplayers="true" controlpose="true" holdpos="-20,-15" aimpos="40,-60" handle1="-70,-20" handle2="0,-20" holdangle="200" reload="1.2" range="800" combatPriority="10" msg="ItemMsgPickUpSelect">
 	<!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	<StatusEffect type="NotInWater" target="This" Condition="5" disabledeltatime="true" />
 	<StatusEffect type="InWater" target="This" Condition="5" disabledeltatime="true" />
-	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	<StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true" >
 	<GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	<Affliction identifier="deep_wuchuan_detection" strength="100" />
 	</StatusEffect>
@@ -97,10 +97,10 @@
     <Sprite texture="%ModDir%/weapon/melee/melee.png" sourcerect="18,154,96,27" depth="0.55" origin="0.5,0.5" />
     <Body width="100" height="27" density="25" />
     <MeleeWeapon slots="Any,RightHand,LeftHand" aimpos="50,0" handle1="10,0" holdangle="90" reload="1" range="75" combatPriority="25" msg="ItemMsgPickUpSelect">
-     <StatusEffect type="Onactive" target="Character" setvalue="true" >
+     <StatusEffect type="Onactive" interval="3" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
-	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	 <StatusEffect type="Onactive" interval="0.5" target="Character" setvalue="true" >
 	  <Affliction identifier="deep_knife_detect_1" strength="100" />
 	 </StatusEffect>
       <Attack targetimpulse="5" severlimbsprobability="0.2" itemdamage="5" structuredamage="0" structuresoundtype="StructureSlash" penetration="0.5" >
