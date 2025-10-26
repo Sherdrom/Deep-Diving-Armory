@@ -1,6 +1,8 @@
 Deep_Lua.Main = {}
 
-local RicochetSound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg")
+if not Game.IsMultiplayer then
+    local RicochetSound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg")
+end
 
 -- Limb convertion stuff
 local limbtoslot = {
