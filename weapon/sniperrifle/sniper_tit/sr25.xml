@@ -22,22 +22,22 @@
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_tit/sniper_tit.png" sourcerect="23,848,495,132" depth="0.55" origin="0.5,0.5" />
     <Body width="300" height="70" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,5" handle1="-65,-20" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="This" Scale="0.25" setvalue="true"></StatusEffect>
+      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
       <!-- 禁用狙击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sniper_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
@@ -48,11 +48,11 @@
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
-      <!--6倍镜-->
+      <!--6倍镜
       <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="6x_sight" strength="10" />
         <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
-      </StatusEffect>
+      </StatusEffect>-->
 
       <!-- 有短枪口件时，略微增加枪口距离-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="278,26" comparison="and" setvalue="true">
@@ -89,7 +89,7 @@
       <StatusEffect type="OnUse" target="Contained">
         <Use />
       </StatusEffect>
-      <!--8倍镜-->
+      <!--8倍镜
       <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="8x_sight_reduce" strength="4" />
         <RequiredItems items="8x_sight" type="Contained" />
@@ -102,8 +102,8 @@
         <Conditional speed="gt 0.5" />
         <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
         <RequiredItems items="8x_sight" type="Contained" />
-      </StatusEffect>
-      <!--6倍镜-->
+      </StatusEffect>-->
+      <!--6倍镜
       <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="6x_sight_reduce" strength="4" />
         <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
@@ -116,7 +116,7 @@
         <Conditional speed="gt 3" />
         <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
         <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
-      </StatusEffect>
+      </StatusEffect>-->
       <StatusEffect type="OnUse" Condition="-100" target="This">
         <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>

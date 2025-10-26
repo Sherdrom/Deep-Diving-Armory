@@ -24,23 +24,20 @@
     <Sprite texture="%ModDir%/weapon/smg/smg_steel/smg_steel.png" sourcerect="13,357,322,118" depth="0.55" origin="0.5,0.5" />
     <Body width="100" height="65" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-    <StatusEffect type="OnActive" target="This" Scale="0.25" setvalue="true">
+    <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true">
       </StatusEffect>
       <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" SpeedMultiplier="1.15" setvalue="true">
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <Affliction identifier="smg" strength="100" />
       </StatusEffect>
-      <StatusEffect type="OnContained" target="Character" setvalue="true">
-        <Affliction identifier="smg_water_resistance" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="Onactive" target="Character" setvalue="true">
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->

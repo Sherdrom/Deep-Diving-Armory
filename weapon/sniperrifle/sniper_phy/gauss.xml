@@ -16,12 +16,12 @@
     <Body width="370" height="80" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="70,-10" aimpos="90,5" handle1="-85,-8" handle2="100,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
 	<!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	<!-- 禁用狙击合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_sniper_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
@@ -31,10 +31,10 @@
 	  <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" />
 	  <RequiredItems items="deep_gauss_mag" type="Contained" />
       </StatusEffect>
-	  <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	  <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
-	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	 <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->

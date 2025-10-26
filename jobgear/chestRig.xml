@@ -277,58 +277,58 @@
     <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
     <!-- 轻装上阵合约-->
     
-      <StatusEffect type="OnWearing" target="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
+      <StatusEffect type="OnWearing" interval="0.9" target="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		        <RequiredItems tags="deep_travel_light" type="Contained" >
             </RequiredItems>
             <dropitem/>
       </StatusEffect>
 
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
     <!-- 钢制插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_3" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_5" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_7" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_9" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_10" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
  <!-- 陶瓷插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 复合插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
 	  </StatusEffect>
@@ -340,19 +340,19 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.15" damagesound="LimbArmor" deflectprojectiles="true" />
       <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.53" inheritsourcerect="false" sourcerect="184,175,147,207" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="chip_ergonomics" type="Contained"  />
 	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
 	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
 	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
 	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
       </StatusEffect>
@@ -391,57 +391,57 @@
     <Body width="130" height="170" density="25" />
     <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
     <!-- 轻装上阵合约-->
-      <StatusEffect type="OnWearing" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
+      <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" />
         <dropitem/>
       </StatusEffect>
     <StatValue stattype="MovementSpeed" value="-0.05" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
     <!-- 钢制插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_3" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_5" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_7" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_9" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_10" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
  <!-- 陶瓷插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 复合插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
 	  </StatusEffect>
@@ -452,19 +452,19 @@
       <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.45" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.57" inheritsourcerect="false" sourcerect="362,177,137,178" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_ergonomics" type="Contained"  />
 	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
 	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
 	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
 	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
       </StatusEffect>
@@ -506,70 +506,70 @@
     <Body width="150" height="190" density="25" />
     <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
     <!-- 轻装上阵合约-->
-      <StatusEffect type="OnWearing" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
+      <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" />
         <dropitem/>
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
     <StatValue stattype="MovementSpeed" value="-0.1" />
     <!-- 钢制插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_3" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_5" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_7" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_9" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_10" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
  <!-- 钢制手臂插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_8_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 陶瓷插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 复合插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
 	  </StatusEffect>
@@ -587,19 +587,19 @@
 	  <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="RightHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="100,10,1,1" />
 	  <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="LeftHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="100,10,1,1" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="-5" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_ergonomics" type="Contained"  />
 	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
 	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
 	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
 	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
       </StatusEffect>
@@ -643,70 +643,70 @@
     <Body width="150" height="200" density="25" />
     <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
     <!-- 轻装上阵合约-->
-      <StatusEffect type="OnWearing" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
+      <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" />
         <dropitem/>
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
     <StatValue stattype="MovementSpeed" value="-0.15" />
     <!-- 钢制插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_3" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_5" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_7" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_9" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_10" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
  <!-- 钢制手臂插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_8_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 陶瓷插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 复合插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
 	  </StatusEffect>
@@ -724,19 +724,19 @@
 	  <sprite texture="%ModDir%/jobgear/armor/armor_2.png" limb="RightHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="0,0,1,1" />
 	  <sprite texture="%ModDir%/jobgear/armor/armor_2.png" limb="LeftHand" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="0,0,1,1" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="-15" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_ergonomics" type="Contained"  />
 	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
 	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
 	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
 	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
       </StatusEffect>
@@ -780,70 +780,70 @@
     <Body width="150" height="190" density="25" />
     <Wearable slots="Any,OuterClothes" msg="ItemMsgPickUpSelect">
     <!-- 轻装上阵合约-->
-      <StatusEffect type="OnWearing" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
+      <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" />
         <dropitem/>
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" >
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
 	  <StatValue stattype="MovementSpeed" value="-0.2" />
     <!-- 钢制插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_3" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_5" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_7" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_9" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_10" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
         <Affliction identifier="steel_plate_heavy_run" strength="1" />
 	  </StatusEffect>
  <!-- 钢制手臂插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_4" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_4_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_6" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_6_debuff" strength="1" />
 	  </StatusEffect>
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems items="deep_plate_metal_arm_8" type="Contained" />
 	  	  <Affliction identifier="deep_plate_metal_arm_8_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 陶瓷插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
  <!-- 复合插板debuff-->
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
 	  </StatusEffect>
@@ -864,19 +864,19 @@
     <sprite texture="%ModDir%/jobgear/armor/armor_2.png" limb="RightThigh" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="0,0,1,1" />
 	  <sprite texture="%ModDir%/jobgear/armor/armor_2.png" limb="LeftThigh" hidelimb="false" inheritscale="true" scale="0.48" inheritorigin="false" origin="0.55,0.65" inheritsourcerect="false" sourcerect="0,0,1,1" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="-20" />
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_ergonomics" type="Contained"  />
 	  	  <Affliction identifier="chip_ergonomics_1" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_heavy_armor" type="Contained"  />
 	  	  <Affliction identifier="chip_heavy_armor" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_strengthening_of_limbs" type="Contained"  />
 	  	  <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
       </StatusEffect>
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 	  <RequiredItems items="chip_emergency_defibrillation" type="Contained"  />
 	  	  <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
       </StatusEffect>
