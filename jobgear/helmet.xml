@@ -40,49 +40,49 @@
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" disabledeltatime="true" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
-		<RequiredItems items="chip_cqb" type="Contained"  />
+		<RequiredItems items="chip_cqb" type="Contained"  targetslot="1" />
       </StatusEffect>
       <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_marksman_1" strength="100" />
-		<RequiredItems items="chip_marksman" type="Contained"  />
+		<RequiredItems items="chip_marksman" type="Contained" targetslot="1" />
       </StatusEffect>	 
       <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_commando_1" strength="100" />
-		<RequiredItems items="chip_commando" type="Contained"  />
+		<RequiredItems items="chip_commando" type="Contained" targetslot="1" />
       </StatusEffect>	
       <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_doc_1" strength="100" />
-		<RequiredItems items="chip_doc" type="Contained"  />
+		<RequiredItems items="chip_doc" type="Contained" targetslot="1" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_frogman_1" strength="100" />
-		<RequiredItems items="chip_frogman" type="Contained"  />
+		<RequiredItems items="chip_frogman" type="Contained" targetslot="1" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
-		<RequiredItems items="chip_heavy_defender" type="Contained"  />
+		<RequiredItems items="chip_heavy_defender" type="Contained" targetslot="1" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_blaster" strength="100" />
-		<RequiredItems items="chip_blaster" type="Contained"  />
+		<RequiredItems items="chip_blaster" type="Contained" targetslot="1" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_machinegunner_detect" strength="100" />
-		<RequiredItems items="chip_machinegunner" type="Contained"  />
+		<RequiredItems items="chip_machinegunner" type="Contained" targetslot="1" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_chip_striker" strength="100" />
-		<RequiredItems items="chip_striker" type="Contained"  />
+		<RequiredItems items="chip_striker" type="Contained" targetslot="1" />
       </StatusEffect>
 
       <!-- 戴上战术设备时，启动面板-->
 	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.25" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
-		<RequiredItems tags="deep_helmet_tac" type="Contained"  />
+		<RequiredItems tags="deep_helmet_tac" type="Contained" targetslot="0" />
       </StatusEffect>
 
 	  <!-- 因甲鱼的大手，不得不走aff -->
@@ -99,65 +99,65 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
 	    <!-- 开启热成像 -->
-        <StatusEffect type="OnUse" target="This" interval="0.9" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnUse" target="This" interval="60" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
         <!-- 战术装备开启时，锁定，以免出现bug -->
-		<StatusEffect type="OnUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
+		<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
 		</StatusEffect>
 		<!-- 关闭热成像 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
 		<!-- 确保热成像默认关闭 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
 		</StatusEffect>
 		<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Thermal_Off" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	    <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" target="This" interval="0.9" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" target="This" interval="60" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Thermal_On" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 夜视仪开关 -->
-	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
 		  </StatusEffect>
-          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Night_Off" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Night_On" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
 	  <!-- 开启健康扫描仪 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 		<!-- 关闭健康扫描仪 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 
 		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Health_Off" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Health_On" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 
       </TickBox>
@@ -175,10 +175,10 @@
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，确保所有显示关闭 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
       </StatusEffect>
 	  <!-- 拆解设备开启的头盔时，确保设备不锁定 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 	  </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
@@ -230,7 +230,7 @@
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
@@ -289,65 +289,65 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
 	    <!-- 开启热成像 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
         <!-- 战术装备开启时，锁定，以免出现bug -->
-		<StatusEffect type="OnUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
+		<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
 		</StatusEffect>
 		<!-- 关闭热成像 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
 		<!-- 确保热成像默认关闭 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
 		</StatusEffect>
 		<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Thermal_Off" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	    <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Thermal_On" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 夜视仪开关 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+	  <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" >
 		  </StatusEffect>
-          <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" />
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Night_Off" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Night_On" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
 	  <!-- 开启健康扫描仪 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 		<!-- 关闭健康扫描仪 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 
 		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Health_Off" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Health_On" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 
       </TickBox>
@@ -365,10 +365,10 @@
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，确保所有显示关闭 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
       </StatusEffect>
 	  <!-- 拆解设备开启的头盔时，确保设备不锁定 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 	  </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
@@ -420,7 +420,7 @@
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
@@ -479,65 +479,65 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
 	    <!-- 开启热成像 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
         <!-- 战术装备开启时，锁定，以免出现bug -->
-		<StatusEffect type="OnUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
+		<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
 		</StatusEffect>
 		<!-- 关闭热成像 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
 		<!-- 确保热成像默认关闭 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
 		</StatusEffect>
 		<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Thermal_Off" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	    <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Thermal_On" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 夜视仪开关 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+	  <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true"  >
 		  </StatusEffect>
-          <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true"  />
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Night_Off" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Night_On" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
 	  <!-- 开启健康扫描仪 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 		<!-- 关闭健康扫描仪 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 
 		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Health_Off" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Health_On" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 
       </TickBox>
@@ -555,10 +555,10 @@
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，确保所有显示关闭 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
       </StatusEffect>
 	  <!-- 拆解设备开启的头盔时，确保设备不锁定 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 	  </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
@@ -612,7 +612,7 @@
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
@@ -743,65 +743,65 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
 	    <!-- 开启热成像 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
         <!-- 战术装备开启时，锁定，以免出现bug -->
-		<StatusEffect type="OnUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
+		<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
 		</StatusEffect>
 		<!-- 关闭热成像 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
 		<!-- 确保热成像默认关闭 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
 		</StatusEffect>
 		<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Thermal_Off" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	    <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Thermal_On" />
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 夜视仪开关 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="0.1" >
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true"  >
 		  </StatusEffect>
-          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="0.1" />
+          <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true"  />
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Night_Off" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Night_On" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
 	  <!-- 开启健康扫描仪 -->
-        <StatusEffect type="OnUse" interval="0.9" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 		<!-- 关闭健康扫描仪 -->
-        <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 
 		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Health_Off" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Health_On" />
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
       </StatusEffect>
 
 
@@ -820,10 +820,10 @@
 		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
 	  <!-- 拔出战术设备时，确保所有显示关闭 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
       </StatusEffect>
 	  <!-- 拆解设备开启的头盔时，确保设备不锁定 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
+	  <StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
 		</StatusEffect>
 	  </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
@@ -1436,7 +1436,7 @@
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" />
+		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
@@ -1480,14 +1480,14 @@
       <TickBox text="战术设备开关" >
 	    <!-- 开启热成像 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
         <!-- 战术装备开启时，锁定，以免出现bug -->
 		<StatusEffect type="OnUse" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
 		</StatusEffect>
 		<!-- 关闭热成像 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" />
+		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
 		</StatusEffect>
 		<!-- 确保热成像默认关闭 -->
 		<StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
@@ -1502,11 +1502,11 @@
 
 	  <!-- 开启健康扫描仪 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 		<!-- 关闭健康扫描仪 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" />
+		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
 		</StatusEffect>
 
       </TickBox>
