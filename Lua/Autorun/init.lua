@@ -25,6 +25,6 @@ if CLIENT and Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/CL_PlayRicochetSound.lua")--Play Ricochet Sound
 end
 
-if CLIENT or not Game.IsMultiplayer then
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/CL_ThermalVisablePatch.lua")--F**kin thermal goggles.--Simon "Ghost" Riley, Bravo 0-7
-end
+--if CLIENT or not Game.IsMultiplayer then
+    --dofile(Deep_Lua.Path .. "/Lua/Scripts/CL_ThermalVisablePatch.lua")--F**kin thermal goggles.--Simon "Ghost" Riley, Bravo 0-7
+--end
