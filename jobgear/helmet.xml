@@ -411,17 +411,17 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST_BLACK.png" depth="0.55" limb="Head" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="16,8,94,90"  origin="0.55,0.62" > 
-	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  <!-- <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" /> -->
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
-	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <!-- <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
         <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
       </StatusEffect>
       <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
+      </StatusEffect> -->
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
 		<Affliction identifier="chip_cqb_1" strength="100" />
 		<RequiredItems items="chip_cqb" type="Contained"  />
@@ -517,6 +517,7 @@
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_BLACK_Night_On" />
+		<LuaHook name="Deep_NVG_G"/>
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
