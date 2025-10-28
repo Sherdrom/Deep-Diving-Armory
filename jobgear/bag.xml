@@ -23,11 +23,12 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+    <ItemContainer capacity="1" hideitems="true" maxstacksize="1" depth="0.5" >
     <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
       <Containable items="deep_rig" />
-      <SubContainer capacity="23" maxstacksize="32">
-        <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+      <SubContainer capacity="23" hideitems="true" maxstacksize="32">
+        <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" >
+        </Containable>
       </SubContainer>
     </ItemContainer>
   </Item>

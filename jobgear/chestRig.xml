@@ -10,7 +10,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="32,12,179,201" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="11,177,151,177" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
@@ -18,14 +18,109 @@
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Torso" hidelimb="false" inheritscale="true" scale="0.68" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="11,177,151,177" >
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.68" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="11,177,151,177" >
       </sprite>
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
     <StatValue stattype="MovementSpeed" value="0.1" />
+     <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
     </Wearable>
-	<ItemContainer capacity="12" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="10" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_alpha" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -38,22 +133,117 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="760,9,196,227" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="508,179,158,198" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="2" />
-	  <Item identifier="ballisticfiber" />
+	    <Item identifier="ballisticfiber" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="70" />
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.72" inheritorigin="false" origin="0.54,0.47" inheritsourcerect="false" sourcerect="508,179,158,198" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.72" inheritorigin="false" origin="0.54,0.47" inheritsourcerect="false" sourcerect="508,179,158,198" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-	<ItemContainer capacity="16" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="14" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_separatists" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -66,7 +256,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="263,270,202,244" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="697,181,147,191" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
@@ -76,13 +266,108 @@
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.69" inheritorigin="false" origin="0.45,0.53" inheritsourcerect="false" sourcerect="697,181,147,191" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.69" inheritorigin="false" origin="0.45,0.53" inheritsourcerect="false" sourcerect="697,181,147,191" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="30" />
     <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-	<ItemContainer capacity="24" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="22" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_commando" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -95,7 +380,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="33,274,165,214" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="24,396,130,179" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
@@ -103,13 +388,108 @@
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.69" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="24,396,130,179" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.69" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="24,396,130,179" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
     <StatValue stattype="MovementSpeed" value="0.1" />
     </Wearable>
-	<ItemContainer capacity="12" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="10" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_coalition" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -122,7 +502,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="491,268,257,236" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="198,398,145,225" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="2" />
 	  <Item identifier="ballisticfiber" />
@@ -132,12 +512,107 @@
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="198,398,145,225" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="198,398,145,225" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-	<ItemContainer capacity="16" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="14" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_mk3" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -150,7 +625,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="778,260,208,237" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="355,399,182,225" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
@@ -160,13 +635,108 @@
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.62" inheritorigin="false" origin="0.52,0.5" inheritsourcerect="false" sourcerect="355,399,182,225" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.62" inheritorigin="false" origin="0.52,0.5" inheritsourcerect="false" sourcerect="355,399,182,225" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="30" />
     <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-	<ItemContainer capacity="24" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="22" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_m43" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -179,7 +749,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="288,533,183,252" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="32,620,144,215" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" />
     </Deconstruct>
@@ -187,13 +757,108 @@
       <RequiredSkill identifier="weapons" level="30" />
 	  <RequiredItem identifier="organicfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="32,620,144,215" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="32,620,144,215" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
     <StatValue stattype="MovementSpeed" value="0.1" />
     </Wearable>
-	<ItemContainer capacity="12" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="10" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_ghost" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -206,7 +871,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="507,543,214,241" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="200,628,174,206" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="2" />
 	  <Item identifier="ballisticfiber" />
@@ -216,12 +881,107 @@
 	  <RequiredItem identifier="organicfiber" amount="4" />
 	  <RequiredItem identifier="ballisticfiber" amount="2" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="200,628,174,206" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="200,628,174,206" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-	<ItemContainer capacity="16" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="14" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_thunder" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
@@ -234,7 +994,7 @@
     </Price>
     <InventoryIcon texture="%ModDir%/jobgear/chestrig/rig_icon.png" sourcerect="755,550,252,236" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/chestrig/rig.png" depth="0.6" sourcerect="389,641,174,195" origin="0.5,0.5" />
-    <Body radius="150" height="170" density="15" />
+    <Body width="150" height="170" density="15" />
     <Deconstruct time="5">
       <Item identifier="organicfiber" amount="4" />
 	  <Item identifier="ballisticfiber" amount="2" />
@@ -244,13 +1004,108 @@
 	  <RequiredItem identifier="organicfiber" amount="8" />
 	  <RequiredItem identifier="ballisticfiber" amount="4" />
     </Fabricate>
-    <Wearable slots="Any,Bag" msg="ItemMsgPickUpSelect" >
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="389,641,174,195" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect" >
+    <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_chestrig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_platerig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
+	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+	  </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn" type="Contained" targetslot="1"  />
+	  	  <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_assistant_1" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+		  <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_mechanical_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_electrician_2" type="Contained"  targetslot="1"/>
+	  	  <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="chip_assistant_2" strength="100" />
+		  <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+
+
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="389,641,174,195" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="30" />
     <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-	<ItemContainer capacity="24" maxstacksize="32" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
+	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" >
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+	    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+	  <SubContainer capacity="1" maxstacksize="1">
+	    <Containable tags="deep_chip_headset" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+      <SubContainer capacity="22" maxstacksize="32">
+	    <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
+      </SubContainer>
     </ItemContainer>
   </Item>
 
@@ -279,10 +1134,20 @@
     
       <StatusEffect type="OnWearing" interval="0.9" target="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
-		        <RequiredItems tags="deep_travel_light" type="Contained" >
+		        <RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" >
             </RequiredItems>
             <dropitem/>
       </StatusEffect>
+
+      <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_platerig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_chestrig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
 
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
@@ -393,9 +1258,20 @@
     <!-- 轻装上阵合约-->
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
-		<RequiredItems tags="deep_travel_light" type="Contained" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
         <dropitem/>
       </StatusEffect>
+
+      <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_platerig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_chestrig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
     <StatValue stattype="MovementSpeed" value="-0.05" />
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
@@ -508,9 +1384,20 @@
     <!-- 轻装上阵合约-->
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
-		<RequiredItems tags="deep_travel_light" type="Contained" />
+		<RequiredItems tags="deep_travel_light" type="Contained"  TargetSlot="0" />
         <dropitem/>
       </StatusEffect>
+
+      <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_platerig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_chestrig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
@@ -645,9 +1532,20 @@
     <!-- 轻装上阵合约-->
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
-		<RequiredItems tags="deep_travel_light" type="Contained" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
         <dropitem/>
       </StatusEffect>
+
+      <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_platerig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_chestrig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
@@ -782,9 +1680,20 @@
     <!-- 轻装上阵合约-->
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
-		<RequiredItems tags="deep_travel_light" type="Contained" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
         <dropitem/>
       </StatusEffect>
+
+      <!-- 穿上胸挂时，给予人物胸挂检测 -->
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+	  	  <Affliction identifier="deep_platerig_detect" strength="5" />
+    </StatusEffect>
+
+    <StatusEffect type="OnWearing" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+        <Conditional deep_chestrig_detect="gt 0.0" />
+        <dropitem/>
+    </StatusEffect>
+
 	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" >
 	    <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	  </StatusEffect>
