@@ -8,7 +8,6 @@ public class CreateNightVisionTexture
 {
     private Texture2D _texture;
     private Color[] _pixelBuffer;
-    private Random _random;
     private int _textureWidth;
     private int _textureHeight;
     
@@ -21,8 +20,6 @@ public class CreateNightVisionTexture
 
     // 预计算表
     private float[] _vignetteTable;
-    private int _gridSpacingSquared;
-    private int _verticalGridSpacing;
 
     /// <summary>
     /// 初始化矩形夜视仪纹理
@@ -33,7 +30,6 @@ public class CreateNightVisionTexture
         _textureHeight = height;
         _texture = new Texture2D(graphicsDevice, _textureWidth, _textureHeight);
         _pixelBuffer = new Color[_textureWidth * _textureHeight];
-        _random = new Random();
         
         // 预计算数据
         PrecomputeData();
@@ -63,25 +59,25 @@ public class CreateNightVisionTexture
                 _vignetteTable[index] = 1.0f - Math.Max(distX, distY) * 0.3f;
             }
         }
-
-        _gridSpacingSquared = _gridSpacing * _gridSpacing;
-        _verticalGridSpacing = _gridSpacing * 4;
     }
 
     /// <summary>
-    /// 生成夜视仪纹理（优化版本）
+    /// 生成夜视仪纹理（优化版本，支持多线程）
     /// </summary>
     private void GenerateNightVisionTexture()
     {
-        // 使用单线程循环，通常比Parallel.For更快用于小纹理
-        for (int i = 0; i < _pixelBuffer.Length; i++)
+        // 使用多线程处理像素数据以提高性能
+        Parallel.For(0, _textureHeight, y =>
         {
-            int x = i % _textureWidth;
-            int y = i / _textureWidth;
-            
-            _pixelBuffer[i] = CalculatePixelColor(x, y, false);
-        }
-        
+            int rowStart = y * _textureWidth;
+            for (int x = 0; x < _textureWidth; x++)
+            {
+                int index = rowStart + x;
+                _pixelBuffer[index] = CalculatePixelColor(x, y, false);
+            }
+        });
+
+        // 批量更新纹理数据
         _texture.SetData(_pixelBuffer);
     }
 
@@ -90,11 +86,10 @@ public class CreateNightVisionTexture
     /// </summary>
     public void Update(float deltaTime)
     {
-        // 只更新扫描线位置
-        _scanLinePosition += _scanLineSpeed * deltaTime;
-        if (_scanLinePosition > _textureHeight + 10)
-            _scanLinePosition = -10;
-        
+        // 更新扫描线位置，确保范围在 [0, _textureHeight]
+        _scanLinePosition = (_scanLinePosition + _scanLineSpeed * deltaTime) % _textureHeight;
+        if (_scanLinePosition < 0) _scanLinePosition += _textureHeight;
+
         UpdateDynamicTexture();
     }
 
@@ -140,7 +135,7 @@ public class CreateNightVisionTexture
     private Color CalculatePixelColor(int x, int y, bool checkScanLine)
     {
         Color pixelColor = _nightVisionColor;
-        
+
         // 网格效果（使用预计算的模运算）
         if ((y % _gridSpacing) < 2) // 水平网格线
         {
@@ -148,28 +143,20 @@ public class CreateNightVisionTexture
             pixelColor.G = (byte)(pixelColor.G * 0.7f);
             pixelColor.B = (byte)(pixelColor.B * 0.7f);
         }
-        else if ((x % _verticalGridSpacing) < 2) // 垂直网格线
-        {
-            pixelColor.R = (byte)(pixelColor.R * 0.8f);
-            pixelColor.G = (byte)(pixelColor.G * 0.8f);
-            pixelColor.B = (byte)(pixelColor.B * 0.8f);
-        }
-        
-        // 杂色效果（使用更快的随机数生成）
-        float noise = ((x * 197 + y * 331 + (int)(_scanLinePosition * 1000)) & 0xFF) * 0.0039f - 0.5f; // 0.0039 = 1/255
-        noise *= _noiseIntensity;
-        
+
+        // 杂色效果（改进随机性）
+        float noise = (float)(new Random(x * 197 + y * 331).NextDouble() - 0.5) * _noiseIntensity;
         pixelColor.R = ClampByte(pixelColor.R + noise * 255);
         pixelColor.G = ClampByte(pixelColor.G + noise * 255);
         pixelColor.B = ClampByte(pixelColor.B + noise * 255);
-        
-        // 暗角效果（使用预计算表）
+
+        // 暗角效果（优化计算）
         int index = y * _textureWidth + x;
         float vignette = _vignetteTable[index];
         pixelColor.R = (byte)(pixelColor.R * vignette);
         pixelColor.G = (byte)(pixelColor.G * vignette);
         pixelColor.B = (byte)(pixelColor.B * vignette);
-        
+
         // 扫描线效果（只在需要时检查）
         if (checkScanLine && Math.Abs(y - _scanLinePosition) <= 1)
         {
@@ -177,7 +164,7 @@ public class CreateNightVisionTexture
             pixelColor.G = (byte)Math.Min(pixelColor.G + 50, 255);
             pixelColor.B = (byte)Math.Min(pixelColor.B + 50, 255);
         }
-        
+
         return pixelColor;
     }
 
@@ -223,9 +210,12 @@ public class CreateNightVisionTexture
     /// </summary>
     public void Dispose()
     {
-        _texture?.Dispose();
-        _texture = null;
-        _pixelBuffer = null;
-        _vignetteTable = null;
+        if (_texture != null && !_texture.IsDisposed)
+        {
+            _texture.Dispose();
+        }
+        _texture = null!; // Suppress nullable warnings
+        _pixelBuffer = null!; // Suppress nullable warnings
+        _vignetteTable = null!; // Suppress nullable warnings
     }
 }
