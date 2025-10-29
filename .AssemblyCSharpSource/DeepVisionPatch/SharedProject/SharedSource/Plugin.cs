@@ -16,6 +16,7 @@ namespace DeepVisionPatch
     {
         public Harmony? harmonyInstance;
         public static CreateViewTexture viewTexture = new CreateViewTexture();
+        public static CreateNightVisionTexture nvTexture = new CreateNightVisionTexture();
         public void Initialize()
         {
             // When your plugin is loading, use this instead of the constructor
@@ -30,6 +31,7 @@ namespace DeepVisionPatch
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
             viewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
+            nvTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256, 256);
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Loaded!");
         }
 
