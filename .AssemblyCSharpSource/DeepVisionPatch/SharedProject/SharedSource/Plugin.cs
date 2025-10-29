@@ -31,7 +31,7 @@ namespace DeepVisionPatch
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
             viewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
-            nvTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256, 256);
+            nvTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 512, 512);
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Loaded!");
         }
 

@@ -123,9 +123,9 @@ namespace DeepVisionPatch
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, transformMatrix: cam.Transform * Matrix.CreateScale(new Vector3(GameSettings.CurrentConfig.Graphics.LightMapScale, GameSettings.CurrentConfig.Graphics.LightMapScale, 1.0f)));
                 spriteBatch.Draw(texture, new Vector2(headPosition.X, -headPosition.Y), null, Color.White, rotation,
-                    new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 0.0f);
+                    new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 1.0f);
                 spriteBatch.Draw(textureCircle, new Vector2(headPosition.X, -headPosition.Y + 70f), null, Color.White, 0f,
-                    new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f,0.45f), SpriteEffects.None, 0.0f);
+                    new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f,0.45f), SpriteEffects.None, 1.0f);
                 spriteBatch.End();
                         
             //--------------------------------------

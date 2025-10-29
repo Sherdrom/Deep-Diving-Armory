@@ -6,20 +6,21 @@ namespace DeepVisionPatch;
 
 public class CreateNightVisionTexture
 {
-    private Texture2D _texture;
-    private Color[] _pixelBuffer;
+    // Ensure the fields are initialized to avoid nullability issues
+    private Texture2D _texture = null!;
+    private Color[] _pixelBuffer = null!;
+    private float[] _vignetteTable = null!;
+
     private int _textureWidth;
     private int _textureHeight;
     
     // 夜视仪参数
-    private Color _nightVisionColor = new Color(0, 255, 0, 255); // 绿色
-    private int _gridSpacing = 8; // 网格间距
+    private Color _nightVisionColor = new Color(0, 255, 0, 50); // 绿色
+    private int _gridSpacing = 3; // 网格间距
     private float _noiseIntensity = 0.1f; // 杂色强度
-    private float _scanLineSpeed = 2.0f; // 扫描线移动速度
+    private float _scanLineSpeed = 80.0f; // 扫描线移动速度
     private float _scanLinePosition = 0; // 扫描线位置
-
-    // 预计算表
-    private float[] _vignetteTable;
+    private float vignetteMulti = 0.8f; // 暗角倍数
 
     /// <summary>
     /// 初始化矩形夜视仪纹理
@@ -47,16 +48,23 @@ public class CreateNightVisionTexture
         _vignetteTable = new float[_textureWidth * _textureHeight];
         float centerX = _textureWidth / 2f;
         float centerY = _textureHeight / 2f;
-        float maxDistance = Math.Max(centerX, centerY);
+
+        // 添加一个变量用于调整中心保持明亮的区域大小
+        float vignetteRadius = Math.Min(centerX, centerY) * vignetteMulti; // 可调节的半径系数
 
         for (int y = 0; y < _textureHeight; y++)
         {
             for (int x = 0; x < _textureWidth; x++)
             {
                 int index = y * _textureWidth + x;
-                float distX = Math.Abs(x - centerX) / maxDistance;
-                float distY = Math.Abs(y - centerY) / maxDistance;
-                _vignetteTable[index] = 1.0f - Math.Max(distX, distY) * 0.3f;
+                float distX = x - centerX;
+                float distY = y - centerY;
+                float distance = MathF.Sqrt(distX * distX + distY * distY);
+
+                // 根据距离计算暗角值，中心区域保持明亮
+                _vignetteTable[index] = distance < vignetteRadius
+                    ? 1.0f
+                    : Math.Max(0.0f, 1.0f - (distance - vignetteRadius) / vignetteRadius);
             }
         }
     }
@@ -89,6 +97,9 @@ public class CreateNightVisionTexture
         // 更新扫描线位置，确保范围在 [0, _textureHeight]
         _scanLinePosition = (_scanLinePosition + _scanLineSpeed * deltaTime) % _textureHeight;
         if (_scanLinePosition < 0) _scanLinePosition += _textureHeight;
+
+        // 添加随机噪点效果
+        AddNoiseToTexture(deltaTime);
 
         UpdateDynamicTexture();
     }
@@ -144,11 +155,11 @@ public class CreateNightVisionTexture
             pixelColor.B = (byte)(pixelColor.B * 0.7f);
         }
 
-        // 杂色效果（改进随机性）
-        float noise = (float)(new Random(x * 197 + y * 331).NextDouble() - 0.5) * _noiseIntensity;
-        pixelColor.R = ClampByte(pixelColor.R + noise * 255);
-        pixelColor.G = ClampByte(pixelColor.G + noise * 255);
-        pixelColor.B = ClampByte(pixelColor.B + noise * 255);
+        // // 杂色效果（改进随机性）
+        // float noise = (float)(new Random(x * 197 + y * 331).NextDouble() - 0.5) * _noiseIntensity;
+        // pixelColor.R = ClampByte(pixelColor.R + noise * 255);
+        // pixelColor.G = ClampByte(pixelColor.G + noise * 255);
+        // pixelColor.B = ClampByte(pixelColor.B + noise * 255);
 
         // 暗角效果（优化计算）
         int index = y * _textureWidth + x;
@@ -217,5 +228,37 @@ public class CreateNightVisionTexture
         _texture = null!; // Suppress nullable warnings
         _pixelBuffer = null!; // Suppress nullable warnings
         _vignetteTable = null!; // Suppress nullable warnings
+    }
+
+    private void AddNoiseToTexture(float deltaTime)
+    {
+        return;
+        Random random = new Random();
+        float timeFactor = deltaTime * 1000; // 时间因子，确保噪点随时间变化
+
+        for (int y = 0; y < _textureHeight; y++)
+        {
+            for (int x = 0; x < _textureWidth; x++)
+            {
+                int index = y * _textureWidth + x;
+
+                // 使用时间因子生成动态噪点
+                float noise = (float)(random.NextDouble()); // 生成0到1之间的随机值
+
+                // 模拟白色雪花噪点效果
+                if (noise < 0.02f) // 2%的像素变为白色噪点
+                {
+                    _pixelBuffer[index] = Color.White;
+                }
+                else
+                {
+                    // 其余像素保持原始颜色，叠加轻微噪点
+                    float subtleNoise = (float)(random.NextDouble() - 0.5) * _noiseIntensity;
+                    _pixelBuffer[index].R = ClampByte(_pixelBuffer[index].R + subtleNoise * 255);
+                    _pixelBuffer[index].G = ClampByte(_pixelBuffer[index].G + subtleNoise * 255);
+                    _pixelBuffer[index].B = ClampByte(_pixelBuffer[index].B + subtleNoise * 255);
+                }
+            }
+        }
     }
 }
