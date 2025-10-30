@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 using HarmonyLib;
 using Barotrauma;
 
@@ -16,7 +18,7 @@ namespace DeepVisionPatch
     {
         public Harmony? harmonyInstance;
         public static CreateViewTexture viewTexture = new CreateViewTexture();
-        public static CreateNightVisionTexture nvTexture = new CreateNightVisionTexture();
+        public static CreateNightVisionTexture nvTexture_Green = new CreateNightVisionTexture();
         public void Initialize()
         {
             // When your plugin is loading, use this instead of the constructor
@@ -31,7 +33,7 @@ namespace DeepVisionPatch
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
             viewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
-            nvTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 512, 512);
+            nvTexture_Green.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));    //初始化绿色夜视仪
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Loaded!");
         }
 
