@@ -10,8 +10,8 @@ public class CreateNightVisionTexture
     private Color[] _pixelBuffer = null!;
     private float[] _vignetteTable = null!;
 
-    private int _textureWidth = 512;
-    private int _textureHeight = 512;
+    private int _textureWidth;
+    private int _textureHeight;
     
     // 夜视仪参数
     private Color _nightVisionColor = new Color(0, 255, 0, 50); // 绿色
@@ -26,6 +26,8 @@ public class CreateNightVisionTexture
     public void Initialize(GraphicsDevice graphicsDevice, Color color)
     {
         _nightVisionColor = color;
+        _textureWidth = 512;
+        _textureHeight = 512;
         _texture = new Texture2D(graphicsDevice, _textureWidth, _textureHeight);
         _pixelBuffer = new Color[_textureWidth * _textureHeight];
         

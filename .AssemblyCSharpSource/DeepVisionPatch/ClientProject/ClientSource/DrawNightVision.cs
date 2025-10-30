@@ -12,7 +12,9 @@ public class DrawNightVision
 
     private static readonly Dictionary<string, CreateNightVisionTexture> nvColor = new Dictionary<string, CreateNightVisionTexture>
     {
-        ["NVG_Green"] = DeepVisionPatch.nvTexture_Green     // 绿色夜视仪
+        ["NVG_Green"] = DeepVisionPatch.nvTexture_Green,     // 绿色夜视仪
+        ["NVG_Blue"]  = DeepVisionPatch.nvTexture_Blue       // 蓝色夜视仪
+        
     };
 
     public static void Postfix(GameScreen __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, double deltaTime)
@@ -23,17 +25,21 @@ public class DrawNightVision
         if (headItem == null) return;
         IEnumerable<Item> headItems = headItem.ContainedItems; // 获取头盔内的item
 
+        bool hasNightVision = false;
         // 头盔Hook 战术设备(夜视仪)的开关判断
         foreach (KeyValuePair<ushort, bool> nightVisionStatus in NightVisionPatch.NightVisionStatus)
         {
             if (headItem != null && headItem.ID == nightVisionStatus.Key)
             {
+                hasNightVision = true;
                 if (nightVisionStatus.Value == false)
                 {
                     return;
                 }
             }
         }
+
+        if (!hasNightVision) return; // 如果没有夜视仪，直接返回
 
         // 以下通过_nvTexture和item的Tag来设置夜视仪的颜色
         foreach (Item item in headItems)
@@ -44,7 +50,9 @@ public class DrawNightVision
                 foreach (KeyValuePair<string, CreateNightVisionTexture> kvp in nvColor)
                 {
                     if (item.HasTag(kvp.Key))
+                    {
                         _nvTexture = kvp.Value;
+                    }
                 }
             }
         }
