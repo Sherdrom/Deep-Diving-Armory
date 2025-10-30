@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace DeepVisionPatch;
 
@@ -17,8 +16,6 @@ public class CreateNightVisionTexture
     // 夜视仪参数
     private Color _nightVisionColor = new Color(0, 255, 0, 50); // 绿色
     private int _gridSpacing = 3; // 网格间距
-
-    // private float _noiseIntensity = 0.1f; // 杂色强度
     private float _scanLineSpeed = 80.0f; // 扫描线移动速度
     private float _scanLinePosition = 0; // 扫描线位置
     private float vignetteMulti = 0.8f; // 暗角倍数
@@ -152,12 +149,6 @@ public class CreateNightVisionTexture
             pixelColor.B = (byte)(pixelColor.B * 0.7f);
         }
 
-        // // 杂色效果（改进随机性）
-        // float noise = (float)(new Random(x * 197 + y * 331).NextDouble() - 0.5) * _noiseIntensity;
-        // pixelColor.R = ClampByte(pixelColor.R + noise * 255);
-        // pixelColor.G = ClampByte(pixelColor.G + noise * 255);
-        // pixelColor.B = ClampByte(pixelColor.B + noise * 255);
-
         // 暗角效果（优化计算）
         int index = y * _textureWidth + x;
         float vignette = _vignetteTable[index];
@@ -177,18 +168,9 @@ public class CreateNightVisionTexture
     }
 
     /// <summary>
-    /// 快速字节钳制
-    /// </summary>
-    private byte ClampByte(float value)
-    {
-        int intValue = (int)value;
-        return (byte)(intValue < 0 ? 0 : intValue > 255 ? 255 : intValue);
-    }
-
-    /// <summary>
     /// 设置夜视仪参数（需要时重新预计算）
     /// </summary>
-    public void SetNightVisionParameters(Color? color = null, int? gridSpacing = null, float? noiseIntensity = null, float? scanLineSpeed = null)
+    public void SetNightVisionParameters(Color? color = null, int? gridSpacing = null, float? scanLineSpeed = null)
     {
         bool needsRecompute = false;
         
@@ -198,8 +180,6 @@ public class CreateNightVisionTexture
             _gridSpacing = gridSpacing.Value;
             needsRecompute = true;
         }
-
-        // if (noiseIntensity.HasValue) _noiseIntensity = noiseIntensity.Value;
         
         if (scanLineSpeed.HasValue) _scanLineSpeed = scanLineSpeed.Value;
         
