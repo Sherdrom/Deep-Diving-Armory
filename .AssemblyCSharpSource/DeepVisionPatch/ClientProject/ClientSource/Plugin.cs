@@ -15,11 +15,13 @@ namespace DeepVisionPatch
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {
-        public static float FieldOfView { get; set; } = MathF.PI * 8/9; // Default to 8/9 PI degrees
-        public static readonly Dictionary<string,float> ObstructVision = new Dictionary<string, float>
+        public static float FieldOfView { get; set; } = MathF.PI * 8 / 9; // Default to 8/9 PI degrees
+        
+        // 恒定视野字典
+        public static readonly Dictionary<string, float> ObstructVision = new Dictionary<string, float>
         {
-            ["ObstructVision_30"]=MathF.PI/6,
-            ["ObstructVision_45"]=MathF.PI/4
+            ["ObstructVision_30"] = MathF.PI / 6,
+            ["ObstructVision_45"] = MathF.PI / 4
         };
         public static bool Prefix(LightManager __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, Camera cam, ref Vector2 lookAtPosition)
         {
@@ -38,8 +40,8 @@ namespace DeepVisionPatch
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
             if (LightManager.ViewTarget == null) { return false; }
-            // float leftHandSpread = -1;
-            // float rightHandSpread = -1;
+
+            // 面罩视野的开关判断
             foreach (KeyValuePair<ushort, bool> maskStatus in HelmetMaskPatch.MaskStatus)
             {
                 if (headItem != null && headItem.ID == maskStatus.Key && !((rightHand != null && rightHand.HasTag("ObstructVision")) || (leftHand != null && leftHand.HasTag("ObstructVision"))))
@@ -54,17 +56,10 @@ namespace DeepVisionPatch
                     }
                 }
             }
-            // if (rightHand != null) 
-            //     rightHandSpread = (float?)Traverse.Create(rightHand?
-            //                                          .GetComponent<RangedWeapon>())?
-            //                                          .Method("GetSpread", character)?
-            //                                          .GetValue() ?? -1f;
-            // if (leftHand != null) 
-            //     leftHandSpread = (float?)Traverse.Create(leftHand?
-            //                                             .GetComponent<RangedWeapon>())?
-            //                                             .Method("GetSpread",character)?
-            //                                             .GetValue() ?? -1f;
-            if(headItem != null && headItem.HasTag("ObstructVision") || (rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")))
+
+            // 根据headItem的xml中的tag设置恒定的视野角度：例如30度、45度
+            //ToDo：也可根据headItem中包含的物品tag（夜视仪、热成像）来设置角度
+            if (headItem != null && headItem.HasTag("ObstructVision") || (rightHand != null && rightHand.HasTag("ObstructVision")) || (leftHand != null && leftHand.HasTag("ObstructVision")))
             {
                 float minVal = MathF.PI;
                 foreach (KeyValuePair<string, float> kvp in ObstructVision)
@@ -80,18 +75,17 @@ namespace DeepVisionPatch
                     FieldOfView = minVal;
                 }
             }
-            else 
+
+            // 一般情况
+            else
             {
-                // if (rightHandSpread == -1 && leftHandSpread == -1)
-                //     FieldOfView = MathF.PI * 8 / 9;
-                // else
-                    float offsetMin = 256f;
-                    float offsetMax = 540f;
-                    float neededOffset = MathHelper.Clamp(Screen.Selected.Cam.OffsetAmount, offsetMin, offsetMax);
-                    float minFov = MathF.PI / 6;
-                    float maxFov = MathF.PI * 8 / 9;
-                    float t = MathHelper.Clamp((neededOffset - offsetMin) / (offsetMax - offsetMin), 0f, 1f);
-                    FieldOfView = maxFov - (maxFov - minFov) * t ; 
+                float offsetMin = 256f;
+                float offsetMax = 540f;
+                float neededOffset = MathHelper.Clamp(Screen.Selected.Cam.OffsetAmount, offsetMin, offsetMax);
+                float minFov = MathF.PI / 6;
+                float maxFov = MathF.PI * 8 / 9;
+                float t = MathHelper.Clamp((neededOffset - offsetMin) / (offsetMax - offsetMin), 0f, 1f);
+                FieldOfView = maxFov - (maxFov - minFov) * t;
             }
 
             graphics.SetRenderTarget(__instance.LosTexture);
@@ -129,9 +123,9 @@ namespace DeepVisionPatch
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, transformMatrix: cam.Transform * Matrix.CreateScale(new Vector3(GameSettings.CurrentConfig.Graphics.LightMapScale, GameSettings.CurrentConfig.Graphics.LightMapScale, 1.0f)));
                 spriteBatch.Draw(texture, new Vector2(headPosition.X, -headPosition.Y), null, Color.White, rotation,
-                    new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 0.0f);
+                    new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 1.0f);
                 spriteBatch.Draw(textureCircle, new Vector2(headPosition.X, -headPosition.Y + 70f), null, Color.White, 0f,
-                    new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f,0.45f), SpriteEffects.None, 0.0f);
+                    new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f,0.45f), SpriteEffects.None, 1.0f);
                 spriteBatch.End();
                         
             //--------------------------------------
