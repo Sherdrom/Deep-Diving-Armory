@@ -38,7 +38,7 @@ public class DrawNightVision
         // 以下通过_nvTexture和item的Tag来设置夜视仪的颜色
         foreach (Item item in headItems)
         {
-            if (item != null && item.HasTag("NightVision")) // 获取夜视仪item
+            if (item != null && item.HasTag("NightVisionGoggle")) // 获取夜视仪item
             {
                 // 通过字典设置_nvTexture
                 foreach (KeyValuePair<string, CreateNightVisionTexture> kvp in nvColor)
