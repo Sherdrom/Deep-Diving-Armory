@@ -23,7 +23,7 @@ public class DrawNightVision
         if (headItem == null) return;
         IEnumerable<Item> headItems = headItem.ContainedItems; // 获取头盔内的item
 
-        // 头盔战术设备（夜视仪）的开关判断
+        // 头盔Hook 战术设备(夜视仪)的开关判断
         foreach (KeyValuePair<ushort, bool> nightVisionStatus in NightVisionPatch.NightVisionStatus)
         {
             if (headItem != null && headItem.ID == nightVisionStatus.Key)
