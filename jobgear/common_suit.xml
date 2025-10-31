@@ -9,7 +9,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" amount="1" />
@@ -55,7 +55,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -98,7 +98,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -145,7 +145,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -191,7 +191,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -229,14 +229,12 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="摘下面罩" >
 	    <!-- 关闭面罩 -->
-        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true" >
-		<Hook name="MASKA_Open" />
+    <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" setvalue="true" >
 		<LuaHook name="MarkSuit_MaskOff" />
 		</StatusEffect>
 
 		<!-- 升起面罩 -->
-        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive" >
-		<Hook name="MASKA_Origin" />
+    <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false"  setvalue="true" currentmode="Passive" >
 		<LuaHook name="MarkSuit_MaskOn" />
 		</StatusEffect>
 

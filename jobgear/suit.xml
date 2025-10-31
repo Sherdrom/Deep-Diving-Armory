@@ -9,7 +9,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" amount="1" />
@@ -55,7 +55,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" amount="1" />
@@ -103,7 +103,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -148,7 +148,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="organicfiber" amount="2" />
       <RequiredItem identifier="KEVLAR" />
@@ -194,7 +194,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="organicfiber" amount="1" />
       <RequiredItem identifier="KEVLAR" amount="2" />
@@ -241,7 +241,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-	<Fabricate suitablefabricators="fabricator" requiredtime="10">
+	<Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="organicfiber" amount="4" />
       <RequiredItem identifier="KEVLAR" amount="4" />
@@ -270,9 +270,8 @@
       <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/grizzlies_suit.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,internaldamage,organdamage,explosiondamage,bleeding,stun,Shrapnel_residue" damagemultiplier="0.7" />
 	  <SkillModifier skillidentifier="weapons" skillvalue="20" />
-    <StatusEffect type="OnWearing" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+    <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
     <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	  	  <Affliction identifier="deep_grizzlies_suit_detect" strength="1.0" />
       </StatusEffect>
     </Wearable>
 	<ItemContainer capacity="8" maxstacksize="32">

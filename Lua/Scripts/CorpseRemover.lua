@@ -6,6 +6,7 @@ LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.AICharacter"], "Despawn
 Game.AddCommand("EnableForceCorpseRemove", "Force ALL characters to remove after death", function()
     forceremove = true
 end, nil, false)
+
 Game.AddCommand("DisableForceCorpseRemove", "Only Human will remove after death", function()
     forceremove = false
 end, nil, false)
@@ -25,14 +26,15 @@ Hook.Add("character.death", "Deep_CR", function(c)
     if c.Removed then return end
     if      (not forceremove)
         and (
-               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and GameMain.GameSession.Campaign ~= nil )
+               (c.CauseOfDeath.Type == CauseOfDeathType.Disconnected and Game.GameSession.Campaign ~= nil )
+            --or c.CauseOfDeath.Type == CauseOfDeathType.Unknown
+            or c.IsHuskInfected
             or (not c.IsHuman)
-            or c.TeamID == CharacterTeamType.Team1 
-            or c.TeamID == CharacterTeamType.None
+            or (c.TeamID == CharacterTeamType.Team1 and Game.GameSession.Campaign ~= nil)
         ) then
         return
     end
     c.EnableDespawn = true
     if c.Removed then return end
-    c.Despawn()
+    Timer.Wait(function() c.Despawn() end,30000)
 end)

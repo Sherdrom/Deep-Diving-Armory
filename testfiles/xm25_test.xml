@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-    <Item name="XM-25 ABAW" identifier="deep_xm25" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.23" impactsoundtag="impact_metal_light">
+    <Item name="XM-25 ABAW" identifier="deep_xm25_test" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon" scale="0.23" impactsoundtag="impact_metal_light">
         <InventoryIcon texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" origin="0.5,0.5" />
         <Sprite texture="%ModDir%/testfiles/XM25/XM25.png" sourcerect="0,0,400,185" depth="0.55" origin="0.5,0.5" />
         <Body width="400" height="70" density="52" />
@@ -39,50 +39,5 @@
             </Containable>
         </ItemContainer>
         <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
-    </Item>
-
-    <Item name="XM-25编程高爆破片弹弹匣" identifier="deep_xm25_abhe" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="2" health="8" scale="0.23" cargocontaineridentifier="metalcrate" tags="smallitem,tes20mag" impactsoundtag="impact_metal_light">
-        <InventoryIcon texture="%ModDir%/testfiles/XM25/XM25_HE.png" sourcerect="0,0,72,90" />
-        <Sprite texture="%ModDir%/testfiles/XM25/XM25_HE.png" depth="0.56" sourcerect="0,0,72,90" origin="0.5,0.5" />
-        <Body width="72" height="90" density="25" />
-        <Deconstruct time="18">
-            <Item identifier="c4block" mincondition="0.5" outcondition="0.2" />
-            <Item identifier="steel" mincondition="0.5" outcondition="0.6" />
-            <Item identifier="plastic" outcondition="0.8" />
-        </Deconstruct>
-        <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" SpawnWithId="deep_xm25round_abhe" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-            <Containable items="deep_xm25round_abhe" />
-            <StatusEffect type="OnUse" target="This" condition="-1" disabledeltatime="true">
-                <SpawnItem identifiers="deep_xm25round_abhe" spawnposition="ThisInventory" />
-            </StatusEffect>
-        </ItemContainer>
-        <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
-    </Item>
-    <Item identifier="deep_xm25round_abhe" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,xm25round" impactsoundtag="None" hideinmenus="true" scale="0.5">
-        <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
-        <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
-        <Body width="40" height="14" density="30" gravityscale="0.0" linearDamping="0.0"/>
-        <Projectile characterusable="false" hitscan="false" launchImpulse="15" penetration="0.0" MaxTargetsToHit="99" spread="0.1" DamageDoors="true">
-            <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="80" velocitymax="100" colormultiplier="255,0,0,175" scalemultiplier="1,0.6" />
-            <Attack structuredamage="2" targetforce="3" itemdamage="18" severlimbsprobability="0.0" />
-            <StatusEffect type="OnNotContained" target="This" stackable="false" delay="1.2">
-                <Remove />
-            </StatusEffect>
-            <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
-                <Explosion range="80.0" ballastfloradamage="45" structuredamage="45" itemdamage="45" force="10" severlimbsprobability="0.3" decal="explosion" interactthroughwalls="false" decalsize="0.5" penetration="0.4">
-                    <Affliction identifier="explosiondamage" strength="60" dividebylimbcount="true" />
-                    <Affliction identifier="burn" strength="10" probability="0.7" dividebylimbcount="false" />
-                    <Affliction identifier="stun" strength="0.03" />
-                </Explosion>
-                <Explosion range="200.0" force="10" severlimbsprobability="0.3" debris="true" decal="" interactthroughwalls="false" decalsize="0.5" penetration="0.5">
-                    <Affliction identifier="lacerations" strength="250" probability="0.8" />
-                    <Affliction identifier="bleeding" strength="20" probability="0.5" />
-                </Explosion>
-            </StatusEffect>
-            <StatusEffect type="OnUse" target="This" OneShot="true">
-                <LuaHook name="Deep_AirBurstControl" />
-            </StatusEffect>
-        </Projectile>
-        <Upgrade gameversion="0.10.0.0" scale="0.5" />
     </Item>
 </Items>

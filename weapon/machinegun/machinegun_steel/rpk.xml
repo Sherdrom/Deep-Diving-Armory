@@ -10,7 +10,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="steel_barrel" amount="2" />
 	  <RequiredItem identifier="steel_part" amount="2" />
@@ -25,25 +25,25 @@
     <Body width="220" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="45,-15" aimpos="70,8" handle1="-90,-15" handle2="80,30" holdangle="-35" msg="ItemMsgPickUpSelect" >
 	<!-- 禁用机枪合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_machinegun_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	  <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
-    <StatusEffect type="OnActive" target="This" Scale="0.3" setvalue="true" >
+    <StatusEffect type="OnActive" interval="3" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-	<StatusEffect type="OnActive" target="Character" setvalue="true" >
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setvalue="true" >
 		  <Affliction identifier="deep_machinegun_crouch" strength="100"/>
     </StatusEffect>
-	<StatusEffect type="Onactive" target="Character" setvalue="true" >
+	<StatusEffect type="Onactive" interval="3" target="Character" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
-	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	 <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
     <Affliction identifier="deep_machinegunner_light_detect" strength="100" />
      </StatusEffect>
@@ -131,15 +131,15 @@
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
-	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="403,22,51,29" origin="0.5,0.5" />
-	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
+	    <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
+	    <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
+	    <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="9,5" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="9,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="9,5" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="9,5" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-25,14" setactive="true" containedspritedepth="0.45" depth="0.55" />

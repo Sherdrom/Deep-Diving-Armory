@@ -273,11 +273,14 @@
     <Character identifier="deep_grizzlies_leader_elite" from="deep_grizzlies_elite" spawnpointtags="banditleader" requirekill="true" asfaraspossible="true" multiplayeronly="true" />
     </Characters>
     <message header="missionheader0.deep_destory_grizzlies_base_hard" text="missionmessage0.deep_destory_grizzlies_base_hard" />
-	<OverrideMusic state="0" type="deep_grizzlies" />
-  <OverrideMusic state="1" type="deep_reinforce" />
+	<OverrideMusic state="0" type="deep_grizzlies0" />
+  <OverrideMusic state="1" type="deep_grizzlies1" />
+  <OverrideMusic state="2" type="deep_grizzlies2" />
+  <OverrideMusic state="3" type="deep_grizzlies3" />
   <TriggerEvent state="1" delay="0" eventidentifier="deep_grizzlies_reinforce_end" campaignonly="true"/>
-  <TriggerEvent state="0" delay="0" eventidentifier="deep_grizzlies_reinforce_20min" campaignonly="true"/>
+  <TriggerEvent state="1" delay="0" eventidentifier="deep_grizzlies_reinforce_20min" campaignonly="true"/>
   <TriggerEvent state="0" delay="0" eventidentifier="deep_white_keycard_del" campaignonly="true"/>
+  <TriggerEvent state="0" delay="0" eventidentifier="deep_grizzlies_reinforce_start" campaignonly="true"/>
 </OutpostDestroyMission>
   
   <EliminateTargetsMission
@@ -376,7 +379,7 @@
 	<OverrideMusic state="1" type="pvp" />
   </PirateMission>
   
-  <PirateMission
+  <!--<PirateMission
     type="Pirate"
     identifier="deep_beacon_fight_2"
     tags="deep_beacon_fight"
@@ -411,13 +414,14 @@
     <message header="missionheader0.deep_beacon_fight_2" text="missionmessage0.deep_beacon_fight_2"/>
     <message header="missionheader1.deep_beacon_fight_2" text="missionmessage1.deep_beacon_fight_2"/>
 	<OverrideMusic state="1" type="deep_pir_normal" />
-  </PirateMission>
+  </PirateMission>-->
 
   <BeaconMission
     identifier="deep_beacon_fight_pirate_normal"
     textidentifier="deep_beacon_fight_pirate_normal"
     achievementidentifier="deep_beacon_fight_pirate_normal"
-    tags="deep_beacon_fight_new"
+    tags="deep_close_combat"
+    beaconTags="deep_close_combat_pirate"
     type="Beacon"
     allowretry="false"
     difficulty="4"
@@ -428,7 +432,7 @@
     <Reputation identifier="coalition" amount="3" />
     <Reputation identifier="separatists" amount="3" />
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
-    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <!--<TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>-->
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_normal" campaignonly="true"/>
   </BeaconMission>
 
@@ -436,7 +440,8 @@
     identifier="deep_beacon_fight_pirate_hard"
     textidentifier="deep_beacon_fight_pirate_hard"
     achievementidentifier="deep_beacon_fight_pirate_hard"
-    tags="deep_beacon_fight_new"
+    tags="deep_close_combat"
+    beaconTags="deep_close_combat_pirate"
     type="Beacon"
     allowretry="false"
     difficulty="4"
@@ -447,9 +452,55 @@
     <Reputation identifier="coalition" amount="5" />
     <Reputation identifier="separatists" amount="5" />
     <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" color="243,146,55"/>
-    <TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>
+    <!--<TriggerEvent state="0" delay="0" eventidentifier="deep_beaconstation_indestructible" campaignonly="true"/>-->
     <TriggerEvent state="0" delay="0" eventidentifier="deep_beacon_pirate_hard" campaignonly="true"/>
   </BeaconMission>
+
+  <!--<BeaconMission
+    identifier="deep_meet_on_the_battleground"
+    textidentifier="deep_meet_on_the_battleground"
+    achievementidentifier="deep_meet_on_the_battleground"
+    tags="deep_meet_on_the_battleground"
+    beaconTags="deep_meet_on_the_battleground"
+    sonarlabel="target"
+    type="Beacon"
+    allowretry="false"
+    difficulty="5"
+    reward="12000"
+    minleveldifficulty="0"
+    maxleveldifficulty="100"
+    sideobjective="false">
+    <Portrait texture="Content/Map/LocationPortraits/WorkCampMilitary.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/WorkCampResearchFacility2.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Reputation identifier="coalition" amount="8" />
+    <Reputation identifier="separatists" amount="-8" />
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="243,146,55"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_test" campaignonly="true"/>
+  </BeaconMission>-->
+
+  <SalvageMission
+    identifier="deep_meet_on_the_battleground"
+    tags="deep_salvagewreck"
+    wreckTags="deep_meet_on_the_battleground"
+    type="SalvageWreck"
+    difficulty="5"
+    commonness="100"
+    reward="12000"
+    achievementidentifier="deep_meet_on_the_battleground"
+    spawntype="wreck"
+    itemidentifier="deep_separatist_confidential_information"
+    containertag="deep_securecontainer"
+    requirewreck="true"
+    maxleveldifficulty="100"
+    PickedUpMessage="missionmessage.deep_meet_on_the_battleground.pickedup">
+    <Portrait texture="Content/Map/LocationPortraits/WorkCampMilitary.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Portrait texture="Content/Map/LocationPortraits/WorkCampResearchFacility2.png" sourcerect="0,0,2160,1080" premultiplyalpha="false"/>
+    <Reputation identifier="coalition" amount="8" />
+    <Reputation identifier="separatists" amount="-8" />
+    <Icon texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" color="243,146,55"/>
+    <message header="missionheader0.deep_meet_on_the_battleground" text="missionmessage0.deep_meet_on_the_battleground"/>
+    <TriggerEvent state="0" delay="0" eventidentifier="deep_meet_on_the_battleground_separatists_state0" campaignonly="true"/>
+  </SalvageMission>
 
 
 </Missions>

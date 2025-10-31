@@ -4,36 +4,36 @@
     <Deconstruct time="10">
       <Item identifier="physicorium" amount="4" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="80" />
-      <RequiredItem identifier="physicorium_barrel" amount="3" />
-	  <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="tungsten_phy_barrel" amount="3" />
+	    <RequiredItem identifier="tungsten_phy_part" amount="3" />
       <RequiredItem identifier="engineeringplastic" amount="2"/>
-	  <RequiredItem identifier="glassfibre" amount="3" />
-	  <RequiredItem identifier="three_shotgun_design" />
+	    <RequiredItem identifier="glassfibre" amount="3" />
+	    <RequiredItem identifier="three_shotgun_design" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/shotgun/shotgun45.png" sourcerect="731,401,188,183" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/shotgun/shotgun_phy/shotgun_phy.png" sourcerect="606,217,604,166" depth="0.55" origin="0.5,0.5" />
     <Body width="200" height="50" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-40,-15" handle2="80,25" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect" >
 	<!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 	<!-- 禁用霰弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_no_shotgun_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
-	<StatusEffect type="Onactive" target="Character" SpeedMultiplier="0.6" setvalue="true" >
+	<StatusEffect type="Onactive" interval="0.9" target="Character" SpeedMultiplier="0.6" setvalue="true" >
 	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
 	 </StatusEffect>
 	 <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
+	 <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true" >
 	  <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
 	 </StatusEffect>
-	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	 <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->
@@ -109,16 +109,16 @@
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
-	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="189,300,90,60" origin="0.5,0.5" />
-	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="278,22,56,32" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
+      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
+	  <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
 	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
 	  <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,focusingflashlight,spreadflashlight" hide="false" itempos="48,-4" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="48,-4" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="deep_laser" hide="false" itempos="48,-4" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="48,-4" setactive="true" />
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="13,16" setactive="true" containedspritedepth="0.45" depth="0.55" />

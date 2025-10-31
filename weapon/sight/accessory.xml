@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="vertical_grip" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="vertical_grip" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -9,25 +9,24 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="33,17,77,135" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="vertical_grip" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="vertical_grip" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="vertical_grips_short" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="vertical_grips_short" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="380" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -36,25 +35,24 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,320,65,103" depth="0.549" origin="0.5,0.6" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="vertical_grip_short" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="vertical_grip_short" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="vertical_grips_hollow_out" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="vertical_grips_hollow_out" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="390" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -63,25 +61,24 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,318,61,122" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="vertical_grips_hollow_out" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="vertical_grips_hollow_out" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="cqr_grips" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="cqr_grips" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="450" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -90,25 +87,24 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,470,256,157" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,460,256,164" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="18,460,256,164" depth="0.549" origin="0.5,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" OnlyInside="true" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="cqr_grips" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" OnlyInside="true" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="cqr_grips" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="oblique_grips" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="oblique_grips" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="410" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -117,27 +113,25 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="43,658,83,156" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="43,658,83,156" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="43,658,83,156" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Parent,Character" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="oblique_grips" strength="1" />
-	      <Conditional Condition="lt 1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Parent,Character" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="oblique_grips" strength="5" />
+        <Conditional Condition="lt 1" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="corner_grip" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="corner_grip" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="420" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -146,25 +140,24 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" depth="0.6" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="40,164,244,104" depth="0.549" origin="0.5,0.65" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="corner_grip" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="corner_grip" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-    
-  <Item name="" identifier="focusingflashlight" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="focusingflashlight" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -173,20 +166,20 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
-	  <RequiredItem identifier="groundglass" />
+      <RequiredItem identifier="groundglass" />
       <RequiredItem identifier="uranium" />
       <RequiredItem identifier="glassfibre" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" depth="0.54" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand,Head" holdpos="80,-50" aimpos="80,0" handle1="-20,0" msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
       <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" Flicker="0" range="1500" powerconsumption="10" IsOn="true">
         <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
       </LightComponent>
@@ -194,34 +187,108 @@
         <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
       </LightComponent>
     </Holdable>
-	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
-      </Wearable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="focusingflashlight_L" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.2" style="ItemUI" />
+      <Button text="转为手枪专用聚焦手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="focusingflashlight_small" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
   </Item>
-  
-  
-  <Item name="" identifier="focusingflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
-    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
-	  <RequiredItem identifier="groundglass" />
-      <RequiredItem identifier="uranium" />
-      <RequiredItem identifier="glassfibre" />
-    </Fabricate>
-	<Deconstruct time="5">
+  <Item name="" identifier="focusingflashlight_L" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,340,188,51" depth="0.551" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" holdpos="80,-50" aimpos="80,0" handle1="-20,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" Flicker="0" range="1500" powerconsumption="10" IsOn="true">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
+      </LightComponent>
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" range="1500" powerconsumption="10" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
+      </LightComponent>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="focusingflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.2" style="ItemUI" />
+      <Button text="转为手枪专用聚焦手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="focusingflashlight_small" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
+  </Item>
+  <Item name="" identifier="focusingflashlight_small" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_flashlight_small" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="365,289,132,57" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="367,131,628,57" depth="0.549" origin="0.1,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" holdpos="80,-50" aimpos="80,0" handle1="-20,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" Flicker="0" range="1500" powerconsumption="10" IsOn="true">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.02, 0.5" size="1.5,1.5" />
+      </LightComponent>
+      <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" range="1500" powerconsumption="10" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0">
+        <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
+      </LightComponent>
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_laser_1" strength="5" />
+      </StatusEffect>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为通用聚焦手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="focusingflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
+  </Item>
+  <Item name="" identifier="focusingflashlight_p" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light" hideinmenus="true">
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,575,112,51" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,575,112,51" depth="0.65" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand,Head" holdpos="80,-50" aimpos="80,0" handle1="-20,0" msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
       <LightComponent LightColor="0.5,0.5,0.5,0.5" directional="true" Flicker="0" range="1500" powerconsumption="10" IsOn="true">
         <LightTexture texture="Content/Lights/lightcone.png" origin="0.0, 0.5" size="1.5,1.5" />
       </LightComponent>
@@ -230,9 +297,7 @@
       </LightComponent>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="spreadflashlight" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="spreadflashlight" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -241,117 +306,183 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="groundglass" />
       <RequiredItem identifier="uranium" />
       <RequiredItem identifier="glassfibre" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" depth="0.54" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand,Head"  msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
       <LightComponent lightcolor="1.0,1.0,1.0,0.2" range="1200.0" powerconsumption="0">
-      <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
-      <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
-    </LightComponent>
+        <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
+        <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
+      </LightComponent>
     </Holdable>
-	<Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect">
-      </Wearable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="spreadflashlight_L" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.2" style="ItemUI" />
+      <Button text="转为手枪专用广域手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="spreadflashlight_small" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
   </Item>
-  
-  
-  <Item name="" identifier="spreadflashlight_p" category="Weapon" maxstacksize="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
-    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantoutpost" multiplier="1" />
-      <Price storeidentifier="merchantcity" multiplier="1" />
-      <Price storeidentifier="merchantresearch" multiplier="1" />
-      <Price storeidentifier="merchantmilitary" multiplier="1" />
-      <Price storeidentifier="merchantmine" multiplier="1" />
-    </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="30" />
-      <RequiredItem identifier="groundglass" />
-      <RequiredItem identifier="uranium" />
-      <RequiredItem identifier="glassfibre" />
-    </Fabricate>
-	<Deconstruct time="5">
+  <Item name="" identifier="spreadflashlight_L" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="451,422,162,81" depth="0.551" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent lightcolor="1.0,1.0,1.0,0.2" range="1200.0" powerconsumption="0">
+        <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
+        <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
+      </LightComponent>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="spreadflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.2" style="ItemUI" />
+      <Button text="转为手枪专用广域手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="spreadflashlight_small" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
+  </Item>
+  <Item name="" identifier="spreadflashlight_small" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_flashlight_small" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="378,355,118,75" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="379,197,608,75" depth="0.549" origin="0.1,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+      <LightComponent lightcolor="1.0,1.0,1.0,0.2" range="1200.0" powerconsumption="0">
+        <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
+        <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
+      </LightComponent>
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_laser_1" strength="5" />
+      </StatusEffect>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为通用广域手电" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="spreadflashlight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+    <Wearable slots="Any,Head" armorvalue="0" msg="ItemMsgPickUpSelect"></Wearable>
+  </Item>
+  <Item name="" identifier="spreadflashlight_p" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light" hideinmenus="true">
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="47,630,112,60" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="47,630,112,60" depth="0.65" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand,Head"  msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
+    <Holdable slots="Any,RightHand,LeftHand,Head" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="Always" targettype="This" Voltage="10.0" setvalue="true" />
       <LightComponent lightcolor="1.0,1.0,1.0,0.2" range="1200.0" powerconsumption="0">
-      <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
-      <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
-    </LightComponent>
+        <LightTexture texture="Content/Lights/pointlight_bounce.png" origin="0.5,0.5" />
+        <sprite texture="Content/Items/Electricity/signalcomp.png" sourcerect="784,528,64,96" />
+      </LightComponent>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="chip_friendly_fire" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+  <Item name="" identifier="chip_friendly_fire" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="carbon" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="carbon" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="178,844,120,113" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="178,844,120,113" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="friendly_fire" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="friendly_fire" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_gun_in_water" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+  <Item name="" identifier="chip_gun_in_water" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="carbon" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="carbon" />
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="205,597,120,113" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deepgun_inwater_detect_chip" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deepgun_inwater_detect_chip" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_locate" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_locate" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="carbon" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="carbon" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="180,712,120,113" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="180,712,120,113" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="Always" targettype="This" Voltage="1.0" setvalue="true" />
+      <StatusEffect type="Always" targettype="This" Voltage="1.0" setvalue="true" />
     </Holdable>
-	<AiTarget soundrange="50000" sonarlabel="entityname.sonarbeacon" sight="0" staticsight="true"/>
-	<LightComponent LightColor="0.0,0,0.0,0" range="0" powerconsumption="10" blinkfrequency="2" IsOn="false" canbeselected="false">
+    <AiTarget soundrange="50000" sonarlabel="entityname.sonarbeacon" sight="0" staticsight="true" />
+    <LightComponent LightColor="0.0,0,0.0,0" range="0" powerconsumption="10" blinkfrequency="2" IsOn="false" canbeselected="false">
       <StatusEffect type="OnActive" targettype="Contained" Condition="-0.1">
         <RequiredItem items="mobilebattery" type="Contained" />
       </StatusEffect>
@@ -359,164 +490,153 @@
         <Conditional Voltage="gt 0.5" targetitemcomponent="LightComponent" />
       </StatusEffect>
     </LightComponent>
-	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.16,0.15" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.006,-0.05" style="ItemUI" />
       <TickBox text="sonarbeacon.beaconactive">
         <StatusEffect type="OnUse" targettype="This" IsOn="true" />
         <StatusEffect type="OnSecondaryUse" targettype="This" IsOn="false" />
       </TickBox>
-      <TextBox text="sonarbeacon.beaconsignal" propertyname="SonarLabel" maxtextlength="32"/>
+      <TextBox text="sonarbeacon.beaconsignal" propertyname="SonarLabel" maxtextlength="32" />
     </CustomInterface>
   </Item>
-  
-  
-  <Item name="" identifier="chip_first_aid" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_first_aid" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="carbon" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="carbon" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,842,127,118" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="48,842,127,118" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="chip_first_aid" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="chip_first_aid" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="chip_rapid_receiver" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_rapid_receiver" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="deep_ssd" />
+      <RequiredItem identifier="deep_ssd" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="310,711,126,118" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="310,711,126,118" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="chip_rapid_receiver" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="chip_rapid_receiver" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="chip_unstable_gunpowder" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_unstable_gunpowder" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="deep_ssd" />
+      <RequiredItem identifier="deep_ssd" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="315,845,126,118" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="315,845,126,118" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="chip_unstable_gunpowder" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="chip_unstable_gunpowder" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="chip_improved_barrel" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_improved_barrel" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="deep_ssd" />
+      <RequiredItem identifier="deep_ssd" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="441,712,120,116" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="441,712,120,116" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" Condition="8" target="Parent" comparison="and" >
-	      <Conditional Condition="gt 1" />
+      <StatusEffect type="OnActive" Condition="8" target="Parent" comparison="and">
+        <Conditional Condition="gt 1" />
       </StatusEffect>
-	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="improved_barrel" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="improved_barrel" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="chip_oc_gun" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_oc_gun" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="447,858,119,116" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="447,858,119,116" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="chip_oc_gun" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="chip_oc_gun" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-    <Item name="" identifier="chip_headshot" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_headshot" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="585,861,119,116" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="585,861,119,116" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	  <Affliction identifier="chip_headshot_detect" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+        <Affliction identifier="chip_headshot_detect" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-    <Item name="" identifier="chip_bodyshot" category="Weapon" maxstacksize="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_bodyshot" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="718,861,119,116" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="718,861,119,116" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	  <Affliction identifier="chip_bodyshot_detect" strength="30" />
+      <StatusEffect type="OnActive" interval="0.25" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+        <Affliction identifier="chip_bodyshot_detect" strength="30" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="extended_barrel" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="extended_barrel" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_muzzle,deep_muzzle_long" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="800" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -525,26 +645,30 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="engineeringplastic" />
       <RequiredItem identifier="physicorium" />
-	  <RequiredItem identifier="deep_ssd" />
+      <RequiredItem identifier="deep_ssd" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="physicorium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="39,340,259,43" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="39,340,259,43" depth="0.54" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="127,221,207,29" depth="0.54" origin="0.18,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="extended_barrel" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="extended_barrel" strength="2" />
+      </StatusEffect>
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_long_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="deep_flash_hider" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_flash_hider" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="700" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -553,26 +677,30 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="19,170,85,41" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="19,170,85,41" depth="0.54" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	      <Affliction identifier="flash_hider" strength="1" />
-	      <Conditional speed="gte 1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="flash_hider" strength="2" />
+        <Conditional speed="gte 1" />
+      </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="deep_compensator" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_compensator" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="700" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -581,26 +709,30 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" depth="0.54" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" depth="0.54" origin="0.4,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	      <Affliction identifier="deep_compensator" strength="1" />
-	      <Conditional speed="lt 1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_compensator" strength="2" />
+        <Conditional speed="lt 1" />
+      </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="deep_muzzle_brake" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_muzzle_brake" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="750" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -609,50 +741,57 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="22,214,78,43" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="22,214,78,43" depth="0.54" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deep_muzzle_brake" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_brake" strength="1" />
+      </StatusEffect>
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_short_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  <Item name="" identifier="deep_muffler" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_muzzle_short" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
-  <Price baseprice="900" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Item name="" identifier="deep_muffler" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_muzzle,deep_muzzle_long" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+    <Price baseprice="900" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="titaniumaluminiumalloy" amount="2" />
-	  <RequiredItem identifier="deep_ssd" />
+      <RequiredItem identifier="deep_ssd" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" depth="0.54" origin="0.3,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="125,170,212,42" depth="0.54" origin="0.2,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_muzzle_long_detect" strength="10" />
+        <Affliction identifier="deep_muzzle_none_detect" strength="10" />
+      </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  <Item name="" identifier="shotgun_ammo_bag" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,shotgun_ammo_bag" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.07" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="shotgun_ammo_bag" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,shotgun_ammo_bag" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.07" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="700" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -661,279 +800,282 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="ballisticfiber" amount="4" />
-	  <RequiredItem identifier="KEVLAR" amount="2" />
+      <RequiredItem identifier="KEVLAR" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="ballisticfiber" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="308,418,128,94" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="308,418,128,94" depth="0.5" origin="0.5,0.5" />
     <Body width="80" height="35" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" Condition="5" target="Parent" comparison="and" >
-	      <Conditional Condition="gt 10" />
-      </StatusEffect>
     </Holdable>
-  </Item> 
-  
-  <Item name="" identifier="chip_ergonomics" subcategory="deep_chip_armor" category="Equipment" maxstacksize="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  </Item>
+  <Item name="" identifier="chip_ergonomics" subcategory="deep_chip_armor" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="3" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="709,711,131,124" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="709,711,131,124" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_heavy_armor" subcategory="deep_chip_armor" category="Equipment" maxstacksize="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_heavy_armor" subcategory="deep_chip_armor" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="3" />
-	  <RequiredItem identifier="ballisticfiber" amount="3" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="ballisticfiber" amount="3" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="845,714,129,123" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="845,714,129,123" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_strengthening_of_limbs" subcategory="deep_chip_armor" category="Equipment" maxstacksize="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_strengthening_of_limbs" subcategory="deep_chip_armor" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="3" />
-	  <RequiredItem identifier="ballisticfiber" amount="3" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="ballisticfiber" amount="3" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="710,581,129,123" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="710,581,129,123" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_emergency_defibrillation" subcategory="deep_chip_armor" category="Equipment" maxstacksize="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_emergency_defibrillation" subcategory="deep_chip_armor" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_chip_armor" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" amount="3" />
-	  <RequiredItem identifier="ballisticfiber" amount="3" />
-	  <RequiredItem identifier="deep_ssd" amount="3" />
+      <RequiredItem identifier="ballisticfiber" amount="3" />
+      <RequiredItem identifier="deep_ssd" amount="3" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="843,579,128,123" />
     <Sprite texture="%ModDir%/weapon/sight/accessory.png" sourcerect="843,579,128,123" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_cqb" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_cqb" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="deep_ssd" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="16,195,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="16,195,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_frogman" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_frogman" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="glassfibre" />
-	  <RequiredItem identifier="deep_ssd" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="496,198,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="496,198,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_marksman" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_marksman" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="145,195,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="145,195,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_commando" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_commando" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="264,196,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="264,196,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_heavy_defender" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_heavy_defender" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="608,197,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="608,197,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-
-  <Item name="" identifier="chip_blaster" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_blaster" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="712,197,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="712,197,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-
-  <Item name="" identifier="chip_machinegunner" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_machinegunner" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="816,197,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="816,197,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-
-  <Item name="" identifier="chip_striker" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_striker" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="2" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="917,197,104,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="917,197,104,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="chip_doc" subcategory="deep_head_chip" category="Equipment" maxstacksize="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="chip_doc" subcategory="deep_head_chip" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_head_chip" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.1" impactsoundtag="impact_metal_light" setactive="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="KEVLAR" />
       <RequiredItem identifier="engineeringplastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="KEVLAR" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="381,196,103,103" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_head.png" sourcerect="381,196,103,103" depth="0.45" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  
-  <Item name="" identifier="deep_laser" setactive="true" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_laser" setactive="true" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="2" spawnprobability="0.02" />
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="glassfibre" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="453,534,134,88" />
-    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.56" origin="0.07,0.5" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.551" origin="0.07,0.5" />
     <Body width="30" height="50" density="20" />
-    <Holdable slots="Any,RightHand,LeftHand"  msg="ItemMsgPickUpSelect">
-	  <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deep_laser_1" strength="1" />
+    <Holdable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_laser_1" strength="5" />
       </StatusEffect>
     </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为右导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="deep_laser_R" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
   </Item>
-  
-  <Item name="" identifier="deep_18c_buttstock" category="Weapon" maxstacksize="1" Tags="smallitem,deep_accessory,deep_18c_stock" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.4" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+  <Item name="" identifier="deep_laser_R" setactive="true" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.11" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/accessory.png" sourcerect="453,534,134,88" />
+    <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="21,9,976,93" depth="0.54" origin="0.07,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_laser_1" strength="5" />
+      </StatusEffect>
+    </Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为左导轨安装" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="deep_laser" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_18c_buttstock" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_18c_stock" canbepicked="true" description="" cargocontaineridentifier="metalcrate" subcategory="accessory" scale="0.4" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="40,844,127,48" />
     <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="40,844,127,48" depth="0.6" origin="0.5,0.5" />
     <Body width="130" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deep_18c_buttstock" strength="1" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_18c_buttstock" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  </Items>
+</Items>

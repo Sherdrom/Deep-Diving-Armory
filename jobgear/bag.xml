@@ -11,7 +11,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="3" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="28,8,106,173" origin="0.5,0.5" />
@@ -23,8 +23,13 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="24" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" hideitems="true" maxstacksize="1" depth="0.5" >
+    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <Containable items="deep_rig" />
+      <SubContainer capacity="23" hideitems="true" maxstacksize="32">
+        <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" >
+        </Containable>
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -40,7 +45,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="3" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="305,26,113,151" origin="0.5,0.5" />
@@ -52,8 +57,12 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="20" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <Containable items="deep_rig" />
+      <SubContainer capacity="19" maxstacksize="32">
+        <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -68,7 +77,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="2" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="4" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="327,273,101,149" origin="0.5,0.5" />
@@ -80,8 +89,12 @@
     </Wearable>
     <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
     </Holdable>
-    <ItemContainer capacity="20" maxstacksize="32" depth="0.5" >
-      <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <Containable items="deep_rig" />
+      <SubContainer capacity="19" maxstacksize="32">
+        <Containable items="smallitem" excludeditems="toolbelt,toolbox,bandolier,deep_bag" />
+      </SubContainer>
     </ItemContainer>
   </Item>
   
@@ -96,7 +109,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="4" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="6" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="23,238,121,182" origin="0.5,0.5" />
@@ -110,7 +123,11 @@
     <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
       <Containable items="weapon" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="93,274,94,84" origin="0.5,0.5" />
-      <SubContainer capacity="29" maxstacksize="32">
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_rig" />
+      </SubContainer>
+      <SubContainer capacity="28" maxstacksize="32">
         <Containable tags="smallitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag" />
       </SubContainer>
     </ItemContainer>
@@ -127,7 +144,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="4" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="6" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="176,241,121,182" origin="0.5,0.5" />
@@ -141,7 +158,11 @@
     <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
       <Containable items="weapon" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="93,274,94,84" origin="0.5,0.5" />
-      <SubContainer capacity="29" maxstacksize="32">
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_rig" />
+      </SubContainer>
+      <SubContainer capacity="28" maxstacksize="32">
         <Containable tags="smallitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag" />
       </SubContainer>
     </ItemContainer>
@@ -159,7 +180,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="4" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="8" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="428,7,168,201" origin="0.5,0.5" />
@@ -176,11 +197,57 @@
     <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
     <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="8,333,66,64" origin="0.5,0.5" />
     <SlotIcon slotindex="1" texture="%ModDir%/misc/ui2.png" sourcerect="10,268,62,50" origin="0.5,0.5" />
+    <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
       <Containable items="diving" excludeditems="deepdivinglarge" />
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="tool" excludedidentifiers="largemobilecontainer" />
       </SubContainer>
-      <SubContainer capacity="28" maxstacksize="32">
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_rig" />
+      </SubContainer>
+      <SubContainer capacity="27" maxstacksize="32">
+        <Containable tags="smallitem,mediumitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag,deep_rig" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+
+  <Item name="" identifier="deep_beta2" InvulnerabletoDamage="true" subcategory="deep_bag" category="Equipment" tags="mediumitem,mobilecontainer,largemobilecontainer,tool,deep_bag" showcontentsintooltip="true" Scale="0.5" fireproof="true" description="" impactsoundtag="impact_soft">
+  <Price baseprice="450" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="organicfiber" amount="4" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <Item identifier="organicfiber" amount="8" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="447,250,129,194" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/bag/bag.png" sourcerect="358,125,92,151" depth="0.6" />
+    <Body width="140" height="160" density="15" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+	  <StatValue stattype="MovementSpeed" value="-0.3" />
+	  <SkillModifier skillidentifier="weapons" skillvalue="-20" />
+      <sprite CanBeHiddenByOtherWearables="false" CanBeHiddenByItem="deepdivinglarge" texture="%ModDir%/jobgear/bag/bag.png" sourcerect="358,125,92,151" limb="Torso" depthlimb="Waist" inherittexturescale="false" scale="0.43" origin="1.2,0.5" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-70" handle1="-5,50" handle2="10,50" holdangle="0" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use" allowswappingwhenpicked="false">
+    <StatValue stattype="MovementSpeed" value="-0.2" />
+    </Holdable>
+    <ItemContainer capacity="1" maxstacksize="1" depth="0.5" >
+    <SlotIcon slotindex="0" texture="%ModDir%/misc/ui2.png" sourcerect="8,333,66,64" origin="0.5,0.5" />
+    <SlotIcon slotindex="1" texture="%ModDir%/misc/ui2.png" sourcerect="10,268,62,50" origin="0.5,0.5" />
+    <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="401,403,108,92" origin="0.5,0.5" />
+      <Containable items="diving" excludeditems="deepdivinglarge" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="tool" excludedidentifiers="largemobilecontainer" />
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="deep_rig" />
+      </SubContainer>
+      <SubContainer capacity="27" maxstacksize="32">
         <Containable tags="smallitem,mediumitem" excludedidentifiers="toolbelt,toolbox,bandolier,deep_bag,deep_rig" />
       </SubContainer>
     </ItemContainer>
@@ -198,7 +265,7 @@
     <Deconstruct time="10">
       <Item identifier="organicfiber" amount="8" />
     </Deconstruct>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <Item identifier="organicfiber" amount="12" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/jobgear/bag/bag_icon.png" sourcerect="625,8,165,251" origin="0.5,0.5" />

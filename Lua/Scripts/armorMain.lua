@@ -1,5 +1,9 @@
 Deep_Lua.Main = {}
 
+if not Game.IsMultiplayer then
+    local RicochetSound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg")
+end
+
 -- Limb convertion stuff
 local limbtoslot = {
     [LimbType.Head] = {InvSlotType.Head,0},
@@ -25,6 +29,18 @@ function Deep_Lua.Main.getArmor(character,targetlimb)
     local characterInv = character.Inventory                                    --Get character inv
     if characterInv == nil then return nil,nil end
     local targetinv = limbtoslot[targetlimb.type]                               --Get corresponding limb and its slot
+    
+    if targetlimb.type == LimbType.Head then
+        if characterInv.GetItemInLimbSlot(InvSlotType.OuterClothes) ~= nil then --2025/9/15 Update: Fixed an issue with bodyarmor covering head
+            local item = characterInv.GetItemInLimbSlot(InvSlotType.OuterClothes)
+            if Deep_Lua.Armors[item.Prefab.Identifier.Value] ~= nil then
+                if Deep_Lua.Armors[item.Prefab.Identifier.Value].protectionarea[LimbType.Head] then
+                    targetinv = limbtoslot[LimbType.Torso]
+                end
+            end
+        end
+    end
+
     if targetinv == nil then return nil,nil end
     local outeritem = characterInv.GetItemInLimbSlot(targetinv[1])              --Get outer cloth(item)
     if outeritem == nil then return nil,nil end
@@ -72,6 +88,21 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
 
     if ricochet then                                                                        --Jackpot
         continue = false
+        if Game.IsMultiplayer then
+            local message = Networking.Start("PlayRicochetSound")
+            message.WriteDouble(item.WorldPosition.X)
+            message.WriteDouble(item.WorldPosition.Y)
+            --for client in Client.ClientList do
+            --    Networking.Send(message, client.Connection)    --abadoned due to potential to kill the server networ :(
+            --end
+            local client = Util.FindClientCharacter(char)
+            if client then
+                Networking.Send(message, client.Connection)
+            end
+        end
+        if not Game.IsMultiplayer then
+            SoundPlayer.PlaySound(RicochetSound, item.WorldPosition, 1, 5000, 1)
+        end
         return 0, 0, continue
     end
 
@@ -84,7 +115,7 @@ function Deep_Lua.Main.PlateMain(data,item,penlevel,damagemultiplier,affliction,
         elseif data.type == "metal" then
             item.Condition = CaculateMetalDamage(item,affliction,data)
         else
-            item.Condition = data.customexpression(item,affliction,data)                        --Require custom expression
+            item.Condition = data.customexpression(item,affliction,data)                    --Require custom expression
         end
     end
 
@@ -128,7 +159,7 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local afflictions = ptable["afflictions"]
     local penetrationlevel = math.floor((ptable["penetration"]+0.00001)*10)
     local targetcharacter = targetlimb.character
-    if not targetcharacter.IsHuman then return end
+    --if not targetcharacter.IsHuman then return end
     local outercloth,innerplate = Deep_Lua.Main.getArmor(targetcharacter,targetlimb)
     local outertargetid,innertargetid
     local clothdata, platedata = nil,nil
@@ -172,9 +203,11 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
         end
         if clothdata ~= nil and outertargetid == "Any" then                                                     --Here we add up all strength for "Any" case
             clothaffliction.Strength = clothaffliction.Strength + i.Strength                                    --We actually trick our own codes. Makesure
+            executecloth = true
         end                                                                                                     --you wont use anything else than Strength
         if platedata ~= nil and innertargetid == "Any" then                                                     --in "Any" case. This var only contains
             plateaffliction.Strength = plateaffliction.Strength + i.Strength                                    --Strength in that case.
+            executeplate = true
         end
     end
 

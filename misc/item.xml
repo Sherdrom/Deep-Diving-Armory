@@ -5,12 +5,10 @@
     <Sprite texture="Content/Items/Tools/tools.png" sourcerect="473,1,29,65" depth="0.55" origin="0.5,0.5" />
     <Body width="27" height="60" density="12" />
     <Holdable slots="Any,RightHand,LeftHand" holdangle="30" handle1="0,-15" msg="ItemMsgPickUpSelect" />
-    <AiTarget soundrange="100000" sonarlabel="entityname.sonarbeacon" sight="500" staticsight="true"/>
+    <AiTarget soundrange="100000" sonarlabel="entityname.sonarbeacon" sight="500" staticsight="true" />
     <LightComponent LightColor="0.0,1.0,0.0,1.0" range="50" powerconsumption="0" blinkfrequency="2" IsOn="false" canbeselected="false">
-      <StatusEffect type="OnActive" targettype="Contained" Condition="-0">
-      </StatusEffect>
-      <StatusEffect type="OnActive" targettype="This" SoundRange="100000" setvalue="true">
-      </StatusEffect>
+      <StatusEffect type="OnActive" targettype="Contained" Condition="-0"></StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" SoundRange="100000" setvalue="true"></StatusEffect>
     </LightComponent>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.16,0.15" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.006,-0.05" style="ItemUI" />
@@ -18,61 +16,77 @@
         <StatusEffect type="OnUse" targettype="This" IsOn="true" />
         <StatusEffect type="OnSecondaryUse" targettype="This" IsOn="false" />
       </TickBox>
-      <TextBox text="sonarbeacon.beaconsignal" propertyname="SonarLabel" maxtextlength="32"/>
+      <TextBox text="sonarbeacon.beaconsignal" propertyname="SonarLabel" maxtextlength="32" />
     </CustomInterface>
-	<ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorstyle="battery">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
       <Containable items="mobilebattery">
         <StatusEffect type="OnContaining" targettype="This" Voltage="1.0" setvalue="true" />
       </Containable>
     </ItemContainer>
   </Item>
-  
   <Item name="" identifier="deep_trash_can" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="" scale="0.45" impactsoundtag="impact_metal_light">
-  <Fabricate suitablefabricators="fabricator" requiredtime="5">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
       <RequiredItem identifier="steel" amount="1" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="9,92,108,156" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
-	<Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
-	<StatusEffect type="OnNotContained" target="contained" delay="0.1" setvalue="true" stackable="false">
-		<remove />
-    </StatusEffect>
-    <StatusEffect type="OnContained" target="Character" SpeedMultiplier="0.2"  setvalue="true" stackable="false">
-    </StatusEffect>
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+      <StatusEffect type="OnNotContained" target="contained" delay="0.1" setvalue="true" stackable="false">
+        <remove />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="Character" SpeedMultiplier="0.2" setvalue="true" stackable="false"></StatusEffect>
     </Holdable>
-	<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="销毁垃圾" connection="signal_out1">
         <StatusEffect type="OnUse" target="contained" delay="0.1" setvalue="true" stackable="false">
-		<remove />
+          <remove />
         </StatusEffect>
-      </Button>      
+      </Button>
     </CustomInterface>
-    <ItemContainer capacity="1" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
-	</ItemContainer>
+    <ItemContainer capacity="1" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false"></ItemContainer>
   </Item>
-
-  <Item name="" identifier="deep_thermal_interference" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light" >
-  <Deconstruct time="5">
-  <Item identifier="copper" amount="1"/>
-  </Deconstruct>
+  <Item name="" identifier="deep_refresh_tool" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
+      <RequiredSkill identifier="electrical" level="20" />
+      <RequiredSkill identifier="mechanical" level="30" />
+      <RequiredItem identifier="steel" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="9,92,108,156" origin="0.5,0.5" />
+    <Body width="110" height="160" density="20" />
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false" />
+    <ItemContainer capacity="1" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
+      <SlotIcon slotindex="0" texture="Content/UI/SettingsMenuAtlas.png" sourcerect="193,0,63,64" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="Content/UI/SettingsMenuAtlas.png" sourcerect="193,64,63,64" origin="0.5,0.5" />
+      <Containable targetslot="0" items="smallitem,mediumitem,largeitem">
+        <StatusEffect target="Contained" type="OnContaining" Interval="2">
+          <LuaHook name="Deep_RefreshItem" />
+        </StatusEffect>
+      </Containable>
+      <SubContainer capacity="1" maxstacksize="32" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_thermal_interference" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light">
+    <Deconstruct time="5">
+      <Item identifier="copper" amount="1" />
+    </Deconstruct>
     <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="171,15,151,133" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
-	  <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
-    </Holdable>
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
   </Item>
-
-  <Item name="" identifier="deep_white_keycard" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="deep_white_keycard" scale="0.2" impactsoundtag="impact_metal_light" >
+  <Item name="" identifier="deep_white_keycard" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_white_keycard" scale="0.2" impactsoundtag="impact_metal_light">
     <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="332,11,138,143" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
-	  <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
-    </Holdable>
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
   </Item>
-
-
+  <Item name="" identifier="deep_separatist_confidential_information" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light">
+    <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="325,175,158,184" origin="0.5,0.5" />
+    <Body width="110" height="160" density="20" />
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
+  </Item>
 </Items>

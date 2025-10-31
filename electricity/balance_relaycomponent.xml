@@ -32,13 +32,15 @@
     <ItemContainer capacity="50" slotsperrow="10" canbeselected="true" hideitems="true" msg="ItemMsgInteractSelect">
       <GuiFrame relativesize="0.35,0.45" anchor="Center" style="ItemUI" />
       <RequiredItem items="deep_white_keycard" type="Picked" msg="ItemMsgUnauthorizedAccess" ignoreineditor="true" />
-      <Containable items="smallitem,mediumitem,mobilecontainer" />
+      <Containable items="smallitem,mediumitem,mobilecontainer" excludedidentifiers="deep_white_keycard"/>
       <SubContainer capacity="10" maxstacksize="1">
         <SlotIcon texture="Content/UI/CommandUIAtlas.png" sourcerect="639,926,128,80" origin="0.5,0.5" />
         <Containable items="mobilecontainer,deepdiving,deepdivinglarge,ammobox,coilgunammo,depthchargeammo" />
       </SubContainer>
     </ItemContainer>
   </Item>
+
+  
 
 <Item name="" identifier="deep_balance_relaycomponent_no_6x_8x_sight" category="Electrical" subcategory="deep_balance_relaycomponent" Tags="smallitem,deep_balance_relaycomponent_no_6x_8x_sight,deep_ssd_relaycomponent" maxstacksize="1" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" GrabWhenSelected="true" signalcomponentcolor="#694341" linkable="true" allowedlinks="securesteelcabinet" >
     <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="512,388,63,57" origin="0.5,0.5" />

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_USP" subcategory="pistol" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,pistolitem,gunsmith,mountableweapon,deep_condition_100" Scale="0.5" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_USP" subcategory="pistol" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,pistolitem,gunsmith,mountableweapon,deep_condition_100" Scale="0.32" impactsoundtag="impact_metal_light">
     <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
     <Price baseprice="140" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
@@ -10,47 +10,63 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="steel" amount="2" />
-	  <RequiredItem identifier="carbon" amount="1" />
-	  <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="carbon" amount="1" />
+      <RequiredItem identifier="glassfibre" />
     </Fabricate>
-	    <Deconstruct time="10">
+    <Deconstruct time="10">
       <Item identifier="steel" />
       <Item identifier="plastic" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/pistol/pistol45.png" sourcerect="0,445,87,59" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/pistol/pistol.png" sourcerect="0,384,76,54" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/pistol/pistol_steel/pistol_steel_45.png" sourcerect="18,211,113,77" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/pistol/pistol_steel/pistol_steel.png" sourcerect="18,196,98,71" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-15,-7" handle2="-15,-7"       msg="ItemMsgPickUpSelect" >
-	<StatusEffect type="Onactive" target="Character" setvalue="true" >
-	  <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
-	 </StatusEffect>
-	 <StatusEffect type="Onactive" target="Character" setvalue="true" >
-	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	 </StatusEffect>
-	 <StatusEffect type="OnActive" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
-     </StatusEffect>
-     <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
-    <Conditional chip_bodyshot_detect="gt 10.0" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-25,-7" handle2="-15,-7" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.32" setvalue="true" >
+    </StatusEffect>
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
+        <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
       </StatusEffect>
-     <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
-    <Conditional chip_bodyshot_detect="lt 10.0" />
+      <StatusEffect type="Onactive" interval="3" target="Character" setvalue="true">
+        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-	</Holdable>
-    <RangedWeapon barrelpos="29,11" spread="3" unskilledspread="6" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.25" holdtrigger="true">
-	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
-	  <StatusEffect type="InWater" target="This" Condition="20"/>
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deepgun_inwater_detect" strength="100" />
+      </StatusEffect>
+      <!-- 有碎甲芯片时，增加1级穿甲-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1">
+        <Conditional chip_bodyshot_detect="gt 10.0" />
+      </StatusEffect>
+      <!-- 有碎甲芯片时，增加1级穿甲-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
+        <Conditional chip_bodyshot_detect="lt 10.0" />
+      </StatusEffect>
+
+      <!-- 有短枪口件时，略微增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="69,27" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_short_detect="gte 1.0" />
+      </StatusEffect>
+      <!-- 有长枪口件时，极大增加枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="109,27" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_long_detect="gte 1.0" />
+      </StatusEffect>
+      <!-- 无枪口件时，恢复枪口距离-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="49,27" comparison="and" setvalue="true">
+        <Conditional deep_muzzle_none_detect="lte 0.0" />
+      </StatusEffect>
+
+    </Holdable>
+    <RangedWeapon barrelpos="49,27" spread="2" unskilledspread="4" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.25" holdtrigger="true">
+      <StatusEffect type="NotInWater" target="This" Condition="10" />
+      <StatusEffect type="InWater" target="This" Condition="20" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <Sound file="%ModDir%/weapon/ammo/9mmp.ogg" type="OnUse" range="3000" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
-	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1" stackable="false" />
+      <ParticleEmitter particle="deep_plasmaspark" particlespersecond="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1" stackable="false" />
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="1" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="6.0" />
         <ParticleEmitter particle="deep_casingfirearm_9mm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
@@ -60,18 +76,18 @@
       </StatusEffect>
       <RequiredItems items="deep_9mm_2" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="30" />
+      <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" containedspritedepth="0.56">
-      <Containable items="deep_9mm_2" hide="true" setactive="true" itempos="0,-7" rotation="0" >
-      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+    <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="deep_9mm_2" hide="true" setactive="true" itempos="0,-7" rotation="0">
+        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1" setvalue="true" />
         <!-- 弹匣隐藏 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
-
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
         <StatusEffect type="OnInserted" target="This" holdpos="50,-20" aimpos="50,-20" holdangle="-35" handle2="-15,-7" disabledeltatime="true" delay="0.05" condition="0" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="-15,-7" disabledeltatime="true" delay="0.8" setvalue="true" />
@@ -83,21 +99,37 @@
         <StatusEffect type="OnInserted" target="This" holdpos="40,-10" aimpos="60,3" holdangle="10" aimangle="0" handle2="-15,-7" disabledeltatime="true" delay="0.9" setvalue="true" />
         <!-- Puts the hand on the eject port. -->
         <!-- End. Sets everything to default values. -->
-        <StatusEffect type="OnInserted" target="This" handle1="-15,-7" handle2="-15,-7" holdangle="45" holdpos="30,-20" aimangle="0" aimpos="85,5" disabledeltatime="true" delay="1" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" handle1="-25,-7" handle2="-15,-7" holdangle="45" holdpos="30,-20" aimangle="0" aimpos="85,5" disabledeltatime="true" delay="1" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="1" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
-        <sound file="%ModDir%/weapon/ammo/9mmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
+          <sound file="%ModDir%/weapon/ammo/9mmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
+          <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="10,70,85,40" origin="0.5,0.5" />
-	  <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="6,2,110,113" origin="0.5,0.5" />
+      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
+      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,focusingflashlight_p,spreadflashlight_p" hide="false" itempos="13,2" setactive="true" />
+        <Containable items="flashlight,deep_flashlight_small" excludedidentifiers="spreadflashlight_L,focusingflashlight_L,spreadflashlight,focusingflashlight" hide="false" itempos="12,2" setactive="true" >
+        </Containable>
       </SubContainer>
-	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-4,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable tags="thermalgoggles_sight" hide="false" itempos="-4,15" setactive="true">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+        </Containable>
+        <Containable Items="thermalgoggles_sight">
+          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+        </Containable>
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1">
+        <!-- 枪口件，增加枪口距离 -->
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="18.5,8.5" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
     </ItemContainer>
     <aitarget sightrange="1000" soundrange="1500" fadeouttime="5" />
@@ -107,4 +139,4 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="30" />
   </Item>
-  </Items>
+</Items>

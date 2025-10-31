@@ -8,7 +8,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -17,21 +17,20 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="7,2,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="11,0,61,91" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="11,0,61,91" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet" >
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round"></Containable>
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.56x45_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_tit_reload,556mag" impactsoundtag="impact_metal_light">
@@ -42,7 +41,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -51,7 +50,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="140,3,118,107" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="8,6,64,89" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="8,6,64,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_tit" />
@@ -60,12 +59,11 @@
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.56x45_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_phy_reload,556mag" impactsoundtag="impact_metal_light">
@@ -76,7 +74,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -85,7 +83,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,465,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="76,3,73,93" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="76,3,73,93" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
@@ -94,24 +92,22 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_556x45_M995" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_phy_ful_reload_4,556mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -120,7 +116,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,10,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="79,693,59,87" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="79,693,59,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_M995" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_M995" />
@@ -129,24 +125,22 @@
         <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_556x45_SSA_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_tun_ful_reload,556mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -155,7 +149,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,121,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="146,695,57,87" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="146,695,57,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_SSA_AP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_SSA_AP" />
@@ -164,21 +158,19 @@
         <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
   <Item name="" identifier="deep_5.56x45_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,drums_lead,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="150" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -187,7 +179,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -196,7 +188,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,459,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round" />
@@ -205,13 +197,13 @@
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -225,7 +217,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -234,7 +226,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="137,593,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_tit" />
@@ -243,13 +235,13 @@
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -263,7 +255,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -272,7 +264,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="278,812,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="639,18,81,122" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
@@ -281,27 +273,27 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_556x45_vhs" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_phy_reload,556mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="225" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="225" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -314,7 +306,7 @@
       <Item identifier="plastic" outcondition="0.25" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,8,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="723,5,78,98" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="723,5,78,98" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round_phy" />
@@ -323,23 +315,22 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_556x45_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,rifle_du_reload,556mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="180" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -347,10 +338,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="574,9,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="569,163,58,89" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="569,163,58,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="556x45round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="556x45round_depleted_uranium" />
@@ -359,13 +349,12 @@
         <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.45x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_lead_reload,545mag" impactsoundtag="impact_metal_light">
@@ -376,7 +365,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -385,7 +374,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,232,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="218,3,60,87" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="218,3,60,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round" />
@@ -394,13 +383,12 @@
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.45x39_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_tit_reload,545mag" impactsoundtag="impact_metal_light">
@@ -411,7 +399,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -420,7 +408,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,119,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="231,10,61,93" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="231,10,61,93" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_tit" />
@@ -429,13 +417,12 @@
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.45x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_phy_reload,545mag" impactsoundtag="impact_metal_light">
@@ -446,7 +433,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -455,7 +442,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,236,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="324,11,61,90" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="324,11,61,90" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_phy" />
@@ -464,25 +451,23 @@
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_545x39_BS" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_phy_ful_reload_4,545mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="280" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="280" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -491,7 +476,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,123,114,104" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="300,142,69,92" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="300,142,69,92" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="545x39round_BS" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="545x39round_BS" />
@@ -500,26 +485,23 @@
         <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
   <Item name="" identifier="deep_5.45x39_103" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.3" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_tun_ful_reload,545mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -528,7 +510,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,10,115,104" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="300,142,69,92" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="300,142,69,92" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_7n39" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_7n39" />
@@ -537,29 +519,29 @@
         <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_545x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,rifle_du_reload,545mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -567,10 +549,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="585,135,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="634,163,55,87" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="634,163,55,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="545x39round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="545x39round_depleted_uranium" />
@@ -579,13 +560,12 @@
         <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_5.45x39_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,drums_lead,545mag" impactsoundtag="impact_metal_light">
@@ -596,7 +576,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -605,7 +585,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,575,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round" />
@@ -614,13 +594,13 @@
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -634,7 +614,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -643,7 +623,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="136,706,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_tit" />
@@ -652,27 +632,27 @@
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_545x39_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,drums_phy,545mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="420" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="420" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -681,7 +661,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="418,11,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="725,19,73,113" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="725,19,73,113" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.45x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.45x39round_phy" />
@@ -690,13 +670,13 @@
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -710,7 +690,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -719,7 +699,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,691,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="815,25,95,95" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="815,25,95,95" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_lead" />
@@ -728,13 +708,12 @@
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_7.62x39" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_tit_reload,762mag" impactsoundtag="impact_metal_light">
@@ -745,7 +724,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -754,7 +733,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,353,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="282,3,72,95" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="282,3,72,95" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round" />
@@ -763,13 +742,12 @@
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_7.62x39_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_phy_reload,762mag" impactsoundtag="impact_metal_light">
@@ -780,7 +758,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -789,7 +767,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,579,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="510,9,72,97" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="510,9,72,97" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round_phy" />
@@ -798,25 +776,23 @@
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_762x39_BP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_phy_ful_reload_4,762mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+  <Item name="" identifier="deep_762x39_BP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.26" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_phy_ful_reload_4,762mag" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -825,7 +801,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,236,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="111,923,81,98" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="111,923,81,98" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_BP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_BP" />
@@ -834,25 +810,23 @@
         <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-   </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-  <Item name="" identifier="deep_762x39_MAI_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_tun_ful_reload,762mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="375" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+  <Item name="" identifier="deep_762x39_MAI_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.26" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_tun_ful_reload,762mag" impactsoundtag="impact_metal_light">
+    <Price baseprice="375" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -861,7 +835,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,246,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="200,922,84,101" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="200,922,84,101" origin="0.5,0.5" />
     <Body width="72" height="95" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_MAI_AP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_MAI_AP" />
@@ -870,31 +844,29 @@
         <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
   <Item name="" identifier="deep_762x39_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="6" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,rifle_du_reload,762mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -902,10 +874,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,254,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="692,161,87,96" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="692,161,87,96" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_depleted_uranium" />
@@ -914,13 +885,12 @@
         <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_762_expansion_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,drums_lead,762mag" impactsoundtag="impact_metal_light">
@@ -931,7 +901,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="lead" />
       <RequiredItem identifier="gun_powder" />
@@ -940,7 +910,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,807,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="252,4,68,115" origin="0.65,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x39round_lead" />
@@ -949,19 +919,18 @@
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_762_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x39,drums_tit,762mag" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -970,7 +939,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -979,7 +948,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="140,470,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="252,4,68,115" origin="0.65,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round" />
@@ -988,13 +957,13 @@
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -1008,7 +977,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -1017,7 +986,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="435,380,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="252,4,68,115" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="252,4,68,115" origin="0.65,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x39round_phy" />
@@ -1026,13 +995,13 @@
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -1046,7 +1015,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -1055,7 +1024,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,236,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="147,2,46,80" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="147,2,46,80" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round" />
@@ -1064,13 +1033,12 @@
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_7.62x51_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_phy_reload,762_51mag" impactsoundtag="impact_metal_light">
@@ -1081,7 +1049,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -1090,7 +1058,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="272,692,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round_phy" />
@@ -1099,25 +1067,23 @@
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_762x51_M61" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_phy_ful_reload_4,762_51mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="340" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="340" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1126,7 +1092,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,349,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_M61" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_M61" />
@@ -1135,25 +1101,23 @@
         <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_762x51_M993" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_tun_ful_reload,762_51mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="425" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="425" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1162,7 +1126,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="9,371,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.65" sourcerect="623,15,47,82" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_AP.png" depth="0.551" sourcerect="623,15,47,82" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_M993" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_M993" />
@@ -1171,21 +1135,20 @@
         <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_762x51_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,drums_tit,762_51mag" impactsoundtag="impact_metal_light">
     <Price baseprice="170" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -1194,7 +1157,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -1203,7 +1166,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="428,130,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="162,5,79,116" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="162,5,79,116" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round" />
@@ -1212,27 +1175,27 @@
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_762x51_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.32" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,rifle_du_reload,762_51mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -1240,10 +1203,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,366,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="788,157,45,80" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="788,157,45,80" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x51round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x51round_depleted_uranium" />
@@ -1252,13 +1214,12 @@
         <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_762x51_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_7.62x51,drums_phy,762_51mag" impactsoundtag="impact_metal_light">
@@ -1269,7 +1230,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="2">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="2">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -1278,7 +1239,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="428,260,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.65" sourcerect="162,5,79,116" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="162,5,79,116" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="7.62x51round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="7.62x51round_phy" />
@@ -1287,13 +1248,13 @@
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character">
+      <StatusEffect type="OnActive" interval="0.9" target="Character">
         <Affliction identifier="expansion_mag" strength="100" />
       </StatusEffect>
     </Holdable>
@@ -1307,7 +1268,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -1316,7 +1277,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="275,121,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="754,12,97,180" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="754,12,97,180" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="12.7x55round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="12.7x55round" />
@@ -1325,27 +1286,25 @@
         <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
-    </StatusEffect>
+      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true"></StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_127x55_PS12B" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="4" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55,rifle_phy_ful_reload_4,127_55mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1354,37 +1313,34 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,462,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="754,12,97,180" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="754,12,97,180" origin="0.5,0.5" />
     <Body width="46" height="80" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="127x55round_PS12B" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x55round_PS12B" />
-       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
-    </StatusEffect>
+      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true"></StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
-
   <Item name="" identifier="deep_127x55_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_12.7x55,rifle_du_reload,127_55mag" impactsoundtag="impact_metal_light">
-  <Price baseprice="230" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="230" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -1392,10 +1348,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="590,479,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="511,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="754,12,97,180" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="127x55round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="127x55round_depleted_uranium" />
@@ -1404,18 +1359,16 @@
         <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true" >
-    </StatusEffect>
+      <StatusEffect type="OnActive" target="This" Scale="0.2" setvalue="true"></StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_tit_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="165" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -1424,7 +1377,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
       <RequiredItem identifier="gun_powder" />
@@ -1433,7 +1386,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="139,820,118,107" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="511,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="511,432,96,128" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_tit" />
@@ -1442,24 +1395,22 @@
         <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_du_reload" impactsoundtag="impact_metal_light">
-  <Price baseprice="195" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="195" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="depletedfuel" />
       <RequiredItem identifier="gun_powder" />
@@ -1467,10 +1418,9 @@
       <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-    <Deconstruct time="5">
-    </Deconstruct>
+    <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="591,593,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="624,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="624,432,96,128" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_du" />
@@ -1479,16 +1429,14 @@
         <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_phy_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="250" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -1497,7 +1445,7 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder" />
@@ -1506,7 +1454,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="278,920,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="511,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="511,432,96,128" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_phy" />
@@ -1515,24 +1463,22 @@
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
-  <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1541,7 +1487,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="152,578,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="511,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="511,432,96,128" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_fu" />
@@ -1550,24 +1496,22 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
-  <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1576,7 +1520,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="9,483,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="511,432,96,128" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="511,432,96,128" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_ap" />
@@ -1585,29 +1529,28 @@
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_fu_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
-  <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="110" />
       <RequiredItem identifier="physicorium" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1616,7 +1559,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="152,697,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="739,432,106,137" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="739,432,106,137" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_fu" />
@@ -1625,24 +1568,22 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-    </Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
   <Item name="" identifier="deep_qbz95_mag_ap_chixiao" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.17" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_58x42_mag_chixiao,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
-  <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
       <RequiredSkill identifier="weapons" level="120" />
       <RequiredItem identifier="deep_tungsten_phy" />
       <RequiredItem identifier="gun_powder_fulgurium" />
@@ -1651,7 +1592,7 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,604,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="739,432,106,137" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="739,432,106,137" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="58x42round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="58x42round_ap" />
@@ -1660,18 +1601,116 @@
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<!-- 禁用高穿弹合约-->
-      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and" >
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
-        <dropitem/>
+        <dropitem />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-
+  <Item name="" identifier="deep_792x33_lead_mkb42h" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.18" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_792x33,rifle_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="75" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="7,11,114,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="871,432,72,133" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="792x33round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="792x33round"></Containable>
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="792x33round" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_792x33_tit_mkb42h" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.18" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_792x33,rifle_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="150" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="133,13,114,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="871,432,72,133" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="792x33round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="792x33round_tit"></Containable>
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="792x33round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_792x33_phy_mkb42h" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.18" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_792x33,rifle_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="75" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="259,13,115,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="871,432,72,133" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="792x33round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="792x33round_phy"></Containable>
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="792x33round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--打完时，删除弹匣内子弹-->
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
+        <removeitem />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
 </Items>
