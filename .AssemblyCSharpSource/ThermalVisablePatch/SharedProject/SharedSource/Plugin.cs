@@ -40,7 +40,8 @@ namespace ThermalVisablePatch
                 if (netMessage == null) return;
                 ushort characterId = netMessage.ReadUInt16();
                 bool hide = netMessage.ReadBoolean();
-                var character = Character.CharacterList.Find(c => c.ID == characterId);
+                // var character = Character.CharacterList.Find(c => c.ID == characterId);
+                Character character = Entity.FindEntityByID(characterId) as Character;
                 if (character != null)
                 {
                     character.Params.HideInThermalGoggles = hide;
