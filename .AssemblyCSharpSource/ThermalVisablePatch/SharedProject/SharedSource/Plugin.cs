@@ -102,18 +102,20 @@ namespace ThermalVisablePatch
                     LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (SP): Hiding '{character.Name}'.");
                     character.Params.HideInThermalGoggles = true;
                 }
-                else
-                {
-                    clientPendingSync(character);
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Try pendHiding '{character.Name} ");
-                    if (character.Params.HideInThermalGoggles)
-                    {
-                        LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Character '{character.Name}' is already set to HideInThermalGoggles.");
-                        return;
-                    }                   
-                }
 #endif
             }
+#if CLIENT
+            else
+            {
+                clientPendingSync(character);
+                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Try pendHiding '{character.Name} ");
+                if (character.Params.HideInThermalGoggles)
+                {
+                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Character '{character.Name}' is already set to HideInThermalGoggles.");
+                    return;
+                }
+            }
+#endif
         }
 
 #if CLIENT
