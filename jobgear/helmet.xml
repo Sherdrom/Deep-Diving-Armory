@@ -31,7 +31,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.5" limb="Head" depthlimb="RightForearm" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="9,9,98,93"  origin="0.55,0.62" > 
-	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
@@ -93,6 +93,11 @@
         <Conditional deep_helmet_tac_detect="lt 1.0" />
       </StatusEffect>
 
+      <StatusEffect type="OnWearing" target="This" setvalue="true" interval="60" >
+	  <LuaHook name="NightVision_Off" />
+	  <RequiredItems items="114" matchonempty="true" type="Contained" targetslot="0" />
+	  </StatusEffect>
+
     </Wearable>
 	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -131,11 +136,13 @@
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Night_Off" />
+		<LuaHook name="NightVision_Off" />
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
-	  <!-- 检测到热成像开启时，更换开启的贴图 -->
+	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="SixBFortySeven_Night_On" />
+		<LuaHook name="NightVision_On"/>
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
@@ -219,7 +226,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST.png" depth="0.55" limb="Head" depthlimb="RightForearm" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="16,8,94,90"  origin="0.55,0.62" > 
-	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
@@ -320,11 +327,13 @@
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Night_Off" />
+		<LuaHook name="NightVision_Off" />
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="FAST_Night_On" />
+		<LuaHook name="NightVision_On"/>
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
@@ -601,7 +610,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/GHOST.png" depth="0.55" limb="Head" depthlimb="RightForearm" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="5,4,107,98"  origin="0.55,0.62" > 
-	  <LightComponent LightColor="0,255,0,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+	  <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
 	  <SkillModifier skillidentifier="weapons" skillvalue="10" />
 	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
@@ -774,11 +783,13 @@
 		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
 		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Night_Off" />
+		<LuaHook name="NightVision_Off" />
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 	  <!-- 检测到热成像开启时，更换开启的贴图 -->
 	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
         <LuaHook name="GHOST_Night_On" />
+		<LuaHook name="NightVision_On"/>
 		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
       </StatusEffect>
 
