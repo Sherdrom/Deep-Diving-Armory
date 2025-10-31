@@ -1,10 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using HarmonyLib;
 using Barotrauma;
+using Barotrauma.Networking;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -23,6 +21,27 @@ namespace ThermalVisablePatch
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("ThermalVisablePatch");
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Initialized!");
+
+#if CLIENT
+            // 注册同步HideInThermalGoggles的网络消息处理
+            GameMain.LuaCs.Networking.Receive("SyncHideInThermalGoggles", args =>
+            {
+                var netMessage = args[0] as IReadMessage;
+                if (netMessage == null) return;
+                ushort characterId = netMessage.ReadUInt16();
+                bool hide = netMessage.ReadBoolean();
+                var character = Character.CharacterList.Find(c => c.ID == characterId);
+                if (character != null)
+                {
+                    character.Params.HideInThermalGoggles = hide;
+                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Synced HideInThermalGoggles for '{character.Name}' to {hide}");
+                }
+                else
+                {
+                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Character with ID {characterId} not found for HideInThermalGoggles sync.");
+                }
+            });
+#endif
         }
 
         public void OnLoadCompleted()
@@ -66,6 +85,11 @@ namespace ThermalVisablePatch
 #if SERVER
                 LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] SERVER: Hiding '{character.Name}'.");
                 character.Params.HideInThermalGoggles = true;
+                // 同步到所有客户端
+                var message = GameMain.LuaCs.Networking.Start("SyncHideInThermalGoggles");
+                message.WriteUInt16(character.ID); // 角色唯一ID
+                message.WriteBoolean(true);
+                GameMain.LuaCs.Networking.Send(message);
 #elif CLIENT
                 if (GameMain.IsSingleplayer)
                 {
