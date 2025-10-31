@@ -13,6 +13,10 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="false" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="shotgunammo" />
+      <StatusEffect type="Always" target="this" condition="0" setvalue="true">
+        <RequiredItems items="shotgunammo" type="Contained" RequireEmpty="true"/>
+      </StatusEffect>
+      <StatusEffect type="OnContaining" target="this" condition="100" setvalue="true"/>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">

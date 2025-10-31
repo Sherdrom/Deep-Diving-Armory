@@ -65,9 +65,9 @@
     </Holdable>
 
     <!-- 灯光组件-->
-    <LightComponent LightColor="255,255,255,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+    <LightComponent range="0" IsOn="false" />
 
-    <RangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" suitableProjectiles="deep_round,shotgunshell">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -94,7 +94,7 @@
       <StatusEffect type="OnUse" Condition="-120" target="This">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,556mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,556mag,deep_sub_hanging" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="70" />
       <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
@@ -168,5 +168,13 @@
     </Quality>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="70" />
+
+    <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="战术设备开关" >
+        <StatusEffect type="OnUse" target="This" IsOn="true" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" setvalue="true" />
+      </TickBox>
+    </CustomInterface>
   </Item>
 </Items>

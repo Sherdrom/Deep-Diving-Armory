@@ -15,6 +15,7 @@ if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/LockFix.lua")--Locked Item Fixer
     dofile(Deep_Lua.Path .. "/Lua/Scripts/RefreshTool.lua")--Item Refresh Tool
     --dofile(Deep_Lua.Path .. "/Lua/Scripts/NotLuaMissing.lua")--Not Lua Missing
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/switchAmmo.lua")
 
 end
 
