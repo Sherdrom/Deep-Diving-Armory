@@ -14,6 +14,10 @@ namespace ThermalVisablePatch
 {
     public partial class ThermalVisablePatch : IAssemblyPlugin
     {
+#if CLIENT
+        // 用于暂存未创建角色的同步消息
+        private static Dictionary<ushort, bool> pendingHideSync = new Dictionary<ushort, bool>();
+#endif
         public Harmony? harmonyInstance;
         public void Initialize()
         {
@@ -38,7 +42,9 @@ namespace ThermalVisablePatch
                 }
                 else
                 {
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Character with ID {characterId} not found for HideInThermalGoggles sync.");
+                    // 角色未创建，暂存
+                    pendingHideSync[characterId] = hide;
+                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Character with ID {characterId} not found, pending HideInThermalGoggles sync.");
                 }
             });
 #endif
@@ -98,11 +104,30 @@ namespace ThermalVisablePatch
                 }
                 else
                 {
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Not hiding '{character.Name}' because it's not a singleplayer game.");
+                    clientPendingSync(character);
+                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Try pendHiding '{character.Name} ");
+                    if (character.Params.HideInThermalGoggles)
+                    {
+                        LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Character '{character.Name}' is already set to HideInThermalGoggles.");
+                        return;
+                    }                   
                 }
 #endif
             }
         }
+
+#if CLIENT
+        public static void clientPendingSync(Character character)
+        {
+            if (character == null) return;
+            if (pendingHideSync.TryGetValue(character.ID, out bool hide))
+            {
+                character.Params.HideInThermalGoggles = hide;
+                pendingHideSync.Remove(character.ID);
+                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Applied pending HideInThermalGoggles for '{character.Name}'");
+            }
+        }
+#endif
     }
 
     [HarmonyPatch]
@@ -177,5 +202,24 @@ namespace ThermalVisablePatch
 
             return codes.AsEnumerable();
         }
+
+// #if SERVER
+//         // 服务端新客户端加入时补发所有需要同步的角色状态
+//         [HarmonyPatch(typeof(Client), "OnConnected")]
+//         [HarmonyPostfix]
+//         static void ClientOnConnectedPostfix(Client __instance)
+//         {
+//             foreach (var c in Character.CharacterList)
+//             {
+//                 if (c.Params.HideInThermalGoggles)
+//                 {
+//                     var syncMsg = GameMain.LuaCs.Networking.Start("SyncHideInThermalGoggles");
+//                     syncMsg.WriteUInt16(c.ID);
+//                     syncMsg.WriteBoolean(true);
+//                     GameMain.LuaCs.Networking.Send(syncMsg, __instance.Connection);
+//                 }
+//             }
+//         }
+// #endif
     }
 }
