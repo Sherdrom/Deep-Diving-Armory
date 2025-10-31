@@ -25,7 +25,13 @@ namespace ThermalVisablePatch
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("ThermalVisablePatch");
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Initialized!");
+        }
 
+        public void OnLoadCompleted()
+        {
+            // After all plugins have loaded
+            // Put code that interacts with other plugins here.
+            harmonyInstance?.PatchAll();
 #if CLIENT
             // 注册同步HideInThermalGoggles的网络消息处理
             GameMain.LuaCs.Networking.Receive("SyncHideInThermalGoggles", args =>
@@ -48,13 +54,6 @@ namespace ThermalVisablePatch
                 }
             });
 #endif
-        }
-
-        public void OnLoadCompleted()
-        {
-            // After all plugins have loaded
-            // Put code that interacts with other plugins here.
-            harmonyInstance?.PatchAll();
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Loaded!");
         }
 
