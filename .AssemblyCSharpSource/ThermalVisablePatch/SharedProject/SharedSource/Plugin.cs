@@ -202,24 +202,5 @@ namespace ThermalVisablePatch
 
             return codes.AsEnumerable();
         }
-
-// #if SERVER
-//         // 服务端新客户端加入时补发所有需要同步的角色状态
-//         [HarmonyPatch(typeof(Client), "OnConnected")]
-//         [HarmonyPostfix]
-//         static void ClientOnConnectedPostfix(Client __instance)
-//         {
-//             foreach (var c in Character.CharacterList)
-//             {
-//                 if (c.Params.HideInThermalGoggles)
-//                 {
-//                     var syncMsg = GameMain.LuaCs.Networking.Start("SyncHideInThermalGoggles");
-//                     syncMsg.WriteUInt16(c.ID);
-//                     syncMsg.WriteBoolean(true);
-//                     GameMain.LuaCs.Networking.Send(syncMsg, __instance.Connection);
-//                 }
-//             }
-//         }
-// #endif
     }
 }
