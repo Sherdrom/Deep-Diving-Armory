@@ -95,7 +95,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.5" limb="Head" depthlimb="RightForearm" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="12,219,142,93"  origin="0.42,0.62" >
-    <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+    <LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite>
     <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
@@ -145,14 +145,17 @@
     <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
       <!-- 夜视仪开关 -->
-	      <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" disabledeltatime="true" >
-	         <LuaHook name="NightVision_On"/>
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
 		  </StatusEffect>
-
-
-          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" disabledeltatime="true" >
-		     <LuaHook name="NightVision_Off" />
-		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
+		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_Off" />
+      </StatusEffect>
+	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_On"/>
+      </StatusEffect>
 
 
 
@@ -428,7 +431,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST.png" depth="0.55" limb="Head" depthlimb="RightForearm" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="18,231,134,89"  origin="0.42,0.62" > 
-    <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+    <LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
     <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
@@ -479,14 +482,17 @@
     <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
       <!-- 夜视仪开关 -->
-	      <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" disabledeltatime="true" >
-	         <LuaHook name="NightVision_On"/>
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
 		  </StatusEffect>
-
-
-          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" disabledeltatime="true" >
-		     <LuaHook name="NightVision_Off" />
-		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
+		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_Off" />
+      </StatusEffect>
+	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_On"/>
+      </StatusEffect>
 
 
 
@@ -764,7 +770,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST_BLACK.png" depth="0.55" limb="Head" depthlimb="RightForearm" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="18,231,134,89"  origin="0.42,0.62" > 
-    <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+    <LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
     <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
@@ -815,14 +821,17 @@
     <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
       <!-- 夜视仪开关 -->
-	      <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" disabledeltatime="true" >
-	         <LuaHook name="NightVision_On"/>
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
 		  </StatusEffect>
-
-
-          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" disabledeltatime="true" >
-		     <LuaHook name="NightVision_Off" />
-		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
+		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_Off" />
+      </StatusEffect>
+	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_On"/>
+      </StatusEffect>
 
 
 
@@ -1183,7 +1192,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/GHOST.png" depth="0.55" limb="Head" depthlimb="RightForearm" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" hidewearablesoftype="Hair" sourcerect="6,229,140,99"  origin="0.42,0.66" > 
-    <LightComponent LightColor="255,255,255,200" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+    <LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 	  </sprite> 
     <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Affliction identifier="deep_gpnvg18" amount="1" />
@@ -1306,14 +1315,17 @@
     <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <TickBox text="战术设备开关" >
       <!-- 夜视仪开关 -->
-	      <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" disabledeltatime="true" >
-	         <LuaHook name="NightVision_On"/>
+	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
 		  </StatusEffect>
-
-
-          <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" disabledeltatime="true" >
-		     <LuaHook name="NightVision_Off" />
-		  </StatusEffect>
+          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
+		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
+		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_Off" />
+      </StatusEffect>
+	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
+	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
+		<LuaHook name="NightVision_On"/>
+      </StatusEffect>
 
 
       </TickBox>
