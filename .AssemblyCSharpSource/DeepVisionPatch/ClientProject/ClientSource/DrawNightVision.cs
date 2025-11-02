@@ -8,7 +8,7 @@ namespace DeepVisionPatch;
 [HarmonyPatch(typeof(GameScreen),nameof(GameScreen.DrawMap))]
 public class DrawNightVision
 {
-    private static CreateNightVisionTexture _nvTexture = new CreateNightVisionTexture();
+    private static CreateNightVisionTexture _nvTexture = DeepVisionPatch.nvTexture_Green;   // 默认为绿色
 
     private static readonly Dictionary<string, CreateNightVisionTexture> nvColor = new Dictionary<string, CreateNightVisionTexture>
     {
