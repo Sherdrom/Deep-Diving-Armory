@@ -82,7 +82,8 @@
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
       <!--"Use" contained magazine to spawn projectiles.-->
-      <StatusEffect type="OnUse" target="Contained" TargetSlot="0">
+      <StatusEffect type="OnUse" target="Contained,This" TargetSlot="0">
+        <Conditional currentProjectileSelected="lt 1"/>
         <Use />
       </StatusEffect>
       <StatusEffect type="OnUse" Condition="-80" target="This">
@@ -170,6 +171,11 @@
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <Button text="SwitchAmmo" >
         <StatusEffect type="OnUse" target="This" currentProjectileSelected="1" />
+      </Button>
+      <Button text="Test" >
+        <StatusEffect type="OnUse" target="This" >
+          <LuaHook name="Deep_TEST"/>
+        </StatusEffect>
       </Button>
     </CustomInterface>
   </Item>

@@ -1,3 +1,6 @@
+LuaUserData.RegisterType("Barotrauma.Items.Components.SwitchableRangedWeapon")
+
+
 Deep_Lua = {}
 Deep_Lua.Path = ...
 
@@ -27,3 +30,5 @@ end
 --if CLIENT or not Game.IsMultiplayer then
     --dofile(Deep_Lua.Path .. "/Lua/Scripts/CL_ThermalVisablePatch.lua")--F**kin thermal goggles.--Simon "Ghost" Riley, Bravo 0-7
 --end
+
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/DevTest.lua")

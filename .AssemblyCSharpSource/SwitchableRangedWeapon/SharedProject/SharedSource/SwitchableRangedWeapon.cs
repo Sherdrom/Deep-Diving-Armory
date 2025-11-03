@@ -9,110 +9,11 @@ using System.Linq;
 
 namespace Barotrauma.Items.Components
 {
-    partial class SwitchableRangedWeapon : ItemComponent
+    partial class SwitchableRangedWeapon : RangedWeapon
     {
-        private float reload;
-        public float ReloadTimer { get; private set; }
-
-        private int currentSelected;
+        private int currentSelected = 0;
 
         private int maxselectable = 1;
-
-        private Vector2 barrelPos;
-
-        [Serialize("0.0,0.0", IsPropertySaveable.No, description: "The position of the barrel as an offset from the item's center (in pixels). Determines where the projectiles spawn.")]
-        public string BarrelPos
-        {
-            get { return XMLExtensions.Vector2ToString(ConvertUnits.ToDisplayUnits(barrelPos)); }
-            set { barrelPos = ConvertUnits.ToSimUnits(XMLExtensions.ParseVector2(value)); }
-        }
-
-        [Serialize(1.0f, IsPropertySaveable.No, description: "How long the user has to wait before they can fire the weapon again (in seconds).")]
-        public float Reload
-        {
-            get { return reload; }
-            set { reload = Math.Max(value, 0.0f); }
-        }
-
-        [Serialize(0f, IsPropertySaveable.No, description: "Weapons skill requirement to reload at normal speed.")]
-        public float ReloadSkillRequirement
-        {
-            get;
-            set;
-        }
-
-        [Serialize(1.0f, IsPropertySaveable.No, description: "Reload time at 0 skill level. Reload time scales with skill level up to the Weapons skill requirement.")]
-        public float ReloadNoSkill
-        {
-            get;
-            set;
-        }
-
-        [Serialize(false, IsPropertySaveable.No, description: "Tells the AI to hold the trigger down when it uses this weapon")]
-        public bool HoldTrigger
-        {
-            get;
-            set;
-        }
-
-        [Serialize(1, IsPropertySaveable.No, description: "How many projectiles the weapon launches when fired once.")]
-        public int ProjectileCount
-        {
-            get;
-            set;
-        }
-
-        [Serialize(0.0f, IsPropertySaveable.No, description: "Random spread applied to the firing angle of the projectiles when used by a character with sufficient skills to use the weapon (in degrees).")]
-        public float Spread
-        {
-            get;
-            set;
-        }
-
-        [Serialize(0.0f, IsPropertySaveable.No, description: "Random spread applied to the firing angle of the projectiles when used by a character with insufficient skills to use the weapon (in degrees).")]
-        public float UnskilledSpread
-        {
-            get;
-            set;
-        }
-
-        [Serialize(0.0f, IsPropertySaveable.No, description: "The impulse applied to the physics body of the projectile (the higher the impulse, the faster the projectiles are launched). Sum of weapon + projectile.")]
-        public float LaunchImpulse
-        {
-            get;
-            set;
-        }
-
-        [Serialize(0.0f, IsPropertySaveable.Yes, description: "Percentage of damage mitigation ignored when hitting armored body parts (deflecting limbs). Sum of weapon + projectile."), Editable(MinValueFloat = 0.0f, MaxValueFloat = 1f)]
-        public float Penetration { get; private set; }
-
-        [Serialize(1f, IsPropertySaveable.Yes, description: "Weapon's damage modifier")]
-        public float WeaponDamageModifier
-        {
-            get;
-            private set;
-        }
-
-        [Serialize(0f, IsPropertySaveable.Yes, description: "The time required for a charge-type turret to charge up before able to fire.")]
-        public float MaxChargeTime
-        {
-            get;
-            private set;
-        }
-
-        [Serialize(defaultValue: 1f, IsPropertySaveable.Yes, description: "Penalty multiplier to reload time when dual-wielding.")]
-        public float DualWieldReloadTimePenaltyMultiplier
-        {
-            get;
-            private set;
-        }
-
-        [Serialize(defaultValue: 0f, IsPropertySaveable.Yes, description: "Additive penalty to accuracy (spread angle) when dual-wielding.")]
-        public float DualWieldAccuracyPenalty
-        {
-            get;
-            private set;
-        }
 
         private IList<Identifier> switchableProjectiles;
 
@@ -123,30 +24,6 @@ namespace Barotrauma.Items.Components
             set { currentSelected = (value <= (maxselectable - 1)) ? value : 0;  }
         }
 
-        private enum ChargingState
-        {
-            Inactive,
-            WindingUp,
-            WindingDown,
-        }
-        private ChargingState currentChargingState;
-
-        public Vector2 TransformedBarrelPos
-        {
-            get
-            {
-                Matrix bodyTransform = Matrix.CreateRotationZ(item.body == null ? item.RotationRad : item.body.Rotation);
-                Vector2 flippedPos = barrelPos;
-                if (item.body != null && item.body.Dir < 0.0f) { flippedPos.X = -flippedPos.X; }
-                return Vector2.Transform(flippedPos, bodyTransform) * item.Scale;
-            }
-        }
-
-
-        public Projectile LastProjectile { get; private set; }
-
-        private float currentChargeTime;
-        private bool tryingToCharge;
 
         public SwitchableRangedWeapon(Item item, ContentXElement element)
             : base(item, element)
@@ -170,81 +47,6 @@ namespace Barotrauma.Items.Components
 
         partial void InitProjSpecific(ContentXElement rangedWeaponElement);
 
-        public override void Equip(Character character)
-        {
-            //clamp above 1 to prevent rapid-firing by swapping weapons
-            ReloadTimer = Math.Max(Math.Min(reload, 1.0f), ReloadTimer);
-            IsActive = true;
-        }
-
-        public override void Update(float deltaTime, Camera cam)
-        {
-            ReloadTimer -= deltaTime;
-
-            if (ReloadTimer < 0.0f)
-            {
-                ReloadTimer = 0.0f;
-                if (MaxChargeTime <= 0f)
-                {
-                    IsActive = false;
-                    return;
-                }
-            }
-
-            float previousChargeTime = currentChargeTime;
-
-            float chargeDeltaTime = tryingToCharge && ReloadTimer <= 0f ? deltaTime : -deltaTime;
-            currentChargeTime = Math.Clamp(currentChargeTime + chargeDeltaTime, 0f, MaxChargeTime);
-
-            tryingToCharge = false;
-
-            if (currentChargeTime == 0f)
-            {
-                currentChargingState = ChargingState.Inactive;
-            }
-            else if (currentChargeTime < previousChargeTime)
-            {
-                currentChargingState = ChargingState.WindingDown;
-            }
-            else
-            {
-                // if we are charging up or at maxed charge, remain winding up
-                currentChargingState = ChargingState.WindingUp;
-            }
-
-            UpdateProjSpecific(deltaTime);
-        }
-
-        partial void UpdateProjSpecific(float deltaTime);
-
-        private float GetSpread(Character user)
-        {
-            float degreeOfFailure = MathHelper.Clamp(1.0f - DegreeOfSuccess(user), 0.0f, 1.0f);
-            degreeOfFailure *= degreeOfFailure;
-            float spread = MathHelper.Lerp(Spread, UnskilledSpread, degreeOfFailure) / (1f + user.GetStatValue(StatTypes.RangedSpreadReduction));
-            if (user.IsDualWieldingRangedWeapons())
-            {
-                spread += Math.Max(0f, ApplyDualWieldPenaltyReduction(user, DualWieldAccuracyPenalty, neutralValue: 0f));
-            }
-            return MathHelper.ToRadians(spread);
-        }
-
-        /// <summary>
-        /// Lerps between the original penalty and a neutral value, which should be 1 for multipliers and 0 for additive penalties.
-        /// </summary>
-        /// <param name="character">The character to get stat values from</param>
-        /// <param name="originalPenalty">The original penalty value</param>
-        /// <param name="neutralValue">Neutral value to lerp towards. Should be 1 for multipliers and 0 for additives.</param>
-        /// <returns></returns>
-        private static float ApplyDualWieldPenaltyReduction(Character character, float originalPenalty, float neutralValue)
-        {
-            float statAdjustmentPrc = character.GetStatValue(StatTypes.DualWieldingPenaltyReduction);
-            statAdjustmentPrc = MathHelper.Clamp(statAdjustmentPrc, 0f, 1f);
-            float reducedPenaltyMultiplier = MathHelper.Lerp(originalPenalty, neutralValue, statAdjustmentPrc);
-            return reducedPenaltyMultiplier;
-        }
-
-        private readonly List<Body> ignoredBodies = new List<Body>();
         public override bool Use(float deltaTime, Character? character = null)
         {
             tryingToCharge = true;
@@ -356,7 +158,7 @@ namespace Barotrauma.Items.Components
             return characterUsable || character == null;
         }
 
-        public Projectile FindProjectile(bool triggerOnUseOnContainers = false)
+        public new Projectile FindProjectile(bool triggerOnUseOnContainers = false)
         {
             foreach (ItemContainer container in item.GetComponents<ItemContainer>())
             {
