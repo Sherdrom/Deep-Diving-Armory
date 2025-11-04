@@ -20,6 +20,10 @@ namespace Barotrauma.Items.Components
         [Serialize("F", IsPropertySaveable.No)]
         public string switchKey
         {
+            get
+            {
+                return ((char)modeswitchkey).ToString();
+            }
             set
             {
                 object Key;
@@ -27,7 +31,7 @@ namespace Barotrauma.Items.Components
                 modeswitchkey = success ? (Keys)Key : Keys.F;
                 if (!success)
                 {
-                    DebugConsole.AddWarning($"Invalid {nameof(modeswitchkey)} configuration at {item.Name}: Key is not supported! Using F as default.",
+                    DebugConsole.AddWarning($"Invalid {nameof(modeswitchkey)} configuration at {item.Name}: {value} is not supported! Using F as default.",
                     item.Prefab.ContentPackage);
                 }
             }
