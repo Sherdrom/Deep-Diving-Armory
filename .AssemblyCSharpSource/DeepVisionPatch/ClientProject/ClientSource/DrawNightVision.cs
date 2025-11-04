@@ -8,13 +8,13 @@ namespace DeepVisionPatch;
 [HarmonyPatch(typeof(GameScreen),nameof(GameScreen.DrawMap))]
 public class DrawNightVision
 {
-    private static CreateNightVisionTexture _nvTexture = DeepVisionPatch.nvTexture_Green;   // 默认为绿色
+    private static CreateNightVisionTexture _nvTexture = DeepVisionPatch.GreenNightVisionTexture;   // 默认为绿色
 
     private static readonly Dictionary<string, CreateNightVisionTexture> nvColor = new Dictionary<string, CreateNightVisionTexture>
     {
-        ["NVG_Green"] = DeepVisionPatch.nvTexture_Green,     // 绿色夜视仪
-        ["NVG_Blue"]  = DeepVisionPatch.nvTexture_Blue       // 蓝色夜视仪
-        
+        ["NVG_Green"] = DeepVisionPatch.GreenNightVisionTexture,     // 绿色夜视仪
+        ["NVG_Blue"]  = DeepVisionPatch.BlueNightVisionTexture       // 蓝色夜视仪
+
     };
 
     public static void Postfix(GameScreen __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, double deltaTime)

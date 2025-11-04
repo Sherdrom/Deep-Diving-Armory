@@ -99,9 +99,9 @@ namespace DeepVisionPatch
                 //the visible area stretches to the maximum when the cursor is this far from the character
                 const float MaxOffset = 256.0f;
                 // Texture2D texture = new CreateViewTexture().CreateSectorTexture(graphics,256,FieldOfView,Color.Black);
-                DeepVisionPatch.viewTexture.UpdateSectorTexture(FieldOfView, new Color(255,255,255,30));
-                Texture2D texture = DeepVisionPatch.viewTexture.GetTexture();
-                Texture2D textureCircle = DeepVisionPatch.viewTexture.GetTextureCircle();
+                DeepVisionPatch.ViewTexture.UpdateSectorTexture(FieldOfView, new Color(255,255,255,30));
+                Texture2D texture = DeepVisionPatch.ViewTexture.GetTexture();
+                Texture2D textureCircle = DeepVisionPatch.ViewTexture.GetTextureCircle();
                 //the magic numbers here are just based on experimentation
                 float MinHorizontalScale = MathHelper.Lerp(5f, 1.5f, 0);
                 float MaxHorizontalScale = MinHorizontalScale * 5f;

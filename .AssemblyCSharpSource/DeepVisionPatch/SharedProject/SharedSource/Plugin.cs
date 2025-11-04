@@ -14,28 +14,36 @@ using Barotrauma;
 
 namespace DeepVisionPatch
 {
+    /// <summary>
+    /// Deep Vision Patch Plugin
+    /// Provides tactical view textures and night vision functionality for the Deep Diving Armory mod
+    /// </summary>
     public partial class DeepVisionPatch : IAssemblyPlugin
     {
-        public Harmony? harmonyInstance;
-        public static CreateViewTexture viewTexture = new CreateViewTexture();
-        public static CreateNightVisionTexture nvTexture_Green = new CreateNightVisionTexture();
-        public static CreateNightVisionTexture nvTexture_Blue = new CreateNightVisionTexture();
+        private Harmony? _harmonyInstance;
+
+        // Texture creators - initialized during OnLoadCompleted
+        public static CreateViewTexture ViewTexture { get; } = new CreateViewTexture();
+        public static CreateNightVisionTexture GreenNightVisionTexture { get; } = new CreateNightVisionTexture();
+        public static CreateNightVisionTexture BlueNightVisionTexture { get; } = new CreateNightVisionTexture();
+
         public void Initialize()
         {
-            // When your plugin is loading, use this instead of the constructor
-            // Put any code here that does not rely on other plugins.
-            harmonyInstance = new Harmony("DeepVisionPatch");
+            // Called when plugin is loading - use for initialization that doesn't depend on other plugins
+            _harmonyInstance = new Harmony("DeepVisionPatch");
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Initialized!");
         }
 
         public void OnLoadCompleted()
         {
-            // After all plugins have loaded
-            // Put code that interacts with other plugins here.
-            harmonyInstance?.PatchAll();
-            viewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
-            nvTexture_Green.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));    //初始化绿色夜视仪
-            nvTexture_Blue.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 0, 255, 50));     //初始化蓝色夜视仪
+            // Called after all plugins have loaded - use for plugin interactions and final initialization
+            _harmonyInstance?.PatchAll();
+
+            // Initialize texture creators with their specific parameters
+            ViewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
+            GreenNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));
+            BlueNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 0, 255, 50));
+
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Loaded!");
         }
 
@@ -46,8 +54,8 @@ namespace DeepVisionPatch
 
         public void Dispose()
         {
-            // Cleanup your plugin!
-            harmonyInstance?.UnpatchSelf();
+            // Cleanup resources
+            _harmonyInstance?.UnpatchSelf();
             LuaCsSetup.PrintCsMessage("[Deep Diving Armory] DeepVisionPatch Disposed!");
         }
     }
