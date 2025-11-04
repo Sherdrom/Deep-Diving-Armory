@@ -5,6 +5,7 @@ using Barotrauma.Networking;
 using Microsoft.Xna.Framework;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Collections.Generic;
 
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
@@ -107,13 +108,8 @@ namespace ThermalVisablePatch
 #if CLIENT
             else
             {
+                // Apply any pending sync from the server
                 clientPendingSync(character);
-                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Try pendHiding '{character.Name} ");
-                if (character.Params.HideInThermalGoggles)
-                {
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (MP): Character '{character.Name}' is already set to HideInThermalGoggles.");
-                    return;
-                }
             }
 #endif
         }
