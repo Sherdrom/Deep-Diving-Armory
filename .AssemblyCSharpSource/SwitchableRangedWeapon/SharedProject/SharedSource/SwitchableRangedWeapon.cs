@@ -21,9 +21,8 @@ namespace Barotrauma.Items.Components
         public int currentProjectileSelected
         {
             get { return currentSelected; }
-            set { currentSelected = (value <= (maxselectable - 1)) ? value : 0;  }
+            set { currentSelected = (value <= (maxselectable - 1)) ? value : 0; }
         }
-
 
         public SwitchableRangedWeapon(Item item, ContentXElement element)
             : base(item, element)
@@ -151,11 +150,6 @@ namespace Barotrauma.Items.Components
             LaunchProjSpecific();
 
             return true;
-        }
-
-        public override bool SecondaryUse(float deltaTime, Character character = null)
-        {
-            return characterUsable || character == null;
         }
 
         public new Projectile FindProjectile(bool triggerOnUseOnContainers = false)

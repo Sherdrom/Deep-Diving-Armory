@@ -64,7 +64,7 @@
 
     </Holdable>
 
-    <SwitchableRangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableProjectiles="deep_round,shotgunshell">
+    <SwitchableRangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableProjectiles="deep_round,shotgunammo">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -167,15 +167,11 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="70" />
 
+    <!--可选项-->
     <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
       <Button text="SwitchAmmo" >
         <StatusEffect type="OnUse" target="This" currentProjectileSelected="1" />
-      </Button>
-      <Button text="Test" >
-        <StatusEffect type="OnUse" target="This" >
-          <LuaHook name="Deep_TEST"/>
-        </StatusEffect>
       </Button>
     </CustomInterface>
   </Item>
@@ -186,4 +182,8 @@
     例外：
         SuitableProjectiles -> switchableProjectiles
         +currentProjectileSelected
+
+    Upd 2025/11/5:
+    支持按键切换，切换按键F
+    暂不支持修改按键
 -->

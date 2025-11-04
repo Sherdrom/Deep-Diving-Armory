@@ -9,7 +9,7 @@ using Barotrauma;
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 
-namespace MyModName
+namespace Deep_SwitchableRangedWeapon
 {
     public partial class Plugin : IAssemblyPlugin
     {
@@ -19,14 +19,14 @@ namespace MyModName
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             Instance = new Plugin();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] Template Initialized!");
+            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Initialized!");
         }
 
         public void OnLoadCompleted()
         {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] Template Loaded!");
+            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Loaded!");
         }
 
         public void PreInitPatching()
@@ -37,7 +37,8 @@ namespace MyModName
         public void Dispose()
         {
             // Cleanup your plugin!
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] Template Disposed!");
+            Instance = null;
+            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Disposed!");
         }
     }
 }

@@ -1,6 +1,3 @@
-LuaUserData.RegisterType("Barotrauma.Items.Components.SwitchableRangedWeapon")
-
-
 Deep_Lua = {}
 Deep_Lua.Path = ...
 

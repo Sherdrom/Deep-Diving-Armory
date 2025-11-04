@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Barotrauma;
 
-namespace MyModName
+namespace Deep_SwitchableRangedWeapon
 {
     public partial class Plugin : IAssemblyPlugin
     {
