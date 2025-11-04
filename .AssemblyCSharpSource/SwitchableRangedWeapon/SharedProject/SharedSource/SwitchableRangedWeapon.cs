@@ -3,6 +3,7 @@ using Barotrauma.Networking;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Barotrauma.Items.Components
 
         private IList<Identifier> switchableProjectiles;
 
-        [Serialize(0, IsPropertySaveable.Yes, description: "")]
+        [InGameEditable,Serialize(0, IsPropertySaveable.Yes,alwaysUseInstanceValues:true)]
         public int currentProjectileSelected
         {
             get { return currentSelected; }
@@ -34,8 +35,10 @@ namespace Barotrauma.Items.Components
             }
 
             characterUsable = true;
+            
             switchableProjectiles = element.GetAttributeIdentifierArray(nameof(switchableProjectiles), Array.Empty<Identifier>());
             maxselectable = switchableProjectiles.Count();
+
             if (ReloadSkillRequirement > 0 && ReloadNoSkill <= reload)
             {
                 DebugConsole.AddWarning($"Invalid XML at {item.Name}: ReloadNoSkill is lower or equal than it's reload skill, despite having ReloadSkillRequirement.",

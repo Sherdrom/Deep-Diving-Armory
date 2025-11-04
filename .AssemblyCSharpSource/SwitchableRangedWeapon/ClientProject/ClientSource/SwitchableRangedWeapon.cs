@@ -1,4 +1,5 @@
 ﻿using Barotrauma;
+using Barotrauma.Networking;
 using Barotrauma.Particles;
 using Barotrauma.Sounds;
 using Microsoft.Xna.Framework;
@@ -13,6 +14,30 @@ namespace Barotrauma.Items.Components
 {
     partial class SwitchableRangedWeapon : RangedWeapon
     {
+
+        private Keys modeswitchkey;
+
+        [Serialize("F", IsPropertySaveable.No)]
+        public string switchKey
+        {
+            set
+            {
+                object Key;
+                bool success = Enum.TryParse(typeof(Keys), value, out Key);
+                modeswitchkey = success ? (Keys)Key : Keys.F;
+                if (!success)
+                {
+                    DebugConsole.AddWarning($"Invalid {nameof(modeswitchkey)} configuration at {item.Name}: Key is not supported! Using F as default.",
+                    item.Prefab.ContentPackage);
+                }
+            }
+        }
+
+
+        partial void InitProjSpecific(ContentXElement rangedWeaponElement)
+        {
+            switchKey = rangedWeaponElement.GetAttributeString(nameof(modeswitchkey), "F");
+        }
         public override void UpdateHUDComponentSpecific(Character character, float deltaTime, Camera cam)
         {
             crossHairPosDirtyTimer -= deltaTime;
@@ -42,13 +67,10 @@ namespace Barotrauma.Items.Components
         {
             if (character == null) return;
 
-            if (PlayerInput.KeyHit(Keys.F))
+            if (PlayerInput.KeyHit(modeswitchkey))
             {
                 currentProjectileSelected += 1;
-                if (SerializableProperties.TryGetValue(nameof(currentProjectileSelected).ToIdentifier(), out var property))
-                {
-                    GameMain.Client?.CreateEntityEvent(Item, new Item.ChangePropertyEventData(property, this));
-                }
+                GameMain.Client?.CreateEntityEvent(this.Item, new Item.ChangePropertyEventData(this.SerializableProperties["currentProjectileSelected".ToIdentifier()], this));
             }
         }
     }
