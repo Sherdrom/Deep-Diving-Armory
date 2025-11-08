@@ -21,16 +21,14 @@ namespace Deep_SwitchableRangedWeapon
         {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
-
-            Type type = Type.GetType("Barotrauma.Items.Components.SwitchableRangedWeapon");
-            if (type == null)
+            TypeCode type = Type.GetTypeCode(typeof(Barotrauma.Items.Components.SwitchableRangedWeapon));
+            if (type != null)
             {
-                Instance = new SRW();
-                LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Initialized!");
+                DebugConsole.AddWarning("WARNING: An instance of SwitchableRangedWeapon plugin is already exist! Skipping...");
             }
             else
             {
-                DebugConsole.AddWarning($"WARNING: A instance of SwitchableRangedWeapon is already exist! Skipping...");
+                Instance = new SRW();
             }
         }
 
