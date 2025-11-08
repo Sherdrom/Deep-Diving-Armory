@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Barotrauma;
+using Barotrauma.Items.Components;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Barotrauma;
+using static Barotrauma.PetBehavior.ItemProduction;
 
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
@@ -11,22 +14,30 @@ using Barotrauma;
 
 namespace Deep_SwitchableRangedWeapon
 {
-    public partial class Plugin : IAssemblyPlugin
+    public partial class SRW : IAssemblyPlugin
     {
-        public static Plugin? Instance;
+        public static SRW? Instance;
         public void Initialize()
         {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
-            Instance = new Plugin();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Initialized!");
+
+            Type type = Type.GetType("Barotrauma.Items.Components.SwitchableRangedWeapon");
+            if (type == null)
+            {
+                Instance = new SRW();
+                LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Initialized!");
+            }
+            else
+            {
+                DebugConsole.AddWarning($"WARNING: A instance of SwitchableRangedWeapon is already exist! Skipping...");
+            }
         }
 
         public void OnLoadCompleted()
         {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Loaded!");
         }
 
         public void PreInitPatching()
@@ -38,7 +49,6 @@ namespace Deep_SwitchableRangedWeapon
         {
             // Cleanup your plugin!
             Instance = null;
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SwitchableRangedWeapon Disposed!");
         }
     }
 }

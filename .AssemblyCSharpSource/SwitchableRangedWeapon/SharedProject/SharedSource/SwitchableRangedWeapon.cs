@@ -28,22 +28,8 @@ namespace Barotrauma.Items.Components
         public SwitchableRangedWeapon(Item item, ContentXElement element)
             : base(item, element)
         {
-            item.IsShootable = true;
-            if (element.Parent is { } parent)
-            {
-                item.RequireAimToUse = parent.GetAttributeBool(nameof(item.RequireAimToUse), true);
-            }
-
-            characterUsable = true;
-            
             switchableProjectiles = element.GetAttributeIdentifierArray(nameof(switchableProjectiles), Array.Empty<Identifier>());
             maxselectable = switchableProjectiles.Count();
-
-            if (ReloadSkillRequirement > 0 && ReloadNoSkill <= reload)
-            {
-                DebugConsole.AddWarning($"Invalid XML at {item.Name}: ReloadNoSkill is lower or equal than it's reload skill, despite having ReloadSkillRequirement.",
-                    item.Prefab.ContentPackage);
-            }
             InitProjSpecific(element);
         }
 
@@ -196,6 +182,8 @@ namespace Barotrauma.Items.Components
         }
 
         partial void LaunchProjSpecific();
+
+
     }
     class AbilityRangedWeapon : AbilityObject, IAbilityItem
     {

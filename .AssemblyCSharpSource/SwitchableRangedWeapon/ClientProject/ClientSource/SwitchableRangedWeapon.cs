@@ -17,6 +17,8 @@ namespace Barotrauma.Items.Components
 
         private Keys modeswitchkey;
 
+        private bool updating = false;
+
         [Serialize("F", IsPropertySaveable.No)]
         public string switchKey
         {
@@ -42,6 +44,8 @@ namespace Barotrauma.Items.Components
         {
             switchKey = rangedWeaponElement.GetAttributeString(nameof(modeswitchkey), "F");
         }
+
+
         public override void UpdateHUDComponentSpecific(Character character, float deltaTime, Camera cam)
         {
             crossHairPosDirtyTimer -= deltaTime;
