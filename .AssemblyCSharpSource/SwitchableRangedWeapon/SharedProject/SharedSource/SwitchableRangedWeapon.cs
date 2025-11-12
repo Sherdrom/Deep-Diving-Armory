@@ -5,45 +5,149 @@ using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Barotrauma.Items.Components
 {
     partial class SwitchableRangedWeapon : RangedWeapon
     {
-        private int currentSelected = 0;
+        private int currentselected = 0;
 
-        private int maxselectable = 1;
+        private int currentfiremode = 0;
+
+        private int maxprojectileselectable = 1;
+
+        private int maxfiremodeselectable = 1;
+
+        private int roundsshot = 0;
+
+        private float burstreload;
+
+        private bool triggerreleased = true;
 
         private IList<Identifier> switchableProjectiles;
+
+        private IList<FireMode> switchableFiremodes;
+
+        [InGameEditable, Serialize(0, IsPropertySaveable.Yes, alwaysUseInstanceValues: true)]
+        public int currentFireModeSelected
+        {
+            get { return currentfiremode; }
+            set { currentfiremode = (value <= (maxfiremodeselectable - 1) && value >= 0) ? value : 0; }
+        }
 
         [InGameEditable,Serialize(0, IsPropertySaveable.Yes,alwaysUseInstanceValues:true)]
         public int currentProjectileSelected
         {
-            get { return currentSelected; }
-            set { currentSelected = (value <= (maxselectable - 1)) ? value : 0; }
+            get { return currentselected; }
+            set { currentselected = (value <= (maxprojectileselectable - 1)) ? value : 0; }
+        }
+
+        [InGameEditable, Serialize(true, IsPropertySaveable.Yes, alwaysUseInstanceValues: true)]
+        public bool triggerReleased
+        {
+            get
+            {
+                return triggerreleased;
+            }
+            set
+            {
+                if(value)
+                {
+                    roundsshot = 0;
+                }
+                triggerreleased = value;
+            }
+        }
+
+        [InGameEditable, Serialize(0, IsPropertySaveable.Yes, alwaysUseInstanceValues: true)]
+        public int shotsPerBurst
+        {
+            get;
+            set;
+        }
+
+        [InGameEditable, Serialize(0.0f, IsPropertySaveable.Yes, alwaysUseInstanceValues: true)]
+        public float burstReload
+        {
+            get { return burstreload; }
+            set { burstreload = Math.Max(value, 0.0f); }
         }
 
         public SwitchableRangedWeapon(Item item, ContentXElement element)
             : base(item, element)
         {
             switchableProjectiles = element.GetAttributeIdentifierArray(nameof(switchableProjectiles), Array.Empty<Identifier>());
-            maxselectable = switchableProjectiles.Count();
+            IList<string> switchableFiremodesStr = element.GetAttributeStringArray(nameof(switchableFiremodes), Array.Empty<string>());
+            switchableFiremodes = WriteFiremode(switchableFiremodesStr, item);
+            maxprojectileselectable = switchableProjectiles.Count();
+            maxfiremodeselectable = switchableFiremodes.Count();
             InitProjSpecific(element);
+        }
+
+        private IList<FireMode> WriteFiremode(IList<string> FireModeStr, Item item)
+        {
+            if(FireModeStr == Array.Empty<string>())
+            {
+                return new List<FireMode>() { FireMode.Auto };
+            }
+            IList<FireMode> TempFireMode = new List<FireMode>();
+            foreach (string FM in FireModeStr)
+            {
+                bool success = Enum.TryParse(FM ,true ,out FireMode fireMode);
+                if(success)
+                {
+                    TempFireMode.Add(fireMode);
+                }
+                else
+                {
+                    DebugConsole.AddWarning($"Invalid FireMode {FM} found in {item.Name}");
+                }
+            }
+            return TempFireMode;
         }
 
         partial void InitProjSpecific(ContentXElement rangedWeaponElement);
 
         public override bool Use(float deltaTime, Character? character = null)
         {
+            switch(switchableFiremodes[currentfiremode])
+            {
+                case FireMode.Safe:
+                    return false;
+                case FireMode.Semi:
+                    if(roundsshot >= 1)
+                    {
+                        return false;
+                    }
+                    break;
+                case FireMode.Burst:
+                    if (roundsshot >= shotsPerBurst)
+                    {
+                        return false;
+                    }
+                    break;
+            }
+
             tryingToCharge = true;
             if (character == null || character.Removed) { return false; }
             if ((item.RequireAimToUse && !character.IsKeyDown(InputType.Aim)) || ReloadTimer > 0.0f) { return false; }
             if (currentChargeTime < MaxChargeTime) { return false; }
 
             IsActive = true;
-            float baseReloadTime = reload;
+
+            float baseReloadTime;
+            if (switchableFiremodes[currentfiremode] == FireMode.Burst)
+            {
+                baseReloadTime = burstreload;
+            }
+            else
+            {
+                baseReloadTime = reload;
+            }
             float weaponSkill = character.GetSkillLevel(Tags.WeaponsSkill);
 
             bool applyReloadFailure = ReloadSkillRequirement > 0 && ReloadNoSkill > reload && weaponSkill < ReloadSkillRequirement;
@@ -138,6 +242,9 @@ namespace Barotrauma.Items.Components
 
             LaunchProjSpecific();
 
+            triggerreleased = false;
+            roundsshot += 1;
+
             return true;
         }
 
@@ -177,7 +284,7 @@ namespace Barotrauma.Items.Components
         {
             if (projectile?.Item == null) { return false; }
             if (!switchableProjectiles.Any()) { return true; }
-            if (switchableProjectiles.ElementAt(currentSelected) == projectile.Item.Prefab.Identifier || projectile.Item.HasTag(switchableProjectiles.ElementAt(currentSelected))) { return true; }
+            if (switchableProjectiles.ElementAt(currentselected) == projectile.Item.Prefab.Identifier || projectile.Item.HasTag(switchableProjectiles.ElementAt(currentselected))) { return true; }
             return false;
         }
 

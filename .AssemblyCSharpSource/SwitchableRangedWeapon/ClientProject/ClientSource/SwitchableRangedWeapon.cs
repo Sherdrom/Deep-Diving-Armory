@@ -71,15 +71,38 @@ namespace Barotrauma.Items.Components
             UpdateUserInput(character);
         }
 
+        private bool previousshootkeystat = false;
         private void UpdateUserInput(Character character)
         {
             if (character == null) return;
+
+            if (PlayerInput.KeyUp(InputType.Shoot) && (PlayerInput.KeyDown(InputType.Shoot) != previousshootkeystat))
+            {
+                triggerReleased = true;
+                GameMain.Client?.CreateEntityEvent(this.Item, new Item.ChangePropertyEventData(this.SerializableProperties["triggerReleased".ToIdentifier()], this));
+            }
+            if (PlayerInput.KeyHit(InputType.PreviousFireMode))
+            {
+                currentFireModeSelected -= 1;
+                GameMain.Client?.CreateEntityEvent(this.Item, new Item.ChangePropertyEventData(this.SerializableProperties["currentFireModeSelected".ToIdentifier()], this));
+                GUI.AddMessage($"FireMode: {switchableFiremodes[currentFireModeSelected].ToString()}", Color.White, 2.5f, false);
+            }
+
+            if (PlayerInput.KeyHit(InputType.NextFireMode))
+            {
+                currentFireModeSelected += 1;
+                GameMain.Client?.CreateEntityEvent(this.Item, new Item.ChangePropertyEventData(this.SerializableProperties["currentFireModeSelected".ToIdentifier()], this));
+                GUI.AddMessage($"FireMode: {switchableFiremodes[currentFireModeSelected].ToString()}", Color.White, 2.5f, false);
+            }
 
             if (PlayerInput.KeyHit(modeswitchkey))
             {
                 currentProjectileSelected += 1;
                 GameMain.Client?.CreateEntityEvent(this.Item, new Item.ChangePropertyEventData(this.SerializableProperties["currentProjectileSelected".ToIdentifier()], this));
+                GUI.AddMessage($"Selected Projectile: {switchableProjectiles.ElementAt(currentselected).ToString()}", Color.Yellow, 2.5f, false);
             }
+            //TextManager.Get()
+            previousshootkeystat = PlayerInput.KeyDown(InputType.Shoot);
         }
     }
 }
