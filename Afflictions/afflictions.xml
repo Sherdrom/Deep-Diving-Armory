@@ -43,6 +43,10 @@
       <Description textidentifier="afflictiondescription.deep_headshot_deadly.low" minstrength="0" maxstrength="15" />
       <Description textidentifier="afflictiondescription.deep_headshot_deadly" minstrength="15" maxstrength="25" />
       <Effect minstrength="0" maxstrength="25" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="1.2" dialogflag="damage">
+      <StatusEffect target="Limb" disabledeltatime="true">
+          <Conditional LimbType="neq Head" />
+          <ReduceAffliction identifier="deep_headshot_deadly" amount="114514" />
+        </StatusEffect>
       </Effect>
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="581,0,128,128" origin="0,0" />
     </InternalDamage>
@@ -61,11 +65,19 @@
 
     <Affliction identifier="deep_headshot_deadly_onlyhead_irresistible" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" karmachangeonapplied="0" maxstrength="1" affectmachines="true">
       <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly_irresistible" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0">
+      <StatusEffect target="Limb" disabledeltatime="true">
+          <Conditional LimbType="neq Head" />
+          <ReduceAffliction identifier="deep_headshot_deadly_onlyhead_irresistible" amount="114514" />
+        </StatusEffect>
       </Effect>
     </Affliction>
 
     <Affliction identifier="deep_headshot_deadly_onlyhead" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" karmachangeonapplied="0" maxstrength="1" affectmachines="true">
       <Effect minstrength="0" maxstrength="1" resistancefor="deep_headshot_deadly" resistancelimbs="Torso,RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="1" maxresistance="1" strengthchange="-0">
+      <StatusEffect target="Limb" disabledeltatime="true">
+          <Conditional LimbType="neq Head" />
+          <ReduceAffliction identifier="deep_headshot_deadly" amount="114514" />
+        </StatusEffect>
       </Effect>
     </Affliction>
 
@@ -75,7 +87,7 @@
     </Affliction>
 
     <Affliction identifier="deep_headshot_deadly_monster_huge" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" karmachangeonapplied="0" maxstrength="1" affectmachines="true">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,bleeding" minresistance="0.9" maxresistance="0.9" strengthchange="-1">
+      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,bleeding" minresistance="0.95" maxresistance="0.95" strengthchange="-1">
       </Effect>
     </Affliction>
 
@@ -85,7 +97,7 @@
     </Affliction>
 
     <Affliction identifier="deep_lie_down" description="" isbuff="true" type="deep_lie_down_resistance" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="1" affectmachines="false">
-      <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue" minresistance="0.9" maxresistance="0.9" strengthchange="-2">
+      <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue,explosiondamage" minresistance="0.9" maxresistance="0.9" strengthchange="-2">
       </Effect>
     </Affliction>
 

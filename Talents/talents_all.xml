@@ -22,7 +22,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-    <!--  深潜枪打巨兽类敌人时，造成10%伤害 -->
+    <!--  深潜枪打巨兽类敌人时，造成5%伤害 -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData tags="deep_round" />
@@ -45,7 +45,7 @@
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.6" />
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-0.6" />
       </Abilities>
     </AbilityGroupInterval>
     <AbilityGroupInterval Interval="0.9">
@@ -54,7 +54,7 @@
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
-        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.6" />
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6" />
       </Abilities>
     </AbilityGroupInterval>
     <!-- 致死爆头（对人） -->
@@ -85,7 +85,7 @@
       </Abilities>
     </AbilityGroupEffect>
     <!-- 卧倒（获得90%破片残留抗性） -->
-    <AbilityGroupInterval interval="0.1">
+    <AbilityGroupInterval interval="0.25">
       <Conditions>
         <AbilityConditionRagdolled />
       </Conditions>
