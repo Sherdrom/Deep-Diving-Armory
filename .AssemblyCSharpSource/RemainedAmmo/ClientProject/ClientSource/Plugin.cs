@@ -8,7 +8,6 @@ using Barotrauma.Items.Components;
 using FarseerPhysics.Dynamics;
 using HarmonyLib;
 using System.Reflection.Emit;
-using System.Reflection;
 using Color = Microsoft.Xna.Framework.Color;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -105,52 +104,8 @@ namespace RemainedAmmo
                     }
                 }
                 if(conditionValue == null){return;}
-                remainedAmmo = (int)Math.Floor(containedIndicatorState*100 / Math.Abs(conditionValue.GetValueOrDefault()));
+                remainedAmmo = (int)Math.Floor(containedIndicatorState*100 / Math.Abs(conditionValue.GetValueOrDefault()));              
             }
-
-            // 获取射击模式和弹药类型信息
-            string modeText = "";
-            string ammoTypeText = "";
-
-            // 尝试获取 SwitchableRangedWeapon 组件
-            // 使用 GetComponents 然后查找匹配的类型
-            try
-            {
-                var components = rangedWeapon.Item.GetComponents<ItemComponent>();
-                foreach (var comp in components)
-                {
-                    // 通过类型名称检查是否为 SwitchableRangedWeapon
-                    if (comp.GetType().Name == "SwitchableRangedWeapon")
-                    {
-                        dynamic weapon = comp;
-
-                        // 获取射击模式和弹药类型
-                        try
-                        {
-                            // 使用 dynamic 动态访问私有字段
-                            var firemodes = weapon.switchableFiremodes;
-                            var projectiles = weapon.switchableProjectiles;
-
-                            if (firemodes != null && firemodes.Count > 0)
-                            {
-                                modeText = firemodes[weapon.currentFireModeSelected].ToString();
-                            }
-
-                            if (projectiles != null && projectiles.Count > 0)
-                            {
-                                ammoTypeText = projectiles[weapon.currentProjectileSelected].ToString();
-                            }
-                        }
-                        catch { }
-                        break;
-                    }
-                }
-            }
-            catch
-            {
-                // 如果不是 SwitchableRangedWeapon 或出错则忽略
-            }
-
             // 绘制相关图像
             // drawRemained:
             string ammoString = "00";
@@ -158,50 +113,23 @@ namespace RemainedAmmo
             else {ammoString = remainedAmmo.ToString();}
             var scale = rangedWeapon.currentCrossHairScale;
             Color indicatorColor = new Color(230,26,18,255);
-            Color modeColor = new Color(255,255,255,200); // 白色半透明
-            Color ammoTypeColor = new Color(100,200,255,200); // 浅蓝色半透明
-            Vector2 basePos = rangedWeapon.crosshairPos;
-            Vector2 modeTextPos = basePos;
-            Vector2 ammoTypeTextPos = basePos;
-            Vector2 ammoTextPos = basePos;
-
-            // 如果是双持武器，且是左手武器，将文字放在左边
+            Vector2 TextPos = rangedWeapon.crosshairPos;
+            // 如果是双持武器，且是左手武器，将数字放在左边
             Character character = (Character)rangedWeapon.Item.ParentInventory.Owner;
-            if (character == null) { return; }
             CharacterInventory characterInventory = character.Inventory;
             var leftItem = characterInventory.GetItemInLimbSlot(InvSlotType.LeftHand);
             var rightItem =characterInventory.GetItemInLimbSlot(InvSlotType.RightHand);
-            bool isLeftHandWeapon = (leftItem!=null && rightItem!=null && rangedWeapon.Item.ID == leftItem.ID && leftItem.ID != rightItem.ID);
-
-            float leftOffset = isLeftHandWeapon ? -46f : 8f;
-            float rightOffset = isLeftHandWeapon ? -46f : 60f;
-
-            // 设置文字位置
-            // 弹药数量 - 最下方
-            ammoTextPos.X += leftOffset;
-            ammoTextPos.Y += 110f * scale * scale;
-
-            // 射击模式 - 中间
-            modeTextPos.X += rightOffset;
-            modeTextPos.Y += 80f * scale * scale;
-
-            // 弹药类型 - 最上方
-            ammoTypeTextPos.X += rightOffset;
-            ammoTypeTextPos.Y += 50f * scale * scale;
-
-            // 绘制文字
-            if (!string.IsNullOrEmpty(ammoString))
+            if(leftItem!=null && rightItem!=null && rangedWeapon.Item.ID == leftItem.ID && leftItem.ID != rightItem.ID)
             {
-                GUIStyle.DigitalFont.DrawString(spriteBatch, ammoString, ammoTextPos, indicatorColor);
+                TextPos.X -= 46f;
             }
-            if (!string.IsNullOrEmpty(modeText))
+            else
             {
-                GUIStyle.DigitalFont.DrawString(spriteBatch, modeText, modeTextPos, modeColor);
+                TextPos.X += 8f;
             }
-            if (!string.IsNullOrEmpty(ammoTypeText))
-            {
-                GUIStyle.DigitalFont.DrawString(spriteBatch, ammoTypeText, ammoTypeTextPos, ammoTypeColor);
-            }
+            TextPos.Y += 110f * scale * scale;
+
+            GUIStyle.DigitalFont.DrawString(spriteBatch,ammoString,TextPos,indicatorColor);                        
         }
     }
 }
