@@ -41,6 +41,25 @@
     <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 使用光源组件作为自变量-->
+    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
+    </LightComponent>
+<!-- 右键瞄准时，设置电压为1.0-->
+    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+    </StatusEffect>
+<!-- 电压大于0.9时，开启热成像-->
+    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
+    <Conditional Voltage="gte 0.9" />
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+    </StatusEffect>
+<!-- 松开右键，电压小于0.8时，关闭热成像-->
+    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
+    <Conditional EntityType="eq character" TargetContainer="True" />
+    <Conditional Voltage="lte 0.8" />
+    </StatusEffect>
+
 	</Holdable>
 	<!--可以背背上-->
 	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
@@ -66,7 +85,7 @@
       <RequiredItems items="deep_meteorite_mag,tsm_grenade_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
 	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
-	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+	  <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="deep_meteorite_mag,tsm_grenade_mag" hide="false" itempos="-11,-10" rotation="0" >
@@ -111,7 +130,7 @@
       <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="vertical_grip,corner_grip" hide="false" itempos="18,-5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable tags="deep_grip" hide="false" itempos="18,-5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="50,5" setactive="true" />
@@ -121,12 +140,17 @@
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,8x_sight" hide="false" itempos="-13,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight" hide="false"  itempos="-13,14" setactive="true" >
-		<StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
-		</Containable>
-		<Containable Items="thermalgoggles_sight">
-          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
+
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-13,14" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
+        </StatusEffect>
         </Containable>
+
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-13,14" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
+        </StatusEffect>
+        </Containable>
+
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

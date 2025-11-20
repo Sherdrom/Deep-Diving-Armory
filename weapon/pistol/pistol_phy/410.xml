@@ -45,6 +45,25 @@
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 使用光源组件作为自变量-->
+    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
+    </LightComponent>
+<!-- 右键瞄准时，设置电压为1.0-->
+    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
+    </StatusEffect>
+<!-- 电压大于0.9时，开启热成像-->
+    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
+    <Conditional Voltage="gte 0.9" />
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
+    </StatusEffect>
+<!-- 松开右键，电压小于0.8时，关闭热成像-->
+    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
+    <Conditional EntityType="eq character" TargetContainer="True" />
+    <Conditional Voltage="lte 0.8" />
+    </StatusEffect>
+
     </Holdable>
     <RangedWeapon weapondamagemodifier="1" barrelpos="55,28" spread="0.1" unskilledspread="3" combatPriority="100" reload="0.3" drawhudwhenequipped="true" crosshairscale="0.5">
       <StatusEffect type="OnUse" target="This" Condition="-400" />
@@ -68,6 +87,7 @@
       </StatusEffect>
       <RequiredItems items="shotgunammo" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="50" />
+      <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </RangedWeapon>
     <ItemContainer capacity="1" maxstacksize="5" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="shotgunammo" hide="true" setactive="true" />
@@ -82,12 +102,12 @@
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="1,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable tags="thermalgoggles_sight" hide="false" itempos="1,15" setactive="true">
-          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="false" overlaycolor="0,0,0,0" thermalgoggles="false" showtexts="false" debugwiring="false" delay="1" stackable="false" />
+
+        <Containable items="thermalgoggles_sight" hide="false" itempos="1,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
+        </StatusEffect>
         </Containable>
-        <Containable Items="thermalgoggles_sight">
-          <StatusEffect type="OnActive" target="This" targetitemcomponent="StatusHUD" drawhudwhenequipped="true" overlaycolor="176,0,0,120" thermalgoggles="true" />
-        </Containable>
+
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

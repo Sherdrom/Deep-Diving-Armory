@@ -24,7 +24,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="holographic_sight" strength="5" />
       </StatusEffect>
     </Holdable>
@@ -53,7 +54,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="2x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
@@ -87,7 +89,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="2.5x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
@@ -121,7 +124,8 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,202,184,70" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	          <Affliction identifier="3x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
@@ -161,14 +165,15 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="red_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
   
   
-<Item name="" identifier="thermalgoggles_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.18" impactsoundtag="impact_metal_light">
+<Item name="" identifier="thermalgoggles_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_thermalgoggles_sight" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.18" impactsoundtag="impact_metal_light">
 <Price baseprice="1200" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -191,13 +196,14 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="182,3,90,67" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+  <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="thermalgoggles_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
   
-  <Item name="" identifier="thermalgoggles_sight_6x" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom6x" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.18" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="thermalgoggles_sight_6x" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom6x,deep_thermalgoggles_sight" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.18" impactsoundtag="impact_metal_light">
   <Price baseprice="1500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -220,7 +226,8 @@
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="284,276,226,59" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and" >
+    <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="thermalgoggles_sight_6x" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
@@ -260,7 +267,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	        <Affliction identifier="8x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
@@ -300,7 +308,8 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
 	  <Affliction identifier="1_3x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
