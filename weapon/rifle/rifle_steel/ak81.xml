@@ -64,7 +64,6 @@
     <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
     <Conditional EntityType="eq character" TargetContainer="True" />
     <Conditional Voltage="lte 0.8" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
     </StatusEffect>
 
 	</Holdable>
@@ -149,8 +148,17 @@
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-23,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
-		<Containable tags="thermalgoggles_sight,thermalgoggles_sight_6x" hide="false"  itempos="-23,15" setactive="true" >
-		</Containable>
+
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-23,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
+        </StatusEffect>
+        </Containable>
+
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-23,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
+        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
+        </StatusEffect>
+        </Containable>
+
       </SubContainer>
 	  <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
