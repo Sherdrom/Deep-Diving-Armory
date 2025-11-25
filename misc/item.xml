@@ -5,10 +5,10 @@
     <Sprite texture="Content/Items/Tools/tools.png" sourcerect="473,1,29,65" depth="0.55" origin="0.5,0.5" />
     <Body width="27" height="60" density="12" />
     <Holdable slots="Any,RightHand,LeftHand" holdangle="30" handle1="0,-15" msg="ItemMsgPickUpSelect" />
-    <AiTarget soundrange="100000" sonarlabel="entityname.sonarbeacon" sight="500" staticsight="true" />
+    <AiTarget soundrange="500000" sonarlabel="entityname.sonarbeacon" sight="500" staticsight="true" />
     <LightComponent LightColor="0.0,1.0,0.0,1.0" range="50" powerconsumption="0" blinkfrequency="2" IsOn="false" canbeselected="false">
       <StatusEffect type="OnActive" targettype="Contained" Condition="-0"></StatusEffect>
-      <StatusEffect type="OnActive" targettype="This" SoundRange="100000" setvalue="true"></StatusEffect>
+      <StatusEffect type="OnActive" targettype="This" SoundRange="500000" setvalue="true"></StatusEffect>
     </LightComponent>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.16,0.15" anchor="CenterLeft" pivot="BottomLeft" relativeoffset="0.006,-0.05" style="ItemUI" />
