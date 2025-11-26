@@ -16,19 +16,21 @@
 
     <InternalDamage name="deep_bullet_injury" identifier="deep_bullet_injury" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury" selfcauseofdeathdescription="You have died of deep_bullet_injury" limbspecific="true" maxstrength="40" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
       <Description textidentifier="afflictiondescription.deep_bullet_injury" minstrength="0" maxstrength="40" />
-      <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.40" dialogflag="damage">
-        <StatusEffect target="Limb" disabledeltatime="true">
-          <Conditional LimbType="neq Torso" />
-          <ReduceAffliction identifier="deep_headshot_deadly" amount="114514" />
-        </StatusEffect>
-        <StatusEffect target="Limb" disabledeltatime="true">
-          <Conditional LimbType="neq LeftArm" />
-          <ReduceAffliction identifier="deep_headshot_deadly" amount="114514" />
-        </StatusEffect>
-        <StatusEffect target="Limb" disabledeltatime="true">
-          <Conditional LimbType="neq RightArm" />
-          <ReduceAffliction identifier="deep_headshot_deadly" amount="114514" />
-        </StatusEffect>
+      <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,LeftThigh,RightThigh" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.40" dialogflag="damage">
+      </Effect>
+      <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0" />
+    </InternalDamage>
+
+    <InternalDamage name="deep_bullet_injury_arm" identifier="deep_bullet_injury_arm" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury_arm" selfcauseofdeathdescription="You have died of deep_bullet_injury_arm" limbspecific="true" maxstrength="10" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
+      <Description textidentifier="afflictiondescription.deep_bullet_injury_arm" minstrength="0" maxstrength="10" />
+      <Effect minstrength="0" maxstrength="10" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.10" dialogflag="damage">
+      </Effect>
+      <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0" />
+    </InternalDamage>
+
+    <InternalDamage name="deep_bullet_injury_groin" identifier="deep_bullet_injury_groin" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury_groin" selfcauseofdeathdescription="You have died of deep_bullet_injury_groin" limbspecific="true" maxstrength="10" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
+      <Description textidentifier="afflictiondescription.deep_bullet_injury_groin" minstrength="0" maxstrength="10" />
+      <Effect minstrength="0" maxstrength="10" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.10" dialogflag="damage">
       </Effect>
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="141,0,128,128" color="195,60,60,255" origin="0,0" />
     </InternalDamage>
@@ -736,7 +738,7 @@
     </Affliction>
 
     <Affliction identifier="chip_heavy_defender_talent" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
-      <Effect minstrength="0" maxstrength="2" resistancefor="stun,damage,Shrapnel_residue" minresistance="0.15" maxresistance="0.15" strengthchange="-1">
+      <Effect minstrength="0" maxstrength="2" resistancefor="stun,damage,Shrapnel_residue" minresistance="0.2" maxresistance="0.2" strengthchange="-1">
       </Effect>
     </Affliction>
 
@@ -800,7 +802,7 @@
     </Affliction>
 
     <Affliction identifier="deep_chip_heavy_defender" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
+      <Effect minstrength="0" maxstrength="2" resistancefor="deep_plate_debuff" minresistance="10" maxresistance="10" strengthchange="-1" >
         <StatValue stattype="AttackMultiplier" value="-0.3" />
         <StatValue stattype="RangedAttackSpeed" value="-0.3" />
       </Effect>
@@ -1230,7 +1232,7 @@
     </Affliction>
 
     <Affliction identifier="chip_emergency_defibrillation" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="1" treatmentthreshold="1000" duration="1" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-      <Effect minstrength="0" maxstrength="1">
+      <Effect minstrength="0" resistancefor="fractures" minresistance="10" maxresistance="10" maxstrength="1">
         <StatusEffect target="Character">
           <ReduceAffliction type="deep_gunwound" strength="1000" />
           <ReduceAffliction type="damage" strength="1000" />

@@ -328,7 +328,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 4,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_arm",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_arm_5 = {
+        name = "手臂轻质钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 5,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_arm",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
@@ -350,7 +372,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 6,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_arm",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_arm_7 = {
+        name = "手臂复合钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 7,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_arm",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
@@ -372,7 +416,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 8,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_arm",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_arm_9 = {
+        name = "手臂超重钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 9,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_arm",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
@@ -394,7 +460,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 4,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_groin",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_5 = {
+        name = "腹股沟轻质钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 5,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_groin",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
@@ -416,7 +504,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 6,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_groin",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_7 = {
+        name = "腹股沟复合钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 7,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_groin",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
@@ -438,7 +548,29 @@ Deep_Lua.Armors = {
         ricochetchance = 0.0,
         level = 8,
         aftereffectmultiplier  = 1.0,
-        correctionaffliction = "deep_bullet_injury",
+        correctionaffliction = "deep_bullet_injury_groin",
+        correctionmultiplier = 0.15,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_metal_groin_9 = {
+        name = "腹股沟超重钢",
+        type = "metal",
+        ricochetchance = 0.0,
+        level = 9,
+        aftereffectmultiplier  = 1.0,
+        correctionaffliction = "deep_bullet_injury_groin",
         correctionmultiplier = 0.15,
         enablecorrection = true,
         penresistance = 0.0,
