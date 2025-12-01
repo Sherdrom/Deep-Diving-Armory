@@ -60,8 +60,30 @@ Deep_Lua.Armors = {
     deep_plate_ceramic_4 = {
         name = "氧化铝",
         type = "ceramic",
-        ricochetchance = 0.25,
+        ricochetchance = 0.15,
         level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_5 = {
+        name = "高纯度氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.2,
+        level = 5,
         aftereffectmultiplier  = 0.8,
         correctionaffliction = nil,
         correctionmultiplier = 0.0,
@@ -82,8 +104,30 @@ Deep_Lua.Armors = {
     deep_plate_ceramic_6 = {
         name = "碳化硅",
         type = "ceramic",
-        ricochetchance = 0.3,
+        ricochetchance = 0.25,
         level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_7 = {
+        name = "二硼化钛",
+        type = "ceramic",
+        ricochetchance = 0.3,
+        level = 7,
         aftereffectmultiplier  = 0.8,
         correctionaffliction = nil,
         correctionmultiplier = 0.0,
@@ -123,10 +167,32 @@ Deep_Lua.Armors = {
         end,
     },
 
+    deep_plate_ceramic_9 = {
+        name = "氧化铍",
+        type = "ceramic",
+        ricochetchance = 0.4,
+        level = 9,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
     deep_plate_ceramic_10 = {
         name = "刚化钨",
         type = "ceramic",
-        ricochetchance = 0.4,
+        ricochetchance = 0.45,
         level = 10,
         aftereffectmultiplier  = 0.8,
         correctionaffliction = nil,
@@ -445,6 +511,270 @@ Deep_Lua.Armors = {
         maxhits = 0,
         maxcondition = 0,
         ignoredamage = true,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_4 = {
+        name = "手臂氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.15,
+        level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_5 = {
+        name = "手臂高纯度氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.2,
+        level = 5,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_6 = {
+        name = "手臂碳化硅",
+        type = "ceramic",
+        ricochetchance = 0.25,
+        level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_7 = {
+        name = "手臂二硼化钛",
+        type = "ceramic",
+        ricochetchance = 0.3,
+        level = 7,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_8 = {
+        name = "手臂碳化硼",
+        type = "ceramic",
+        ricochetchance = 0.35,
+        level = 8,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_arm_9 = {
+        name = "手臂氧化铍",
+        type = "ceramic",
+        ricochetchance = 0.4,
+        level = 9,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_4 = {
+        name = "腹股沟氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.15,
+        level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_5 = {
+        name = "腹股沟高纯度氧化铝",
+        type = "ceramic",
+        ricochetchance = 0.2,
+        level = 5,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_6 = {
+        name = "腹股沟碳化硅",
+        type = "ceramic",
+        ricochetchance = 0.25,
+        level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_7 = {
+        name = "腹股沟二硼化钛",
+        type = "ceramic",
+        ricochetchance = 0.3,
+        level = 7,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_8 = {
+        name = "腹股沟碳化硼",
+        type = "ceramic",
+        ricochetchance = 0.35,
+        level = 8,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_ceramic_groin_9 = {
+        name = "腹股沟氧化铍",
+        type = "ceramic",
+        ricochetchance = 0.4,
+        level = 9,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = nil,
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
         protectionarea = {},
         targetidentifier = {
             ["gunshotwound"] = true

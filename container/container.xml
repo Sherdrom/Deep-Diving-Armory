@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_weapon_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy" >
+  <Item name="" identifier="deep_weapon_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
-      <Item identifier="steel" amount="2"/>
-	  <Item identifier="plastic" amount="2" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="mechanical" level="20" />
       <Item identifier="steel" amount="4" />
-	  <Item identifier="plastic" amount="4" />
+      <Item identifier="plastic" amount="4" />
     </Fabricate>
     <Price baseprice="200">
       <Price storeidentifier="merchantoutpost" minavailable="1" />
@@ -16,27 +15,24 @@
       <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
     </Price>
     <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="4,10,367,83" origin="0.5,0.6" />
     <Sprite texture="%ModDir%/container/container.png" sourcerect="4,10,367,83" origin="0.5,0.5" depth="0.6" />
     <Body width="367" height="83" density="20" />
-	<Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="36" maxstacksize="1" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-	      <Containable items="weapon,gun,gunsmith,mountableweapon,smallautoweapon,pistolitem" />
-	</ItemContainer>
+      <Containable items="weapon,gun,gunsmith,mountableweapon,smallautoweapon,pistolitem" />
+    </ItemContainer>
   </Item>
-  
-  
-  <Item name="" identifier="deep_ammo_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy" >
+  <Item name="" identifier="deep_ammo_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
-      <Item identifier="steel" amount="2"/>
-	  <Item identifier="plastic" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="mechanical" level="20" />
       <Item identifier="steel" amount="2" />
-	  <Item identifier="plastic" amount="2" />
+      <Item identifier="plastic" amount="2" />
     </Fabricate>
     <Price baseprice="100">
       <Price storeidentifier="merchantoutpost" minavailable="1" />
@@ -44,27 +40,24 @@
       <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
     </Price>
-    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="25,130,151,138" origin="0.5,0.6" />
-    <Sprite texture="%ModDir%/container/container.png" sourcerect="25,130,151,138" origin="0.5,0.5" depth="0.6" />
+    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="29,119,166,150" origin="0.5,0.6" />
+    <Sprite texture="%ModDir%/container/container.png" sourcerect="29,119,165,150" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-	<Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="36" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-	      <Containable items="smallitem" />
-	</ItemContainer>
+      <Containable items="smallitem" />
+    </ItemContainer>
   </Item>
-  
-  
-  <Item name="" identifier="deep_accessory_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy" >
+  <Item name="" identifier="deep_accessory_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
-      <Item identifier="steel" amount="2"/>
-	  <Item identifier="plastic" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="mechanical" level="20" />
       <Item identifier="steel" amount="2" />
-	  <Item identifier="plastic" amount="2" />
+      <Item identifier="plastic" amount="2" />
     </Fabricate>
     <Price baseprice="100">
       <Price storeidentifier="merchantoutpost" minavailable="1" />
@@ -72,27 +65,24 @@
       <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
     </Price>
-    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="47,293,107,116" origin="0.5,0.6" />
-    <Sprite texture="%ModDir%/container/container.png" sourcerect="47,293,107,116" origin="0.5,0.5" depth="0.6" />
+    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="37,295,142,122" origin="0.5,0.6" />
+    <Sprite texture="%ModDir%/container/container.png" sourcerect="37,295,142,122" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-	<Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,60" handle2="0,60" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-	      <Containable items="deep_accessory,deep_chip_headset,deep_head_chip,deep_chip_armor,deep_tac,deep_mobile_shield_fix" />
-	  </ItemContainer>
+      <Containable items="deep_accessory,deep_chip_headset,deep_head_chip,deep_chip_armor,deep_tac,deep_mobile_shield_fix" />
+    </ItemContainer>
   </Item>
-  
-  
-  <Item name="" identifier="deep_explosive_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy" >
+  <Item name="" identifier="deep_explosive_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
-      <Item identifier="steel" amount="2"/>
-	  <Item identifier="plastic" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="mechanical" level="20" />
       <Item identifier="steel" amount="2" />
-	  <Item identifier="plastic" amount="2" />
+      <Item identifier="plastic" amount="2" />
     </Fabricate>
     <Price baseprice="100">
       <Price storeidentifier="merchantoutpost" minavailable="1" />
@@ -100,27 +90,24 @@
       <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
     </Price>
-    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="213,132,191,143" origin="0.5,0.6" />
-    <Sprite texture="%ModDir%/container/container.png" sourcerect="213,132,191,143" origin="0.5,0.5" depth="0.6" />
+    <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="226,132,191,143" origin="0.5,0.6" />
+    <Sprite texture="%ModDir%/container/container.png" sourcerect="226,132,191,143" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-	<Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,30" handle2="0,30" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-	      <Containable items="explosive,demolitionsexpert,handgrenade" />
-	</ItemContainer>
+      <Containable items="explosive,demolitionsexpert,handgrenade" />
+    </ItemContainer>
   </Item>
-  
-  
-  <Item name="" identifier="deep_cloth_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy" >
+  <Item name="" identifier="deep_cloth_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
-      <Item identifier="steel" amount="2"/>
-	  <Item identifier="plastic" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="mechanical" level="20" />
       <Item identifier="steel" amount="2" />
-	  <Item identifier="plastic" amount="2" />
+      <Item identifier="plastic" amount="2" />
     </Fabricate>
     <Price baseprice="100">
       <Price storeidentifier="merchantoutpost" minavailable="1" />
@@ -128,12 +115,12 @@
       <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
       <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
     </Price>
     <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="258,292,123,163" origin="0.5,0.6" />
     <Sprite texture="%ModDir%/container/container.png" sourcerect="258,292,123,163" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-	<Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
       <RequiredItem identifier="wrench" type="Equipped" />
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" />
       <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
@@ -141,7 +128,47 @@
       </StatusEffect>
     </Holdable>
     <ItemContainer capacity="36" maxstacksize="32" slotsperrow="6" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
-	      <Containable items="clothing,deep_rig,deep_plate,deep_helmet,deep_bag,mobileradio,deep_plate_arm,deep_plate_groin,deep_tac,deep_chip_armor" />
-	</ItemContainer>
+      <Containable items="smallitem,clothing,deep_rig,deep_plate,deep_helmet,deep_bag,mobileradio,deep_plate_arm,deep_plate_groin,deep_tac,deep_chip_armor,helmet" />
+    </ItemContainer>
   </Item>
-  </Items>
+  <Item name="" identifier="deep_materials_crate" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" scale="0.45" linkable="true" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy" waterproof="true" fireproof="true">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="mechanical" level="30" />
+      <RequiredItem identifier="steel" amount="2" />
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="steel" amount="1" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/container/container.png" sourcerect="26,434,160,145" origin="0.5,0.5" depth="0.6" />
+    <Body width="160" height="145" density="10" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer capacity="42" maxstacksize="32" canbeselected="true" hideitems="true" keepopenwhenequipped="true" movableframe="true">
+      <Containable items="smallitem,mediumitem" excludeditems="bandolier,cargoscooter,largemobilecontainer" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_plate_crate" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
+    <Deconstruct time="10">
+      <Item identifier="steel" amount="1" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="mechanical" level="20" />
+      <Item identifier="steel" amount="2" />
+      <Item identifier="plastic" amount="2" />
+    </Fabricate>
+    <Price baseprice="100">
+      <Price storeidentifier="merchantoutpost" minavailable="1" />
+      <Price storeidentifier="merchantcity" multiplier="0.9" minavailable="2" />
+      <Price storeidentifier="merchantresearch" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1.25" minavailable="1" />
+      <Price storeidentifier="merchantmine" multiplier="1.25" minavailable="4" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="10" />
+    </Price>
+    <Sprite texture="%ModDir%/container/container.png" sourcerect="440,14,229,185" origin="0.5,0.5" depth="0.6" />
+    <Body width="230" height="185" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,80" handle2="0,80" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+      <Containable tags="deep_plate,deep_plate_arm,deep_plate_groin" />
+    </ItemContainer>
+  </Item>
+</Items>
