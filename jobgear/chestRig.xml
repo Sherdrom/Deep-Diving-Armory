@@ -1396,6 +1396,11 @@
 		<RequiredItems tags="deep_travel_light" type="Contained"  TargetSlot="0" />
         <dropitem/>
       </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="1" setvalue="true" comparison="and" >
+        <Conditional deep_contract_travel_light_detect="gt 0.0" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="1" />
+        <dropitem/>
+      </StatusEffect>
 
       <!-- 穿上胸挂时，给予人物胸挂检测 -->
     <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
@@ -1476,10 +1481,18 @@
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_ceramic_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_ceramic_arm_debuff" strength="5" />
+	  </StatusEffect>
  <!-- 复合插板debuff-->
     <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_composite_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_composite_arm_debuff" strength="5" />
 	  </StatusEffect>
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -1554,6 +1567,11 @@
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
+        <dropitem/>
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="1" setvalue="true" comparison="and" >
+        <Conditional deep_contract_travel_light_detect="gt 0.0" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="1" />
         <dropitem/>
       </StatusEffect>
 
@@ -1636,10 +1654,18 @@
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_ceramic_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_ceramic_arm_debuff" strength="5" />
+	  </StatusEffect>
  <!-- 复合插板debuff-->
     <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_composite_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_composite_arm_debuff" strength="5" />
 	  </StatusEffect>
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
@@ -1714,6 +1740,11 @@
       <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="0" setvalue="true" comparison="and" >
         <Conditional deep_contract_travel_light_detect="gt 0.0" />
 		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
+        <dropitem/>
+      </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" targettype="Contained,Character" TargetSlot="1" setvalue="true" comparison="and" >
+        <Conditional deep_contract_travel_light_detect="gt 0.0" />
+		<RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="1" />
         <dropitem/>
       </StatusEffect>
 
@@ -1796,10 +1827,18 @@
 	  <RequiredItems tags="deep_plate_ceramic" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
 	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_ceramic_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_ceramic_arm_debuff" strength="5" />
+	  </StatusEffect>
  <!-- 复合插板debuff-->
     <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
 	  <RequiredItems tags="deep_plate_composite" type="Contained" TargetSlot="0" />
 	  	  <Affliction identifier="deep_plate_composite_debuff" strength="1" />
+	  </StatusEffect>
+	  <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	  <RequiredItems tags="deep_plate_composite_arm" type="Contained" targetslot="1" />
+	  	  <Affliction identifier="deep_plate_composite_arm_debuff" strength="5" />
 	  </StatusEffect>
       <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
 	  <damagemodifier afflictionidentifiers="stun" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="LimbArmor" deflectprojectiles="true" />
