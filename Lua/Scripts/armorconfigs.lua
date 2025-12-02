@@ -1027,6 +1027,50 @@ Deep_Lua.Armors = {
         end,
     },
 
+    deep_plate_rf3 = {
+        name = "RF3",
+        type = "composite",
+        ricochetchance = 0.25,
+        level = 9,
+        aftereffectmultiplier  = 0.5,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_plate_br6 = {
+        name = "BR6",
+        type = "composite",
+        ricochetchance = 0.3,
+        level = 10,
+        aftereffectmultiplier  = 0.4,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 80,
+        maxcondition = 100,
+        ignoredamage = false,
+        protectionarea = {},
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
     deep_plate_composite_arm_6 = {
         name = "凯夫拉+氧化铝",
         type = "composite",

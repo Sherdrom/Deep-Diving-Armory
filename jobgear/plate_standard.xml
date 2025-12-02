@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="deep_plate_rf3" subcategory="plate_composite" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_plate,deep_plate_composite,deep_travel_light,deep_plate_composite_repair_66" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="130" />
+      <RequiredItem identifier="deep_high_hardness_ceramics" amount="6" />
+      <RequiredItem identifier="deep_pbo_fiber" amount="1" />
+      <RequiredItem identifier="deep_dyneema" amount="2" />
+      <RequiredItem identifier="engineeringplastic" amount="2" />
+      <RequiredItem identifier="deep_polyurethane" amount="2" />
+      <RequiredItem identifier="deep_plate_carrier" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="6" />
+      <RequiredItem identifier="deep_ghost_formula" amount="3" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_tungsten" amount="2" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/jobgear/plate/plate_standard.png" sourcerect="190,10,155,202" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/jobgear/sound/armor_de.ogg" type="OnUse" range="2000.0" loop="false" volume="1" />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="deep_plate_br6" subcategory="plate_composite" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_plate,deep_plate_composite,deep_travel_light,deep_plate_composite_repair_100" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.2" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="140" />
+      <RequiredItem identifier="deep_high_hardness_ceramics" amount="8" />
+      <RequiredItem identifier="deep_pbo_fiber" amount="2" />
+      <RequiredItem identifier="deep_dyneema" amount="4" />
+      <RequiredItem identifier="engineeringplastic" amount="4" />
+      <RequiredItem identifier="deep_polyurethane" amount="4" />
+      <RequiredItem identifier="deep_plate_carrier" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="12" />
+      <RequiredItem identifier="deep_grizzlies_formula" amount="3" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_tungsten_phy" amount="2" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/jobgear/plate/plate_standard.png" sourcerect="191,231,172,200" depth="0.6" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnBroken" target="This">
+        <sound file="%ModDir%/jobgear/sound/armor_de.ogg" type="OnUse" range="2000.0" loop="false" volume="1" />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+</Items>
