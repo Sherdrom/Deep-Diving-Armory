@@ -81,7 +81,7 @@
     </StatusEffect>
 
     </Holdable>
-    <RangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" >
+    <SwitchableRangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableProjectiles="deep_round,deep_round_sub_hanging" >
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -99,8 +99,7 @@
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
       <!--"Use" contained magazine to spawn projectiles.-->
-      <StatusEffect type="OnUse" target="Contained,This" TargetSlot="0">
-        <Conditional currentProjectileSelected="lt 1"/>
+      <StatusEffect type="OnUse" target="Contained">
         <Use />
       </StatusEffect>
       <StatusEffect type="OnUse" Condition="-80" target="This">
@@ -112,7 +111,7 @@
       <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,556mag,deep_sub_hanging" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="70" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="deep_5.56x45,deep_5.56x45_expansion,556mag" hide="false" itempos="-2,-9" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
@@ -188,14 +187,6 @@
     </Quality>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="70" />
-
-    <!--可选项
-    <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <Button text="SwitchAmmo" >
-        <StatusEffect type="OnUse" target="This" currentProjectileSelected="1" />
-      </Button>
-    </CustomInterface>-->
   </Item>
 </Items>
 
