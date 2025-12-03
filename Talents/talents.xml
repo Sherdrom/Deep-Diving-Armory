@@ -445,5 +445,19 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!-- 先辈不会引爆友军阔剑，但会踩敌人的 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_pigman_claymore_safe" amount="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
   </Talent>
 </Talents>
