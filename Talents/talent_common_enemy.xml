@@ -89,5 +89,18 @@
       </Abilities>
     </AbilityGroupInterval>
 
+    <!--敌人踩阔剑不会爆炸，做出敌我识别-->
+     <AbilityGroupInterval interval="1" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
+            <Affliction identifier="deep_claymore_safe" strength="4.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
   </Talent>
 </Talents>
