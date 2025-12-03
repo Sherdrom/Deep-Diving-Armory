@@ -25,10 +25,6 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
-      </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />

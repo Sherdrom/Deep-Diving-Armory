@@ -13,12 +13,12 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" maxstacksize="6" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="false" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="shotgunammo" />
-      <StatusEffect type="OnContaining" target="this" condition="100" setvalue="true"/>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character">
-        <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      <StatusEffect type="OnActive" interval="0.5" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="5" />
+        <RequiredItems tags="deep_round_shotgun_attenuation" type="Contained" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
