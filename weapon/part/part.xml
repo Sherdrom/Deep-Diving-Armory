@@ -500,6 +500,24 @@
       </StatusEffect>
     </Holdable>
   </Item>
+  <Item name="" identifier="m14ebr_moonwolf_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="12" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_ssd" amount="6" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design_2.png" sourcerect="20,430,189,185" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/design_2.png" sourcerect="21,430,187,187" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
   <Item name="" identifier="saintpredator_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
