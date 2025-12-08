@@ -33,15 +33,22 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
     <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
+
+      <!-- 半自动射击，获得伤害加成和高精度-->
+      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+        <Conditional currentFireModeSelected="eq 1" />
+        <Affliction identifier="deep_Semi" strength="100" />
+      </StatusEffect>
+      
 	</Holdable>
-    <RangedWeapon reload="0.085" weapondamagemodifier="1" holdtrigger="true" barrelpos="300,4" spread="2" unskilledspread="4" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="1" holdtrigger="true" barrelpos="300,4" spread="2" unskilledspread="4" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -70,7 +77,7 @@
       <RequiredItems items="deep_7.62x51,762_51mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
 	  <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet" >
       <Containable items="deep_7.62x51,762_51mag" hide="false" itempos="-4,-12" setactive="true" rotation="0" >
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->

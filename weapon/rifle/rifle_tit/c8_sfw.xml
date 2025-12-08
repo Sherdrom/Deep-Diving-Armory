@@ -83,7 +83,13 @@
     <Conditional Voltage="lte 0.8" />
     </StatusEffect>
 
-    <!-- 切换成下挂霰弹时，获得距离衰减-->
+    <!-- 半自动射击，获得伤害加成和高精度-->
+      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+        <Conditional currentFireModeSelected="eq 1" />
+        <Affliction identifier="deep_Semi" strength="100" />
+      </StatusEffect>
+
+    <!-- 切换成下挂霰弹时，获得距离衰减 -->
       <StatusEffect type="OnActive" interval="0.5" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Conditional currentProjectileSelected="eq 1" />
         <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
@@ -99,7 +105,7 @@
       </StatusEffect>
 
     </Holdable>
-    <SwitchableRangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableProjectiles="deep_round,deep_round_sub_hanging" >
+    <SwitchableRangedWeapon reload="0.071" weapondamagemodifier="1" holdtrigger="true" barrelpos="216,27" spread="6" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableProjectiles="deep_round,smallitem" switchableFiremodes="Auto,Semi" firemodeswitchkey="V" >
     <!-- SwitchableRangedWeapon 相关-->
 
      <!--使用主弹药时,只使用0号位弹匣 -->
@@ -125,11 +131,21 @@
 
       <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 1" />
+      <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
         <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
         <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" selectionmode="Random" />
         <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
         <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+      </StatusEffect>
+
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
+      <Conditional currentProjectileSelected="eq 1" />
+      <RequiredItems items="deep_sub_hanging_m203" type="Contained" targetslot="1" />
+        <Explosion range="150.0" force="2" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
+        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
       </StatusEffect>
 
       <!-- SwitchableRangedWeapon 相关-->
@@ -191,7 +207,8 @@
       <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_grip" hide="false" itempos="18,-2" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable tags="deep_sub_hanging" hide="false" itempos="27,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_sub_hanging_master_key" hide="false" itempos="27,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_sub_hanging_m203" hide="false" itempos="27,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="22,7" setactive="true" />
