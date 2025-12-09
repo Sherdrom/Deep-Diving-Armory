@@ -14,7 +14,9 @@
     <Sprite texture="%ModDir%/weapon/sight/sub_hanging.png" sourcerect="4,10,337,174" depth="0.549" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" maxstacksize="6" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="false" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="shotgunammo" />
+      <Containable items="shotgunammo" >
+      <StatusEffect type="OnInserted" target="Contained" tags="deep_round_sub_hanging" disabledeltatime="true" delay="0.1" />
+      </Containable>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -48,6 +50,7 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="false" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="grenade">
+        <StatusEffect type="OnInserted" target="Contained" tags="deep_round_sub_hanging" disabledeltatime="true" delay="0.1" />
         <StatusEffect type="OnInserted" target="Contained" launchimpulse="12.0" disabledeltatime="true" delay="0.1" setvalue="true" />
         <StatusEffect type="OnRemoved" target="Contained" launchimpulse="18.0" disabledeltatime="true" delay="0.1" setvalue="true" />
       </Containable>
@@ -80,6 +83,7 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" canbeselected="false" ShowConditionInContainedStateIndicator="false" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="grenade">
+        <StatusEffect type="OnInserted" target="Contained" tags="deep_round_sub_hanging" disabledeltatime="true" delay="0.1" />
         <StatusEffect type="OnInserted" target="Contained" launchimpulse="12.0" disabledeltatime="true" delay="0.1" setvalue="true" />
         <StatusEffect type="OnRemoved" target="Contained" launchimpulse="18.0" disabledeltatime="true" delay="0.1" setvalue="true" />
       </Containable>
