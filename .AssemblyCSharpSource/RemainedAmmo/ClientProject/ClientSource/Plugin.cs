@@ -18,7 +18,7 @@ namespace RemainedAmmo
     public partial class RemainedAmmo : IAssemblyPlugin
     {
         // Client-specific code
-         //patch DrawHUD
+         //patch DrawHUD for RangedWeapon
         [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.DrawHUD))]
         static class RangedWeapon_DrawHUD_Patch
         {
@@ -75,37 +75,62 @@ namespace RemainedAmmo
             }
             return currentAmmoNumber;
         }
-        public static void DrawMyString(RangedWeapon rangedWeapon, SpriteBatch spriteBatch)
+        public static void DrawMyString(object rangedWeaponObj, SpriteBatch spriteBatch)
         {
+            // 支持RangedWeapon和SwitchableRangedWeapon
+            if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
+
             if(rangedWeapon.Item.Prefab.ContentPackage == null || !rangedWeapon.Item.Prefab.ContentPackage.Name.Contains("Deep Diving Armory") || rangedWeapon.Item.HasTag("noammocount")) {return;}
             int remainedAmmo = 0;
             var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (ItemContainer == null) { return; }
             float containedIndicatorState = rangedWeapon.Item.GetComponent<ItemContainer>().GetContainedIndicatorState();
+
+            // 获取当前选择的弹匣（支持SwitchableRangedWeapon的双弹匣系统）
             int targetSlot = Math.Max(ItemContainer.ContainedStateIndicatorSlot, 0);
-            if (targetSlot >= ItemContainer.Inventory.Capacity){return;}
-            // 获取RemainedAmmo
-            IEnumerable<Item> itemsAt = ItemContainer.Inventory.GetItemsAt(targetSlot);
-            // if (itemsAt == null) {goto drawRemained;}
-            // if(itemsAt.FirstOrDefault() == null) {goto drawRemained;}
-            if(itemsAt == null || itemsAt.FirstOrDefault() == null || itemsAt.FirstOrDefault().ownInventory == null) { remainedAmmo = CurrentAmmoNumber(rangedWeapon.Item,ItemContainer);}
-            else
+
+            // 检查是否为SwitchableRangedWeapon（使用字符串模式匹配避免访问级别问题）
+            if (rangedWeapon.GetType().Name == "SwitchableRangedWeapon")
             {
-                float? conditionValue = 1.0f;
-                if(itemsAt.FirstOrDefault().statusEffectLists.TryGetValue(ActionType.OnUse,out List<StatusEffect> onUseEffects))
+                // 使用反射获取CurrentSelected属性，避免dynamic的性能开销
+                var currentSelectedProperty = rangedWeapon.GetType().GetProperty("CurrentSelected");
+                if (currentSelectedProperty != null)
                 {
-                    // 遍历 List<StatusEffect>，查找 Condition 属性
-                    foreach (var statusEffect in onUseEffects)
+                    targetSlot = Math.Max(Convert.ToInt32(currentSelectedProperty.GetValue(rangedWeapon)), 0);
+
+                    // 处理下挂组件的特殊情况
+                    if (targetSlot == 1)
                     {
-                        if(GetConditionValue(statusEffect)!=null)
+                        IEnumerable<Item> itemsAt = ItemContainer.Inventory.GetItemsAt(targetSlot);
+                        Item? hangWeaponItem = itemsAt.FirstOrDefault();
+                        if(hangWeaponItem != null)
                         {
-                            conditionValue = GetConditionValue(statusEffect);
+                            var hangWeaponContainer = hangWeaponItem.GetComponent<ItemContainer>();
+                            if(hangWeaponContainer != null)
+                            {
+                                float hangContainedIndicatorState = hangWeaponItem.GetComponent<ItemContainer>().GetContainedIndicatorState();
+                                remainedAmmo = GetRemainedAmmo(0, hangWeaponItem, hangWeaponContainer, hangContainedIndicatorState);
+                            }
                         }
                     }
+                    else
+                    {
+                        // 主武器模式，使用标准逻辑
+                        remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
+                    }
                 }
-                if(conditionValue == null){return;}
-                remainedAmmo = (int)Math.Floor(containedIndicatorState*100 / Math.Abs(conditionValue.GetValueOrDefault()));              
+                else
+                {
+                    // 如果反射失败，使用默认逻辑
+                    remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
+                }
             }
+            else
+            {
+                // 非SwitchableRangedWeapon，使用标准逻辑
+                remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
+            }
+
             // 绘制相关图像
             // drawRemained:
             string ammoString = "00";
@@ -129,7 +154,37 @@ namespace RemainedAmmo
             }
             TextPos.Y += 110f * scale * scale;
 
-            GUIStyle.DigitalFont.DrawString(spriteBatch,ammoString,TextPos,indicatorColor);                        
+            GUIStyle.DigitalFont.DrawString(spriteBatch,ammoString,TextPos,indicatorColor);
+        }
+
+        public static int GetRemainedAmmo(int targetSlot, Item item, ItemContainer itemContainer, float containedIndicatorState)
+        {
+            int remainedAmmo = 0;
+            // 获取当前选择的弹匣
+            if (targetSlot >= itemContainer.Inventory.Capacity){return 0;}
+            // 获取RemainedAmmo
+            IEnumerable<Item> itemsAt = itemContainer.Inventory.GetItemsAt(targetSlot);
+            // if (itemsAt == null) {goto drawRemained;}
+            // if(itemsAt.FirstOrDefault() == null) {goto drawRemained;}
+            if(itemsAt == null || itemsAt.FirstOrDefault() == null || itemsAt.FirstOrDefault().ownInventory == null) { remainedAmmo = CurrentAmmoNumber(item,itemContainer);}
+            else
+            {
+                float? conditionValue = 1.0f;
+                if(itemsAt.FirstOrDefault().statusEffectLists.TryGetValue(ActionType.OnUse,out List<StatusEffect> onUseEffects))
+                {
+                    // 遍历 List<StatusEffect>，查找 Condition 属性
+                    foreach (var statusEffect in onUseEffects)
+                    {
+                        if(GetConditionValue(statusEffect)!=null)
+                        {
+                            conditionValue = GetConditionValue(statusEffect);
+                        }
+                    }
+                }
+                if(conditionValue == null){return 0;}
+                remainedAmmo = (int)Math.Floor(containedIndicatorState*100 / Math.Abs(conditionValue.GetValueOrDefault()));              
+            }
+            return remainedAmmo;
         }
     }
 }
