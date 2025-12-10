@@ -733,26 +733,154 @@
 
     <ScriptedEvent identifier="deep_meet_on_the_battleground_separatists_state0" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_blaster_elite"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_leader_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_soldier_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_striker_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_heavy_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="0" />
+      <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_sniper_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="4" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_meet_on_the_battleground_separatists" dialogtype="Small" eventsprite="separatists_reinforce"/>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pirate_easy">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_rookie" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_soldier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_scout" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_heavy" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_leader_easy" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pirate_normal">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_scout" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_soldier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_soldier_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_scout_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_leader_normal" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_leader_normal_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pirate_hard">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_soldier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_scout" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_heavy" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_leader_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_soldier_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pirate_scout_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_separatist_normal">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_soldier_moderate" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_striker_moderate" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_moderate" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_moderate" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_grenadier_moderate" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_soldier_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_striker_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_separatist_hard">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_blaster_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_grenadier_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_striker_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_leader_hard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_leader_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_blaster_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_coalition">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_soldier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_blaster" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_heavy" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_sniper" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_grenadier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_leader" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_sniper_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_blaster_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_heavy_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_co_leader_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_ghost">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_grenadier" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_Fearless_Vanguard" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_sniper" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_leader" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_grenadier_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_Fearless_Vanguard_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_sniper_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_ghost_leader_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_grizzlies">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_team_juggernaut" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_political_commissar" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_heavy_gunner" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_heavy_gl" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_leader" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_machinegun_fort" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_machinegun_fort_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_heavy_gunner_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_heavy_gl_elite" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_grizzlies_leader_elite" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <WaitAction time="0" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
     </ScriptedEvent>
 
     <!--<ScriptedEvent identifier="deep_meet_on_the_battleground_separatists_state1" commonness="150">
