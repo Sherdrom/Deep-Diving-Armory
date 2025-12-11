@@ -92,8 +92,8 @@ namespace RemainedAmmo
             // 检查是否为SwitchableRangedWeapon（使用字符串模式匹配避免访问级别问题）
             if (rangedWeapon.GetType().Name == "SwitchableRangedWeapon")
             {
-                // 使用反射获取CurrentSelected属性，避免dynamic的性能开销
-                var currentSelectedProperty = rangedWeapon.GetType().GetProperty("CurrentSelected");
+                // 使用反射获取currentProjectileSelected属性，避免dynamic的性能开销
+                var currentSelectedProperty = rangedWeapon.GetType().GetProperty("currentProjectileSelected");
                 if (currentSelectedProperty != null)
                 {
                     targetSlot = Math.Max(Convert.ToInt32(currentSelectedProperty.GetValue(rangedWeapon)), 0);
