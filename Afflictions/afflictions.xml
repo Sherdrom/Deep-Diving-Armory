@@ -14,6 +14,12 @@
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="724,0,128,128" color="195,60,60,255" origin="0,0" />
     </InternalDamage>
 
+    <Affliction name="deep_calm_buff" identifier="deep_calm_buff" type="deep_calm_buff" isbuff="true" causeofdeathdescription="deep_calm_buff" limbspecific="false" indicatorlimb="Head" maxstrength="1000" >
+      <Description textidentifier="afflictiondescription.deep_calm_buff" minstrength="0" maxstrength="1000" />
+      <Effect minstrength="0" maxstrength="1000" strengthchange="-1" />
+      <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="2,143,128,128" color="195,60,60,255" origin="0,0" />
+    </Affliction>
+
     <InternalDamage name="deep_bullet_injury" identifier="deep_bullet_injury" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury" selfcauseofdeathdescription="You have died of deep_bullet_injury" limbspecific="true" maxstrength="40" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
       <Description textidentifier="afflictiondescription.deep_bullet_injury" minstrength="0" maxstrength="40" />
       <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,LeftThigh,RightThigh" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.40" dialogflag="damage">
@@ -1735,7 +1741,7 @@
     </Affliction>
 
     <Affliction identifier="deep_Burst" description="" isbuff="true" type="deep_SwitchableRangedWeapon_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="1" affectmachines="false">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-0.8">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-0.8" resistancefor="deep_Semi" minresistance="10" maxresistance="10" >
       <StatValue stattype="RangedAttackMultiplier" value="0.1" />
       <StatValue stattype="RangedSpreadReduction" value="0.5" />
       </Effect>
