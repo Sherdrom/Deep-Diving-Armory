@@ -75,7 +75,7 @@
         <Conditional attached="false" />
       </StatusEffect>
     </Holdable>
-    <Fabricator canbeselected="true" powerconsumption="0.0" msg="ItemMsgInteractSelect" fabricationspeed="1" CreateButtonText="true" >
+    <Fabricator canbeselected="true" powerconsumption="0.0" msg="ItemMsgInteractSelect" fabricationspeed="2" CreateButtonText="true" >
       <GuiFrame relativesize="0.4,0.6" style="ItemUI" anchor="Center" />
       <sound file="Content/Items/Fabricators/Fabricator.ogg" type="OnActive" range="1000.0" volumeproperty="RelativeVoltage" loop="true" />
       <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
@@ -108,7 +108,23 @@
       </StatusEffect>
     </Repairable>
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
-    <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
+    <ItemContainer capacity="6" canbeselected="true" hideitems="true" slotsperrow="3" uilabel="" allowuioverlap="true" />
+    <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true">
+    <GuiFrame relativesize="0.09,0.07" anchor="CenterTop" pivot="CenterTop" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="超频模式(OC)" >
+	  <!-- 开启超频模式 -->
+	  <StatusEffect type="OnUse" fabricationspeed="5" interval="60" target="This" disabledeltatime="true" setValue="true" >
+	  <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" interval="1" />
+      </StatusEffect>
+	  
+	  <StatusEffect type="OnUse" condition="-1" interval="60" target="This" >
+      </StatusEffect>
+	  
+	  <!-- 关闭超频模式 -->
+	  <StatusEffect type="OnSecondaryUse" fabricationspeed="2" interval="60" target="This" disabledeltatime="true" setValue="true" >
+      </StatusEffect>
+	  </TickBox>
+    </CustomInterface>
   </Item>
 
   <Item name="" identifier="ore_refining_machine" tags="ore_refining_machine,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false" >
