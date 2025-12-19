@@ -47,11 +47,11 @@
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 
@@ -74,7 +74,7 @@
     </StatusEffect>
 
     </Holdable>
-    <RangedWeapon barrelpos="71,28" spread="8" unskilledspread="16" combatPriority="100" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.1" holdtrigger="true">
+    <SwitchableRangedWeapon barrelpos="71,28" spread="8" unskilledspread="16" combatPriority="100" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.1" holdtrigger="true" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V" >
       <StatusEffect type="NotInWater" target="This" Condition="10" />
       <StatusEffect type="InWater" target="This" Condition="20" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
@@ -95,7 +95,7 @@
       <RequiredItems items="deep_44mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="deep_44mag" hide="true" setactive="true" itempos="0,-7" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->

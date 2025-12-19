@@ -35,24 +35,24 @@
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 
       <!-- 有短枪口件时，略微增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="72,25" comparison="and" setvalue="true">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="72,25" comparison="and" setvalue="true">
         <Conditional deep_muzzle_short_detect="gte 1.0" />
       </StatusEffect>
       <!-- 有长枪口件时，极大增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="112,25" comparison="and" setvalue="true">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="112,25" comparison="and" setvalue="true">
         <Conditional deep_muzzle_long_detect="gte 1.0" />
       </StatusEffect>
       <!-- 无枪口件时，恢复枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" barrelpos="52,25" comparison="and" setvalue="true">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="52,25" comparison="and" setvalue="true">
         <Conditional deep_muzzle_none_detect="lte 0.0" />
       </StatusEffect>
 
@@ -74,8 +74,17 @@
     <Conditional Voltage="lte 0.8" />
     </StatusEffect>
 
+    <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+
     </Holdable>
-    <RangedWeapon barrelpos="52,25" spread="3" weapondamagemodifier="1" unskilledspread="20" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.06" holdtrigger="true">
+    <SwitchableRangedWeapon barrelpos="52,25" spread="3" weapondamagemodifier="1" unskilledspread="20" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.06" holdtrigger="true" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V" >
+    <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_yes" strength="100" />
+      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <Sound file="%ModDir%/weapon/ammo/9mmp.ogg" type="OnUse" range="3000" selectionmode="Random" />
@@ -93,7 +102,7 @@
       <RequiredItems items="deep_glock" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="85" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="deep_glock" hide="false" setactive="true" itempos="-11,-9" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
