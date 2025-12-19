@@ -1747,6 +1747,18 @@
       </Effect>
     </Affliction>
 
+    <Affliction identifier="deep_VCE_none" description="" isbuff="true" type="deep_VCE" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
+      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
+      </Effect>
+      <AfflictionOverlay texture="%ModDir%/jobgear/armor/VCE.png" /> 
+    </Affliction>
+
+    <Affliction identifier="deep_VCE_yes" description="" isbuff="true" type="deep_VCE" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
+      <Effect minstrength="0" maxstrength="2" resistancefor="deep_VCE_none" maxresistance="1.0" minresistance="1.0" strengthchange="-1">
+      <ReduceAffliction type="deep_VCE_none" amount="100" />
+      </Effect>
+    </Affliction>
+
 
   </Override>
 </Afflictions>

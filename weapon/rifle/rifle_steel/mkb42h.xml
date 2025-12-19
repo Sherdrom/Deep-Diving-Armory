@@ -91,8 +91,17 @@
       <Conditional currentProjectileSelected="eq 1" />
       </StatusEffect>
 
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+
     </Holdable>
     <SwitchableRangedWeapon reload="0.12" weapondamagemodifier="1" holdtrigger="true" barrelpos="244,18" spread="1" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi" firemodeswitchkey="V" >
+    <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_yes" strength="100" />
+      </StatusEffect>
     <!-- SwitchableRangedWeapon 相关-->
 
      <!--使用主弹药时,只使用0号位弹匣 -->
