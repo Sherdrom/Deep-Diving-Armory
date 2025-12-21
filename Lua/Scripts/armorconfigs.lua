@@ -1352,6 +1352,32 @@ Deep_Lua.Armors = {
         end,
     },
 
+    deep_heyuanmu_suit = {
+        name = "deep_heyuanmu_suit",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
     --Lv 3
     deep_6b13 = { --WARN: 6B13 is not a valid id.
         name = "6B13",
