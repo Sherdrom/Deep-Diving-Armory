@@ -38,11 +38,11 @@
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0">
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
       <!--6倍镜
@@ -69,13 +69,22 @@
     <Conditional Voltage="lte 0.8" />
     </StatusEffect>
 
+    <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+
       <StatValue stattype="MovementSpeed" value="-0.6" />
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper_phy/sniper_phy.png" sourcerect="13,601,1187,249" canbehiddenbyotherwearables="false" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.22" origin="0.4,0.8" />
       <StatValue stattype="MovementSpeed" value="-0.3" />
     </Wearable>
-    <RangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="594,1" spread="0" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" penetration="1">
+    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="594,1" spread="0" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" penetration="1" botreload="0.1" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
+    <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_yes" strength="100" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,258,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
@@ -131,7 +140,7 @@
       <RequiredItems items="ntw_20mm" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="ntw_20mm" hide="true" itempos="-4,-9" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
@@ -170,18 +179,18 @@
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,8x_sight,1_3x_sight" hide="false" itempos="-37,16" setactive="true" containedspritedepth="0.45" depth="0.55" />
         <Containable items="8x_sight" hide="false" itempos="-37,16" setactive="true" containedspritedepth="0.45" depth="0.55">
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="1.2" setValue="true"></StatusEffect>
-          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="1.2" setValue="true"></StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
         </Containable>
         <Containable items="3x_sight" hide="false" itempos="-37,16" setactive="true" containedspritedepth="0.45" depth="0.55">
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true"></StatusEffect>
-          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true"></StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
         </Containable>
         <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-37,16" setactive="true" containedspritedepth="0.45" depth="0.55">
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.8" setValue="true"></StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true"></StatusEffect>
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
         </StatusEffect>
-          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="RangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
         </Containable>
 
         <Containable items="thermalgoggles_sight" hide="false" itempos="-37,16" setactive="true" containedspritedepth="0.45" depth="0.55" >

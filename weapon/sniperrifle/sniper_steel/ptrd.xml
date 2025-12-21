@@ -40,11 +40,11 @@
 	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
      </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
     <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
      <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="RangedWeapon" comparison="and" setvalue="true" penetration="0" >
+    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0" >
     <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 
@@ -66,13 +66,22 @@
     <Conditional Voltage="lte 0.8" />
     </StatusEffect>
 
+    <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+
       <StatValue stattype="MovementSpeed" value="-0.6" />
 	</Holdable>
 	<Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="380,507,575,97" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.4,0.7" />
       <StatValue stattype="MovementSpeed" value="-0.3" />
     </Wearable>
-    <RangedWeapon reload="0.1" MaxChargeTime="0.5" weapondamagemodifier="1" holdtrigger="true" barrelpos="300,13" spread="0" unskilledspread="40" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5">
+    <SwitchableRangedWeapon reload="0.1" MaxChargeTime="0.5" weapondamagemodifier="1" holdtrigger="true" barrelpos="300,13" spread="0" unskilledspread="40" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.1" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
+    <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_yes" strength="100" />
+      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -100,7 +109,7 @@
       <RequiredSkill identifier="weapons" level="80" />
 	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
     <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
       <Containable items="ptrd_145mm" hide="true" itempos="-30,-2" setactive="true" rotation="0" >
       <!-- Locks the ammunition, preventing the person from adding more or removing. -->
