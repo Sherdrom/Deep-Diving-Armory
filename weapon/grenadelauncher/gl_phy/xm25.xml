@@ -29,8 +29,18 @@
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.9" setvalue="true" />
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
       <StatusEffect type="OnUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
+
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+
     </Holdable>
-    <RangedWeapon reload="1.5" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="200,15" spread="12" unskilledspread="20" combatPriority="200" drawhudwhenequipped="true" crosshairscale="0.5">
+    <SwitchableRangedWeapon reload="1.5" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="200,15" spread="12" unskilledspread="20" combatPriority="200" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="1.5" >
+    <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <Affliction identifier="deep_VCE_yes" strength="100" />
+      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="1.5" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
       </StatusEffect>
@@ -47,7 +57,7 @@
       </StatusEffect>
       <StatusHUD range="3000" ThermalGoggles="true" ShowTexts="false" OverlayColor="0,255,0,0" drawhudwhenequipped="true" />
       <RequiredItems items="deep_xm25_mag" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
-    </RangedWeapon>
+    </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorstyle="bullet" containedstateindicatorslot="0">
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <Containable items="deep_xm25_mag" hide="false" itempos="-24,-12" rotation="-5" depth="0.56">
