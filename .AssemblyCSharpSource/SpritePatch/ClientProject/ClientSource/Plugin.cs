@@ -2,6 +2,7 @@
 using Barotrauma;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace SpritePatch
 {
@@ -9,7 +10,7 @@ namespace SpritePatch
     public static class UniversalSpritePatch
     {
         // 存储所有物品的独立Sprite实例
-        private static readonly Dictionary<Item, Sprite> itemSprites = new Dictionary<Item, Sprite>();
+        private static readonly ConcurrentDictionary<Item, Sprite> itemSprites = new ConcurrentDictionary<Item, Sprite>();
 
         /// <summary>
         /// 物品更新时确保初始化独立Sprite

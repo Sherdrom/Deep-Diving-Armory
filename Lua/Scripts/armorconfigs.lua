@@ -1369,6 +1369,34 @@ Deep_Lua.Armors = {
         protectionarea = {
             [LimbType.Torso] = true,
             [LimbType.Waist] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_zhenli_Suit = {
+        name = "deep_heyuanmu_suit",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
         },
         targetidentifier = {
             ["gunshotwound"] = true
