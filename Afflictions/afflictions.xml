@@ -20,6 +20,11 @@
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="2,143,128,128" color="195,60,60,255" origin="0,0" />
     </Affliction>
 
+    <Affliction identifier="deep_stable_shooting" type="deep_stable_shooting" isbuff="true" limbspecific="false" indicatorlimb="Head" maxstrength="2" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" >
+      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
+      </Effect>
+    </Affliction>
+
     <InternalDamage name="deep_bullet_injury" identifier="deep_bullet_injury" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury" selfcauseofdeathdescription="You have died of deep_bullet_injury" limbspecific="true" maxstrength="40" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
       <Description textidentifier="afflictiondescription.deep_bullet_injury" minstrength="0" maxstrength="40" />
       <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,LeftThigh,RightThigh" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.40" dialogflag="damage">
