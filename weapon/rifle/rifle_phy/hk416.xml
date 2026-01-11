@@ -99,11 +99,11 @@
         <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
       </StatusEffect>
 
-      <StatusEffect type="OnActive" interval="0.9" target="This" stackable="false" reload="0.07" comparison="and" setvalue="true" >
+      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.07" comparison="and" setvalue="true" >
       <Conditional currentProjectileSelected="eq 0" />
       </StatusEffect>
 
-      <StatusEffect type="OnActive" interval="0.9" target="This" stackable="false" reload="0.4" barrelpos="234,-4" comparison="and" setvalue="true" >
+      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.4" barrelpos="234,-4" comparison="and" setvalue="true" >
       <Conditional currentProjectileSelected="eq 1" />
       </StatusEffect>
 
@@ -120,25 +120,11 @@
       </StatusEffect>
     <!-- SwitchableRangedWeapon 相关-->
 
-     <!--使用主弹药时,只使用0号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and" >
-      <Conditional currentProjectileSelected="eq 0" />
-        <Use />
-      </StatusEffect>
-
       <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 0" />
         <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
         <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" />
-      </StatusEffect>
-
-
-
-    <!-- 使用下挂弹药时,只使用1号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="1" comparison="and" >
-      <Conditional currentProjectileSelected="eq 1" />
-        <Use />
       </StatusEffect>
 
       <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
@@ -161,6 +147,10 @@
       </StatusEffect>
 
       <!-- SwitchableRangedWeapon 相关-->
+      <!--生成子弹-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
+      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />

@@ -298,6 +298,14 @@
       </Effect>
     </Affliction>
 
+    <Affliction identifier="deep_muffler" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
+      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
+        <StatValue stattype="SoundRangeMultiplier" value="-0.8" />
+        <StatValue stattype="RangedSpreadReduction" value="0.2" />
+        <StatValue stattype="WeaponsSkillBonus" value="-15" />
+      </Effect>
+    </Affliction>
+
 
     <Affliction identifier="improved_barrel" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
@@ -1320,8 +1328,10 @@
 
     <Affliction identifier="deepgun_inwater_detect" description="" isbuff="true" type="deepgun_inwater_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="deep_headshot_3,deep_bodyshot_30" minresistance="1" maxresistance="1" >
-      <ReduceAffliction type="deep_headshot_3" amount="100" />
-      <ReduceAffliction type="deep_bodyshot_30" amount="100" />
+      <StatusEffect target="Character" interval="0.5" >
+          <ReduceAffliction type="deep_headshot_3" amount="100" />
+          <ReduceAffliction type="deep_bodyshot_30" amount="100" />
+      </StatusEffect>
       </Effect>
     </Affliction>
 
@@ -1355,8 +1365,8 @@
 
     <Affliction identifier="deep_fn57_mute" description="" isbuff="true" type="deep_pistol_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SoundRangeMultiplier" value="0.5" />
-        <StatValue stattype="SightRangeMultiplier" value="0.5" />
+        <StatValue stattype="SoundRangeMultiplier" value="-0.5" />
+        <StatValue stattype="SightRangeMultiplier" value="-0.5" />
       </Effect>
     </Affliction>
 
@@ -1760,7 +1770,14 @@
 
     <Affliction identifier="deep_VCE_yes" description="" isbuff="true" type="deep_VCE" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="false">
       <Effect minstrength="0" maxstrength="2" resistancefor="deep_VCE_none" maxresistance="1.0" minresistance="1.0" strengthchange="-1">
-      <ReduceAffliction type="deep_VCE_none" amount="100" />
+      <StatusEffect target="Character" interval="0.9" >
+          <ReduceAffliction identifier="deep_VCE_none" strength="100" />
+      </StatusEffect>
+      </Effect>
+    </Affliction>
+
+    <Affliction identifier="deep_is_shooting" description="" isbuff="true" type="deep_is_shooting" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="1" affectmachines="false">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
       </Effect>
     </Affliction>
 
