@@ -525,6 +525,18 @@
       </Abilities>
     </AbilityGroupInterval>
 
+    <!-- 消音器蹲下射击-->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_muffler" />
+        <AbilityConditionCrouched />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly" addedmultiplier="0.2" />
+        <CharacterAbilityModifyAffliction afflictionidentifiers="gunshotwound" addedmultiplier="0.1" />
+      </Abilities>
+    </AbilityGroupEffect>
+
 
     <!-- 乌川天赋-->
     <AbilityGroupInterval interval="0.5">
