@@ -87,17 +87,38 @@
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
-      <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
-      <ParticleEmitter particle="deep_plasmaspark" particlespersecond="5" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
-      <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
-      <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
+      <!-- 普通枪声，消音器枪声 -->
+      <!-- 短枪管音效与特效 -->
+    <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
+	     <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
+	     <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
+       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
+       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
+       <ParticleEmitter particle="deep_muzzleflash" Distance="65" angle="8" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+	     <ParticleEmitter particle="deep_plasmaspark" Distance="65" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+	  </StatusEffect>
+
+      <!-- 延长枪管音效与特效 -->
+    <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
+	     <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
+	     <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
+       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
+       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
+       <ParticleEmitter particle="deep_muzzleflash" Distance="85" angle="7" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+	     <ParticleEmitter particle="deep_plasmaspark" Distance="85" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+	  </StatusEffect>
+
+	  <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
+	     <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
+	     <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" selectionmode="Random" />
+       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
+       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
+	  </StatusEffect>
+      <!-- 普通枪声，消音器枪声 -->
       <StatusEffect type="OnUse" target="This">
         <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="1.2" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
       </StatusEffect>
-      <StatusEffect type="NotInWater" target="This" Condition="10" />
-      <StatusEffect type="InWater" target="This" Condition="1000" />
       <!--"Use" contained magazine to spawn projectiles.-->
       <StatusEffect type="OnUse" target="Contained">
         <Use />
@@ -134,12 +155,8 @@
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
-      <StatusEffect type="OnUse" Condition="-100" target="This">
-        <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
-      </StatusEffect>
       <RequiredItems items="deep_m14ebr_drum" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
-      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
@@ -153,11 +170,11 @@
         <!-- 弹匣显示 -->
         <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.7" setvalue="true" disabledeltatime="true" />
 
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-20" holdangle="10" handle2="-30,-30" delay="0.01" condition="0" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="50,-20" holdangle="10" handle2="-30,-30" delay="0.01" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="-200,-100" delay="0.3" setvalue="true" />
         <!-- Sets gun's and hand's position, makes a sound. -->
-        <StatusEffect type="OnInserted" target="This" handle2="-40,-40" holdangle="30" holdpos="35,-15" aimangle="45" aimpos="25,0" delay="0.7" condition="0" setvalue="true" forceplaysounds="true">
+        <StatusEffect type="OnInserted" target="This" handle2="-40,-40" holdangle="30" holdpos="35,-15" aimangle="45" aimpos="25,0" delay="0.7" setvalue="true" forceplaysounds="true">
           <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
         <!-- Puts the hand back. -->
@@ -171,8 +188,8 @@
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" holdpos="55,-18" aimpos="70,3" handle1="-155,-15" handle2="80,20" holdangle="-35" aimangle="0" delay="2" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
-        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" >
         <sound file="%ModDir%/Sound/Weapons/M14/gunOther/m14_re.ogg" type="OnUse" range="500.0" loop="false" volume="0.5" />
         </StatusEffect>
       </Containable>

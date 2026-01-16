@@ -90,9 +90,6 @@
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="3" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="60" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" target="This" Condition="-800" />  
-	  <StatusEffect type="NotInWater" target="This" Condition="10"/>
-	  <StatusEffect type="InWater" target="This" Condition="1000"/>
       <!--"Use" contained magazine to spawn projectiles.-->
       <StatusEffect type="OnUse" target="Contained">
         <Use />
@@ -116,9 +113,6 @@
       </StatusEffect>-->
 
 
-	  <StatusEffect type="OnUse" Condition="-100" target="This" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
-      </StatusEffect>
       <!-- ============== 拉栓动画开始 ================= -->
     <!-- Locks the ammunition, preventing the person from adding more or removing. -->
     <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
@@ -150,7 +144,6 @@
     <!-- ============== 拉栓动画结束 ================= -->
       <RequiredItems items="deep_Mosin_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
 	  <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
@@ -160,7 +153,7 @@
       <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
       <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
       <!-- ============== 换弹动画开始 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" Condition="0" />
+      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
       <!-- 先拉栓 -->
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-100,25" holdpos="60,-10" aimpos="70,10" holdangle="15" aimangle="10" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
@@ -201,6 +194,8 @@
       <StatusEffect type="OnInserted" target="This" delay="2.4" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnInserted" target="This" delay="2.5" setvalue="true" handle2="100,20" handle1="-150,-15" />
       <!-- ============== 换弹动画结束 ================= -->
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2.5" stackable="false" />
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
       <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
       <sound file="%ModDir%/Sound/Weapons/Mosin/gunOther/mosin_re.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />

@@ -107,11 +107,11 @@
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
-        <StatusEffect type="OnInserted" target="This" holdpos="40,-20" aimpos="50,-20" holdangle="-35" handle2="-90,-7" disabledeltatime="true" delay="0.05" condition="0" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="40,-20" aimpos="50,-20" holdangle="-35" handle2="-90,-7" disabledeltatime="true" delay="0.05" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="-90,-7" disabledeltatime="true" delay="0.6" setvalue="true" />
         <!-- Sets gun's and hand's position, makes a sound. -->
-        <StatusEffect type="OnInserted" target="This" handle2="-90,-7" holdangle="15" holdpos="40,-20" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.7" condition="0" setvalue="true" forceplaysounds="true">
+        <StatusEffect type="OnInserted" target="This" handle2="-90,-7" holdangle="15" holdpos="40,-20" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.7" setvalue="true" forceplaysounds="true">
           <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
         <!-- Puts the hand back. -->
@@ -119,8 +119,8 @@
         <!-- Puts the hand on the eject port. -->
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" handle1="-70,-7" handle2="-70,-7" holdangle="45" holdpos="30,-20" aimangle="0" aimpos="85,15" disabledeltatime="true" delay="1" setvalue="true" />
-        <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="1" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
           <sound file="%ModDir%/weapon/ammo/pistol_re.ogg" type="OnUse" range="200.0" loop="false" volume="2" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
