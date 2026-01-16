@@ -87,7 +87,7 @@
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
-	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+	    <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
       <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1" />
       <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1" />
       <Sound file="%ModDir%/Sound/Weapons/AWM/gunFire/awm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1" />
@@ -163,7 +163,6 @@
     <!-- ============== 拉栓动画结束 ================= -->
       <RequiredItems items="deep_AWM_mag,86_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="90" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2.6" stackable="false" />
 	  <StatusEffect type="OnBroken" target="This">
         <!-- <sound file="%ModDir%/weapon/ammo/awmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" /> -->
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -177,7 +176,7 @@
       <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
       <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
       <!-- ============== 换弹动画开始 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" Condition="0" />
+      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
       <!-- 先拉栓 -->
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="70,10" holdangle="10" aimangle="10" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
@@ -216,7 +215,8 @@
       <StatusEffect type="OnInserted" target="This" delay="2.4" setvalue="true" holdpos="70,-10" aimpos="80,0" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnInserted" target="This" delay="2.5" setvalue="true" handle2="100,20" handle1="-180,-40" />
       <!-- ============== 换弹动画结束 ================= -->
-      <StatusEffect type="OnInserted" target="This" Condition="3000" disabledeltatime="true" delay="2.6" stackable="false" />
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2.5" stackable="false" />
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />

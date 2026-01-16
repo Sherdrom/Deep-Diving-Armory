@@ -164,7 +164,6 @@
     <!-- ============== 拉栓动画结束 ================= -->
       <RequiredItems items="deep_r93_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="3" stackable="false" />
 	  <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
@@ -174,7 +173,7 @@
       <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
       <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
       <!-- ============== 换弹动画开始 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" Condition="0" />
+      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
       <!-- 先拉栓 -->
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-120,-5" holdpos="60,-10" aimpos="70,10" holdangle="15" aimangle="10" disabledeltatime="true" />
       <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
@@ -210,6 +209,8 @@
       <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" holdpos="60,-20" aimpos="77,7" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" handle2="80,20" handle1="-125,-5" />
       <!-- ============== 换弹动画结束 ================= -->
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
+      <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
       <StatusEffect type="OnInserted" target="This" delay="1.6" setValue="true" disabledeltatime="true" >
       <sound file="%ModDir%/Sound/Weapons/R93/gunOther/r93_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
 		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
