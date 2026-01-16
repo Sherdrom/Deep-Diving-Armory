@@ -193,11 +193,11 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
 
     --let's find out if it is a valid attack
     for i in afflictions do
-        if clothdata ~= nil and not executecloth and checkid(i.identifier.Value, outertargetid) then
+        if clothdata ~= nil and not executecloth and (checkid(i.identifier.Value, outertargetid) or checkid(i.Prefab.AfflictionType.Value, outertargetid)) then
             if i.Strength > clothaffliction.Strength then clothaffliction = i end
             executecloth = true
         end
-        if platedata~= nil and not executeplate and checkid(i.identifier.Value, innertargetid) then
+        if platedata~= nil and not executeplate and (checkid(i.identifier.Value, innertargetid) or checkid(i.Prefab.AfflictionType.Value, innertargetid)) then
             if i.Strength > plateaffliction.Strength then plateaffliction = i end
             executeplate = true
         end
