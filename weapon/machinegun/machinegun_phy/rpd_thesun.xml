@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_rpd_thesun" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.21" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_rpd_thesun" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.21" impactsoundtag="impact_metal_light" health="220" >
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="tungsten_phy_barrel" amount="2" />
@@ -98,14 +98,19 @@
       <Sound file="%ModDir%/weapon/ammo/rpd.ogg" type="OnUse" range="3000" volume="1.5" selectionmode="Random" />
       <Sound file="%ModDir%/weapon/ammo/rpd.ogg" type="OnUse" range="3000" volume="1.5" frequencymultiplier="0.98" />
       <Sound file="%ModDir%/weapon/ammo/rpd.ogg" type="OnUse" range="3000" volume="1.5" frequencymultiplier="1.02" />
-      <StatusEffect type="OnUse" target="This" Condition="-1" disabledeltatime="true" />
-      <StatusEffect type="NotInWater" target="This" Condition="5" />
-      <StatusEffect type="InWater" target="This" Condition="1000" />
-      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="6" stackable="false" />
-      <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/rpd_re.ogg" type="OnUse" range="500.0" loop="false" volume="1.5" />
-        <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      <!-- 枪械过热卡壳 -->
+	    <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true"  />
+      <StatusEffect type="NotInWater" targettype="This" Condition="5" />
+	    <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
+      <StatusEffect type="OnBroken" target="This"  disableDeltaTime="true" forceplaysounds="true" >
+         <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true" >
+         <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true" >
+      </StatusEffect>
+      <!-- 枪械过热卡壳 -->
       <StatusEffect type="OnUse" target="This">
         <ParticleEmitter particle="deep_casingfirearm_762_39" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="0.6" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
@@ -122,11 +127,11 @@
         <Conditional skillrequirement="true" weapons="lt 80" />
         <Affliction identifier="blunttrauma" strength="1" />
       </StatusEffect>
-      <StatusEffect type="OnUse" Condition="-0.8" target="This" disabledeltatime="true">
-        <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-0.5" target="This" disabledeltatime="true" >
+	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>
-      <StatusEffect type="OnUse" Condition="-1.2" target="This" disabledeltatime="true">
-        <RequiredItems items="chip_oc_gun" type="Contained" />
+	  <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true" >
+	  <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_rpd_mag_sun" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
@@ -179,7 +184,6 @@
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.2" />
-      <QualityStat stattype="Condition" value="0.25" />
     </Quality>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="80" />
