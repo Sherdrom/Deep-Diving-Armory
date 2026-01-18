@@ -1,29 +1,210 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <!--<Item name="" identifier="deep_rifle_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="fabricator" requiredtime="5">
+  <Item name="" identifier="deep_rifle_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" />
       <RequiredItem identifier="physicorium_part" />
       <RequiredItem identifier="engineeringplastic" />
       <RequiredItem identifier="glassfibre" />
-      <RequiredItem identifier="deep_ssd" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
-    <Sprite texture="%ModDir%/weapon/part/part.png" depth="0.65" sourcerect="876,171,160,141" origin="0.5,0.5" />
-    <Body width="110" height="160" density="20" />
-    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,173,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer hideitems="true" capacity="1" drawinventory="true">
-      <Containable tags="deep_rifle_upgrade_tool_steel_tit">
-      </Containable>
+      <Containable tags="deep_rifle_upgrade_tool_steel_tit"></Containable>
     </ItemContainer>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="确认升级" connection="signal_out1">
-        <StatusEffect type="OnUse" target="Contained" delay="0.01" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3" ></StatusEffect>
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_rifle_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_rifle_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
       </Button>
     </CustomInterface>
-  </Item>-->
+  </Item>
+  <Item name="" identifier="deep_smg_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" amount="3" />
+      <RequiredItem identifier="dementonite" amount="2" />
+      <RequiredItem identifier="engineeringplastic" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,330,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_smg_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_smg_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_smg_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_pistol_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" amount="2" />
+      <RequiredItem identifier="dementonite" amount="1" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,801,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_pistol_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_pistol_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_pistol_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_sniper_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium_barrel" amount="3" />
+      <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="engineeringplastic" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,487,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_sniper_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_sniper_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_sniper_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_shotgun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium_barrel" />
+	    <RequiredItem identifier="physicorium_part" />	  
+      <RequiredItem identifier="engineeringplastic" />
+	    <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,644,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_shotgun_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_shotgun_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_shotgun_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_machinegun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium_barrel" amount="3" />
+	    <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="engineeringplastic" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,958,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_machinegun_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_machinegun_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_machinegun_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_gl_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium_barrel" amount="3" />
+	    <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="engineeringplastic" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="53,1116,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_gl_upgrade_tool_steel_tit"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" InventoryIconcolor="255,255,0,255" tags="deep_upgrade_tool_steel_tit_confirm" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_gl_upgrade_tool_steel_tit" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_gl_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
   <Item name="" identifier="steel_barrel" subcategory="part" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="32" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="40" />
