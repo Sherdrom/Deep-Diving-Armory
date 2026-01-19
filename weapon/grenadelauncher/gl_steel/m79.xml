@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_m79" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_condition_100" Scale="0.3" impactsoundtag="impact_metal_light" >
+<Item name="" identifier="deep_m79" subcategory="deep_gl" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,provocativetohumanai,mountableweapon,deep_condition_100,deep_gl_upgrade_tool_steel_tit" Scale="0.3" impactsoundtag="impact_metal_light" >
 <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
 <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
 <Price baseprice="400" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
@@ -35,6 +35,13 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
+
+      <!-- 装备升级的钢制，钛制枪械加成 -->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+        <Conditional HasTag="deep_upgrade_tool_steel_tit_confirm" />
+        <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_gl" strength="10" />
+      </StatusEffect>
+
     <StatusEffect type="OnActive" interval="3" target="This" Scale="0.3" setvalue="true" >
     </StatusEffect>
 	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />

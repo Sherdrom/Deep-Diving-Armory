@@ -25,9 +25,9 @@
       <StatusEffect type="OnUse" target="This" condition="-12.5" disabledeltatime="true">
         <SpawnItem identifiers="9mmround" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -59,9 +59,9 @@
       <StatusEffect type="OnUse" target="This" condition="-6.66" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_2" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_2" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -93,9 +93,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="5.7round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="5.7round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -127,9 +127,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="57round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="57round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -161,9 +161,9 @@
       <StatusEffect type="OnUse" target="This" condition="-14.3" disabledeltatime="true">
         <SpawnItem identifiers=".45acp" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers=".45acp" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -195,9 +195,9 @@
       <StatusEffect type="OnUse" target="This" condition="-14.3" disabledeltatime="true">
         <SpawnItem identifiers="p_45acp_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="p_45acp_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -229,9 +229,9 @@
       <StatusEffect type="OnUse" target="This" condition="-14.3" disabledeltatime="true">
         <SpawnItem identifiers="p_45acp_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="p_45acp_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -263,9 +263,9 @@
       <StatusEffect type="OnUse" target="This" condition="-14.3" disabledeltatime="true">
         <SpawnItem identifiers=".50ae" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers=".50ae" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -297,9 +297,9 @@
       <StatusEffect type="OnUse" target="This" condition="-14.3" disabledeltatime="true">
         <SpawnItem identifiers=".50gl" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers=".50gl" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -331,9 +331,9 @@
       <StatusEffect type="OnUse" target="This" condition="-16.66" disabledeltatime="true">
         <SpawnItem identifiers="44_Magnum" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="44_Magnum" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -365,9 +365,9 @@
       <StatusEffect type="OnUse" target="This" condition="-16.66" disabledeltatime="true">
         <SpawnItem identifiers=".50sw" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers=".50sw" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -399,9 +399,9 @@
       <StatusEffect type="OnUse" target="This" condition="-6.66" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -433,9 +433,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5.88" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -467,9 +467,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5.88" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -501,9 +501,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -538,9 +538,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -575,9 +575,9 @@
       <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_3" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -612,9 +612,9 @@
       <StatusEffect type="OnUse" target="This" condition="-2" disabledeltatime="true">
         <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1" >
+        <SpawnItem identifiers="9mmround_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
