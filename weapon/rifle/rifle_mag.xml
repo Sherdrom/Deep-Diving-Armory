@@ -21,10 +21,17 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round"></Containable>
+
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
+
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -54,10 +61,12 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
+
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -87,9 +96,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -120,9 +129,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -153,9 +162,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -192,9 +201,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -230,9 +239,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -268,9 +277,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -310,9 +319,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -344,9 +353,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -378,9 +387,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -412,9 +421,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -446,9 +455,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -480,9 +489,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -514,9 +523,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -555,9 +564,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -589,9 +598,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -627,9 +636,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -665,9 +674,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -703,9 +712,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -737,9 +746,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -771,9 +780,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -805,9 +814,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -839,9 +848,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -880,9 +889,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -914,9 +923,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -952,9 +961,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -990,9 +999,9 @@
       <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1028,9 +1037,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1062,9 +1071,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1096,9 +1105,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1130,9 +1139,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1164,9 +1173,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1204,9 +1213,9 @@
       <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1242,9 +1251,9 @@
       <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1281,9 +1290,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1315,9 +1324,9 @@
       <StatusEffect type="OnUse" target="This" condition="-2.5" disabledeltatime="true">
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1353,9 +1362,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1389,9 +1398,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1426,9 +1435,9 @@
       <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
         <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1462,9 +1471,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1495,9 +1504,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1529,9 +1538,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -1563,9 +1572,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1596,9 +1605,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1629,9 +1638,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -1668,9 +1677,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1701,9 +1710,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
@@ -1740,9 +1749,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="792x33round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="792x33round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1773,9 +1782,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="792x33round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="792x33round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
@@ -1806,9 +1815,9 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="792x33round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="792x33round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>

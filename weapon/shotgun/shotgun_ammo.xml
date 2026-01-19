@@ -414,9 +414,9 @@
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
         <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -454,9 +454,9 @@
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
         <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -558,9 +558,9 @@
       <StatusEffect type="OnUse" target="This" condition="-50" disabledeltatime="true">
         <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <!--打完时，删除弹匣内子弹-->
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
-        <removeitem />
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射-->
+      <StatusEffect type="OnContained" target="This" interval="1" >
+        <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
