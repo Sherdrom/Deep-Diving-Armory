@@ -697,14 +697,7 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnContained" target="This" condition="100" setvalue="true" interval="0.9" />
-      <StatusEffect type="OnBroken" target="This">
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
+      <StatusEffect type="OnBroken" target="This" >
         <Remove />
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
@@ -739,10 +732,19 @@
       </Button>
     </CustomInterface>
     <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Voltage="gt 0.5" />
+      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+        <Conditional deep_enemy_affliction_resistance="gt 0.5" />
         <Conditional Condition="lte 99" />
         <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+
       </StatusEffect>
     </MotionSensor>
   </Item>
@@ -774,13 +776,6 @@
       </StatusEffect>
       <StatusEffect type="OnContained" target="This" condition="100" setvalue="true" interval="0.9" />
       <StatusEffect type="OnBroken" target="This">
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
         <Remove />
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
@@ -815,10 +810,19 @@
       </Button>
     </CustomInterface>
     <MotionSensor rangex="25" rangey="10" detectoffset="-35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Voltage="gt 0.5" />
+      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+        <Conditional deep_enemy_affliction_resistance="gt 0.5" />
         <Conditional Condition="lte 99" />
         <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+
       </StatusEffect>
     </MotionSensor>
   </Item>
@@ -1012,13 +1016,6 @@
       </StatusEffect>
       <StatusEffect type="OnContained" target="This" condition="100" setvalue="true" interval="0.9" />
       <StatusEffect type="OnBroken" target="This">
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
         <Remove />
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
@@ -1042,10 +1039,19 @@
       </Button>
     </CustomInterface>
     <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Voltage="lt 0.1" />
+      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+        <Conditional deep_enemy_affliction_resistance="lt 0.5" />
         <Conditional Condition="lte 99" />
         <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+
       </StatusEffect>
     </MotionSensor>
   </Item>
@@ -1077,13 +1083,6 @@
       </StatusEffect>
       <StatusEffect type="OnContained" target="This" condition="100" setvalue="true" interval="0.9" />
       <StatusEffect type="OnBroken" target="This">
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
         <Remove />
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
@@ -1107,10 +1106,19 @@
       </Button>
     </CustomInterface>
     <MotionSensor rangex="25" rangey="10" detectoffset="-35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Voltage="lt 0.1" />
+      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and" >
+        <Conditional deep_enemy_affliction_resistance="lt 0.5" />
         <Conditional Condition="lte 99" />
         <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+
       </StatusEffect>
     </MotionSensor>
   </Item>
