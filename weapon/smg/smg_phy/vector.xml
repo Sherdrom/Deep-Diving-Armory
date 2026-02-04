@@ -65,12 +65,12 @@
     </LightComponent>
 <!-- 右键瞄准时，设置电压为1.0-->
     <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
     </StatusEffect>
 <!-- 电压大于0.9时，开启热成像-->
     <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
     <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
+    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
     </StatusEffect>
 <!-- 松开右键，电压小于0.8时，关闭热成像-->
     <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
