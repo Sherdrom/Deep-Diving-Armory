@@ -7,6 +7,7 @@
   <Sprite identifier="coalition_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" origin="0.5,0.5"/>
   <Sprite identifier="ghost_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="275,244,264,235" origin="0.5,0.5"/>
   <Sprite identifier="grizzlies_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="14,490,264,235" origin="0.5,0.5"/>
+  <Sprite identifier="deep_pigcat_reinforce_end" texture="%ModDir%/Missions/icon/destory.png" sourcerect="315,509,220,224" origin="0.5,0.5"/>
     </EventSprites>
   <EventPrefabs>
   <ScriptedEvent identifier="deep_abandoned_indestructible">
@@ -32,9 +33,10 @@
       </StatusEffectAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_white_keycard_del">
+    <ScriptedEvent identifier="deep_importantitem_del">
       <!-- 确保玩家身上的白卡删除 -->
       <TagAction criteria="itemidentifier:deep_white_keycard" tag="targetkeycard" submarinetype="Any" continueifnotargetsfound="true" />
+      <TagAction criteria="itemidentifier:deep_reinforce_transmitter" tag="targetkeycard" submarinetype="Any" continueifnotargetsfound="true" />
       <StatusEffectAction targettag="targetkeycard">
         <StatusEffect target="This" >
            <remove/>
@@ -367,6 +369,21 @@
       <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_rookie"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pirate_reinforce_easy_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pirate_reinforce_normal_end" commonness="150">
@@ -387,6 +404,21 @@
       <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"   LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pirate_reinforce_normal_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pirate_reinforce_hard_end" commonness="150">
@@ -407,6 +439,22 @@
       <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pirate_reinforce_hard_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_separatists_reinforce_normal_end" commonness="150">
@@ -431,6 +479,21 @@
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_separatists_reinforce_normal_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_separatists_reinforce_hard_end" commonness="150">
@@ -455,6 +518,21 @@
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_striker_hard"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_separatists_reinforce_hard_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_coalition_reinforce_hard_end" commonness="150">
@@ -479,6 +557,21 @@
       <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_heavy"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_coalition_reinforce_hard_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_ghost_reinforce_end" commonness="150">
@@ -503,6 +596,21 @@
       <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_ghost_reinforce_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_grizzlies_reinforce_end" commonness="150">
@@ -527,13 +635,192 @@
       <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gl_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_reinforce_transmitter" targetinventory="deep_securesteelcabinet" targettag="deep_reinforce_transmitter"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="deep_reinforce_transmitter" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_grizzlies_reinforce_20min" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <WaitAction time="5" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_end.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="10" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_huohuade"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_moonwolf"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_man"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_paidaxing"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_koishi"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_alice"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_luoweier"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaohua"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_white_keycard" targetinventory="pigcatteam_2" targettag="deep_keycard"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_2" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team3" />
+            <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="2" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team3" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team3.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_binary"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_FL"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_heyuanmu"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_cat_master"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baka"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaochun"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baixi"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ruarua"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_3" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team4" />
+            <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="3" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team4" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team4.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_39"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangpai"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_mark"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xuefeng"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_diluka"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_roger"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_4" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team5" />
+            <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="4" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team5" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team5.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_noob"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_top"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_handong"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ludao"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_douzi"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_pigbig"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_5" MaxAmount="0">
+          <Success>
+            <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team6" />
+            <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="5" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team6" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team6.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangtuo"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ben"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_rat_snake"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_50bro"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baidi"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xianbei"  LootingIsStealing="false" TeamID="0"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_6" MaxAmount="0">
+          <Success>
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_complete" />
+          <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="6" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_complete" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_complete.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pirate_reinforce_easy_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_pirate_reinforce_20min.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -546,8 +833,6 @@
     <ScriptedEvent identifier="deep_pirate_reinforce_normal_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_pirate_reinforce_20min.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
       <!-- 任务bgm改变，未完成<MissionStateAction missionidentifier="deep_destory_pirate_base_normal" operation="Set" value="2" />-->
@@ -567,8 +852,6 @@
     <ScriptedEvent identifier="deep_pirate_reinforce_hard_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_pirate_reinforce_20min.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -587,8 +870,6 @@
     <ScriptedEvent identifier="deep_separatists_reinforce_normal_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_separatists_reinforce_20min.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_separatists_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -607,8 +888,6 @@
     <ScriptedEvent identifier="deep_separatists_reinforce_hard_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_separatists_reinforce_20min.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_separatists_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -627,8 +906,6 @@
     <ScriptedEvent identifier="deep_coalition_reinforce_hard_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_coalition_reinforce_20min.c1" dialogtype="Small" eventsprite="coalition_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_coalition_reinforce_20min.c2" dialogtype="Small" eventsprite="coalition_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -647,8 +924,6 @@
     <ScriptedEvent identifier="deep_ghost_reinforce_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_ghost_reinforce_20min.c1" dialogtype="Small" eventsprite="ghost_reinforce"/>
-      <WaitAction time="1190" />
       <ConversationAction text="EventText.deep_ghost_reinforce_20min.c2" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="0"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
@@ -666,7 +941,7 @@
 
     <ScriptedEvent identifier="deep_grizzlies_reinforce_20min" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <WaitAction time="890" />
+      <WaitAction time="5" />
       <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c2" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <MissionStateAction missionidentifier="deep_destory_grizzlies_base_hard" operation="Set" value="2" />
       <WaitAction time="10" />
@@ -689,12 +964,12 @@
       <TagAction criteria="player" tag="player" />
       <RNGAction chance="0.5">
       <Success>
-      <WaitAction time="1" />
+      <WaitAction time="5" />
       <ConversationAction text="EventText.deep_pigcatman_reinforce_call.c1" dialogtype="Small" eventsprite="pigcat_1"/>
-      <WaitAction time="300" />
+      <WaitAction time="180" />
       <ConversationAction text="EventText.deep_pigcatman_reinforce.c1" dialogtype="Small" eventsprite="pigcat_1"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce_pigcatman" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
       </Success>
       </RNGAction>
     </ScriptedEvent>
@@ -763,9 +1038,9 @@
       <TagAction criteria="humanprefabidentifier:deep_pirate_heavy" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_pirate_leader_easy" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pirate_normal">
@@ -777,9 +1052,9 @@
       <TagAction criteria="humanprefabidentifier:deep_pirate_leader_normal" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_pirate_leader_normal_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pirate_hard">
@@ -791,9 +1066,9 @@
       <TagAction criteria="humanprefabidentifier:deep_pirate_soldier_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_pirate_scout_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_separatist_normal">
@@ -808,9 +1083,9 @@
       <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_separatist_hard">
@@ -826,9 +1101,9 @@
       <TagAction criteria="humanprefabidentifier:deep_separatist_sniper_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_separatist_heavy_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_coalition">
@@ -844,9 +1119,9 @@
       <TagAction criteria="humanprefabidentifier:deep_co_heavy_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_co_leader_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_ghost">
@@ -860,9 +1135,9 @@
       <TagAction criteria="humanprefabidentifier:deep_ghost_sniper_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_ghost_leader_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_grizzlies">
@@ -878,9 +1153,27 @@
       <TagAction criteria="humanprefabidentifier:deep_grizzlies_heavy_gl_elite" tag="enemy"/>
       <TagAction criteria="humanprefabidentifier:deep_grizzlies_leader_elite" tag="enemy"/>
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
-      <WaitAction time="0" />
       <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
-      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.5" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_secondarydocking_no_rush_face_pigcat">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_peachhat" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_tuanzi" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_cifang" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_godfatherkeha" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_renhan" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_2r4g" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_kuai" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_xiaolongbao" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_taidian" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_thesun" tag="enemy"/>
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team1" addtocrew="false" />
+      <NPCChangeTeamAction NPCTag="enemy" teamid="Team2" addtocrew="false" RemoveFromCrew="true" />
+      <WaitAction time="0.5" />
+      <CombatAction CombatMode="Retreat" NPCTag="enemy" EnemyTag="enemy" CoolDown="0.1" />
     </ScriptedEvent>
 
     <!--<ScriptedEvent identifier="deep_meet_on_the_battleground_separatists_state1" commonness="150">

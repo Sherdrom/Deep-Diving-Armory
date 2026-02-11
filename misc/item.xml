@@ -90,7 +90,7 @@
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
   </Item>
   <Item name="" identifier="deep_cloth_invisible" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light">
-  <Fabricate suitablefabricators="fabricator" requiredtime="5">
+    <Fabricate suitablefabricators="fabricator" requiredtime="5">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
     </Fabricate>
@@ -107,10 +107,21 @@
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="恢复装备贴图" connection="signal_out1">
-        <StatusEffect type="OnUse" target="Contained" delay="0.1" setvalue="true" spritecolor="255,255,255,255" >
-        </StatusEffect>
+        <StatusEffect type="OnUse" target="Contained" delay="0.1" setvalue="true" spritecolor="255,255,255,255"></StatusEffect>
       </Button>
     </CustomInterface>
   </Item>
-
+  <Item name="" identifier="deep_reinforce_transmitter" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light" isshootable="true" InvulnerabletoDamage="true" >
+    <InventoryIcon texture="%ModDir%/jobgear/tac/tac.png" sourcerect="10,747,168,166" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.65" sourcerect="206,758,37,147" origin="0.5,0.5" />
+    <Body width="110" height="160" density="20" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="this">
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="this" delay="0.5">
+        <remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
 </Items>
