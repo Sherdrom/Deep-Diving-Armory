@@ -157,6 +157,13 @@ Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
     local afflictions = ptable["afflictions"]
+
+    -- Yeah, WTF why penetration is a userdate???
+    if type(ptable["penetration"]) ~= "number" then 
+        ptable.PreventExecution = true
+        return
+    end
+
     local penetrationlevel = math.floor((ptable["penetration"]+0.00001)*10)
     local targetcharacter = targetlimb.character
     --if not targetcharacter.IsHuman then return end
