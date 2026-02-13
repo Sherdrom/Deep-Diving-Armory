@@ -4,6 +4,7 @@ Deep_Lua.APS = {
         maxVelocity = 30,
         minsize = 0,
         probability = 0.95,
+        range = 300,
         action = function(activeapsdata)
             if activeapsdata.triggered == nil then activeapsdata.triggered = false end
             if activeapsdata.prevtarget == nil then activeapsdata.prevtarget = {} end
@@ -31,8 +32,8 @@ Deep_Lua.APS = {
                     light.pulseAmount = 0.0
                     light.pulseFrequency = 0
                     if SERVER then
-                        pulseAmount = light.SerializableProperties[Identifier("pulseAmount")]
-                        pulseFrequency = light.SerializableProperties[Identifier("pulseFrequency")]
+                        local pulseAmount = light.SerializableProperties[Identifier("pulseAmount")]
+                        local pulseFrequency = light.SerializableProperties[Identifier("pulseFrequency")]
                         Networking.CreateEntityEvent(activeapsdata.apsitem, Item.ChangePropertyEventData(pulseAmount, light))
                         Networking.CreateEntityEvent(activeapsdata.apsitem, Item.ChangePropertyEventData(pulseFrequency, light))
                     end

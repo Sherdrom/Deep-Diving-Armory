@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
   <Talents>
-  <Talent identifier="deep_talent_pigcat_peach">
+  <Talent identifier="deep_talent_pigcat_equipment_invisible">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 确保身上装备隐形 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_pigca_team_equipment_invisible" amount="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_soldier">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_talent_coalition_soidier">
     </Description>
@@ -14,11 +32,12 @@
 	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
 		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
 	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
         <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
       </Abilities>
     </AbilityGroupEffect>
 	<!-- 抗性 -->
-	  <AbilityGroupInterval interval="5" >
+	  <AbilityGroupInterval interval="0.9" >
       <Abilities>
 		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
@@ -38,12 +57,338 @@
 	<!-- 突击手 -->
 	<AbilityGroupInterval interval="0.9" >
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+		<AbilityConditionNearbyCharacterCount distance="700" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.5"/>
-        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 暴力军阀 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="1200" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="1200" targettypes="Enemy" count="2"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="handheldranged" />
+        <AbilityConditionNearbyCharacterCount distance="1200" targettypes="Enemy" count="3"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_striker">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.2"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.1"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 强攻手 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1.2"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
+
+  <Talent identifier="deep_talent_pigcat_blaster">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.2"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 爆破手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="600" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.9"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_sniper">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.2"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 狙击手 -->
+	<AbilityGroupInterval interval="0.1" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 特种部队 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionAttackData weapontype="Turret" invert="true"/>
+        <AbilityConditionCharacter targettype="Enemy">
+          <Conditional WasFullHealth="true"/>
+        </AbilityConditionCharacter>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAttackData addeddamagemultiplier="1" />
+      </Abilities>
+    </AbilityGroupEffect>
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_machinegunner">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.2"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 机枪手 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_thesun">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.2"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="1"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 机枪手 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.3"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
+  <Talent identifier="deep_talent_pigcat_renhan">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_coalition_soidier">
+    </Description>
+    <!-- 士兵天赋 -->
+	<!-- 数值调整 -->
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.5"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="2"/>
+    		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.8"/>
+		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+	    	<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.3"/>
+        <CharacterAbilityModifyStat stattype="WeaponsSkillBonus" value="100"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	  <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 攻击时降低玩家60%伤害抗性 -->
+	<AbilityGroupEffect abilityeffecttype="OnAttack" >
+     <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+              <Affliction identifier="deep_gunwound_reduce_60" strength="10.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 无畏者 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="300" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupInterval>
+  </Talent>
+
 </Talents>
