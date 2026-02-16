@@ -23,9 +23,9 @@ Hook.Add("Deep_APS", "Deep_APS",
         local apsinfo = Deep_Lua.APS[item.Prefab.Identifier.Value] or Deep_Lua.APS.defaultAPS
         if ActiveAPS[item] == nil then ActiveAPS[item] = {} end
         for target, value in pairs(ActiveProjectiles) do
-            if not target.Removed then
+            if not target.Removed and not target.IsContained then
                 if (target.WorldPosition - item.WorldPosition).Length() <= apsinfo.range then
-                    if target.body.Height * target.body.Width >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then                    --Ah fuck those explosion based detection. We only care about speed and size
+                    if target.body.Height * target.body.Width >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then
                         if Submarine.CheckVisibility(item.SimPosition,target.SimPosition,false,false,true,true,true) == nil then
                             ActiveAPS[item] = {
                                 apsitem = item,
