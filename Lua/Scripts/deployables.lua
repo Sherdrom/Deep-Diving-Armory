@@ -44,3 +44,9 @@ Hook.Add("Deep_APS", "Deep_APS",
         end
     end
 )
+
+
+Hook.Add("roundEnd", "roundEndReset", function()
+    ActiveAPS = {}
+    ActiveProjectiles = {}
+end)
