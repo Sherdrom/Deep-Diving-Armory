@@ -6,6 +6,7 @@ local ActiveAPS = {}
 local ActiveProjectiles = {}
 
 Hook.Patch("Barotrauma.Items.Components.Projectile", "Shoot", function(instance, ptable)
+    if instance.Hitscan then return end
     if ActiveProjectiles[instance.item] then return end
     ActiveProjectiles[instance.item] = true
 end, Hook.HookMethodType.After)
