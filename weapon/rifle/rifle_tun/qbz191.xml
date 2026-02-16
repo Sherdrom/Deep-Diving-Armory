@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_qbz_191" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="140" >
+  <Item name="" identifier="deep_qbz_191" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="140">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="tungsten_phy_barrel" />
@@ -13,8 +13,8 @@
       <Item identifier="physicorium" />
       <Item identifier="physicorium" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_45.png" sourcerect="342,559,132,122" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy.png" sourcerect="1430,206,452,128" depth="0.55" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_tun/rifle_tun_45.png" sourcerect="20,151,132,122" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/rifle/rifle_tun/rifle_tun.png" sourcerect="60,1111,452,128" depth="0.55" origin="0.5,0.5" />
     <Body width="452" height="128" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-5" aimpos="55,2" handle1="-60,-25" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
@@ -104,44 +104,40 @@
         <Conditional currentProjectileSelected="eq 0" />
         <Use />
       </StatusEffect>
-
       <!--使用主弹药时,短枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
-      <Conditional currentProjectileSelected="eq 0" />
-      <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
+        <Conditional currentProjectileSelected="eq 0" />
+        <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-	      <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.3"/>
-        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.3"/>
-        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.3"/>
-       <ParticleEmitter particle="deep_muzzleflash" Distance="60" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="60" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-       <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.3" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.3" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.3" />
+        <ParticleEmitter particle="deep_muzzleflash" Distance="60" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="60" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
       </StatusEffect>
-
       <!--使用主弹药时,延长枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
-      <Conditional currentProjectileSelected="eq 0" />
-      <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
+        <Conditional currentProjectileSelected="eq 0" />
+        <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-	      <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.3"/>
-        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.3"/>
-        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.3"/>
-       <ParticleEmitter particle="deep_muzzleflash" Distance="80" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="80" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-       <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.3" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.3" />
+        <Sound file="%ModDir%/weapon/ammo/qbz95_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.3" />
+        <ParticleEmitter particle="deep_muzzleflash" Distance="80" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="80" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
       </StatusEffect>
-
       <!--使用主弹药时,消音器音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
-      <Conditional currentProjectileSelected="eq 0" />
-      <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
-      <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-	     <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
-       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
-       <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
+        <Conditional currentProjectileSelected="eq 0" />
+        <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
+        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05" />
+        <ParticleEmitter particle="deep_casingfirearm_58_42" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
       </StatusEffect>
-
       <!-- 使用下挂弹药时,只使用1号位弹匣 -->
       <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="1" comparison="and">
         <Conditional currentProjectileSelected="eq 1" />
@@ -156,7 +152,7 @@
         <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
         <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
         <ParticleEmitter particle="deep_muzzleflash" Distance="50" angle="-3" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	      <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true">
         <Conditional currentProjectileSelected="eq 1" />
@@ -166,52 +162,50 @@
         <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
         <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
         <ParticleEmitter particle="deep_muzzleflash" Distance="50" angle="-3" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	      <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
       <!-- SwitchableRangedWeapon 相关-->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <!-- 枪械过热卡壳 -->
-	    <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true"  />
+      <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true" />
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
-	    <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
-      <StatusEffect type="OnBroken" target="This"  disableDeltaTime="true" forceplaysounds="true" >
-         <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+      <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true" >
-         <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true" >
-      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
       <StatusEffect type="NotInWater" target="This">
         <Conditional Condition="lt 50" />
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
-      <StatusEffect type="OnUse" Condition="-0.3" target="This" disabledeltatime="true" >
-	  <RequiredItems tags="deep_muzzle_mute" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-0.3" target="This" disabledeltatime="true">
+        <RequiredItems tags="deep_muzzle_mute" type="Contained" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" Condition="-0.5" target="This" disabledeltatime="true" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-0.5" target="This" disabledeltatime="true">
+        <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true" >
-	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
+        <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_58x42_mag,deep_sub_hanging" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_58x42_mag" hide="false" itempos="3,-9" setactive="true" rotation="0" >
+      <Containable items="deep_58x42_mag" hide="false" itempos="3,-9" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="2" setvalue="true" />
         <!-- 弹匣隐藏 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
-
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
         <StatusEffect type="OnInserted" target="This" holdpos="40,-20" holdangle="10" handle2="-150,-100" delay="0.01" setvalue="true" />
         <!-- Puts the hand back. -->
         <StatusEffect type="OnInserted" target="This" handle2="30,-20" delay="0.4" setvalue="true" />
@@ -230,9 +224,9 @@
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" holdpos="40,-5" aimpos="55,2" handle1="-60,-25" handle2="80,10" holdangle="-35" aimangle="0" disabledeltatime="true" delay="2" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" >
-        <sound file="%ModDir%/weapon/ammo/qbz95_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-		          <ParticleEmitter particle="fleshsmoke" particlespersecond="1" scalemin="1" scalemax="2" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
+          <sound file="%ModDir%/weapon/ammo/qbz95_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <ParticleEmitter particle="fleshsmoke" particlespersecond="1" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
