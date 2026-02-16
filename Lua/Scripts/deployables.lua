@@ -1,7 +1,3 @@
-LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.Controller"], "targetRotation")
-
-
-
 local ActiveAPS = {}
 local ActiveProjectiles = {}
 
@@ -11,7 +7,7 @@ Hook.Patch("Barotrauma.Items.Components.Projectile", "Shoot", function(instance,
     ActiveProjectiles[instance.item] = true
 end, Hook.HookMethodType.After)
 
-Hook.Patch("Barotrauma.Items.Components.Throwable", "SecondaryUse", function(instance, ptable)
+Hook.Patch("Barotrauma.Items.Components.Throwable", "Use", function(instance, ptable)
     if ActiveProjectiles[instance.item] then return end
     ActiveProjectiles[instance.item] = true
 end, Hook.HookMethodType.After)
