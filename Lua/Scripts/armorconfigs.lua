@@ -1941,7 +1941,6 @@ Deep_Lua.Armors = {
     },
 
 }
-
 -- penlevel = floor(pen*10)
 -- overwhelming pen : penlevel - level >= 2
 -- Non-pen correction: correctionaffliction = targetaffliction * correctionmultiplier
@@ -1953,7 +1952,20 @@ Deep_Lua.Armors = {
 
 -- All pre-defined type will only decide damage with gunshot wound is valid.
 
+local function calculateHash(configtable)
+    local count = 0
+    local localhash = 0
+    for id,config in pairs(configtable) do
+        if type(config) == "table" then
+            if config.level == nil then return nil end
+            count = 1 + count
+            localhash = config.level + localhash * count
+        end
+    end
+    return localhash
+end
 
+local hash = calculateHash(Deep_Lua.Armors)
 
 -- WARN: YOU SHOULD MAKE SURE YOUR CONFIG IS CORRECT BEFORE LOADING INTO MAIN CONFIG!
 function Deep_Lua.Armors.AddtoMain(configtable)
@@ -1970,9 +1982,26 @@ function Deep_Lua.Armors.AddtoMain(configtable)
         Deep_Lua.Armors[id] = config
         ::loopend::                     --Red Light. Next.
     end
+    hash = calculateHash(configtable)
 end
-
 
 --local TestArmors = {}
 
 --Deep_Lua.Armors.AddtoMain(TestArmors)
+
+
+Hook.Patch("Omega","Barotrauma.Character", "DamageLimb", function(_, _)
+    if calculateHash(Deep_Lua.Armors) ~= hash then
+        for character in Character.CharacterList do
+            --[[
+            local prefab = AfflictionPrefab.Prefabs["DEEP_TABLEMISMATCH"]
+            local aff = prefab.Instantiate(100, nil)
+            char.CharacterHealth.ApplyAffliction(LimbType.Head,aff,true,false,false)
+            ]]
+            print("CONFIG MISMATCH! ARMOR SYSTEM DISABLED!")
+        end
+        Deep_Lua.Armors = nil
+        Hook.RemovePatch("November", "Barotrauma.Character", "DamageLimb", nil, Hook.HookMethodType.Before)
+    end
+    Hook.RemovePatch("Omega", "Barotrauma.Character", "DamageLimb", nil, Hook.HookMethodType.Before)
+end,Hook.HookMethodType.Before)

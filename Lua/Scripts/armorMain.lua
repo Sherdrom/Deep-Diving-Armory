@@ -153,7 +153,7 @@ local function checkid(input, required)                                         
 end
 
 --Main stuff
-Hook.Patch("Barotrauma.Character", "DamageLimb", function(instance, ptable)
+Hook.Patch("November","Barotrauma.Character", "DamageLimb", function(instance, ptable)
     local targetlimb = ptable["hitLimb"]
     if targetlimb == nil then return end
     local afflictions = ptable["afflictions"]
