@@ -160,7 +160,6 @@ Hook.Patch("November","Barotrauma.Character", "DamageLimb", function(instance, p
 
     -- Yeah, WTF why penetration is a userdate???
     if type(ptable["penetration"]) ~= "number" then 
-        ptable.PreventExecution = true
         return
     end
 
