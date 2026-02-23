@@ -21,17 +21,14 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="5.56x45round"></Containable>
-
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
-
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -61,12 +58,10 @@
       <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
-
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -97,7 +92,7 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -130,7 +125,7 @@
         <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="556x45round_M995" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -163,7 +158,7 @@
         <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="556x45round_SSA_AP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -202,7 +197,7 @@
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -240,7 +235,7 @@
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -278,7 +273,7 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -320,7 +315,7 @@
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.56x45round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -354,7 +349,7 @@
         <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="556x45round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -388,7 +383,7 @@
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -422,7 +417,7 @@
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -456,7 +451,7 @@
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -490,7 +485,7 @@
         <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="545x39round_BS" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -524,7 +519,7 @@
         <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round_7n39" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -565,7 +560,7 @@
         <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="545x39round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -599,7 +594,7 @@
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -637,7 +632,7 @@
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -675,7 +670,7 @@
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="5.45x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -713,7 +708,7 @@
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -747,7 +742,7 @@
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -781,7 +776,7 @@
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -815,7 +810,7 @@
         <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x39round_BP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -849,7 +844,7 @@
         <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x39round_MAI_AP" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -890,7 +885,7 @@
         <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x39round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -924,7 +919,7 @@
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -962,7 +957,7 @@
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x39round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1000,7 +995,7 @@
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x39round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1038,7 +1033,7 @@
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1072,7 +1067,7 @@
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1106,7 +1101,7 @@
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1140,7 +1135,7 @@
         <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x51round_M61" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1174,7 +1169,7 @@
         <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x51round_M993" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1214,7 +1209,7 @@
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x51round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1252,7 +1247,7 @@
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x51round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1291,7 +1286,7 @@
         <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="762x51round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1325,7 +1320,7 @@
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="7.62x51round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1363,7 +1358,7 @@
         <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="12.7x55round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1399,7 +1394,7 @@
         <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="127x55round_PS12B" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1436,7 +1431,7 @@
         <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="127x55round_depleted_uranium" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1472,7 +1467,7 @@
         <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1505,7 +1500,7 @@
         <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1539,7 +1534,7 @@
         <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1573,7 +1568,7 @@
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1606,7 +1601,7 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1639,7 +1634,7 @@
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1678,7 +1673,7 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1711,7 +1706,7 @@
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1750,7 +1745,7 @@
         <SpawnItem identifiers="792x33round" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="792x33round" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1783,7 +1778,7 @@
         <SpawnItem identifiers="792x33round_tit" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="792x33round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
@@ -1816,11 +1811,423 @@
         <SpawnItem identifiers="792x33round_phy" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="792x33round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="80" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="7,368,114,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="453,617,37,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_lead" />
+      <!--20发弹容，每发-5耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_lead" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="9x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="165" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="133,369,115,106" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="453,617,37,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="9x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_du_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="195" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="385,369,114,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="498,618,37,84" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="9x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="250" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="259,370,113,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="453,617,37,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
+    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="110" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="511,368,115,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="453,617,37,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_fu" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9a91_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="638,368,114,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="453,617,37,85" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_ap" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-5" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_ap" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
+    </Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_lead" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_lead_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="80" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="7,246,114,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="281,612,70,136" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_lead" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_lead" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_lead" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_tit_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="165" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="133,249,114,104" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="281,612,70,136" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_tit" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_tit" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_du_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="195" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="385,248,114,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="362,612,70,137" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_du" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_du" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_du" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_du" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <!--Magazines can be combined to raise condition.-->
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_phy_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="250" sold="true" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="258,248,115,106" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="281,612,70,136" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_phy" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_phy" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
+    <Price baseprice="320" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="110" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="512,126,114,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="300,768,78,131" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_fu" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_fu" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_fu" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_9x39_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
+    <Price baseprice="430" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_3.png" sourcerect="638,126,113,105" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="299,768,79,131" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <ItemContainer hideitems="true" capacity="2" SpawnWithId="9x39round_ap" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+      <Containable items="9x39round_ap" />
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
+        <SpawnItem identifiers="9x39round_ap" spawnposition="ThisInventory" Count="2" />
+      </StatusEffect>
+      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
+      <StatusEffect type="OnInserted" target="This" interval="1">
+        <SpawnItem identifiers="58x42round_ap" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
+      </StatusEffect>
+    </ItemContainer>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 </Items>

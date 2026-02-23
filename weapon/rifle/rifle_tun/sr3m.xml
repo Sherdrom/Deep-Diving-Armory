@@ -190,12 +190,12 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_58x42_mag,deep_sub_hanging" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_9x39_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_58x42_mag" hide="false" itempos="5,-9" setactive="true" rotation="0">
+      <Containable items="deep_9x39_mag" hide="false" itempos="19,-7" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -241,23 +241,23 @@
         <Containable items="deep_sub_hanging_qlg10a" hide="false" itempos="41,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" itempos="25,6" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" itempos="36,7" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="25,6" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="36,7" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-9,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-9,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="2,15.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="thermalgoggles_sight" hide="false" itempos="2,15.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true"></StatusEffect>
         </Containable>
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-9,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="2,15.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true"></StatusEffect>
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <!-- 枪口件，增加枪口距离 -->
-        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="49,6" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="50,6.5" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />

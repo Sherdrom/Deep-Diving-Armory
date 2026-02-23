@@ -23,7 +23,7 @@
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_tit/rifle_tit_45.png" sourcerect="159,539,137,124" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/rifle/rifle_tit/rifle_tit.png" sourcerect="549,593,414,112" depth="0.55" origin="0.5,0.5" />
-    <Body width="185" height="70" density="10" />
+    <Body width="410" height="110" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-5" aimpos="40,5" handle1="20,-15" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
@@ -132,7 +132,7 @@
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
       <StatusEffect type="OnUse" target="This">
-        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <ParticleEmitter particle="deep_casingfirearm_9_39" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
       </StatusEffect>
       <StatusEffect type="NotInWater" target="This">
@@ -152,12 +152,12 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,556mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_9x39_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="70" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_5.56x45,deep_5.56x45_expansion,556mag" hide="false" itempos="-10,-10" setactive="true" rotation="0">
+      <Containable items="deep_9x39_mag" hide="false" itempos="7,-8" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -198,26 +198,26 @@
       <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
       <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="vertical_grip,vertical_grips_short,vertical_grips_hollow_out" hide="false" itempos="33,-4" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_grip" hide="false" itempos="21,-3" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="22,4" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="25,6" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="22,4" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="25,6" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-7,16.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-7,16.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true"></StatusEffect>
         </Containable>
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-7,16.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true"></StatusEffect>
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <!-- 枪口件，增加枪口距离 -->
-        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="44,5" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
+        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="53,6" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
