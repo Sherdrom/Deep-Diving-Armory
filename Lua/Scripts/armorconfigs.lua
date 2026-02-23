@@ -1,61 +1,4 @@
 Deep_Lua.Armors = {
-    sampleitemid = {
-        --Universal
-        name = "something",                         --Name, not actually used in game. Optional, you can remove this if you know what is what.
-        type = "typename",                          --Armorplate type, available: "metal","composite","ceramic","custom"
-        ricochetchance = 0.0,                       --Define ricochet chance, range 0-1, will not affect force-pen
-        level = 0,                                  --Bulletproof level, range 0-10, 10+ is also possible.(I dont think that will be useful, really)
-        aftereffectmultiplier  = 0.0,               --Define damage multiplier if pen-ed
-        correctionaffliction = nil,                 --Define affliction applied to user if non-pen, TODO: Use table instead of single string(Low Prior)
-        correctionmultiplier = 0.0,                 --Define how many damage should pass to user
-        enablecorrection = false,                   --Define should give non-pen affliction
-        penresistance = 0.8,                        --Define pen resistance, will use to caculate remaining pen
-        targetidentifier = {                        --Define what damage will this plate/helmet/armor protect against. For most cases gunshotwound.
-            ["gunshotwound"] = true
-        },
-        --targetidentifier = "Any" if you want to define a full-protection armor(Also work for pre-defined types)
-
-        --Condition caculation
-        maxhits = 0,                                --Define how many hits this armorplate can take, use to caculate condition
-        maxcondition = 0,                           --Define max condition for this armorplate, use to caculate condition
-        ignoredamage = false,                       --Will the item take damage or not.
-
-        --Carrier/Helmet with extra armor plate Specific
-        isPlateCarrier = false,                     --Decided whether this is a plate carrier. Only work for outer cloth/helmet.
-        protectionarea = {                          --Define areas of protection, only necessary for plate carriers. Define this for plates wont work.
-            [LimbType.Torso] = true,                --Only add true items.
-            [LimbType.Waist] = true,                --Note: This list may not up-to-date so please note we accept any limbs here. Use custom limbs at your own risk
-            [LimbType.LeftArm] = true,
-            [LimbType.LeftForearm] = true,
-            [LimbType.LeftHand] = true,
-            [LimbType.RightArm] = true,
-            [LimbType.RightForearm] = true,
-            [LimbType.RightHand] = true,
-            [LimbType.LeftThigh] = true,
-            [LimbType.RightThigh] = true,
-            [LimbType.LeftLeg] = true,
-            [LimbType.RightLeg] = true,
-            [LimbType.LeftFoot] = true,
-            [LimbType.RightFoot] = true,
-        },
-
-        --Masked Helmet Specific
-        isHelmet = false,                           --Define whether this is a masked helmet, if true use masked helmet specific code
-                                                    --Use this ONLY when you want to define a helmet with a mask. Otherwise keep this false, = a standard armor for your head.
-
-        --Custom stuff, only work if type "custom"
-        customexpression = function(item,affliction,data)         --expression to caculate plate damage
-            return item.Condition - (affliction.Strength / 100) * (data.maxcondition / data.maxhits)
-        end,
-
-        --Third-Party Support
-        protected = true,                           --Protected or not
-        override = true,                            --Override control parameter
-        forceoverride = false,                      --Force override control parameter
-                                                    --Be aware what are u doing before using this parameter!
-
-    },
-
     --陶瓷
     deep_plate_ceramic_4 = {
         name = "氧化铝",
@@ -74,6 +17,10 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -96,6 +43,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -118,6 +68,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -140,6 +93,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -162,6 +118,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -184,6 +143,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -206,6 +168,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -229,6 +194,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -251,6 +219,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -273,6 +244,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -295,6 +269,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -317,6 +294,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -339,6 +319,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -361,6 +344,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -383,6 +369,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -405,6 +394,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -427,6 +419,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -449,6 +444,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -471,6 +469,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -493,6 +494,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -515,6 +519,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -537,6 +544,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -559,6 +569,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -581,6 +594,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -603,6 +619,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -625,6 +644,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -647,6 +669,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -669,6 +694,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -691,6 +719,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -713,6 +744,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -735,6 +769,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -757,6 +794,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -779,6 +819,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -801,6 +844,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -823,6 +869,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -845,6 +894,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -867,6 +919,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -889,6 +944,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -911,6 +969,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -934,6 +995,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -956,6 +1020,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -978,6 +1045,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1000,6 +1070,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1022,6 +1095,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1044,6 +1120,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1066,6 +1145,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1088,6 +1170,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1110,6 +1195,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1132,6 +1220,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1154,6 +1245,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1176,6 +1270,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1198,6 +1295,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1220,6 +1320,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1242,6 +1345,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1269,6 +1375,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1295,6 +1404,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1321,6 +1433,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1347,6 +1462,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1375,6 +1493,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1401,6 +1522,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1428,6 +1552,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1460,6 +1587,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1492,6 +1622,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1524,6 +1657,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1556,6 +1692,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1590,6 +1729,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1624,6 +1766,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1656,6 +1801,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1691,6 +1839,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1725,6 +1876,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1757,6 +1911,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1796,6 +1953,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
         customexpression = function(item,affliction,data)
             return 100
         end,
@@ -1823,6 +1983,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },--Sample
 
     deep_zsh_1_2_m = {
@@ -1846,6 +2009,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },
 
     deep_fast_helmet_ghost = {
@@ -1869,6 +2035,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },
 
     deep_Fearless_Vanguard = {
@@ -1892,6 +2061,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },
 
     deep_altyn = {
@@ -1915,6 +2087,9 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },
 
     deep_maska = {
@@ -1938,10 +2113,12 @@ Deep_Lua.Armors = {
         targetidentifier = {
             ["gunshotwound"] = true
         },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
     },
 
 }
-
 -- penlevel = floor(pen*10)
 -- overwhelming pen : penlevel - level >= 2
 -- Non-pen correction: correctionaffliction = targetaffliction * correctionmultiplier
@@ -1953,26 +2130,6 @@ Deep_Lua.Armors = {
 
 -- All pre-defined type will only decide damage with gunshot wound is valid.
 
-
-
--- WARN: YOU SHOULD MAKE SURE YOUR CONFIG IS CORRECT BEFORE LOADING INTO MAIN CONFIG!
-function Deep_Lua.Armors.AddtoMain(configtable)
-    for id,config in pairs(configtable) do
-        if Deep_Lua.Armors[id] == nil then goto goodend end
-        if config.override ~= true then
-            print("‖color:gui.yellow‖Warning: Config for " .. id .. " already exists. Please use override control parameter.‖end‖")
-            goto loopend
-        elseif Deep_Lua.Armors[id].protected == true and config.forceoverride ~= true then
-            print("‖color:gui.yellow‖Warning: Config for " .. id .. " is protected. Skipping...‖end‖")
-            goto loopend
-        end
-        ::goodend::                     --Green Light. All clear to go. NO VALIDATION CHECK.
-        Deep_Lua.Armors[id] = config
-        ::loopend::                     --Red Light. Next.
-    end
-end
-
-
---local TestArmors = {}
-
---Deep_Lua.Armors.AddtoMain(TestArmors)
+Timer.Wait(function()
+     VCE.ArmorSystem.AddtoMain(Deep_Lua.Armors)
+end,10)
