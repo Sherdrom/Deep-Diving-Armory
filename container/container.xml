@@ -46,7 +46,7 @@
     <Sprite texture="%ModDir%/container/container.png" sourcerect="29,119,165,150" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+    <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
       <Containable items="smallitem" />
     </ItemContainer>
   </Item>
@@ -72,7 +72,7 @@
     <Body width="150" height="140" density="20" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,60" handle2="0,60" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-      <Containable items="deep_accessory,deep_chip_headset,deep_head_chip,deep_chip_armor,deep_tac,deep_mobile_shield_fix" />
+      <Containable items="smallitem" />
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_explosive_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
