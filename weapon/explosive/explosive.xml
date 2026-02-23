@@ -1226,7 +1226,7 @@
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="1" drawhudwhenequipped="true" crosshairscale="0.2">
-      <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="1">
+      <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="5">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
     </RangedWeapon>
@@ -1733,9 +1733,9 @@
     </Projectile>
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnNotContained" comparison="and" target="This">
-        <Conditional Condition="e 1" />
+        <Conditional Condition="lt 10" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="400" penetration="1" force="30" camerashake="100" ballastfloradamage="1000" structuredamage="400" itemdamage="500" severlimbsprobability="1" smoke="false" playtinnitus="true" DistanceFalloff="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+        <Explosion range="500" penetration="1" force="30" camerashake="100" ballastfloradamage="1000" structuredamage="400" itemdamage="500" severlimbsprobability="1" smoke="false" playtinnitus="true" DistanceFalloff="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
           <Affliction identifier="Shrapnel_residue" strength="1200" />
           <Affliction identifier="Shrapnel_residue" strength="600" probability="0.8" />
           <Affliction identifier="explosiondamage" strength="400" />
