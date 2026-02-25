@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_asval" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,tool,simpletool,mechanicalrepairtool,wrenchitem,electricalrepairtool,screwdriver,wrench,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="120">
+  <Item name="" identifier="deep_asval" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="80">
     <Price baseprice="900" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -11,7 +11,7 @@
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="physicorium_barrel" />
-      <RequiredItem identifier="physicorium_part" />
+      <RequiredItem identifier="physicorium_part" amount="2" />
       <RequiredItem identifier="engineeringplastic" />
       <RequiredItem identifier="glassfibre" />
     </Fabricate>
@@ -20,21 +20,22 @@
       <Item identifier="physicorium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_45.png" sourcerect="483,7,153,134" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_2.png" sourcerect="9,9,524,108" depth="0.55" origin="0.5,0.5" />
-    <Body width="230" height="70" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-85,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
+    <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_2.png" sourcerect="14,9,451,91" depth="0.55" origin="0.5,0.5" />
+    <Body width="520" height="110" density="10" />
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-60,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.9" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
       <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
+        <Affliction identifier="deep_muffler" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
@@ -43,21 +44,6 @@
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
-      <!-- 有短枪口件时，略微增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="264,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_short_detect="gte 1.0" />
-      </StatusEffect>
-      <!-- 有长枪口件时，极大增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="324,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_long_detect="gte 1.0" />
-      </StatusEffect>
-      <!-- 无枪口件时，恢复枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="234,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_none_detect="lte 0.0" />
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
@@ -80,100 +66,27 @@
         <Conditional currentFireModeSelected="eq 1" />
         <Affliction identifier="deep_Semi" strength="100" />
       </StatusEffect>
-      <!-- 三连发，获得伤害加成和精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 2" />
-        <Affliction identifier="deep_Burst" strength="100" />
-      </StatusEffect>
-      <!-- 切换成下挂霰弹时，获得距离衰减 -->
-      <StatusEffect type="OnActive" interval="0.5" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentProjectileSelected="eq 1" />
-        <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
-        <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.07" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.4" barrelpos="234,-4" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 1" />
-      </StatusEffect>
       <!-- VCE检测 -->
       <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
     </Holdable>
-    <SwitchableRangedWeapon reload="0.07" weapondamagemodifier="1" holdtrigger="true" barrelpos="234,26" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi,Burst" firemodeswitchkey="V" burstReload="0.07" shotsPerBurst="3">
+    <SwitchableRangedWeapon reload="0.066" weapondamagemodifier="1" holdtrigger="true" barrelpos="226,29" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
-      <!-- SwitchableRangedWeapon 相关-->
-      <!--使用主弹药时,只使用0号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Use />
-      </StatusEffect>
-      <!--使用主弹药时,短枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
-        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-        <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" selectionmode="Random" />
-        <ParticleEmitter particle="deep_muzzleflash" Distance="60" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_plasmaspark" Distance="60" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-      </StatusEffect>
-      <!--使用主弹药时,延长枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
-        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-        <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" selectionmode="Random" />
-        <ParticleEmitter particle="deep_muzzleflash" Distance="80" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_plasmaspark" Distance="80" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-      </StatusEffect>
-      <!--使用主弹药时,消音器音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
-        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05" />
-        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-      </StatusEffect>
-      <!-- 使用下挂弹药时,只使用1号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="1" comparison="and">
-        <Conditional currentProjectileSelected="eq 1" />
-        <Use />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true">
-        <Conditional currentProjectileSelected="eq 1" />
-        <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
-        <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
-        <ParticleEmitter particle="deep_muzzleflash" Distance="50" angle="-3" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true">
-        <Conditional currentProjectileSelected="eq 1" />
-        <RequiredItems items="deep_sub_hanging_m203" type="Contained" targetslot="1" />
-        <Explosion range="150.0" force="2" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
-        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
-        <Sound file="%ModDir%/weapon/ammo/40mm_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
-        <ParticleEmitter particle="deep_muzzleflash" Distance="50" angle="-3" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-      </StatusEffect>
-      <!-- SwitchableRangedWeapon 相关-->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <!-- 普通枪声，消音器枪声 -->
+      <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05" />
+      </StatusEffect>
+      <!-- 普通枪声，消音器枪声 -->
       <!-- 枪械过热卡壳 -->
-      <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-1.3" disableDeltaTime="true" />
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
@@ -184,11 +97,17 @@
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
-      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="1.6" stackable="false" />
-      <StatusEffect type="OnUse" target="Contained" comparison="and">
+      <StatusEffect type="OnUse" target="This">
+        <ParticleEmitter particle="deep_casingfirearm_9_39" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+        <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="15" />
+      </StatusEffect>
+      <StatusEffect type="NotInWater" target="This">
         <Conditional Condition="lt 50" />
-        <Conditional inwater="false" />
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+      </StatusEffect>
+      <!--"Use" contained magazine to spawn projectiles.-->
+      <StatusEffect type="OnUse" target="Contained">
+        <Use />
       </StatusEffect>
       <StatusEffect type="OnUse" Condition="-0.3" target="This" disabledeltatime="true">
         <RequiredItems tags="deep_muzzle_mute" type="Contained" />
@@ -200,34 +119,39 @@
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_9x39_mag" type="Contained" msg="ItemMsgAmmoRequired" />
-      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredSkill identifier="weapons" level="90" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_9x39_mag" hide="false" itempos="5,-8" setactive="true" rotation="0">
-        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
-        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1.6" setvalue="true" />
+      <Containable items="deep_9x39_mag" hide="false" itempos="5,-6" setactive="true" rotation="0">
+        <!-- 立即锁定弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
+        <!-- 延迟解锁弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="1.5" setvalue="true" />
         <!-- 弹匣隐藏 -->
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.5" setvalue="true" disabledeltatime="true" />
-        <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="5,-30" disabledeltatime="true" delay="0.05" setvalue="true" />
-        <!-- Puts the hand back. -->
-        <StatusEffect type="OnInserted" target="This" handle2="26,-5" disabledeltatime="true" delay="0.3" setvalue="true" />
-        <!-- Sets gun's and hand's position, makes a sound. -->
-        <StatusEffect type="OnInserted" target="This" handle2="0,-80" holdangle="30" holdpos="15,-15" aimangle="25" aimpos="25,0" disabledeltatime="true" delay="0.4" setvalue="true" forceplaysounds="true">
-          <!-- 声音文件 <Sound file="%ModDir%/MachinePistol/MachinePistolMagInsert.ogg" type="OnUse" range="1000" /> -->
-        </StatusEffect>
-        <!-- Puts the hand back. -->
-        <StatusEffect type="OnInserted" target="This" holdpos="40,-10" aimpos="60,3" holdangle="10" aimangle="0" handle2="-45,-8" disabledeltatime="true" delay="0.8" setvalue="true" />
-        <!-- Puts the hand on the eject port. -->
-        <!-- End. Sets everything to default values. -->
-        <StatusEffect type="OnInserted" target="This" holdpos="40,-10" aimpos="60,3" handle1="-85,-15" handle2="80,20" holdangle="-35" aimangle="0" disabledeltatime="true" delay="1.6" setvalue="true" />
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1.6" stackable="false" />
+        <!-- 0.01s枪械抬起35度 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="25,-20" holdangle="35" aimangle="35" delay="0.01" setvalue="true" />
+        <!-- 0.01s右手拿弹匣 -->
+        <StatusEffect type="OnInserted" target="This" handle2="-120,-80" delay="0.01" setvalue="true" />
+        <!-- 0.5s右手插弹匣 -->
+        <StatusEffect type="OnInserted" target="This" handle2="70,-50" delay="0.5" setvalue="true" />
+        <!-- 0.6s枪械抬起25度 -->
+        <StatusEffect type="OnInserted" target="This" holdangle="25" aimangle="25" delay="0.6" setvalue="true" />
+        <!-- 0.8s左手准备拉栓 -->
+        <StatusEffect type="OnInserted" target="This" handle1="15,10" handle2="80,10" delay="0.8" setvalue="true" />
+        <!-- 0.8s枪械抬起5度 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="5" aimangle="5" delay="0.8" setvalue="true" />
+        <!-- 1.3s左手拉栓 -->
+        <StatusEffect type="OnInserted" target="This" handle1="-40,10" delay="1.3" setvalue="true" />
+        <!-- 恢复原样 -->
+        <StatusEffect type="OnInserted" target="This" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-60,-15" handle2="80,20" holdangle="-35" aimangle="0" delay="1.5" setvalue="true" />
+        <!-- 换弹音效，禁止换弹中开火 -->
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1.5" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/5.56reload.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/939_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
@@ -235,33 +159,23 @@
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="6,2,110,113" origin="0.5,0.5" />
       <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
       <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
-      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
-      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="112,75,54,28" origin="0.5,0.5" />
+      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
+      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
-      <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_grip" hide="false" itempos="30,-2" setactive="true" />
-        <Containable items="deep_sub_hanging_master_key" hide="false" itempos="25,-8.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable items="deep_sub_hanging_m203" hide="false" itempos="25,-8.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="vertical_grip,vertical_grips_short,vertical_grips_hollow_out" hide="false" itempos="26,-3" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" itempos="32,7" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" itempos="30,6" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="32,7" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="30,6" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-8,16.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-8,16.5" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-8,14.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-8,14.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true"></StatusEffect>
         </Containable>
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-8,16.5" setactive="true" containedspritedepth="0.45" depth="0.55">
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true"></StatusEffect>
-        </Containable>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1">
-        <!-- 枪口件，增加枪口距离 -->
-        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="60,6" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
@@ -273,9 +187,8 @@
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.15" />
-      <QualityStat stattype="RepairSpeed" value="0.3" />
     </Quality>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
-    <SkillRequirementHint identifier="weapons" level="80" />
+    <SkillRequirementHint identifier="weapons" level="90" />
   </Item>
 </Items>

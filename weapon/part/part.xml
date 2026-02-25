@@ -121,9 +121,9 @@
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" />
-	    <RequiredItem identifier="physicorium_part" />	  
+      <RequiredItem identifier="physicorium_part" />
       <RequiredItem identifier="engineeringplastic" />
-	    <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="glassfibre" />
       <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
@@ -151,7 +151,7 @@
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
-	    <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="physicorium_part" amount="3" />
       <RequiredItem identifier="engineeringplastic" amount="1" />
       <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
@@ -180,7 +180,7 @@
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
-	    <RequiredItem identifier="physicorium_part" amount="3" />
+      <RequiredItem identifier="physicorium_part" amount="3" />
       <RequiredItem identifier="engineeringplastic" amount="1" />
       <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
@@ -769,6 +769,60 @@
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/part/design_2.png" sourcerect="19,632,184,180" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/part/design_2.png" sourcerect="19,633,184,180" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="sr3m_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_ssd" amount="5" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design_2.png" sourcerect="220,444,185,184" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/design_2.png" sourcerect="220,445,184,183" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="ots14_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_ssd" amount="5" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design_2.png" sourcerect="612,456,185,181" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/design_2.png" sourcerect="612,456,185,180" depth="0.55" origin="0.5,0.5" />
+    <Body width="30" height="50" density="20" />
+    <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </Holdable>
+  </Item>
+  <Item name="" identifier="asvalmod4_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_ssd" amount="10" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="deep_ssd" amount="5" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/design_2.png" sourcerect="415,445,185,183" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/part/design_2.png" sourcerect="413,445,187,183" depth="0.55" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
