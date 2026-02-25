@@ -1303,7 +1303,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约 -->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1357,7 +1357,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="257,10,88,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1411,7 +1411,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="483,10,79,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1465,7 +1465,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="585,6,98,122" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1519,7 +1519,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1573,7 +1573,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="132,6,89,85" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1627,7 +1627,7 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="362,9,96,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,30">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
@@ -1679,8 +1679,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
@@ -1708,8 +1709,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
@@ -1737,8 +1739,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
@@ -1766,8 +1769,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
@@ -1795,8 +1799,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
@@ -1839,8 +1844,9 @@
         </Explosion>
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" interval="1" disabledeltatime="true">
-        <sound file="Content/Items/Button/Switch1.ogg" range="1000" frequencymultiplier="2" volume="0.75" />
+      <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
+        <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
+        <ParticleEmitter particle="deep_explosive_alarm" particleamount="1" CopyTargetAngle="false" />
       </StatusEffect>
     </Projectile>
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
