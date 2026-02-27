@@ -15,7 +15,3 @@ if SERVER or not Game.IsMultiplayer then
 end
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Airburst.lua")--Airburst stuff, work both side
-
-if CLIENT and Game.IsMultiplayer then
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/CL_PlayRicochetSound.lua")--Play Ricochet Sound
-end

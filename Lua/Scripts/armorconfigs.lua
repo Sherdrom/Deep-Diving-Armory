@@ -2132,4 +2132,4 @@ Deep_Lua.Armors = {
 
 Timer.Wait(function()
      VCE.ArmorSystem.AddtoMain(Deep_Lua.Armors)
-end,10)
+end,100)
