@@ -148,10 +148,10 @@
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="1000.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.7" debris="true" decal="explosion" decalsize="2">
-          <Affliction identifier="Shrapnel_residue" strength="400" />
+          <Affliction identifier="Shrapnel_residue" strength="450" />
           <Affliction identifier="explosiondamage" strength="250" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
+          <Affliction identifier="bleeding" strength="450" />
+          <Affliction identifier="stun" strength="6" />
         </Explosion>
         <Remove />
       </StatusEffect>
@@ -244,7 +244,7 @@
         <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
           <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="bleeding" strength="350" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
@@ -336,7 +336,7 @@
         <Explosion range="1200.0" penetration="1" ballastfloradamage="1000" structuredamage="0" levelwalldamage="500" itemdamage="500" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="800" />
           <Affliction identifier="explosiondamage" strength="400" />
-          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="bleeding" strength="500" />
           <Affliction identifier="stun" strength="10" />
         </Explosion>
         <Remove />
@@ -1657,19 +1657,21 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />
   </Item>
-  <Item name="" identifier="deep_f1_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_f1_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade" >
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="12.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+    <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="3">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="2">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="3" disabledeltatime="true">
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="750.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
@@ -1678,6 +1680,35 @@
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="1200" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="400" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="12.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      </StatusEffect>
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-25" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="4" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-25" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1690,24 +1721,55 @@
   <Item name="" identifier="deep_m67_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="257,10,88,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+    <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="1000.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="450" />
+          <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="bleeding" strength="450" />
+          <Affliction identifier="stun" strength="6" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="1350" />
+          <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="bleeding" strength="450" />
+          <Affliction identifier="stun" strength="6" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
       <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="4" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="1000.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
-          <Affliction identifier="Shrapnel_residue" strength="400" />
-          <Affliction identifier="explosiondamage" strength="250" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-        <Remove />
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-20" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="5" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-20" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1720,24 +1782,55 @@
   <Item name="" identifier="deep_cluster_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="585,6,98,122" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="10.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+    <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="2" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="3">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="2">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="7" disabledeltatime="true">
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="1200.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="20" severlimbsprobability="1" debris="true" decal="explosion" decalsize="2">
+        <Explosion range="1200.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="800" />
           <Affliction identifier="explosiondamage" strength="400" />
-          <Affliction identifier="bleeding" strength="400" />
+          <Affliction identifier="bleeding" strength="500" />
           <Affliction identifier="stun" strength="10" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="2400" />
+          <Affliction identifier="explosiondamage" strength="400" />
+          <Affliction identifier="bleeding" strength="500" />
+          <Affliction identifier="stun" strength="10" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="10.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      </StatusEffect>
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-12.5" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="8" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-12.5" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1750,24 +1843,55 @@
   <Item name="" identifier="deep_rgd5_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="483,10,79,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+   <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.6" debris="true" decal="explosion" decalsize="2">
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="400" />
           <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="bleeding" strength="350" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="1200" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="350" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      </StatusEffect>
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-50" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="2" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-50" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1780,24 +1904,55 @@
   <Item name="" identifier="deep_m24_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="16.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+    <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="5" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="7">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="5">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="2">
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="350" />
           <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
           <Affliction identifier="stun" strength="5" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.8" debris="true" decal="explosion" decalsize="2">
+          <Affliction identifier="Shrapnel_residue" strength="1050" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="16.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      </StatusEffect>
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-50" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="2" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-50" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1810,16 +1965,18 @@
   <Item name="" identifier="deep_stun_grenade_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="132,6,89,85" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" />
-    <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
-    <!-- AI躲避投掷出去的手雷 -->
-    <StatusEffect type="OnNotContained" target="This" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    <Body radius="23" height="20" density="30" />
+    <Throwable characterusable="false" slots="RightHand,LeftHand" throwforce="3" aimpos="35,-10" msg="ItemMsgPickUpSelect">
+      <!-- 有爆破手芯片时，增加投掷距离-->
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" comparison="and" setvalue="true" throwforce="4.5">
+        <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
-        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      <!-- 人物未装备手雷时，恢复-->
+      <StatusEffect type="OnContained" interval="0.9" targettype="This" setvalue="true" throwforce="3">
+        <Conditional IsActive="false" />
       </StatusEffect>
-      <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="2" disabledeltatime="true">
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="neq character" TargetContainer="true" />
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="750" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
           <Affliction identifier="stun" strength="10" />
@@ -1843,6 +2000,50 @@
           <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="true" />
+        <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+          <Affliction identifier="stun" strength="10" />
+          <Affliction identifier="blind" strength="15" />
+          <Affliction identifier="sensoryoverload" strength="15" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        </Explosion>
+        <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
+          <Affliction identifier="stun" strength="20" />
+          <Affliction identifier="blind" strength="25" />
+          <Affliction identifier="sensoryoverload" strength="30" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+        </Explosion>
+        <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
+        <Explosion range="100" force="0.1" empstrength="10" smoke="false" penetration="1">
+          <Affliction identifier="explosiondamage" strength="10" />
+          <Affliction identifier="blind_hard" strength="10" />
+          <Affliction identifier="stun" strength="40" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Throwable>
+    <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+        <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+      </StatusEffect>
+      <!-- 不在物品栏时，扣耐久 -->
+      <StatusEffect type="OnNotContained" target="This" condition="-50" >
+      </StatusEffect>
+      <!-- 投出时，固定延迟爆炸 -->
+      <StatusEffect type="OnNotContained" target="This" condition="0" setvalue="true" delay="2" >
+      </StatusEffect>
+      <!-- 在玩家物品栏时，扣耐久 -->
+      <StatusEffect type="OnContained" target="This" condition="-50" comparison="and" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" interval="0.2" disabledeltatime="true" forcePlaySounds="true" >
         <sound file="Content/Items/WarningBeepSlow.ogg" range="1500" frequencymultiplier="3.0" volume="1" forcePlaySounds="true" />
@@ -1924,19 +2125,32 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="1.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_rgo_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_rgo_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body width="38" height="15" density="30" />
-    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Pickable slots="Any,RightHand,LeftHand" msg="ItemMsgPickUpSelect" >
+    <!-- 在玩家物品栏时，删除本体，生成一个新摔炮 -->
+      <StatusEffect type="OnContained" target="This" comparison="and" delay="0.1" stackable="false" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
+      <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" comparison="and" delay="0.05" stackable="false" >
+      <Conditional EntityType="eq character" TargetContainer="True" />
+      <SpawnItem identifiers="deep_RGO" spawnposition="SameInventory" Count="1" />
+      </StatusEffect>
+    </Pickable>
     <Projectile characterusable="false" launchimpulse="12.0" sticktocharacters="false">
+    <!-- 解除锁定，AI躲避投掷出去的手雷 -->
+    <StatusEffect type="OnNotContained" target="This" NonInteractable="false" setvalue="true" disableDeltaTime="true" isdangerous="true" comparison="and" >
+    </StatusEffect>
       <StatusEffect type="OnImpact" target="This" Condition="-1000.0" delay="0" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="350.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0" debris="true" decal="explosion" decalsize="2">
           <Affliction identifier="Shrapnel_residue" strength="350" />
           <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
+          <Affliction identifier="stun" strength="3" />
         </Explosion>
         <Remove />
       </StatusEffect>
