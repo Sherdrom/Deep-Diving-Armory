@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_6p41_darkdog" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" health="210">
+  <Item name="" identifier="deep_6p41_darkdog" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.23" impactsoundtag="impact_metal_light" health="210">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="tungsten_phy_barrel" amount="4" />
@@ -26,7 +26,12 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.25" setvalue="true"></StatusEffect>
+      <!--弹箱打空时，回归原始贴图-->
+    <StatusEffect type="OnActive" interval="0.9" target="Contained" comparison="and" setvalue="true" >
+    <Conditional condition="eq 0" />
+    <LuaHook name="6P41OriginSprite" />
+    </StatusEffect>
+      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.23" setvalue="true"></StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
       <StatusEffect type="OnActive" interval="0.9" target="Character" setvalue="true">
         <Affliction identifier="deep_machinegun_crouch" strength="100" />
@@ -69,9 +74,9 @@
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
-      <sprite texture="%ModDir%/weapon/machinegun/machinegun_tun/Sprite/6P41_darkdog.png" canbehiddenbyotherwearables="false" sourcerect="18,9,607,160" rotation="90" inheritlimbdepth="false" depth="0.15" limb="Torso" scale="0.3" origin="0.5,0.95" />
+      <sprite texture="%ModDir%/weapon/machinegun/machinegun_tun/Sprite/6P41_darkdog.png" canbehiddenbyotherwearables="false" sourcerect="18,9,607,160" rotation="90" inheritlimbdepth="false" depth="0.12" limb="Torso" scale="0.23" origin="0.5,0.95" />
     </Wearable>
-    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1.2" holdtrigger="true" barrelpos="300,34" spread="12" unskilledspread="24" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="300,34" spread="12" unskilledspread="24" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
       <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_VCE_yes" strength="100" />
@@ -80,9 +85,9 @@
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
       <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
-      <Sound file="%ModDir%/weapon/ammo/mg42.ogg" type="OnUse" range="3000" selectionmode="Random" />
-      <Sound file="%ModDir%/weapon/ammo/mg42.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
-      <Sound file="%ModDir%/weapon/ammo/mg42.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+      <Sound file="%ModDir%/weapon/ammo/pkp.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="%ModDir%/weapon/ammo/pkp.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
+      <Sound file="%ModDir%/weapon/ammo/pkp.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
       <!-- 枪械过热卡壳 -->
       <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true" />
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
@@ -117,61 +122,66 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_mg42_mag,mg42mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_6p41_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_mg42_mag,mg42mag" hide="false" itempos="-9,-2" setactive="true" rotation="0">
+      <Containable items="deep_6p41_mag" hide="false" itempos="-4,-13" setactive="true" rotation="40" >
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="4.5" setvalue="true" />
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="8" setvalue="true" />
         <!-- 弹匣隐藏 -->
-        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
-        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="3" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="4.6" setvalue="true" disabledeltatime="true" />
         <!-- 放平机枪 -->
-        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" delay="0.01" setvalue="true" disabledeltatime="true"></StatusEffect>
+        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" delay="0.01" setvalue="true" disabledeltatime="true" >
+        </StatusEffect>
         <!-- 打开机枪盖子1 -->
-        <StatusEffect type="OnInserted" target="This" handle2="-80,20" delay="0.02" setvalue="true" disabledeltatime="true"></StatusEffect>
+        <StatusEffect type="OnInserted" target="This" handle2="-160,20" delay="1.5" setvalue="true" disabledeltatime="true" >
+        </StatusEffect>
         <!-- 打开机枪盖子2 -->
-        <StatusEffect type="OnInserted" target="This" hideitems="true" holdpos="50,-5" handle1="-75,-110" handle2="-30,40" holdangle="10" delay="0.5" setvalue="true" disabledeltatime="true">
-          <LuaHook name="MG42OpenTheLidSprite" />
+        <StatusEffect type="OnInserted" target="This" hideitems="true" holdpos="70,5" handle1="-90,-110" handle2="-160,50" holdangle="10" delay="2.1" setvalue="true" disabledeltatime="true" >
+        <LuaHook name="6P41OpenTheLidSprite" />
         </StatusEffect>
         <!-- 放入弹匣 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-75,-110" handle2="-30,-100" holdangle="10" delay="1" setvalue="true" disabledeltatime="true">
-          <LuaHook name="MG42PutOnMagSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="70,5" handle1="-90,-110" handle2="-30,-100" holdangle="10" delay="2.7" setvalue="true" disabledeltatime="true" >
+        <LuaHook name="6P41PutOnMagSprite" />
         </StatusEffect>
         <!-- 准备拿弹链 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-75,-110" handle2="-50,-100" holdangle="10" delay="1.5" setvalue="true" disabledeltatime="true"></StatusEffect>
+        <StatusEffect type="OnInserted" target="This" holdpos="70,5" handle1="-90,-110" handle2="-60,-100" holdangle="10" delay="3.3" setvalue="true" disabledeltatime="true" >
+        </StatusEffect>
         <!-- 放入弹链 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,0" handle2="-50,-40" holdangle="10" delay="2.1" setvalue="true" disabledeltatime="true">
-          <LuaHook name="MG42PutOnAmmoSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="70,5" handle2="-60,-80" holdangle="10" delay="3.9" setvalue="true" disabledeltatime="true" >
+        <LuaHook name="6P41PutOnAmmoSprite" />
         </StatusEffect>
         <!-- 准备关闭盖子 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-75,-110" handle2="-30,40" holdangle="10" delay="2.5" setvalue="true" disabledeltatime="true"></StatusEffect>
+        <StatusEffect type="OnInserted" target="This" holdpos="70,5" handle1="-90,-110" handle2="-160,50" holdangle="10" delay="4.5" setvalue="true" disabledeltatime="true" >
+        </StatusEffect>
         <!-- 关闭盖子 -->
-        <StatusEffect type="OnInserted" target="This" hideitems="false" holdpos="45,-15" handle1="-75,-30" handle2="-80,20" holdangle="10" delay="3" setvalue="true" disabledeltatime="true">
-          <LuaHook name="MG42CloseTheLidSprite" />
+        <StatusEffect type="OnInserted" target="This" hideitems="false" holdpos="70,-15" handle1="-90,-20" handle2="-160,-10" holdangle="10" delay="5" setvalue="true" disabledeltatime="true" >
+        <LuaHook name="6P41CloseTheLidSprite" />
         </StatusEffect>
         <!-- 准备拉栓-->
-        <StatusEffect type="OnInserted" target="This" holdangle="-10" handle1="-50,10" handle2="80,20" delay="3.7" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdangle="-10" handle1="-50,10" handle2="80,20" delay="6.3" setvalue="true" />
         <!-- 拉栓 -->
-        <StatusEffect type="OnInserted" target="This" handle1="-90,10" delay="4.2" forceplaysounds="true" />
+        <StatusEffect type="OnInserted" target="This" handle1="-120,10" delay="6.8" forceplaysounds="true" />
         <!-- 复原 -->
-        <StatusEffect type="OnInserted" target="This" handle1="-80,-20" handle2="80,20" holdangle="-35" holdpos="40,-10" aimangle="0" aimpos="70,5" delay="4.5" setvalue="true"></StatusEffect>
+        <StatusEffect type="OnInserted" target="This" holdpos="45,-15" aimpos="75,0" handle1="-120,-30" handle2="60,20" holdangle="-35" delay="8" setvalue="true" >
+        </StatusEffect>
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="4.5" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="8" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" />
         <!-- 换弹声音 -->
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/m249re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-          <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
+        <sound file="%ModDir%/weapon/ammo/pkpre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
         <!-- 拔出弹匣时，回归初始贴图 -->
-        <StatusEffect type="OnRemoved" target="This" setvalue="true" disabledeltatime="true">
-          <LuaHook name="MG42OriginSprite" />
+        <StatusEffect type="OnRemoved" target="This" setvalue="true" disabledeltatime="true" >
+        <LuaHook name="6P41OriginSprite" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
@@ -181,17 +191,17 @@
       <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="40,4" setactive="true" />
+        <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="24,2" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="40,4" setactive="true" />
+        <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="24,2" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-18,13" setactive="true" containedspritedepth="0.45" depth="0.55" />
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-18,13" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-7,19.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-7,19.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true"></StatusEffect>
         </Containable>
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-18,13" setactive="true" containedspritedepth="0.45" depth="0.55">
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-7,19.5" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true"></StatusEffect>
         </Containable>
       </SubContainer>

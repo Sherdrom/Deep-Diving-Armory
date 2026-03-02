@@ -50,21 +50,20 @@
         <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
     </Holdable>
-    <SwitchableRangedWeapon reload="0.15" weapondamagemodifier="1.0" holdtrigger="true" barrelpos="350,1" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.15" switchableSlots="0" switchableFiremodes="Semi,Burst" firemodeswitchkey="V" burstReload="0.1" shotsPerBurst="4" >
+    <SwitchableRangedWeapon reload="0.15" weapondamagemodifier="1.0" holdtrigger="true" barrelpos="350,1" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.15" switchableSlots="0" switchableFiremodes="Semi,Burst" firemodeswitchkey="V" burstReload="0.05" shotsPerBurst="4" >
       <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
+      <ParticleEmitter particle="chargenucleargun" particlespersecond="30" scalemultiplier="0.75,0.75" scalemin="1.0" scalemax="1.0" anglemax="360" />
       <!-- 普通枪声，消音器枪声 -->
       <!-- 短枪管音效与特效 -->
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
-        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
-        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
-        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
-        <ParticleEmitter particle="deep_muzzleflash" Distance="65" angle="8" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-        <ParticleEmitter particle="deep_plasmaspark" Distance="65" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+        <Sound file="%ModDir%/weapon/ammo/izanagi_paidaxing_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1" />
+        <Sound file="%ModDir%/weapon/ammo/izanagi_paidaxing_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1" />
+        <Sound file="%ModDir%/weapon/ammo/izanagi_paidaxing_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1" />
       </StatusEffect>
       <!-- 普通枪声，消音器枪声 -->
       <StatusEffect type="OnUse" target="This">
@@ -106,12 +105,11 @@
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
-      <RequiredItems items="deep_m14ebr_drum" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_izanagi_paidaxing_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
-      <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_m14ebr_drum" hide="false" itempos="-15,-6" setactive="true" rotation="0">
+      <Containable items="deep_izanagi_paidaxing_mag" hide="false" itempos="-23,-12" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -136,11 +134,11 @@
           <!-- 声音文件 <Sound file="%ModDir%/DeadeyeCarbine/DeadeyeCarbineEjectPortClose.ogg" type="OnUse" range="1000" /> -->
         </StatusEffect>
         <!-- End. Sets everything to default values. -->
-        <StatusEffect type="OnInserted" target="This" holdpos="55,-18" aimpos="70,3" handle1="-155,-15" handle2="80,20" holdangle="-35" aimangle="0" delay="2" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" holdpos="60,-12" aimpos="80,3" handle1="-170,-35" handle2="80,20" holdangle="-35" aimangle="0" delay="2" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/Sound/Weapons/M14/gunOther/m14_re.ogg" type="OnUse" range="500.0" loop="false" volume="0.5" />
+          <sound file="%ModDir%/weapon/ammo/izanagi_paidaxing_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
