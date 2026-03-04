@@ -2118,6 +2118,55 @@ Deep_Lua.Armors = {
         SoundRange = 5000,
     },
 
+    --EXOSUIT
+    deep_alice_battlesuit_shorthair_EXO = {
+        type = "metal",
+        ricochetchance = 0.5,
+        level = 10,
+        aftereffectmultiplier  = 0.2,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.8,
+        targetidentifier = 
+        {
+            ["damage"] = true,
+        },
+        ignoredamage = true,
+
+        isPlateCarrier = false,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+            [LimbType.LeftFoot] = true,
+            [LimbType.RightFoot] = true,
+            [LimbType.Head] = true,
+        },
+        
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+
+        --Custom stuff, only work if type "custom"
+        customexpression = function(item,affliction,data)         --expression to caculate plate damage
+            return 100
+        end,
+
+        protected = true,
+        override = true,
+        forceoverride = true,
+
+    },
+
 }
 -- penlevel = floor(pen*10)
 -- overwhelming pen : penlevel - level >= 2
