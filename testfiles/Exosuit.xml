@@ -44,6 +44,14 @@
           <Conditional IsDead="false" />
           <Conditional IsOn="true" />
         </StatusEffect>
+        <StatusEffect type="OnWearing" target="Character,This" targetslot="0" comparison="And" Interval="2" disabledeltatime="true">
+          <Conditional IsDead="false" />
+          <Conditional IsOn="true" />
+          <ReduceAffliction type="damage" strength="10" />
+          <ReduceAffliction type="burn" strength="10" />
+          <ReduceAffliction type="poison" strength="10" />
+          <ReduceAffliction type="bleeding" strength="10" />
+        </StatusEffect>
         <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" targetslot="0" comparison="And">
           <Conditional IsDead="false" />
           <Conditional IsOn="true" />
@@ -114,6 +122,14 @@
         <StatusEffect type="OnWearing" target="Character,This" SpeedMultiplier="1.8" setvalue="true" targetslot="0" comparison="And">
           <Conditional IsDead="false" />
           <Conditional IsOn="true" />
+        </StatusEffect>
+        <StatusEffect type="OnWearing" target="Character,This" targetslot="0" comparison="And" Interval="2" disabledeltatime="true">
+          <Conditional IsDead="false" />
+          <Conditional IsOn="true" />
+          <ReduceAffliction type="damage" strength="10" />
+          <ReduceAffliction type="burn" strength="10" />
+          <ReduceAffliction type="poison" strength="10" />
+          <ReduceAffliction type="bleeding" strength="10" />
         </StatusEffect>
         <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" targetslot="0" comparison="And">
           <Conditional IsDead="false" />
