@@ -76,6 +76,7 @@ Hook.Patch("Barotrauma.Items.Components.Turret", "Launch", function(instance,pta
 		return
 	end
 	if projectile == nil or not projectile.HasTag("saclosmsl") then return end
+	if Deep_Lua.MissileConfigs[projectile.Prefab.Identifier.Value] == nil then return end
 	if Deep_Lua.MissileConfigs[projectile.Prefab.Identifier.Value].IS_AUTO_GUIDED then
 		local prefab = ItemPrefab.GetItemPrefab("msl_targetmarker")
 		Entity.Spawner.AddItemToSpawnQueue(prefab, instance.item.OwnInventory , nil, nil, nil)
