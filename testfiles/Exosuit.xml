@@ -27,44 +27,38 @@
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" probabilitymultiplier="0.0" />
       <StatusEffect type="OnWearing" target="Character" PressureProtection="10000.0" OxygenAvailable="200.0" UseHullOxygen="false" setvalue="true" disabledeltatime="true"/>
       <StatValue stattype="FlowResistance" value="1.0" />
-      <StatusEffect type="OnWearing" target="This" comparison="And" Offset="0,-50">
-        <Conditional IsOn="true" />
-        <Conditional InWater="true" /> 
-        <sound file="Content/Items/Diving/ScooterLoop.ogg" range="500.0" loop="true" volume="0.05"/>
-      </StatusEffect>
       <SkillModifier skillidentifier="weapons" skillvalue="10" />
       <SkillModifier skillidentifier="helm" skillvalue="10" />
       <SkillModifier skillidentifier="mechanical" skillvalue="10" />
       <SkillModifier skillidentifier="electrical" skillvalue="10" />
       <SkillModifier skillidentifier="medical" skillvalue="10" />
+      <StatusEffect type="OnWearing" target="Character,This" SpeedMultiplier="1.8" setvalue="true" targetslot="0" comparison="And">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="Character,This" targetslot="0" Interval="2" comparison="And" disabledeltatime="true">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+        <ReduceAffliction type="damage" strength="10" />
+        <ReduceAffliction type="burn" strength="10" />
+        <ReduceAffliction type="poison" strength="10" />
+        <ReduceAffliction type="bleeding" strength="10" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" comparison="And">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <Conditional IsLocalPlayer="true"/>
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+      </StatusEffect>
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
+    <ItemContainer capacity="1" maxstacksize="1" slotsperrow="3" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
       <Containable items="mobilebattery" >
-        <StatusEffect type="OnWearing" target="Character,This" SpeedMultiplier="1.8" setvalue="true" targetslot="0" comparison="And">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Character,This" targetslot="0" comparison="And" Interval="2" disabledeltatime="true">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-          <ReduceAffliction type="damage" strength="10" />
-          <ReduceAffliction type="burn" strength="10" />
-          <ReduceAffliction type="poison" strength="10" />
-          <ReduceAffliction type="bleeding" strength="10" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" targetslot="0" comparison="And">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-          <Conditional IsLocalPlayer="true"/>
-        </StatusEffect>
         <StatusEffect type="OnWearing" target="Contained" Condition="-0.01" comparison="And">
           <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
           <Conditional IsOn="true" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Contained">
-          <Conditional condition="lt 1.0" />
-          <Sound file="Content/Items/WarningBeepSlow.ogg" range="250" loop="true"/>
         </StatusEffect>
       </Containable>
       <SubContainer capacity="1" maxstacksize="1">
@@ -120,44 +114,38 @@
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" probabilitymultiplier="0.0" />
       <StatusEffect type="OnWearing" target="Character" PressureProtection="10000.0" OxygenAvailable="200.0" UseHullOxygen="false" setvalue="true" disabledeltatime="true"/>
       <StatValue stattype="FlowResistance" value="1.0" />
-      <StatusEffect type="OnWearing" target="This" comparison="And" Offset="0,-50">
-        <Conditional IsOn="true" />
-        <Conditional InWater="true" /> 
-        <sound file="Content/Items/Diving/ScooterLoop.ogg" range="500.0" loop="true" volume="0.05"/>
-      </StatusEffect>
       <SkillModifier skillidentifier="weapons" skillvalue="10" />
       <SkillModifier skillidentifier="helm" skillvalue="10" />
       <SkillModifier skillidentifier="mechanical" skillvalue="10" />
       <SkillModifier skillidentifier="electrical" skillvalue="10" />
       <SkillModifier skillidentifier="medical" skillvalue="10" />
+      <StatusEffect type="OnWearing" target="Character,This" SpeedMultiplier="1.8" setvalue="true" targetslot="0" comparison="And">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="Character,This" targetslot="0" Interval="2" comparison="And" disabledeltatime="true">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+        <ReduceAffliction type="damage" strength="10" />
+        <ReduceAffliction type="burn" strength="10" />
+        <ReduceAffliction type="poison" strength="10" />
+        <ReduceAffliction type="bleeding" strength="10" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" comparison="And">
+        <Conditional IsDead="false" />
+        <Conditional IsOn="true" />
+        <Conditional IsLocalPlayer="true"/>
+        <RequiredItem items="mobilebattery" type="Contained" ExcludeBroken="true"/>
+      </StatusEffect>
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
+    <ItemContainer capacity="1" maxstacksize="1" slotsperrow="3" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
       <Containable items="mobilebattery" >
-        <StatusEffect type="OnWearing" target="Character,This" SpeedMultiplier="1.8" setvalue="true" targetslot="0" comparison="And">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Character,This" targetslot="0" comparison="And" Interval="2" disabledeltatime="true">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-          <ReduceAffliction type="damage" strength="10" />
-          <ReduceAffliction type="burn" strength="10" />
-          <ReduceAffliction type="poison" strength="10" />
-          <ReduceAffliction type="bleeding" strength="10" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Character,This" Voltage="1.0" setvalue="true" targetslot="0" comparison="And">
-          <Conditional IsDead="false" />
-          <Conditional IsOn="true" />
-          <Conditional IsLocalPlayer="true"/>
-        </StatusEffect>
         <StatusEffect type="OnWearing" target="Contained" Condition="-0.01" comparison="And">
           <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
           <Conditional IsOn="true" />
-        </StatusEffect>
-        <StatusEffect type="OnWearing" target="Contained">
-          <Conditional condition="lt 1.0" />
-          <Sound file="Content/Items/WarningBeepSlow.ogg" range="250" loop="true"/>
         </StatusEffect>
       </Containable>
       <SubContainer capacity="1" maxstacksize="1">
