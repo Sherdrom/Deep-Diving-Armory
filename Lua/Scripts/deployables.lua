@@ -27,11 +27,17 @@ Hook.Add("Deep_APS", "Deep_APS",
                 if (target.WorldPosition - item.WorldPosition).Length() <= apsinfo.range then
                     if target.body.Height * target.body.Width >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then
                         if Submarine.CheckVisibility(item.SimPosition,target.SimPosition,false,false,true,true,true) == nil then
-                            ActiveAPS[item] = {
-                                apsitem = item,
-                                apstarget = target,
-                                probability = apsinfo.probability
-                            }
+                            if ActiveAPS[item] == nil then
+                                ActiveAPS[item] = {
+                                    apsitem = item,
+                                    apstarget = target,
+                                    probability = apsinfo.probability
+                                }
+                            else
+                                ActiveAPS[item].apsitem = item
+                                ActiveAPS[item].apstarget = target
+                                ActiveAPS[item].probability = apsinfo.probability
+                            end
                             apsinfo.action(ActiveAPS[item])
                         end
                     end

@@ -1,7 +1,7 @@
 local function IsOBJApproaching(pos1, pos2, velocity1, velocity2)
     local deltaPos = pos2 - pos1
     local relativeVel = velocity2 - velocity1
-    return deltaPos.X * relativeVel.X + deltaPos.Y * relativeVel.Y < 0
+    return deltaPos.X * relativeVel.X + deltaPos.Y * relativeVel.Y <= 0
 end
 
 Deep_Lua.APS = {
@@ -70,5 +70,33 @@ Deep_Lua.APS = {
                 end,20000)
             end
         end
-    }
+    },
+    deep_apscore = {
+        minVelocity = 5,
+        maxVelocity = 30,
+        minsize = 0,
+        probability = 1.0,
+        range = 400,
+        action = function(activeapsdata)
+            if activeapsdata.prevtarget == nil then activeapsdata.prevtarget = {} end
+            if activeapsdata.isCoolDown or activeapsdata.prevtarget[activeapsdata.apstarget] == true then return end
+            activeapsdata.prevtarget[activeapsdata.apstarget] = true
+            if not IsOBJApproaching(activeapsdata.apstarget.WorldPosition, activeapsdata.apsitem.WorldPosition, activeapsdata.apstarget.body.LinearVelocity, activeapsdata.apsitem.body.LinearVelocity) then return end
+            
+            Explosion(50, 30, 50, 50, 50, 0, 0).Explode(activeapsdata.apstarget.WorldPosition, nil)
+
+            if Deep_Lua.HF.DoChance(activeapsdata.probability) then
+                activeapsdata.apstarget.Condition = 0
+            end
+
+            activeapsdata.apstarget.body.LinearVelocity = activeapsdata.apstarget.body.LinearVelocity * 0.3
+
+            activeapsdata.apsitem.Condition = activeapsdata.apsitem.Condition - 10
+
+            activeapsdata.isCoolDown = true
+            Timer.Wait(function()
+                activeapsdata.isCoolDown = false
+            end,100)
+        end
+    },
 }
