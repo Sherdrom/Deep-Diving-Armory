@@ -960,6 +960,40 @@
       <MissionStateAction missionidentifier="deep_destory_grizzlies_base_hard" operation="Set" value="3" />
     </ScriptedEvent>
 
+    <!-- 战无不休合约 -->
+    <ScriptedEvent identifier="deep_contract_never_ending_battle" commonness="150">
+      <TagAction criteria="player" tag="player"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_peachhat" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_tuanzi" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_cifang" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_godfatherkeha" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_renhan" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_2r4g" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_kuai" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_xiaolongbao" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_taidian" tag="enemy"/>
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_team_thesun" tag="enemy"/>
+
+      <Label name="deep_contract_never_ending_battle" />
+      <CountTargetsAction targettag="deep_balance_contract_never_ending_battle" MaxAmount="0">
+          <Success>
+            <Label name="deep_contract_never_ending_battle_loop" />
+            <StatusEffectAction targettag="enemy">
+                    <StatusEffect target="This" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+                         <Affliction identifier="deep_contract_never_ending_battle_detect" strength="10" />
+                    </StatusEffect>
+            </StatusEffectAction>
+            <WaitAction time="1" />
+            <Goto name="deep_contract_never_ending_battle_loop" />
+          </Success>
+          <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_contract_never_ending_battle" />
+          </Failure>
+      </CountTargetsAction>
+
+    </ScriptedEvent>
+
     <ScriptedEvent identifier="deep_pigcatman_reinforce_easy" commonness="150">
       <TagAction criteria="player" tag="player" />
       <RNGAction chance="0.5">

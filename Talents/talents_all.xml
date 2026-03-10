@@ -711,12 +711,11 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 巡回结束时，确保合约效果清除 -->
+    <!-- 巡回结束时，确保合约效果清除 
     <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
           <StatusEffects>
-
             <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
               <Affliction identifier="deep_contract_resistance" amount="10.0" />
             </StatusEffect>
@@ -724,9 +723,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupEffect>-->
 
-    <!-- 巡回结束时，确保合约效果清除，二次保险 -->
+    <!-- 巡回结束时，确保合约效果清除，二次保险 
     <AbilityGroupEffect abilityeffecttype="OnRoundEnd">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -737,7 +736,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupEffect>-->
 
     <!-- 中距离作战合约 -->
     <AbilityGroupInterval interval="5">
@@ -943,7 +942,6 @@
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="false">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character">
-              <dropcontaineditems />
               <removecharacter />
             </StatusEffect>
           </StatusEffects>
