@@ -197,18 +197,75 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!--敌人踩阔剑不会爆炸，做出敌我识别
-     <AbilityGroupInterval interval="5" >
+      <!-- 天神射手——5倍致命爆头 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly,deep_headshot_deadly_irresistible" addedmultiplier="5" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 天神射手——-30%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="gunshotwound" addedmultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 死里逃生 -->
+	<AbilityGroupInterval interval="0.25" >
+	    <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_narrow_escape_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
-            <Affliction identifier="deep_claymore_safe" strength="4.0"/>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="8" stackable="false" comparison="and" >
+            <Conditional health="lt 50" />
+            <Affliction identifier="deep_contract_narrow_escape_effect" strength="5" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>-->
+    </AbilityGroupInterval>
+
+    <!-- 束手就擒 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_surrender_without_fight_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+            <Affliction identifier="deep_contract_surrender_without_fight_attack_detect" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 死亡诡计 -->
+	<AbilityGroupInterval interval="0.25" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_death_trick_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <SpawnItem identifiers="deep_f1_ammo" spawnposition="target" Count="1" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
 
   </Talent>
 </Talents>

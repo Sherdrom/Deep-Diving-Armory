@@ -959,34 +959,6 @@
       <WaitAction time="600" />
       <MissionStateAction missionidentifier="deep_destory_grizzlies_base_hard" operation="Set" value="3" />
     </ScriptedEvent>
-
-    <!-- 战无不休合约 -->
-    <ScriptedEvent identifier="deep_contract_never_ending_battle" commonness="150">
-    <Label name="deep_contract_never_ending_battle_loop" />
-      <!-- 玩家 -->
-      <TagAction criteria="player" tag="player"/>
-      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
-      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy"/>
-      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy"/>
-
-      <CountTargetsAction targettag="deep_balance_contract_never_ending_battle" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy">
-                    <StatusEffect target="Character" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" >
-                    <Conditional deep_contract_never_ending_battle_detect="lt 0.5" />
-                         <Affliction identifier="deep_contract_never_ending_battle_detect" strength="5" />
-                    </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="1" />
-            <Goto name="deep_contract_never_ending_battle_loop" />
-          </Success>
-          <Failure>
-          <WaitAction time="1" />
-          <Goto name="deep_contract_never_ending_battle_loop" />
-          </Failure>
-      </CountTargetsAction>
-
-    </ScriptedEvent>
     
 
     <ScriptedEvent identifier="deep_pigcatman_reinforce_easy" commonness="150">

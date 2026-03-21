@@ -87,18 +87,25 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!--敌人踩阔剑不会爆炸，做出敌我识别，有严重掉帧，实验中
-     <AbilityGroupInterval interval="5" >
+    <!-- 天神射手——5倍致命爆头 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
-            <Affliction identifier="deep_claymore_safe" strength="4.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly,deep_headshot_deadly_irresistible" addedmultiplier="5" />
       </Abilities>
-    </AbilityGroupInterval>-->
+    </AbilityGroupEffect>
+
+    <!-- 天神射手——-30%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="gunshotwound" addedmultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
 
   </Talent>
 </Talents>

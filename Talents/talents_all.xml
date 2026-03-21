@@ -981,6 +981,26 @@
       </Abilities>
     </AbilityGroupInterval>
 
+    <!-- 束手就擒 -->
+    <AbilityGroupInterval interval="0.2">
+      <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_surrender_without_fight_attack_detect" />
+        <AbilityConditionRagdolled />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" comparison="and" stackable="false" >
+            <Conditional deep_enemy_affliction_resistance="lt 0.5" />
+            <SpawnItem identifiers="deep_surrender_without_fight_handcuffs" spawnposition="SameInventory" Count="1" />
+            <Affliction identifier="deep_contract_surrender_without_fight_no_bleeding_effect" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
     <!-- LUA 缺失 -->
 
     <!--<AbilityGroupInterval maxtriggercount="1" >

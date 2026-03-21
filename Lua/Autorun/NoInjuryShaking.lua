@@ -27,9 +27,25 @@ Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptabl
 	end
 end, Hook.HookMethodType.Before)
 
+--移除手臂晃动惩罚，严酷训练
+Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptable)
+	if HasAffliction(instance.Character, "deep_contract_harsh_training_detect", 1) then
+		ptable.PreventExecution = true
+		return 0
+	end
+end, Hook.HookMethodType.Before)
+
 --移除腿部受伤移速惩罚
 Hook.Patch("Barotrauma.Character", "CalculateMovementPenalty", function(instance, ptable)
 	if HasAffliction(instance, "deep_calm_buff", 1) then
+		ptable.PreventExecution = true
+	return 0
+	end
+end, Hook.HookMethodType.Before)
+
+--移除腿部受伤移速惩罚，严酷训练
+Hook.Patch("Barotrauma.Character", "CalculateMovementPenalty", function(instance, ptable)
+	if HasAffliction(instance, "deep_contract_harsh_training_detect", 1) then
 		ptable.PreventExecution = true
 	return 0
 	end
