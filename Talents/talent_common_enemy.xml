@@ -107,5 +107,90 @@
       </Abilities>
     </AbilityGroupEffect>
 
+    <!-- 死里逃生 -->
+	<AbilityGroupInterval interval="0.25" >
+	    <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_narrow_escape_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="8" stackable="false" comparison="and" >
+            <Conditional health="lt 50" />
+            <Affliction identifier="deep_contract_narrow_escape_effect" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 束手就擒 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_surrender_without_fight_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+            <Affliction identifier="deep_contract_surrender_without_fight_attack_detect" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 勇冠三军 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+        <AbilityConditionAboveVitality vitalitypercentage="0.5" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_the_bravest_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_contract_the_bravest_detect_up_50" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+
+    <!-- 勇冠三军 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_the_bravest_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_contract_the_bravest_detect_below_50" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 爆破专家 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_demolition_expert_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_chip_blaster" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
   </Talent>
 </Talents>

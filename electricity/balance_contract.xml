@@ -52,407 +52,354 @@
       </StatusEffect>
     </Holdable>
   </Item>
+  <!-- 中距离作战——N1 -->
   <Item name="" identifier="deep_balance_contract_no_6x_8x_sight" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_6x_8x_sight_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_6x_8x_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_6x_8x_sight_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_6x_8x_sight_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_6x_8x_sight" />
       </StatusEffect>
+
     </Holdable>
   </Item>
-  <Item name="" identifier="deep_balance_contract_no_sight" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
-    <Upgrade gameversion="0.10.0.0" scale="0.5" />
-    <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
-    <Body width="36" height="40" density="20" />
-    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
-        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_sight_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
-      </StatusEffect>
-      <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sight" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
-        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_sight_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="this" delay="0.5">
-        <remove />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_sight_detect" strength="1" />
-      </StatusEffect>
-    </Holdable>
-  </Item>
+
+  <!-- 禁用狙械——N1 -->
   <Item name="" identifier="deep_balance_contract_no_sniper" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_sniper_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_sniper" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_sniper_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_sniper_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_sniper" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 禁用霰弹——N1 -->
   <Item name="" identifier="deep_balance_contract_no_shotgun" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_shotgun_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_shotgun" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_shotgun_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_shotgun_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_shotgun" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 禁用机枪——N1 -->
   <Item name="" identifier="deep_balance_contract_no_machinegun" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_machinegun_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_machinegun" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_machinegun_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_machinegun_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_machinegun" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 禁用榴弹——N1 -->
   <Item name="" identifier="deep_balance_contract_no_gl" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_gl_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_gl" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_gl_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_gl_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_gl" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 禁用高穿弹——N1 -->
   <Item name="" identifier="deep_balance_contract_no_high_penetration" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_high_penetration_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_high_penetration" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_high_penetration_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_high_penetration_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_high_penetration" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 禁用爆破物——N2 -->
   <Item name="" identifier="deep_balance_contract_no_explosive" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_explosive_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_explosive" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_explosive_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_explosive_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_explosive" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 轻装上阵——N2 -->
   <Item name="" identifier="deep_balance_contract_travel_light" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_travel_light_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_travel_light" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_travel_light_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_travel_light_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_travel_light" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 不痛不痒——N2 -->
   <Item name="" identifier="deep_balance_contract_neither_painful_nor_itching" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_neither_painful_nor_itching_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_neither_painful_nor_itching" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_neither_painful_nor_itching_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_neither_painful_nor_itching_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_neither_painful_nor_itching" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 抵近射击——N2 -->
+  <Item name="" identifier="deep_balance_contract_no_sight" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
+    <Body width="36" height="40" density="20" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
+      </StatusEffect>
+      <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
+        <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="this" delay="0.5">
+        <remove />
+      </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_sight" />
+      </StatusEffect>
+
+    </Holdable>
+  </Item>
+
+  <!-- 最终防线——N3 -->
   <Item name="" identifier="deep_balance_contract_no_dealth" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_dealth_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_no_dealth" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_no_dealth_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_no_dealth_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_no_dealth" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 二战老兵——N3 -->
   <Item name="" identifier="deep_balance_contract_wwt" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_wwt" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_wwt_detect" strength="1" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_wwt" />
       </StatusEffect>
+
     </Holdable>
   </Item>
+
+  <!-- 闪电战——N3 -->
   <Item name="" identifier="deep_balance_contract_blitzkrieg" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_blitzkrieg_detect" strength="0.016" />
-      </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_blitzkrieg" Range="2000" disableDeltaTime="true" setValue="true " condition="0">
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
-      </StatusEffect>
-      <StatusEffect type="OnBroken" target="Character" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_contract_blitzkrieg_detect" strength="0.016" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="NearbyCharacters" range="500" disableDeltaTime="true" setValue="true " multiplyafflictionsbymaxvitality="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-        <Affliction identifier="deep_contract_blitzkrieg_detect" strength="0.016" />
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_blitzkrieg" />
       </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -462,11 +409,10 @@
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -475,6 +421,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_draw_a_circle" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -484,11 +436,10 @@
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -497,6 +448,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_never_ending_battle" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -550,11 +507,10 @@
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -563,6 +519,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_ready_or_not" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -572,11 +534,10 @@
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -585,6 +546,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_deep_diving_marksman" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -594,11 +561,10 @@
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -607,6 +573,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_narrow_escape" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -616,11 +588,10 @@
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -629,20 +600,25 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_surrender_without_fight" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
-  <!-- 死亡诡计——N2 -->
-  <Item name="" identifier="deep_balance_contract_death_trick" category="Electrical" subcategory="deep_balance_enemy_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
+  <!-- 勇冠三军——N2 -->
+  <Item name="" identifier="deep_balance_contract_the_bravest" category="Electrical" subcategory="deep_balance_enemy_contract" tags="smallitem,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -651,6 +627,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_the_bravest" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -660,11 +642,10 @@
     <Sprite texture="contract.png" sourcerect="13,200,102,105" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -673,6 +654,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_demolition_expert" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -684,11 +671,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -697,6 +683,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_strongbody" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -706,11 +698,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -719,6 +710,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_raid_command" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -728,11 +725,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -741,6 +737,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_precision_shooting" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -750,11 +752,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -763,6 +764,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_exquisite_armor" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -772,11 +779,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -785,6 +791,12 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_weapon_modification" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
 
@@ -794,11 +806,10 @@
     <Sprite texture="contract.png" sourcerect="8,339,106,110" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true ">
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true" setValue="true" stackable="false" >
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="this" delay="0.5">
-        <remove />
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -807,6 +818,13 @@
       <StatusEffect type="OnBroken" target="this" delay="0.5">
         <remove />
       </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_contract_harsh_training" />
+      </StatusEffect>
+
     </Holdable>
   </Item>
+
 </Items>

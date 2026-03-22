@@ -9,28 +9,312 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_never_ending_battle" MaxAmount="0">
-          <Success>
             <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_never_ending_battle_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_never_ending_battle_detect" strength="5" />
                     </StatusEffect>
             </StatusEffectAction>
-            <WaitAction time="2" />
+
+      <WaitAction time="2" />
             <Goto name="deep_contract_never_ending_battle_loop" />
+    </ScriptedEvent>
+
+    <!-- 战争幽灵——N3 -->
+    <ScriptedEvent identifier="deep_contract_ghosts_of_war" commonness="150">
+    <Label name="deep_contract_ghosts_of_war" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+            <StatusEffectAction targettag="enemy" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_never_ending_battle_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_never_ending_battle_detect" strength="5" />
+                    </StatusEffect>
+            </StatusEffectAction>
+
+    </ScriptedEvent>
+
+    <!-- 严正以待——N3 -->
+    <ScriptedEvent identifier="deep_contract_ready_or_not" commonness="150">
+    <Label name="deep_contract_ready_or_not" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_ready_or_not_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_ready_or_not_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_ready_or_not" />
+    </ScriptedEvent>
+
+    <!-- 永恒追猎——N3海盗 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_pirate" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pirate" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pirate" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pirate" />
           </Success>
           <Failure>
           <WaitAction time="2" />
-          <Goto name="deep_contract_never_ending_battle_loop" />
+          <Goto name="deep_contract_eternal_hunt" />
           </Failure>
       </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——海盗 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_pirate" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
 
+    <!-- 永恒追猎——N3分离主义部队 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_separatist" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_separatist" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_separatist" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_separatist" />
+          </Success>
+          <Failure>
+          <WaitAction time="2" />
+          <Goto name="deep_contract_eternal_hunt" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——分离主义部队 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_separatist" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
+
+    <!-- 永恒追猎——N3联盟军 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_coalition" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_coalition" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_coalition" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_coalition" />
+          </Success>
+          <Failure>
+          <WaitAction time="2" />
+          <Goto name="deep_contract_eternal_hunt" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——联盟军 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_coalition" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
+
+    <!-- 永恒追猎——N3幽灵 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_ghost" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_ghost" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_ghost" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_ghost" />
+          </Success>
+          <Failure>
+          <WaitAction time="2" />
+          <Goto name="deep_contract_eternal_hunt" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——幽灵 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_ghost" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
+
+    <!-- 永恒追猎——N3灰熊 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_grizzlies" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_grizzlies" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_grizzlies" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_grizzlies" />
+          </Success>
+          <Failure>
+          <WaitAction time="2" />
+          <Goto name="deep_contract_eternal_hunt" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——灰熊 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_grizzlies" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
+
+    <!-- 永恒追猎——N3猪队 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_pigcat" commonness="150">
+    <Label name="deep_contract_eternal_hunt" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <CountTargetsAction targettag="deep_balance_contract_eternal_hunt" MaxAmount="0">
+          <Success>
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pigcat_1" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pigcat_2" />
+          <WaitAction time="180" />
+          <TriggerEventAction Identifier="deep_contract_eternal_hunt_hunter_pigcat_3" />
+          </Success>
+          <Failure>
+          <WaitAction time="2" />
+          <Goto name="deep_contract_eternal_hunt" />
+          </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+    <!-- 永恒追猎——猪队 -->
+    <ScriptedEvent identifier="deep_contract_eternal_hunt_hunter_pigcat" commonness="150">
+    <TagAction criteria="player" tag="player" />
+      <WaitAction time="1" />
+      <ConversationAction text="EventText.deep_contract_eternal_hunt_start.c1" dialogtype="Small" eventsprite="coalition_reinforce" />
+      <WaitAction time="3" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_grizzlies_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_grizzlies_hunter_elite"  LootingIsStealing="false" TeamID="2" targettag="deep_hunter" spawnlocation="Outpost" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <CombatAction CombatMode="Offensive" NPCTag="deep_hunter" EnemyTag="player" CoolDown="114514" AbandonOnReset="false"/>
+    </ScriptedEvent>
+
+    <!-- 最终防线——N3 -->
+    <ScriptedEvent identifier="deep_contract_no_dealth" commonness="150">
+    <Label name="deep_contract_no_dealth" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_dealth_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_dealth_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_dealth" />
+    </ScriptedEvent>
+
+    <!-- 二战老兵——N3 -->
+    <ScriptedEvent identifier="deep_contract_wwt" commonness="150">
+    <Label name="deep_contract_wwt" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_wwt_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_wwt_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_wwt" />
+    </ScriptedEvent>
+
+    <!-- 闪电战——N3 -->
+    <ScriptedEvent identifier="deep_contract_blitzkrieg" commonness="150">
+    <Label name="deep_contract_blitzkrieg" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" >
+                         <Affliction identifier="deep_contract_blitzkrieg_detect" strength="0.001" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_blitzkrieg" />
     </ScriptedEvent>
 
     <!-- 画地为牢——N3 -->
     <ScriptedEvent identifier="deep_contract_draw_a_circle" commonness="150">
-    <Label name="deep_contract_draw_a_circle" />
       <!-- 标记所有门 -->
       <TagAction criteria="itemidentifier:door" tag="targetdoor" submarinetype="Outpost" continueifnotargetsfound="true" />
       <TagAction criteria="itemidentifier:windoweddoor" tag="targetdoor" submarinetype="Outpost" continueifnotargetsfound="true" />
@@ -39,18 +323,11 @@
       <TagAction criteria="itemidentifier:hatch" tag="targetdoor" submarinetype="Outpost" continueifnotargetsfound="true" />
       <TagAction criteria="itemidentifier:hatchwbuttons" tag="targetdoor" submarinetype="Outpost" continueifnotargetsfound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_draw_a_circle" MaxAmount="0">
-          <Success>
             <StatusEffectAction targettag="targetdoor" >
                     <StatusEffect target="This" comparison="and" stackable="false" setvalue="true" InvulnerabletoDamage="true" window="0.0,0.0,0.0,0.0" >
                     </StatusEffect>
             </StatusEffectAction>
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_draw_a_circle" />
-          </Failure>
-      </CountTargetsAction>
+          
 
     </ScriptedEvent>
 
@@ -61,23 +338,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_deep_diving_marksman" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_deep_diving_marksman_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_deep_diving_marksman_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_deep_diving_marksman" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_deep_diving_marksman" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 死里逃生——N2 -->
@@ -87,23 +355,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_narrow_escape" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_narrow_escape_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_narrow_escape_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_narrow_escape" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_narrow_escape" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 束手就擒——N2 -->
@@ -113,49 +372,116 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_surrender_without_fight" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_surrender_without_fight_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_surrender_without_fight_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_surrender_without_fight" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_surrender_without_fight" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
-    <!-- 死亡诡计——N2 -->
-    <ScriptedEvent identifier="deep_contract_death_trick" commonness="150">
-    <Label name="deep_contract_death_trick" />
+    <!-- 勇冠三军——N2 -->
+    <ScriptedEvent identifier="deep_contract_the_bravest" commonness="150">
+    <Label name="deep_contract_the_bravest" />
       <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_death_trick" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
-                    <Conditional deep_contract_death_trick_detect="lt 0.5" />
-                         <Affliction identifier="deep_contract_death_trick_detect" strength="5" />
+                    <Conditional deep_contract_the_bravest_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_the_bravest_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
-            <Goto name="deep_contract_death_trick" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_death_trick" />
-          </Failure>
-      </CountTargetsAction>
+      </StatusEffectAction>
+      <WaitAction time="2" />
+            <Goto name="deep_contract_the_bravest" />
+    </ScriptedEvent>
 
+    <!-- 爆破专家——N2 -->
+    <ScriptedEvent identifier="deep_contract_demolition_expert" commonness="150">
+    <Label name="deep_contract_demolition_expert" />
+      <!-- 使用深潜安全官，深潜医生作为特殊职业，方便统一给Affliction -->
+      <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
+      <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
+
+      <StatusEffectAction targettag="enemy" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_demolition_expert_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_demolition_expert_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+      <WaitAction time="2" />
+            <Goto name="deep_contract_demolition_expert" />
+    </ScriptedEvent>
+
+    <!-- 禁用爆破物——N2 -->
+    <ScriptedEvent identifier="deep_contract_no_explosive" commonness="150">
+    <Label name="deep_contract_no_explosive" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_explosive_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_explosive_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_explosive" />
+    </ScriptedEvent>
+
+    <!-- 轻装上阵——N2 -->
+    <ScriptedEvent identifier="deep_contract_travel_light" commonness="150">
+    <Label name="deep_contract_travel_light" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_travel_light_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_travel_light_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_travel_light" />
+    </ScriptedEvent>
+
+    <!-- 不痛不痒——N2 -->
+    <ScriptedEvent identifier="deep_contract_neither_painful_nor_itching" commonness="150">
+    <Label name="deep_contract_neither_painful_nor_itching" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_neither_painful_nor_itching_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_neither_painful_nor_itching_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_neither_painful_nor_itching" />
+    </ScriptedEvent>
+
+    <!-- 抵近射击——N2 -->
+    <ScriptedEvent identifier="deep_contract_no_sight" commonness="150">
+    <Label name="deep_contract_no_sight" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_sight_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_sight_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_sight" />
     </ScriptedEvent>
 
     <!-- 身强体壮——N1 -->
@@ -165,23 +491,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_strongbody" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_strongbody_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_strongbody_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_strongbody" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_strongbody" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 突袭指令——N1 -->
@@ -191,23 +508,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_raid_command" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_raid_command_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_raid_command_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_raid_command" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_raid_command" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 精确射击——N1 -->
@@ -217,23 +525,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_precision_shooting" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_precision_shooting_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_precision_shooting_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_precision_shooting" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_precision_shooting" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 额外缓冲层——N1 -->
@@ -243,23 +542,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_exquisite_armor" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_exquisite_armor_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_exquisite_armor_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_exquisite_armor" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_exquisite_armor" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 武器改装——N1 -->
@@ -269,23 +559,14 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_weapon_modification" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_weapon_modification_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_weapon_modification_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_weapon_modification" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_weapon_modification" />
-          </Failure>
-      </CountTargetsAction>
-
     </ScriptedEvent>
 
     <!-- 严酷训练——N1 -->
@@ -295,23 +576,116 @@
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="enemy" ContinueIfNoTargetsFound="true"  />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="enemy" ContinueIfNoTargetsFound="true" />
 
-      <CountTargetsAction targettag="deep_balance_contract_harsh_training" MaxAmount="0">
-          <Success>
-            <StatusEffectAction targettag="enemy" >
+      <StatusEffectAction targettag="enemy" >
                     <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
                     <Conditional deep_contract_harsh_training_detect="lt 0.5" />
                          <Affliction identifier="deep_contract_harsh_training_detect" strength="5" />
                     </StatusEffect>
-            </StatusEffectAction>
-            <WaitAction time="2" />
+      </StatusEffectAction>
+      <WaitAction time="2" />
             <Goto name="deep_contract_harsh_training" />
-          </Success>
-          <Failure>
-          <WaitAction time="2" />
-          <Goto name="deep_contract_harsh_training" />
-          </Failure>
-      </CountTargetsAction>
+    </ScriptedEvent>
 
+    <!-- 中距离作战——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_6x_8x_sight" commonness="150">
+    <Label name="deep_contract_no_6x_8x_sight" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_6x_8x_sight_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_6x_8x_sight_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_6x_8x_sight" />
+    </ScriptedEvent>
+
+    <!-- 禁用狙械——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_sniper" commonness="150">
+    <Label name="deep_contract_no_sniper" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_sniper_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_sniper_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_sniper" />
+    </ScriptedEvent>
+
+    <!-- 禁用霰弹——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_shotgun" commonness="150">
+    <Label name="deep_contract_no_shotgun" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_shotgun_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_shotgun_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_shotgun" />
+    </ScriptedEvent>
+
+    <!-- 禁用机枪——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_machinegun" commonness="150">
+    <Label name="deep_contract_no_machinegun" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_machinegun_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_machinegun_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_machinegun" />
+    </ScriptedEvent>
+
+    <!-- 禁用榴弹——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_gl" commonness="150">
+    <Label name="deep_contract_no_gl" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_gl_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_gl_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_gl" />
+    </ScriptedEvent>
+
+    <!-- 禁用高穿弹——N1 -->
+    <ScriptedEvent identifier="deep_contract_no_high_penetration" commonness="150">
+    <Label name="deep_contract_no_high_penetration" />
+      <!-- 标记我方小队，方便统一给Affliction -->
+      <TagAction criteria="crew" tag="contract_player" ContinueIfNoTargetsFound="true"  />
+
+      <StatusEffectAction targettag="contract_player" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" comparison="and" stackable="false" setvalue="true" >
+                    <Conditional deep_contract_no_high_penetration_detect="lt 0.5" />
+                         <Affliction identifier="deep_contract_no_high_penetration_detect" strength="5" />
+                    </StatusEffect>
+      </StatusEffectAction>
+
+      <WaitAction time="2" />
+            <Goto name="deep_contract_no_high_penetration" />
     </ScriptedEvent>
 
 

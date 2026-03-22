@@ -738,7 +738,7 @@
       </Abilities>
     </AbilityGroupEffect>-->
 
-    <!-- 中距离作战合约 -->
+    <!-- 中距离作战合约 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_6x_8x_sight_detect" />
@@ -752,25 +752,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 抵近射击合约 -->
-    <AbilityGroupInterval interval="5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_sight_detect" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
-              <Affliction identifier="deep_contract_no_sight_detect" amount="1.0" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupInterval>
-
-    <!-- 禁用狙击 -->
+    <!-- 禁用狙击 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_sniper_detect" />
@@ -784,9 +768,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 禁用霰弹 -->
+    <!-- 禁用霰弹 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_shotgun_detect" />
@@ -800,7 +784,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
@@ -812,7 +796,7 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 禁用机枪 -->
+    <!-- 禁用机枪 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_machinegun_detect" />
@@ -826,9 +810,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 禁用榴弹 -->
+    <!-- 禁用榴弹 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_gl_detect" />
@@ -842,9 +826,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 禁用高穿弹 -->
+    <!-- 禁用高穿弹 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_high_penetration_detect" />
@@ -858,9 +842,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 禁用爆破物 -->
+    <!-- 禁用爆破物 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_explosive_detect" />
@@ -874,7 +858,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
@@ -886,7 +870,7 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 轻装上阵 -->
+    <!-- 轻装上阵 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_travel_light_detect" />
@@ -900,9 +884,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 不痛不痒 -->
+    <!-- 不痛不痒 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_neither_painful_nor_itching_detect" />
@@ -916,9 +900,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 最终防线 -->
+    <!-- 最终防线 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_no_dealth_detect" />
@@ -932,7 +916,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
     <AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
       <Conditions>
@@ -941,15 +925,16 @@
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="false">
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character">
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" >
               <removecharacter />
+              <dropitem />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 二战老兵 -->
+    <!-- 二战老兵 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_wwt_detect" />
@@ -963,9 +948,9 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
 
-    <!-- 闪电战 -->
+    <!-- 闪电战 
     <AbilityGroupInterval interval="5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_contract_blitzkrieg_detect" />
@@ -979,7 +964,23 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
+
+    <!-- 严正以待 
+    <AbilityGroupInterval interval="5">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_ready_or_not_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="true" allowclientsimulation="false">
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+              <Affliction identifier="deep_contract_ready_or_not_detect" amount="1.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffectsToAllies>
+      </Abilities>
+    </AbilityGroupInterval>-->
 
     <!-- 束手就擒 -->
     <AbilityGroupInterval interval="0.2">
