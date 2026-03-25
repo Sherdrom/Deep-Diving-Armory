@@ -38,7 +38,17 @@
       </SubContainer>
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_contract_terminal" InvulnerabletoDamage="true" category="Electrical" subcategory="deep_balance_relaycomponent" tags="deep_contract_container" linkable="true" spritecolor="255,255,255,255" pickdistance="150" waterproof="true" fireproof="true" scale="0.5">
+  <Item name="" identifier="deep_contract_terminal_old_contract" InvulnerabletoDamage="true" category="Electrical" subcategory="deep_balance_relaycomponent" tags="deep_contract_container" linkable="true" spritecolor="255,255,255,255" pickdistance="150" waterproof="true" fireproof="true" scale="0.5">
+    <Sprite texture="containers.png" depth="0.84" sourcerect="126,383,167,154" origin="0.5,0.5" />
+    <ItemContainer capacity="30" slotsperrow="10" canbeselected="true" hideitems="true" msg="ItemMsgInteractSelect">
+      <GuiFrame relativesize="0.5,0.6" anchor="Center" style="ItemUI" />
+      <Containable items="contract,deep_balance_contract_start">
+        <StatusEffect type="OnRemoved" target="Contained" InvulnerabletoDamage="false"></StatusEffect>
+      </Containable>
+      <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_contract_terminal_operation_tidal_hunt" InvulnerabletoDamage="true" category="Electrical" subcategory="deep_balance_relaycomponent" tags="deep_contract_container" linkable="true" spritecolor="255,255,255,255" pickdistance="150" waterproof="true" fireproof="true" scale="0.5">
     <Sprite texture="containers.png" depth="0.84" sourcerect="126,383,167,154" origin="0.5,0.5" />
     <ItemContainer capacity="30" slotsperrow="10" canbeselected="true" hideitems="true" msg="ItemMsgInteractSelect">
       <GuiFrame relativesize="0.5,0.6" anchor="Center" style="ItemUI" />

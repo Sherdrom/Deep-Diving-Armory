@@ -460,4 +460,64 @@
     </AbilityGroupInterval>
 
   </Talent>
+
+  <Talent identifier="deep_talent_pigcat_contract_room">
+    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
+    <Description tag="talentdescription.deep_talent_pigcat_contract_room">
+    </Description>
+	<AbilityGroupEffect abilityeffecttype="None">
+      <Abilities>
+        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
+		    <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="-100"/>
+	     	<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+      </Abilities>
+    </AbilityGroupEffect>
+	<!-- 抗性 -->
+	<AbilityGroupInterval interval="0.5" >
+      <Abilities>
+		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+	<!-- 突击手 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.2"/>
+		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 先辈不受合约影响 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_contract_resistance_reinforce" amount="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 先辈不会引爆友军阔剑，但会踩敌人的 -->
+    <AbilityGroupInterval interval="0.9" >
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+              <Affliction identifier="deep_pigman_claymore_safe" amount="5.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+  </Talent>
+
 </Talents>

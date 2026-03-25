@@ -2,6 +2,9 @@
 <Randomevents>
   <EventSprites>
   <Sprite identifier="pigcat_1" texture="%ModDir%/Missions/icon/pigcat.png" sourcerect="275,2,270,222" origin="0.9,0.5"/>
+  <Sprite identifier="pigcat_contract_room" texture="%ModDir%/Missions/icon/pigcat.png" sourcerect="576,3,322,308" origin="0.9,0.5"/>
+  <Sprite identifier="pigcat_contract_room_smile" texture="%ModDir%/Missions/icon/pigcat.png" sourcerect="18,373,322,308" origin="0.9,0.5"/>
+  <Sprite identifier="pigcat_contract_room_close_eyes" texture="%ModDir%/Missions/icon/pigcat.png" sourcerect="396,375,322,308" origin="0.9,0.5"/>
   <Sprite identifier="pirate_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="8,0,190,220" origin="0.5,0.5"/>
   <Sprite identifier="separatists_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" origin="0.5,0.5"/>
   <Sprite identifier="coalition_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" origin="0.5,0.5"/>
@@ -55,7 +58,7 @@
       <StatusEffectAction targettag="targetlight_all">
         <StatusEffect target="This" setvalue="true" ison="false" />
       </StatusEffectAction>
-          <WaitAction time="1" />
+          <WaitAction time="3.8" />
       <StatusEffectAction targettag="targetlight_on">
         <StatusEffect target="This" setvalue="true" ison="true" />
       </StatusEffectAction>
@@ -72,7 +75,7 @@
       <StatusEffectAction targettag="targetlight_all">
         <StatusEffect target="This" setvalue="true" ison="false" />
       </StatusEffectAction>
-          <WaitAction time="1" />
+          <WaitAction time="3.8" />
       <StatusEffectAction targettag="targetlight_on">
         <StatusEffect target="This" setvalue="true" ison="true" />
       </StatusEffectAction>
@@ -387,6 +390,26 @@
       </ConversationAction>
       <NPCWaitAction npctag="deep_pigcat_medium_captain" wait="false" />
     </ScriptedEvent>
+    <!-- 合约房先辈——海盗 -->
+    <ScriptedEvent identifier="deep_pigcat_contract_room_pirate" commonness="200">
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_contract_room_pirate" targettag="deep_pigcat_contract_room_pirate" spawnlocation="Outpost" spawnpointtag="deep_pigcat" spawnpointtype="cargo" RequireSpawnPointTag="true" />
+      <Label name="deep_pigcat_contract_room_loop" />
+      <GodModeAction targettag="deep_pigcat_contract_room_pirate" enabled="true" />
+      <TagAction criteria="player" tag="player" />
+      <TriggerAction target1tag="deep_pigcat_contract_room_pirate" target2tag="player" applytotarget2="triggerer_player" radius="100" waitforinteraction="true"/>
+      <ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_contract_room_start.c1" eventsprite="pigcat_contract_room">
+
+        <Option text="EventText.deep_pigcat_contract_room_option.c1">
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_contract_room.contract_answer" eventsprite="pigcat_contract_room_smile" />
+        </Option>
+
+        <Option text="EventText.deep_pigcat_contract_room_option.c2">
+		<ConversationAction targettag="triggerer_player" text="EventText.deep_pigcat_contract_room.xianbei_answer" eventsprite="pigcat_contract_room_close_eyes" />
+        </Option>
+
+      </ConversationAction>
+      <Goto name="deep_pigcat_contract_room_loop" />
+    </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_grizzlies_reinforce_start" commonness="150">
       <TagAction criteria="player" tag="player" />
@@ -428,7 +451,7 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
