@@ -7,7 +7,7 @@
   <Sprite identifier="coalition_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="7,239,264,235" origin="0.5,0.5"/>
   <Sprite identifier="ghost_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="275,244,264,235" origin="0.5,0.5"/>
   <Sprite identifier="grizzlies_reinforce" texture="%ModDir%/Missions/icon/destory.png" sourcerect="14,490,264,235" origin="0.5,0.5"/>
-  <Sprite identifier="deep_pigcat_reinforce_end" texture="%ModDir%/Missions/icon/destory.png" sourcerect="315,509,220,224" origin="0.5,0.5"/>
+  <Sprite identifier="deep_pigcat_reinforce_end" texture="%ModDir%/Missions/icon/destory.png" sourcerect="570,510,233,237" origin="0.5,0.5"/>
     </EventSprites>
   <EventPrefabs>
   <ScriptedEvent identifier="deep_abandoned_indestructible">
@@ -41,6 +41,43 @@
         <StatusEffect target="This" >
            <remove/>
         </StatusEffect>
+      </StatusEffectAction>
+    </ScriptedEvent>
+
+    <!-- 地图Debuff选择——夜图 -->
+    <ScriptedEvent identifier="deep_map_debuff_select_night">
+    
+      <TagAction criteria="itemtag:light" tag="targetlight_all" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemtag:lightcomponent" tag="targetlight_on" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemidentifier:emergencylight" tag="targetlight_on" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemtag:searchlight" tag="targetlight_on" submarinetype="outpost" continueifnotargetsfound="true" />
+
+      <StatusEffectAction targettag="targetlight_all">
+        <StatusEffect target="This" setvalue="true" ison="false" />
+      </StatusEffectAction>
+          <WaitAction time="1" />
+      <StatusEffectAction targettag="targetlight_on">
+        <StatusEffect target="This" setvalue="true" ison="true" />
+      </StatusEffectAction>
+    </ScriptedEvent>
+
+    <!-- 地图Debuff选择——夜图——远港建造厂 -->
+    <ScriptedEvent identifier="deep_map_debuff_select_night_farport">
+    
+      <TagAction criteria="itemtag:light" tag="targetlight_all" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemtag:lightcomponent" tag="targetlight_on_red" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemidentifier:emergencylight" tag="targetlight_on" submarinetype="outpost" continueifnotargetsfound="true" />
+      <TagAction criteria="itemtag:searchlight" tag="targetlight_on" submarinetype="outpost" continueifnotargetsfound="true" />
+
+      <StatusEffectAction targettag="targetlight_all">
+        <StatusEffect target="This" setvalue="true" ison="false" />
+      </StatusEffectAction>
+          <WaitAction time="1" />
+      <StatusEffectAction targettag="targetlight_on">
+        <StatusEffect target="This" setvalue="true" ison="true" />
+      </StatusEffectAction>
+      <StatusEffectAction targettag="targetlight_on_red">
+        <StatusEffect target="This" setvalue="true" ison="true" lightcolor="84,17,17,125" />
       </StatusEffectAction>
     </ScriptedEvent>
 
@@ -362,11 +399,11 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_rookie"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_rookie"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -391,17 +428,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_normal"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -426,17 +463,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_scout"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -462,21 +499,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_soldier_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_soldier_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_heavy_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_heavy_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_dreadnaught"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_dreadnaught"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_blaster_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_moderate" npcidentifier="deep_separatist_blaster_moderate"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -501,21 +538,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_heavy_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_heavy_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_sniper_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_sniper_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_leader_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_blaster_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_blaster_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_striker_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_striker_hard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -540,21 +577,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="coalition_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_leader"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_leader"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co" npcidentifier="deep_co_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -579,21 +616,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_Fearless_Vanguard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_Fearless_Vanguard"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_leader"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_leader"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_grenadier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost" npcidentifier="deep_ghost_sniper"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -618,21 +655,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_reinforce_end.c1" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_political_commissar"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_political_commissar"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_machinegun_fort"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_machinegun_fort"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_heavy_gunner"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_heavy_gunner"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_heavy_gl"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_heavy_gl"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_team_juggernaut"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies" npcidentifier="deep_grizzlies_team_juggernaut"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gl_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gl_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" submarinetype="outpost" />
@@ -657,21 +694,21 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_pigcat_reinforce_end.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_huohuade"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_huohuade"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_moonwolf"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_moonwolf"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_man"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_man"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_paidaxing"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_paidaxing"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_koishi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_koishi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_alice"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_alice"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_luoweier"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_luoweier"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaohua"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaohua"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="pigcatteam_2" targettag="deep_keycard"/>
       <WaitAction time="1" />
@@ -693,21 +730,21 @@
       <TagAction criteria="player" tag="player" />
       <ConversationAction text="EventText.deep_pigcat_reinforce_end_team3.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_binary"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_binary"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_FL"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_FL"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_heyuanmu"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_heyuanmu"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_cat_master"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_cat_master"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baka"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baka"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaochun"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xiaochun"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baixi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baixi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ruarua"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ruarua"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
 
       <Label name="deep_all_reinforce1_alive" />
@@ -727,17 +764,17 @@
       <TagAction criteria="player" tag="player" />
       <ConversationAction text="EventText.deep_pigcat_reinforce_end_team4.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_39"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_39"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangpai"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangpai"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_mark"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_mark"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xuefeng"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xuefeng"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_diluka"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_diluka"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_roger"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_roger"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
 
       <Label name="deep_all_reinforce1_alive" />
@@ -757,17 +794,17 @@
       <TagAction criteria="player" tag="player" />
       <ConversationAction text="EventText.deep_pigcat_reinforce_end_team5.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_noob"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_noob"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_top"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_top"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_handong"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_handong"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ludao"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ludao"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_douzi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_douzi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_pigbig"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_pigbig"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
 
       <Label name="deep_all_reinforce1_alive" />
@@ -787,17 +824,17 @@
       <TagAction criteria="player" tag="player" />
       <ConversationAction text="EventText.deep_pigcat_reinforce_end_team6.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangtuo"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangtuo"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ben"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_ben"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_rat_snake"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_rat_snake"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_50bro"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_50bro"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baidi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_baidi"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xianbei"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_xianbei"  LootingIsStealing="false" TeamID="2"  targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
 
       <Label name="deep_all_reinforce1_alive" />
@@ -823,11 +860,11 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_soldier"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_easy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_leader_easy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pirate_reinforce_normal_20min" commonness="150">
@@ -836,17 +873,17 @@
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
       <!-- 任务bgm改变，未完成<MissionStateAction missionidentifier="deep_destory_pirate_base_normal" operation="Set" value="2" />-->
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_normal_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_normal_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate" npcidentifier="deep_pirate_heavy"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_scout_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_scout_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_pirate_reinforce_hard_20min" commonness="150">
@@ -854,17 +891,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_pirate_reinforce_20min.c2" dialogtype="Small" eventsprite="pirate_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_leader_hard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_scout_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_pirate_elite" npcidentifier="deep_pirate_scout_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_separatists_reinforce_normal_20min" commonness="150">
@@ -872,17 +909,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_separatists_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_soldier_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_separatists_reinforce_hard_20min" commonness="150">
@@ -890,17 +927,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_separatists_reinforce_20min.c2" dialogtype="Small" eventsprite="separatists_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_blaster_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_blaster_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_separatists_elite" npcidentifier="deep_separatist_sniper_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_coalition_reinforce_hard_20min" commonness="150">
@@ -908,17 +945,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_coalition_reinforce_20min.c2" dialogtype="Small" eventsprite="coalition_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_heavy_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_leader_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_leader_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_blaster_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_co_elite" npcidentifier="deep_co_blaster_elite" LootingIsStealing="false"  TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_ghost_reinforce_20min" commonness="150">
@@ -926,17 +963,17 @@
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_ghost_reinforce_20min.c2" dialogtype="Small" eventsprite="ghost_reinforce"/>
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_Fearless_Vanguard_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_grenadier_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_leader_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_leader_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="0.5" />
-      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_ghost_elite" npcidentifier="deep_ghost_sniper_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
     </ScriptedEvent>
 
     <ScriptedEvent identifier="deep_grizzlies_reinforce_20min" commonness="150">
@@ -945,17 +982,17 @@
       <ConversationAction text="EventText.deep_grizzlies_reinforce_20min.c2" dialogtype="Small" eventsprite="grizzlies_reinforce"/>
       <MissionStateAction missionidentifier="deep_destory_grizzlies_base_hard" operation="Set" value="2" />
       <WaitAction time="10" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_machinegun_fort_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gunner_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gunner_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gunner_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gunner_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gl_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_heavy_gl_elite" LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
-      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_grizzlies_elite" npcidentifier="deep_grizzlies_leader_elite"  LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="600" />
       <MissionStateAction missionidentifier="deep_destory_grizzlies_base_hard" operation="Set" value="3" />
     </ScriptedEvent>
@@ -970,7 +1007,7 @@
       <WaitAction time="180" />
       <ConversationAction text="EventText.deep_pigcatman_reinforce.c1" dialogtype="Small" eventsprite="pigcat_1"/>
       <WaitAction time="5" />
-      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce_pigcatman" spawnlocation="Outpost" targetmoduletags="adminmodule" AllowInPlayerView="false" />
+      <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce_pigcatman" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       </Success>
       </RNGAction>
     </ScriptedEvent>
