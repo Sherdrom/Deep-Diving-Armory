@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_rifle_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_rifle_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" />
@@ -30,7 +30,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_smg_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_smg_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="3" />
@@ -59,7 +59,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_pistol_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_pistol_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="2" />
@@ -88,7 +88,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_sniper_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_sniper_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
@@ -117,7 +117,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_shotgun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_shotgun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" />
@@ -147,7 +147,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_machinegun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_machinegun_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
@@ -176,7 +176,7 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_gl_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem" scale="0.45" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_gl_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium_barrel" amount="3" />
@@ -199,6 +199,27 @@
         </StatusEffect>
         <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
           <RequiredItems tags="deep_gl_upgrade_tool_steel_tit" type="Contained" />
+          <remove />
+          <dropcontaineditems />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
+  <Item name="" identifier="deep_tun_phy_upgrade_tool" subcategory="part" category="Weapon" maxstacksize="1" Tags="smallitem,deep_tun_phy_upgrade_tool" scale="0.45" impactsoundtag="impact_metal_light">
+    <Sprite texture="%ModDir%/weapon/part/upgrade_tool.png" depth="0.65" sourcerect="242,14,161,142" origin="0.5,0.5" />
+    <Body width="160" height="140" density="20" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
+    <ItemContainer hideitems="true" capacity="1" drawinventory="true">
+      <Containable tags="deep_upgrade_tool_tun_phy"></Containable>
+    </ItemContainer>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="确认升级" connection="signal_out1">
+        <StatusEffect type="OnUse" target="Contained" delay="0.01" setvalue="true" Qualitylevel="3">
+          <RequiredItems tags="deep_upgrade_tool_tun_phy" type="Contained" />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="This" delay="0.5" setvalue="true">
+          <RequiredItems tags="deep_upgrade_tool_tun_phy" type="Contained" />
           <remove />
           <dropcontaineditems />
         </StatusEffect>
@@ -363,7 +384,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="SCAR_shield_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="SCAR_shield_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -380,7 +401,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="NTW_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="NTW_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -397,7 +418,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="gm6_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="gm6_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -414,7 +435,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="whiteeagle_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="whiteeagle_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -431,7 +452,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="m500_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="m500_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -448,7 +469,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="pp19_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="pp19_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -465,7 +486,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="vhs_d3_baka_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="vhs_d3_baka_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -482,7 +503,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="74m_103_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="74m_103_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -499,7 +520,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="meteorite_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="meteorite_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -516,7 +537,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="mg42_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="mg42_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -533,7 +554,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="aa12_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="aa12_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -550,7 +571,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="deep_xm25_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_xm25_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -567,7 +588,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="wuchuan_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="wuchuan_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -584,7 +605,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="gauss_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="gauss_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -601,7 +622,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="three_shotgun_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="three_shotgun_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -618,7 +639,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="rpd_thesun_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="rpd_thesun_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -635,7 +656,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="sa58_sheep_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="sa58_sheep_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -652,7 +673,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="mk17_peach_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="mk17_peach_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -669,7 +690,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="ar15_50_xiaohua_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ar15_50_xiaohua_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -686,7 +707,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="m14ebr_moonwolf_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="m14ebr_moonwolf_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
@@ -703,7 +724,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="saintpredator_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="saintpredator_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -720,7 +741,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="qbz95_chixiao_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="qbz95_chixiao_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -737,7 +758,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="qbz191_192_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="qbz191_192_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -754,7 +775,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="sr3m_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="sr3m_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -771,7 +792,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="ots14_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ots14_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -788,7 +809,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="asvalmod4_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="asvalmod4_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="10" />
@@ -805,7 +826,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="lyxn_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="lyxn_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -822,7 +843,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="izanagi_paidaxing_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="izanagi_paidaxing_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -839,7 +860,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="rm338_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="rm338_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -856,7 +877,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="6p41_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="6p41_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="14" />
@@ -873,7 +894,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="mygo74m_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="mygo74m_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -890,7 +911,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="g36c_roger_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="g36c_roger_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="8" />
@@ -907,7 +928,7 @@
       </StatusEffect>
     </Holdable>
   </Item>
-  <Item name="" identifier="MK22_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="MK22_design" subcategory="part" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem,rare_supply_create_4" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_ssd" amount="12" />
