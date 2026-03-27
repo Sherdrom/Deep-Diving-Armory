@@ -333,6 +333,16 @@
         </StatusEffect>
       </StatusEffectAction>
     </ScriptedEvent>
+
+     <!-- 湮灭炸弹 -->
+    <ScriptedEvent identifier="deep_meet_on_the_battleground_clear">
+    <TagAction criteria="structureidentifier:ff_x_wall" tag="targetclear" submarinetype="wreck" continueifnotargetsfound="true" />
+    <StatusEffectAction targettag="targetclear">
+        <StatusEffect target="This" maxhealth="0" >
+        <remove/>
+        </StatusEffect>
+    </StatusEffectAction>
+    </ScriptedEvent>
 	
      <ScriptedEvent identifier="deep_pigcat_easy" commonness="200">
       <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_easy" targettag="deep_pigcat_easy_captain" spawnlocation="Outpost" spawnpointtype="Path" targetmoduletags="adminmodule" />
@@ -1085,7 +1095,7 @@
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_heavy_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
       <SpawnAction npcsetidentifier="deep_separatists_hard" npcidentifier="deep_separatist_sniper_hard"   LootingIsStealing="false" TeamID="2"  targettag="reinforce" spawnlocation="Wreck" spawnpointtag="deep_enemy_spawn" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
-      <WaitAction time="4" />
+      <WaitAction time="1" />
       <SpawnAction itemidentifier="deep_white_keycard" targetinventory="reinforce" targettag="deep_keycard"/>
       <WaitAction time="5" />
       <ConversationAction text="EventText.deep_meet_on_the_battleground_separatists" dialogtype="Small" eventsprite="separatists_reinforce"/>
