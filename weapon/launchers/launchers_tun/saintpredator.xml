@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item identifier="deep_saintpredator" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount,zoom3x" scale="0.3" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredItem identifier="tungsten_phy_part" amount="4" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="6" />
+      <RequiredItem identifier="engineeringplastic" amount="4" />
+      <RequiredItem identifier="saintpredator_design" amount="1" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten" amount="2" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_45.png" sourcerect="1819,26,188,192" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_tun/saint_predator/Saint_Predator.png" sourcerect="28,13,499,151" depth="0.55" origin="0.5,0.5" />
+    <Body width="500" height="150" density="10" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/launchers/launchers_tun/saint_predator/Saint_Predator.png" canbehiddenbyotherwearables="false" sourcerect="28,13,499,151" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.3" origin="0.55,0.8" />
+      <StatValue stattype="MovementSpeed" value="-0.2" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="20,6" aimpos="20,6" handle1="40,-40" handle2="200,-30" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
+      <StatValue stattype="MovementSpeed" value="-0.4" />
+    </Holdable>
+    <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="250,22" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="256,256,256,256" />
+      <!-- 筒口特效 -->
+      <ParticleEmitter particle="flamethrower" particleamount="5" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <ParticleEmitter particle="deep_plasmaspark" particlespersecond="15" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.5" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.5" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.5" />
+      <StatusEffect type="OnUse" target="Character">
+        <LuaHook name="Deep_AirBurstBound" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" offset="-120,30">
+        <Explosion range="500.0" force="-3" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="150" />
+      </StatusEffect>
+      <RequiredItems tags="deep_clustermsl_saint" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="120" />
+      <!-- 武器操作技能 -->
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" comparison="and" targetlimbs="Head,LeftHand,RightHand">
+        <Conditional skillrequirement="true" weapons="lt 120" />
+        <Affliction identifier="stun" strength="8" />
+        <Affliction identifier="burn" strength="40" />
+      </StatusEffect>
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="400" barrelpos="80,-10" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="3" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true"></StatusEffect>
+      <RequiredItems items="deep_backblast_exec" type="Contained" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" containedstateindicatorslot="0" removecontaineditemsondeconstruct="false" containedstateindicatorstyle="bullet">
+      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
+      <Containable tags="deep_clustermsl_saint">
+        <StatusEffect type="OnContaining" target="This">
+          <SpawnItem identifiers="deep_backblast_exec" spawnposition="ThisInventory" />
+          <Conditional ReloadTimer="lte 0.1" />
+        </StatusEffect>
+        <!--换弹动画-->
+        <!-- 锁定弹药+弹药透明 -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" spritecolor="255,255,255,255" />
+        <!-- 弹药重新显示 -->
+        <StatusEffect type="OnRemoved" target="Contained" delay="0.5" setvalue="true" spritecolor="255,255,255,255" />
+        <!-- 解锁弹药  -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="6.5" setvalue="true" />
+        <!-- 竖放筒子  -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="200,-30" holdangle="-95" delay="0.05" setvalue="true" />
+        <!-- 打开盖子，左手准备打开 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="-340,-20" holdangle="-95" delay="1" setvalue="true" />
+        <!--打开盖子，左手打开 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,-5" handle2="-320,0" holdangle="-95" delay="2" setvalue="true" >
+               <LuaHook name="SaintOpenLidSprite" />
+        </StatusEffect>
+        <!--打开盖子，左手准备拿弹药 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,0" handle2="200,-30" holdangle="-95" delay="3" setvalue="true" />
+        <!--打开盖子，左手第一步放弹药 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="30,0" handle2="-340,-40" holdangle="-95" delay="4" setvalue="true" >
+               <LuaHook name="SaintReloadSprite" />
+        </StatusEffect>
+        <!--打开盖子，左手第二步放弹药 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,0" handle2="-320,20" holdangle="-95" delay="5" setvalue="true" >
+               <LuaHook name="SaintOpenLidSprite" />
+        </StatusEffect>
+        <!--关闭盖子 -->
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="-340,-20" holdangle="-95" delay="5.5" setvalue="true" >
+               <LuaHook name="SaintOriginSprite" />
+        </StatusEffect>
+
+
+        <!-- 回归常态  -->
+        <StatusEffect type="OnInserted" target="This" holdpos="20,6" aimpos="20,6" handle1="40,-40" handle2="200,-30" holdangle="-30" delay="6.5" setvalue="true" />
+        <StatusEffect type="OnInserted" target="This" condition="100"  setValue="true" disabledeltatime="true" delay="6.5" stackable="false" >
+               <LuaHook name="SaintOriginSprite" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" condition="0" setValue="true" disabledeltatime="true" delay="0.01"/>
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.5">
+          <sound file="%ModDir%/weapon/launchers/Sound/rocket_re_2.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="deep_backblast_exec" depth="0.55" />
+    </ItemContainer>
+    <CustomInterface canbeselected="true" drawhudwhenequipped="true">
+      <GuiFrame relativesize="0.1,0.1" anchor="BottomLeft" absoluteoffset="20,20" style="ItemUI" />
+      <TickBox text="ab_switch">
+        <StatusEffect type="OnUse" target="Contained" targetitemcomponent="Projectile" maxtargetstohit="1" setvalue="true" />
+        <StatusEffect type="OnSecondaryUse" target="Contained" targetitemcomponent="Projectile" maxtargetstohit="30" setvalue="true" />
+      </TickBox>
+    </CustomInterface>
+    <SkillRequirementHint identifier="weapons" level="120" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+</Items>
