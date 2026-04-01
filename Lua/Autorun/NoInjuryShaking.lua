@@ -50,3 +50,11 @@ Hook.Patch("Barotrauma.Character", "CalculateMovementPenalty", function(instance
 	return 0
 	end
 end, Hook.HookMethodType.Before)
+
+
+
+
+
+
+
+
