@@ -4,11 +4,11 @@ LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.Wearabl
 
 local WEAR_CONFIG = {
     Sound = {
-            OpenSound = {  sound = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Mask/MaskOpen.ogg"),
+            OpenSound = {  sound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/Sound/HelmetTac/Mask/MaskOpen.ogg"),
                             frequencyMultiplier = 1,
                             gain = 1,
                             range = 500},
-            CloseSound = { sound = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Mask/MaskClose.ogg"),
+            CloseSound = { sound = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/Sound/HelmetTac/Mask/MaskClose.ogg"),
                             frequencyMultiplier = 1,
                             gain = 1,
                             range = 500}

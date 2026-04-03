@@ -948,10 +948,10 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
+    <FactionMotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false" factiontarget="enemy" >
       <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
         <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
+        <Conditional targetitemcomponent="FactionMotionSensor" EnemyDetected="eq true" />
 
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
         <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
@@ -962,22 +962,7 @@
         </Explosion>
 
       </StatusEffect>
-    </MotionSensor>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
+    </FactionMotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_dangerous_left" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">

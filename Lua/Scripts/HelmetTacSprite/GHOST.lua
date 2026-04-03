@@ -4,7 +4,7 @@ LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.Wearabl
 
 local WEAR_CONFIG = {
     Sound = {
-            nightSound = {  turnOn = Game.SoundManager.LoadSound(... .. "/Sound/HelmetTac/Night/nightOn.ogg"),
+            nightSound = {  turnOn = Game.SoundManager.LoadSound(Deep_Lua.Path .. "/Sound/HelmetTac/Night/nightOn.ogg"),
                             frequencyMultiplier = 1,
                             gain = 1,
                             range = 500},
