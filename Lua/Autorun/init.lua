@@ -23,7 +23,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/NoInjuryShaking.lua")--止痛药
 dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
 
 --敌人脑子修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/test.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
 
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")

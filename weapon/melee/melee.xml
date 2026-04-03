@@ -19,7 +19,7 @@
     </Wearable>
     <MeleeWeapon slots="RightHand+LeftHand" blocksplayers="true" controlpose="true" holdpos="-20,-15" aimpos="40,-60" handle1="-70,-20" handle2="0,-20" holdangle="200" reload="1.2" range="800" combatPriority="200" msg="ItemMsgPickUpSelect">
 	<!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" delay="1" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
