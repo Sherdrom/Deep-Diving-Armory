@@ -162,7 +162,7 @@ namespace KillNotification
                         if (Character.Controlled == attacker)
                         {
                             // 播放音效
-                            SoundPlayer.PlaySound("deep_player_kill", 0.5f);
+                            SoundPlayer.PlaySound("deep_player_kill", 0.8f);
                         }
                     } catch {}
                 }
@@ -224,7 +224,7 @@ namespace KillNotification
                         if (Character.Controlled == attacker)
                         {
                             // 播放音效
-                            SoundPlayer.PlaySound("deep_player_kill", 0.5f);
+                            SoundPlayer.PlaySound("deep_player_kill", 0.8f);
                         }
                     } catch {}
                 }
