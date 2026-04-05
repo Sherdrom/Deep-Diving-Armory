@@ -15,7 +15,9 @@ namespace DeepHitMarker
     {
         public readonly string Name = "Deep Hit Marker";
         public static float HitHintTimer { get; set; }
+        public static float KillHintTimer { get; set; }
         public static int HitHintSize { get; set; } = 10;
+        public static int KillHintSize { get; set; } = 30;
         public static Color HitHintColor { get; set; }
         public static int CrosshairDistance { get; set; } = 12; // 从10改为20，让线条离中心更远
         public static bool IsHeadshot { get; set; }
@@ -67,6 +69,11 @@ namespace DeepHitMarker
 #endif
                     if (IsOutOfScreen(__instance.WorldPosition)) { return; }
                     HitHintTimer = 0.25f;
+                    // 当击杀生物时，设置 KillHintTimer
+                    if (__instance.IsDead)
+                    {
+                        KillHintTimer = 0.5f;
+                    }
                     // 使用不区分大小写的比较，并检查多种可能的头部名称
                     IsHeadshot = __result.HitLimb != null && 
                                  (__result.HitLimb.Name.ToLower() == "head" || 
@@ -103,6 +110,8 @@ namespace DeepHitMarker
         {
             HitHintTimer -= (float)Timing.Step;
             HitHintTimer = Math.Max(HitHintTimer, 0);
+            KillHintTimer -= (float)Timing.Step;
+            KillHintTimer = Math.Max(KillHintTimer, 0);
             return null;
         }
 
@@ -168,6 +177,14 @@ static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> inst
                                      new Vector2(position.X - CrosshairDistance, position.Y - CrosshairDistance),
                                      new Vector2(position.X - CrosshairDistance - HitHintSize, position.Y - CrosshairDistance - HitHintSize),
                                      HitHintColor, lineThickness);
+            
+            // 绘制击杀时的圆形反馈
+            if (KillHintTimer > 0)
+            {
+                float alpha = KillHintTimer / 0.1f; // 淡出效果
+                Color killColor = new Color(255, 0, 0, alpha * 255); // 红色
+                ShapeExtensions.DrawCircle(spriteBatch, position, KillHintSize, 32, killColor, 2f);
+            }
         }
     }
 

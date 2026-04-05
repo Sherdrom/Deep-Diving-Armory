@@ -1,4 +1,5 @@
 using Barotrauma;
+using Barotrauma.Sounds;
 using HarmonyLib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -142,6 +143,29 @@ namespace KillNotification
                 string victimName = GetCharacterName(character);
                 bool isVictimTeam1 = character.TeamID == CharacterTeamType.Team1;
                 killInfos.Add(new KillInfo(attackerName, victimName, NotificationDuration, false, null, isVictimTeam1));
+                
+                // 当 team1 生物死亡时播放音效
+                if (isVictimTeam1)
+                {
+                    try
+                    {
+                        // 播放音效
+                        SoundPlayer.PlaySound("deep_player_death", 0.5f);
+                    } catch {}
+                }
+                // 当不是 team1 的生物死亡时，播放击杀音效
+                else
+                {
+                    try
+                    {
+                        // 只有攻击者能听到击杀音效
+                        if (Character.Controlled == attacker)
+                        {
+                            // 播放音效
+                            SoundPlayer.PlaySound("deep_player_kill", 0.5f);
+                        }
+                    } catch {}
+                }
             }
             return null;
         }
@@ -177,6 +201,33 @@ namespace KillNotification
                 string attackerName = GetCharacterName(attacker);
                 string victimName = GetCharacterName(character);
                 killInfos.Add(new KillInfo(attackerName, victimName, NotificationDuration, false, null, isVictimTeam1));
+                
+                // 当 team1 生物死亡时播放音效
+                if (isVictimTeam1)
+                {
+                    try
+                    {
+                        // 播放指定路径的音效
+                        try
+                        {
+                            // 播放音效
+                            SoundPlayer.PlaySound("deep_player_death", 0.5f);
+                        } catch {}
+                    } catch {}
+                }
+                // 当不是 team1 的生物死亡时，也播放音效
+                else
+                {
+                    try
+                    {
+                        // 只有攻击者能听到击杀音效
+                        if (Character.Controlled == attacker)
+                        {
+                            // 播放音效
+                            SoundPlayer.PlaySound("deep_player_kill", 0.5f);
+                        }
+                    } catch {}
+                }
             }
             else
             {
@@ -223,6 +274,25 @@ namespace KillNotification
                 }
                 
                 killInfos.Add(new KillInfo(victimName, afflictionName, NotificationDuration, true, afflictionName, isVictimTeam1));
+                
+                // 当 team1 生物死亡时播放音效
+                if (isVictimTeam1)
+                {
+                    try
+                    {
+                        // 播放指定路径的音效
+                        try
+                        {
+                            // 播放音效
+                            SoundPlayer.PlaySound("deep_player_death", 0.5f);
+                        } catch {}
+                    } catch {}
+                }
+                // 当不是 team1 的生物死亡时，也播放音效
+                else
+                {
+                    // 找不到攻击者，不播放击杀音效
+                }
             }
             return null;
         }
@@ -295,12 +365,23 @@ namespace KillNotification
                 return "未知";
             }
 
-            // 对于 team1 的生物（玩家），使用原始名称
+            // 首先尝试获取角色的显示名称（无论是哪个团队）
+            if (!string.IsNullOrEmpty(character.Name))
+            {
+                return character.Name;
+            }
+
+            // 对于 team1 的生物（玩家），如果没有显示名称，使用其他方式获取
             if (character.TeamID == CharacterTeamType.Team1)
             {
-                if (!string.IsNullOrEmpty(character.Name))
+                // 尝试获取角色的 Prefab 名称
+                if (character.Prefab != null && character.Prefab.Name != null)
                 {
-                    return character.Name;
+                    string prefabName = character.Prefab.Name.ToString();
+                    if (!string.IsNullOrEmpty(prefabName))
+                    {
+                        return prefabName;
+                    }
                 }
             }
 
@@ -314,12 +395,6 @@ namespace KillNotification
                 {
                     return localizedName;
                 }
-            }
-
-            // 尝试获取角色的显示名称
-            if (!string.IsNullOrEmpty(character.Name))
-            {
-                return character.Name;
             }
 
             // 尝试获取角色的 Prefab 名称
