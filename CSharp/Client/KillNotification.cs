@@ -12,10 +12,11 @@ namespace KillNotification
     public class KillNotification : IAssemblyPlugin
     {
         public readonly string Name = "Kill Notification";
-        private const float NotificationDuration = 3f;
+        private const float NotificationDuration = 4f;
         private List<KillInfo> killInfos = new List<KillInfo>();
         public Harmony? harmonyInstance;
         public static KillNotification instance;
+        public static float FontScale = 1.8f; // 默认字体缩放因子
 
         public KillNotification()
         {
@@ -90,14 +91,15 @@ namespace KillNotification
                         text = $"{killInfo.AttackerName} Kill {killInfo.VictimName}";
                     }
                     
-                    // 使用较大的字体
-                    var font = GUIStyle.LargeFont ?? GUIStyle.Font ?? GUIStyle.SmallFont;
+                    // 使用默认字体
+                    var font = GUIStyle.Font ?? GUIStyle.SmallFont;
                     if (font == null)
                     {
                         continue;
                     }
                     
-                    Vector2 textSize = font.MeasureString(text);
+                    // 计算缩放后的文本大小
+                    Vector2 textSize = font.MeasureString(text) * FontScale;
                     
                     Vector2 position = new Vector2(
                         GameMain.GraphicsWidth - textSize.X - 20f,
@@ -107,7 +109,15 @@ namespace KillNotification
                     // 使用 GUI.DrawString 方法绘制
                     try
                     {
-                        GUI.DrawString(spriteBatch, position, text, color, Color.Black * 0.5f, 0, font);
+                        // 保存当前的spriteBatch状态
+                        spriteBatch.End();
+                        // 开始一个新的spriteBatch，应用缩放变换
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.CreateScale(FontScale));
+                        // 绘制文本
+                        GUI.DrawString(spriteBatch, position / FontScale, text, color, Color.Black * 0.5f, 0, font);
+                        // 恢复原始的spriteBatch状态
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
                     } catch {}
                     
                     yOffset += textSize.Y + spacing;
