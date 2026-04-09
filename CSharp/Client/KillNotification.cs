@@ -176,8 +176,8 @@ namespace KillNotification
                 {
                     try
                     {
-                        // 只有攻击者能听到击杀音效
-                        if (Character.Controlled == attacker)
+                        // 只有攻击者能听到击杀音效，且受害者必须是Human类型
+                        if (Character.Controlled == attacker && character.IsHuman)
                         {
                             // 播放音效
                             SoundPlayer.PlaySound("deep_player_kill", 0.8f);
@@ -238,8 +238,8 @@ namespace KillNotification
                 {
                     try
                     {
-                        // 只有攻击者能听到击杀音效
-                        if (Character.Controlled == attacker)
+                        // 只有攻击者能听到击杀音效，且受害者必须是Human类型
+                        if (Character.Controlled == attacker && character.IsHuman)
                         {
                             // 播放音效
                             SoundPlayer.PlaySound("deep_player_kill", 0.8f);
