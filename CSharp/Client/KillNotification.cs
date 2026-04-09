@@ -39,9 +39,17 @@ namespace KillNotification
         public void Dispose()
         {
             harmonyInstance?.UnpatchSelf();
-            GameMain.LuaCs.Hook.Remove("think", "KillNotificationThink");
-            GameMain.LuaCs.Hook.Remove("attack", "KillNotificationAttack");
-            GameMain.LuaCs.Hook.Remove("characterDeath", "KillNotificationCharacterDeath");
+            // 使用反射来调用Remove方法，以避免依赖于具体的接口定义
+            try
+            {
+                System.Reflection.MethodInfo removeMethod = GameMain.LuaCs.Hook.GetType().GetMethod("Remove", new[] { typeof(string), typeof(string) });
+                if (removeMethod != null)
+                {
+                    removeMethod.Invoke(GameMain.LuaCs.Hook, new object[] { "think", "KillNotificationThink" });
+                    removeMethod.Invoke(GameMain.LuaCs.Hook, new object[] { "attack", "KillNotificationAttack" });
+                    removeMethod.Invoke(GameMain.LuaCs.Hook, new object[] { "characterDeath", "KillNotificationCharacterDeath" });
+                }
+            } catch {}
         }
 
         public void PreInitPatching()
