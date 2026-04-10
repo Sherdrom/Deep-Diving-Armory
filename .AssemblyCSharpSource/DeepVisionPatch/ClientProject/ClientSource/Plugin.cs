@@ -1,17 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-using Barotrauma;
+﻿using Barotrauma.Lights;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Barotrauma.Items.Components;
-using Barotrauma.Lights;
+
 
 namespace DeepVisionPatch
 {
+    partial class DeepVisionPatch
+    {
+        private Harmony? _harmonyInstance;
+
+        // Texture creators - initialized during OnLoadCompleted
+        public static CreateViewTexture ViewTexture { get; } = new CreateViewTexture();
+        public static CreateNightVisionTexture GreenNightVisionTexture { get; } = new CreateNightVisionTexture();
+        public static CreateNightVisionTexture BlueNightVisionTexture { get; } = new CreateNightVisionTexture();
+
+        partial void InitlizeProjSpecific()
+        {
+            // Called when plugin is loading - use for initialization that doesn't depend on other plugins
+            _harmonyInstance = new Harmony("DeepVisionPatch");
+        }
+
+        partial void OnLoadCompletedProjSpecific()
+        {
+            // Called after all plugins have loaded - use for plugin interactions and final initialization
+            _harmonyInstance?.PatchAll();
+            // Initialize texture creators with their specific parameters
+            ViewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
+            GreenNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));
+            BlueNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 0, 255, 50));
+        }
+
+        partial void DisposeProjSpecific()
+        {
+            // Cleanup resources
+            _harmonyInstance?.UnpatchSelf();
+        }
+    }
+
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {

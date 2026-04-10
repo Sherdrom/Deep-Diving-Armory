@@ -23,7 +23,6 @@ namespace PirateMissionPatch
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("PirateMissionPatch");
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] PirateMissionPatch Initialized!");
         }
 
         public void OnLoadCompleted()
@@ -31,7 +30,6 @@ namespace PirateMissionPatch
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] PirateMissionPatch Loaded!");
         }
 
         public void PreInitPatching()
@@ -43,7 +41,6 @@ namespace PirateMissionPatch
         {
             // Cleanup your plugin!
             harmonyInstance?.UnpatchSelf();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] PirateMissionPatch Disposed!");
         }
 
         [HarmonyPatch(typeof(PirateMission), nameof(PirateMission.StartMissionSpecific))]

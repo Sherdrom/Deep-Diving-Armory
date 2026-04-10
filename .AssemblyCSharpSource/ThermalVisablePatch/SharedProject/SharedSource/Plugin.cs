@@ -1,17 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using HarmonyLib;
-using Barotrauma;
-using Barotrauma.Networking;
-using Microsoft.Xna.Framework;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Collections.Generic;
-
-[assembly: IgnoresAccessChecksTo("Barotrauma")]
-[assembly: IgnoresAccessChecksTo("DedicatedServer")]
-[assembly: IgnoresAccessChecksTo("BarotraumaCore")]
-
-namespace ThermalVisablePatch
+﻿namespace ThermalVisablePatch
 {
     public partial class ThermalVisablePatch : IAssemblyPlugin
     {
@@ -25,7 +12,6 @@ namespace ThermalVisablePatch
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("ThermalVisablePatch");
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Initialized!");
         }
 
         public void OnLoadCompleted()
@@ -35,7 +21,7 @@ namespace ThermalVisablePatch
             harmonyInstance?.PatchAll();
 #if CLIENT
             // 注册同步HideInThermalGoggles的网络消息处理
-            GameMain.LuaCs.Networking.Receive("SyncHideInThermalGoggles", args =>
+            LuaCsSetup.Instance.Networking.Receive("SyncHideInThermalGoggles", args =>
             {
                 var netMessage = args[0] as IReadMessage;
                 if (netMessage == null) return;
@@ -56,7 +42,6 @@ namespace ThermalVisablePatch
                 }
             });
 #endif
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Loaded!");
         }
 
         public void PreInitPatching()
@@ -68,7 +53,6 @@ namespace ThermalVisablePatch
         {
             // Cleanup your plugin!
             harmonyInstance?.UnpatchSelf();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] ThermalVisablePatch Disposed!");
         }
 
         public static void NPCHideInThermalGoggles(Character character)
@@ -93,10 +77,10 @@ namespace ThermalVisablePatch
                 LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] SERVER: Hiding '{character.Name}'.");
                 character.Params.HideInThermalGoggles = true;
                 // 同步到所有客户端
-                var message = GameMain.LuaCs.Networking.Start("SyncHideInThermalGoggles");
+                var message = LuaCsSetup.Instance.Networking.Start("SyncHideInThermalGoggles");
                 message.WriteUInt16(character.ID); // 角色唯一ID
                 message.WriteBoolean(true);
-                GameMain.LuaCs.Networking.Send(message);
+                LuaCsSetup.Instance.Networking.Send(message);
 #elif CLIENT
                 if (GameMain.IsSingleplayer)
                 {

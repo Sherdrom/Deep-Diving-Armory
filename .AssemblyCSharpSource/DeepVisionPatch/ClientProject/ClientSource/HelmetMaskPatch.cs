@@ -23,7 +23,7 @@ public class HelmetMaskPatch
     public static void Postfix()
     {
         // ALTYN mask - close
-        GameMain.LuaCs.Hook.Add("ALTYN_Origin", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("ALTYN_Origin", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
@@ -36,7 +36,7 @@ public class HelmetMaskPatch
         });
 
         // ALTYN mask - open
-        GameMain.LuaCs.Hook.Add("ALTYN_Open", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("ALTYN_Open", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
@@ -49,7 +49,7 @@ public class HelmetMaskPatch
         });
 
         // MASKA mask - close
-        GameMain.LuaCs.Hook.Add("MASKA_Origin", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("MASKA_Origin", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
@@ -62,7 +62,7 @@ public class HelmetMaskPatch
         });
 
         // MASKA mask - open
-        GameMain.LuaCs.Hook.Add("MASKA_Open", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("MASKA_Open", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
