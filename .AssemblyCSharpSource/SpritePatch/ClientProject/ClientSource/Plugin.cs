@@ -1,10 +1,4 @@
-﻿using HarmonyLib;
-using Barotrauma;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-
-namespace SpritePatch
+﻿namespace SpritePatch
 {
     [HarmonyPatch]
     public static class UniversalSpritePatch

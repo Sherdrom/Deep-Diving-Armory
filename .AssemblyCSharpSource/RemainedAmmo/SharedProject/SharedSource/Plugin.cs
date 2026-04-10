@@ -1,22 +1,15 @@
-﻿using Barotrauma;
-using HarmonyLib;
-using System.Runtime.CompilerServices;
-
-[assembly: IgnoresAccessChecksTo("Barotrauma")]
-[assembly: IgnoresAccessChecksTo("DedicatedServer")]
-[assembly: IgnoresAccessChecksTo("BarotraumaCore")]
-
-namespace RemainedAmmo
+﻿namespace RemainedAmmo
 {
     public partial class RemainedAmmo : IAssemblyPlugin
     {
+        public ILoggerService LoggerService { get; set; }
+        
         public Harmony? harmonyInstance;
         public void Initialize()
         {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("RemainedAmmo");
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo Initialized!");
         }
 
         public void OnLoadCompleted()
@@ -24,7 +17,6 @@ namespace RemainedAmmo
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo Loaded!");
         }
 
         public void PreInitPatching()
@@ -36,7 +28,6 @@ namespace RemainedAmmo
         {
             // Cleanup your plugin!
             harmonyInstance?.UnpatchSelf();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] RemainedAmmo Disposed!");
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using Barotrauma;
-using Barotrauma.Networking;
-using HarmonyLib;
-using MonoGame.Utilities;
-
-namespace ThermalVisablePatch
+﻿namespace ThermalVisablePatch
 {
     public partial class ThermalVisablePatch : IAssemblyPlugin
     {
@@ -21,10 +16,10 @@ namespace ThermalVisablePatch
                 {
                     if (character.Params.HideInThermalGoggles)
                     {
-                        var syncMsg = GameMain.LuaCs.Networking.Start("SyncHideInThermalGoggles");
+                        var syncMsg = LuaCsSetup.Instance.Networking.Start("SyncHideInThermalGoggles");
                         syncMsg.WriteUInt16(character.ID);
                         syncMsg.WriteBoolean(true);
-                        GameMain.LuaCs.Networking.Send(syncMsg, owner.Connection);
+                        LuaCsSetup.Instance.Networking.Send(syncMsg, owner.Connection);
                     }
                 }
             }

@@ -1,16 +1,5 @@
-﻿using System.Collections.Immutable;
-using Barotrauma;
-using Microsoft.Xna.Framework;
+﻿using Barotrauma.Items.Components;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Linq;
-using Barotrauma.Items.Components;
-using FarseerPhysics.Dynamics;
-using HarmonyLib;
-using System.Reflection.Emit;
-using Color = Microsoft.Xna.Framework.Color;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using static Barotrauma.Inventory;
 
 namespace RemainedAmmo

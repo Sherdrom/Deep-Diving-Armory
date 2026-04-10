@@ -22,7 +22,7 @@ public class NightVisionPatch
     public static void Postfix()
     {
         // Hook to turn off night vision
-        GameMain.LuaCs.Hook.Add("NightVision_Off", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("NightVision_Off", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
@@ -36,7 +36,7 @@ public class NightVisionPatch
         });
 
         // Hook to turn on night vision
-        GameMain.LuaCs.Hook.Add("NightVision_On", (object[] args) =>
+        LuaCsSetup.Instance.Hook.Add("NightVision_On", (object[] args) =>
         {
             Item item = (Item)args[2];
             if (item == null) return null;
