@@ -1,9 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModConfig>
-
+    <!--Lua-->
     <Lua File="%ModDir%/Lua/Autorun/init.lua" IsAutorun="true"/>
 
+    <!--In-Memory-->
+    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client"/>
+    <Assembly File="%ModDir%/CSharp/Client/KillNotification.cs" IsScript="true" Target="Client"/>
 
+    <Assembly File="%ModDir%/CSharp/Shared/HeadshotOnlyMod.cs" IsScript="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/HumanAIIgnoreEnemyAIPatch.cs" IsScript="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/IgnoreArmLimbsMod.cs" IsScript="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/NoCollisionHoldable.cs" IsScript="true"/>
+
+    <!--Assemblies-->
     <Assembly File="%ModDir%/bin/Client/Linux/DeepVisionPatch.dll" Target="Client" Platform="Linux"/>
     <Assembly File="%ModDir%/bin/Client/OSX/DeepVisionPatch.dll" Target="Client" Platform="OSX"/>
     <Assembly File="%ModDir%/bin/Client/Windows/DeepVisionPatch.dll" Target="Client" Platform="Windows"/>
