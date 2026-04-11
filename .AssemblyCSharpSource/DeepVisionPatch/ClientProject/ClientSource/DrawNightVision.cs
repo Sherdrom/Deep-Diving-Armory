@@ -40,6 +40,8 @@ public class DrawNightVision
             // X轴和Y轴分别缩放以填充整个屏幕
             var scaleVector = new Vector2(viewport.Width / texture.Width * 1.3f, viewport.Height / texture.Height * 1.3f);
             spriteBatch.Draw(texture, center, null, Color.White, 0f, origin, scaleVector, SpriteEffects.None, 0f);
+            // Draw lightweight scanline overlay without modifying the main texture
+            nvTexture.DrawOverlay(spriteBatch, center, scaleVector);
         }
         spriteBatch.End();
     }
