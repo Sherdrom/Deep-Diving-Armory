@@ -8,15 +8,6 @@ namespace DeepVisionPatch;
 [HarmonyPatch(typeof(GameScreen),nameof(GameScreen.DrawMap))]
 public class DrawNightVision
 {
-    private static CreateNightVisionTexture _nvTexture = DeepVisionPatch.GreenNightVisionTexture;   // 默认为绿色
-
-    private static readonly Dictionary<string, CreateNightVisionTexture> nvColor = new Dictionary<string, CreateNightVisionTexture>
-    {
-        ["NVG_Green"] = DeepVisionPatch.GreenNightVisionTexture,     // 绿色夜视仪
-        ["NVG_Blue"]  = DeepVisionPatch.BlueNightVisionTexture       // 蓝色夜视仪
-
-    };
-
     public static void Postfix(GameScreen __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, double deltaTime)
     {
         Character character = Character.Controlled;
@@ -31,23 +22,7 @@ public class DrawNightVision
         NightVisionPatch.NightVisionStatus.TryGetValue(headItem.ID, out bool NVStatus);
         if (!NVStatus) { return; }
 
-        // 以下通过_nvTexture和item的Tag来设置夜视仪的颜色
-        foreach (Item item in headItems)
-        {
-            if (item?.HasTag("NightVisionGoggle") != null) // 获取夜视仪item
-            {
-                // 通过字典设置_nvTexture
-                foreach (KeyValuePair<string, CreateNightVisionTexture> kvp in nvColor)
-                {
-                    if (item.HasTag(kvp.Key))
-                    {
-                        _nvTexture = kvp.Value;
-                    }
-                }
-            }
-        }
-
-        DrawNightVisionTexture(spriteBatch, deltaTime, graphics, _nvTexture);
+        DrawNightVisionTexture(spriteBatch, deltaTime, graphics, DeepVisionPatch.CurrentNVTexture);
     }
     
     public static void DrawNightVisionTexture(SpriteBatch spriteBatch, double deltaTime, GraphicsDevice graphics, CreateNightVisionTexture nvTexture)

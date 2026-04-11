@@ -1,4 +1,7 @@
-﻿namespace DeepVisionPatch
+﻿using Barotrauma.LuaCs;
+using Barotrauma.LuaCs.Data;
+
+namespace DeepVisionPatch
 {
     /// <summary>
     /// Deep Vision Patch Plugin
@@ -6,6 +9,11 @@
     /// </summary>
     public partial class DeepVisionPatch : IAssemblyPlugin
     {
+        private ContentPackage package;
+
+        public IConfigService LuaCsConfigService { get; set; }
+        public IPluginManagementService LuaCsPluginService { get; set; }
+
         partial void InitlizeProjSpecific();
         partial void OnLoadCompletedProjSpecific();
         partial void DisposeProjSpecific();
@@ -14,6 +22,7 @@
         {
             InitlizeProjSpecific();
         }
+
 
         public void OnLoadCompleted()
         {

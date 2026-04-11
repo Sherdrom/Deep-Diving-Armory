@@ -1,4 +1,5 @@
 ﻿using Barotrauma.Lights;
+using Barotrauma.LuaCs.Data;
 using Microsoft.Xna.Framework.Graphics;
 
 
@@ -7,14 +8,34 @@ namespace DeepVisionPatch
     partial class DeepVisionPatch
     {
         private Harmony? _harmonyInstance;
+        private static String CurrentColorMode;
 
         // Texture creators - initialized during OnLoadCompleted
         public static CreateViewTexture ViewTexture { get; } = new CreateViewTexture();
-        public static CreateNightVisionTexture GreenNightVisionTexture { get; } = new CreateNightVisionTexture();
-        public static CreateNightVisionTexture BlueNightVisionTexture { get; } = new CreateNightVisionTexture();
+        private static CreateNightVisionTexture GreenNightVisionTexture { get; } = new CreateNightVisionTexture();
+        private static CreateNightVisionTexture BlueNightVisionTexture { get; } = new CreateNightVisionTexture();
+
+        public static CreateNightVisionTexture CurrentNVTexture 
+        { 
+            get
+            {
+                if (CurrentColorMode == "White Phosphorus") { return BlueNightVisionTexture; }
+                return GreenNightVisionTexture;
+            }
+        }
 
         partial void InitlizeProjSpecific()
         {
+            LuaCsPluginService.TryGetPackageForPlugin<DeepVisionPatch>(out ContentPackage ResultPackage);
+            package = ResultPackage;
+
+            LuaCsConfigService.TryGetConfig(package, "NVGColorMode", out ISettingBase SetColor);
+            CurrentColorMode = SetColor.GetStringValue();
+            SetColor.OnValueChanged += _ =>
+            {
+                CurrentColorMode = SetColor.GetStringValue();
+            };
+
             // Called when plugin is loading - use for initialization that doesn't depend on other plugins
             _harmonyInstance = new Harmony("DeepVisionPatch");
         }
