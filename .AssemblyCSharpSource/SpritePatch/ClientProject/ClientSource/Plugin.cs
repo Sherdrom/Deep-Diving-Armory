@@ -54,19 +54,22 @@
         {
             if (original == null) return null;
             Sprite clone = new Sprite(original);
-            clone.Origin = original.Origin; 
-            clone.Depth = original.Depth;   
-            clone.size = original.size; 
-            clone.effects = original.effects; 
-            clone.identifier = original.identifier; 
+            clone.Origin = original.Origin;
+            clone.Depth = original.Depth;
+            clone.size = original.size;
+            clone.effects = original.effects;
+            clone.rotation = original.rotation;
+            clone.identifier = original.identifier;
             clone.cannotBeLoaded = original.cannotBeLoaded;
-            clone.loadingAsync = false; 
+            clone.loadingAsync = false;
             clone.LazyLoad = original.LazyLoad;
             clone.RelativeSize = original.RelativeSize;
-            clone.Compress = original.Compress; 
-            clone.SourceElement = original.SourceElement; 
-            clone.EntityIdentifier = original.EntityIdentifier; 
+            clone.Compress = original.Compress;
+            clone.SourceElement = original.SourceElement;
+            clone.EntityIdentifier = original.EntityIdentifier;
             clone.Name = original.Name;
+            clone.offset = original.offset;
+            clone.FilePath = original.FilePath;
             return clone;
         }
     }
