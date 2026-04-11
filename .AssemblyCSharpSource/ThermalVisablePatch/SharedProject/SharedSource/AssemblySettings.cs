@@ -18,4 +18,4 @@ global using Barotrauma.Networking;
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
 
-namespace MyModName;
+namespace ThermanVisablePatch;

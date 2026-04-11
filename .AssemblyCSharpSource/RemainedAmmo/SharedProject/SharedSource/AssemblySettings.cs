@@ -17,4 +17,4 @@ global using HarmonyLib;
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
 
-namespace MyModName;
+namespace RemainedAmmo;
