@@ -126,7 +126,7 @@ namespace RemainedAmmo
             if(remainedAmmo<10){ammoString = "0" + remainedAmmo;}
             else {ammoString = remainedAmmo.ToString();}
             var scale = rangedWeapon.currentCrossHairScale;
-            Color indicatorColor = new Color(230,26,18,255);
+            Color indicatorColor = new Color(207,207,207,255);
             Vector2 TextPos = rangedWeapon.crosshairPos;
             // 如果是双持武器，且是左手武器，将数字放在左边
             Character character = (Character)rangedWeapon.Item.ParentInventory.Owner;
