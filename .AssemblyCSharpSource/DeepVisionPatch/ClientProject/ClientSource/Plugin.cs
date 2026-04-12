@@ -27,9 +27,9 @@ namespace DeepVisionPatch
         partial void InitlizeProjSpecific()
         {
             LuaCsPluginService.TryGetPackageForPlugin<DeepVisionPatch>(out ContentPackage ResultPackage);
-            package = ResultPackage;
+            Package = ResultPackage;
 
-            LuaCsConfigService.TryGetConfig(package, "NVGColorMode", out ISettingBase SetColor);
+            LuaCsConfigService.TryGetConfig(Package, "NVGColorMode", out ISettingBase SetColor);
             CurrentColorMode = SetColor.GetStringValue();
             SetColor.OnValueChanged += _ =>
             {
@@ -79,7 +79,7 @@ namespace DeepVisionPatch
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
             if (rightHand == null && leftHand == null && headItem == null) { return true; }
             if (!((rightHand != null && (rightHand.HasTag("weapon")||rightHand.HasTag("ObstructVision")))|| (leftHand != null && (leftHand.HasTag("weapon")||leftHand.HasTag("ObstructVision"))) || headItem != null && headItem.HasTag("ObstructVision"))) { return true; }
-            if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
+            if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name)) { return true; }
             if (character == null || (!character.IsKeyDown(InputType.Aim)&& !((rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")) || headItem != null && headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }

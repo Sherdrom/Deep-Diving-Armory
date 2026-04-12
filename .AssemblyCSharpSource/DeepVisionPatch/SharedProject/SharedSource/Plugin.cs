@@ -9,7 +9,7 @@ namespace DeepVisionPatch
     /// </summary>
     public partial class DeepVisionPatch : IAssemblyPlugin
     {
-        private ContentPackage package;
+        public static ContentPackage Package { get; private set; }
 
         public IConfigService LuaCsConfigService { get; set; }
         public IPluginManagementService LuaCsPluginService { get; set; }
