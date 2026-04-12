@@ -69,7 +69,7 @@ namespace RemainedAmmo
             // 支持RangedWeapon和SwitchableRangedWeapon
             if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
 
-            if(rangedWeapon.Item.Prefab.ContentPackage == null || !rangedWeapon.Item.Prefab.ContentPackage.Name.Contains("Deep Diving Armory") || rangedWeapon.Item.HasTag("noammocount")) {return;}
+            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != RemainedAmmo.Package.Name || rangedWeapon.Item.HasTag("noammocount")) {return;}
             int remainedAmmo = 0;
             var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (ItemContainer == null) { return; }
