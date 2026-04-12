@@ -4,13 +4,13 @@
     <Lua File="%ModDir%/Lua/Autorun/init.lua" IsAutorun="true"/>
 
     <!--In-Memory-->
-    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client"/>
-    <Assembly File="%ModDir%/CSharp/Client/KillNotification.cs" IsScript="true" Target="Client"/>
+    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>
+    <Assembly File="%ModDir%/CSharp/Client/KillNotification.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>
 
-    <Assembly File="%ModDir%/CSharp/Shared/HeadshotOnlyMod.cs" IsScript="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/HumanAIIgnoreEnemyAIPatch.cs" IsScript="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/IgnoreArmLimbsMod.cs" IsScript="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/NoCollisionHoldable.cs" IsScript="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/HeadshotOnlyMod.cs" IsScript="true" UseInternalAccessName="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/HumanAIIgnoreEnemyAIPatch.cs" IsScript="true" UseInternalAccessName="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/IgnoreArmLimbsMod.cs" IsScript="true" UseInternalAccessName="true"/>
+    <Assembly File="%ModDir%/CSharp/Shared/NoCollisionHoldable.cs" IsScript="true" UseInternalAccessName="true"/>
 
     <!--Assemblies-->
     <Assembly File="%ModDir%/bin/Client/Linux/DeepVisionPatch.dll" Target="Client" Platform="Linux"/>
