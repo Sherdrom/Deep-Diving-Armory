@@ -132,7 +132,7 @@ end,
 -- aff控制AI取消所有命令，用于交战区防止冲家(26.4.1;17:23 By peach)
 local TARGET_AFFLICTION = "deep_cancel_order_detect"
 -- 执行间隔（秒）
-local CHECK_INTERVAL = 3
+local CHECK_INTERVAL = 1
 -- 上次执行时间
 local lastCheckTime = 0
 
@@ -158,53 +158,61 @@ Hook.Add("think", "CheckBurnAndCancelOrders", function()
             
             -- 如果有deep_cancel_order_detect Affliction且强度大于0.5
             if afflictionStrength > 0.5 then
-                -- 检查角色是否有命令
-                if character.CurrentOrders and #character.CurrentOrders > 0 then
                     -- 创建取消命令的命令
                     local dismissalOrder = OrderPrefab.Dismissal.CreateInstance(OrderPrefab.OrderTargetType.Entity, character)
                     -- 设置命令，取消所有现有命令
                     character.SetOrder(dismissalOrder, true, false)
-                end
             end
         end
     end
 end)
 
--- aff控制AI抵御入侵者，用于追猎者(26.4.1;18:25 By peach)
-local TARGET_AFFLICTION_HUNTING = "deep_hunting_order_detect"
+-- aff控制AI抵御入侵者，用于追猎者(26.4.1;18:25 By peach) 
+local TARGET_AFFLICTION_HUNTING = "deep_hunting_order_detect" 
+local CHECK_INTERVAL = 1.0 -- 检查间隔，单位秒
+local lastCheckTime = 0 -- 上次检查时间
 
--- 监听游戏更新事件
-Hook.Add("think", "CheckGunshotWoundAndGiveFightOrderToAI", function()
-    -- 获取当前时间（秒）
-    local currentTime = Timer.GetTime()
+-- 监听游戏更新事件 
+Hook.Add("think", "CheckGunshotWoundAndGiveFightOrderToAI", function() 
+    -- 获取当前时间（秒） 
+    local currentTime = Timer.GetTime() 
     
-    -- 检查是否达到执行间隔
-    if currentTime - lastCheckTime < CHECK_INTERVAL then
-        return -- 未达到间隔，跳过执行
-    end
+    -- 检查是否达到执行间隔 
+    if currentTime - lastCheckTime < CHECK_INTERVAL then 
+        return -- 未达到间隔，跳过执行 
+    end 
     
-    -- 更新上次执行时间
-    lastCheckTime = currentTime
+    -- 更新上次执行时间 
+    lastCheckTime = currentTime 
     
-    -- 遍历所有角色
-    for _, character in pairs(Character.CharacterList) do
-        -- 检查角色是否是人类且是AI控制
-        if character.IsHuman and character.IsAIControlled then
-            -- 检查角色是否有deep_hunting_order_detect Affliction（使用identifier）
-            local afflictionStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION_HUNTING)
+    -- 遍历所有角色 
+    for _, character in pairs(Character.CharacterList) do 
+        -- 只检查角色是否是人类 
+        if character.IsHuman then 
+            -- 检查角色是否有deep_hunting_order_detect Affliction（使用identifier） 
+            local afflictionStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION_HUNTING) 
             
-            -- 如果有deep_hunting_order_detect Affliction且强度大于0.5
-            if afflictionStrength > 0.5 then
-                -- 检查fightintruders命令是否存在
-                if OrderPrefab.Prefabs["fightintruders"] then
-                    -- 创建fightintruders命令
-                    local fightOrder = OrderPrefab.Prefabs["fightintruders"].CreateInstance(OrderPrefab.OrderTargetType.Entity, character)
-                    -- 设置命令
-                    character.SetOrder(fightOrder, true, false)
-                end
-            end
-        end
-    end
+            -- 如果有deep_hunting_order_detect Affliction且强度大于0.5 
+            if afflictionStrength > 0.5 then 
+                -- 检查fightintruders命令是否存在 
+                if OrderPrefab.Prefabs["fightintruders"] then 
+                    -- 创建fightintruders命令 
+                    local fightOrder = OrderPrefab.Prefabs["fightintruders"].CreateInstance(OrderPrefab.OrderTargetType.Entity, character) 
+                    -- 设置命令，使用force=true确保命令被强制设置
+                    character.SetOrder(fightOrder, true, false, true) 
+                    
+                    -- 尝试获取AI控制器并强制重新评估目标
+                    if character.AIController then
+                        -- 直接尝试调用SetForcedOrder，不需要检查类型
+                        -- 在Lua中，我们无法直接检查C#对象的类型，所以直接尝试调用
+                        pcall(function()
+                            character.AIController.SetForcedOrder(fightOrder)
+                        end)
+                    end
+                end 
+            end 
+        end 
+    end 
 end)
 
 
