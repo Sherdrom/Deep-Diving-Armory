@@ -13,7 +13,6 @@ namespace DeepVisionPatch
 
         public IConfigService LuaCsConfigService { get; set; }
         public IPluginManagementService LuaCsPluginService { get; set; }
-        public ILuaEventService eventService { get; set; }
         private NightVisionPatch _nightVisionPatch;
         private HelmetMaskPatch _helmetMaskPatch;
 
