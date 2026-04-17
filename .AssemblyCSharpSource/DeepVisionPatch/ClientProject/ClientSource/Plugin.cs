@@ -97,7 +97,7 @@ namespace DeepVisionPatch
                     {
                         headItem = null;
                         if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")))) { return true; }
-                        if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
+                        if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name)) { return true; }
                     }
                 }
             }
