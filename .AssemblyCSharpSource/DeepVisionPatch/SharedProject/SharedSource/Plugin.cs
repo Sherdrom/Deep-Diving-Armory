@@ -13,6 +13,8 @@ namespace DeepVisionPatch
 
         public IConfigService LuaCsConfigService { get; set; }
         public IPluginManagementService LuaCsPluginService { get; set; }
+        private NightVisionPatch _nightVisionPatch;
+        private HelmetMaskPatch _helmetMaskPatch;
 
         partial void InitlizeProjSpecific();
         partial void OnLoadCompletedProjSpecific();
@@ -21,6 +23,13 @@ namespace DeepVisionPatch
         public void Initialize()
         {
             InitlizeProjSpecific();
+            // 1. 获取 ILuaEventService
+            if (LuaCsSetup.Instance?.Hook is ILuaEventService eventService)
+            {
+                // 2. 初始化 NightVisionPatch 和 HelmetMaskPatch
+                _nightVisionPatch = new NightVisionPatch(eventService);
+                _helmetMaskPatch = new HelmetMaskPatch(eventService);
+            }
         }
 
 

@@ -16,62 +16,66 @@ public class HelmetMaskPatch
     /// </summary>
     public static Dictionary<ushort, bool> MaskStatus { get; } = new Dictionary<ushort, bool>();
 
+    public HelmetMaskPatch(ILuaEventService luaEventService)
+    {
+        // 在构造函数中只注册一次 Hook
+        RegisterHooks(luaEventService);
+    }
+
     /// <summary>
     /// Sets up Lua hooks for mask control
     /// Called after character control patch
     /// </summary>
-    public static void Postfix()
+    private void RegisterHooks(ILuaEventService luaEventService)
     {
         // ALTYN mask - close
-        LuaCsSetup.Instance.Hook.Add("ALTYN_Origin", (object[] args) =>
+        luaEventService.Add("ALTYN_Origin", (object[] args) =>
         {
-            Item item = (Item)args[2];
-            if (item == null) return null;
-
-            if (!MaskStatus.TryGetValue(item.ID, out bool currentStatus) || currentStatus)
+            if (args.Length > 2 && args[2] is Item item)
             {
-                MaskStatus[item.ID] = false; // Mask closed
+                HandleHelmetMask(item, false);
             }
             return null;
         });
 
         // ALTYN mask - open
-        LuaCsSetup.Instance.Hook.Add("ALTYN_Open", (object[] args) =>
+        luaEventService.Add("ALTYN_Open", (object[] args) =>
         {
-            Item item = (Item)args[2];
-            if (item == null) return null;
-
-            if (!MaskStatus.TryGetValue(item.ID, out bool currentStatus) || !currentStatus)
+            if (args.Length > 2 && args[2] is Item item)
             {
-                MaskStatus[item.ID] = true; // Mask open
+                HandleHelmetMask(item, true);
             }
             return null;
         });
 
         // MASKA mask - close
-        LuaCsSetup.Instance.Hook.Add("MASKA_Origin", (object[] args) =>
+        luaEventService.Add("MASKA_Origin", (object[] args) =>
         {
-            Item item = (Item)args[2];
-            if (item == null) return null;
-
-            if (!MaskStatus.TryGetValue(item.ID, out bool currentStatus) || currentStatus)
+            if (args.Length > 2 && args[2] is Item item)
             {
-                MaskStatus[item.ID] = false; // Mask closed
+                HandleHelmetMask(item, false);
             }
             return null;
         });
 
         // MASKA mask - open
-        LuaCsSetup.Instance.Hook.Add("MASKA_Open", (object[] args) =>
+        luaEventService.Add("MASKA_Open", (object[] args) =>
         {
-            Item item = (Item)args[2];
-            if (item == null) return null;
-
-            if (!MaskStatus.TryGetValue(item.ID, out bool currentStatus) || !currentStatus)
+            if (args.Length > 2 && args[2] is Item item)
             {
-                MaskStatus[item.ID] = true; // Mask open
+                HandleHelmetMask(item, true);
             }
             return null;
         });
+    }
+
+    private void HandleHelmetMask(Item item, bool enabled)
+    {
+        Character character = Character.Controlled;
+        // 检查逻辑：物品是否属于当前玩家控制的角色
+        if (character != null && item.ParentInventory?.Owner == character)
+        {
+            MaskStatus[item.ID] = enabled;
+        }
     }
 }

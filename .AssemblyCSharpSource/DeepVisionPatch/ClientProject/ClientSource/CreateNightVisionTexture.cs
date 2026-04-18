@@ -28,7 +28,7 @@ public class CreateNightVisionTexture
     private float _vignetteMultiplier = 0.8f; // 暗角倍数 
 
     // Constants for scanline calculations
-    private const int SCANLINE_WIDTH = 3;
+    private const int SCANLINE_WIDTH = 2;
     private const float GRID_DARKEN_FACTOR = 0.7f;
     private const int SCANLINE_COLOR_OFFSET = 50;
 
