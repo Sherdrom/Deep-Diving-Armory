@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Libs>..\..\.Tools/Refs</Libs>
+    <Libs>..\..\..\.Tools/Refs</Libs>
   </PropertyGroup>
   <Import Project="..\SharedProject\SharedProject.projitems" Label="Shared" />
   <Import Project="../Build.props"/>
-
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACETRACE;CLIENT;WINDOWS</DefineConstants>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
