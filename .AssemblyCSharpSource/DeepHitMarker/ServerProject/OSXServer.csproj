@@ -1,16 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Libs>..\..\.Tools/Refs</Libs>
+    <Libs>..\..\..\.Tools/Refs</Libs>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Barotrauma">
-      <HintPath>$(Libs)\OSX\Barotrauma.dll</HintPath>
+    <Reference Include="DedicatedServer">
+      <HintPath>$(Libs)\OSX\DedicatedServer.dll</HintPath>
     </Reference>
     <Reference Include="BarotraumaCore">
       <HintPath>$(Libs)\OSX\BarotraumaCore.dll</HintPath>
-    </Reference>
-    <Reference Include="DedicatedServer">
-      <HintPath>$(Libs)\OSX\DedicatedServer.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework.MacOS.NetStandard">
       <HintPath>$(Libs)\MonoGame.Framework.MacOS.NetStandard.dll</HintPath>
@@ -21,11 +18,11 @@
   <Import Project="../Build.props"/>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>TRACE;SERVER;OSX</DefineConstants>
+    <DefineConstants>TRACE;OSX;SERVER</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>TRACE;SERVER;OSX</DefineConstants>
+    <DefineConstants>TRACE;OSX;SERVER</DefineConstants>
   </PropertyGroup>
 
   <Target Name="CopyFiles" AfterTargets="Build">
@@ -36,4 +33,5 @@
     <Copy SourceFiles="@(Assemblies)" DestinationFiles="$(ModDeployDir)bin\Server\OSX\$(TargetName).dll" />
     <Copy SourceFiles="@(DepsFiles)" DestinationFiles="$(ModDeployDir)bin\Server\OSX\$(TargetName).deps.json" />
   </Target>
+  
 </Project>

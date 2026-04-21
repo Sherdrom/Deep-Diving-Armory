@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Libs>..\..\.Tools/Refs</Libs>
+    <Libs>..\..\..\.Tools/Refs</Libs>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Barotrauma">
@@ -33,4 +33,5 @@
     <Copy SourceFiles="@(Assemblies)" DestinationFiles="$(ModDeployDir)bin\Client\OSX\$(TargetName).dll" />
     <Copy SourceFiles="@(DepsFiles)" DestinationFiles="$(ModDeployDir)bin\Client\OSX\$(TargetName).deps.json" />
   </Target>
+
 </Project>

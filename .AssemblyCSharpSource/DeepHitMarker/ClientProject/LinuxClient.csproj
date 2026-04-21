@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <Libs>..\..\.Tools/Refs</Libs>
+      <Libs>..\..\..\.Tools/Refs</Libs>
     </PropertyGroup>
     <ItemGroup>
       <Reference Include="Barotrauma">
@@ -13,18 +13,18 @@
         <HintPath>$(Libs)\MonoGame.Framework.Linux.NetStandard.dll</HintPath>
       </Reference>
     </ItemGroup>
-
+    
     <Import Project="..\SharedProject\SharedProject.projitems" Label="Shared" />
     <Import Project="../Build.props"/>
-
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DefineConstants>TRACE;CLIENT;LINUX</DefineConstants>
     </PropertyGroup>
-
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DefineConstants>TRACE;CLIENT;LINUX</DefineConstants>
     </PropertyGroup>
-
+    
     <Target Name="CopyFiles" AfterTargets="Build">
         <ItemGroup>
             <Assemblies Include="$(TargetDir)$(TargetName).dll" />
