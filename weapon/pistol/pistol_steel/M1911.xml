@@ -23,7 +23,7 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_steel/pistol_steel.png" sourcerect="11,10,112,76" depth="0.55" origin="0.5,0.5" />
     <Body width="80" height="50" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-30,-7" handle2="-20,-7" msg="ItemMsgPickUpSelect">
-    <StatusEffect type="OnActive" interval="5" target="This" Scale="0.32" setvalue="true" >
+    <StatusEffect type="OnActive" interval="0.5" target="This" Scale="0.32" setvalue="true" >
     </StatusEffect>
 
     <!-- 装备升级的钢制，钛制枪械加成 -->
@@ -187,6 +187,11 @@
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.05" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.3" />
+      <ModifyStat stattype="FiringRateMultiplier" value="0.1" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.5" />
+    </Modify>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="30" />
   </Item>
