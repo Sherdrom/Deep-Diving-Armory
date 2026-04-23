@@ -22,6 +22,10 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/zoom.lua")--瞄具视野
 dofile(Deep_Lua.Path .. "/Lua/Scripts/NoInjuryShaking.lua")--止痛药
 dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
 
+--枪械改装系统
+dofile(Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Main.lua")
+
 --敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
 
