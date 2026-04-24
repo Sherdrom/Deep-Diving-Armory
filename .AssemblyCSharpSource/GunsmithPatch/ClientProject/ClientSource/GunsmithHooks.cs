@@ -29,6 +29,29 @@ namespace GunsmithPatch
                 }
                 return null;
             });
+
+            hook.Add("DeepGunsmithRequestState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    string savedState = item.GetComponent<Barotrauma.Items.Components.GunsmithData>()?.SavedState ?? string.Empty;
+                    CallLuaHook("DeepGunsmithReceiveState", item, savedState);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithSaveState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? savedState = FindStringArg(args, 0);
+                Barotrauma.Items.Components.GunsmithData? data = item?.GetComponent<Barotrauma.Items.Components.GunsmithData>();
+                if (data != null && savedState != null)
+                {
+                    data.SavedState = savedState;
+                }
+                return null;
+            });
         }
 
         private static void CallLuaHook(string hookName, params object[] args)

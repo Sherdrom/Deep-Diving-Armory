@@ -7,6 +7,7 @@ This folder stores development notes for the `GunsmithPatch` prototype under Dee
 - [V0 Summary](./V0_Gunsmith_Summary.md)
 - [V0.1 Summary](./V0.1_Gunsmith_Summary.md)
 - [V0.2 Summary](./V0.2_Gunsmith_Summary.md)
+- [V0.3 Summary](./V0.3_Gunsmith_Summary.md)
 
 ## Current Direction
 
