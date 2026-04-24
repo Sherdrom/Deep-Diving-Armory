@@ -11,7 +11,6 @@ namespace GunsmithPatch
                 string? layerSpec = FindStringArg(args, 1);
                 int width = FindIntArg(args, 0);
                 int height = FindIntArg(args, 1);
-                LuaCsSetup.PrintCsMessage($"[Gunsmith] C# received DeepGunsmithApply. item={(item?.Prefab?.Identifier.Value ?? "null")}, width={width}, height={height}");
                 if (item != null && signature != null && layerSpec != null)
                 {
                     ApplyFromLua(item, signature, layerSpec, width, height);
@@ -24,15 +23,12 @@ namespace GunsmithPatch
                 Item? item = FindArg<Item>(args);
                 string? title = FindStringArg(args, 0);
                 string? slotSpec = FindStringArg(args, 1);
-                LuaCsSetup.PrintCsMessage($"[Gunsmith] C# received DeepGunsmithOpen. item={(item?.Prefab?.Identifier.Value ?? "null")}, title={title ?? "null"}");
                 if (item != null && title != null && slotSpec != null)
                 {
                     OpenFromLua(item, title, slotSpec);
                 }
                 return null;
             });
-
-            LuaCsSetup.PrintCsMessage("[Gunsmith] Lua bridge registered.");
         }
 
         private static void CallLuaHook(string hookName, params object[] args)

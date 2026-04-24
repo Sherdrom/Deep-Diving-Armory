@@ -9,7 +9,6 @@ namespace GunsmithPatch
             if (item == null || item.Removed) { return; }
 
             CloseWindow();
-            LuaCsSetup.PrintCsMessage($"[Gunsmith] Building UI for {item.Prefab.Identifier.Value}. slotspec={slotSpec}");
 
             activeWindow = new GUIFrame(new RectTransform(new Vector2(0.42f, 0.52f), GUI.Canvas, Anchor.Center), color: Color.Black * 0.85f);
             GUIListBox list = new(new RectTransform(new Vector2(0.94f, 0.88f), activeWindow.RectTransform, Anchor.Center));
@@ -35,7 +34,6 @@ namespace GunsmithPatch
             try
             {
                 activeWindow.AddToGUIUpdateList();
-                LuaCsSetup.PrintCsMessage("[Gunsmith] Window added via AddToGUIUpdateList.");
             }
             catch (Exception ex)
             {

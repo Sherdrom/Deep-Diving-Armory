@@ -29,11 +29,28 @@ namespace GunsmithPatch
             List<GunsmithLayer> layers = ParseLayers(layerSpec);
             if (layers.Count == 0) { return; }
 
-            Texture2D texture = ComposeTexture(layers, Math.Max(width, 1), Math.Max(height, 1));
-            Sprite? worldSprite = CreateSprite(item.Prefab.Sprite, texture, width, height);
-            Sprite? inventorySprite = CreateSprite(item.Prefab.InventoryIcon ?? item.Prefab.Sprite, texture, width, height);
+            bool shouldOwnWorldSprite = item.HasTag("deep_gunsmith");
+            bool shouldReplaceActiveSprite =
+                shouldOwnWorldSprite ||
+                ReferenceEquals(item.activeSprite, item.Prefab.Sprite) ||
+                (existing != null && ReferenceEquals(item.activeSprite, existing.WorldSprite));
+
+            Texture2D texture;
+            try
+            {
+                texture = ComposeTexture(layers, Math.Max(width, 1), Math.Max(height, 1));
+            }
+            catch (Exception ex)
+            {
+                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to compose runtime texture: {ex.Message}");
+                return;
+            }
+
+            Sprite? worldSprite = CreateWorldSprite(item.Prefab.Sprite, texture);
+            Sprite? inventorySprite = CreateInventorySprite(item.Prefab.InventoryIcon ?? item.Prefab.Sprite, texture);
             if (worldSprite == null || inventorySprite == null)
             {
+                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to create runtime sprites for '{item.Prefab.Identifier.Value}'.");
                 texture.Dispose();
                 return;
             }
@@ -46,24 +63,30 @@ namespace GunsmithPatch
                 InventorySprite = inventorySprite
             };
 
-            if (itemStates.TryGetValue(item, out GunsmithSpriteState? oldState))
+            itemStates[item] = state;
+            ApplyState(item, state, shouldReplaceActiveSprite);
+
+            if (existing != null && ReferenceEquals(item.activeSprite, existing.WorldSprite))
             {
-                oldState.Texture.Dispose();
+                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to apply updated world sprite for '{item.Prefab.Identifier.Value}'.");
             }
 
-            itemStates[item] = state;
-            ApplyState(item, state);
+            if (existing != null)
+            {
+                existing.Texture.Dispose();
+            }
         }
 
         public static void ClearFromLua(Item item)
         {
             if (item == null) { return; }
+            if (itemStates.TryGetValue(item, out GunsmithSpriteState? state) && ReferenceEquals(item.activeSprite, state.WorldSprite))
+            {
+                item.activeSprite = item.Prefab.Sprite;
+            }
             RemoveState(item);
             item.OverrideInventorySprite = null;
-            if (ReferenceEquals(item.activeSprite, item.Prefab.Sprite) == false)
-            {
-                item.SetActiveSprite();
-            }
+            item.SetActiveSprite();
         }
 
         internal static bool TryGetState(Item item, out GunsmithSpriteState state)
@@ -77,10 +100,10 @@ namespace GunsmithPatch
             }
         }
 
-        internal static void ApplyState(Item item, GunsmithSpriteState state)
+        internal static void ApplyState(Item item, GunsmithSpriteState state, bool forceWorldSprite = false)
         {
             item.OverrideInventorySprite = state.InventorySprite;
-            if (ReferenceEquals(item.activeSprite, item.Prefab.Sprite))
+            if (item.HasTag("deep_gunsmith") || forceWorldSprite || ReferenceEquals(item.activeSprite, item.Prefab.Sprite))
             {
                 item.activeSprite = state.WorldSprite;
             }

@@ -55,14 +55,34 @@ namespace GunsmithPatch
             });
         }
 
-        private static Sprite? CreateSprite(Sprite? original, Texture2D texture, int width, int height)
+        private static Sprite? CreateWorldSprite(Sprite? original, Texture2D texture)
         {
             if (original == null) { return null; }
 
             Sprite clone = new(original)
             {
-                SourceRect = new Rectangle(0, 0, width, height),
-                Origin = new Vector2(width * 0.5f, height * 0.5f),
+                SourceRect = CreateWorldSourceRect(original, texture),
+                Origin = original.Origin,
+                RelativeOrigin = original.RelativeOrigin,
+                RelativeSize = original.RelativeSize,
+                Depth = original.Depth,
+                SourceElement = original.SourceElement,
+                EntityIdentifier = original.EntityIdentifier,
+                FilePath = original.FilePath
+            };
+            clone.texture = texture;
+            return clone;
+        }
+
+        private static Sprite? CreateInventorySprite(Sprite? original, Texture2D texture)
+        {
+            if (original == null) { return null; }
+
+            Rectangle sourceRect = new(0, 0, texture.Width, texture.Height);
+            Sprite clone = new(original)
+            {
+                SourceRect = sourceRect,
+                Origin = new Vector2(sourceRect.Width * 0.5f, sourceRect.Height * 0.5f),
                 RelativeOrigin = new Vector2(0.5f, 0.5f),
                 RelativeSize = Vector2.One,
                 Depth = original.Depth,
@@ -72,6 +92,20 @@ namespace GunsmithPatch
             };
             clone.texture = texture;
             return clone;
+        }
+
+        private static Rectangle CreateWorldSourceRect(Sprite original, Texture2D texture)
+        {
+            Rectangle sourceRect = original.SourceRect;
+            int width = Math.Min(sourceRect.Width, texture.Width);
+            int height = Math.Min(sourceRect.Height, texture.Height);
+
+            if (width <= 0 || height <= 0)
+            {
+                return new Rectangle(0, 0, texture.Width, texture.Height);
+            }
+
+            return new Rectangle(0, 0, width, height);
         }
 
         private static string ResolvePath(string path)

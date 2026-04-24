@@ -1,6 +1,7 @@
 namespace GunsmithPatch
 {
     [HarmonyPatch]
+    [HarmonyAfter("SpritePatch")]
     public static class GunsmithSpritePatch
     {
         [HarmonyPatch(typeof(Item), nameof(Item.Update))]

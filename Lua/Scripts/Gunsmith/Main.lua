@@ -5,7 +5,6 @@ local config = Gunsmith.Config
 local selections = {}
 local appliedSignatures = {}
 local lastScanTime = 0
-local lastOpenDebugTime = 0
 
 local function itemIdentifier(item)
     if not item or not item.Prefab then return nil end
@@ -133,23 +132,6 @@ local function selectedHandWeapon(character)
     return nil
 end
 
-local function debugHeldWeapons(character)
-    local currentTime = Timer.GetTime()
-    if currentTime - lastOpenDebugTime < 0.5 then return end
-    lastOpenDebugTime = currentTime
-
-    if not character or not character.Inventory then
-        print("[Gunsmith] G pressed, but local character/inventory is unavailable.")
-        return
-    end
-
-    local rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand)
-    local leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand)
-    local rightId = itemIdentifier(rightHand) or "none"
-    local leftId = itemIdentifier(leftHand) or "none"
-    print("[Gunsmith] G pressed. RightHand=" .. rightId .. ", LeftHand=" .. leftId)
-end
-
 function Gunsmith.Open(item)
     if SERVER then return end
     if not item or not platformConfig(item) then return end
@@ -169,7 +151,6 @@ function Gunsmith.Open(item)
             table.insert(entries, slot .. "|" .. label)
         end
 
-        print("[Gunsmith] Opening UI for " .. tostring(itemIdentifier(item)))
         Hook.Call("DeepGunsmithOpen", item, "Gunsmith: " .. itemIdentifier(item), table.concat(entries, ";"))
     end)
 
@@ -208,8 +189,6 @@ if CLIENT then
         local item = selectedHandWeapon(instance)
         if item then
             Gunsmith.Open(item)
-        else
-            debugHeldWeapons(instance)
         end
     end, Hook.HookMethodType.After)
 

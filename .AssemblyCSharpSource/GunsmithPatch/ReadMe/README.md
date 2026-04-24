@@ -1,31 +1,40 @@
-This is a project template for making plugin-powered ContentPackages for LuaCsForBarotrauma. For more details,
-visit the Wiki.
+# GunsmithPatch ReadMe
 
-Please see the [Luatrauma Docs](https://luatrauma.github.io/Luatrauma.Docs/cs/setup-assembly-csharp/) for detailed instructions.
+This folder stores development notes for the `GunsmithPatch` prototype under Deep-Diving-Armory.
 
-Quick Start Steps:
+## Version Notes
 
-1. Download the Libraries file [luacsforbarotrauma_refs.zip](https://github.com/evilfactory/LuaCsForBarotrauma/releases) from latest release, unzip it, and place the contents in /Refs as shown below.
+- [V0 Summary](./V0_Gunsmith_Summary.md)
+- [V0.1 Summary](./V0.1_Gunsmith_Summary.md)
 
-- The libraries for this project must be downloaded separately. They can be found in the LuaCsForBarotrauma Steam Workshop
-folder under the subfolder "Publicized". Just copy the ones listed below into "/Refs".
+## Current Direction
 
-You need to edit the "Build.props" file: 
+The project is currently validating a modular firearm customization workflow for Barotrauma:
 
-> <ModDeployDir>..\LUATRAMA_DEBUG_LOCALMODS_MYMODDIR\</ModDeployDir>
+- Lua owns configuration and part selection data
+- C# owns runtime UI and sprite composition
+- weapon visuals are assembled from reusable part layers
 
-Replace "..\LUATRAMA_DEBUG_LOCALMODS_MYMODDIR\" with the absolute path of your mod in "Barotrauma\LocalMods\", ie. "Steam\..\Barotrauma\LocalMods\GunsmithPatch\"
+## Current Test Scope
 
-> <AssemblyName>GunsmithPatch</AssemblyName>
-> <RootNamespace>GunsmithPatch</RootNamespace>
+The active validation weapon is:
 
-Replace "GunsmithPatch" with a valid assembly name, this should be similar to your mod name but does not need to match. This name should:
-- Not include spaces.
-- Not include special characters, periods are allowed.
-- Use english characters.
+- `deep_m4`
 
+Current new-system tag:
 
-2. Set the executable directory for the Launch Configurations (Client, Server).
+- `deep_gunsmith`
 
-3. Set your details (modname, files, etc) in Assets/Content/filelist.xml
-- Note: All files should be placed under "/Content" and will be copied automatically to "LocalMods/<YourMod>/...".
+Current validated slots:
+
+- `receiver`
+- `barrel`
+- `handguard`
+- `pistol_grip`
+- `stock`
+
+## Notes
+
+- This is no longer just the original template readme.
+- Template setup details should be read from LuaCs / Luatrauma upstream docs if needed.
+- Local version notes for this prototype should continue to live in this folder.
