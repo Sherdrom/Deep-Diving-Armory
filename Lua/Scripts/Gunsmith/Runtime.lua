@@ -4,6 +4,7 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
 local Persistence = Gunsmith.Persistence
 local UiSpec = Gunsmith.UiSpec
+local Inventory = Gunsmith.Inventory
 local Runtime = {}
 
 Gunsmith.Runtime = Runtime
@@ -120,16 +121,80 @@ function Runtime.CyclePart(item, slotPath)
     Runtime.Apply(item)
 end
 
+local function selectionSubtreePaths(selection, slotPath)
+    local paths = {}
+    local prefix = slotPath .. "/"
+    for path, _ in pairs(selection) do
+        if path == slotPath or string.sub(path, 1, #prefix) == prefix then
+            table.insert(paths, path)
+        end
+    end
+    table.sort(paths, function(left, right)
+        local _, leftDepth = string.gsub(left, "/", "")
+        local _, rightDepth = string.gsub(right, "/", "")
+        if leftDepth == rightDepth then return left > right end
+        return leftDepth > rightDepth
+    end)
+    return paths
+end
+
+local function returnSelectionSubtree(character, selection, slotPath, onAllReturned)
+    if not Inventory then return 0 end
+    local parts = {}
+    for _, path in ipairs(selectionSubtreePaths(selection, slotPath)) do
+        local part = Core.GetPart(selection[path])
+        if part and Inventory.ItemIdentifierForPart(part) then
+            table.insert(parts, part)
+        end
+    end
+
+    local pending = #parts
+    if pending == 0 then return 0 end
+
+    local completed = 0
+    local function onReturned()
+        completed = completed + 1
+        if completed >= pending and onAllReturned then
+            onAllReturned()
+        end
+    end
+
+    for _, part in ipairs(parts) do
+        if not Inventory.ReturnPartItem(character, part, onReturned) then
+            pending = pending - 1
+        end
+    end
+
+    if pending == 0 then return 0 end
+    return pending
+end
+
 function Runtime.SetPart(item, slotPath, partId)
     local selection = Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
+    local character = Inventory and Inventory.ActorForItem(item) or nil
+    local returnedParts = 0
+    local refreshWhenReturned = function()
+        if item and not item.removed then
+            Runtime.Open(item)
+        end
+    end
+
     if partId == Gunsmith.EmptyPartId then
+        if Core.IsRequiredSlot(platform, slotPath) then return end
+        returnedParts = returnSelectionSubtree(character, selection, slotPath, refreshWhenReturned)
         selection[slotPath] = nil
     else
         local part = Gunsmith.Config.parts[partId]
         if not part or part.slot ~= Core.LeafSlot(slotPath) then return end
+        if selection[slotPath] == partId then return end
+        if Inventory and not Inventory.ConsumePartItem(character, part) then
+            print("[Gunsmith] Missing part item for " .. tostring(partId))
+            return
+        end
+        returnedParts = returnSelectionSubtree(character, selection, slotPath, refreshWhenReturned)
         selection[slotPath] = partId
     end
 
@@ -138,6 +203,10 @@ function Runtime.SetPart(item, slotPath, partId)
     Persistence.Save(item)
     State.appliedSignatures[item] = nil
     Runtime.Apply(item)
+    if returnedParts and returnedParts > 0 then
+        return false
+    end
+    return true
 end
 
 function Runtime.SelectedHandWeapon(character)
@@ -167,7 +236,7 @@ function Runtime.Open(item)
             Runtime.SetCurrentUiPath(item, currentPath)
         end
 
-        Hook.Call("DeepGunsmithOpen", item, "改装: " .. Core.ItemIdentifier(item), UiSpec.Build(selection, platform, currentPath))
+        Hook.Call("DeepGunsmithOpen", item, "改装: " .. Core.ItemIdentifier(item), UiSpec.Build(item, selection, platform, currentPath))
     end)
 
     if not ok then

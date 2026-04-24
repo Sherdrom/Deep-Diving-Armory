@@ -4,6 +4,7 @@ local basePath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith"
 
 dofile(basePath .. "/Core.lua")
 dofile(basePath .. "/Persistence.lua")
+dofile(basePath .. "/Inventory.lua")
 dofile(basePath .. "/UiSpec.lua")
 dofile(basePath .. "/Runtime.lua")
 dofile(basePath .. "/Hooks.lua")

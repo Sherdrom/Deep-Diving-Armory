@@ -46,8 +46,10 @@ function Hooks.Register()
     Hook.Add("DeepGunsmithSetPart", "DeepGunsmithSetPart", function(...)
         local item, strings = readItemAndStrings({ ... })
         if item and strings[1] and strings[2] then
-            Runtime.SetPart(item, strings[1], strings[2])
-            Runtime.Open(item)
+            local shouldOpenNow = Runtime.SetPart(item, strings[1], strings[2])
+            if shouldOpenNow ~= false then
+                Runtime.Open(item)
+            end
         end
     end)
 

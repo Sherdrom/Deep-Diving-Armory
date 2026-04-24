@@ -2,24 +2,37 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
+local Inventory = Gunsmith.Inventory
 local UiSpec = {}
 Gunsmith.UiSpec = UiSpec
 
-local function appendPartEntry(entries, partId)
+local function appendPartEntry(entries, item, selection, slotPath, partId)
     local part = Gunsmith.Config.parts[partId]
     if part then
-        table.insert(entries, partId .. ":" .. part.name)
+        local status = "available"
+        if selection[slotPath] == partId then
+            status = "installed"
+        elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
+            status = "missing"
+        end
+        table.insert(entries, partId .. ":" .. part.name .. ":" .. status)
     end
 end
 
-function UiSpec.Build(selection, platform, currentPath)
+function UiSpec.Build(item, selection, platform, currentPath)
     local path = currentPath or ""
     local entries = {}
 
     for _, slot in ipairs(Core.SlotsForPath(selection, platform, path)) do
-        local partEntries = { Gunsmith.EmptyPartId .. ":[空]" }
+        local emptyStatus = "available"
+        if Core.IsRequiredSlot(platform, slot.path) then
+            emptyStatus = "disabled"
+        elseif not selection[slot.path] then
+            emptyStatus = "installed"
+        end
+        local partEntries = { Gunsmith.EmptyPartId .. ":[空]:" .. emptyStatus }
         for _, partId in ipairs(Core.GetPartsForSlot(slot.slot)) do
-            appendPartEntry(partEntries, partId)
+            appendPartEntry(partEntries, item, selection, slot.path, partId)
         end
 
         local slotPath = slot.path

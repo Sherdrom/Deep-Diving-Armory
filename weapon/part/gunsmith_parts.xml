@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="轻量护木" identifier="deep_gunsmith_m4_handguard_alt" subcategory="part" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="8">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="steel" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel.png" sourcerect="262,628,92,34" />
+    <Sprite texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel.png" sourcerect="262,628,92,34" depth="0.55" origin="0.5,0.5" />
+    <Body width="70" height="24" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <Item name="短皮卡汀尼导轨" identifier="deep_gunsmith_m4_rail_short" subcategory="part" category="Weapon" maxstacksize="8" maxstacksizecharacterinventory="4" Tags="smallitem,deep_gunsmith_part" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.12" impactsoundtag="impact_metal_light">
+    <Price baseprice="120" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="4">
+      <RequiredSkill identifier="weapons" level="20" />
+      <RequiredItem identifier="steel" />
+    </Fabricate>
+    <Deconstruct time="3">
+      <Item identifier="steel" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/part/part.png" sourcerect="635,44,100,108" />
+    <Sprite texture="%ModDir%/weapon/part/part.png" sourcerect="635,44,100,108" depth="0.55" origin="0.5,0.5" />
+    <Body width="42" height="14" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+
+  <Item name="红点瞄准镜" identifier="deep_gunsmith_m4_red_dot" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_accessory" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+    <Price baseprice="500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="8">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="groundglass" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit" />
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="15,7,73,59" />
+    <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="15,7,73,59" depth="0.549" origin="0.5,0.5" />
+    <Body width="30" height="24" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+</Items>

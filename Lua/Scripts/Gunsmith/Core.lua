@@ -79,6 +79,17 @@ function Core.GetPartsForSlot(slot)
     return parts
 end
 
+function Core.IsRequiredSlot(platform, path)
+    if not platform or not path or path == "" then return false end
+    if platform.requiredSlots and platform.requiredSlots[path] ~= nil then
+        return platform.requiredSlots[path] == true
+    end
+    if not string.find(path, "/", 1, true) and platform.requiredRootSlots ~= false then
+        return true
+    end
+    return false
+end
+
 function Core.RootSlots(platform)
     local slots = {}
     for _, slot in ipairs(platform.slots) do

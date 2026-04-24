@@ -8,6 +8,7 @@ Deep_Lua.Gunsmith.Config = {
             id = "ar15",
             canvas = { w = 512, h = 160 },
             slots = { "receiver", "barrel", "handguard", "pistol_grip", "stock" },
+            requiredRootSlots = true,
             slotNames = {
                 receiver = "机匣",
                 barrel = "枪管",
@@ -88,6 +89,7 @@ Deep_Lua.Gunsmith.Config = {
         m4_handguard_alt = {
             slot = "handguard",
             name = "轻量护木",
+            itemIdentifier = "deep_gunsmith_m4_handguard_alt",
             texture = texture,
             source = { x = 262, y = 628, w = 92, h = 34 },
             offset = { x = 268, y = 72 },
@@ -135,6 +137,7 @@ Deep_Lua.Gunsmith.Config = {
         m4_rail_short = {
             slot = "top_rail",
             name = "短皮卡汀尼导轨",
+            itemIdentifier = "deep_gunsmith_m4_rail_short",
             order = 60,
             mounts = {
                 { slot = "optic_mount", name = "瞄具挂点" }
@@ -166,6 +169,7 @@ Deep_Lua.Gunsmith.Config = {
         m4_red_dot = {
             slot = "optic_mount",
             name = "红点瞄准镜",
+            itemIdentifier = "deep_gunsmith_m4_red_dot",
             order = 70
         },
         m4_holo_sight = {
