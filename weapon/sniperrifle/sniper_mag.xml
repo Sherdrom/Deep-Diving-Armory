@@ -831,13 +831,16 @@
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.65" sourcerect="595,70,82,73" origin="0.5,0.5" />
-    <BrokenSprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="689,73,22,72" depth="0.65" />
     <Body width="70" height="70" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="762x54Rround" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="762x54Rround" />
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
+        <LuaHook name="DeepMosinMagIcon" />
+      </StatusEffect>
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
         <SpawnItem identifiers="762x54Rround" spawnposition="ThisInventory" Count="2" />
+        <LuaHook name="DeepMosinMagIcon" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
       <StatusEffect type="OnInserted" target="This" interval="1">
@@ -848,6 +851,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!--当弹匣在人的物品栏时，设置其能见度为255-->
       <StatusEffect type="OnContained" targettype="This" setvalue="true" comparison="and" interval="0.9" spritecolor="255,255,255,255">
+        <LuaHook name="DeepMosinMagIcon" />
         <Conditional IsActive="false" />
         <Conditional EntityType="eq character" TargetContainer="True" />
       </StatusEffect>
