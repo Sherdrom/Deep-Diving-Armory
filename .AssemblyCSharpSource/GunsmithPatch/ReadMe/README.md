@@ -6,6 +6,7 @@ This folder stores development notes for the `GunsmithPatch` prototype under Dee
 
 - [V0 Summary](./V0_Gunsmith_Summary.md)
 - [V0.1 Summary](./V0.1_Gunsmith_Summary.md)
+- [V0.2 Summary](./V0.2_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -32,6 +33,11 @@ Current validated slots:
 - `handguard`
 - `pistol_grip`
 - `stock`
+
+Current nested validation paths include:
+
+- `handguard/top_rail`
+- `handguard/top_rail/optic_mount`
 
 ## Notes
 
