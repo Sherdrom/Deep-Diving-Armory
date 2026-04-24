@@ -38,12 +38,20 @@
 			"args": ["watch", "run"],
 			"requireExactSource": false
 		},
-				{
+		{
 			"name": "Linux Debug C#",
 			"type": "coreclr",
 			"request": "launch",
 			"program": "${workspaceFolder}/../../Barotrauma",
 			"args": ["watch", "run"],
+			"requireExactSource": false
+		},
+		{
+			"name": "MacOS Attach C# (Steam Online)",
+			"type": "coreclr",
+			"request": "attach",
+			"processName": "Barotrauma",
+			"targetArchitecture": "x86_64",
 			"requireExactSource": false
 		},
         {
