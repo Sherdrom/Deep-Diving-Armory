@@ -5,6 +5,14 @@ local Validation = {}
 Gunsmith.Validation = Validation
 
 local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier" }
+local knownStatFields = {
+    weight = true,
+    ergonomics = true,
+    recoilControl = true,
+    spreadReduction = true,
+    fireRateMultiplier = true,
+    damageMultiplier = true
+}
 
 local function isArray(value)
     if type(value) ~= "table" then return false end
@@ -174,9 +182,24 @@ function Validation.Run(configOverride, label)
         if type(weapon) ~= "table" or type(platformId) ~= "string" or not platforms[platformId] then
             table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' references missing platform '" .. tostring(platformId) .. "'.")
         end
-        if type(weapon) == "table" and not validOptionalScale(weapon.scale) then
-            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
-        end
+            if type(weapon) == "table" and not validOptionalScale(weapon.scale) then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
+            end
+            if type(weapon) == "table" and weapon.preview ~= nil then
+                if type(weapon.preview) ~= "table" then
+                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview must be a table.")
+                else
+                    if weapon.preview.padding ~= nil and (type(weapon.preview.padding) ~= "number" or weapon.preview.padding < 0) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.padding must be a non-negative number.")
+                    end
+                    if not validOptionalScale(weapon.preview.zoom) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.zoom must be a positive number.")
+                    end
+                    if not validOptionalPoint(weapon.preview.offset) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.offset must contain numeric x/y.")
+                    end
+                end
+            end
     end
 
     for partId, part in pairs(parts) do
@@ -202,6 +225,19 @@ function Validation.Run(configOverride, label)
             end
             if part.visual ~= nil and not validOptionalScale(part.visual.scale) then
                 table.insert(errors, "Part '" .. partId .. "' visual.scale must be a positive number.")
+            end
+            if part.stats ~= nil then
+                if type(part.stats) ~= "table" then
+                    table.insert(errors, "Part '" .. partId .. "' stats must be a table.")
+                else
+                    for statName, statValue in pairs(part.stats) do
+                        if not knownStatFields[statName] then
+                            table.insert(warnings, "Part '" .. partId .. "' uses unknown stat '" .. tostring(statName) .. "'.")
+                        elseif type(statValue) ~= "number" then
+                            table.insert(errors, "Part '" .. partId .. "' stat '" .. statName .. "' must be a number.")
+                        end
+                    end
+                end
             end
 
             local item = part.item
@@ -295,6 +331,10 @@ function Validation.RunSelfTest()
                 name = "Bad Visual Part",
                 provides = { "test_receiver" },
                 item = { virtual = true },
+                stats = {
+                    weight = "heavy",
+                    mysteryStat = 1
+                },
                 visual = {
                     texture = "missing_offset",
                     source = { x = 0, y = 0, w = 16, h = 16 }

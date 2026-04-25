@@ -43,7 +43,12 @@ Deep_Lua.Gunsmith.Config = {
     weapons = {
         deep_m4 = {
             platform = "ar15",
-            scale = 0.25
+            scale = 1,
+            preview = {
+                padding = 12,
+                zoom = 1.0,
+                offset = { x = 0, y = 0 }
+            }
         }
     },
 
@@ -52,6 +57,7 @@ Deep_Lua.Gunsmith.Config = {
             slot = "receiver",
             name = "M4 标准机匣",
             provides = { "ar15_receiver" },
+            stats = { weight = 1.0, ergonomics = 8, recoilControl = 0.02 },
             visual = {
                 texture = texture,
                 source = { x = 120, y = 600, w = 185, h = 72 },
@@ -65,6 +71,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "M4 备用机匣",
             provides = { "ar15_receiver" },
             item = { virtual = true },
+            stats = { weight = 0.9, ergonomics = 10, recoilControl = 0.01 },
             visual = {
                 texture = texture,
                 source = { x = 130, y = 610, w = 165, h = 58 },
@@ -78,6 +85,7 @@ Deep_Lua.Gunsmith.Config = {
             slot = "barrel",
             name = "14.5 英寸枪管",
             provides = { "ar15_barrel" },
+            stats = { weight = 0.85, ergonomics = -2, recoilControl = 0.04, spreadReduction = 0.06 },
             visual = {
                 texture = texture,
                 source = { x = 285, y = 612, w = 178, h = 34 },
@@ -91,6 +99,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "短枪管",
             provides = { "ar15_barrel" },
             item = { virtual = true },
+            stats = { weight = 0.58, ergonomics = 4, recoilControl = -0.02, spreadReduction = -0.03 },
             visual = {
                 texture = texture,
                 source = { x = 285, y = 612, w = 126, h = 34 },
@@ -104,6 +113,7 @@ Deep_Lua.Gunsmith.Config = {
             slot = "handguard",
             name = "M4 标准护木",
             provides = { "ar15_handguard" },
+            stats = { weight = 0.48, ergonomics = 2, recoilControl = 0.02 },
             visual = {
                 texture = texture,
                 source = { x = 260, y = 628, w = 105, h = 45 },
@@ -123,6 +133,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "轻量护木",
             provides = { "ar15_handguard" },
             item = { identifier = "deep_gunsmith_m4_handguard_alt" },
+            stats = { weight = 0.32, ergonomics = 5, recoilControl = -0.01 },
             visual = {
                 texture = texture,
                 source = { x = 262, y = 628, w = 92, h = 34 },
@@ -140,6 +151,7 @@ Deep_Lua.Gunsmith.Config = {
             slot = "pistol_grip",
             name = "A2 握把",
             provides = { "ar15_pistol_grip" },
+            stats = { weight = 0.12, ergonomics = 3, recoilControl = 0.02 },
             visual = {
                 texture = texture,
                 source = { x = 194, y = 652, w = 42, h = 62 },
@@ -153,6 +165,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "紧凑握把",
             provides = { "ar15_pistol_grip" },
             item = { virtual = true },
+            stats = { weight = 0.09, ergonomics = 6, recoilControl = -0.01 },
             visual = {
                 texture = texture,
                 source = { x = 198, y = 652, w = 34, h = 52 },
@@ -166,6 +179,7 @@ Deep_Lua.Gunsmith.Config = {
             slot = "stock",
             name = "卡宾枪托",
             provides = { "ar15_stock" },
+            stats = { weight = 0.36, ergonomics = 2, recoilControl = 0.05 },
             visual = {
                 texture = texture,
                 source = { x = 30, y = 613, w = 115, h = 62 },
@@ -179,6 +193,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "短枪托",
             provides = { "ar15_stock" },
             item = { virtual = true },
+            stats = { weight = 0.22, ergonomics = 6, recoilControl = -0.03 },
             visual = {
                 texture = texture,
                 source = { x = 50, y = 614, w = 82, h = 54 },
@@ -193,6 +208,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "短皮卡汀尼导轨",
             provides = { "picatinny_rail" },
             item = { identifier = "deep_gunsmith_m4_rail_short" },
+            stats = { weight = 0.08, ergonomics = -1 },
             mounts = {
                 { slot = "optic_mount", name = "瞄具挂点", accepts = { "small_optic", "medium_optic" } }
             }
@@ -202,6 +218,7 @@ Deep_Lua.Gunsmith.Config = {
             name = "长皮卡汀尼导轨",
             provides = { "picatinny_rail" },
             item = { virtual = true },
+            stats = { weight = 0.14, ergonomics = -2 },
             mounts = {
                 { slot = "optic_mount", name = "瞄具挂点", accepts = { "small_optic", "medium_optic" } }
             }
@@ -210,31 +227,36 @@ Deep_Lua.Gunsmith.Config = {
             slot = "left_rail",
             name = "侧面导轨",
             provides = { "picatinny_rail" },
-            item = { virtual = true }
+            item = { virtual = true },
+            stats = { weight = 0.08, ergonomics = -1 }
         },
         m4_right_rail = {
             slot = "right_rail",
             name = "右侧导轨",
             provides = { "picatinny_rail" },
-            item = { virtual = true }
+            item = { virtual = true },
+            stats = { weight = 0.08, ergonomics = -1 }
         },
         m4_bottom_rail = {
             slot = "bottom_rail",
             name = "下方导轨",
             provides = { "picatinny_rail" },
-            item = { virtual = true }
+            item = { virtual = true },
+            stats = { weight = 0.1, ergonomics = -1, recoilControl = 0.01 }
         },
         m4_red_dot = {
             slot = "optic_mount",
             name = "红点瞄准镜",
             provides = { "small_optic" },
-            item = { identifier = "deep_gunsmith_m4_red_dot" }
+            item = { identifier = "deep_gunsmith_m4_red_dot" },
+            stats = { weight = 0.18, ergonomics = -1, spreadReduction = 0.03 }
         },
         m4_holo_sight = {
             slot = "optic_mount",
             name = "全息瞄准镜",
             provides = { "medium_optic" },
-            item = { virtual = true }
+            item = { virtual = true },
+            stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 }
         }
     }
 }

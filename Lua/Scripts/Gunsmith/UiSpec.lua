@@ -3,8 +3,21 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
 local Inventory = Gunsmith.Inventory
+local Stats = Gunsmith.Stats
 local UiSpec = {}
 Gunsmith.UiSpec = UiSpec
+
+local function encodePreview(item, platform)
+    local weapon = Core.WeaponConfig(item) or {}
+    local preview = weapon.preview or {}
+    local offset = preview.offset or { x = 0, y = 0 }
+    return string.format(
+        "padding=%.4f,zoom=%.4f,offsetX=%.4f,offsetY=%.4f",
+        preview.padding or 12,
+        preview.zoom or 1.0,
+        offset.x or 0,
+        offset.y or 0)
+end
 
 local function appendPartEntry(entries, item, selection, platform, slotPath, partId)
     local part = Gunsmith.Config.parts[partId]
@@ -17,7 +30,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
             status = "missing"
         end
-        table.insert(entries, partId .. ":" .. part.name .. ":" .. status)
+        table.insert(entries, partId .. ":" .. part.name .. ":" .. status .. ":" .. Stats.Encode(Stats.PartStats(part), "~"))
     end
 end
 
@@ -53,5 +66,5 @@ function UiSpec.Build(item, selection, platform, currentPath)
         path,
         Core.PathLabel(selection, platform, path),
         Core.ParentPath(path)
-    }, "|") .. "::" .. table.concat(entries, ";")
+    }, "|") .. "::" .. encodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
 end

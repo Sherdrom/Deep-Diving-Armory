@@ -60,7 +60,9 @@ namespace GunSmith
                 Signature = signature,
                 Texture = texture,
                 WorldSprite = worldSprite,
-                InventorySprite = inventorySprite
+                InventorySprite = inventorySprite,
+                ContentBounds = CalculateContentBounds(layers, Math.Max(width, 1), Math.Max(height, 1)),
+                Layers = layers
             };
 
             itemStates[item] = state;

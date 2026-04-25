@@ -71,6 +71,7 @@ local function buildLayerSpecForItem(item, selection, platform)
             local x = origin.x + (offset.x - origin.x) * layoutScale
             local y = origin.y + (offset.y - origin.y) * layoutScale
             table.insert(layers, table.concat({
+                path,
                 selection[path],
                 visual.texture,
                 string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
@@ -244,6 +245,7 @@ function Runtime.Open(item)
             Runtime.SetCurrentUiPath(item, currentPath)
         end
 
+        Runtime.Apply(item)
         Hook.Call("DeepGunsmithOpen", item, "改装: " .. Core.ItemIdentifier(item), UiSpec.Build(item, selection, platform, currentPath))
     end)
 

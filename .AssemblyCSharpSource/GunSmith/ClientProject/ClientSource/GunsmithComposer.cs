@@ -8,19 +8,21 @@ namespace GunSmith
             foreach (string layerText in layerSpec.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
                 string[] parts = layerText.Split('|', StringSplitOptions.TrimEntries);
-                if (parts.Length < 5) { continue; }
-                if (!TryParseRectangle(parts[2], out Rectangle sourceRect)) { continue; }
-                if (!TryParseVector2(parts[3], out Vector2 offset)) { continue; }
-                if (!int.TryParse(parts[4], out int order)) { order = 0; }
+                if (parts.Length < 7) { continue; }
+                if (!TryParseRectangle(parts[3], out Rectangle sourceRect)) { continue; }
+                if (!TryParseVector2(parts[4], out Vector2 offset)) { continue; }
+                if (!int.TryParse(parts[5], out int order)) { order = 0; }
                 float scale = 1.0f;
-                if (parts.Length > 5 && (!float.TryParse(parts[5], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out scale) || scale <= 0))
+                if (!float.TryParse(parts[6], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out scale) || scale <= 0)
                 {
                     scale = 1.0f;
                 }
 
                 layers.Add(new GunsmithLayer
                 {
-                    TexturePath = ResolvePath(parts[1]),
+                    SlotPath = parts[0],
+                    PartId = parts[1],
+                    TexturePath = ResolvePath(parts[2]),
                     SourceRect = sourceRect,
                     Offset = offset,
                     Scale = scale,
@@ -29,6 +31,24 @@ namespace GunSmith
             }
 
             return layers.OrderBy(layer => layer.Order).ToList();
+        }
+
+        private static Rectangle CalculateContentBounds(IReadOnlyList<GunsmithLayer> layers, int canvasWidth, int canvasHeight)
+        {
+            if (layers.Count == 0)
+            {
+                return new Rectangle(0, 0, Math.Max(canvasWidth, 1), Math.Max(canvasHeight, 1));
+            }
+
+            Rectangle bounds = layers[0].DrawBounds;
+            for (int i = 1; i < layers.Count; i++)
+            {
+                bounds = Rectangle.Union(bounds, layers[i].DrawBounds);
+            }
+
+            Rectangle canvas = new(0, 0, Math.Max(canvasWidth, 1), Math.Max(canvasHeight, 1));
+            Rectangle clipped = Rectangle.Intersect(bounds, canvas);
+            return clipped.Width > 0 && clipped.Height > 0 ? clipped : canvas;
         }
 
         private static Texture2D ComposeTexture(IReadOnlyList<GunsmithLayer> layers, int width, int height)
