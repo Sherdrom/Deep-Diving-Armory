@@ -11,6 +11,7 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V0.4 Summary](./V0.4_Gunsmith_Summary.md)
 - [V0.5 Summary](./V0.5_Gunsmith_Summary.md)
 - [V0.6 Summary](./V0.6_Gunsmith_Summary.md)
+- [V0.7 Summary](./V0.7_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -22,9 +23,10 @@ The project is currently validating a modular firearm customization workflow for
 
 ## Current Test Scope
 
-The active validation weapon is:
+The active validation weapons are:
 
 - `deep_m4`
+- `deep_hk416`
 
 Current new-system tag:
 
@@ -41,6 +43,9 @@ Current validated slots:
 Current nested validation paths include:
 
 - `handguard/top_rail`
+- `handguard/bottom_rail`
+- `handguard/left_rail`
+- `handguard/right_rail`
 - `handguard/top_rail/optic_mount`
 
 ## Notes

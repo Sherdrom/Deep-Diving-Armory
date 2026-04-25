@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_hk416" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,tool,simpletool,mechanicalrepairtool,wrenchitem,electricalrepairtool,screwdriver,wrench,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="120" >
+  <Item name="" identifier="deep_hk416" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,tool,simpletool,mechanicalrepairtool,wrenchitem,electricalrepairtool,screwdriver,wrench,deep_condition_100,deep_gunsmith" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="120" >
     <Price baseprice="900" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -22,8 +22,8 @@
     <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy.png" sourcerect="815,13,467,145" depth="0.55" origin="0.5,0.5" />
     <Body width="230" height="70" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-85,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
-    <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true">
-      </StatusEffect>
+    <!-- <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true">
+      </StatusEffect> -->
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -299,6 +299,7 @@
       <QualityStat stattype="FirepowerMultiplier" value="0.15" />
       <QualityStat stattype="RepairSpeed" value="0.3" />
     </Quality>
+    <GunsmithData />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="80" />
   </Item>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_m4" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_rifle_upgrade_tool_steel_tit,deep_gunsmith" Scale="0.25" impactsoundtag="impact_metal_light" health="100" >
+  <Item name="" identifier="deep_m4" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,mountableweapon,deep_condition_100,deep_rifle_upgrade_tool_steel_tit,deep_gunsmith" Scale="0.25" impactsoundtag="impact_metal_light" health="100" >
     <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
     <Price baseprice="280" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
@@ -23,8 +23,8 @@
     <Sprite texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel.png" sourcerect="29,580,453,136" depth="0.55" origin="0.5,0.5" />
     <Body width="200" height="65" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,3" handle1="-75,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect" >
-    <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true" >
-    </StatusEffect>
+    <!-- <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true" >
+    </StatusEffect> -->
     
 	   <!-- 二战老兵合约 -->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >

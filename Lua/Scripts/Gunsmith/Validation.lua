@@ -56,22 +56,34 @@ local function hasAnyProvidedPart(parts, accepts)
     return false
 end
 
-local function visualComplete(visual)
-    if type(visual) ~= "table" then return false end
-    local source = visual.source
-    local offset = visual.offset
-    return type(visual.texture) == "string" and visual.texture ~= "" and
-        type(source) == "table" and type(source.x) == "number" and type(source.y) == "number" and
-        type(source.w) == "number" and type(source.h) == "number" and
-        type(offset) == "table" and type(offset.x) == "number" and type(offset.y) == "number"
-end
-
-local function validOptionalScale(value)
-    return value == nil or (type(value) == "number" and value > 0)
+local function partProvidesAccepted(part, accepts)
+    if type(part) ~= "table" or type(part.provides) ~= "table" or type(accepts) ~= "table" then return false end
+    for _, provided in ipairs(part.provides) do
+        for _, accepted in ipairs(accepts) do
+            if provided == accepted then return true end
+        end
+    end
+    return false
 end
 
 local function validOptionalPoint(value)
     return value == nil or (type(value) == "table" and type(value.x) == "number" and type(value.y) == "number")
+end
+
+local function visualComplete(visual)
+    if type(visual) ~= "table" then return false end
+    local source = visual.source
+    local offset = visual.offset
+    local relativeOffset = visual.relativeOffset
+    return type(visual.texture) == "string" and visual.texture ~= "" and
+        type(source) == "table" and type(source.x) == "number" and type(source.y) == "number" and
+        type(source.w) == "number" and type(source.h) == "number" and
+        (validOptionalPoint(offset) and validOptionalPoint(relativeOffset)) and
+        (offset ~= nil or relativeOffset ~= nil)
+end
+
+local function validOptionalScale(value)
+    return value == nil or (type(value) == "number" and value > 0)
 end
 
 local function itemPrefabExists(identifier)
@@ -129,6 +141,9 @@ function Validation.Run(configOverride, label)
     local defaultParts = {}
     local acceptedTypes = {}
     local providedTypes = {}
+    local rootSlotNames = {}
+
+    local platformRootSlots = {}
 
     for platformId, platform in pairs(platforms) do
         if type(platform) ~= "table" then
@@ -153,6 +168,7 @@ function Validation.Run(configOverride, label)
                 local rootSlots = {}
                 for _, slot in ipairs(platform.slots) do
                     rootSlots[slot] = true
+                    rootSlotNames[slot] = true
                     local accepts = platform.rootAccepts and platform.rootAccepts[slot] or nil
                     if not hasStringArray(accepts) then
                         table.insert(errors, "Platform '" .. platformId .. "' root slot '" .. tostring(slot) .. "' is missing rootAccepts entry.")
@@ -160,6 +176,7 @@ function Validation.Run(configOverride, label)
                         addSetValues(acceptedTypes, accepts)
                     end
                 end
+                platformRootSlots[platformId] = rootSlots
 
                 for slot, partId in pairs(platform.defaults) do
                     if not rootSlots[slot] then
@@ -171,6 +188,8 @@ function Validation.Run(configOverride, label)
                         table.insert(errors, "Platform '" .. platformId .. "' default part '" .. tostring(partId) .. "' does not exist.")
                     elseif part.slot ~= slot then
                         table.insert(errors, "Default part '" .. tostring(partId) .. "' slot does not match '" .. tostring(slot) .. "'.")
+                    elseif not partProvidesAccepted(part, platform.rootAccepts and platform.rootAccepts[slot]) then
+                        table.insert(errors, "Platform '" .. platformId .. "' default part '" .. tostring(partId) .. "' is not accepted by slot '" .. tostring(slot) .. "'.")
                     end
                 end
             end
@@ -182,8 +201,30 @@ function Validation.Run(configOverride, label)
         if type(weapon) ~= "table" or type(platformId) ~= "string" or not platforms[platformId] then
             table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' references missing platform '" .. tostring(platformId) .. "'.")
         end
+            local platform = type(platformId) == "string" and platforms[platformId] or nil
             if type(weapon) == "table" and not validOptionalScale(weapon.scale) then
                 table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
+            end
+            if type(weapon) == "table" and weapon.defaults ~= nil then
+                if type(weapon.defaults) ~= "table" then
+                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' defaults must be a table.")
+                elseif type(platform) == "table" then
+                    local rootSlots = platformRootSlots[platformId] or {}
+                    for slot, partId in pairs(weapon.defaults) do
+                        if not rootSlots[slot] then
+                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' default slot '" .. tostring(slot) .. "' is not a root slot.")
+                        end
+                        defaultParts[partId] = true
+                        local part = parts[partId]
+                        if not part then
+                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' default part '" .. tostring(partId) .. "' does not exist.")
+                        elseif part.slot ~= slot then
+                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' default part '" .. tostring(partId) .. "' slot does not match '" .. tostring(slot) .. "'.")
+                        elseif not partProvidesAccepted(part, platform.rootAccepts and platform.rootAccepts[slot]) then
+                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' default part '" .. tostring(partId) .. "' is not accepted by slot '" .. tostring(slot) .. "'.")
+                        end
+                    end
+                end
             end
             if type(weapon) == "table" and weapon.preview ~= nil then
                 if type(weapon.preview) ~= "table" then
@@ -226,6 +267,9 @@ function Validation.Run(configOverride, label)
             if part.visual ~= nil and not validOptionalScale(part.visual.scale) then
                 table.insert(errors, "Part '" .. partId .. "' visual.scale must be a positive number.")
             end
+            if part.visual ~= nil and part.visual.relativeOffset ~= nil and rootSlotNames[part.slot] then
+                table.insert(warnings, "Part '" .. partId .. "' is in a root slot but uses visual.relativeOffset.")
+            end
             if part.stats ~= nil then
                 if type(part.stats) ~= "table" then
                     table.insert(errors, "Part '" .. partId .. "' stats must be a table.")
@@ -267,6 +311,9 @@ function Validation.Run(configOverride, label)
                             if not hasAnyProvidedPart(parts, mount.accepts) then
                                 table.insert(warnings, label .. " accepts no currently provided part type.")
                             end
+                        end
+                        if not validOptionalPoint(mount.anchor) then
+                            table.insert(errors, label .. " anchor must contain numeric x/y.")
                         end
                     end
                 end
@@ -340,6 +387,17 @@ function Validation.RunSelfTest()
                     source = { x = 0, y = 0, w = 16, h = 16 }
                 }
             },
+            bad_relative_visual_part = {
+                slot = "optic_mount",
+                name = "Bad Relative Visual Part",
+                provides = { "test_receiver" },
+                item = { virtual = true },
+                visual = {
+                    texture = "bad_relative_offset",
+                    source = { x = 0, y = 0, w = 16, h = 16 },
+                    relativeOffset = { x = "bad", y = 0 }
+                }
+            },
             no_item_part = {
                 slot = "receiver",
                 name = "No Item Part",
@@ -357,7 +415,7 @@ function Validation.RunSelfTest()
                 provides = { "unused_test_type" },
                 item = { virtual = true },
                 mounts = {
-                    { slot = "optic_mount" }
+                    { slot = "optic_mount", anchor = { x = "bad", y = 0 } }
                 }
             }
         }

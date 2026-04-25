@@ -40,14 +40,12 @@ local function sortedSavedPaths(savedParts)
     return paths
 end
 
-function Persistence.Encode(selection, platform)
+function Persistence.Encode(selection, platform, weapon)
     local entries = {}
 
     for _, slot in ipairs(platform.slots) do
         local partId = selection[slot]
-        if partId ~= platform.defaults[slot] then
-            table.insert(entries, string.format("\"%s\":\"%s\"", jsonEscape(slot), jsonEscape(partId or Gunsmith.EmptyPartId)))
-        end
+        table.insert(entries, string.format("\"%s\":\"%s\"", jsonEscape(slot), jsonEscape(partId or Gunsmith.EmptyPartId)))
     end
 
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
@@ -77,7 +75,7 @@ function Persistence.Decode(json)
     return parts
 end
 
-function Persistence.ApplySavedParts(selection, platform, savedParts)
+function Persistence.ApplySavedParts(selection, platform, weapon, savedParts)
     if type(savedParts) ~= "table" then return end
 
     for _, path in ipairs(sortedSavedPaths(savedParts)) do
@@ -93,7 +91,7 @@ function Persistence.ApplySavedParts(selection, platform, savedParts)
                     selection[path] = partId
                 end
             end
-            Core.PruneInvalidSelections(selection, platform)
+            Core.PruneInvalidSelections(selection, platform, weapon)
         end
     end
 end
@@ -101,12 +99,13 @@ end
 function Persistence.Receive(item, json)
     local State = Gunsmith.State
     local platform = Core.PlatformConfig(item)
+    local weapon = Core.WeaponConfig(item)
     local key = Core.ItemKey(item)
     if not State or not platform or not key then return end
 
-    local selection = Core.CopyDefaults(platform)
-    Persistence.ApplySavedParts(selection, platform, Persistence.Decode(json))
-    Core.PruneInvalidSelections(selection, platform)
+    local selection = Core.CopyDefaults(platform, weapon)
+    Persistence.ApplySavedParts(selection, platform, weapon, Persistence.Decode(json))
+    Core.PruneInvalidSelections(selection, platform, weapon)
 
     State.selections[key] = selection
     State.loadedStates[key] = true
@@ -121,9 +120,10 @@ end
 function Persistence.Save(item)
     if not Hook or not Hook.Call then return end
     local platform = Core.PlatformConfig(item)
+    local weapon = Core.WeaponConfig(item)
     local selection = Gunsmith.Runtime and Gunsmith.Runtime.GetSelection(item) or nil
     if not platform or not selection then return end
 
-    Core.PruneInvalidSelections(selection, platform)
-    Hook.Call("DeepGunsmithSaveState", item, Persistence.Encode(selection, platform))
+    Core.PruneInvalidSelections(selection, platform, weapon)
+    Hook.Call("DeepGunsmithSaveState", item, Persistence.Encode(selection, platform, weapon))
 end

@@ -25,7 +25,7 @@ function Runtime.GetSelection(item)
 
     local key = Core.ItemKey(item)
     if not State.selections[key] then
-        State.selections[key] = Core.CopyDefaults(platform)
+        State.selections[key] = Core.CopyDefaults(platform, Core.WeaponConfig(item))
         if not State.loadedStates[key] then
             State.loadedStates[key] = true
             Persistence.Request(item)
@@ -46,8 +46,8 @@ function Runtime.SetCurrentUiPath(item, path)
     State.uiPaths[key] = path or ""
 end
 
-local function buildSignature(selection, platform)
-    Core.PruneInvalidSelections(selection, platform)
+local function buildSignature(item, selection, platform)
+    Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
     local values = {}
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         table.insert(values, path .. ":" .. tostring(selection[path] or ""))
@@ -55,8 +55,44 @@ local function buildSignature(selection, platform)
     return table.concat(values, ",")
 end
 
+local resolveVisualOffset
+
+local function resolveMountAnchor(selection, platform, path)
+    local mount = Core.MountForPath(selection, path)
+    local anchor = mount and mount.anchor or nil
+    if not anchor then return nil end
+
+    local parentPath = Core.ParentPath(path)
+    local parentPart = Core.GetInstalledPart(selection, parentPath)
+    local parentVisual = Core.PartVisual(parentPart)
+    if parentVisual and parentVisual.offset then
+        local parentOffset = resolveVisualOffset(selection, platform, parentPath, parentVisual)
+        if parentOffset then
+            return {
+                x = anchor.x + parentOffset.x - parentVisual.offset.x,
+                y = anchor.y + parentOffset.y - parentVisual.offset.y
+            }
+        end
+    end
+
+    return anchor
+end
+
+resolveVisualOffset = function(selection, platform, path, visual)
+    local relativeOffset = visual.relativeOffset
+    local anchor = resolveMountAnchor(selection, platform, path)
+    if anchor and relativeOffset then
+        return {
+            x = anchor.x + relativeOffset.x,
+            y = anchor.y + relativeOffset.y
+        }
+    end
+
+    return visual.offset
+end
+
 local function buildLayerSpecForItem(item, selection, platform)
-    Core.PruneInvalidSelections(selection, platform)
+    Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
     local layers = {}
     local weaponScale = Core.WeaponScale(item)
     local layoutScale = (platform.visualScale or 1.0) * weaponScale
@@ -64,21 +100,23 @@ local function buildLayerSpecForItem(item, selection, platform)
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])
         local visual = Core.PartVisual(part)
-        if visual and visual.texture and visual.source and visual.offset then
+        if visual and visual.texture and visual.source then
             local source = visual.source
-            local offset = visual.offset
-            local scale = (visual.scale or 1.0) * layoutScale
-            local x = origin.x + (offset.x - origin.x) * layoutScale
-            local y = origin.y + (offset.y - origin.y) * layoutScale
-            table.insert(layers, table.concat({
-                path,
-                selection[path],
-                visual.texture,
-                string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
-                string.format("%.4f,%.4f", x, y),
-                tostring(visual.order or 0),
-                string.format("%.4f", scale)
-            }, "|"))
+            local offset = resolveVisualOffset(selection, platform, path, visual)
+            if offset then
+                local scale = (visual.scale or 1.0) * layoutScale
+                local x = origin.x + (offset.x - origin.x) * layoutScale
+                local y = origin.y + (offset.y - origin.y) * layoutScale
+                table.insert(layers, table.concat({
+                    path,
+                    selection[path],
+                    visual.texture,
+                    string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
+                    string.format("%.4f,%.4f", x, y),
+                    tostring(visual.order or 0),
+                    string.format("%.4f", scale)
+                }, "|"))
+            end
         end
     end
     return table.concat(layers, ";")
@@ -92,7 +130,7 @@ function Runtime.Apply(item)
     if not platform then return end
 
     local selection = Runtime.GetSelection(item)
-    local signature = buildSignature(selection, platform)
+    local signature = buildSignature(item, selection, platform)
     if State.appliedSignatures[item] == signature then return end
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
@@ -151,7 +189,8 @@ local function returnSelectionSubtree(character, sourceItem, selection, slotPath
     if not Inventory then return 0 end
     local parts = {}
     for _, path in ipairs(selectionSubtreePaths(selection, slotPath)) do
-        local part = Core.GetPart(selection[path])
+        local partId = selection[path]
+        local part = Core.GetPart(partId)
         if part and Inventory.ItemIdentifierForPart(part) then
             table.insert(parts, part)
         end
@@ -181,6 +220,7 @@ end
 function Runtime.SetPart(item, slotPath, partId)
     local selection = Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
+    local weapon = Core.WeaponConfig(item)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
     local character = Inventory and Inventory.ActorForItem(item) or nil
@@ -199,7 +239,7 @@ function Runtime.SetPart(item, slotPath, partId)
         local part = Gunsmith.Config.parts[partId]
         if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
         if selection[slotPath] == partId then return end
-        if Inventory and not Core.IsDefaultPart(platform, slotPath, partId) and not Inventory.ConsumePartItem(character, part) then
+        if Inventory and not Inventory.ConsumePartItem(character, part) then
             print("[Gunsmith] Missing part item for " .. tostring(partId))
             return
         end
@@ -208,7 +248,7 @@ function Runtime.SetPart(item, slotPath, partId)
     end
 
     Core.ClearDescendants(selection, slotPath)
-    Core.PruneInvalidSelections(selection, platform)
+    Core.PruneInvalidSelections(selection, platform, weapon)
     Persistence.Save(item)
     State.appliedSignatures[item] = nil
     Runtime.Apply(item)

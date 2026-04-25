@@ -57,10 +57,17 @@ function Core.LeafSlot(path)
     return string.match(path, "([^/]+)$") or path
 end
 
-function Core.CopyDefaults(platform)
+function Core.CopyDefaults(platform, weapon)
     local result = {}
-    for slot, partId in pairs(platform.defaults) do
-        result[slot] = partId
+    if platform and type(platform.defaults) == "table" then
+        for slot, partId in pairs(platform.defaults) do
+            result[slot] = partId
+        end
+    end
+    if weapon and type(weapon.defaults) == "table" then
+        for slot, partId in pairs(weapon.defaults) do
+            result[slot] = partId
+        end
     end
     return result
 end
@@ -117,6 +124,12 @@ function Core.AcceptsForPath(selection, platform, slotPath)
         return platform.rootAccepts and platform.rootAccepts[slotPath] or nil
     end
 
+    local mount = Core.MountForPath(selection, slotPath)
+    return mount and mount.accepts or nil
+end
+
+function Core.MountForPath(selection, slotPath)
+    if not selection or not slotPath or slotPath == "" then return nil end
     local parent = Core.ParentPath(slotPath)
     local slot = Core.LeafSlot(slotPath)
     local parentPart = Core.GetInstalledPart(selection, parent)
@@ -124,7 +137,7 @@ function Core.AcceptsForPath(selection, platform, slotPath)
 
     for _, mount in ipairs(parentPart.mounts) do
         if mount.slot == slot then
-            return mount.accepts
+            return mount
         end
     end
     return nil
@@ -138,11 +151,6 @@ function Core.IsPartCompatible(selection, platform, slotPath, partId)
     local accepts = Core.AcceptsForPath(selection, platform, slotPath)
     if type(accepts) ~= "table" then return false end
     return intersects(accepts, Core.PartProvides(part))
-end
-
-function Core.IsDefaultPart(platform, slotPath, partId)
-    if not platform or not partId or not Core.IsRootSlot(platform, slotPath) then return false end
-    return platform.defaults and platform.defaults[slotPath] == partId
 end
 
 function Core.IsRequiredSlot(platform, path)
@@ -212,13 +220,14 @@ function Core.IsValidPath(selection, platform, path)
     return false
 end
 
-function Core.PruneInvalidSelections(selection, platform)
+function Core.PruneInvalidSelections(selection, platform, weapon)
+    local defaults = Core.CopyDefaults(platform, weapon)
     local changed = true
     while changed do
         changed = false
         for path, partId in pairs(selection) do
             if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId) then
-                local defaultPartId = Core.IsRootSlot(platform, path) and platform.defaults and platform.defaults[path] or nil
+                local defaultPartId = Core.IsRootSlot(platform, path) and defaults[path] or nil
                 if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId) then
                     selection[path] = defaultPartId
                 else
