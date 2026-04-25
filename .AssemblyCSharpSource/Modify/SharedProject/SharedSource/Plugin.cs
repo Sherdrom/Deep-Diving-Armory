@@ -82,7 +82,7 @@ namespace Modify
         public static void Postfix(Item __instance, Quality.StatType statType, ref float __result)
         {
             var modifyComp = __instance.GetComponent<Barotrauma.Items.Components.Modify>();
-            if (modifyComp != null && modifyComp.ModifyLevel > 0)
+            if (modifyComp != null && modifyComp.ModifyLevel != 0)
             {
                 var modifyStatType = (Barotrauma.Items.Components.Modify.StatType)(int)statType;
                 __result += modifyComp.GetValue(modifyStatType);
@@ -101,10 +101,14 @@ namespace Modify
         public static void Postfix(RangedWeapon __instance, ref float __result)
         {
             var modifyComp = __instance.Item.GetComponent<Barotrauma.Items.Components.Modify>();
-            if (modifyComp != null && modifyComp.ModifyLevel > 0)
+            if (modifyComp != null && modifyComp.ModifyLevel != 0)
             {
                 float modifySpreadReduction = modifyComp.GetValue(Barotrauma.Items.Components.Modify.StatType.RangedSpreadReduction);
                 if (modifySpreadReduction > 0f)
+                {
+                    __result /= (1f + modifySpreadReduction);
+                }
+                else if (modifySpreadReduction < 0f)
                 {
                     __result /= (1f + modifySpreadReduction);
                 }

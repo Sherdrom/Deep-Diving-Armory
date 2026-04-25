@@ -28,6 +28,8 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Main.lua")
 
 --敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
+--伤害衰减
+dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOff.lua")
 
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")

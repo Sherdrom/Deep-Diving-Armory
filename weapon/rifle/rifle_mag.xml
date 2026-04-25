@@ -1848,7 +1848,11 @@
         <SpawnItem identifiers="9x39round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9a91_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_tit_reload" impactsoundtag="impact_metal_light">
@@ -1881,7 +1885,11 @@
         <SpawnItem identifiers="9x39round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9a91_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_du_reload" impactsoundtag="impact_metal_light">
@@ -1916,7 +1924,11 @@
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9a91_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_phy_reload" impactsoundtag="impact_metal_light">
@@ -1949,7 +1961,11 @@
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9a91_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_phy_ful_reload_4" impactsoundtag="impact_metal_light">
@@ -1982,7 +1998,11 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9a91_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.28" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9a91_mag,rifle_tun_ful_reload" impactsoundtag="impact_metal_light">
@@ -2021,6 +2041,9 @@
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
@@ -2054,7 +2077,11 @@
         <SpawnItem identifiers="58x42round_lead" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9x39_mag_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,drums_tit" impactsoundtag="impact_metal_light">
@@ -2087,7 +2114,11 @@
         <SpawnItem identifiers="58x42round_tit" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9x39_mag_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,rifle_du_reload_heavy_2" impactsoundtag="impact_metal_light">
@@ -2122,7 +2153,11 @@
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9x39_mag_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,drums_phy" impactsoundtag="impact_metal_light">
@@ -2155,7 +2190,11 @@
         <SpawnItem identifiers="58x42round_phy" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9x39_mag_fu" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,drums_phy_ful" impactsoundtag="impact_metal_light">
@@ -2188,7 +2227,11 @@
         <SpawnItem identifiers="58x42round_fu" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
+      </StatusEffect>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   <Item name="" identifier="deep_9x39_mag_ap" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_9x39_mag,drums_tun_ful" impactsoundtag="impact_metal_light">
@@ -2226,6 +2269,9 @@
       <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
         <dropitem />
+      </StatusEffect>
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_1500_2300_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
