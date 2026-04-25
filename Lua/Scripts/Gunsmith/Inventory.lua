@@ -32,7 +32,12 @@ end
 
 function Inventory.ItemIdentifierForPart(part)
     if not part then return nil end
-    return part.itemIdentifier
+    if not part.item then return nil end
+    return part.item.identifier
+end
+
+function Inventory.IsVirtualPart(part)
+    return part and part.item and part.item.virtual == true
 end
 
 function Inventory.FindPartItem(character, identifier)
@@ -78,7 +83,7 @@ function Inventory.ConsumePartItem(character, part)
     return true
 end
 
-function Inventory.ReturnPartItem(character, part, onReturned)
+function Inventory.ReturnPartItem(character, part, onReturned, sourceItem)
     local identifier = Inventory.ItemIdentifierForPart(part)
     if not identifier or not ItemPrefab or not Entity or not Entity.Spawner then return false end
 
@@ -102,6 +107,11 @@ function Inventory.ReturnPartItem(character, part, onReturned)
 
     if character and character.WorldPosition then
         Entity.Spawner.AddItemToSpawnQueue(prefab, character.WorldPosition, nil, nil, notifyReturned)
+        return true
+    end
+
+    if sourceItem and sourceItem.WorldPosition then
+        Entity.Spawner.AddItemToSpawnQueue(prefab, sourceItem.WorldPosition, nil, nil, notifyReturned)
         return true
     end
 

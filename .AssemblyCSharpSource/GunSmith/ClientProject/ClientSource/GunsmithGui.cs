@@ -212,6 +212,7 @@ namespace GunSmith
             return part.Status switch
             {
                 "missing" => "[缺少配件] " + part.Name,
+                "incompatible" => "[不兼容] " + part.Name,
                 "disabled" => "[不可拆空] " + part.Name,
                 "available" => "[可安装] " + part.Name,
                 _ => part.Name
@@ -293,7 +294,7 @@ namespace GunSmith
 
         private sealed record GunsmithGuiPart(string Id, string Name, string Status)
         {
-            public bool IsActionable => Status != "missing" && Status != "disabled";
+            public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }
     }
 }

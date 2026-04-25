@@ -12,12 +12,18 @@ namespace GunSmith
                 if (!TryParseRectangle(parts[2], out Rectangle sourceRect)) { continue; }
                 if (!TryParseVector2(parts[3], out Vector2 offset)) { continue; }
                 if (!int.TryParse(parts[4], out int order)) { order = 0; }
+                float scale = 1.0f;
+                if (parts.Length > 5 && (!float.TryParse(parts[5], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out scale) || scale <= 0))
+                {
+                    scale = 1.0f;
+                }
 
                 layers.Add(new GunsmithLayer
                 {
                     TexturePath = ResolvePath(parts[1]),
                     SourceRect = sourceRect,
                     Offset = offset,
+                    Scale = scale,
                     Order = order
                 });
             }
@@ -38,7 +44,7 @@ namespace GunSmith
             foreach (GunsmithLayer layer in layers)
             {
                 Texture2D texture = GetTexture(layer.TexturePath);
-                batch.Draw(texture, layer.Offset, layer.SourceRect, Color.White);
+                batch.Draw(texture, layer.Offset, layer.SourceRect, Color.White, 0.0f, Vector2.Zero, layer.Scale, SpriteEffects.None, 0.0f);
             }
             batch.End();
 

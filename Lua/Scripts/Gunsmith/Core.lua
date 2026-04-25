@@ -28,6 +28,12 @@ function Core.PlatformConfig(item)
     return config.platforms[weapon.platform]
 end
 
+function Core.WeaponScale(item)
+    local weapon = Core.WeaponConfig(item)
+    if not weapon or type(weapon.scale) ~= "number" or weapon.scale <= 0 then return 1.0 end
+    return weapon.scale
+end
+
 function Core.SlotName(platform, slot)
     if platform.slotNames and platform.slotNames[slot] then
         return platform.slotNames[slot]
@@ -68,6 +74,16 @@ function Core.GetInstalledPart(selection, path)
     return Core.GetPart(selection[path])
 end
 
+function Core.PartVisual(part)
+    if not part then return nil end
+    return part.visual
+end
+
+function Core.PartProvides(part)
+    if not part or type(part.provides) ~= "table" then return {} end
+    return part.provides
+end
+
 function Core.GetPartsForSlot(slot)
     local parts = {}
     for partId, part in pairs(Gunsmith.Config.parts) do
@@ -77,6 +93,56 @@ function Core.GetPartsForSlot(slot)
     end
     table.sort(parts)
     return parts
+end
+
+local function contains(values, target)
+    if type(values) ~= "table" then return false end
+    for _, value in ipairs(values) do
+        if value == target then return true end
+    end
+    return false
+end
+
+local function intersects(left, right)
+    if type(left) ~= "table" or type(right) ~= "table" then return false end
+    for _, value in ipairs(left) do
+        if contains(right, value) then return true end
+    end
+    return false
+end
+
+function Core.AcceptsForPath(selection, platform, slotPath)
+    if not platform or not slotPath or slotPath == "" then return nil end
+    if Core.IsRootSlot(platform, slotPath) then
+        return platform.rootAccepts and platform.rootAccepts[slotPath] or nil
+    end
+
+    local parent = Core.ParentPath(slotPath)
+    local slot = Core.LeafSlot(slotPath)
+    local parentPart = Core.GetInstalledPart(selection, parent)
+    if not parentPart or not parentPart.mounts then return nil end
+
+    for _, mount in ipairs(parentPart.mounts) do
+        if mount.slot == slot then
+            return mount.accepts
+        end
+    end
+    return nil
+end
+
+function Core.IsPartCompatible(selection, platform, slotPath, partId)
+    local part = Core.GetPart(partId)
+    if not part or not platform or not slotPath or slotPath == "" then return false end
+    if part.slot ~= Core.LeafSlot(slotPath) then return false end
+
+    local accepts = Core.AcceptsForPath(selection, platform, slotPath)
+    if type(accepts) ~= "table" then return false end
+    return intersects(accepts, Core.PartProvides(part))
+end
+
+function Core.IsDefaultPart(platform, slotPath, partId)
+    if not platform or not partId or not Core.IsRootSlot(platform, slotPath) then return false end
+    return platform.defaults and platform.defaults[slotPath] == partId
 end
 
 function Core.IsRequiredSlot(platform, path)
@@ -150,9 +216,14 @@ function Core.PruneInvalidSelections(selection, platform)
     local changed = true
     while changed do
         changed = false
-        for path, _ in pairs(selection) do
-            if not Core.IsValidPath(selection, platform, path) then
-                selection[path] = nil
+        for path, partId in pairs(selection) do
+            if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId) then
+                local defaultPartId = Core.IsRootSlot(platform, path) and platform.defaults and platform.defaults[path] or nil
+                if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId) then
+                    selection[path] = defaultPartId
+                else
+                    selection[path] = nil
+                end
                 changed = true
             end
         end

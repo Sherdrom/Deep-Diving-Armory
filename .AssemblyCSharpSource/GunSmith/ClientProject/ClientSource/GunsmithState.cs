@@ -5,6 +5,7 @@ namespace GunSmith
         public string TexturePath { get; init; } = string.Empty;
         public Rectangle SourceRect { get; init; }
         public Vector2 Offset { get; init; }
+        public float Scale { get; init; } = 1.0f;
         public int Order { get; init; }
     }
 

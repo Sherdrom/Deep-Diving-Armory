@@ -55,20 +55,28 @@ local function buildSignature(selection, platform)
     return table.concat(values, ",")
 end
 
-local function buildLayerSpec(selection, platform)
+local function buildLayerSpecForItem(item, selection, platform)
     Core.PruneInvalidSelections(selection, platform)
     local layers = {}
+    local weaponScale = Core.WeaponScale(item)
+    local layoutScale = (platform.visualScale or 1.0) * weaponScale
+    local origin = platform.visualOrigin or { x = platform.canvas.w * 0.5, y = platform.canvas.h * 0.5 }
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])
-        if part and part.texture and part.source and part.offset then
-            local source = part.source
-            local offset = part.offset
+        local visual = Core.PartVisual(part)
+        if visual and visual.texture and visual.source and visual.offset then
+            local source = visual.source
+            local offset = visual.offset
+            local scale = (visual.scale or 1.0) * layoutScale
+            local x = origin.x + (offset.x - origin.x) * layoutScale
+            local y = origin.y + (offset.y - origin.y) * layoutScale
             table.insert(layers, table.concat({
                 selection[path],
-                part.texture,
+                visual.texture,
                 string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
-                string.format("%d,%d", offset.x, offset.y),
-                tostring(part.order or 0)
+                string.format("%.4f,%.4f", x, y),
+                tostring(visual.order or 0),
+                string.format("%.4f", scale)
             }, "|"))
         end
     end
@@ -86,7 +94,7 @@ function Runtime.Apply(item)
     local signature = buildSignature(selection, platform)
     if State.appliedSignatures[item] == signature then return end
 
-    local layerSpec = buildLayerSpec(selection, platform)
+    local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
         Hook.Call("DeepGunsmithApply", item, signature, layerSpec, platform.canvas.w, platform.canvas.h)
         State.appliedSignatures[item] = signature
@@ -100,7 +108,12 @@ function Runtime.CyclePart(item, slotPath)
     local platform = Core.PlatformConfig(item)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
-    local parts = Core.GetPartsForSlot(Core.LeafSlot(slotPath))
+    local parts = {}
+    for _, partId in ipairs(Core.GetPartsForSlot(Core.LeafSlot(slotPath))) do
+        if Core.IsPartCompatible(selection, platform, slotPath, partId) then
+            table.insert(parts, partId)
+        end
+    end
     if #parts == 0 then return end
 
     local current = selection[slotPath]
@@ -113,12 +126,7 @@ function Runtime.CyclePart(item, slotPath)
     end
     if nextIndex > #parts then nextIndex = 1 end
 
-    selection[slotPath] = parts[nextIndex]
-    Core.ClearDescendants(selection, slotPath)
-    Core.PruneInvalidSelections(selection, platform)
-    Persistence.Save(item)
-    State.appliedSignatures[item] = nil
-    Runtime.Apply(item)
+    return Runtime.SetPart(item, slotPath, parts[nextIndex])
 end
 
 local function selectionSubtreePaths(selection, slotPath)
@@ -138,7 +146,7 @@ local function selectionSubtreePaths(selection, slotPath)
     return paths
 end
 
-local function returnSelectionSubtree(character, selection, slotPath, onAllReturned)
+local function returnSelectionSubtree(character, sourceItem, selection, slotPath, onAllReturned)
     if not Inventory then return 0 end
     local parts = {}
     for _, path in ipairs(selectionSubtreePaths(selection, slotPath)) do
@@ -160,7 +168,7 @@ local function returnSelectionSubtree(character, selection, slotPath, onAllRetur
     end
 
     for _, part in ipairs(parts) do
-        if not Inventory.ReturnPartItem(character, part, onReturned) then
+        if not Inventory.ReturnPartItem(character, part, onReturned, sourceItem) then
             pending = pending - 1
         end
     end
@@ -184,17 +192,17 @@ function Runtime.SetPart(item, slotPath, partId)
 
     if partId == Gunsmith.EmptyPartId then
         if Core.IsRequiredSlot(platform, slotPath) then return end
-        returnedParts = returnSelectionSubtree(character, selection, slotPath, refreshWhenReturned)
+        returnedParts = returnSelectionSubtree(character, item, selection, slotPath, refreshWhenReturned)
         selection[slotPath] = nil
     else
         local part = Gunsmith.Config.parts[partId]
-        if not part or part.slot ~= Core.LeafSlot(slotPath) then return end
+        if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
         if selection[slotPath] == partId then return end
-        if Inventory and not Inventory.ConsumePartItem(character, part) then
+        if Inventory and not Core.IsDefaultPart(platform, slotPath, partId) and not Inventory.ConsumePartItem(character, part) then
             print("[Gunsmith] Missing part item for " .. tostring(partId))
             return
         end
-        returnedParts = returnSelectionSubtree(character, selection, slotPath, refreshWhenReturned)
+        returnedParts = returnSelectionSubtree(character, item, selection, slotPath, refreshWhenReturned)
         selection[slotPath] = partId
     end
 
