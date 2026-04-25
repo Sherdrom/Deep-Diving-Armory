@@ -7,7 +7,8 @@ namespace Barotrauma.Items.Components
 {
     partial class Modify : ItemComponent
     {
-        public const int MaxModifyLevel = 3;
+        public const int MaxModifyLevel = 5;
+        public const int MinModifyLevel = -5;
 
         public enum StatType
         {
@@ -29,7 +30,7 @@ namespace Barotrauma.Items.Components
 
         private int modifyLevel;
 
-        [Editable(MinValueInt = 0, MaxValueInt = MaxModifyLevel), Serialize(0, IsPropertySaveable.Yes)]
+        [Editable(MinValueInt = MinModifyLevel, MaxValueInt = MaxModifyLevel), Serialize(0, IsPropertySaveable.Yes)]
         public int ModifyLevel
         {
             get { return modifyLevel; }
@@ -38,7 +39,7 @@ namespace Barotrauma.Items.Components
                 if (value == modifyLevel) { return; }
 
                 bool wasInFullCondition = item.IsFullCondition;
-                modifyLevel = MathHelper.Clamp(value, 0, MaxModifyLevel);
+                modifyLevel = MathHelper.Clamp(value, MinModifyLevel, MaxModifyLevel);
                 item.RecalculateConditionValues();
                 if (wasInFullCondition && statValues.ContainsKey(StatType.Condition))
                 {
