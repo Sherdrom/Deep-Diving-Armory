@@ -22,10 +22,11 @@ end
 local function appendPartEntry(entries, item, selection, platform, slotPath, partId)
     local part = Gunsmith.Config.parts[partId]
     if part then
+        local weapon = Core.WeaponConfig(item)
         local status = "available"
         if selection[slotPath] == partId then
             status = "installed"
-        elseif not Core.IsPartCompatible(selection, platform, slotPath, partId) then
+        elseif not Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then
             status = "incompatible"
         elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
             status = "missing"

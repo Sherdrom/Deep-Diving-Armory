@@ -55,9 +55,9 @@ local function buildSignature(item, selection, platform)
     return table.concat(values, ",")
 end
 
-local resolveVisualOffset
+local resolveDrawOffset
 
-local function resolveMountAnchor(selection, platform, path)
+local function resolveMountAnchor(selection, platform, weapon, path)
     local mount = Core.MountForPath(selection, path)
     local anchor = mount and mount.anchor or nil
     if not anchor then return nil end
@@ -65,34 +65,48 @@ local function resolveMountAnchor(selection, platform, path)
     local parentPath = Core.ParentPath(path)
     local parentPart = Core.GetInstalledPart(selection, parentPath)
     local parentVisual = Core.PartVisual(parentPart)
-    if parentVisual and parentVisual.offset then
-        local parentOffset = resolveVisualOffset(selection, platform, parentPath, parentVisual)
+    if parentVisual then
+        local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
         if parentOffset then
             return {
-                x = anchor.x + parentOffset.x - parentVisual.offset.x,
-                y = anchor.y + parentOffset.y - parentVisual.offset.y
+                x = parentOffset.x + anchor.x,
+                y = parentOffset.y + anchor.y
             }
         end
     end
 
-    return anchor
+    return nil
 end
 
-resolveVisualOffset = function(selection, platform, path, visual)
-    local relativeOffset = visual.relativeOffset
-    local anchor = resolveMountAnchor(selection, platform, path)
-    if anchor and relativeOffset then
+resolveDrawOffset = function(selection, platform, weapon, path, visual)
+    local anchor = nil
+    if Core.IsRootSlot(platform, path) then
+        local slot = Core.LeafSlot(path)
+        anchor = weapon and weapon.rootSockets and weapon.rootSockets[slot] or nil
+    else
+        anchor = resolveMountAnchor(selection, platform, weapon, path)
+    end
+
+    if anchor and visual.attachPoint then
         return {
-            x = anchor.x + relativeOffset.x,
-            y = anchor.y + relativeOffset.y
+            x = anchor.x - visual.attachPoint.x,
+            y = anchor.y - visual.attachPoint.y
         }
     end
 
-    return visual.offset
+    if anchor and visual.relativeOffset then
+        return {
+            x = anchor.x + visual.relativeOffset.x,
+            y = anchor.y + visual.relativeOffset.y
+        }
+    end
+
+    return nil
 end
 
 local function buildLayerSpecForItem(item, selection, platform)
-    Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
+    local weapon = Core.WeaponConfig(item)
+    Core.PruneInvalidSelections(selection, platform, weapon)
     local layers = {}
     local weaponScale = Core.WeaponScale(item)
     local layoutScale = (platform.visualScale or 1.0) * weaponScale
@@ -102,11 +116,11 @@ local function buildLayerSpecForItem(item, selection, platform)
         local visual = Core.PartVisual(part)
         if visual and visual.texture and visual.source then
             local source = visual.source
-            local offset = resolveVisualOffset(selection, platform, path, visual)
-            if offset then
+            local drawOffset = resolveDrawOffset(selection, platform, weapon, path, visual)
+            if drawOffset then
                 local scale = (visual.scale or 1.0) * layoutScale
-                local x = origin.x + (offset.x - origin.x) * layoutScale
-                local y = origin.y + (offset.y - origin.y) * layoutScale
+                local x = origin.x + (drawOffset.x - origin.x) * layoutScale
+                local y = origin.y + (drawOffset.y - origin.y) * layoutScale
                 table.insert(layers, table.concat({
                     path,
                     selection[path],
@@ -145,11 +159,12 @@ end
 function Runtime.CyclePart(item, slotPath)
     local selection = Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
+    local weapon = Core.WeaponConfig(item)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
     local parts = {}
     for _, partId in ipairs(Core.GetPartsForSlot(Core.LeafSlot(slotPath))) do
-        if Core.IsPartCompatible(selection, platform, slotPath, partId) then
+        if Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then
             table.insert(parts, partId)
         end
     end
@@ -237,7 +252,7 @@ function Runtime.SetPart(item, slotPath, partId)
         selection[slotPath] = nil
     else
         local part = Gunsmith.Config.parts[partId]
-        if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
+        if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then return end
         if selection[slotPath] == partId then return end
         if Inventory and not Inventory.ConsumePartItem(character, part) then
             print("[Gunsmith] Missing part item for " .. tostring(partId))

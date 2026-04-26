@@ -87,7 +87,7 @@ function Persistence.ApplySavedParts(selection, platform, weapon, savedParts)
                 end
             else
                 local part = Gunsmith.Config.parts[partId]
-                if part and Core.IsPartCompatible(selection, platform, path, partId) then
+                if part and Core.IsPartCompatible(selection, platform, path, partId, weapon) then
                     selection[path] = partId
                 end
             end

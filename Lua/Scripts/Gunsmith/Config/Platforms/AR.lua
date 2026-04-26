@@ -8,8 +8,8 @@ config.platforms.AR = {
     id = "AR",
 
     -- 运行时合成贴图的画布尺寸。
-    -- 根部件 visual.offset 和挂点 anchor 都使用这个平台 canvas 坐标系。
-    -- 子配件可以用 visual.relativeOffset 相对父挂点定位。
+    -- 根槽 rootSockets 使用这个平台 canvas 坐标系。
+    -- 子配件可以用 visual.attachPoint 对齐父配件本地 mount.anchor。
     canvas = { w = 512, h = 160 },
 
     -- 平台级缩放。weapon.scale 和 part.visual.scale 会继续叠乘。
@@ -25,9 +25,10 @@ config.platforms.AR = {
     requiredRootSlots = true,
 
     -- 根槽兼容规则：槽位接受的类型必须和 part.provides 至少命中一个。
-    -- 例：receiver 接受 AR_receiver，所以 provides = { "AR_receiver" } 的配件才能装进 receiver。
+    -- receiver 在具体武器里通常会用 weapon.rootAccepts 覆盖成 M4_receiver / HK416_receiver 等独有类型。
+    -- 这里的 receiver 规则只作为未覆盖武器的兜底。
     rootAccepts = {
-        receiver = { "AR_receiver" },
+        receiver = { "M4_receiver" },
         barrel = { "AR_barrel" },
         handguard = { "AR_handguard" },
         pistol_grip = { "AR_pistol_grip" },
@@ -52,7 +53,7 @@ config.platforms.AR = {
     -- 平台默认配件。未声明 weapon.defaults 的武器会从这里初始化。
     -- defaults 只表示初始装配模板；安装/替换时仍按实体 item 消耗和返还。
     defaults = {
-        receiver = "AR_receiver_std",
+        receiver = "M4_receiver_std",
         barrel = "AR_barrel_145",
         handguard = "AR_handguard_std",
         pistol_grip = "AR_grip_std",

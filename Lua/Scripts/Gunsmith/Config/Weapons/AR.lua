@@ -9,11 +9,25 @@ config.weapons.deep_m4 = {
     platform = "AR",
 
     defaults = {
-        receiver = "AR_receiver_std",
+        receiver = "M4_receiver_std",
         barrel = "AR_barrel_145",
         handguard = "AR_handguard_std",
         pistol_grip = "AR_grip_std",
         stock = "AR_stock_std"
+    },
+
+    -- 武器级根槽兼容覆盖。机匣是武器独有件，所以 M4 只接受 M4_receiver。
+    rootAccepts = {
+        receiver = { "M4_receiver" }
+    },
+
+    -- 根槽接口点。根部件会用 visual.attachPoint 对齐 rootSockets[slot]。
+    rootSockets = {
+        receiver = { x = 209, y = 60 },
+        barrel = { x = 271, y = 57 },
+        handguard = { x = 271, y = 57 },
+        pistol_grip = { x = 183, y = 87 },
+        stock = { x = 141, y = 60 }
     },
 
     -- 武器级整体视觉缩放，会和 platform.visualScale、part.visual.scale 相乘。
@@ -38,6 +52,19 @@ config.weapons.deep_hk416 = {
         handguard = "hk416_handguard_std",
         pistol_grip = "hk416_grip_std",
         stock = "hk416_stock_std"
+    },
+
+    -- HK416 只接受自己的机匣；其他根槽继续沿用 AR 平台通用 accepts。
+    rootAccepts = {
+        receiver = { "HK416_receiver" }
+    },
+
+    rootSockets = {
+        receiver = { x = 184, y = 58 },
+        barrel = { x = 250, y = 57 },
+        handguard = { x = 250, y = 55 },
+        pistol_grip = { x = 166, y = 88 },
+        stock = { x = 114, y = 59 }
     },
     
     scale = 1,

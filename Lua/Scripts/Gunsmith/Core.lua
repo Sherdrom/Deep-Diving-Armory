@@ -118,9 +118,12 @@ local function intersects(left, right)
     return false
 end
 
-function Core.AcceptsForPath(selection, platform, slotPath)
+function Core.AcceptsForPath(selection, platform, slotPath, weapon)
     if not platform or not slotPath or slotPath == "" then return nil end
     if Core.IsRootSlot(platform, slotPath) then
+        if weapon and type(weapon.rootAccepts) == "table" and weapon.rootAccepts[slotPath] ~= nil then
+            return weapon.rootAccepts[slotPath]
+        end
         return platform.rootAccepts and platform.rootAccepts[slotPath] or nil
     end
 
@@ -143,12 +146,12 @@ function Core.MountForPath(selection, slotPath)
     return nil
 end
 
-function Core.IsPartCompatible(selection, platform, slotPath, partId)
+function Core.IsPartCompatible(selection, platform, slotPath, partId, weapon)
     local part = Core.GetPart(partId)
     if not part or not platform or not slotPath or slotPath == "" then return false end
     if part.slot ~= Core.LeafSlot(slotPath) then return false end
 
-    local accepts = Core.AcceptsForPath(selection, platform, slotPath)
+    local accepts = Core.AcceptsForPath(selection, platform, slotPath, weapon)
     if type(accepts) ~= "table" then return false end
     return intersects(accepts, Core.PartProvides(part))
 end
@@ -226,9 +229,9 @@ function Core.PruneInvalidSelections(selection, platform, weapon)
     while changed do
         changed = false
         for path, partId in pairs(selection) do
-            if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId) then
+            if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId, weapon) then
                 local defaultPartId = Core.IsRootSlot(platform, path) and defaults[path] or nil
-                if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId) then
+                if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId, weapon) then
                     selection[path] = defaultPartId
                 else
                     selection[path] = nil

@@ -8,8 +8,7 @@ local sightTexture = Deep_Lua.Path .. "/weapon/sight/sight.png"
 -- 这里的配件通常不是根槽默认件，而是由护木、导轨等父配件的 mounts 暴露出来。
 local function opticMount(anchor)
     return {
-        -- 导轨内部的瞄具挂点。anchor 以该导轨的参考 offset 为基准；
-        -- 当导轨通过父挂点移动到不同武器或不同护木位置时，Runtime 会把这个 anchor 一起平移。
+        -- 导轨内部的瞄具挂点。anchor 是导轨 source 内部的本地坐标。
         { slot = "optic_mount", name = "瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = anchor }
     }
 end
@@ -26,15 +25,14 @@ parts.AR_rail_short = {
     visual = {
         texture = railTexture,
         source = { x = 635, y = 44, w = 100, h = 108 },
-        -- offset 是该共享件在 AR 参考画布中的基准位置；实际安装到子槽时优先使用 relativeOffset。
-        offset = { x = 276, y = 58 },
-        relativeOffset = { x = 0, y = 0 },
+        -- attachPoint 是导轨自身的本地连接点，会对齐到父护木的本地 mount.anchor。
+        attachPoint = { x = 0, y = 0 },
         order = 60,
         scale = 0.22
     },
 
     -- 导轨安装后继续提供 optic_mount，UI 才会显示“进入该配件挂点”。
-    mounts = opticMount({ x = 288, y = 44 })
+    mounts = opticMount({ x = 12, y = -14 })
 }
 
 parts.AR_rail_long = {
@@ -46,12 +44,11 @@ parts.AR_rail_long = {
     visual = {
         texture = railTexture,
         source = { x = 631, y = 166, w = 106, h = 112 },
-        offset = { x = 276, y = 56 },
-        relativeOffset = { x = 0, y = 0 },
+        attachPoint = { x = 0, y = 0 },
         order = 60,
         scale = 0.24
     },
-    mounts = opticMount({ x = 290, y = 42 })
+    mounts = opticMount({ x = 14, y = -14 })
 }
 
 parts.AR_side_rail = {
@@ -63,12 +60,11 @@ parts.AR_side_rail = {
     visual = {
         texture = railTexture,
         source = { x = 635, y = 44, w = 100, h = 108 },
-        offset = { x = 274, y = 82 },
-        relativeOffset = { x = 0, y = 0 },
+        attachPoint = { x = 0, y = 0 },
         order = 55,
         scale = 0.18
     },
-    mounts = opticMount({ x = 286, y = 68 })
+    mounts = opticMount({ x = 12, y = -14 })
 }
 
 parts.AR_right_rail = {
@@ -80,12 +76,11 @@ parts.AR_right_rail = {
     visual = {
         texture = railTexture,
         source = { x = 635, y = 44, w = 100, h = 108 },
-        offset = { x = 304, y = 82 },
-        relativeOffset = { x = 0, y = 0 },
+        attachPoint = { x = 0, y = 0 },
         order = 65,
         scale = 0.18
     },
-    mounts = opticMount({ x = 316, y = 68 })
+    mounts = opticMount({ x = 12, y = -14 })
 }
 
 parts.AR_bottom_rail = {
@@ -97,12 +92,11 @@ parts.AR_bottom_rail = {
     visual = {
         texture = railTexture,
         source = { x = 631, y = 166, w = 106, h = 112 },
-        offset = { x = 286, y = 104 },
-        relativeOffset = { x = 0, y = 0 },
+        attachPoint = { x = 0, y = 0 },
         order = 65,
         scale = 0.20
     },
-    mounts = opticMount({ x = 300, y = 90 })
+    mounts = opticMount({ x = 14, y = -14 })
 }
 
 parts.AR_red_dot = {
@@ -116,7 +110,7 @@ parts.AR_red_dot = {
     visual = {
         texture = sightTexture,
         source = { x = 15, y = 7, w = 73, h = 59 },
-        relativeOffset = { x = 0, y = 0 },
+        attachPoint = { x = 0, y = 0 },
         order = 80,
         scale = 0.36
     }
@@ -131,7 +125,7 @@ parts.AR_holo_sight = {
     visual = {
         texture = sightTexture,
         source = { x = 108, y = 5, w = 87, h = 66 },
-        relativeOffset = { x = -2, y = -2 },
+        attachPoint = { x = 2, y = 2 },
         order = 80,
         scale = 0.34
     }

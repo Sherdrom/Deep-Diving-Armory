@@ -1,0 +1,31 @@
+Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
+
+local parts = Deep_Lua.Gunsmith.Config.parts
+local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
+
+parts.M4_receiver_std = {
+    -- slot 必须等于平台根槽或父配件 mounts 中声明的子槽。
+    slot = "receiver",
+    name = "M4 标准机匣",
+
+    -- provides 是兼容类型。平台 rootAccepts 或挂点 accepts 必须接受这个类型才可安装。
+    provides = { "M4_receiver" },
+
+    -- 实体配件 item。所有可安装配件都应有 item.identifier；defaults 也会按实体件消耗/返还。
+    item = { identifier = "deep_gunsmith_M4_receiver_std" },
+
+    -- 目前只用于 UI 展示，不直接影响武器实际数值。
+    stats = { weight = 1.0, ergonomics = 8, recoilControl = 0.02 },
+
+    -- visual 是运行时合成图层。根部件用自己的 attachPoint 对齐当前武器 rootSockets[slot]。
+    -- attachPoint 是配件 source 内部的本地连接点。
+    -- 子配件同理：父配件 mounts.anchor 是父配件本地挂点，子配件 attachPoint 会对齐到该挂点。
+    -- order 越小越早绘制，scale 是单个配件缩放。
+    visual = {
+        texture = texture,
+        source = { x = 254, y = 370, w = 135, h = 96 },
+        attachPoint = { x = 71, y = 47 },
+        order = 30,
+        scale = 1.0
+    }
+}
