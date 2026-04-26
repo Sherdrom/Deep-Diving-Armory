@@ -9,11 +9,12 @@ namespace GunSmith
                 Item? item = FindArg<Item>(args);
                 string? signature = FindStringArg(args, 0);
                 string? layerSpec = FindStringArg(args, 1);
+                string? inventorySpec = FindStringArg(args, 2);
                 int width = FindIntArg(args, 0);
                 int height = FindIntArg(args, 1);
                 if (item != null && signature != null && layerSpec != null)
                 {
-                    ApplyFromLua(item, signature, layerSpec, width, height);
+                    ApplyFromLua(item, signature, layerSpec, inventorySpec ?? string.Empty, width, height);
                 }
                 return null;
             });

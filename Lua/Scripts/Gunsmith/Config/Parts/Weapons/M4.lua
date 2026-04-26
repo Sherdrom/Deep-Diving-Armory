@@ -27,5 +27,14 @@ parts.M4_receiver_std = {
         attachPoint = { x = 71, y = 47 },
         order = 30,
         scale = 1.0
+    },
+
+    -- V0.9: receiver 是 AR 的结构核心。anchor 相对 receiver.visual.attachPoint。
+    mounts = {
+        { slot = "barrel", name = "枪管", accepts = { "AR_barrel" }, anchor = { x = 62, y = -3 } },
+        { slot = "handguard", name = "护木", accepts = { "AR_handguard" }, anchor = { x = 62, y = -3 } },
+        { slot = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, anchor = { x = -26, y = 27 } },
+        { slot = "stock", name = "枪托", accepts = { "AR_stock" }, anchor = { x = -68, y = 0 } },
+        { slot = "optic_mount", name = "机匣瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = { x = 18, y = 24 } }
     }
 }

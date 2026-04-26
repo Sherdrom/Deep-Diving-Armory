@@ -18,5 +18,14 @@ parts.hk416_receiver_std = {
         attachPoint = { x = 71, y = 33 },
         order = 30,
         scale = 1.0
+    },
+
+    -- HK416 暂只提供主结构接口；anchor 相对 receiver.visual.attachPoint。184,58
+    -- receiver 顶部瞄具挂点留给后续版本细调。
+    mounts = {
+        { slot = "barrel", name = "枪管", accepts = { "AR_barrel" }, anchor = { x = 250-184, y = 55-58 } },
+        { slot = "handguard", name = "护木", accepts = { "AR_handguard" }, anchor = { x = 250-184, y = 55-58 } },
+        { slot = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, anchor = { x = 166-184, y = 88-58 } },
+        { slot = "stock", name = "枪托", accepts = { "AR_stock" }, anchor = { x = 114-184, y = 59-58 } }
     }
 }

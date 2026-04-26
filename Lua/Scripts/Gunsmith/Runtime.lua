@@ -68,9 +68,10 @@ local function resolveMountAnchor(selection, platform, weapon, path)
     if parentVisual then
         local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
         if parentOffset then
+            local parentAttachPoint = parentVisual.attachPoint or { x = 0, y = 0 }
             return {
-                x = parentOffset.x + anchor.x,
-                y = parentOffset.y + anchor.y
+                x = parentOffset.x + parentAttachPoint.x + anchor.x,
+                y = parentOffset.y + parentAttachPoint.y + anchor.y
             }
         end
     end
@@ -136,6 +137,16 @@ local function buildLayerSpecForItem(item, selection, platform)
     return table.concat(layers, ";")
 end
 
+local function encodeInventorySettings(item)
+    local weapon = Core.WeaponConfig(item) or {}
+    local inventory = weapon.inventory or {}
+    return string.format(
+        "scale=%.4f,rotation=%.4f,padding=%.4f",
+        inventory.scale or 1.0,
+        inventory.rotation or 0.0,
+        inventory.padding or 0.0)
+end
+
 function Runtime.Apply(item)
     if SERVER then return end
     if not item or item.removed then return end
@@ -149,7 +160,7 @@ function Runtime.Apply(item)
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
-        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, platform.canvas.w, platform.canvas.h)
+        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, encodeInventorySettings(item), platform.canvas.w, platform.canvas.h)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")

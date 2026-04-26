@@ -39,7 +39,7 @@ parts.AR_handguard_std = {
         scale = 1.0
     },
     -- mounts 声明该配件安装后提供的子挂点。
-    -- anchor 是子槽在平台 canvas 上的挂点位置，供导轨、瞄具等子配件跟随父配件定位。
+    -- anchor 相对当前配件 visual.attachPoint，供导轨、瞄具等子配件跟随父配件定位。
     -- 子挂点同样通过 accepts/provides 做兼容检查。
     mounts = {
         { slot = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 39, y = 53 } },
@@ -123,7 +123,7 @@ parts.hk416_handguard_std = {
         scale = 1.0
     },
     -- HK416 护木提供和 AR 通用护木相同的四向导轨挂点。
-    -- anchor 使用平台 canvas 坐标，让同一批 AR 共享导轨能跟随 HK416 独有护木定位。
+    -- anchor 相对 HK416 护木 visual.attachPoint，让同一批 AR 共享导轨能跟随 HK416 独有护木定位。
     mounts = {
         { slot = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 16, y = 44 } },
         { slot = "bottom_rail", name = "下导轨", accepts = { "picatinny_rail" }, anchor = { x = 32, y = 104 } },

@@ -13,6 +13,7 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V0.6 Summary](./V0.6_Gunsmith_Summary.md)
 - [V0.7 Summary](./V0.7_Gunsmith_Summary.md)
 - [V0.8 Summary](./V0.8_Gunsmith_Summary.md)
+- [V0.9 Summary](./V0.9_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -36,18 +37,19 @@ Current new-system tag:
 Current validated slots:
 
 - `receiver`
-- `barrel`
-- `handguard`
-- `pistol_grip`
-- `stock`
 
 Current nested validation paths include:
 
-- `handguard/top_rail`
-- `handguard/bottom_rail`
-- `handguard/left_rail`
-- `handguard/right_rail`
-- `handguard/top_rail/optic_mount`
+- `receiver/barrel`
+- `receiver/handguard`
+- `receiver/pistol_grip`
+- `receiver/stock`
+- `receiver/optic_mount`
+- `receiver/handguard/top_rail`
+- `receiver/handguard/bottom_rail`
+- `receiver/handguard/left_rail`
+- `receiver/handguard/right_rail`
+- `receiver/handguard/top_rail/optic_mount`
 
 ## Notes
 

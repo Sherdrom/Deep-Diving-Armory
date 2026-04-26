@@ -10,10 +10,10 @@ config.weapons.deep_m4 = {
 
     defaults = {
         receiver = "M4_receiver_std",
-        barrel = "AR_barrel_145",
-        handguard = "AR_handguard_std",
-        pistol_grip = "AR_grip_std",
-        stock = "AR_stock_std"
+        ["receiver/barrel"] = "AR_barrel_145",
+        ["receiver/handguard"] = "AR_handguard_std",
+        ["receiver/pistol_grip"] = "AR_grip_std",
+        ["receiver/stock"] = "AR_stock_std"
     },
 
     -- 武器级根槽兼容覆盖。机匣是武器独有件，所以 M4 只接受 M4_receiver。
@@ -23,21 +23,25 @@ config.weapons.deep_m4 = {
 
     -- 根槽接口点。根部件会用 visual.attachPoint 对齐 rootSockets[slot]。
     rootSockets = {
-        receiver = { x = 209, y = 60 },
-        barrel = { x = 271, y = 57 },
-        handguard = { x = 271, y = 57 },
-        pistol_grip = { x = 183, y = 87 },
-        stock = { x = 141, y = 60 }
+        receiver = { x = 209, y = 60 }
     },
 
+    -- 以下都为视觉效果参数。
     -- 武器级整体视觉缩放，会和 platform.visualScale、part.visual.scale 相乘。
     scale = 1,
 
-    -- UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响世界/背包贴图。
+    -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响世界/背包贴图。
     preview = {
-        padding = 12,
+        padding = 0,
         zoom = 1.0,
         offset = { x = 0, y = 0 }
+    },
+
+    -- 只影响物品栏图标。rotation 单位为度，正数为顺时针。
+    inventory = {
+        scale = 0.35,   -- 库存图标缩放。
+        rotation = 45,  -- 库存图标旋转角度，单位是度，正数为顺时针。
+        padding = 6     -- 物品栏图标内边距，单位像素。旋转后边缘留白，避免裁切。
     }
 }
 
@@ -48,10 +52,10 @@ config.weapons.deep_hk416 = {
     -- HK416 和 M4 共用 AR 平台规则，但初始外观使用自己的独有部件。
     defaults = {
         receiver = "hk416_receiver_std",
-        barrel = "hk416_barrel_std",
-        handguard = "hk416_handguard_std",
-        pistol_grip = "hk416_grip_std",
-        stock = "hk416_stock_std"
+        ["receiver/barrel"] = "hk416_barrel_std",
+        ["receiver/handguard"] = "hk416_handguard_std",
+        ["receiver/pistol_grip"] = "hk416_grip_std",
+        ["receiver/stock"] = "hk416_stock_std"
     },
 
     -- HK416 只接受自己的机匣；其他根槽继续沿用 AR 平台通用 accepts。
@@ -60,18 +64,22 @@ config.weapons.deep_hk416 = {
     },
 
     rootSockets = {
-        receiver = { x = 184, y = 58 },
-        barrel = { x = 250, y = 57 },
-        handguard = { x = 250, y = 55 },
-        pistol_grip = { x = 166, y = 88 },
-        stock = { x = 114, y = 59 }
+        receiver = { x = 184, y = 58 }
     },
-    
+
+
+    -- 以下都为视觉效果参数。
     scale = 1,
-    
-    preview = {
-        padding = 10,
-        zoom = 1.0,
-        offset = { x = 0, y = 0 }
+
+    -- preview = {
+    --     padding = 0,
+    --     zoom = 1.0,
+    --     offset = { x = 0, y = 0 }
+    -- },
+
+    inventory = {
+        scale = 0.35,   -- 库存图标缩放。
+        rotation = 45,  -- 库存图标旋转角度，单位是度，正数为顺时针。
+        padding = 6     -- 物品栏图标内边距，单位像素。旋转后边缘留白，避免裁切。
     }
 }

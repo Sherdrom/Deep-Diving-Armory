@@ -167,10 +167,16 @@ function Core.IsRequiredSlot(platform, path)
     return false
 end
 
+function Core.IsHiddenRootSlot(platform, slot)
+    return platform and platform.hiddenRootSlots and platform.hiddenRootSlots[slot] == true
+end
+
 function Core.RootSlots(platform)
     local slots = {}
     for _, slot in ipairs(platform.slots) do
-        table.insert(slots, { path = slot, slot = slot, name = Core.SlotName(platform, slot) })
+        if not Core.IsHiddenRootSlot(platform, slot) then
+            table.insert(slots, { path = slot, slot = slot, name = Core.SlotName(platform, slot) })
+        end
     end
     return slots
 end
@@ -193,7 +199,15 @@ end
 
 function Core.SlotsForPath(selection, platform, path)
     if not path or path == "" then
-        return Core.RootSlots(platform)
+        local slots = Core.RootSlots(platform)
+        for _, rootSlot in ipairs(platform.slots or {}) do
+            if Core.IsHiddenRootSlot(platform, rootSlot) then
+                for _, childSlot in ipairs(Core.ChildSlots(selection, platform, rootSlot)) do
+                    table.insert(slots, childSlot)
+                end
+            end
+        end
+        return slots
     end
     return Core.ChildSlots(selection, platform, path)
 end
@@ -230,7 +244,7 @@ function Core.PruneInvalidSelections(selection, platform, weapon)
         changed = false
         for path, partId in pairs(selection) do
             if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId, weapon) then
-                local defaultPartId = Core.IsRootSlot(platform, path) and defaults[path] or nil
+                local defaultPartId = defaults[path]
                 if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId, weapon) then
                     selection[path] = defaultPartId
                 else
