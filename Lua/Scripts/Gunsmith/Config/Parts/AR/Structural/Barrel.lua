@@ -11,7 +11,7 @@ local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 --   XML item id: deep_gunsmith + AR + 部位 + 变体
 -- 如果某个部件只属于特定武器外观，请放到 Config/Weapons/<分类>/<武器>.lua。
 parts.AR_barrel_145 = {
-    slot = "barrel",
+    type = "barrel",
     name = "M4标准枪管",
     provides = { "AR_barrel" },
     item = { identifier = "deep_gunsmith_AR_barrel_std" },
@@ -26,7 +26,7 @@ parts.AR_barrel_145 = {
 }
 
 parts.hk416_barrel_std = {
-    slot = "barrel",
+    type = "barrel",
     name = "HK416 标准枪管",
     provides = { "AR_barrel" },
     item = { identifier = "deep_gunsmith_hk416_barrel_std" },

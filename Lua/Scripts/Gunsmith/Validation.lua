@@ -4,7 +4,8 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Validation = {}
 Gunsmith.Validation = Validation
 
-local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier" }
+local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier", "slot" }
+local oldConfigFields = { "defaults", "rootAccepts", "slots", "requiredRootSlots", "hiddenRootSlots", "slotNames" }
 local knownStatFields = {
     weight = true,
     ergonomics = true,
@@ -86,51 +87,6 @@ local function validOptionalScale(value)
     return value == nil or (type(value) == "number" and value > 0)
 end
 
-local function leafSlot(path)
-    if type(path) ~= "string" or path == "" then return "" end
-    return string.match(path, "([^/]+)$") or path
-end
-
-local function parentPath(path)
-    if type(path) ~= "string" or path == "" then return "" end
-    return string.match(path, "^(.*)/[^/]+$") or ""
-end
-
-local function isRootPath(path)
-    return type(path) == "string" and path ~= "" and not string.find(path, "/", 1, true)
-end
-
-local function sortedPathsByDepth(pathsByPart)
-    local paths = {}
-    for path, _ in pairs(pathsByPart or {}) do
-        table.insert(paths, path)
-    end
-    table.sort(paths, function(left, right)
-        local _, leftDepth = string.gsub(left, "/", "")
-        local _, rightDepth = string.gsub(right, "/", "")
-        if leftDepth == rightDepth then return left < right end
-        return leftDepth < rightDepth
-    end)
-    return paths
-end
-
-local function mountForPath(selection, parts, path)
-    local parent = parentPath(path)
-    local slot = leafSlot(path)
-    local parentPartId = selection[parent]
-    local parentPart = parts[parentPartId]
-    if type(parentPart) ~= "table" or type(parentPart.mounts) ~= "table" then return nil end
-    for _, mount in ipairs(parentPart.mounts) do
-        if mount.slot == slot then return mount end
-    end
-    return nil
-end
-
-local function partSlotForPath(selection, parts, path)
-    local mount = mountForPath(selection, parts, path)
-    return mount and mount.partSlot or leafSlot(path)
-end
-
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
@@ -161,6 +117,14 @@ local function printReport(errors, warnings, label)
     print(string.format("%s %d errors, %d warnings.", reportPrefix(label), #errors, #warnings))
 end
 
+local function mountForPath(part, path)
+    if type(part) ~= "table" or type(part.mounts) ~= "table" then return nil end
+    for _, mount in ipairs(part.mounts) do
+        if mount.path == path then return mount end
+    end
+    return nil
+end
+
 function Validation.Run(configOverride, label)
     local errors = {}
     local warnings = {}
@@ -183,57 +147,49 @@ function Validation.Run(configOverride, label)
         return false
     end
 
-    local defaultParts = {}
+    local defaultPartIds = {}
     local acceptedTypes = {}
     local providedTypes = {}
-
     local platformRootSlots = {}
+    local validatedDefaultParents = {}
 
-    local function effectiveRootAccepts(platform, weapon, slot)
-        if type(weapon) == "table" and type(weapon.rootAccepts) == "table" and weapon.rootAccepts[slot] ~= nil then
-            return weapon.rootAccepts[slot]
+    local function validateDefaultChildren(parentPartId, parentPart, path, stack, depth)
+        if type(parentPart.mounts) ~= "table" then return end
+        if depth > 32 then
+            table.insert(errors, "Default part tree under '" .. tostring(path) .. "' is deeper than 32 levels.")
+            return
         end
-        return platform and platform.rootAccepts and platform.rootAccepts[slot] or nil
-    end
+        if validatedDefaultParents[parentPartId] then return end
+        validatedDefaultParents[parentPartId] = true
 
-    local function validateDefaults(label, defaults, platform, weapon, rootSlots)
-        local selection = {}
-        for _, path in ipairs(sortedPathsByDepth(defaults)) do
-            local partId = defaults[path]
-            defaultParts[partId] = true
+        for _, mount in ipairs(parentPart.mounts) do
+            local childPartId = mount.defaultPart
+            if childPartId ~= nil then
+                if type(childPartId) ~= "string" or childPartId == "" then
+                    table.insert(errors, "Part '" .. tostring(parentPartId) .. "' mount '" .. tostring(mount.path) .. "' defaultPart must be a part id string.")
+                else
+                    local childPathSegment = mount.path
+                    local childPath = path .. "/" .. tostring(childPathSegment)
+                    local childPart = parts[childPartId]
+                    defaultPartIds[childPartId] = true
 
-            local accepts = nil
-            if isRootPath(path) then
-                if not rootSlots[path] then
-                    table.insert(errors, label .. " default slot '" .. tostring(path) .. "' is not a root slot.")
-                else
-                    accepts = effectiveRootAccepts(platform, weapon, path)
-                end
-            else
-                local parent = parentPath(path)
-                if not selection[parent] then
-                    table.insert(errors, label .. " default path '" .. tostring(path) .. "' is missing default parent '" .. tostring(parent) .. "'.")
-                else
-                    local mount = mountForPath(selection, parts, path)
-                    if not mount then
-                        table.insert(errors, label .. " default path '" .. tostring(path) .. "' is not provided by parent part '" .. tostring(selection[parent]) .. "'.")
+                    if stack[childPartId] then
+                        table.insert(errors, "Mount defaultPart contains a cycle at '" .. tostring(childPartId) .. "'.")
+                    elseif not childPart then
+                        table.insert(errors, "Part '" .. tostring(parentPartId) .. "' mount '" .. tostring(childPathSegment) .. "' default part '" .. tostring(childPartId) .. "' does not exist.")
                     else
-                        accepts = mount.accepts
+                        local expectedType = mount.partType or childPathSegment
+                        if childPart.type ~= expectedType then
+                            table.insert(errors, "Part '" .. tostring(parentPartId) .. "' mount '" .. tostring(childPathSegment) .. "' default part '" .. tostring(childPartId) .. "' type does not match '" .. tostring(expectedType) .. "'.")
+                        elseif not partProvidesAccepted(childPart, mount.accepts) then
+                            table.insert(errors, "Part '" .. tostring(parentPartId) .. "' mount '" .. tostring(childPathSegment) .. "' default part '" .. tostring(childPartId) .. "' is not accepted by '" .. tostring(childPath) .. "'.")
+                        end
+
+                        stack[childPartId] = true
+                        validateDefaultChildren(childPartId, childPart, childPath, stack, depth + 1)
+                        stack[childPartId] = nil
                     end
                 end
-            end
-
-            local part = parts[partId]
-            if not part then
-                table.insert(errors, label .. " default part '" .. tostring(partId) .. "' does not exist.")
-            elseif part.slot ~= partSlotForPath(selection, parts, path) then
-                table.insert(errors, label .. " default part '" .. tostring(partId) .. "' slot does not match '" .. tostring(partSlotForPath(selection, parts, path)) .. "'.")
-            elseif accepts and not partProvidesAccepted(part, accepts) then
-                table.insert(errors, label .. " default part '" .. tostring(partId) .. "' is not accepted by path '" .. tostring(path) .. "'.")
-            end
-
-            if part then
-                selection[path] = partId
             end
         end
     end
@@ -242,8 +198,12 @@ function Validation.Run(configOverride, label)
         if type(platform) ~= "table" then
             table.insert(errors, "Platform '" .. tostring(platformId) .. "' must be a table.")
         else
-            if type(platform.slots) ~= "table" then table.insert(errors, "Platform '" .. platformId .. "' is missing slots.") end
-            if type(platform.defaults) ~= "table" then table.insert(errors, "Platform '" .. platformId .. "' is missing defaults.") end
+            for _, field in ipairs(oldConfigFields) do
+                if platform[field] ~= nil then
+                    table.insert(errors, "Platform '" .. tostring(platformId) .. "' uses removed field '" .. field .. "'.")
+                end
+            end
+            if type(platform.rootSlots) ~= "table" then table.insert(errors, "Platform '" .. platformId .. "' is missing rootSlots.") end
             if type(platform.canvas) ~= "table" or type(platform.canvas.w) ~= "number" or type(platform.canvas.h) ~= "number" then
                 table.insert(errors, "Platform '" .. platformId .. "' is missing canvas.w/h.")
             end
@@ -253,86 +213,90 @@ function Validation.Run(configOverride, label)
             if not validOptionalPoint(platform.visualOrigin) then
                 table.insert(errors, "Platform '" .. platformId .. "' visualOrigin must contain numeric x/y.")
             end
-            if type(platform.rootAccepts) ~= "table" then
-                table.insert(errors, "Platform '" .. platformId .. "' is missing rootAccepts.")
-            end
 
-            if type(platform.slots) == "table" and type(platform.defaults) == "table" then
-                local rootSlots = {}
-                for _, slot in ipairs(platform.slots) do
-                    rootSlots[slot] = true
-                    local accepts = platform.rootAccepts and platform.rootAccepts[slot] or nil
-                    if not hasStringArray(accepts) then
-                        table.insert(errors, "Platform '" .. platformId .. "' root slot '" .. tostring(slot) .. "' is missing rootAccepts entry.")
-                    else
-                        addSetValues(acceptedTypes, accepts)
-                    end
-                end
-                platformRootSlots[platformId] = rootSlots
-
-                for slot, _ in pairs(platform.rootAccepts or {}) do
-                    if not rootSlots[slot] then
-                        table.insert(errors, "Platform '" .. platformId .. "' rootAccepts contains unknown root slot '" .. tostring(slot) .. "'.")
-                    end
-                end
-
-                validateDefaults("Platform '" .. platformId .. "'", platform.defaults, platform, nil, rootSlots)
-            end
-        end
-    end
-
-    for weaponId, weapon in pairs(weapons) do
-        local platformId = type(weapon) == "table" and weapon.platform or nil
-        if type(weapon) ~= "table" or type(platformId) ~= "string" or not platforms[platformId] then
-            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' references missing platform '" .. tostring(platformId) .. "'.")
-        end
-            local platform = type(platformId) == "string" and platforms[platformId] or nil
-            if type(weapon) == "table" and not validOptionalScale(weapon.scale) then
-                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
-            end
-            if type(weapon) == "table" then
-                if type(weapon.rootSockets) ~= "table" then
-                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootSockets.")
-                elseif type(platform) == "table" then
-                    local rootSlots = platformRootSlots[platformId] or {}
-                    for _, slot in ipairs(platform.slots or {}) do
-                        if not validOptionalPoint(weapon.rootSockets[slot]) or weapon.rootSockets[slot] == nil then
-                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets missing numeric x/y for root slot '" .. tostring(slot) .. "'.")
+            local rootSlots = {}
+            if type(platform.rootSlots) == "table" then
+                if not isArray(platform.rootSlots) then
+                    table.insert(errors, "Platform '" .. platformId .. "' rootSlots must be an array.")
+                else
+                    for index, root in ipairs(platform.rootSlots) do
+                        local rootLabel = "Platform '" .. platformId .. "' rootSlots #" .. tostring(index)
+                        if type(root) ~= "table" or type(root.path) ~= "string" or root.path == "" then
+                            table.insert(errors, rootLabel .. " is missing path.")
+                        elseif root.slot ~= nil then
+                            table.insert(errors, rootLabel .. " uses removed field 'slot'; use 'path'.")
+                        elseif rootSlots[root.path] then
+                            table.insert(errors, rootLabel .. " duplicates root path '" .. root.path .. "'.")
+                        else
+                            rootSlots[root.path] = root
                         end
-                    end
-                    for slot, _ in pairs(weapon.rootSockets) do
-                        if not rootSlots[slot] then
-                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets contains unknown root slot '" .. tostring(slot) .. "'.")
-                        end
-                    end
-                end
-
-                if weapon.rootAccepts ~= nil then
-                    if type(weapon.rootAccepts) ~= "table" then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootAccepts must be a table.")
-                    elseif type(platform) == "table" then
-                        local rootSlots = platformRootSlots[platformId] or {}
-                        for slot, accepts in pairs(weapon.rootAccepts) do
-                            if not rootSlots[slot] then
-                                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootAccepts contains unknown root slot '" .. tostring(slot) .. "'.")
-                            elseif not hasStringArray(accepts) then
-                                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootAccepts for '" .. tostring(slot) .. "' must be a non-empty string array.")
-                            else
-                                addSetValues(acceptedTypes, accepts)
+                        if type(root) == "table" then
+                            if root.required ~= nil and type(root.required) ~= "boolean" then
+                                table.insert(errors, rootLabel .. " required must be boolean when declared.")
+                            end
+                            if root.hidden ~= nil and type(root.hidden) ~= "boolean" then
+                                table.insert(errors, rootLabel .. " hidden must be boolean when declared.")
                             end
                         end
                     end
                 end
             end
-            if type(weapon) == "table" and weapon.defaults ~= nil then
-                if type(weapon.defaults) ~= "table" then
-                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' defaults must be a table.")
-                elseif type(platform) == "table" then
-                    local rootSlots = platformRootSlots[platformId] or {}
-                    validateDefaults("Weapon '" .. tostring(weaponId) .. "'", weapon.defaults, platform, weapon, rootSlots)
+            platformRootSlots[platformId] = rootSlots
+        end
+    end
+
+    for weaponId, weapon in pairs(weapons) do
+        local platformId = type(weapon) == "table" and weapon.platform or nil
+        local platform = type(platformId) == "string" and platforms[platformId] or nil
+        if type(weapon) ~= "table" or type(platformId) ~= "string" or not platform then
+            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' references missing platform '" .. tostring(platformId) .. "'.")
+        else
+            if weapon.defaults ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'defaults'.") end
+            if weapon.rootAccepts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootAccepts'.") end
+            if not validOptionalScale(weapon.scale) then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
+            end
+
+            local rootSlots = platformRootSlots[platformId] or {}
+            if type(weapon.rootParts) ~= "table" then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootParts.")
+            else
+                for path, root in pairs(rootSlots) do
+                    if root.required == true and weapon.rootParts[path] == nil then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts missing required root path '" .. tostring(path) .. "'.")
+                    end
+                end
+                for path, partId in pairs(weapon.rootParts) do
+                    local part = parts[partId]
+                    if not rootSlots[path] then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts contains unknown root path '" .. tostring(path) .. "'.")
+                    elseif not part then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' root part '" .. tostring(partId) .. "' does not exist.")
+                    elseif part.type ~= path then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' root part '" .. tostring(partId) .. "' type does not match '" .. tostring(path) .. "'.")
+                    else
+                        defaultPartIds[partId] = true
+                        validateDefaultChildren(partId, part, path, { [partId] = true }, 0)
+                    end
                 end
             end
-            if type(weapon) == "table" and weapon.preview ~= nil then
+
+            if type(weapon.rootSockets) ~= "table" then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootSockets.")
+            else
+                for path, root in pairs(rootSlots) do
+                    if root.required == true and (not validOptionalPoint(weapon.rootSockets[path]) or weapon.rootSockets[path] == nil) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets missing numeric x/y for root path '" .. tostring(path) .. "'.")
+                    end
+                end
+                for path, _ in pairs(weapon.rootSockets) do
+                    if not rootSlots[path] then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets contains unknown root path '" .. tostring(path) .. "'.")
+                    end
+                end
+            end
+
+            if weapon.preview ~= nil then
                 if type(weapon.preview) ~= "table" then
                     table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview must be a table.")
                 else
@@ -347,13 +311,30 @@ function Validation.Run(configOverride, label)
                     end
                 end
             end
+
+            if weapon.inventory ~= nil then
+                if type(weapon.inventory) ~= "table" then
+                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory must be a table.")
+                else
+                    if not validOptionalScale(weapon.inventory.scale) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.scale must be a positive number.")
+                    end
+                    if weapon.inventory.rotation ~= nil and type(weapon.inventory.rotation) ~= "number" then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.rotation must be a number.")
+                    end
+                    if weapon.inventory.padding ~= nil and (type(weapon.inventory.padding) ~= "number" or weapon.inventory.padding < 0) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.padding must be a non-negative number.")
+                    end
+                end
+            end
+        end
     end
 
     for partId, part in pairs(parts) do
         if type(part) ~= "table" then
             table.insert(errors, "Part '" .. tostring(partId) .. "' must be a table.")
         else
-            if type(part.slot) ~= "string" or part.slot == "" then table.insert(errors, "Part '" .. partId .. "' is missing slot.") end
+            if type(part.type) ~= "string" or part.type == "" then table.insert(errors, "Part '" .. partId .. "' is missing type.") end
             if type(part.name) ~= "string" or part.name == "" then table.insert(errors, "Part '" .. partId .. "' is missing name.") end
             if not hasStringArray(part.provides) then
                 table.insert(errors, "Part '" .. partId .. "' is missing provides.")
@@ -391,7 +372,7 @@ function Validation.Run(configOverride, label)
             end
 
             local item = part.item
-            if not defaultParts[partId] then
+            if not defaultPartIds[partId] then
                 if type(item) ~= "table" or (type(item.identifier) ~= "string" and item.virtual ~= true) then
                     table.insert(errors, "Non-default part '" .. partId .. "' must declare item.identifier or item.virtual = true.")
                 end
@@ -406,68 +387,66 @@ function Validation.Run(configOverride, label)
                     table.insert(errors, "Part '" .. partId .. "' mounts must be an array.")
                 else
                     for index, mount in ipairs(part.mounts) do
-                        local label = "Part '" .. partId .. "' mount #" .. tostring(index)
-                        if type(mount.slot) ~= "string" or mount.slot == "" then
-                            table.insert(errors, label .. " is missing slot.")
+                        local mountLabel = "Part '" .. partId .. "' mount #" .. tostring(index)
+                        if mount.slot ~= nil then
+                            table.insert(errors, mountLabel .. " uses removed field 'slot'; use 'path'.")
                         end
-                        if mount.partSlot ~= nil and (type(mount.partSlot) ~= "string" or mount.partSlot == "") then
-                            table.insert(errors, label .. " partSlot must be a non-empty string when declared.")
+                        if type(mount.path) ~= "string" or mount.path == "" then
+                            table.insert(errors, mountLabel .. " is missing path.")
+                        end
+                        if mount.partSlot ~= nil then
+                            table.insert(errors, mountLabel .. " uses removed field 'partSlot'; use 'partType'.")
+                        end
+                        if mount.partType ~= nil and (type(mount.partType) ~= "string" or mount.partType == "") then
+                            table.insert(errors, mountLabel .. " partType must be a non-empty string when declared.")
+                        end
+                        if mount.defaultPart ~= nil and (type(mount.defaultPart) ~= "string" or mount.defaultPart == "") then
+                            table.insert(errors, mountLabel .. " defaultPart must be a non-empty string when declared.")
                         end
                         if not hasStringArray(mount.accepts) then
-                            table.insert(errors, label .. " is missing accepts.")
+                            table.insert(errors, mountLabel .. " is missing accepts.")
                         else
                             addSetValues(acceptedTypes, mount.accepts)
                             if not hasAnyProvidedPart(parts, mount.accepts) then
-                                table.insert(warnings, label .. " accepts no currently provided part type.")
+                                table.insert(warnings, mountLabel .. " accepts no currently provided part type.")
                             end
                         end
                         if not validOptionalPoint(mount.anchor) then
-                            table.insert(errors, label .. " anchor must contain numeric x/y.")
+                            table.insert(errors, mountLabel .. " anchor must contain numeric x/y.")
                         end
                     end
                 end
             end
-            if type(weapon) == "table" and weapon.inventory ~= nil then
-                if type(weapon.inventory) ~= "table" then
-                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory must be a table.")
-                else
-                    if not validOptionalScale(weapon.inventory.scale) then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.scale must be a positive number.")
-                    end
-                    if weapon.inventory.rotation ~= nil and type(weapon.inventory.rotation) ~= "number" then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.rotation must be a number.")
-                    end
-                    if weapon.inventory.padding ~= nil and (type(weapon.inventory.padding) ~= "number" or weapon.inventory.padding < 0) then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.padding must be a non-negative number.")
-                    end
-                end
+            if part.defaultParts ~= nil then
+                table.insert(errors, "Part '" .. partId .. "' uses removed field 'defaultParts'; use mounts[].defaultPart.")
             end
         end
     end
 
-    for platformId, platform in pairs(platforms) do
-        if type(platform) == "table" and type(platform.rootAccepts) == "table" then
-            for slot, accepts in pairs(platform.rootAccepts) do
-                if hasStringArray(accepts) and not hasAnyProvidedPart(parts, accepts) then
-                    table.insert(warnings, "Platform '" .. platformId .. "' rootAccepts for '" .. tostring(slot) .. "' has no matching part.")
-                end
-            end
-        end
-    end
-
-    for weaponId, weapon in pairs(weapons) do
-        if type(weapon) == "table" and type(weapon.rootAccepts) == "table" then
-            for slot, accepts in pairs(weapon.rootAccepts) do
-                if hasStringArray(accepts) and not hasAnyProvidedPart(parts, accepts) then
-                    table.insert(warnings, "Weapon '" .. tostring(weaponId) .. "' rootAccepts for '" .. tostring(slot) .. "' has no matching part.")
-                end
-            end
+    for partId, part in pairs(parts) do
+        if type(part) == "table" and type(part.mounts) == "table" then
+            validateDefaultChildren(partId, part, part.type or partId, { [partId] = true }, 0)
         end
     end
 
     for provided, _ in pairs(providedTypes) do
         if not acceptedTypes[provided] then
-            table.insert(warnings, "Provided type '" .. provided .. "' is not accepted by any root slot or mount.")
+            local acceptedByRoot = false
+            for _, weapon in pairs(weapons) do
+                if type(weapon) == "table" and type(weapon.rootParts) == "table" then
+                    for _, rootPartId in pairs(weapon.rootParts) do
+                        local rootPart = parts[rootPartId]
+                        if rootPart and partProvidesAccepted(rootPart, { provided }) then
+                            acceptedByRoot = true
+                            break
+                        end
+                    end
+                end
+                if acceptedByRoot then break end
+            end
+            if not acceptedByRoot then
+                table.insert(warnings, "Provided type '" .. provided .. "' is not accepted by any mount.")
+            end
         end
     end
 
@@ -479,29 +458,22 @@ function Validation.RunSelfTest()
     local badConfig = {
         platforms = {
             broken = {
-                slots = { "receiver" },
+                rootSlots = {
+                    { path = "receiver", required = true, hidden = true },
+                    { path = "receiver", required = "bad" }
+                },
                 defaults = {
-                    receiver = "missing_default_part"
+                    receiver = "old_default"
                 },
                 canvas = { w = 512, h = 160 },
                 visualScale = -1,
-                visualOrigin = { x = "bad", y = 80 },
-                rootAccepts = {
-                    receiver = { "test_receiver" }
-                }
+                visualOrigin = { x = "bad", y = 80 }
             },
             nested_broken = {
-                slots = { "receiver" },
-                defaults = {
-                    receiver = "test_receiver_part",
-                    ["receiver/barrel"] = "bad_slot_part",
-                    ["receiver/missing_mount"] = "test_stock_part",
-                    ["receiver/barrel/muzzle_device"] = "test_stock_part"
+                rootSlots = {
+                    { path = "receiver", required = true, hidden = true }
                 },
-                canvas = { w = 512, h = 160 },
-                rootAccepts = {
-                    receiver = { "test_receiver" }
-                }
+                canvas = { w = 512, h = 160 }
             }
         },
         weapons = {
@@ -511,87 +483,94 @@ function Validation.RunSelfTest()
             bad_scale = {
                 platform = "broken",
                 scale = 0,
+                rootParts = {
+                    receiver = "missing_root_part"
+                },
                 rootSockets = {
                     receiver = { x = 0, y = 0 }
                 }
             },
-            missing_root_socket = {
-                platform = "broken",
-                rootSockets = {}
+            missing_root_part = {
+                platform = "nested_broken",
+                rootParts = {},
+                rootSockets = {
+                    receiver = { x = 0, y = 0 }
+                }
             },
             bad_root_socket = {
-                platform = "broken",
+                platform = "nested_broken",
+                rootParts = {
+                    receiver = "test_receiver_part",
+                    magazine = "test_receiver_part"
+                },
                 rootSockets = {
-                    receiver = { x = "bad", y = 0 }
-                }
-            },
-            unknown_root_socket = {
-                platform = "broken",
-                rootSockets = {
-                    receiver = { x = 0, y = 0 },
+                    receiver = { x = "bad", y = 0 },
                     magazine = { x = 0, y = 0 }
-                }
-            },
-            bad_root_accepts = {
-                platform = "broken",
-                rootSockets = {
-                    receiver = { x = 0, y = 0 }
+                },
+                defaults = {
+                    receiver = "old_weapon_default"
                 },
                 rootAccepts = {
-                    magazine = { "test_magazine" },
-                    receiver = {}
-                }
-            },
-            nested_bad_defaults = {
-                platform = "nested_broken",
-                rootSockets = {
-                    receiver = { x = 0, y = 0 }
+                    receiver = { "old_accepts" }
                 }
             }
         },
         parts = {
             test_receiver_part = {
-                slot = "receiver",
+                type = "receiver",
                 name = "Test Receiver Part",
                 provides = { "test_receiver" },
+                item = { virtual = true },
                 visual = {
                     texture = "test_receiver",
                     source = { x = 0, y = 0, w = 16, h = 16 },
                     attachPoint = { x = 0, y = 0 }
                 },
                 mounts = {
-                    { slot = "barrel", accepts = { "test_barrel" }, anchor = { x = 0, y = 0 } },
-                    { slot = "stock", accepts = { "test_stock" }, anchor = { x = 0, y = 0 } }
+                    { path = "barrel", accepts = { "test_barrel" }, defaultPart = "bad_type_part", anchor = { x = 0, y = 0 } },
+                    { path = "stock", accepts = { "test_stock" }, defaultPart = "cycle_part", anchor = { x = 0, y = 0 } },
+                    { path = "bad_default", accepts = { "test_stock" }, defaultPart = 42, anchor = { x = 0, y = 0 } }
                 }
             },
-            bad_slot_part = {
-                slot = "stock",
-                name = "Bad Slot Part",
+            bad_type_part = {
+                type = "stock",
+                name = "Bad Type Part",
                 provides = { "test_barrel" },
+                item = { virtual = true },
                 visual = {
-                    texture = "bad_slot",
+                    texture = "bad_type",
                     source = { x = 0, y = 0, w = 16, h = 16 },
                     attachPoint = { x = 0, y = 0 }
                 }
             },
             test_stock_part = {
-                slot = "stock",
+                type = "stock",
                 name = "Test Stock Part",
                 provides = { "test_stock" },
+                item = { virtual = true },
                 visual = {
                     texture = "test_stock",
                     source = { x = 0, y = 0, w = 16, h = 16 },
                     attachPoint = { x = 0, y = 0 }
                 }
             },
+            cycle_part = {
+                type = "stock",
+                name = "Cycle Part",
+                provides = { "test_stock" },
+                item = { virtual = true },
+                mounts = {
+                    { path = "stock", accepts = { "test_stock" }, defaultPart = "cycle_part", anchor = { x = 0, y = 0 } }
+                }
+            },
             old_field_part = {
-                slot = "receiver",
+                type = "receiver",
                 name = "Old Field Part",
                 provides = { "test_receiver" },
                 texture = "removed_field"
             },
             bad_visual_part = {
-                slot = "receiver",
+                type = "receiver",
                 name = "Bad Visual Part",
                 provides = { "test_receiver" },
                 item = { virtual = true },
@@ -604,35 +583,13 @@ function Validation.RunSelfTest()
                     source = { x = 0, y = 0, w = 16, h = 16 }
                 }
             },
-            bad_relative_visual_part = {
-                slot = "optic_mount",
-                name = "Bad Attach Point Visual Part",
-                provides = { "test_receiver" },
-                item = { virtual = true },
-                visual = {
-                    texture = "bad_attach_point",
-                    source = { x = 0, y = 0, w = 16, h = 16 },
-                    attachPoint = { x = "bad", y = 0 }
-                }
-            },
-            no_item_part = {
-                slot = "receiver",
-                name = "No Item Part",
-                provides = { "test_receiver" }
-            },
-            missing_prefab_part = {
-                slot = "receiver",
-                name = "Missing Prefab Part",
-                provides = { "test_receiver" },
-                item = { identifier = "deep_gunsmith_validation_missing_prefab" }
-            },
             bad_mount_part = {
-                slot = "receiver",
+                type = "receiver",
                 name = "Bad Mount Part",
                 provides = { "unused_test_type" },
                 item = { virtual = true },
                 mounts = {
-                    { slot = "optic_mount", anchor = { x = "bad", y = 0 } }
+                    { slot = "old_path_field", path = "optic_mount", partSlot = "", partType = "", anchor = { x = "bad", y = 0 } }
                 }
             }
         }

@@ -7,13 +7,13 @@ local railTexture = Deep_Lua.Path .. "/weapon/part/part.png"
 local function opticMount(anchor)
     return {
         -- 导轨内部的瞄具挂点。anchor 是导轨 source 内部的本地坐标。
-        { slot = "optic_mount", name = "瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = anchor }
+        { path = "optic_mount", name = "瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = anchor }
     }
 end
 
 parts.AR_rail_short = {
-    -- top_rail 是护木 mounts 提供的子槽，不是平台根槽。
-    slot = "top_rail",
+    -- top_rail 是护木 mounts 提供的子路径，不是平台根路径。
+    type = "top_rail",
     name = "短皮卡汀尼导轨",
 
     -- 提供 picatinny_rail，因此可以安装到 accepts = { "picatinny_rail" } 的挂点。
@@ -34,7 +34,7 @@ parts.AR_rail_short = {
 }
 
 parts.AR_rail_long = {
-    slot = "top_rail",
+    type = "top_rail",
     name = "长皮卡汀尼导轨",
     provides = { "picatinny_rail" },
     item = { identifier = "deep_gunsmith_AR_rail_long" },
@@ -49,11 +49,11 @@ parts.AR_rail_long = {
     mounts = opticMount({ x = 14, y = -14 })
 }
 
-parts.AR_side_rail = {
-    slot = "left_rail",
-    name = "侧面导轨",
+parts.AR_left_rail = {
+    type = "left_rail",
+    name = "左侧导轨",
     provides = { "picatinny_rail" },
-    item = { identifier = "deep_gunsmith_AR_side_rail" },
+    item = { identifier = "deep_gunsmith_AR_left_rail" },
     stats = { weight = 0.08, ergonomics = -1 },
     visual = {
         texture = railTexture,
@@ -66,7 +66,7 @@ parts.AR_side_rail = {
 }
 
 parts.AR_right_rail = {
-    slot = "right_rail",
+    type = "right_rail",
     name = "右侧导轨",
     provides = { "picatinny_rail" },
     item = { identifier = "deep_gunsmith_AR_right_rail" },
@@ -82,7 +82,7 @@ parts.AR_right_rail = {
 }
 
 parts.AR_bottom_rail = {
-    slot = "bottom_rail",
+    type = "bottom_rail",
     name = "下方导轨",
     provides = { "picatinny_rail" },
     item = { identifier = "deep_gunsmith_AR_bottom_rail" },

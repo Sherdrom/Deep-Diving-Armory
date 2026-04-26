@@ -7,20 +7,9 @@ local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 config.weapons.deep_hk416 = {
     platform = "AR",
 
-    -- 可选：覆盖平台初始装配模板。
-    -- HK416 和 M4 共用 AR 平台规则，但初始外观使用自己的独有部件。
-    defaults = {
-        receiver = "hk416_receiver_std",
-        ["receiver/barrel"] = "hk416_barrel_std",
-        ["receiver/handguard"] = "hk416_handguard_std",
-        ["receiver/pistol_grip"] = "hk416_grip_std",
-        ["receiver/stock"] = "hk416_stock_std",
-        ["receiver/receiver_top_rail"] = "AR_receiver_top_rail"
-    },
-
-    -- HK416 只接受自己的机匣；其他根槽继续沿用 AR 平台通用 accepts。
-    rootAccepts = {
-        receiver = { "HK416_receiver" }
+    -- 具体武器只声明根身份件；子默认件由 receiver.mounts[].defaultPart 展开。
+    rootParts = {
+        receiver = "hk416_receiver_std"
     },
 
     rootSockets = {
@@ -45,7 +34,7 @@ config.weapons.deep_hk416 = {
 }
 
 parts.hk416_receiver_std = {
-    slot = "receiver",
+    type = "receiver",
     name = "HK416 标准机匣",
     provides = { "HK416_receiver" },
     item = { identifier = "deep_gunsmith_hk416_receiver_std" },
@@ -61,10 +50,10 @@ parts.hk416_receiver_std = {
     -- HK416 机匣顶部自带导轨。这里挂一个 virtual part，用它继续提供前/后瞄具挂点。
     -- anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { slot = "receiver_top_rail", name = "顶部导轨", accepts = { "AR_top_rail" }, anchor = { x = 12, y = -23 } },
-        { slot = "barrel", name = "枪管", accepts = { "AR_barrel" }, anchor = { x = 250-184, y = 55-58 } },
-        { slot = "handguard", name = "护木", accepts = { "AR_handguard" }, anchor = { x = 250-184, y = 55-58 } },
-        { slot = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, anchor = { x = 166-184, y = 88-58 } },
-        { slot = "stock", name = "枪托", accepts = { "AR_stock" }, anchor = { x = 114-184, y = 59-58 } }
+        { path = "barrel", name = "枪管", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
+        { path = "handguard", name = "护木", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
+        { path = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
+        { path = "stock", name = "枪托", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },
+        { path = "receiver_top_rail", name = "顶部导轨", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }
 }

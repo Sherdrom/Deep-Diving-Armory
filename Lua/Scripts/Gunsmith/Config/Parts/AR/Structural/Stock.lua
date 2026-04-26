@@ -6,7 +6,7 @@ local parts = Deep_Lua.Gunsmith.Config.parts
 local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
 parts.AR_stock_std = {
-    slot = "stock",
+    type = "stock",
     name = "M4标准枪托",
     provides = { "AR_stock" },
     item = { identifier = "deep_gunsmith_AR_stock_std" },
@@ -21,7 +21,7 @@ parts.AR_stock_std = {
 }
 
 parts.hk416_stock_std = {
-    slot = "stock",
+    type = "stock",
     name = "HK416 标准枪托",
     provides = { "AR_stock" },
     item = { identifier = "deep_gunsmith_hk416_stock_std" },

@@ -43,9 +43,10 @@ end
 function Persistence.Encode(selection, platform, weapon)
     local entries = {}
 
-    for _, slot in ipairs(platform.slots) do
-        local partId = selection[slot]
-        table.insert(entries, string.format("\"%s\":\"%s\"", jsonEscape(slot), jsonEscape(partId or Gunsmith.EmptyPartId)))
+    for _, root in ipairs(Core.RootSlotDefs(platform)) do
+        local path = root.path
+        local partId = selection[path]
+        table.insert(entries, string.format("\"%s\":\"%s\"", jsonEscape(path), jsonEscape(partId or Gunsmith.EmptyPartId)))
     end
 
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
@@ -87,7 +88,7 @@ function Persistence.ApplySavedParts(selection, platform, weapon, savedParts)
                 end
             else
                 local part = Gunsmith.Config.parts[partId]
-                if part and Core.IsPartCompatible(selection, platform, path, partId, weapon) then
+                if part and Core.IsPartCompatible(selection, platform, path, partId) then
                     selection[path] = partId
                 end
             end
@@ -103,7 +104,7 @@ function Persistence.Receive(item, json)
     local key = Core.ItemKey(item)
     if not State or not platform or not key then return end
 
-    local selection = Core.CopyDefaults(platform, weapon)
+    local selection = Core.BuildDefaultSelection(platform, weapon)
     Persistence.ApplySavedParts(selection, platform, weapon, Persistence.Decode(json))
     Core.PruneInvalidSelections(selection, platform, weapon)
 

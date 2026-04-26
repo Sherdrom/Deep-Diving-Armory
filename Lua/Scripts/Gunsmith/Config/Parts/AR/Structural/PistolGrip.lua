@@ -5,7 +5,7 @@ local parts = Deep_Lua.Gunsmith.Config.parts
 local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
 parts.AR_grip_std = {
-    slot = "pistol_grip",
+    type = "pistol_grip",
     name = "M4标准握把",
     provides = { "AR_pistol_grip" },
     item = { identifier = "deep_gunsmith_AR_grip_std" },
@@ -20,7 +20,7 @@ parts.AR_grip_std = {
 }
 
 parts.hk416_grip_std = {
-    slot = "pistol_grip",
+    type = "pistol_grip",
     name = "HK416 标准握把",
     provides = { "AR_pistol_grip" },
     item = { identifier = "deep_gunsmith_hk416_grip_std" },

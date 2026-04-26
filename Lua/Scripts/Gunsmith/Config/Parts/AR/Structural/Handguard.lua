@@ -6,7 +6,7 @@ local parts = Deep_Lua.Gunsmith.Config.parts
 local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
 parts.AR_handguard_std = {
-    slot = "handguard",
+    type = "handguard",
     name = "M4 标准护木",
     provides = { "AR_handguard" },
     item = { identifier = "deep_gunsmith_AR_handguard_std" },
@@ -22,15 +22,15 @@ parts.AR_handguard_std = {
     -- anchor 相对当前配件 visual.attachPoint，供导轨、瞄具等子配件跟随父配件定位。
     -- 子挂点同样通过 accepts/provides 做兼容检查。
     mounts = {
-        { slot = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 39, y = 53 } },
-        { slot = "bottom_rail", name = "下导轨", accepts = { "picatinny_rail" }, anchor = { x = 49, y = 99 } },
-        { slot = "left_rail", name = "左导轨", accepts = { "picatinny_rail" }, anchor = { x = 37, y = 77 } },
-        { slot = "right_rail", name = "右导轨", accepts = { "picatinny_rail" }, anchor = { x = 67, y = 77 } }
+        { path = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 39, y = 53 } },
+        { path = "bottom_rail", name = "下导轨", accepts = { "picatinny_rail" }, anchor = { x = 49, y = 99 } },
+        { path = "left_rail", name = "左导轨", accepts = { "picatinny_rail" }, anchor = { x = 37, y = 77 } },
+        { path = "right_rail", name = "右导轨", accepts = { "picatinny_rail" }, anchor = { x = 67, y = 77 } }
     }
 }
 
 parts.hk416_handguard_std = {
-    slot = "handguard",
+    type = "handguard",
     name = "HK416 标准护木",
     provides = { "AR_handguard" },
     item = { identifier = "deep_gunsmith_hk416_handguard_std" },
@@ -45,9 +45,9 @@ parts.hk416_handguard_std = {
     -- HK416 护木提供和 AR 通用护木相同的四向导轨挂点。
     -- anchor 相对 HK416 护木 visual.attachPoint，让同一批 AR 共享导轨能跟随 HK416 独有护木定位。
     mounts = {
-        { slot = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 16, y = 44 } },
-        { slot = "bottom_rail", name = "下导轨", accepts = { "picatinny_rail" }, anchor = { x = 32, y = 104 } },
-        { slot = "left_rail", name = "左导轨", accepts = { "picatinny_rail" }, anchor = { x = 14, y = 74 } },
-        { slot = "right_rail", name = "右导轨", accepts = { "picatinny_rail" }, anchor = { x = 46, y = 74 } }
+        { path = "top_rail", name = "上导轨", accepts = { "picatinny_rail" }, anchor = { x = 16, y = 44 } },
+        { path = "bottom_rail", name = "下导轨", accepts = { "picatinny_rail" }, anchor = { x = 32, y = 104 } },
+        { path = "left_rail", name = "左导轨", accepts = { "picatinny_rail" }, anchor = { x = 14, y = 74 } },
+        { path = "right_rail", name = "右导轨", accepts = { "picatinny_rail" }, anchor = { x = 46, y = 74 } }
     }
 }

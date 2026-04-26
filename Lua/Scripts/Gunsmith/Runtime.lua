@@ -25,7 +25,7 @@ function Runtime.GetSelection(item)
 
     local key = Core.ItemKey(item)
     if not State.selections[key] then
-        State.selections[key] = Core.CopyDefaults(platform, Core.WeaponConfig(item))
+        State.selections[key] = Core.BuildDefaultSelection(platform, Core.WeaponConfig(item))
         if not State.loadedStates[key] then
             State.loadedStates[key] = true
             Persistence.Request(item)
@@ -96,8 +96,8 @@ end
 resolveDrawOffset = function(selection, platform, weapon, path, visual)
     local anchor = nil
     if Core.IsRootSlot(platform, path) then
-        local slot = Core.LeafSlot(path)
-        anchor = weapon and weapon.rootSockets and weapon.rootSockets[slot] or nil
+        local rootPath = Core.LeafPath(path)
+        anchor = weapon and weapon.rootSockets and weapon.rootSockets[rootPath] or nil
     else
         anchor = resolveMountAnchor(selection, platform, weapon, path)
     end
@@ -188,8 +188,8 @@ function Runtime.CyclePart(item, slotPath)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
     local parts = {}
-    for _, partId in ipairs(Core.GetPartsForSlot(Core.PartSlotForPath(selection, slotPath))) do
-        if Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then
+    for _, partId in ipairs(Core.GetPartsForType(Core.PartTypeForPath(selection, slotPath))) do
+        if Core.IsPartCompatible(selection, platform, slotPath, partId) then
             table.insert(parts, partId)
         end
     end
@@ -277,7 +277,7 @@ function Runtime.SetPart(item, slotPath, partId)
         selection[slotPath] = nil
     else
         local part = Gunsmith.Config.parts[partId]
-        if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then return end
+        if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
         if selection[slotPath] == partId then return end
         if Inventory and not Inventory.ConsumePartItem(character, part) then
             print("[Gunsmith] Missing part item for " .. tostring(partId))
@@ -288,6 +288,9 @@ function Runtime.SetPart(item, slotPath, partId)
     end
 
     Core.ClearDescendants(selection, slotPath)
+    if partId ~= Gunsmith.EmptyPartId then
+        Core.ApplyMountDefaultsForPath(selection, slotPath, {}, 0)
+    end
     Core.PruneInvalidSelections(selection, platform, weapon)
     Persistence.Save(item)
     State.appliedSignatures[item] = nil

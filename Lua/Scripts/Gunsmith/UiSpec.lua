@@ -26,7 +26,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         local status = "available"
         if selection[slotPath] == partId then
             status = "installed"
-        elseif not Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then
+        elseif not Core.IsPartCompatible(selection, platform, slotPath, partId) then
             status = "incompatible"
         elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
             status = "missing"
@@ -47,7 +47,7 @@ function UiSpec.Build(item, selection, platform, currentPath)
             emptyStatus = "installed"
         end
         local partEntries = { Gunsmith.EmptyPartId .. ":[空]:" .. emptyStatus }
-        for _, partId in ipairs(Core.GetPartsForSlot(slot.partSlot or slot.slot)) do
+        for _, partId in ipairs(Core.GetPartsForType(slot.partType)) do
             appendPartEntry(partEntries, item, selection, platform, slot.path, partId)
         end
 

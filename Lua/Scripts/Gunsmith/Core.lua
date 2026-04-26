@@ -34,16 +34,16 @@ function Core.WeaponScale(item)
     return weapon.scale
 end
 
-function Core.SlotName(platform, slot)
-    if platform.slotNames and platform.slotNames[slot] then
-        return platform.slotNames[slot]
+function Core.PathName(platform, path)
+    if platform.pathNames and platform.pathNames[path] then
+        return platform.pathNames[path]
     end
-    return slot
+    return path
 end
 
-function Core.JoinPath(parentPath, slot)
-    if not parentPath or parentPath == "" then return slot end
-    return parentPath .. "/" .. slot
+function Core.JoinPath(parentPath, path)
+    if not parentPath or parentPath == "" then return path end
+    return parentPath .. "/" .. path
 end
 
 function Core.ParentPath(path)
@@ -52,24 +52,89 @@ function Core.ParentPath(path)
     return parent or ""
 end
 
-function Core.LeafSlot(path)
+function Core.LeafPath(path)
     if not path or path == "" then return "" end
     return string.match(path, "([^/]+)$") or path
 end
 
-function Core.CopyDefaults(platform, weapon)
+function Core.RootSlotDefs(platform)
     local result = {}
-    if platform and type(platform.defaults) == "table" then
-        for slot, partId in pairs(platform.defaults) do
-            result[slot] = partId
-        end
-    end
-    if weapon and type(weapon.defaults) == "table" then
-        for slot, partId in pairs(weapon.defaults) do
-            result[slot] = partId
+    if not platform then return result end
+    if type(platform.rootSlots) == "table" then
+        for _, entry in ipairs(platform.rootSlots) do
+            if type(entry) == "table" and type(entry.path) == "string" then
+                table.insert(result, entry)
+            end
         end
     end
     return result
+end
+
+function Core.RootSlotDef(platform, path)
+    for _, entry in ipairs(Core.RootSlotDefs(platform)) do
+        if entry.path == path then return entry end
+    end
+    return nil
+end
+
+local function partProvidesAccepted(part, accepts)
+    if type(part) ~= "table" or type(part.provides) ~= "table" or type(accepts) ~= "table" then return false end
+    for _, provided in ipairs(part.provides) do
+        for _, accepted in ipairs(accepts) do
+            if provided == accepted then return true end
+        end
+    end
+    return false
+end
+
+function Core.DefaultChildMount(parentPart, childPath)
+    if not parentPart or type(parentPart.mounts) ~= "table" then return nil end
+    for _, mount in ipairs(parentPart.mounts) do
+        if mount.path == childPath then return mount end
+    end
+    return nil
+end
+
+function Core.ApplyMountDefaultsForPath(selection, path, visited, depth)
+    if not selection or not path or path == "" then return end
+    if depth and depth > 32 then return end
+    visited = visited or {}
+
+    local parentPart = Core.GetInstalledPart(selection, path)
+    if not parentPart or type(parentPart.mounts) ~= "table" then return end
+
+    for _, mount in ipairs(parentPart.mounts) do
+        local childPathSegment = mount.path
+        local partId = mount.defaultPart
+        local childPath = Core.JoinPath(path, childPathSegment)
+        local visitKey = childPath .. ":" .. tostring(partId)
+        if type(partId) == "string" and partId ~= "" and not visited[visitKey] then
+            visited[visitKey] = true
+            local childPart = Core.GetPart(partId)
+            if childPart and mount and childPart.type == (mount.partType or childPathSegment) and partProvidesAccepted(childPart, mount.accepts) then
+                if not selection[childPath] then
+                    selection[childPath] = partId
+                end
+                Core.ApplyMountDefaultsForPath(selection, childPath, visited, (depth or 0) + 1)
+            end
+        end
+    end
+end
+
+function Core.BuildDefaultSelection(platform, weapon)
+    local selection = {}
+    if not platform or not weapon or type(weapon.rootParts) ~= "table" then return selection end
+
+    for _, root in ipairs(Core.RootSlotDefs(platform)) do
+        local path = root.path
+        local partId = weapon.rootParts[path]
+        local part = Core.GetPart(partId)
+        if part and part.type == path then
+            selection[path] = partId
+            Core.ApplyMountDefaultsForPath(selection, path, {}, 0)
+        end
+    end
+    return selection
 end
 
 function Core.GetPart(partId)
@@ -91,10 +156,10 @@ function Core.PartProvides(part)
     return part.provides
 end
 
-function Core.GetPartsForSlot(slot)
+function Core.GetPartsForType(partType)
     local parts = {}
     for partId, part in pairs(Gunsmith.Config.parts) do
-        if part.slot == slot then
+        if part.type == partType then
             table.insert(parts, partId)
         end
     end
@@ -102,9 +167,9 @@ function Core.GetPartsForSlot(slot)
     return parts
 end
 
-function Core.PartSlotForPath(selection, slotPath)
-    local mount = Core.MountForPath(selection, slotPath)
-    return mount and mount.partSlot or Core.LeafSlot(slotPath)
+function Core.PartTypeForPath(selection, path)
+    local mount = Core.MountForPath(selection, path)
+    return mount and mount.partType or Core.LeafPath(path)
 end
 
 local function contains(values, target)
@@ -123,40 +188,38 @@ local function intersects(left, right)
     return false
 end
 
-function Core.AcceptsForPath(selection, platform, slotPath, weapon)
-    if not platform or not slotPath or slotPath == "" then return nil end
-    if Core.IsRootSlot(platform, slotPath) then
-        if weapon and type(weapon.rootAccepts) == "table" and weapon.rootAccepts[slotPath] ~= nil then
-            return weapon.rootAccepts[slotPath]
-        end
-        return platform.rootAccepts and platform.rootAccepts[slotPath] or nil
+function Core.AcceptsForPath(selection, platform, path)
+    if not platform or not path or path == "" then return nil end
+    if Core.IsRootSlot(platform, path) then
+        return nil
     end
 
-    local mount = Core.MountForPath(selection, slotPath)
+    local mount = Core.MountForPath(selection, path)
     return mount and mount.accepts or nil
 end
 
-function Core.MountForPath(selection, slotPath)
-    if not selection or not slotPath or slotPath == "" then return nil end
-    local parent = Core.ParentPath(slotPath)
-    local slot = Core.LeafSlot(slotPath)
+function Core.MountForPath(selection, path)
+    if not selection or not path or path == "" then return nil end
+    local parent = Core.ParentPath(path)
+    local childPath = Core.LeafPath(path)
     local parentPart = Core.GetInstalledPart(selection, parent)
     if not parentPart or not parentPart.mounts then return nil end
 
     for _, mount in ipairs(parentPart.mounts) do
-        if mount.slot == slot then
+        if mount.path == childPath then
             return mount
         end
     end
     return nil
 end
 
-function Core.IsPartCompatible(selection, platform, slotPath, partId, weapon)
+function Core.IsPartCompatible(selection, platform, path, partId)
     local part = Core.GetPart(partId)
-    if not part or not platform or not slotPath or slotPath == "" then return false end
-    if part.slot ~= Core.PartSlotForPath(selection, slotPath) then return false end
+    if not part or not platform or not path or path == "" then return false end
+    if part.type ~= Core.PartTypeForPath(selection, path) then return false end
+    if Core.IsRootSlot(platform, path) then return true end
 
-    local accepts = Core.AcceptsForPath(selection, platform, slotPath, weapon)
+    local accepts = Core.AcceptsForPath(selection, platform, path)
     if type(accepts) ~= "table" then return false end
     return intersects(accepts, Core.PartProvides(part))
 end
@@ -166,21 +229,24 @@ function Core.IsRequiredSlot(platform, path)
     if platform.requiredSlots and platform.requiredSlots[path] ~= nil then
         return platform.requiredSlots[path] == true
     end
-    if not string.find(path, "/", 1, true) and platform.requiredRootSlots ~= false then
-        return true
+    if not string.find(path, "/", 1, true) then
+        local root = Core.RootSlotDef(platform, path)
+        return root and root.required == true
     end
     return false
 end
 
-function Core.IsHiddenRootSlot(platform, slot)
-    return platform and platform.hiddenRootSlots and platform.hiddenRootSlots[slot] == true
+function Core.IsHiddenRootSlot(platform, path)
+    local root = Core.RootSlotDef(platform, path)
+    return root and root.hidden == true
 end
 
 function Core.RootSlots(platform)
     local slots = {}
-    for _, slot in ipairs(platform.slots) do
-        if not Core.IsHiddenRootSlot(platform, slot) then
-            table.insert(slots, { path = slot, slot = slot, name = Core.SlotName(platform, slot) })
+    for _, root in ipairs(Core.RootSlotDefs(platform)) do
+        local path = root.path
+        if not Core.IsHiddenRootSlot(platform, path) then
+            table.insert(slots, { path = path, partType = path, name = Core.PathName(platform, path) })
         end
     end
     return slots
@@ -192,12 +258,10 @@ function Core.ChildSlots(selection, platform, path)
     if not parentPart or not parentPart.mounts then return slots end
 
     for _, mount in ipairs(parentPart.mounts) do
-        local slot = mount.slot
         table.insert(slots, {
-            path = Core.JoinPath(path, slot),
-            slot = slot,
-            partSlot = mount.partSlot or slot,
-            name = mount.name or Core.SlotName(platform, slot)
+            path = Core.JoinPath(path, mount.path),
+            partType = mount.partType or mount.path,
+            name = mount.name or Core.PathName(platform, mount.path)
         })
     end
     return slots
@@ -206,10 +270,11 @@ end
 function Core.SlotsForPath(selection, platform, path)
     if not path or path == "" then
         local slots = Core.RootSlots(platform)
-        for _, rootSlot in ipairs(platform.slots or {}) do
-            if Core.IsHiddenRootSlot(platform, rootSlot) then
-                for _, childSlot in ipairs(Core.ChildSlots(selection, platform, rootSlot)) do
-                    table.insert(slots, childSlot)
+        for _, root in ipairs(Core.RootSlotDefs(platform)) do
+            local rootPath = root.path
+            if Core.IsHiddenRootSlot(platform, rootPath) then
+                for _, childPath in ipairs(Core.ChildSlots(selection, platform, rootPath)) do
+                    table.insert(slots, childPath)
                 end
             end
         end
@@ -224,34 +289,31 @@ end
 
 function Core.IsRootSlot(platform, path)
     if not path or string.find(path, "/", 1, true) then return false end
-    for _, slot in ipairs(platform.slots) do
-        if slot == path then return true end
-    end
-    return false
+    return Core.RootSlotDef(platform, path) ~= nil
 end
 
 function Core.IsValidPath(selection, platform, path)
     if Core.IsRootSlot(platform, path) then return true end
     local parent = Core.ParentPath(path)
-    local slot = Core.LeafSlot(path)
+    local childPath = Core.LeafPath(path)
     local parentPart = Core.GetInstalledPart(selection, parent)
     if not parentPart or not parentPart.mounts then return false end
 
     for _, mount in ipairs(parentPart.mounts) do
-        if mount.slot == slot then return true end
+        if mount.path == childPath then return true end
     end
     return false
 end
 
 function Core.PruneInvalidSelections(selection, platform, weapon)
-    local defaults = Core.CopyDefaults(platform, weapon)
+    local defaults = Core.BuildDefaultSelection(platform, weapon)
     local changed = true
     while changed do
         changed = false
         for path, partId in pairs(selection) do
-            if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId, weapon) then
+            if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId) then
                 local defaultPartId = defaults[path]
-                if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId, weapon) then
+                if defaultPartId and partId ~= defaultPartId and Core.IsPartCompatible(selection, platform, path, defaultPartId) then
                     selection[path] = defaultPartId
                 else
                     selection[path] = nil
@@ -287,12 +349,12 @@ function Core.PathLabel(selection, platform, path)
     local current = ""
     for segment in string.gmatch(path, "[^/]+") do
         current = Core.JoinPath(current, segment)
-        local mountName = Core.SlotName(platform, segment)
+        local mountName = Core.PathName(platform, segment)
         local parent = Core.ParentPath(current)
         local parentPart = parent ~= "" and Core.GetInstalledPart(selection, parent) or nil
         if parentPart and parentPart.mounts then
             for _, mount in ipairs(parentPart.mounts) do
-                if mount.slot == segment then
+                if mount.path == segment then
                     mountName = mount.name or mountName
                     break
                 end
