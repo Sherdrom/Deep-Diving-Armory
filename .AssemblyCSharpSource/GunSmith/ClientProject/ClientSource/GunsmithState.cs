@@ -27,6 +27,7 @@ namespace GunSmith
     {
         public string Signature { get; init; } = string.Empty;
         public Texture2D Texture { get; init; } = null!;
+        public Texture2D WorldTexture { get; init; } = null!;
         public Texture2D InventoryTexture { get; init; } = null!;
         public Sprite WorldSprite { get; init; } = null!;
         public Sprite InventorySprite { get; init; } = null!;
@@ -37,5 +38,10 @@ namespace GunSmith
     internal sealed record GunsmithInventorySettings(float Scale, float RotationDegrees, float Padding)
     {
         public static GunsmithInventorySettings Default { get; } = new(1.0f, 0.0f, 0.0f);
+    }
+
+    internal sealed record GunsmithWorldSettings(float Scale, float RotationDegrees, float Padding, Vector2 Offset)
+    {
+        public static GunsmithWorldSettings Default { get; } = new(1.0f, 0.0f, 0.0f, Vector2.Zero);
     }
 }

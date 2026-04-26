@@ -14,6 +14,6 @@ parts.AR_receiver_top_rail = {
         -- path 是 UI 展示路径用的；partType 指向候选配件使用的通用类型。
         -- 因此前后挂点都能安装 type = "optic_mount" 的通用瞄具。
         { path = "rear_optic_mount", name = "瞄具挂点", partType = "optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 0, y = 0 } },
-        -- { path = "front_optic_mount", name = "前瞄具挂点", partType = "optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 42, y = 0 } }
+        { path = "front_optic_mount", name = "前瞄具挂点", partType = "optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 42, y = 0 } }
     }
 }

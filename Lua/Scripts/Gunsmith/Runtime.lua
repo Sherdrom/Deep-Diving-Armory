@@ -43,7 +43,7 @@ end
 function Runtime.SetCurrentUiPath(item, path)
     local key = Core.ItemKey(item)
     if not key then return end
-    State.uiPaths[key] = path or ""
+    State.uiPaths[key] = Core.NormalizeUiPath(Core.PlatformConfig(item), path or "")
 end
 
 local function buildSignature(item, selection, platform)
@@ -57,6 +57,13 @@ end
 
 local resolveDrawOffset
 
+local function visualScale(visual)
+    if type(visual) == "table" and type(visual.scale) == "number" and visual.scale > 0 then
+        return visual.scale
+    end
+    return 1.0
+end
+
 local function resolveMountAnchor(selection, platform, weapon, path)
     local mount = Core.MountForPath(selection, path)
     local anchor = mount and mount.anchor or nil
@@ -69,9 +76,10 @@ local function resolveMountAnchor(selection, platform, weapon, path)
         local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
         if parentOffset then
             local parentAttachPoint = parentVisual.attachPoint or { x = 0, y = 0 }
+            local parentScale = visualScale(parentVisual)
             return {
-                x = parentOffset.x + parentAttachPoint.x + anchor.x,
-                y = parentOffset.y + parentAttachPoint.y + anchor.y
+                x = parentOffset.x + (parentAttachPoint.x + anchor.x) * parentScale,
+                y = parentOffset.y + (parentAttachPoint.y + anchor.y) * parentScale
             }
         end
     end
@@ -103,9 +111,10 @@ resolveDrawOffset = function(selection, platform, weapon, path, visual)
     end
 
     if anchor and visual.attachPoint then
+        local scale = visualScale(visual)
         return {
-            x = anchor.x - visual.attachPoint.x,
-            y = anchor.y - visual.attachPoint.y
+            x = anchor.x - visual.attachPoint.x * scale,
+            y = anchor.y - visual.attachPoint.y * scale
         }
     end
 
@@ -161,6 +170,19 @@ local function encodeInventorySettings(item)
         inventory.padding or 0.0)
 end
 
+local function encodeWorldSettings(item)
+    local weapon = Core.WeaponConfig(item) or {}
+    local world = weapon.world or {}
+    local offset = world.offset or { x = 0, y = 0 }
+    return string.format(
+        "scale=%.4f,rotation=%.4f,padding=%.4f,offsetX=%.4f,offsetY=%.4f",
+        world.scale or 1.0,
+        world.rotation or 0.0,
+        world.padding or 0.0,
+        offset.x or 0.0,
+        offset.y or 0.0)
+end
+
 function Runtime.Apply(item)
     if SERVER then return end
     if not item or item.removed then return end
@@ -169,12 +191,14 @@ function Runtime.Apply(item)
     if not platform then return end
 
     local selection = Runtime.GetSelection(item)
-    local signature = buildSignature(item, selection, platform)
+    local inventorySpec = encodeInventorySettings(item)
+    local worldSpec = encodeWorldSettings(item)
+    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec
     if State.appliedSignatures[item] == signature then return end
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
-        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, encodeInventorySettings(item), platform.canvas.w, platform.canvas.h)
+        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, platform.canvas.w, platform.canvas.h)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")
@@ -324,7 +348,7 @@ function Runtime.Open(item)
 
         local currentPath = Runtime.GetCurrentUiPath(item)
         if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
-            currentPath = Core.ParentPath(currentPath)
+            currentPath = Core.UiParentPath(platform, currentPath)
             Runtime.SetCurrentUiPath(item, currentPath)
         end
 

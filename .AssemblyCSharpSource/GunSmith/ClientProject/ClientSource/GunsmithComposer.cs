@@ -115,6 +115,50 @@ namespace GunSmith
             return target;
         }
 
+        private static Texture2D CreateWorldTexture(Texture2D texture, Rectangle contentBounds, GunsmithWorldSettings settings)
+        {
+            GraphicsDevice graphics = graphicsDevice!;
+            SpriteBatch batch = spriteBatch!;
+            float scale = Math.Max(settings.Scale, 0.01f);
+            float rotation = MathHelper.ToRadians(settings.RotationDegrees);
+            float padding = Math.Max(settings.Padding, 0.0f);
+            Vector2 offset = settings.Offset;
+
+            Rectangle sourceRect = Rectangle.Intersect(contentBounds, new Rectangle(0, 0, texture.Width, texture.Height));
+            if (sourceRect.Width <= 0 || sourceRect.Height <= 0)
+            {
+                sourceRect = CreateComposedSourceRect(texture);
+            }
+
+            float scaledWidth = sourceRect.Width * scale;
+            float scaledHeight = sourceRect.Height * scale;
+            float cos = Math.Abs(MathF.Cos(rotation));
+            float sin = Math.Abs(MathF.Sin(rotation));
+            int targetWidth = Math.Max((int)Math.Ceiling(scaledWidth * cos + scaledHeight * sin + padding * 2.0f + Math.Abs(offset.X) * 2.0f), 1);
+            int targetHeight = Math.Max((int)Math.Ceiling(scaledWidth * sin + scaledHeight * cos + padding * 2.0f + Math.Abs(offset.Y) * 2.0f), 1);
+
+            RenderTargetBinding[] previousTargets = graphics.GetRenderTargets();
+            RenderTarget2D target = new(graphics, targetWidth, targetHeight, false, SurfaceFormat.Color, DepthFormat.None);
+
+            graphics.SetRenderTarget(target);
+            graphics.Clear(Color.Transparent);
+            batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null);
+            batch.Draw(
+                texture,
+                new Vector2(targetWidth * 0.5f, targetHeight * 0.5f) + offset,
+                sourceRect,
+                Color.White,
+                rotation,
+                new Vector2(sourceRect.Width * 0.5f, sourceRect.Height * 0.5f),
+                scale,
+                SpriteEffects.None,
+                0.0f);
+            batch.End();
+
+            graphics.SetRenderTargets(previousTargets);
+            return target;
+        }
+
         private static Texture2D GetTexture(string path)
         {
             return textureCache.GetOrAdd(path, static p =>
@@ -185,6 +229,33 @@ namespace GunSmith
                     "scale" when parsed > 0.0f => settings with { Scale = parsed },
                     "rotation" => settings with { RotationDegrees = parsed },
                     "padding" when parsed >= 0.0f => settings with { Padding = parsed },
+                    _ => settings
+                };
+            }
+
+            return settings;
+        }
+
+        private static GunsmithWorldSettings ParseWorldSettings(string value)
+        {
+            GunsmithWorldSettings settings = GunsmithWorldSettings.Default;
+            if (string.IsNullOrWhiteSpace(value)) { return settings; }
+
+            foreach (string entry in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                string[] parts = entry.Split('=', 2, StringSplitOptions.TrimEntries);
+                if (parts.Length != 2 || !float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsed))
+                {
+                    continue;
+                }
+
+                settings = parts[0] switch
+                {
+                    "scale" when parsed > 0.0f => settings with { Scale = parsed },
+                    "rotation" => settings with { RotationDegrees = parsed },
+                    "padding" when parsed >= 0.0f => settings with { Padding = parsed },
+                    "offsetX" => settings with { Offset = new Vector2(parsed, settings.Offset.Y) },
+                    "offsetY" => settings with { Offset = new Vector2(settings.Offset.X, parsed) },
                     _ => settings
                 };
             }

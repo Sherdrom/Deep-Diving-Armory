@@ -241,6 +241,28 @@ function Core.IsHiddenRootSlot(platform, path)
     return root and root.hidden == true
 end
 
+function Core.HiddenHomeRootPath(platform)
+    local hiddenPath = nil
+    for _, root in ipairs(Core.RootSlotDefs(platform)) do
+        if root.hidden == true then
+            if hiddenPath ~= nil then return nil end
+            hiddenPath = root.path
+        end
+    end
+    return hiddenPath
+end
+
+function Core.NormalizeUiPath(platform, path)
+    if not path or path == "" then return "" end
+    if Core.IsHiddenRootSlot(platform, path) then return "" end
+    return path
+end
+
+function Core.UiParentPath(platform, path)
+    local parent = Core.ParentPath(path)
+    return Core.NormalizeUiPath(platform, parent)
+end
+
 function Core.RootSlots(platform)
     local slots = {}
     for _, root in ipairs(Core.RootSlotDefs(platform)) do
@@ -343,7 +365,13 @@ function Core.SortedSelectionPaths(selection)
 end
 
 function Core.PathLabel(selection, platform, path)
-    if not path or path == "" then return "枪械" end
+    if not path or path == "" then
+        local hiddenRootPath = Core.HiddenHomeRootPath(platform)
+        if hiddenRootPath then
+            return "枪械 > " .. Core.PathName(platform, hiddenRootPath)
+        end
+        return "枪械"
+    end
 
     local names = { "枪械" }
     local current = ""

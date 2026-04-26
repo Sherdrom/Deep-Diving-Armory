@@ -36,7 +36,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
 end
 
 function UiSpec.Build(item, selection, platform, currentPath)
-    local path = currentPath or ""
+    local path = Core.NormalizeUiPath(platform, currentPath or "")
     local entries = {}
 
     for _, slot in ipairs(Core.SlotsForPath(selection, platform, path)) do
@@ -66,6 +66,6 @@ function UiSpec.Build(item, selection, platform, currentPath)
     return table.concat({
         path,
         Core.PathLabel(selection, platform, path),
-        Core.ParentPath(path)
+        Core.UiParentPath(platform, path)
     }, "|") .. "::" .. encodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
 end

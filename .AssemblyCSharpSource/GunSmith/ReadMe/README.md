@@ -16,6 +16,7 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V0.9 Summary](./V0.9_Gunsmith_Summary.md)
 - [V0.9.1 Summary](./V0.9.1_Gunsmith_Summary.md)
 - [V0.9.2 Summary](./V0.9.2_Gunsmith_Summary.md)
+- [V0.9.3 Summary](./V0.9.3_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -49,6 +50,7 @@ Current nested validation paths include:
 - `receiver/optic_mount`
 - `receiver/receiver_top_rail`
 - `receiver/receiver_top_rail/rear_optic_mount`
+- `receiver/receiver_top_rail/front_optic_mount`
 - `receiver/handguard/top_rail`
 - `receiver/handguard/bottom_rail`
 - `receiver/handguard/left_rail`

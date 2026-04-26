@@ -85,10 +85,10 @@ namespace GunSmith
             GUIFrame body = new(new RectTransform(new Vector2(0.96f, 0.82f), activeWindow.RectTransform, Anchor.BottomCenter), color: Color.Transparent);
             BuildSlotPanel(body);
 
-            GUIFrame middle = new(new RectTransform(new Vector2(0.38f, 0.96f), body.RectTransform, Anchor.Center), color: Color.Transparent);
+            GUIFrame middle = new(new RectTransform(new Vector2(0.36f, 0.96f), body.RectTransform, Anchor.Center), color: Color.Transparent);
             previewPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.66f), middle.RectTransform, Anchor.TopCenter), color: Color.Black * 0.25f);
             detailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.30f), middle.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
-            GUIFrame rightPanel = new(new RectTransform(new Vector2(0.30f, 0.96f), body.RectTransform, Anchor.CenterRight), color: Color.Transparent);
+            GUIFrame rightPanel = new(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterRight), color: Color.Transparent);
             partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.62f), rightPanel.RectTransform, Anchor.TopCenter));
             partDetailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.34f), rightPanel.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
 
@@ -97,7 +97,7 @@ namespace GunSmith
 
         private static void BuildSlotPanel(GUIFrame body)
         {
-            slotList = new GUIListBox(new RectTransform(new Vector2(0.26f, 0.96f), body.RectTransform, Anchor.CenterLeft));
+            slotList = new GUIListBox(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterLeft));
             RebuildSlotList();
         }
 
@@ -151,7 +151,8 @@ namespace GunSmith
         {
             if (!string.IsNullOrWhiteSpace(previousPath) &&
                 !string.Equals(previousPath, currentPath, StringComparison.Ordinal) &&
-                string.Equals(ParentPath(previousPath), currentPath ?? string.Empty, StringComparison.Ordinal) &&
+                (string.Equals(ParentPath(previousPath), currentPath ?? string.Empty, StringComparison.Ordinal) ||
+                    string.IsNullOrWhiteSpace(currentPath)) &&
                 activeSlots.Any(slot => slot.Path == previousPath))
             {
                 selectedSlot = previousPath;

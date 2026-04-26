@@ -15,7 +15,7 @@ namespace GunSmith
             spriteBatch = new SpriteBatch(graphics);
         }
 
-        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, int width, int height)
+        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, int width, int height)
         {
             if (!IsReady || item == null || item.Removed) { return; }
             if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return; }
@@ -29,6 +29,7 @@ namespace GunSmith
             List<GunsmithLayer> layers = ParseLayers(layerSpec);
             if (layers.Count == 0) { return; }
             GunsmithInventorySettings inventorySettings = ParseInventorySettings(inventorySpec);
+            GunsmithWorldSettings worldSettings = ParseWorldSettings(worldSpec);
 
             bool shouldOwnWorldSprite = item.HasTag("deep_gunsmith");
             bool shouldReplaceActiveSprite =
@@ -48,13 +49,15 @@ namespace GunSmith
             }
 
             Rectangle contentBounds = CalculateContentBounds(layers, Math.Max(width, 1), Math.Max(height, 1));
+            Texture2D worldTexture = CreateWorldTexture(texture, contentBounds, worldSettings);
             Texture2D inventoryTexture = CreateInventoryTexture(texture, contentBounds, inventorySettings);
-            Sprite? worldSprite = CreateWorldSprite(item.Prefab.Sprite, texture);
+            Sprite? worldSprite = CreateWorldSprite(item.Prefab.Sprite, worldTexture);
             Sprite? inventorySprite = CreateInventorySprite(item.Prefab.InventoryIcon ?? item.Prefab.Sprite, inventoryTexture);
             if (worldSprite == null || inventorySprite == null)
             {
                 LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to create runtime sprites for '{item.Prefab.Identifier.Value}'.");
                 texture.Dispose();
+                worldTexture.Dispose();
                 inventoryTexture.Dispose();
                 return;
             }
@@ -63,6 +66,7 @@ namespace GunSmith
             {
                 Signature = signature,
                 Texture = texture,
+                WorldTexture = worldTexture,
                 InventoryTexture = inventoryTexture,
                 WorldSprite = worldSprite,
                 InventorySprite = inventorySprite,
@@ -81,6 +85,7 @@ namespace GunSmith
             if (existing != null)
             {
                 existing.Texture.Dispose();
+                existing.WorldTexture.Dispose();
                 existing.InventoryTexture.Dispose();
             }
         }
@@ -121,6 +126,10 @@ namespace GunSmith
                 {
                     state.InventoryTexture.Dispose();
                 }
+                if (!state.WorldTexture.IsDisposed)
+                {
+                    state.WorldTexture.Dispose();
+                }
             }
         }
 
@@ -148,7 +157,9 @@ namespace GunSmith
         }
 
         private static bool IsStateUsable(GunsmithSpriteState state)
-            => state.Texture != null && !state.Texture.IsDisposed && state.InventoryTexture != null && !state.InventoryTexture.IsDisposed;
+            => state.Texture != null && !state.Texture.IsDisposed &&
+               state.WorldTexture != null && !state.WorldTexture.IsDisposed &&
+               state.InventoryTexture != null && !state.InventoryTexture.IsDisposed;
 
         private static void RestoreVanillaSprite(Item item)
         {
@@ -172,6 +183,10 @@ namespace GunSmith
                     if (!state.InventoryTexture.IsDisposed)
                     {
                         state.InventoryTexture.Dispose();
+                    }
+                    if (!state.WorldTexture.IsDisposed)
+                    {
+                        state.WorldTexture.Dispose();
                     }
                 }
                 RestoreVanillaSprite(pair.Key);

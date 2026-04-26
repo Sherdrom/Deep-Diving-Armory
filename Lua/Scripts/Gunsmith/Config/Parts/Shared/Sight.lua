@@ -15,8 +15,8 @@ parts.AR_red_dot = {
         texture = sightTexture,
         source = { x = 15, y = 7, w = 73, h = 59 },
         attachPoint = { x = 48-15, y = 58-7 },
-        order = 80,
-        scale = 0.18
+        order = 20,
+        scale = 0.5
     }
 }
 
@@ -30,7 +30,7 @@ parts.AR_holo_sight = {
         texture = sightTexture,
         source = { x = 101, y = 9, w = 71, h = 55 },
         attachPoint = { x = 138-101, y = 58-9 },
-        order = 80,
-        scale = 0.18
+        order = 20,
+        scale = 0.5
     }
 }

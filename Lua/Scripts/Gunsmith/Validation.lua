@@ -87,6 +87,26 @@ local function validOptionalScale(value)
     return value == nil or (type(value) == "number" and value > 0)
 end
 
+local function validateSpriteTransform(errors, weaponId, fieldName, settings, allowOffset)
+    if settings == nil then return end
+    if type(settings) ~= "table" then
+        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' " .. fieldName .. " must be a table.")
+        return
+    end
+    if not validOptionalScale(settings.scale) then
+        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' " .. fieldName .. ".scale must be a positive number.")
+    end
+    if settings.rotation ~= nil and type(settings.rotation) ~= "number" then
+        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' " .. fieldName .. ".rotation must be a number.")
+    end
+    if settings.padding ~= nil and (type(settings.padding) ~= "number" or settings.padding < 0) then
+        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' " .. fieldName .. ".padding must be a non-negative number.")
+    end
+    if allowOffset and not validOptionalPoint(settings.offset) then
+        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' " .. fieldName .. ".offset must contain numeric x/y.")
+    end
+end
+
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
@@ -312,21 +332,8 @@ function Validation.Run(configOverride, label)
                 end
             end
 
-            if weapon.inventory ~= nil then
-                if type(weapon.inventory) ~= "table" then
-                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory must be a table.")
-                else
-                    if not validOptionalScale(weapon.inventory.scale) then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.scale must be a positive number.")
-                    end
-                    if weapon.inventory.rotation ~= nil and type(weapon.inventory.rotation) ~= "number" then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.rotation must be a number.")
-                    end
-                    if weapon.inventory.padding ~= nil and (type(weapon.inventory.padding) ~= "number" or weapon.inventory.padding < 0) then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' inventory.padding must be a non-negative number.")
-                    end
-                end
-            end
+            validateSpriteTransform(errors, weaponId, "inventory", weapon.inventory, false)
+            validateSpriteTransform(errors, weaponId, "world", weapon.world, true)
         end
     end
 
@@ -488,6 +495,12 @@ function Validation.RunSelfTest()
                 },
                 rootSockets = {
                     receiver = { x = 0, y = 0 }
+                },
+                world = {
+                    scale = 0,
+                    rotation = "bad",
+                    padding = -1,
+                    offset = { x = "bad", y = 0 }
                 }
             },
             missing_root_part = {
