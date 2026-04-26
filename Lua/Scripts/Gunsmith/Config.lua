@@ -13,11 +13,7 @@ Deep_Lua.Gunsmith.Config = {
 
 local configPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config"
 
--- 加新平台/武器/配件时，在对应目录新建文件后从这里登记加载顺序。
--- 建议顺序：平台 -> 武器 -> 平台通用配件 -> 武器独有配件。
+-- 顶层只加载大类入口，具体文件清单放到各自目录的入口文件里维护。
 dofile(configPath .. "/Platforms/AR.lua")
-dofile(configPath .. "/Weapons/AR.lua")
-dofile(configPath .. "/Parts/AR/RootCommon.lua")
-dofile(configPath .. "/Parts/AR/Attachments.lua")
-dofile(configPath .. "/Parts/Weapons/M4.lua")
-dofile(configPath .. "/Parts/Weapons/HK416.lua")
+dofile(configPath .. "/Weapons/Weapons.lua")
+dofile(configPath .. "/Parts/Parts.lua")

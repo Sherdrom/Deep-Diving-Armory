@@ -18,7 +18,7 @@ config.platforms.AR = {
     -- 平台缩放的中心点。通常放在画布中心，除非整个平台图层需要偏心缩放。
     visualOrigin = { x = 256, y = 80 },
 
-    -- 根槽。V0.9 起 AR 平台只有 receiver 直接挂在 weapon 上。
+    -- 武器本体。V0.9 起 AR 平台只有 receiver 直接挂在 weapon 上。
     -- 枪管、护木、握把、枪托等结构件由当前 receiver 的 mounts 暴露出来。
     slots = { "receiver" },
 
@@ -58,7 +58,10 @@ config.platforms.AR = {
         bottom_rail = "下导轨",
         left_rail = "左导轨",
         right_rail = "右导轨",
-        optic_mount = "瞄具挂点"
+        receiver_top_rail = "机匣顶部导轨",
+        optic_mount = "瞄具挂点",
+        rear_optic_mount = "后瞄具挂点",
+        front_optic_mount = "前瞄具挂点"
     },
 
     -- 平台默认配件。未声明 weapon.defaults 的武器会从这里初始化。

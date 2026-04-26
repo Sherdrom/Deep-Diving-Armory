@@ -102,6 +102,11 @@ function Core.GetPartsForSlot(slot)
     return parts
 end
 
+function Core.PartSlotForPath(selection, slotPath)
+    local mount = Core.MountForPath(selection, slotPath)
+    return mount and mount.partSlot or Core.LeafSlot(slotPath)
+end
+
 local function contains(values, target)
     if type(values) ~= "table" then return false end
     for _, value in ipairs(values) do
@@ -149,7 +154,7 @@ end
 function Core.IsPartCompatible(selection, platform, slotPath, partId, weapon)
     local part = Core.GetPart(partId)
     if not part or not platform or not slotPath or slotPath == "" then return false end
-    if part.slot ~= Core.LeafSlot(slotPath) then return false end
+    if part.slot ~= Core.PartSlotForPath(selection, slotPath) then return false end
 
     local accepts = Core.AcceptsForPath(selection, platform, slotPath, weapon)
     if type(accepts) ~= "table" then return false end
@@ -191,6 +196,7 @@ function Core.ChildSlots(selection, platform, path)
         table.insert(slots, {
             path = Core.JoinPath(path, slot),
             slot = slot,
+            partSlot = mount.partSlot or slot,
             name = mount.name or Core.SlotName(platform, slot)
         })
     end

@@ -47,7 +47,7 @@ function UiSpec.Build(item, selection, platform, currentPath)
             emptyStatus = "installed"
         end
         local partEntries = { Gunsmith.EmptyPartId .. ":[空]:" .. emptyStatus }
-        for _, partId in ipairs(Core.GetPartsForSlot(slot.slot)) do
+        for _, partId in ipairs(Core.GetPartsForSlot(slot.partSlot or slot.slot)) do
             appendPartEntry(partEntries, item, selection, platform, slot.path, partId)
         end
 

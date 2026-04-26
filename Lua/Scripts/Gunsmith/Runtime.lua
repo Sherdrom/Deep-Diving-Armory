@@ -76,6 +76,20 @@ local function resolveMountAnchor(selection, platform, weapon, path)
         end
     end
 
+    local parentAnchor = nil
+    if Core.IsRootSlot(platform, parentPath) then
+        parentAnchor = weapon and weapon.rootSockets and weapon.rootSockets[parentPath] or nil
+    else
+        parentAnchor = resolveMountAnchor(selection, platform, weapon, parentPath)
+    end
+
+    if parentAnchor then
+        return {
+            x = parentAnchor.x + anchor.x,
+            y = parentAnchor.y + anchor.y
+        }
+    end
+
     return nil
 end
 
@@ -174,7 +188,7 @@ function Runtime.CyclePart(item, slotPath)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
     local parts = {}
-    for _, partId in ipairs(Core.GetPartsForSlot(Core.LeafSlot(slotPath))) do
+    for _, partId in ipairs(Core.GetPartsForSlot(Core.PartSlotForPath(selection, slotPath))) do
         if Core.IsPartCompatible(selection, platform, slotPath, partId, weapon) then
             table.insert(parts, partId)
         end

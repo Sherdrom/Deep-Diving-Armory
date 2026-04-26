@@ -126,6 +126,11 @@ local function mountForPath(selection, parts, path)
     return nil
 end
 
+local function partSlotForPath(selection, parts, path)
+    local mount = mountForPath(selection, parts, path)
+    return mount and mount.partSlot or leafSlot(path)
+end
+
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
@@ -221,8 +226,8 @@ function Validation.Run(configOverride, label)
             local part = parts[partId]
             if not part then
                 table.insert(errors, label .. " default part '" .. tostring(partId) .. "' does not exist.")
-            elseif part.slot ~= leafSlot(path) then
-                table.insert(errors, label .. " default part '" .. tostring(partId) .. "' slot does not match '" .. tostring(leafSlot(path)) .. "'.")
+            elseif part.slot ~= partSlotForPath(selection, parts, path) then
+                table.insert(errors, label .. " default part '" .. tostring(partId) .. "' slot does not match '" .. tostring(partSlotForPath(selection, parts, path)) .. "'.")
             elseif accepts and not partProvidesAccepted(part, accepts) then
                 table.insert(errors, label .. " default part '" .. tostring(partId) .. "' is not accepted by path '" .. tostring(path) .. "'.")
             end
@@ -404,6 +409,9 @@ function Validation.Run(configOverride, label)
                         local label = "Part '" .. partId .. "' mount #" .. tostring(index)
                         if type(mount.slot) ~= "string" or mount.slot == "" then
                             table.insert(errors, label .. " is missing slot.")
+                        end
+                        if mount.partSlot ~= nil and (type(mount.partSlot) ~= "string" or mount.partSlot == "") then
+                            table.insert(errors, label .. " partSlot must be a non-empty string when declared.")
                         end
                         if not hasStringArray(mount.accepts) then
                             table.insert(errors, label .. " is missing accepts.")
