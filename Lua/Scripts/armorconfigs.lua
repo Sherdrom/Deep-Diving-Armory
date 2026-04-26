@@ -1635,8 +1635,43 @@ Deep_Lua.Armors = {
         type = "composite",
         isPlateCarrier = true,
         ricochetchance = 0.0,
+        level = 2,
+        aftereffectmultiplier  = 0.9,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_osprey_protection = {
+        name = "osprey_protection",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
         level = 3,
-        aftereffectmultiplier  = 0.8,
+        aftereffectmultiplier  = 0.9,
         correctionaffliction = "deep_bullet_injury",
         correctionmultiplier = 0.05,
         enablecorrection = true,
@@ -1780,7 +1815,7 @@ Deep_Lua.Armors = {
         isPlateCarrier = true,
         ricochetchance = 0.0,
         level = 3,
-        aftereffectmultiplier  = 0.7,
+        aftereffectmultiplier  = 0.8,
         correctionaffliction = "deep_bullet_injury",
         correctionmultiplier = 0.05,
         enablecorrection = true,
@@ -1797,6 +1832,74 @@ Deep_Lua.Armors = {
             [LimbType.RightArm] = true,
             [LimbType.RightForearm] = true,
             [LimbType.RightHand] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    gen4_protection = {
+        name = "Gen 4 Heavy",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    gen4_high_mobility = {
+        name = "Gen 4 Heavy",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 3,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
         },
         targetidentifier = {
             ["gunshotwound"] = true
@@ -1856,6 +1959,43 @@ Deep_Lua.Armors = {
         aftereffectmultiplier  = 0.7,
         correctionaffliction = "deep_bullet_injury",
         correctionmultiplier = 0.05,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+        customexpression = function(item,affliction,data)
+            return 100
+        end,
+    },
+
+    deep_thor_protection = {
+        name = "deep_thor_protection",
+        type = "composite",
+        isPlateCarrier = true,
+        ricochetchance = 0.0,
+        level = 4,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_bullet_injury",
+        correctionmultiplier = 0,
         enablecorrection = true,
         penresistance = 0.0,
         maxhits = 0,
