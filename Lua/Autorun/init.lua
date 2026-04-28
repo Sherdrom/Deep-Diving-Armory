@@ -28,6 +28,8 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOff.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOffToLeviathan.lua")
 
+dofile(Deep_Lua.Path .. "/Lua/Scripts/TruePercentDamage.lua")
+
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/ALTYN.lua")
