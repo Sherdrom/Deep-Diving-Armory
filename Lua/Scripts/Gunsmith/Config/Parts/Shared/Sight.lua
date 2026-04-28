@@ -106,7 +106,7 @@ parts.deep_1_6x_sight = {
         source = { x = 5, y = 537, w = 381, h = 103 },
         attachPoint = { x = 190, y = 97 },
         order = 20,
-        scale = 0.55
+        scale = 0.45
     }
 }
 
@@ -121,7 +121,7 @@ parts.deep_thermalgoggles_sight_6x = {
         source = { x = 401, y = 535, w = 393, h = 103 },
         attachPoint = { x = 196, y = 97 },
         order = 20,
-        scale = 0.55
+        scale = 0.45
     }
 }
 
@@ -136,7 +136,7 @@ parts.deep_8x_sight = {
         source = { x = 5, y = 667, w = 469, h = 106 },
         attachPoint = { x = 234, y = 98 },
         order = 20,
-        scale = 0.55
+        scale = 0.45
     }
 }
 
