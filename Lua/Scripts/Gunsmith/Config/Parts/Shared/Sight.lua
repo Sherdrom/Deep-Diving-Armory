@@ -1,10 +1,10 @@
 Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local parts = Deep_Lua.Gunsmith.Config.parts
-local sightTexture = Deep_Lua.Path .. "/weapon/sight/sight.png"
+local sightTexture = Deep_Lua.Path .. "/weapon/sight/sight_2.png"
 
 -- 通用瞄具。能否安装由父挂点 accepts 和这里的 provides 共同决定。
-parts.AR_red_dot = {
+parts.deep_holo_sight = {
     type = "optic_mount",
     name = "全息瞄具",
     -- small_optic / medium_optic 由导轨或机匣的 optic_mount.accepts 决定。
@@ -13,14 +13,14 @@ parts.AR_red_dot = {
     stats = { weight = 0.18, ergonomics = -1, spreadReduction = 0.03 },
     visual = {
         texture = sightTexture,
-        source = { x = 15, y = 7, w = 73, h = 59 },
-        attachPoint = { x = 48-15, y = 58-7 },
+        source = { x = 5, y = 5, w = 97, h = 62 },
+        attachPoint = { x = 48, y = 57 },
         order = 20,
-        scale = 0.65
+        scale = 0.55
     }
 }
 
-parts.AR_holo_sight = {
+parts.deep_red_dot = {
     type = "optic_mount",
     name = "红点瞄具",
     provides = { "small_optic" },
@@ -28,9 +28,116 @@ parts.AR_holo_sight = {
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
     visual = {
         texture = sightTexture,
-        source = { x = 101, y = 9, w = 71, h = 55 },
-        attachPoint = { x = 138-101, y = 58-9 },
+        source = { x = 106, y = 2, w = 105, h = 66 },
+        attachPoint = { x = 52, y = 61 },
         order = 20,
-        scale = 0.65
+        scale = 0.55
     }
 }
+
+parts.deep_thermalgoggles_sight = {
+    type = "optic_mount",
+    name = "1倍热成像瞄具（30HZ）",
+    provides = { "small_optic" },
+    item = { identifier = "thermalgoggles_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 219, y = 3, w = 90, h = 69 },
+        attachPoint = { x = 45, y = 63 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_2x_sight = {
+    type = "optic_mount",
+    name = "2倍瞄具",
+    provides = { "small_optic" },
+    item = { identifier = "2x_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 5, y = 71, w = 129, h = 81 },
+        attachPoint = { x = 64, y = 74 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_2x5x_sight = {
+    type = "optic_mount",
+    name = "2.5倍瞄具",
+    provides = { "small_optic" },
+    item = { identifier = "2.5x_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 6, y = 154, w = 219, h = 82 },
+        attachPoint = { x = 109, y = 74 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_1_3x_sight = {
+    type = "optic_mount",
+    name = "1-3倍组合瞄具",
+    provides = { "small_optic" },
+    item = { identifier = "1_3x_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 5, y = 236, w = 199, h = 80 },
+        attachPoint = { x = 99, y = 75 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_1_6x_sight = {
+    type = "optic_mount",
+    name = "1-6倍'Vudu'瞄具",
+    provides = { "medium_optic" },
+    item = { identifier = "3x_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 5, y = 537, w = 381, h = 103 },
+        attachPoint = { x = 190, y = 97 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_thermalgoggles_sight_6x = {
+    type = "optic_mount",
+    name = "6倍热成像瞄具（60HZ）",
+    provides = { "medium_optic" },
+    item = { identifier = "thermalgoggles_sight_6x" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 401, y = 535, w = 393, h = 103 },
+        attachPoint = { x = 196, y = 97 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+parts.deep_8x_sight = {
+    type = "optic_mount",
+    name = "8倍狙击瞄具",
+    provides = { "medium_optic" },
+    item = { identifier = "8x_sight" },
+    stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
+    visual = {
+        texture = sightTexture,
+        source = { x = 5, y = 667, w = 469, h = 106 },
+        attachPoint = { x = 234, y = 98 },
+        order = 20,
+        scale = 0.55
+    }
+}
+
+
