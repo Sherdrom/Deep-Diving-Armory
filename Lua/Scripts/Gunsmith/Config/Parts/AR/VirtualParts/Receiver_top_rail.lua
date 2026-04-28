@@ -2,8 +2,7 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local parts = Deep_Lua.Gunsmith.Config.parts
 
--- 虚拟配件：机匣自带顶部导轨。
--- 它不消耗实体 item，也不额外绘制贴图，只负责把一个机匣挂点展开成前/后两个瞄具挂点。
+-- 虚拟配件：它不消耗实体 item，也不额外绘制贴图。适用于自带多个导轨的配件，例如有的护木自带四个导轨，就不需要加实体导轨，改用虚拟导轨确定配件挂点。
 parts.AR_receiver_top_rail = {
     type = "receiver_top_rail",
     name = "机匣顶部导轨",

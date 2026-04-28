@@ -107,6 +107,17 @@ local function validateSpriteTransform(errors, weaponId, fieldName, settings, al
     end
 end
 
+local function hiddenRootPathFor(rootSlots)
+    local hiddenPath = nil
+    for path, root in pairs(rootSlots or {}) do
+        if type(root) == "table" and root.hidden == true then
+            if hiddenPath ~= nil then return nil, "multiple" end
+            hiddenPath = path
+        end
+    end
+    return hiddenPath, nil
+end
+
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
@@ -251,11 +262,39 @@ function Validation.Run(configOverride, label)
                             rootSlots[root.path] = root
                         end
                         if type(root) == "table" then
-                            if root.required ~= nil and type(root.required) ~= "boolean" then
-                                table.insert(errors, rootLabel .. " required must be boolean when declared.")
+                            if root.required ~= nil then
+                                table.insert(errors, rootLabel .. " uses removed field 'required'; root slots are always required.")
                             end
                             if root.hidden ~= nil and type(root.hidden) ~= "boolean" then
                                 table.insert(errors, rootLabel .. " hidden must be boolean when declared.")
+                            end
+                        end
+                    end
+                end
+            end
+            if platform.requiredSlots ~= nil then
+                if type(platform.requiredSlots) ~= "table" then
+                    table.insert(errors, "Platform '" .. platformId .. "' requiredSlots must be a string array.")
+                else
+                    local hiddenPath, hiddenError = hiddenRootPathFor(rootSlots)
+                    if hiddenPath == nil then
+                        local reason = hiddenError == "multiple" and "multiple hidden rootSlots" or "no hidden rootSlot"
+                        table.insert(errors, "Platform '" .. platformId .. "' requiredSlots uses short paths but has " .. reason .. ".")
+                    end
+                    if not isArray(platform.requiredSlots) then
+                        table.insert(errors, "Platform '" .. platformId .. "' requiredSlots must be an array, not a keyed table.")
+                    else
+                        local seenRequiredSlots = {}
+                        for index, requiredPath in ipairs(platform.requiredSlots) do
+                            local requiredLabel = "Platform '" .. platformId .. "' requiredSlots #" .. tostring(index)
+                            if type(requiredPath) ~= "string" or requiredPath == "" then
+                                table.insert(errors, requiredLabel .. " must be a non-empty string.")
+                            elseif string.find(requiredPath, "/", 1, true) then
+                                table.insert(errors, requiredLabel .. " uses removed full path '" .. requiredPath .. "'; use hidden-root-relative path.")
+                            elseif seenRequiredSlots[requiredPath] then
+                                table.insert(errors, requiredLabel .. " duplicates required slot '" .. requiredPath .. "'.")
+                            else
+                                seenRequiredSlots[requiredPath] = true
                             end
                         end
                     end
@@ -273,17 +312,17 @@ function Validation.Run(configOverride, label)
         else
             if weapon.defaults ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'defaults'.") end
             if weapon.rootAccepts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootAccepts'.") end
-            if not validOptionalScale(weapon.scale) then
-                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' scale must be a positive number.")
+            if weapon.scale ~= nil then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'scale'; use platform.visualScale, part.visual.scale, preview.scale, inventory.scale, or world.scale.")
             end
 
             local rootSlots = platformRootSlots[platformId] or {}
             if type(weapon.rootParts) ~= "table" then
                 table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootParts.")
             else
-                for path, root in pairs(rootSlots) do
-                    if root.required == true and weapon.rootParts[path] == nil then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts missing required root path '" .. tostring(path) .. "'.")
+                for path, _ in pairs(rootSlots) do
+                    if weapon.rootParts[path] == nil then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts missing root path '" .. tostring(path) .. "'.")
                     end
                 end
                 for path, partId in pairs(weapon.rootParts) do
@@ -304,8 +343,8 @@ function Validation.Run(configOverride, label)
             if type(weapon.rootSockets) ~= "table" then
                 table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootSockets.")
             else
-                for path, root in pairs(rootSlots) do
-                    if root.required == true and (not validOptionalPoint(weapon.rootSockets[path]) or weapon.rootSockets[path] == nil) then
+                for path, _ in pairs(rootSlots) do
+                    if not validOptionalPoint(weapon.rootSockets[path]) or weapon.rootSockets[path] == nil then
                         table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets missing numeric x/y for root path '" .. tostring(path) .. "'.")
                     end
                 end
@@ -323,8 +362,11 @@ function Validation.Run(configOverride, label)
                     if weapon.preview.padding ~= nil and (type(weapon.preview.padding) ~= "number" or weapon.preview.padding < 0) then
                         table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.padding must be a non-negative number.")
                     end
-                    if not validOptionalScale(weapon.preview.zoom) then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.zoom must be a positive number.")
+                    if weapon.preview.zoom ~= nil then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'preview.zoom'; use preview.scale.")
+                    end
+                    if not validOptionalScale(weapon.preview.scale) then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.scale must be a positive number.")
                     end
                     if not validOptionalPoint(weapon.preview.offset) then
                         table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' preview.offset must contain numeric x/y.")
@@ -467,10 +509,14 @@ function Validation.RunSelfTest()
             broken = {
                 rootSlots = {
                     { path = "receiver", required = true, hidden = true },
-                    { path = "receiver", required = "bad" }
+                    { path = "receiver", hidden = "bad" }
                 },
                 defaults = {
                     receiver = "old_default"
+                },
+                requiredSlots = {
+                    "receiver/barrel",
+                    42
                 },
                 canvas = { w = 512, h = 160 },
                 visualScale = -1,
@@ -478,7 +524,7 @@ function Validation.RunSelfTest()
             },
             nested_broken = {
                 rootSlots = {
-                    { path = "receiver", required = true, hidden = true }
+                    { path = "receiver", hidden = true }
                 },
                 canvas = { w = 512, h = 160 }
             }
@@ -490,6 +536,10 @@ function Validation.RunSelfTest()
             bad_scale = {
                 platform = "broken",
                 scale = 0,
+                preview = {
+                    zoom = 1.0,
+                    scale = 0
+                },
                 rootParts = {
                     receiver = "missing_root_part"
                 },

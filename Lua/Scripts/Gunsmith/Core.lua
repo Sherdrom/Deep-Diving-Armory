@@ -28,12 +28,6 @@ function Core.PlatformConfig(item)
     return config.platforms[weapon.platform]
 end
 
-function Core.WeaponScale(item)
-    local weapon = Core.WeaponConfig(item)
-    if not weapon or type(weapon.scale) ~= "number" or weapon.scale <= 0 then return 1.0 end
-    return weapon.scale
-end
-
 function Core.PathName(platform, path)
     if platform.pathNames and platform.pathNames[path] then
         return platform.pathNames[path]
@@ -188,6 +182,14 @@ local function intersects(left, right)
     return false
 end
 
+local function arrayContains(values, target)
+    if type(values) ~= "table" then return false end
+    for _, value in ipairs(values) do
+        if value == target then return true end
+    end
+    return false
+end
+
 function Core.AcceptsForPath(selection, platform, path)
     if not platform or not path or path == "" then return nil end
     if Core.IsRootSlot(platform, path) then
@@ -226,12 +228,19 @@ end
 
 function Core.IsRequiredSlot(platform, path)
     if not platform or not path or path == "" then return false end
-    if platform.requiredSlots and platform.requiredSlots[path] ~= nil then
-        return platform.requiredSlots[path] == true
-    end
     if not string.find(path, "/", 1, true) then
-        local root = Core.RootSlotDef(platform, path)
-        return root and root.required == true
+        return Core.RootSlotDef(platform, path) ~= nil
+    end
+    if platform.requiredSlots then
+        local hiddenRootPath = Core.HiddenHomeRootPath(platform)
+        local relativePath = path
+        if hiddenRootPath then
+            local prefix = hiddenRootPath .. "/"
+            if string.sub(path, 1, #prefix) == prefix then
+                relativePath = string.sub(path, #prefix + 1)
+            end
+        end
+        return arrayContains(platform.requiredSlots, relativePath)
     end
     return false
 end

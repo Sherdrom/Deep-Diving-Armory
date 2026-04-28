@@ -21,14 +21,10 @@ config.weapons.deep_m4 = {
         receiver = { x = 209, y = 160 }
     },
 
-    -- 以下都为视觉效果参数。
-    -- 武器级整体视觉缩放，会和 platform.visualScale、part.visual.scale 相乘。
-    scale = 1,
-
-    -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响世界/背包贴图。
+    -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
     preview = {
         padding = 0,
-        zoom = 1.0,
+        scale = 1.0,
         offset = { x = 0, y = 0 }
     },
 

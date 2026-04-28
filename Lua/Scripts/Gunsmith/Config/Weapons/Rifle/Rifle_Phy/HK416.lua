@@ -16,15 +16,12 @@ config.weapons.deep_hk416 = {
         receiver = { x = 184, y = 158 }
     },
 
-
-    -- 以下都为视觉效果参数。
-    scale = 1,
-
-    -- preview = {
-    --     padding = 0,
-    --     zoom = 1.0,
-    --     offset = { x = 0, y = 0 }
-    -- },
+    -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
+    preview = {
+        padding = 0,
+        scale = 1.0,
+        offset = { x = 0, y = 0 }
+    },
 
     inventory = {
         scale = 0.35,   -- 库存图标缩放。
@@ -37,7 +34,7 @@ config.weapons.deep_hk416 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 0, y = -100 }
+        offset = { x = 0, y = 0 }
     }
 }
 

@@ -12,9 +12,9 @@ local function encodePreview(item, platform)
     local preview = weapon.preview or {}
     local offset = preview.offset or { x = 0, y = 0 }
     return string.format(
-        "padding=%.4f,zoom=%.4f,offsetX=%.4f,offsetY=%.4f",
+        "padding=%.4f,scale=%.4f,offsetX=%.4f,offsetY=%.4f",
         preview.padding or 12,
-        preview.zoom or 1.0,
+        preview.scale or 1.0,
         offset.x or 0,
         offset.y or 0)
 end

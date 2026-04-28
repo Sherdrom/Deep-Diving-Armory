@@ -132,8 +132,7 @@ local function buildLayerSpecForItem(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     Core.PruneInvalidSelections(selection, platform, weapon)
     local layers = {}
-    local weaponScale = Core.WeaponScale(item)
-    local layoutScale = (platform.visualScale or 1.0) * weaponScale
+    local layoutScale = platform.visualScale or 1.0
     local origin = platform.visualOrigin or { x = platform.canvas.w * 0.5, y = platform.canvas.h * 0.5 }
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])

@@ -305,8 +305,8 @@ namespace GunSmith
             int padding = (int)Math.Round(settings.Padding);
             int x = bounds.X - padding + (int)Math.Round(settings.Offset.X);
             int y = bounds.Y - padding + (int)Math.Round(settings.Offset.Y);
-            int width = Math.Max((int)Math.Ceiling((bounds.Width + padding * 2) / settings.Zoom), 1);
-            int height = Math.Max((int)Math.Ceiling((bounds.Height + padding * 2) / settings.Zoom), 1);
+            int width = Math.Max((int)Math.Ceiling((bounds.Width + padding * 2) / settings.Scale), 1);
+            int height = Math.Max((int)Math.Ceiling((bounds.Height + padding * 2) / settings.Scale), 1);
 
             Rectangle sourceRect = new(x, y, width, height);
             Rectangle textureRect = new(0, 0, state.Texture.Width, state.Texture.Height);
@@ -435,7 +435,7 @@ namespace GunSmith
                 settings = parts[0] switch
                 {
                     "padding" when value >= 0 => settings with { Padding = value },
-                    "zoom" when value > 0 => settings with { Zoom = value },
+                    "scale" when value > 0 => settings with { Scale = value },
                     "offsetX" => settings with { Offset = new Vector2(value, settings.Offset.Y) },
                     "offsetY" => settings with { Offset = new Vector2(settings.Offset.X, value) },
                     _ => settings
@@ -465,7 +465,7 @@ namespace GunSmith
             public static GunsmithStats Empty { get; } = new(0, 0, 0, 0, 0, 0);
         }
 
-        private sealed record GunsmithPreviewSettings(float Padding, float Zoom, Vector2 Offset)
+        private sealed record GunsmithPreviewSettings(float Padding, float Scale, Vector2 Offset)
         {
             public static GunsmithPreviewSettings Default { get; } = new(12.0f, 1.0f, Vector2.Zero);
         }
