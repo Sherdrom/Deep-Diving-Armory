@@ -50,7 +50,7 @@
 
 基础字段：
 
-- `part id`：Lua part id，例如 `AR_barrel_145`。
+- `part id`：Lua part id，例如 `AR_barrel_std`。
 - `名称`：显示名。
 - `type`：配件类型，例如 `receiver / barrel / handguard`。
 - `父部件`：当前部件挂在哪个父部件上；receiver 通常是 root。
