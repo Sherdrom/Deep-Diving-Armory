@@ -26,7 +26,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
 --伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOff.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DeepVCEDamageModifier.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOffToLeviathan.lua")
 
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")
