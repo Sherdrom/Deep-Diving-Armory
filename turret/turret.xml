@@ -120,7 +120,7 @@
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="2" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="20" targetforce="5" itemdamage="15" severlimbsprobability="0.1" penetration="0.2">
-        <Affliction identifier="gunshotwound" strength="12" />
+        <Affliction identifier="gunshotwound" strength="15" />
         <Affliction identifier="bleeding" strength="2.0" />
         <Affliction identifier="stun" strength="0.05" />
       </Attack>
@@ -258,7 +258,7 @@
     <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
-    <ItemContainer hideitems="true" capacity="2" drawinventory="false" canbeselected="false" canbecombined="true" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="1" drawinventory="false" canbeselected="false" canbecombined="true" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <!-- we cheat a bit with ammunition boxes - they don't actually contain hundreds of rounds, 
       but spawn a new round every time the OnUse effect is triggered. OnUse also reduces the condition
       of the item, and when the condition is 0, the box is considered empty. -->
