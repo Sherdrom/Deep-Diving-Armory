@@ -12,12 +12,6 @@ config.platforms.AR = {
     -- 子配件可以用 visual.attachPoint 对齐父配件本地 mount.anchor。
     canvas = { w = 512, h = 260 },
 
-    -- 平台级合成基础缩放。单配件图层缩放写在 part.visual.scale。
-    visualScale = 1.0,
-
-    -- 平台缩放的中心点。通常放在画布中心，除非整个平台图层需要偏心缩放。
-    visualOrigin = { x = 256, y = 130 },
-
     -- 平台根路径。V0.9.2 起平台只描述结构规则，不再声明默认枪型。
     -- receiver 是武器身份件，隐藏在普通改装列表外；其子路径会提升到 UI 首页。
     rootSlots = {

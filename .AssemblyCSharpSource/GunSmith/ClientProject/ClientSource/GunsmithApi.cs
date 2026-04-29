@@ -49,9 +49,13 @@ namespace GunSmith
             }
 
             Rectangle contentBounds = CalculateContentBounds(layers, Math.Max(width, 1), Math.Max(height, 1));
-            Texture2D worldTexture = CreateWorldTexture(texture, contentBounds, worldSettings);
+            Sprite? originalWorldSprite = item.Prefab.Sprite;
+            Vector2 canvasOrigin = originalWorldSprite != null
+                ? new Vector2(texture.Width * originalWorldSprite.RelativeOrigin.X, texture.Height * originalWorldSprite.RelativeOrigin.Y)
+                : new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+            Texture2D worldTexture = CreateWorldTexture(texture, contentBounds, worldSettings, canvasOrigin, out Vector2 worldOrigin);
             Texture2D inventoryTexture = CreateInventoryTexture(texture, contentBounds, inventorySettings);
-            Sprite? worldSprite = CreateWorldSprite(item.Prefab.Sprite, worldTexture);
+            Sprite? worldSprite = CreateWorldSprite(originalWorldSprite, worldTexture, worldOrigin);
             Sprite? inventorySprite = CreateInventorySprite(item.Prefab.InventoryIcon ?? item.Prefab.Sprite, inventoryTexture);
             if (worldSprite == null || inventorySprite == null)
             {

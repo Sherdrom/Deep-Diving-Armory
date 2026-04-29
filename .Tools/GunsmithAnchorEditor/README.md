@@ -188,7 +188,7 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 工具预览是为了快速取点，最终仍要以游戏内 C# 合成为准。出现偏差时优先检查：
 
 - Lua 配置里的 `visual.scale` 是否和工具一致。
-- `platform.visualScale / visualOrigin` 是否有额外影响。
+- `visual.scale` 是否和工具中一致。
 - 复制 Lua 片段时是否贴到了正确部件。
 - 父部件是否和工具里选择的父部件一致。
 

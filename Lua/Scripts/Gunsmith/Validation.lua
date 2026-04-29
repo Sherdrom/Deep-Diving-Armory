@@ -238,11 +238,14 @@ function Validation.Run(configOverride, label)
             if type(platform.canvas) ~= "table" or type(platform.canvas.w) ~= "number" or type(platform.canvas.h) ~= "number" then
                 table.insert(errors, "Platform '" .. platformId .. "' is missing canvas.w/h.")
             end
-            if not validOptionalScale(platform.visualScale) then
-                table.insert(errors, "Platform '" .. platformId .. "' visualScale must be a positive number.")
+            if platform.visualScale ~= nil then
+                table.insert(errors, "Platform '" .. platformId .. "' uses removed field 'visualScale'; use part.visual.scale.")
             end
-            if not validOptionalPoint(platform.visualOrigin) then
-                table.insert(errors, "Platform '" .. platformId .. "' visualOrigin must contain numeric x/y.")
+            if platform.visualOrigin ~= nil then
+                table.insert(errors, "Platform '" .. platformId .. "' uses removed field 'visualOrigin'.")
+            end
+            if platform.worldSpriteDepth ~= nil then
+                table.insert(errors, "Platform '" .. platformId .. "' uses removed field 'worldSpriteDepth'; use the XML Sprite depth.")
             end
 
             local rootSlots = {}
@@ -313,7 +316,7 @@ function Validation.Run(configOverride, label)
             if weapon.defaults ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'defaults'.") end
             if weapon.rootAccepts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootAccepts'.") end
             if weapon.scale ~= nil then
-                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'scale'; use platform.visualScale, part.visual.scale, preview.scale, inventory.scale, or world.scale.")
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'scale'; use part.visual.scale, preview.scale, inventory.scale, or world.scale.")
             end
 
             local rootSlots = platformRootSlots[platformId] or {}
@@ -520,7 +523,8 @@ function Validation.RunSelfTest()
                 },
                 canvas = { w = 512, h = 160 },
                 visualScale = -1,
-                visualOrigin = { x = "bad", y = 80 }
+                visualOrigin = { x = "bad", y = 80 },
+                worldSpriteDepth = "bad"
             },
             nested_broken = {
                 rootSlots = {

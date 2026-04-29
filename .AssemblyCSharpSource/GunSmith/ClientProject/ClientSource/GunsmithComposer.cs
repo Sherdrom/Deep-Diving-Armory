@@ -115,7 +115,7 @@ namespace GunSmith
             return target;
         }
 
-        private static Texture2D CreateWorldTexture(Texture2D texture, Rectangle contentBounds, GunsmithWorldSettings settings)
+        private static Texture2D CreateWorldTexture(Texture2D texture, Rectangle contentBounds, GunsmithWorldSettings settings, Vector2 canvasOrigin, out Vector2 worldOrigin)
         {
             GraphicsDevice graphics = graphicsDevice!;
             SpriteBatch batch = spriteBatch!;
@@ -136,6 +136,11 @@ namespace GunSmith
             float sin = Math.Abs(MathF.Sin(rotation));
             int targetWidth = Math.Max((int)Math.Ceiling(scaledWidth * cos + scaledHeight * sin + padding * 2.0f + Math.Abs(offset.X) * 2.0f), 1);
             int targetHeight = Math.Max((int)Math.Ceiling(scaledWidth * sin + scaledHeight * cos + padding * 2.0f + Math.Abs(offset.Y) * 2.0f), 1);
+            Vector2 targetCenter = new(targetWidth * 0.5f, targetHeight * 0.5f);
+            Vector2 sourceOrigin = new(sourceRect.Width * 0.5f, sourceRect.Height * 0.5f);
+            Vector2 originInSource = canvasOrigin - new Vector2(sourceRect.X, sourceRect.Y);
+            Vector2 localOrigin = (originInSource - sourceOrigin) * scale;
+            worldOrigin = targetCenter + Rotate(localOrigin, rotation);
 
             RenderTargetBinding[] previousTargets = graphics.GetRenderTargets();
             RenderTarget2D target = new(graphics, targetWidth, targetHeight, false, SurfaceFormat.Color, DepthFormat.None);
@@ -145,11 +150,11 @@ namespace GunSmith
             batch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null);
             batch.Draw(
                 texture,
-                new Vector2(targetWidth * 0.5f, targetHeight * 0.5f) + offset,
+                targetCenter + offset,
                 sourceRect,
                 Color.White,
                 rotation,
-                new Vector2(sourceRect.Width * 0.5f, sourceRect.Height * 0.5f),
+                sourceOrigin,
                 scale,
                 SpriteEffects.None,
                 0.0f);
@@ -157,6 +162,15 @@ namespace GunSmith
 
             graphics.SetRenderTargets(previousTargets);
             return target;
+        }
+
+        private static Vector2 Rotate(Vector2 value, float radians)
+        {
+            float cos = MathF.Cos(radians);
+            float sin = MathF.Sin(radians);
+            return new Vector2(
+                value.X * cos - value.Y * sin,
+                value.X * sin + value.Y * cos);
         }
 
         private static Texture2D GetTexture(string path)
@@ -168,7 +182,7 @@ namespace GunSmith
             });
         }
 
-        private static Sprite? CreateWorldSprite(Sprite? original, Texture2D texture)
+        private static Sprite? CreateWorldSprite(Sprite? original, Texture2D texture, Vector2 origin)
         {
             if (original == null) { return null; }
 
@@ -176,8 +190,8 @@ namespace GunSmith
             Sprite clone = new(original)
             {
                 SourceRect = sourceRect,
-                Origin = new Vector2(sourceRect.Width * original.RelativeOrigin.X, sourceRect.Height * original.RelativeOrigin.Y),
-                RelativeOrigin = original.RelativeOrigin,
+                Origin = origin,
+                RelativeOrigin = new Vector2(origin.X / sourceRect.Width, origin.Y / sourceRect.Height),
                 RelativeSize = Vector2.One,
                 Depth = original.Depth,
                 SourceElement = original.SourceElement,

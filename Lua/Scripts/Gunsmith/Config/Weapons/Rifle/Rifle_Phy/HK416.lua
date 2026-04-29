@@ -34,7 +34,7 @@ config.weapons.deep_hk416 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 0, y = 0 }
+        offset = { x = 10, y = -50 }
     }
 }
 

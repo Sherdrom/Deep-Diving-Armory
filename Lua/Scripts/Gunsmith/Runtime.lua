@@ -132,8 +132,6 @@ local function buildLayerSpecForItem(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     Core.PruneInvalidSelections(selection, platform, weapon)
     local layers = {}
-    local layoutScale = platform.visualScale or 1.0
-    local origin = platform.visualOrigin or { x = platform.canvas.w * 0.5, y = platform.canvas.h * 0.5 }
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])
         local visual = Core.PartVisual(part)
@@ -141,15 +139,13 @@ local function buildLayerSpecForItem(item, selection, platform)
             local source = visual.source
             local drawOffset = resolveDrawOffset(selection, platform, weapon, path, visual)
             if drawOffset then
-                local scale = (visual.scale or 1.0) * layoutScale
-                local x = origin.x + (drawOffset.x - origin.x) * layoutScale
-                local y = origin.y + (drawOffset.y - origin.y) * layoutScale
+                local scale = visual.scale or 1.0
                 table.insert(layers, table.concat({
                     path,
                     selection[path],
                     visual.texture,
                     string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
-                    string.format("%.4f,%.4f", x, y),
+                    string.format("%.4f,%.4f", drawOffset.x, drawOffset.y),
                     tostring(visual.order or 0),
                     string.format("%.4f", scale)
                 }, "|"))
