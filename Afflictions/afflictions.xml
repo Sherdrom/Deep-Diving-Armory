@@ -1358,7 +1358,10 @@
 
 
     <Affliction identifier="deepgun_inwater_detect_chip" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" affectmachines="true">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
+      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="deepgun_inwater_detect" minresistance="1" maxresistance="1" >
+      <StatusEffect target="Character" interval="0.25" multiplyafflictionsbymaxvitality="true" >
+          <ReduceAffliction type="deepgun_inwater_detect" amount="10" />
+      </StatusEffect>
       </Effect>
     </Affliction>
 
