@@ -31,7 +31,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
             status = "missing"
         end
-        table.insert(entries, partId .. ":" .. part.name .. ":" .. status .. ":" .. Stats.Encode(Stats.PartStats(part), "~"))
+        table.insert(entries, partId .. ":" .. part.nameKey .. ":" .. status .. ":" .. Stats.Encode(Stats.PartStats(part), "~"))
     end
 end
 
@@ -46,7 +46,7 @@ function UiSpec.Build(item, selection, platform, currentPath)
         elseif not selection[slot.path] then
             emptyStatus = "installed"
         end
-        local partEntries = { Gunsmith.EmptyPartId .. ":[空]:" .. emptyStatus }
+        local partEntries = { Gunsmith.EmptyPartId .. ":deep.gunsmith.ui.empty_part:" .. emptyStatus }
         for _, partId in ipairs(Core.GetPartsForType(slot.partType)) do
             appendPartEntry(partEntries, item, selection, platform, slot.path, partId)
         end
@@ -56,7 +56,7 @@ function UiSpec.Build(item, selection, platform, currentPath)
         local canEnter = Core.HasChildSlots(selection, platform, slotPath) and "1" or "0"
         table.insert(entries, table.concat({
             slotPath,
-            slot.name,
+            slot.nameKey,
             currentPartId,
             canEnter,
             table.concat(partEntries, ",")

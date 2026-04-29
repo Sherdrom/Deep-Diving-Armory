@@ -5,7 +5,7 @@ local Validation = {}
 Gunsmith.Validation = Validation
 
 local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier", "slot" }
-local oldConfigFields = { "defaults", "rootAccepts", "slots", "requiredRootSlots", "hiddenRootSlots", "slotNames" }
+local oldConfigFields = { "defaults", "rootAccepts", "slots", "requiredRootSlots", "hiddenRootSlots", "slotNames", "pathNames" }
 local knownStatFields = {
     weight = true,
     ergonomics = true,
@@ -13,6 +13,38 @@ local knownStatFields = {
     spreadReduction = true,
     fireRateMultiplier = true,
     damageMultiplier = true
+}
+
+local fixedLocalizationKeys = {
+    "deep.gunsmith.ui.title",
+    "deep.gunsmith.ui.close",
+    "deep.gunsmith.ui.current_slots",
+    "deep.gunsmith.ui.back",
+    "deep.gunsmith.ui.selected_prefix",
+    "deep.gunsmith.ui.preview_placeholder",
+    "deep.gunsmith.ui.path_line",
+    "deep.gunsmith.ui.enter_mounts",
+    "deep.gunsmith.ui.part_list_title",
+    "deep.gunsmith.ui.part_detail_title",
+    "deep.gunsmith.ui.empty_part",
+    "deep.gunsmith.ui.weapon_root",
+    "deep.gunsmith.status.installed",
+    "deep.gunsmith.status.missing",
+    "deep.gunsmith.status.incompatible",
+    "deep.gunsmith.status.disabled",
+    "deep.gunsmith.status.available",
+    "deep.gunsmith.action.installed",
+    "deep.gunsmith.action.missing",
+    "deep.gunsmith.action.incompatible",
+    "deep.gunsmith.action.disabled",
+    "deep.gunsmith.action.remove",
+    "deep.gunsmith.action.install",
+    "deep.gunsmith.stat.weight",
+    "deep.gunsmith.stat.ergonomics",
+    "deep.gunsmith.stat.recoil_control",
+    "deep.gunsmith.stat.spread_reduction",
+    "deep.gunsmith.stat.fire_rate",
+    "deep.gunsmith.stat.damage"
 }
 
 local function isArray(value)
@@ -138,6 +170,28 @@ local function reportPrefix(label, level)
     return prefix
 end
 
+local function addLocalizationKey(keys, key)
+    if type(key) == "string" and key ~= "" then
+        keys[key] = true
+    end
+end
+
+local function loadChineseLocalizationKeys()
+    if not io or not io.open or not Deep_Lua or type(Deep_Lua.Path) ~= "string" then
+        return nil, "Lua io is unavailable"
+    end
+    local file = io.open(Deep_Lua.Path .. "/text/chinese.xml", "r")
+    if not file then return nil, "text/chinese.xml cannot be opened" end
+    local content = file:read("*a") or ""
+    file:close()
+
+    local keys = {}
+    for key in string.gmatch(content, "<(deep%.gunsmith%.[^>/]+)>") do
+        keys[key] = true
+    end
+    return keys, nil
+end
+
 local function printReport(errors, warnings, label)
     for _, message in ipairs(errors) do
         print(reportPrefix(label, "ERROR") .. " " .. message)
@@ -183,6 +237,10 @@ function Validation.Run(configOverride, label)
     local providedTypes = {}
     local platformRootSlots = {}
     local validatedDefaultParents = {}
+    local localizationKeys = {}
+    for _, key in ipairs(fixedLocalizationKeys) do
+        addLocalizationKey(localizationKeys, key)
+    end
 
     local function validateDefaultChildren(parentPartId, parentPart, path, stack, depth)
         if type(parentPart.mounts) ~= "table" then return end
@@ -247,6 +305,19 @@ function Validation.Run(configOverride, label)
             if platform.worldSpriteDepth ~= nil then
                 table.insert(errors, "Platform '" .. platformId .. "' uses removed field 'worldSpriteDepth'; use the XML Sprite depth.")
             end
+            if type(platform.pathNameKeys) ~= "table" then
+                table.insert(errors, "Platform '" .. platformId .. "' is missing pathNameKeys.")
+            else
+                for path, key in pairs(platform.pathNameKeys) do
+                    if type(path) ~= "string" or path == "" then
+                        table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys contains invalid path.")
+                    elseif type(key) ~= "string" or key == "" then
+                        table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys['" .. path .. "'] must be a localization key string.")
+                    else
+                        addLocalizationKey(localizationKeys, key)
+                    end
+                end
+            end
 
             local rootSlots = {}
             if type(platform.rootSlots) == "table" then
@@ -263,6 +334,9 @@ function Validation.Run(configOverride, label)
                             table.insert(errors, rootLabel .. " duplicates root path '" .. root.path .. "'.")
                         else
                             rootSlots[root.path] = root
+                            if type(platform.pathNameKeys) == "table" and type(platform.pathNameKeys[root.path]) ~= "string" then
+                                table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys missing root path '" .. root.path .. "'.")
+                            end
                         end
                         if type(root) == "table" then
                             if root.required ~= nil then
@@ -298,6 +372,9 @@ function Validation.Run(configOverride, label)
                                 table.insert(errors, requiredLabel .. " duplicates required slot '" .. requiredPath .. "'.")
                             else
                                 seenRequiredSlots[requiredPath] = true
+                                if type(platform.pathNameKeys) == "table" and type(platform.pathNameKeys[requiredPath]) ~= "string" then
+                                    table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys missing required slot '" .. requiredPath .. "'.")
+                                end
                             end
                         end
                     end
@@ -387,7 +464,14 @@ function Validation.Run(configOverride, label)
             table.insert(errors, "Part '" .. tostring(partId) .. "' must be a table.")
         else
             if type(part.type) ~= "string" or part.type == "" then table.insert(errors, "Part '" .. partId .. "' is missing type.") end
-            if type(part.name) ~= "string" or part.name == "" then table.insert(errors, "Part '" .. partId .. "' is missing name.") end
+            if part.name ~= nil then
+                table.insert(errors, "Part '" .. partId .. "' uses removed field 'name'; use nameKey.")
+            end
+            if type(part.nameKey) ~= "string" or part.nameKey == "" then
+                table.insert(errors, "Part '" .. partId .. "' is missing nameKey.")
+            else
+                addLocalizationKey(localizationKeys, part.nameKey)
+            end
             if not hasStringArray(part.provides) then
                 table.insert(errors, "Part '" .. partId .. "' is missing provides.")
             else
@@ -452,6 +536,16 @@ function Validation.Run(configOverride, label)
                         if mount.partType ~= nil and (type(mount.partType) ~= "string" or mount.partType == "") then
                             table.insert(errors, mountLabel .. " partType must be a non-empty string when declared.")
                         end
+                        if mount.name ~= nil then
+                            table.insert(errors, mountLabel .. " uses removed field 'name'; use nameKey.")
+                        end
+                        if mount.nameKey ~= nil then
+                            if type(mount.nameKey) ~= "string" or mount.nameKey == "" then
+                                table.insert(errors, mountLabel .. " nameKey must be a non-empty string when declared.")
+                            else
+                                addLocalizationKey(localizationKeys, mount.nameKey)
+                            end
+                        end
                         if mount.defaultPart ~= nil and (type(mount.defaultPart) ~= "string" or mount.defaultPart == "") then
                             table.insert(errors, mountLabel .. " defaultPart must be a non-empty string when declared.")
                         end
@@ -502,6 +596,19 @@ function Validation.Run(configOverride, label)
         end
     end
 
+    if configOverride == nil then
+        local chineseKeys, localizationLoadError = loadChineseLocalizationKeys()
+        if chineseKeys then
+            for key, _ in pairs(localizationKeys) do
+                if not chineseKeys[key] then
+                    table.insert(errors, "Missing Chinese localization key '" .. key .. "' in text/chinese.xml.")
+                end
+            end
+        else
+            table.insert(warnings, "Could not verify text/chinese.xml localization keys: " .. tostring(localizationLoadError) .. ".")
+        end
+    end
+
     printReport(errors, warnings, label)
     return #errors == 0
 end
@@ -524,7 +631,13 @@ function Validation.RunSelfTest()
                 canvas = { w = 512, h = 160 },
                 visualScale = -1,
                 visualOrigin = { x = "bad", y = 80 },
-                worldSpriteDepth = "bad"
+                worldSpriteDepth = "bad",
+                pathNames = {
+                    receiver = "Old Name"
+                },
+                pathNameKeys = {
+                    receiver = ""
+                }
             },
             nested_broken = {
                 rootSlots = {
@@ -585,7 +698,7 @@ function Validation.RunSelfTest()
         parts = {
             test_receiver_part = {
                 type = "receiver",
-                name = "Test Receiver Part",
+                nameKey = "deep.gunsmith.test.part.receiver",
                 provides = { "test_receiver" },
                 item = { virtual = true },
                 visual = {
@@ -601,7 +714,7 @@ function Validation.RunSelfTest()
             },
             bad_type_part = {
                 type = "stock",
-                name = "Bad Type Part",
+                nameKey = "deep.gunsmith.test.part.bad_type",
                 provides = { "test_barrel" },
                 item = { virtual = true },
                 visual = {
@@ -612,7 +725,7 @@ function Validation.RunSelfTest()
             },
             test_stock_part = {
                 type = "stock",
-                name = "Test Stock Part",
+                nameKey = "deep.gunsmith.test.part.stock",
                 provides = { "test_stock" },
                 item = { virtual = true },
                 visual = {
@@ -623,7 +736,7 @@ function Validation.RunSelfTest()
             },
             cycle_part = {
                 type = "stock",
-                name = "Cycle Part",
+                nameKey = "deep.gunsmith.test.part.cycle",
                 provides = { "test_stock" },
                 item = { virtual = true },
                 mounts = {
@@ -638,7 +751,7 @@ function Validation.RunSelfTest()
             },
             bad_visual_part = {
                 type = "receiver",
-                name = "Bad Visual Part",
+                nameKey = "deep.gunsmith.test.part.bad_visual",
                 provides = { "test_receiver" },
                 item = { virtual = true },
                 stats = {
@@ -652,11 +765,11 @@ function Validation.RunSelfTest()
             },
             bad_mount_part = {
                 type = "receiver",
-                name = "Bad Mount Part",
+                nameKey = "deep.gunsmith.test.part.bad_mount",
                 provides = { "unused_test_type" },
                 item = { virtual = true },
                 mounts = {
-                    { slot = "old_path_field", path = "optic_mount", partSlot = "", partType = "", anchor = { x = "bad", y = 0 } }
+                    { slot = "old_path_field", path = "optic_mount", name = "Old Mount Name", nameKey = "", partSlot = "", partType = "", anchor = { x = "bad", y = 0 } }
                 }
             }
         }

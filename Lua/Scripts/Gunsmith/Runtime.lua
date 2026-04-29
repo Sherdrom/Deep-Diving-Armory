@@ -348,7 +348,7 @@ function Runtime.Open(item)
         end
 
         Runtime.Apply(item)
-        Hook.Call("DeepGunsmithOpen", item, "改装: " .. Core.ItemIdentifier(item), UiSpec.Build(item, selection, platform, currentPath))
+        Hook.Call("DeepGunsmithOpen", item, "deep.gunsmith.ui.title", UiSpec.Build(item, selection, platform, currentPath))
     end)
 
     if not ok then

@@ -48,7 +48,7 @@ config.weapons.deep_m4 = {
 parts.M4_receiver_std = {
     -- type 是配件自身类型，必须匹配平台根路径或父挂点的 partType。
     type = "receiver",
-    name = "M4 标准机匣",
+    nameKey = "deep.gunsmith.part.M4_receiver_std",
 
     -- provides 是兼容类型。根身份件由 weapon.rootParts 指定；子配件由挂点 accepts 接受。
     provides = { "M4_receiver" },
@@ -73,10 +73,10 @@ parts.M4_receiver_std = {
 
     -- V0.9: receiver 是 AR 的结构核心。anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { path = "barrel", name = "枪管", accepts = { "AR_barrel" }, defaultPart = "AR_barrel_145", anchor = { x = 62, y = -3 } },
-        { path = "handguard", name = "护木", accepts = { "AR_handguard" }, defaultPart = "AR_handguard_std", anchor = { x = 62, y = -3 } },
-        { path = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, defaultPart = "AR_grip_std", anchor = { x = -26, y = 27 } },
-        { path = "stock", name = "枪托", accepts = { "AR_stock" }, defaultPart = "AR_stock_std", anchor = { x = -68, y = 0 } },
-        { path = "optic_mount", name = "机匣瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = { x = 8, y = -41 } }
+        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "AR_barrel_145", anchor = { x = 62, y = -3 } },
+        { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "AR_handguard_std", anchor = { x = 62, y = -3 } },
+        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "AR_grip_std", anchor = { x = -26, y = 27 } },
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "AR_stock_std", anchor = { x = -68, y = 0 } },
+        { path = "optic_mount", nameKey = "deep.gunsmith.mount.M4_receiver_std.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 8, y = -41 } }
     }
 }

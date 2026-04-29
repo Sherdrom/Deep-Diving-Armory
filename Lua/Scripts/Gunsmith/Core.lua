@@ -28,11 +28,11 @@ function Core.PlatformConfig(item)
     return config.platforms[weapon.platform]
 end
 
-function Core.PathName(platform, path)
-    if platform.pathNames and platform.pathNames[path] then
-        return platform.pathNames[path]
+function Core.PathNameKey(platform, path)
+    if platform.pathNameKeys and platform.pathNameKeys[path] then
+        return platform.pathNameKeys[path]
     end
-    return path
+    return "deep.gunsmith.path." .. tostring(path)
 end
 
 function Core.JoinPath(parentPath, path)
@@ -277,7 +277,7 @@ function Core.RootSlots(platform)
     for _, root in ipairs(Core.RootSlotDefs(platform)) do
         local path = root.path
         if not Core.IsHiddenRootSlot(platform, path) then
-            table.insert(slots, { path = path, partType = path, name = Core.PathName(platform, path) })
+            table.insert(slots, { path = path, partType = path, nameKey = Core.PathNameKey(platform, path) })
         end
     end
     return slots
@@ -292,7 +292,7 @@ function Core.ChildSlots(selection, platform, path)
         table.insert(slots, {
             path = Core.JoinPath(path, mount.path),
             partType = mount.partType or mount.path,
-            name = mount.name or Core.PathName(platform, mount.path)
+            nameKey = mount.nameKey or Core.PathNameKey(platform, mount.path)
         })
     end
     return slots
@@ -377,27 +377,27 @@ function Core.PathLabel(selection, platform, path)
     if not path or path == "" then
         local hiddenRootPath = Core.HiddenHomeRootPath(platform)
         if hiddenRootPath then
-            return "枪械 > " .. Core.PathName(platform, hiddenRootPath)
+            return "deep.gunsmith.ui.weapon_root>" .. Core.PathNameKey(platform, hiddenRootPath)
         end
-        return "枪械"
+        return "deep.gunsmith.ui.weapon_root"
     end
 
-    local names = { "枪械" }
+    local names = { "deep.gunsmith.ui.weapon_root" }
     local current = ""
     for segment in string.gmatch(path, "[^/]+") do
         current = Core.JoinPath(current, segment)
-        local mountName = Core.PathName(platform, segment)
+        local mountNameKey = Core.PathNameKey(platform, segment)
         local parent = Core.ParentPath(current)
         local parentPart = parent ~= "" and Core.GetInstalledPart(selection, parent) or nil
         if parentPart and parentPart.mounts then
             for _, mount in ipairs(parentPart.mounts) do
                 if mount.path == segment then
-                    mountName = mount.name or mountName
+                    mountNameKey = mount.nameKey or mountNameKey
                     break
                 end
             end
         end
-        table.insert(names, mountName)
+        table.insert(names, mountNameKey)
     end
     return table.concat(names, " > ")
 end

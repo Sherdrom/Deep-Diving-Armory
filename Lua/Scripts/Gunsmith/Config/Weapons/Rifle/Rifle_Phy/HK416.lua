@@ -40,7 +40,7 @@ config.weapons.deep_hk416 = {
 
 parts.hk416_receiver_std = {
     type = "receiver",
-    name = "HK416 标准机匣",
+    nameKey = "deep.gunsmith.part.hk416_receiver_std",
     provides = { "HK416_receiver" },
     item = { identifier = "deep_gunsmith_hk416_receiver_std" },
     stats = { weight = 1.08, ergonomics = 9, recoilControl = 0.03 },
@@ -55,12 +55,12 @@ parts.hk416_receiver_std = {
     -- HK416 机匣顶部自带导轨。这里挂一个 virtual part，用它继续提供前/后瞄具挂点。
     -- anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { path = "barrel", name = "枪管", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
-        { path = "handguard", name = "护木", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
-        { path = "pistol_grip", name = "手枪握把", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
-        { path = "stock", name = "枪托", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },
-        { path = "optic_mount", name = "机匣瞄具挂点", accepts = { "small_optic", "medium_optic" }, anchor = { x = 226-184, y = 35-58 } }
+        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
+        { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
+        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },
+        { path = "optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 226-184, y = 35-58 } }
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
-        -- { path = "receiver_top_rail", name = "顶部导轨", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
+        -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }
 }

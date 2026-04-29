@@ -7,7 +7,7 @@ local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
 parts.AR_stock_std = {
     type = "stock",
-    name = "M4标准枪托",
+    nameKey = "deep.gunsmith.part.AR_stock_std",
     provides = { "AR_stock" },
     item = { identifier = "deep_gunsmith_AR_stock_std" },
     stats = { weight = 0.36, ergonomics = 2, recoilControl = 0.05 },
@@ -22,7 +22,7 @@ parts.AR_stock_std = {
 
 parts.hk416_stock_std = {
     type = "stock",
-    name = "HK416 标准枪托",
+    nameKey = "deep.gunsmith.part.hk416_stock_std",
     provides = { "AR_stock" },
     item = { identifier = "deep_gunsmith_hk416_stock_std" },
     stats = { weight = 0.42, ergonomics = 3, recoilControl = 0.06 },

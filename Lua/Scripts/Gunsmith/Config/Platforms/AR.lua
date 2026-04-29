@@ -27,20 +27,20 @@ config.platforms.AR = {
         "stock"
     },
 
-    -- UI 显示名。没有写在这里的 path 会直接显示内部 key。
+    -- UI 显示文本只写本地化 key，实际文本放在 text/chinese.xml 等语言文件。
     -- 子挂点 path 也建议登记在这里，方便路径显示为“枪械 > 护木 > 上导轨”。
-    pathNames = {
-        receiver = "机匣",
-        barrel = "枪管",
-        handguard = "护木",
-        pistol_grip = "手枪握把",
-        stock = "枪托",
-        muzzle_device = "枪口装置",
-        top_rail = "上导轨",
-        bottom_rail = "下导轨",
-        left_rail = "左导轨",
-        right_rail = "右导轨",
-        receiver_top_rail = "机匣顶部导轨",
-        optic_mount = "瞄具挂点"
+    pathNameKeys = {
+        receiver = "deep.gunsmith.path.receiver",
+        barrel = "deep.gunsmith.path.barrel",
+        handguard = "deep.gunsmith.path.handguard",
+        pistol_grip = "deep.gunsmith.path.pistol_grip",
+        stock = "deep.gunsmith.path.stock",
+        muzzle_device = "deep.gunsmith.path.muzzle_device",
+        top_rail = "deep.gunsmith.path.top_rail",
+        bottom_rail = "deep.gunsmith.path.bottom_rail",
+        left_rail = "deep.gunsmith.path.left_rail",
+        right_rail = "deep.gunsmith.path.right_rail",
+        receiver_top_rail = "deep.gunsmith.path.receiver_top_rail",
+        optic_mount = "deep.gunsmith.path.optic_mount"
     }
 }

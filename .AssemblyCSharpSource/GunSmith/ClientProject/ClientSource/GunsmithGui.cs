@@ -68,9 +68,9 @@ namespace GunSmith
             if (activeWindow == null) { return; }
 
             GUIFrame header = new(new RectTransform(new Vector2(0.96f, 0.12f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.76f, 0.78f), header.RectTransform, Anchor.CenterLeft), title, textAlignment: Alignment.CenterLeft);
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.76f, 0.78f), header.RectTransform, Anchor.CenterLeft), FormatL(title, LocalizedItemName(activeItem)), textAlignment: Alignment.CenterLeft);
 
-            GUIButton closeButton = new(new RectTransform(new Vector2(0.16f, 0.72f), header.RectTransform, Anchor.CenterRight), (LocalizedString)"关闭", Alignment.Center);
+            GUIButton closeButton = new(new RectTransform(new Vector2(0.16f, 0.72f), header.RectTransform, Anchor.CenterRight), L("deep.gunsmith.ui.close"), Alignment.Center);
             closeButton.OnClicked = (_, _) =>
             {
                 CloseWindow();
@@ -106,11 +106,11 @@ namespace GunSmith
             if (slotList == null) { return; }
             slotList.Content.ClearChildren();
 
-            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), slotList.Content.RectTransform), (LocalizedString)"当前层级槽位", textAlignment: Alignment.Center);
+            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), slotList.Content.RectTransform), L("deep.gunsmith.ui.current_slots"), textAlignment: Alignment.Center);
 
             if (!string.IsNullOrWhiteSpace(activeContext.CurrentPath))
             {
-                GUIButton backButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), (LocalizedString)"[返回上级]", Alignment.Center);
+                GUIButton backButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), L("deep.gunsmith.ui.back"), Alignment.Center);
                 backButton.OnClicked = (_, _) =>
                 {
                     if (activeItem != null && !activeItem.Removed)
@@ -123,8 +123,9 @@ namespace GunSmith
 
             foreach (GunsmithGuiSlot slot in activeSlots)
             {
-                string prefix = slot.Path == selectedSlot ? "[选中] " : "";
-                GUIButton selectButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), (LocalizedString)(prefix + slot.Name), Alignment.Center);
+                string label = LocalizeKey(slot.NameKey);
+                if (slot.Path == selectedSlot) { label = FormatLValue("deep.gunsmith.ui.selected_prefix", label); }
+                GUIButton selectButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), (LocalizedString)label, Alignment.Center);
                 selectButton.OnClicked = (_, _) =>
                 {
                     selectedSlot = slot.Path;
@@ -188,15 +189,15 @@ namespace GunSmith
             }
             else
             {
-                _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 0.28f), previewPanel.RectTransform, Anchor.Center), (LocalizedString)"枪械预览区域", textAlignment: Alignment.Center);
+                _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 0.28f), previewPanel.RectTransform, Anchor.Center), L("deep.gunsmith.ui.preview_placeholder"), textAlignment: Alignment.Center);
             }
 
             if (detailPanel == null) { return; }
             _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.25f), detailPanel.RectTransform, Anchor.TopCenter), (LocalizedString)FormatStatsLine(activeWeaponStats), textAlignment: Alignment.Center);
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 0.28f), detailPanel.RectTransform, Anchor.Center), (LocalizedString)$"路径: {activeContext.PathLabel}", textAlignment: Alignment.Center);
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 0.28f), detailPanel.RectTransform, Anchor.Center), FormatL("deep.gunsmith.ui.path_line", LocalizePathLabel(activeContext.PathLabel)), textAlignment: Alignment.Center);
 
             if (!slot.CanEnter) { return; }
-            GUIButton enterButton = new(new RectTransform(new Vector2(0.72f, 0.28f), detailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)"进入该配件挂点", Alignment.Center);
+            GUIButton enterButton = new(new RectTransform(new Vector2(0.72f, 0.28f), detailPanel.RectTransform, Anchor.BottomCenter), L("deep.gunsmith.ui.enter_mounts"), Alignment.Center);
             enterButton.OnClicked = (_, _) =>
             {
                 if (activeItem != null && !activeItem.Removed)
@@ -212,14 +213,14 @@ namespace GunSmith
             if (partList == null) { return; }
             partList.Content.ClearChildren();
 
-            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), partList.Content.RectTransform), (LocalizedString)$"{slot.Name}配件", textAlignment: Alignment.Center);
+            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), partList.Content.RectTransform), FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey)), textAlignment: Alignment.Center);
 
             foreach (GunsmithGuiPart part in slot.Parts)
             {
                 bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
                 bool selected = part.Id == selectedPartId;
                 string label = PartLabel(part, installed);
-                if (selected) { label = "[选中] " + label; }
+                if (selected) { label = FormatLValue("deep.gunsmith.ui.selected_prefix", label); }
                 GUIButton button = new(new RectTransform(new Vector2(1.0f, 0.14f), partList.Content.RectTransform), (LocalizedString)label, Alignment.Center);
                 button.OnClicked = (_, _) =>
                 {
@@ -241,7 +242,7 @@ namespace GunSmith
             selectedPartId = part.Id;
 
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.18f), partDetailPanel.RectTransform, Anchor.TopCenter), (LocalizedString)"选中配件属性", textAlignment: Alignment.Center);
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.18f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
             _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.44f), partDetailPanel.RectTransform, Anchor.Center), (LocalizedString)FormatPartStats(part.Stats), textAlignment: Alignment.Center);
 
             string buttonText = InstallButtonText(part, installed);
@@ -268,36 +269,62 @@ namespace GunSmith
             selectedPartId ??= slot.Parts.FirstOrDefault()?.Id;
         }
 
-        private static string PartLabel(GunsmithGuiPart part, bool installed)
+        private static LocalizedString L(string key)
+            => TextManager.Get(key).Fallback(key);
+
+        private static string LocalizeKey(string key)
+            => L(key).Value;
+
+        private static LocalizedString FormatL(string key, params object?[] args)
+            => (LocalizedString)FormatLValue(key, args);
+
+        private static string FormatLValue(string key, params object?[] args)
         {
-            if (installed || part.Status == "installed") { return "[已安装] " + part.Name; }
-            return part.Status switch
+            string value = LocalizeKey(key);
+            for (int i = 0; i < args.Length; i++)
             {
-                "missing" => "[缺少配件] " + part.Name,
-                "incompatible" => "[不兼容] " + part.Name,
-                "disabled" => "[不可拆空] " + part.Name,
-                "available" => "[可安装] " + part.Name,
-                _ => part.Name
-            };
+                value = value.Replace("{" + i + "}", args[i]?.ToString() ?? string.Empty, StringComparison.Ordinal);
+            }
+            return value;
         }
+
+        private static string LocalizePathLabel(string pathLabel)
+        {
+            if (string.IsNullOrWhiteSpace(pathLabel)) { return LocalizeKey("deep.gunsmith.ui.weapon_root"); }
+            return string.Join(" > ",
+                pathLabel
+                    .Split('>', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(LocalizeKey));
+        }
+
+        private static string LocalizedItemName(Item? item)
+        {
+            string identifier = item?.Prefab?.Identifier.Value ?? string.Empty;
+            return string.IsNullOrWhiteSpace(identifier)
+                ? string.Empty
+                : TextManager.Get("entityname." + identifier).Fallback(identifier).Value;
+        }
+
+        private static string PartLabel(GunsmithGuiPart part, bool installed)
+            => FormatLValue("deep.gunsmith.status." + (installed ? "installed" : part.Status), LocalizeKey(part.NameKey));
 
         private static string InstallButtonText(GunsmithGuiPart part, bool installed)
         {
-            if (installed || part.Status == "installed") { return "已安装"; }
+            if (installed || part.Status == "installed") { return LocalizeKey("deep.gunsmith.action.installed"); }
             return part.Status switch
             {
-                "missing" => "缺少配件",
-                "incompatible" => "不兼容",
-                "disabled" => "不可拆空",
-                _ => part.Id == EmptyPartId ? "拆除该配件" : "安装该配件"
+                "missing" => LocalizeKey("deep.gunsmith.action.missing"),
+                "incompatible" => LocalizeKey("deep.gunsmith.action.incompatible"),
+                "disabled" => LocalizeKey("deep.gunsmith.action.disabled"),
+                _ => LocalizeKey(part.Id == EmptyPartId ? "deep.gunsmith.action.remove" : "deep.gunsmith.action.install")
             };
         }
 
         private static string FormatStatsLine(GunsmithStats stats)
-            => $"重量 {stats.Weight:0.##} | 操控 {stats.Ergonomics:+0.##;-0.##;0} | 后坐 {stats.RecoilControl * 100:+0.#;-0.#;0}% | 精度 {stats.SpreadReduction * 100:+0.#;-0.#;0}% | 射速 {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | 伤害 {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
+            => $"{LocalizeKey("deep.gunsmith.stat.weight")} {stats.Weight:0.##} | {LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeKey("deep.gunsmith.stat.recoil_control")} {stats.RecoilControl * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.spread_reduction")} {stats.SpreadReduction * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.fire_rate")} {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.damage")} {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
 
         private static string FormatPartStats(GunsmithStats stats)
-            => $"重量: {stats.Weight:+0.##;-0.##;0}\n操控: {stats.Ergonomics:+0.##;-0.##;0}\n后坐控制: {stats.RecoilControl * 100:+0.#;-0.#;0}%\n散布改善: {stats.SpreadReduction * 100:+0.#;-0.#;0}%\n射速修正: {stats.FireRateMultiplier * 100:+0.#;-0.#;0}%\n伤害修正: {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
+            => $"{LocalizeKey("deep.gunsmith.stat.weight")}: {stats.Weight:+0.##;-0.##;0}\n{LocalizeKey("deep.gunsmith.stat.ergonomics")}: {stats.Ergonomics:+0.##;-0.##;0}\n{LocalizeKey("deep.gunsmith.stat.recoil_control")}: {stats.RecoilControl * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.spread_reduction")}: {stats.SpreadReduction * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.fire_rate")}: {stats.FireRateMultiplier * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.damage")}: {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
 
         private static Rectangle CreatePreviewSourceRect(GunsmithSpriteState state, GunsmithPreviewSettings settings)
         {
@@ -370,7 +397,7 @@ namespace GunSmith
             string[] parts = contextSpec.Split('|', 3, StringSplitOptions.TrimEntries);
             return new GunsmithGuiContext(
                 parts.Length > 0 ? parts[0] : string.Empty,
-                parts.Length > 1 && !string.IsNullOrWhiteSpace(parts[1]) ? parts[1] : "枪械",
+                parts.Length > 1 && !string.IsNullOrWhiteSpace(parts[1]) ? parts[1] : "deep.gunsmith.ui.weapon_root",
                 parts.Length > 2 ? parts[2] : string.Empty);
         }
 
@@ -450,12 +477,12 @@ namespace GunSmith
 
         private sealed record GunsmithGuiContext(string CurrentPath, string PathLabel, string ParentPath)
         {
-            public static GunsmithGuiContext Empty { get; } = new(string.Empty, "枪械", string.Empty);
+            public static GunsmithGuiContext Empty { get; } = new(string.Empty, "deep.gunsmith.ui.weapon_root", string.Empty);
         }
 
-        private sealed record GunsmithGuiSlot(string Path, string Name, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts);
+        private sealed record GunsmithGuiSlot(string Path, string NameKey, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts);
 
-        private sealed record GunsmithGuiPart(string Id, string Name, string Status, GunsmithStats Stats)
+        private sealed record GunsmithGuiPart(string Id, string NameKey, string Status, GunsmithStats Stats)
         {
             public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }

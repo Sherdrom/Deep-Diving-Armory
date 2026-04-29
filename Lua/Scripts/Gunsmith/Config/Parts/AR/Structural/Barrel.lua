@@ -12,7 +12,7 @@ local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 -- 如果某个部件只属于特定武器外观，请放到 Config/Weapons/<分类>/<武器>.lua。
 parts.AR_barrel_145 = {
     type = "barrel",
-    name = "M4标准枪管",
+    nameKey = "deep.gunsmith.part.AR_barrel_145",
     provides = { "AR_barrel" },
     item = { identifier = "deep_gunsmith_AR_barrel_std" },
     stats = { weight = 0.85, ergonomics = -2, recoilControl = 0.04, spreadReduction = 0.06 },
@@ -27,7 +27,7 @@ parts.AR_barrel_145 = {
 
 parts.hk416_barrel_std = {
     type = "barrel",
-    name = "HK416 标准枪管",
+    nameKey = "deep.gunsmith.part.hk416_barrel_std",
     provides = { "AR_barrel" },
     item = { identifier = "deep_gunsmith_hk416_barrel_std" },
     stats = { weight = 0.9, ergonomics = -1, recoilControl = 0.05, spreadReduction = 0.07 },

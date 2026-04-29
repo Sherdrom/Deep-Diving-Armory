@@ -6,7 +6,7 @@ local sightTexture = Deep_Lua.Path .. "/weapon/sight/sight_2.png"
 -- 通用瞄具。能否安装由父挂点 accepts 和这里的 provides 共同决定。
 parts.deep_holo_sight = {
     type = "optic_mount",
-    name = "全息瞄具",
+    nameKey = "deep.gunsmith.part.deep_holo_sight",
     -- small_optic / medium_optic 由导轨或机匣的 optic_mount.accepts 决定。
     provides = { "small_optic" },
     item = { identifier = "holographic_sight" },
@@ -22,7 +22,7 @@ parts.deep_holo_sight = {
 
 parts.deep_red_dot = {
     type = "optic_mount",
-    name = "红点瞄具",
+    nameKey = "deep.gunsmith.part.deep_red_dot",
     provides = { "small_optic" },
     item = { identifier = "red_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -37,7 +37,7 @@ parts.deep_red_dot = {
 
 parts.deep_thermalgoggles_sight = {
     type = "optic_mount",
-    name = "1倍热成像瞄具（30HZ）",
+    nameKey = "deep.gunsmith.part.deep_thermalgoggles_sight",
     provides = { "small_optic" },
     item = { identifier = "thermalgoggles_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -52,7 +52,7 @@ parts.deep_thermalgoggles_sight = {
 
 parts.deep_2x_sight = {
     type = "optic_mount",
-    name = "2倍瞄具",
+    nameKey = "deep.gunsmith.part.deep_2x_sight",
     provides = { "small_optic" },
     item = { identifier = "2x_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -67,7 +67,7 @@ parts.deep_2x_sight = {
 
 parts.deep_2x5x_sight = {
     type = "optic_mount",
-    name = "2.5倍瞄具",
+    nameKey = "deep.gunsmith.part.deep_2x5x_sight",
     provides = { "small_optic" },
     item = { identifier = "2.5x_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -82,7 +82,7 @@ parts.deep_2x5x_sight = {
 
 parts.deep_1_3x_sight = {
     type = "optic_mount",
-    name = "1-3倍组合瞄具",
+    nameKey = "deep.gunsmith.part.deep_1_3x_sight",
     provides = { "small_optic" },
     item = { identifier = "1_3x_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -97,7 +97,7 @@ parts.deep_1_3x_sight = {
 
 parts.deep_1_6x_sight = {
     type = "optic_mount",
-    name = "1-6倍'Vudu'瞄具",
+    nameKey = "deep.gunsmith.part.deep_1_6x_sight",
     provides = { "medium_optic" },
     item = { identifier = "3x_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -112,7 +112,7 @@ parts.deep_1_6x_sight = {
 
 parts.deep_thermalgoggles_sight_6x = {
     type = "optic_mount",
-    name = "6倍热成像瞄具（60HZ）",
+    nameKey = "deep.gunsmith.part.deep_thermalgoggles_sight_6x",
     provides = { "medium_optic" },
     item = { identifier = "thermalgoggles_sight_6x" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
@@ -127,7 +127,7 @@ parts.deep_thermalgoggles_sight_6x = {
 
 parts.deep_8x_sight = {
     type = "optic_mount",
-    name = "8倍狙击瞄具",
+    nameKey = "deep.gunsmith.part.deep_8x_sight",
     provides = { "medium_optic" },
     item = { identifier = "8x_sight" },
     stats = { weight = 0.25, ergonomics = -2, spreadReduction = 0.04 },
