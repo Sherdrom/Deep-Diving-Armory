@@ -1041,6 +1041,13 @@
       <ConversationAction text="EventText.deep_pigcatman_reinforce.c1" dialogtype="Small" eventsprite="pigcat_1"/>
       <WaitAction time="5" />
       <SpawnAction npcsetidentifier="deep_outpostnpcs" npcidentifier="deep_pigcat_reinforce_easy" LootingIsStealing="false" TeamID="1"  targettag="reinforce_pigcatman" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="0.5" />
+      <TagAction criteria="humanprefabidentifier:deep_pigcat_reinforce_easy" tag="reinforce_pigcatman" />
+      <StatusEffectAction targettag="reinforce_pigcatman" >
+                    <StatusEffect target="This" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" setvalue="true" >
+                         <Affliction identifier="deep_hunting_order_detect" strength="100" />
+                    </StatusEffect>
+      </StatusEffectAction>
       </Success>
       </RNGAction>
     </ScriptedEvent>
