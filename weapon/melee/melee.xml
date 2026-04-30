@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_wuchuan" subcategory="deep_special" health="1000" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" category="Weapon" Tags="mediumitem,weapon,gunsmith,mountableweapon" scale="0.5" allowasextracargo="true" requireaimtouse="true" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_wuchuan" subcategory="deep_special" health="1000" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" category="Weapon" Tags="mediumitem,weapon,gunsmith,mountableweapon,exotic_supply_create_4,deep_upgrade_tool_tun_phy" scale="0.5" allowasextracargo="true" requireaimtouse="true" impactsoundtag="impact_metal_light">
     <Deconstruct time="20">
-      <Item identifier="dementonite" amount="6" />
+      <Item identifier="deep_tungsten" amount="2" />
     </Deconstruct>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" >
       <RequiredSkill identifier="weapons" level="80" />
@@ -19,7 +19,7 @@
     </Wearable>
     <MeleeWeapon slots="RightHand+LeftHand" blocksplayers="true" controlpose="true" holdpos="-20,-15" aimpos="40,-60" handle1="-70,-20" handle2="0,-20" holdangle="200" reload="1.2" range="800" combatPriority="200" msg="ItemMsgPickUpSelect">
 	<!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" delay="1" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>

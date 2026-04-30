@@ -3,7 +3,7 @@
   <Item name="" identifier="deep_C8-SFW" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_rifle_upgrade_tool_steel_tit" Scale="0.25" impactsoundtag="impact_metal_light" health="110" >
     <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.01" notcampaign="true" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.01" />
-    <Price baseprice="500" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="500" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -17,7 +17,6 @@
       <RequiredItem identifier="engineeringplastic" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="titaniumaluminiumalloy" />
       <Item identifier="titaniumaluminiumalloy" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_tit/rifle_tit_45.png" sourcerect="7,778,138,127" origin="0.5,0.5" />
@@ -301,6 +300,11 @@
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.1" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.15" />
+      <ModifyStat stattype="FiringRateMultiplier" value="0.1" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.5" />
+    </Modify>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="70" />
   </Item>

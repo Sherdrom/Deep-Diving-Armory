@@ -8,56 +8,20 @@ namespace DeepVisionPatch;
 [HarmonyPatch(typeof(GameScreen),nameof(GameScreen.DrawMap))]
 public class DrawNightVision
 {
-    private static CreateNightVisionTexture _nvTexture = DeepVisionPatch.GreenNightVisionTexture;   // 默认为绿色
-
-    private static readonly Dictionary<string, CreateNightVisionTexture> nvColor = new Dictionary<string, CreateNightVisionTexture>
-    {
-        ["NVG_Green"] = DeepVisionPatch.GreenNightVisionTexture,     // 绿色夜视仪
-        ["NVG_Blue"]  = DeepVisionPatch.BlueNightVisionTexture       // 蓝色夜视仪
-
-    };
-
     public static void Postfix(GameScreen __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, double deltaTime)
     {
         Character character = Character.Controlled;
         if (character == null) return;
         Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
         if (headItem == null) return;
-        IEnumerable<Item> headItems = headItem.ContainedItems; // 获取头盔内的item
+        // IEnumerable<Item> headItems = headItem.ContainedItems; // 获取头盔内的item
 
-        bool hasNightVision = false;
+        // if (headItem == null) { return; }
         // 头盔Hook 战术设备(夜视仪)的开关判断
-        foreach (KeyValuePair<ushort, bool> nightVisionStatus in NightVisionPatch.NightVisionStatus)
-        {
-            if (headItem != null && headItem.ID == nightVisionStatus.Key)
-            {
-                hasNightVision = true;
-                if (nightVisionStatus.Value == false)
-                {
-                    return;
-                }
-            }
-        }
+        NightVisionPatch.NightVisionStatus.TryGetValue(headItem.ID, out bool NVStatus);
+        if (!NVStatus) { return; }
 
-        if (!hasNightVision) return; // 如果没有夜视仪，直接返回
-
-        // 以下通过_nvTexture和item的Tag来设置夜视仪的颜色
-        foreach (Item item in headItems)
-        {
-            if (item != null && item.HasTag("NightVisionGoggle")) // 获取夜视仪item
-            {
-                // 通过字典设置_nvTexture
-                foreach (KeyValuePair<string, CreateNightVisionTexture> kvp in nvColor)
-                {
-                    if (item.HasTag(kvp.Key))
-                    {
-                        _nvTexture = kvp.Value;
-                    }
-                }
-            }
-        }
-
-        DrawNightVisionTexture(spriteBatch, deltaTime, graphics, _nvTexture);
+        DrawNightVisionTexture(spriteBatch, deltaTime, graphics, DeepVisionPatch.CurrentNVTexture);
     }
     
     public static void DrawNightVisionTexture(SpriteBatch spriteBatch, double deltaTime, GraphicsDevice graphics, CreateNightVisionTexture nvTexture)
@@ -72,9 +36,11 @@ public class DrawNightVision
         {
             var origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 
-            // X轴和Y轴分别缩放以填充整个屏幕
-            var scaleVector = new Vector2(viewport.Width / texture.Width * 1.3f, viewport.Height / texture.Height * 1.3f);
+            // X轴和Y轴分别缩放以填充整个屏幕（使用浮点除法以允许非均匀缩放）
+            var scaleVector = new Vector2((float)viewport.Width / texture.Width, (float)viewport.Height / texture.Height);
             spriteBatch.Draw(texture, center, null, Color.White, 0f, origin, scaleVector, SpriteEffects.None, 0f);
+            // Draw lightweight scanline overlay without modifying the main texture
+            nvTexture.DrawOverlay(spriteBatch, center, scaleVector);
         }
         spriteBatch.End();
     }

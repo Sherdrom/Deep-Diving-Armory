@@ -12,12 +12,10 @@ local function VectorVelocity(V)
 end
 
 local function SetTimedFuse(projectileitem, fuse)
-    local randomspread = math.random(-55,30)
-    print(randomspread)
     Timer.Wait(function()
         if projectileitem == nil then return end
         projectileitem.Condition = 0
-    end,fuse + randomspread)
+    end,fuse)
 end
 
 local function CalculateFlyingTime(distance, initialVelocity, linearDamping)

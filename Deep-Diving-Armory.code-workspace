@@ -7,8 +7,8 @@
 	"settings": {
 		"Lua.diagnostics.libraryFiles": "Enable",
 		"Lua.workspace.library": [
-			".Tools/types/client",
-			".Tools/types/shared",
+			".Tools/Library/Client",
+			".Tools/Library/Server",
 		],
 
 		"Lua.diagnostics.disable": [
@@ -31,10 +31,18 @@
 	"version": "0.2.0",
     "configurations": [
 		{
-			"name": "Debug C#",
+			"name": "Windows Debug C#",
 			"type": "coreclr",
 			"request": "launch",
 			"program": "${workspaceFolder}/../../Barotrauma.exe",
+			"args": ["watch", "run"],
+			"requireExactSource": false
+		},
+				{
+			"name": "Linux Debug C#",
+			"type": "coreclr",
+			"request": "launch",
+			"program": "${workspaceFolder}/../../Barotrauma",
 			"args": ["watch", "run"],
 			"requireExactSource": false
 		},

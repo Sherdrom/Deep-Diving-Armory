@@ -21,11 +21,11 @@
     <Sprite texture="%ModDir%/container/container.png" sourcerect="4,10,367,83" origin="0.5,0.5" depth="0.6" />
     <Body width="367" height="83" density="20" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" maxstacksize="1" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+    <ItemContainer capacity="36" slotsperrow="10" maxstacksize="1" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
       <Containable items="weapon,gun,gunsmith,mountableweapon,smallautoweapon,pistolitem" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_ammo_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
+  <Item name="" identifier="deep_ammo_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool,deep_32_stack_size" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
     <Deconstruct time="10">
       <Item identifier="steel" amount="1" />
     </Deconstruct>
@@ -45,8 +45,8 @@
     <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="29,119,166,150" origin="0.5,0.6" />
     <Sprite texture="%ModDir%/container/container.png" sourcerect="29,119,165,150" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,70" handle2="0,70" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+    <Pickable slots="RightHand+LeftHand" />
+    <ItemContainer capacity="36" slotsperrow="10" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
       <Containable items="smallitem" />
     </ItemContainer>
   </Item>
@@ -70,9 +70,9 @@
     <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="37,295,142,122" origin="0.5,0.6" />
     <Sprite texture="%ModDir%/container/container.png" sourcerect="37,295,142,122" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,60" handle2="0,60" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
-      <Containable items="deep_accessory,deep_chip_headset,deep_head_chip,deep_chip_armor,deep_tac,deep_mobile_shield_fix" />
+    <Pickable slots="RightHand+LeftHand" />
+    <ItemContainer capacity="36" slotsperrow="10" maxstacksize="4" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+      <Containable items="smallitem" />
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_explosive_container" InvulnerabletoDamage="true" subcategory="deep_container" category="Equipment" tags="deep_container,mediumitem,mobilecontainer,tool" cargocontaineridentifier="" showcontentsintooltip="true" Scale="0.4" description="" impactsoundtag="impact_metal_heavy">
@@ -95,8 +95,8 @@
     <InventoryIcon texture="%ModDir%/container/container.png" sourcerect="226,132,191,143" origin="0.5,0.6" />
     <Sprite texture="%ModDir%/container/container.png" sourcerect="226,132,191,143" origin="0.5,0.5" depth="0.6" />
     <Body width="150" height="140" density="20" />
-    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,30" handle2="0,30" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+    <Pickable slots="RightHand+LeftHand" />
+    <ItemContainer capacity="36" slotsperrow="10" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
       <Containable items="explosive,demolitionsexpert,handgrenade" />
     </ItemContainer>
   </Item>
@@ -127,7 +127,7 @@
         <Conditional attached="false" />
       </StatusEffect>
     </Holdable>
-    <ItemContainer capacity="36" maxstacksize="32" slotsperrow="6" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
+    <ItemContainer capacity="36" maxstacksize="1" slotsperrow="6" keepopenwhenequipped="true" movableframe="true" canbeselected="true" QuickUseMovesItemsInside="false">
       <Containable items="smallitem,clothing,deep_rig,deep_plate,deep_helmet,deep_bag,mobileradio,deep_plate_arm,deep_plate_groin,deep_tac,deep_chip_armor,helmet" />
     </ItemContainer>
   </Item>
@@ -166,8 +166,8 @@
     </Price>
     <Sprite texture="%ModDir%/container/container.png" sourcerect="440,14,229,185" origin="0.5,0.5" depth="0.6" />
     <Body width="230" height="185" density="20" />
-    <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="0,80" handle2="0,80" aimable="false" msg="ItemMsgPickUpSelect" />
-    <ItemContainer capacity="36" maxstacksize="32" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
+    <Pickable slots="RightHand+LeftHand" />
+    <ItemContainer capacity="36" slotsperrow="10" maxstacksize="4" keepopenwhenequipped="true" movableframe="true" QuickUseMovesItemsInside="false">
       <Containable tags="deep_plate,deep_plate_arm,deep_plate_groin" />
     </ItemContainer>
   </Item>

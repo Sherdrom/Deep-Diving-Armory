@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Barotrauma;
-using HarmonyLib;
-
-[assembly: IgnoresAccessChecksTo("Barotrauma")]
-[assembly: IgnoresAccessChecksTo("DedicatedServer")]
-[assembly: IgnoresAccessChecksTo("BarotraumaCore")]
-
-namespace SpritePatch
+﻿namespace SpritePatch
 {
     public partial class SpritePatch : IAssemblyPlugin
     {
+        public IPluginManagementService PluginService { get; set; } = null!;
+        public static ContentPackage? Package { get; private set; }
+
         public Harmony? harmonyInstance;
         public void Initialize()
         {
             // When your plugin is loading, use this instead of the constructor
             // Put any code here that does not rely on other plugins.
             harmonyInstance = new Harmony("SpritePatch");
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SpritePatch Initialized!");
+            if (PluginService.TryGetPackageForPlugin<SpritePatch>(out ContentPackage ownerPackage))
+            {
+                Package = ownerPackage;
+            }
         }
 
         public void OnLoadCompleted()
@@ -28,7 +22,6 @@ namespace SpritePatch
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
             harmonyInstance?.PatchAll();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SpritePatch Loaded!");
         }
 
         public void PreInitPatching()
@@ -40,7 +33,6 @@ namespace SpritePatch
         {
             // Cleanup your plugin!
             harmonyInstance?.UnpatchSelf();
-            LuaCsSetup.PrintCsMessage("[Deep Diving Armory] SpritePatch Disposed!");
         }
     }
 }

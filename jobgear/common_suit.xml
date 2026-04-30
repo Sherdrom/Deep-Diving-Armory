@@ -686,4 +686,519 @@
       <Containable items="smallitem" />
     </ItemContainer>
   </Item>
+  <Item name="" identifier="deep_xingji_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="630,428,123,182" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/xingji_suit_1.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.5" origin="0.75,0.24" sourcerect="387,4,120,171" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/xingji_suit_1.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.73,0.36" sourcerect="97,5,154,248" scale="0.5" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="false" sourcerect="0,0,1,1" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/xingji_suit_2.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <!-- 未完成
+  <Item name="" identifier="deep_weiluonika_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="805,416,100,193" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/weiluonika_suit_1.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0" origin="0.75,0.24" sourcerect="401,6,105,126" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/weiluonika_suit_1.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.53,0.53" sourcerect="173,14,87,168" scale="0.5" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="false" sourcerect="0,0,1,1" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/weiluonika_suit_2.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>-->
+  <Item name="" identifier="deep_yangtuo_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="428,634,83,147" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Torso" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftThigh" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftLeg" hidelimb="false" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_yangtuo_hat" subcategory="deep_hat" category="Equipment" tags="smallitem,clothing" cargocontaineridentifier="metalcrate" description="" scale="0.4">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Deconstruct time="10">
+      <Item identifier="plastic" amount="1" />
+      <Item identifier="fpgacircuit" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="electrical" level="30" />
+      <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="fpgacircuit" />
+    </Fabricate>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/yangtuo_suit.png" sourcerect="444,136,66,94" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/suit/yangtuo_suit.png" depth="0.6" sourcerect="425,2,85,119" origin="0.5,0.5" />
+    <Body width="59" height="40" density="15" />
+    <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
+    <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.39" origin="0.59,0.7" sourcerect="425,2,85,119" />
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true">
+        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_learn" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_learn_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_learn_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_learn_3" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_mechanical_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_electrician_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_security" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_security_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_captain_1" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_medic_1" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_assistant" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_assistant_1" strength="100" />
+        <Affliction identifier="clownpower" strength="100" />
+        <Affliction identifier="psychosis" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_mechanical_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_mechanical_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_electrician_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_electrician_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_security_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_captain_2" strength="100" />
+        <Affliction identifier="chip_captain_talent_detect" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_medic_2" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
+        <Affliction identifier="chip_assistant_2" strength="100" />
+        <Affliction identifier="clownpower" strength="100" />
+      </StatusEffect>
+      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
+        <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
+      </StatusEffect>
+    </Wearable>
+    <ItemContainer capacity="1" maxstacksize="1" autoinject="true">
+      <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
+      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
+      <Containable items="chem,syringe" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip_headset" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      </SubContainer>
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_zhenli_suit_copy" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate Suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/Suit_icon.png" sourcerect="9,748,155,110" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobgear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/zhenli_suit_1.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.36" origin="0.52,0.45" sourcerect="430,5,78,76" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/zhenli_suit_1.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" scale="0.49" origin="0.62,0.37" sourcerect="149,5,104,251" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="false" sourcerect="0,0,1,1" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/zhenli_suit_2.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_alice_battle_suit_shorthair" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="829,699,121,158" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_4.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.46" origin="0.86,0.22" sourcerect="5,5,247,382" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_1.png" limb="Torso" hideotherwearables="true" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.83,0.45" sourcerect="8,5,240,227" scale="0.49" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightHand" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftHand" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftForearm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightForearm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftArm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightArm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="Waist" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="false" inheritsourcerect="true" origin="0.1,0.12" scale="0.8" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightThigh" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftThigh" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightLeg" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightForearm" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftLeg" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="Waist" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightFoot" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightForearm" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftFoot" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightFoot" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_alice_battle_suit_longhair" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="829,699,121,158" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_3.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.46" origin="0.86,0.22" sourcerect="5,5,247,382" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_1.png" limb="Torso" hideotherwearables="true" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.83,0.45" sourcerect="8,5,240,227" scale="0.49" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightHand" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftHand" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftForearm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightForearm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftArm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightArm" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="Waist" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="false" inheritsourcerect="true" origin="0.1,0.12" scale="0.8" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightThigh" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftThigh" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightLeg" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightForearm" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftLeg" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="Waist" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="RightFoot" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightForearm" />
+      <sprite texture="%ModDir%/jobgear/suit/alice_battle_suit_2.png" limb="LeftFoot" hideotherwearables="true" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightFoot" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_xiaohua_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="4" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="183,756,113,96" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="Torso" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/xiaohua_suit.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="10" />
+      <SkillModifier skillidentifier="medical" skillvalue="10" />
+    </Wearable>
+    <ItemContainer capacity="8" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_daojiang_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="555,628,77,136" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.47" origin="0.6,0.47" sourcerect="416,2,92,124" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="Torso" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/daojiang_suit.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_ump45_suit" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="10,558,144,172" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/ump45_suit_1.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.3" origin="0.74,0.3" sourcerect="358,8,147,205" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/ump45_suit_1.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.49,0.52" sourcerect="183,15,70,164" scale="0.5" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightForearm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightArm" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="Waist" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftThigh" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftLeg" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="RightFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightForearm" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/ump45_suit_2.png" limb="LeftFoot" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" depthlimb="RightFoot" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
 </Items>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_pkp" subcategory="machinegun" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.3" impactsoundtag="impact_metal_light" health="190" >
-  <Price baseprice="1100" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Price baseprice="1100" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -16,7 +16,7 @@
 	  <RequiredItem identifier="glassfibre" amount="2" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="physicorium" amount="6" />
+      <Item identifier="physicorium" amount="2" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/machinegun/machinegun45.png" sourcerect="501,9,287,252" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/machinegun/machinegun_phy/Sprite/PKP.png" sourcerect="10,6,492,94" depth="0.55" origin="0.5,0.5" />
@@ -112,7 +112,7 @@
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true" >
       </StatusEffect>
-      <!-- 枪械过热卡壳 -->
+    <!-- 枪械过热卡壳 -->
       <StatusEffect type="OnUse" target="This">
 	  <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="0.8" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />

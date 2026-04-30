@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <!-- 夜战夺隘 -->
+  <Item name="" identifier="deep_map_debuff_night" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,deep_map_contract,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
+    <Body width="36" height="40" density="20" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
+      </StatusEffect>
+      <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
+        <sound file="%ModDir%/electricity/sound/deep_map_debuff_lightoff.ogg" type="OnUse" range="5000.0" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="this" delay="0.5">
+        <remove />
+      </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_map_debuff_select_night" />
+      </StatusEffect>
+
+      <!-- 物品损坏时触给予补给箱 -->
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1" >
+      </StatusEffect>
+
+    </Holdable>
+  </Item>
+
+  <!-- 夜战夺隘——远港建造厂 -->
+  <Item name="" identifier="deep_map_debuff_night_farport" category="Electrical" subcategory="deep_balance_contract" tags="smallitem,deep_map_contract,contract" allowedlinks="door" linkable="true" cargocontaineridentifier="metalcrate" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" maxstacksize="1">
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+    <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
+    <Body width="36" height="40" density="20" />
+    <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
+      </StatusEffect>
+      <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
+        <sound file="%ModDir%/electricity/sound/deep_map_debuff_lightoff.ogg" type="OnUse" range="5000.0" />
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="this" delay="0.5">
+        <remove />
+      </StatusEffect>
+
+      <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
+      <TriggerEvent identifier="deep_map_debuff_select_night_farport" />
+      </StatusEffect>
+
+      <!-- 物品损坏时触给予补给箱 -->
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1" >
+      </StatusEffect>
+
+    </Holdable>
+  </Item>
+
+</Items>

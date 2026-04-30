@@ -18,10 +18,10 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character">
-	       <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
-    </Holdable>
+  </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.5" />
@@ -35,11 +35,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -69,8 +69,8 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character">
-	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
@@ -86,11 +86,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -120,8 +120,8 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character">
-	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
@@ -137,11 +137,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -171,8 +171,8 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="18,189,82,100" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
 	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character">
-	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
@@ -188,11 +188,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -235,11 +235,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -282,11 +282,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -329,11 +329,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -344,7 +344,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
   
-    <Item name="" identifier="deep_birdshot" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+    <!--<Item name="" identifier="deep_birdshot" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
     <Price baseprice="20" sold="true" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -373,11 +373,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -386,7 +386,7 @@
       </StatusEffect>
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
-  </Item>
+  </Item>-->
 
     <Item name="" identifier="deep_aa12_12shell" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_tit_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -421,8 +421,8 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
 	<Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnActive" interval="0.9" target="Character">
-	  <Affliction identifier="deep_shotgun_damgage_balance_12shell" strength="100" />
+	  <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
 	</Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
@@ -482,11 +482,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -519,11 +519,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />
@@ -565,7 +565,10 @@
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	</Holdable>
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+      </StatusEffect>
+	  </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
@@ -588,11 +591,11 @@
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
 	  <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
-        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
       <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional entitytype="eq Structure" />

@@ -6,7 +6,7 @@
     </Description>
     <!-- 敌人基础调整 -->
     <!-- 小惩罚机制：敌人在水中5s后，+50%伤害 -->
-    <AbilityGroupInterval interval="5" >
+    <AbilityGroupInterval interval="3" >
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
@@ -17,7 +17,7 @@
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 抗性 -->
-	<AbilityGroupInterval interval="10" >
+	<AbilityGroupInterval interval="1" >
       <Abilities>
     <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
 		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
@@ -25,17 +25,15 @@
     <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到6倍伤害，方便补刀 -->
+	<!-- 敌人倒地后，受到8倍伤害，方便补刀（无战无不休时生效）-->
 	<AbilityGroupInterval interval="0.5" >
-	  <Conditions>
+	    <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+        <AbilityConditionHasAffliction invert="true" afflictionidentifier="deep_contract_never_ending_battle_detect" />
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="6"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_bullet_injury" multiplier="6"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly" multiplier="6"/>
-    <CharacterAbilityModifyResistance resistanceid="deep_headshot_deadly_irresistible" multiplier="6"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="6"/>
+		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="8"/>
+		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="8"/>
       </Abilities>
     </AbilityGroupInterval>
 	<!-- 敌人开枪无法压制玩家-->
@@ -89,18 +87,110 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!--敌人踩阔剑不会爆炸，做出敌我识别，有严重掉帧，实验中
-     <AbilityGroupInterval interval="5" >
+    <!-- 天神射手——5倍致命爆头 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
       <Abilities>
-        <CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="deep_headshot_deadly,deep_headshot_deadly_irresistible" addedmultiplier="5" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 天神射手——-30%枪伤 -->
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_deep_diving_marksman_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityModifyAffliction afflictionidentifiers="gunshotwound" addedmultiplier="-0.3" />
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 死里逃生 -->
+	<AbilityGroupInterval interval="0.25" >
+	    <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_narrow_escape_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true"  >
-            <Affliction identifier="deep_claymore_safe" strength="4.0"/>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" delay="8" stackable="false" comparison="and" >
+            <Conditional health="lt 50" />
+            <Affliction identifier="deep_contract_narrow_escape_effect" strength="5" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>-->
+    </AbilityGroupInterval>
+
+    <!-- 束手就擒 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_surrender_without_fight_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+            <Affliction identifier="deep_contract_surrender_without_fight_attack_detect" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!-- 勇冠三军 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+        <AbilityConditionAboveVitality vitalitypercentage="0.5" />
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_the_bravest_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_contract_the_bravest_detect_up_50" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+
+    <!-- 勇冠三军 -->
+	<AbilityGroupInterval interval="0.9" >
+      <Conditions>
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5"/>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_the_bravest_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_contract_the_bravest_detect_below_50" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+    <!-- 爆破专家 -->
+	<AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="deep_contract_demolition_expert_detect" />
+      </Conditions>
+      <Abilities>
+		    <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and" >
+            <Affliction identifier="deep_chip_blaster" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
 
   </Talent>
 </Talents>

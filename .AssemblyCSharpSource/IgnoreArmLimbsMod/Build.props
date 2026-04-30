@@ -1,0 +1,43 @@
+<Project>
+    <PropertyGroup>
+        <Libs>..\..\..\.Tools/Refs</Libs>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="Farseer.NetStandard">
+            <HintPath>$(Libs)\Farseer.NetStandard.dll</HintPath>
+        </Reference>
+        <Reference Include="Lidgren.NetStandard">
+            <HintPath>$(Libs)\Lidgren.NetStandard.dll</HintPath>
+        </Reference>
+        <Reference Include="Mono.Cecil">
+            <HintPath>$(Libs)\Mono.Cecil.dll</HintPath>
+        </Reference>
+        <Reference Include="MoonSharp.Interpreter">
+            <HintPath>$(Libs)\MoonSharp.Interpreter.dll</HintPath>
+        </Reference>
+        <Reference Include="XNATypes">
+            <HintPath>$(Libs)\XNATypes.dll</HintPath>
+        </Reference>
+
+        <PackageReference Include="HarmonyX" Version="2.16.0" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <ModDeployDir>..\..\IgnoreArmLimbsMod\</ModDeployDir>
+        <AssemblyName>IgnoreArmLimbsMod</AssemblyName>
+        <RootNamespace>IgnoreArmLimbsMod</RootNamespace>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <Authors />
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PlatformTarget>x64</PlatformTarget>
+        <Platforms>x64</Platforms>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+</Project>

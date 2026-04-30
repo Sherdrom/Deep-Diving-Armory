@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_sv98" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_sniper_upgrade_tool_steel_tit" Scale="0.25" impactsoundtag="impact_metal_light" >
-  <Price baseprice="950" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+  <Price baseprice="950" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -277,6 +277,11 @@
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.1" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.15" />
+      <ModifyStat stattype="FiringRateMultiplier" value="0.1" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.5" />
+    </Modify>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="80" />
   </Item>

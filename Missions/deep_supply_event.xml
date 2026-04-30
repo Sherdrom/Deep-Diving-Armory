@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Randomevents>
+<EventPrefabs>
+
+    <!-- 白箱子 -->
+    <ScriptedEvent identifier="deep_normal_supply_crate_spawn">
+    <RNGAction Chance="0.2">
+
+        <Success>
+        <RNGAction Chance="0.2">
+
+        <Success>
+        <!-- 4%出货 -->
+        <SpawnAction ItemTag="normal_supply_create_4" targetinventory="player" amount="1" />
+        </Success>
+
+        <Failure>
+        <!-- 16%出货 -->
+        <SpawnAction ItemTag="normal_supply_create_16" targetinventory="player" amount="1" />
+        </Failure>
+
+        </RNGAction>
+        </Success>
+
+        <Failure>
+        <RNGAction Chance="0.5">
+
+        <Success>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="plant" targetinventory="player" amount="2" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="plantitem" targetinventory="player" amount="2" />
+        </Failure>
+        </RNGAction>
+
+        </Success>
+
+        <Failure>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="normal_supply_create_40" targetinventory="player" amount="2" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="fertilizer" targetinventory="player" amount="1" />
+        </Failure>
+        </RNGAction>
+
+        </Failure>
+
+        </RNGAction>
+        </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+
+    <!-- 绿箱子 -->
+    <ScriptedEvent identifier="deep_exquisite_supply_crate_spawn">
+    <RNGAction Chance="0.2">
+
+        <Success>
+        <RNGAction Chance="0.2">
+
+        <Success>
+        <!-- 4%出货 -->
+        <SpawnAction ItemTag="deep_upgrade_tool" targetinventory="player" amount="1" />
+        </Success>
+
+        <Failure>
+        <!-- 16%出货 -->
+        <SpawnAction ItemTag="exquisite_supply_create_16" targetinventory="player" amount="1" />
+        </Failure>
+
+        </RNGAction>
+        </Success>
+
+        <Failure>
+        <RNGAction Chance="0.5">
+
+        <Success>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="exquisite_supply_create_40_medical" targetinventory="player" amount="1" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="normal_supply_create_16" targetinventory="player" amount="1" />
+        </Failure>
+        </RNGAction>
+
+        </Success>
+
+        <Failure>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="normal_supply_create_40" targetinventory="player" amount="4" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="exquisite_supply_create_40" targetinventory="player" amount="2" />
+        </Failure>
+        </RNGAction>
+
+        </Failure>
+
+        </RNGAction>
+        </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+
+    <!-- 蓝箱子 -->
+    <ScriptedEvent identifier="deep_rare_supply_crate_spawn">
+    <RNGAction Chance="0.2">
+
+        <Success>
+        <RNGAction Chance="0.2">
+
+        <Success>
+        <!-- 4%出货 -->
+        <SpawnAction ItemTag="rare_supply_create_4" targetinventory="player" amount="1" />
+        </Success>
+
+        <Failure>
+        <!-- 16%出货 -->
+        <SpawnAction ItemTag="deep_head_chip" targetinventory="player" amount="1" />
+        </Failure>
+
+        </RNGAction>
+        </Success>
+
+        <Failure>
+        <RNGAction Chance="0.5">
+
+        <Success>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="rare_supply_create_40_medical" targetinventory="player" amount="1" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="rare_supply_create_40" targetinventory="player" amount="2" />
+        </Failure>
+        </RNGAction>
+
+        </Success>
+
+        <Failure>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="exquisite_supply_create_40" targetinventory="player" amount="4" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="exquisite_supply_create_16" targetinventory="player" amount="2" />
+        </Failure>
+        </RNGAction>
+
+        </Failure>
+
+        </RNGAction>
+        </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+
+    <!-- 紫箱子 -->
+    <ScriptedEvent identifier="deep_exotic_supply_crate_spawn">
+    <RNGAction Chance="0.2">
+
+        <Success>
+        <RNGAction Chance="0.2">
+
+        <Success>
+        <!-- 4%出货 -->
+        <SpawnAction ItemTag="exotic_supply_create_4" targetinventory="player" amount="1" />
+        </Success>
+
+        <Failure>
+        <!-- 16%出货 -->
+        <SpawnAction ItemTag="deep_upgrade_tool" targetinventory="player" amount="1" />
+        </Failure>
+
+        </RNGAction>
+        </Success>
+
+        <Failure>
+        <RNGAction Chance="0.5">
+
+        <Success>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemTag="rare_supply_create_40_medical" targetinventory="player" amount="2" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="deep_tungsten" targetinventory="player" amount="4" />
+        </Failure>
+        </RNGAction>
+
+        </Success>
+
+        <Failure>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="deep_gold_bar" targetinventory="player" amount="1" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="engineeringplastic" targetinventory="player" amount="4" />
+        </Failure>
+        </RNGAction>
+
+        </Failure>
+
+        </RNGAction>
+        </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+
+    <!-- 金箱子 -->
+    <ScriptedEvent identifier="deep_legend_supply_crate_spawn">
+    <SpawnAction ItemTag="rare_supply_create_4" targetinventory="player" amount="1" />
+    <SpawnAction ItemTag="rare_supply_create_4" targetinventory="player" amount="1" />
+    <RNGAction Chance="0.2">
+
+        <Success>
+        <RNGAction Chance="0.2">
+
+        <Success>
+        <!-- 4%出货 -->
+        <SpawnAction ItemIdentifier="deep_tun_phy_upgrade_tool" targetinventory="player" amount="2" />
+        </Success>
+
+        <Failure>
+        <!-- 16%出货 -->
+        <SpawnAction ItemTag="legend_supply_create_16" targetinventory="player" amount="1" />
+        </Failure>
+
+        </RNGAction>
+        </Success>
+
+        <Failure>
+        <RNGAction Chance="0.5">
+
+        <Success>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="deep_tungsten_phy" targetinventory="player" amount="12" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="ammobox_tun_ful" targetinventory="player" amount="1" />
+        </Failure>
+        </RNGAction>
+
+        </Success>
+
+        <Failure>
+
+        <RNGAction Chance="0.5">
+        <Success>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="deep_gold_bar" targetinventory="player" amount="3" />
+        </Success>
+        <Failure>
+        <!-- 40%出货 -->
+        <SpawnAction ItemIdentifier="ak12_blackice" targetinventory="player" amount="1" />
+        </Failure>
+        </RNGAction>
+
+        </Failure>
+
+        </RNGAction>
+        </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+
+    <!-- 红箱子 -->
+    <ScriptedEvent identifier="deep_dudog_supply_crate_spawn">
+    <RNGAction Chance="0.06">
+
+    <Success>
+    <!-- 6%出货 -->
+    <SpawnAction ItemIdentifier="deep_legend_supply_crate" targetinventory="player" amount="1" />
+    </Success>
+
+    <Failure>
+    <!-- 94%出货 -->
+    <SpawnAction ItemTag="deep_dudog_supply_crate_94" targetinventory="player" amount="1" />
+    </Failure>
+
+      </RNGAction>
+    </ScriptedEvent>
+    
+    
+    </EventPrefabs>
+  
+</Randomevents>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <!--Launcher Misc-->
+  <Item identifier="deep_safetypin" category="Weapon" Scale="0.1" hideinmenus="true">
+    <InventoryIcon texture="%ModDir%/weapon/launchers/misc.png" sourcerect="35,58,284,118" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/misc.png" sourcerect="35,58,284,118" depth="0.55" origin="0.5,0.5" />
+    <Body width="280" height="120" density="10" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" >
+    <StatusEffect type="OnNotContained" target="This" setvalue="true" delay="2" >
+         <remove/>
+    </StatusEffect>
+    </Pickable>
+  </Item>
+  <Item identifier="deep_cluster_sp" category="Weapon" scale="0.3" sonarsize="1" hideinmenus="true">
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="143,414,113,9" depth="0.55" />
+    <Body width="170" height="10" density="0" />
+    <Holdable slots="RightHand+LeftHand" holdpos="0,-50" handle1="-10,0" handle2="10,0" aimable="false" />
+    <Projectile characterusable="false" launchimpulse="5.0" impulsespread="1" damagedoors="true" DamageUser="true">
+      <StatusEffect type="OnActive" target="This" lifetime="1">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="1" velocitymin="-10" velocitymax="-100" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" condition="-100" stackable="false" />
+      <StatusEffect type="OnNotContained" target="This" condition="-100" OneShot="true" setvalue="true" delay="1.5" />
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="2000" volume="2" forcePlaySounds="true" />
+        <Explosion range="300.0" ballastfloradamage="200" structuredamage="0" itemdamage="100" force="5" severlimbsprobability="0.7" debris="true" decal="explosion" decalsize="0.7" penetration="1.0" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="100">
+          <Affliction identifier="Shrapnel_residue" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="explosiondamage" strength="300" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="100" dividebylimbcount="false" />
+          <Affliction identifier="bleeding" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="5" dividebylimbcount="false" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item identifier="deep_backblast_exec" category="Misc" interactthroughwalls="false" cargocontaineridentifier="metalcrate" tags="smallitem" impactsoundtag="None" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="832,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="189,299,23,11" depth="0.55" origin="0.5,0.5" />
+    <Body width="60" height="60" density="15" />
+    <ItemComponent characterusable="false">
+      <StatusEffect type="OnBroken" target="This" stackable="false">
+        <Remove />
+      </StatusEffect>
+    </ItemComponent>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+</Items>

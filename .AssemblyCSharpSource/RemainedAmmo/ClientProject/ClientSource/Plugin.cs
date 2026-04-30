@@ -1,16 +1,5 @@
-﻿using System.Collections.Immutable;
-using Barotrauma;
-using Microsoft.Xna.Framework;
+﻿using Barotrauma.Items.Components;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Linq;
-using Barotrauma.Items.Components;
-using FarseerPhysics.Dynamics;
-using HarmonyLib;
-using System.Reflection.Emit;
-using Color = Microsoft.Xna.Framework.Color;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using static Barotrauma.Inventory;
 
 namespace RemainedAmmo
@@ -80,7 +69,7 @@ namespace RemainedAmmo
             // 支持RangedWeapon和SwitchableRangedWeapon
             if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
 
-            if(rangedWeapon.Item.Prefab.ContentPackage == null || !rangedWeapon.Item.Prefab.ContentPackage.Name.Contains("Deep Diving Armory") || rangedWeapon.Item.HasTag("noammocount")) {return;}
+            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != RemainedAmmo.Package.Name || rangedWeapon.Item.HasTag("noammocount")) {return;}
             int remainedAmmo = 0;
             var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (ItemContainer == null) { return; }
@@ -137,7 +126,7 @@ namespace RemainedAmmo
             if(remainedAmmo<10){ammoString = "0" + remainedAmmo;}
             else {ammoString = remainedAmmo.ToString();}
             var scale = rangedWeapon.currentCrossHairScale;
-            Color indicatorColor = new Color(230,26,18,255);
+            Color indicatorColor = new Color(207,207,207,255);
             Vector2 TextPos = rangedWeapon.crosshairPos;
             // 如果是双持武器，且是左手武器，将数字放在左边
             Character character = (Character)rangedWeapon.Item.ParentInventory.Owner;

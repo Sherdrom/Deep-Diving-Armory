@@ -79,7 +79,7 @@
     <Body width="110" height="160" density="20" />
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
   </Item>
-  <Item name="" identifier="deep_white_keycard" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_white_keycard" scale="0.2" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_white_keycard" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_white_keycard,deep_importantitem_del" scale="0.2" impactsoundtag="impact_metal_light">
     <Sprite texture="%ModDir%/misc/ui2.png" depth="0.65" sourcerect="332,11,138,143" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false"></Holdable>
@@ -111,7 +111,8 @@
       </Button>
     </CustomInterface>
   </Item>
-  <Item name="" identifier="deep_reinforce_transmitter" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem" scale="0.2" impactsoundtag="impact_metal_light" isshootable="true" InvulnerabletoDamage="true" >
+  
+  <Item name="" identifier="deep_reinforce_transmitter" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_importantitem_del" scale="0.2" impactsoundtag="impact_metal_light" isshootable="true" InvulnerabletoDamage="true" >
     <InventoryIcon texture="%ModDir%/jobgear/tac/tac.png" sourcerect="10,747,168,166" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.65" sourcerect="206,758,37,147" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
@@ -124,4 +125,75 @@
       </StatusEffect>
     </Holdable>
   </Item>
+
+   <!--<Item name="" identifier="deep_meet_on_the_battleground_clear" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="deep_clear_item" scale="0.5" impactsoundtag="impact_metal_light">
+    <Sprite texture="Content/Map/Outposts/Art/FactionItems.png" depth="0.55" sourcerect="448,198,38,76" origin="0.5,0.5" />
+    <Body width="40" height="80" density="10" />
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+    <StatusEffect type="OnNotContained" target="This" Condition="-30" stackable="false" />
+
+    <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+    <TriggerEvent identifier="deep_meet_on_the_battleground_clear" />
+    <remove />
+    </StatusEffect>
+
+      <StatusEffect type="OnBroken" target="NearbyCharacters" range="10000" setvalue="true" stackable="false">
+        <removecharacter />
+      </StatusEffect>
+
+    </Holdable>
+  </Item>-->
+
+  <!--<Item name="阵营位移传感器" identifier="deep_motiondetector" category="Electrical" Tags="smallitem,sensor" maxstacksize="32" maxstacksizecharacterinventory="8" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_metal_light" isshootable="true" GrabWhenSelected="true">
+    <Price baseprice="130" minleveldifficulty="15">
+      <Price storeidentifier="merchantoutpost" />
+      <Price storeidentifier="merchantcity" sold="false"/>
+      <Price storeidentifier="merchantresearch" multiplier="1.25" />
+      <Price storeidentifier="merchantmilitary" />
+      <Price storeidentifier="merchantmine" />
+      <Price storeidentifier="merchantengineering" multiplier="0.9" />
+    </Price>
+    <PreferredContainer primary="engcab"/>
+    <PreferredContainer secondary="wreckengcab,abandonedengcab,pirateengcab,outpostengcab,beaconengcab" amount="1" spawnprobability="0.05" />
+    <Upgrade gameversion="0.9.5.0" scale="0.5" />
+    <Deconstruct time="10">
+      <Item identifier="plastic" />
+      <Item identifier="copper" />
+      <Item identifier="silicon" />
+    </Deconstruct>
+    <Fabricate suitablefabricators="fabricator" requiredtime="10">
+      <RequiredSkill identifier="electrical" level="30" />
+      <RequiredItem identifier="fpgacircuit" />
+      <RequiredItem identifier="silicon" />
+    </Fabricate>
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="832,256,64,64" origin="0.5,0.5" />
+    <Sprite texture="signalcomp.png" depth="0.8" sourcerect="0,288,48,48" origin="0.5,0.5" />
+    <FactionMotionSensor 
+      rangeX="200" 
+      rangeY="100" 
+      detectoffset="0,0"
+      updateinterval="0.1"
+      minimumvelocity="0"
+      target="Human"
+      factiontarget="Any"
+      friendlyoutput="1"
+      enemyoutput="1"
+      neutraloutput="1"
+      output="1"
+      falseoutput="0"
+      ignoredelay="1"
+    />
+    <Body width="42" height="36" density="15" />
+    <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="ItemMsgDetachWrench" MsgWhenDropped="ItemMsgPickupSelect" PickingTime="5.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="true">
+      <RequiredItem items="wrench,deattachtool" excludeditems="multitool" type="Equipped" />
+    </Holdable>
+    <ConnectionPanel selectkey="Action" canbeselected="true" msg="ItemMsgRewireScrewdriver" hudpriority="10">
+      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
+      <RequiredItem items="screwdriver" type="Equipped" />
+      <output name="friendly_out" displayname="检测到友方" />
+      <output name="enemy_out" displayname="检测到敌方" />
+      <output name="neutral_out" displayname="检测到中立" />
+    </ConnectionPanel>
+  </Item>-->
+
 </Items>

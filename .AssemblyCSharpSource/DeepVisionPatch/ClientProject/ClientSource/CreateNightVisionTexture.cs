@@ -14,6 +14,9 @@ public class CreateNightVisionTexture
     private Color[] _pixelBuffer = null!;
     private float[] _vignetteTable = null!;
 
+    // Lightweight scanline overlay texture (1px wide)
+    private Texture2D _scanlineTexture = null!;
+
     private int _textureWidth;
     private int _textureHeight;
 
@@ -25,9 +28,9 @@ public class CreateNightVisionTexture
     private float _vignetteMultiplier = 0.8f; // 暗角倍数 
 
     // Constants for scanline calculations
-    private const int SCANLINE_WIDTH = 3;
+    private const int SCANLINE_WIDTH = 2;
     private const float GRID_DARKEN_FACTOR = 0.7f;
-    private const int SCANLINE_BRIGHTNESS = 50;
+    private const int SCANLINE_COLOR_OFFSET = 50;
 
     /// <summary>
     /// Initializes the night vision texture with specified color
@@ -45,6 +48,21 @@ public class CreateNightVisionTexture
 
         PrecomputeStaticData();
         GenerateInitialTexture();
+
+        // Create a small scanline texture we can draw every frame without SetData
+        int scanlineTexHeight = SCANLINE_WIDTH;
+        _scanlineTexture = new Texture2D(graphicsDevice, 1, scanlineTexHeight);
+        Color[] scanPixels = new Color[1 * scanlineTexHeight];
+        for (int y = 0; y < scanlineTexHeight; y++)
+        {
+            // float t = 1f - MathF.Abs(y - SCANLINE_WIDTH) / (float)(SCANLINE_WIDTH + 1);
+            byte r = (byte)MathF.Min(_nightVisionColor.R + SCANLINE_COLOR_OFFSET, 255);
+            byte g = (byte)MathF.Min(_nightVisionColor.G + SCANLINE_COLOR_OFFSET, 255);
+            byte b = (byte)MathF.Min(_nightVisionColor.B + SCANLINE_COLOR_OFFSET, 255);
+            byte a = _nightVisionColor.A;
+            scanPixels[y] = new Color(r, g, b, a);
+        }
+        _scanlineTexture.SetData(scanPixels);       
     }
 
     /// <summary>
@@ -86,66 +104,16 @@ public class CreateNightVisionTexture
             for (int x = 0; x < _textureWidth; x++)
             {
                 int index = rowStart + x;
-                _pixelBuffer[index] = CalculatePixelColor(x, y, checkScanLine: false);
+                _pixelBuffer[index] = CalculatePixelColor(x, y);
             }
         });
 
         _texture.SetData(_pixelBuffer);
     }
-
     /// <summary>
-    /// Updates the night vision texture with animated scanlines
+    /// 预计算夜视仪效果的像素颜色，包含网格和暗角效果，但不包含扫描线（扫描线在DrawOverlay中单独处理）
     /// </summary>
-    /// <param name="deltaTime">Time elapsed since last update (in seconds)</param>
-    public void Update(float deltaTime)
-    {
-        // Update scanline position (wrap around texture height)
-        _scanLinePosition = (_scanLinePosition + _scanLineSpeed * deltaTime) % _textureHeight;
-        if (_scanLinePosition < 0)
-            _scanLinePosition += _textureHeight;
-
-        UpdateDynamicRegions();
-    }
-
-    /// <summary>
-    /// Updates only the regions that change (scanline areas)
-    /// </summary>
-    private void UpdateDynamicRegions()
-    {
-        // Calculate current and previous scanline regions
-        int currentStart = Math.Max(0, (int)_scanLinePosition - SCANLINE_WIDTH);
-        int currentEnd = Math.Min(_textureHeight, (int)_scanLinePosition + SCANLINE_WIDTH);
-
-        int previousStart = Math.Max(0, (int)(_scanLinePosition - _scanLineSpeed) - SCANLINE_WIDTH);
-        int previousEnd = Math.Min(_textureHeight, (int)(_scanLinePosition - _scanLineSpeed) + SCANLINE_WIDTH);
-
-        // Update both regions
-        UpdateTextureRegion(previousStart, previousEnd, includeScanLine: false);
-        UpdateTextureRegion(currentStart, currentEnd, includeScanLine: true);
-
-        _texture.SetData(_pixelBuffer);
-    }
-
-    /// <summary>
-    /// Updates a specific Y-range of the texture
-    /// </summary>
-    private void UpdateTextureRegion(int startY, int endY, bool includeScanLine)
-    {
-        for (int y = startY; y < endY; y++)
-        {
-            int rowStart = y * _textureWidth;
-            for (int x = 0; x < _textureWidth; x++)
-            {
-                int index = rowStart + x;
-                _pixelBuffer[index] = CalculatePixelColor(x, y, includeScanLine);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Calculates the color for a single pixel with all night vision effects
-    /// </summary>
-    private Color CalculatePixelColor(int x, int y, bool checkScanLine)
+    private Color CalculatePixelColor(int x, int y)
     {
         Color pixelColor = _nightVisionColor;
 
@@ -164,51 +132,55 @@ public class CreateNightVisionTexture
         pixelColor.G = (byte)(pixelColor.G * vignette);
         pixelColor.B = (byte)(pixelColor.B * vignette);
 
-        // Scanline effect: bright horizontal line that moves
-        if (checkScanLine && Math.Abs(y - _scanLinePosition) <= 1)
-        {
-            pixelColor.R = (byte)Math.Min(pixelColor.R + SCANLINE_BRIGHTNESS, 255);
-            pixelColor.G = (byte)Math.Min(pixelColor.G + SCANLINE_BRIGHTNESS, 255);
-            pixelColor.B = (byte)Math.Min(pixelColor.B + SCANLINE_BRIGHTNESS, 255);
-        }
-
         return pixelColor;
     }
 
     /// <summary>
-    /// Updates night vision parameters (recomputes data if needed)
+    /// Updates the night vision texture with animated scanlines
     /// </summary>
-    public void SetNightVisionParameters(
-        Color? color = null,
-        int? gridSpacing = null,
-        float? scanLineSpeed = null)
+    /// <param name="deltaTime">Time elapsed since last update (in seconds)</param>
+    public void Update(float deltaTime)
     {
-        bool needsRecompute = false;
-
-        if (color.HasValue)
-            _nightVisionColor = color.Value;
-
-        if (gridSpacing.HasValue)
-        {
-            _gridSpacing = gridSpacing.Value;
-            needsRecompute = true;
-        }
-
-        if (scanLineSpeed.HasValue)
-            _scanLineSpeed = scanLineSpeed.Value;
-
-        // Recompute only if grid spacing changed (affects static data)
-        if (needsRecompute)
-        {
-            PrecomputeStaticData();
-            GenerateInitialTexture();
-        }
+        // Advance scanline position for smooth motion. Keep Update lightweight (no SetData here).
+        _scanLinePosition = (_scanLinePosition + _scanLineSpeed * deltaTime) % _textureHeight;
+        if (_scanLinePosition < 0)
+            _scanLinePosition += _textureHeight;
     }
 
     /// <summary>
     /// Gets the current night vision texture
     /// </summary>
     public Texture2D GetTexture() => _texture;
+
+    /// <summary>
+    /// Draws a lightweight scanline overlay on top of the base texture using the provided SpriteBatch.
+    /// </summary>
+    public void DrawOverlay(SpriteBatch spriteBatch, Vector2 center, Vector2 scaleVector)
+    {
+        if (_scanlineTexture == null) return;
+
+        // Normalized position of the scanline within the texture [0,1]
+        float normY = _scanLinePosition / _textureHeight;
+
+        // Compute offset from texture center (in screen pixels)
+        float halfTexHeightScreen = _textureHeight * 0.5f * scaleVector.Y;
+        float offsetY = (normY - 0.5f) * 2f * halfTexHeightScreen; // distance from center
+
+        // Compute destination position for scanline (centered horizontally)
+        Vector2 position = new Vector2(center.X, center.Y + offsetY);
+
+        // Scale scanline to full screen width and appropriate height
+        float destWidth = _textureWidth * scaleVector.X;
+        float destHeight = _scanlineTexture.Height * scaleVector.Y;
+
+        var destRect = new Rectangle(
+            (int)(position.X - destWidth * 0.5f),
+            (int)(position.Y - destHeight * 0.5f),
+            (int)destWidth,
+            (int)destHeight);
+
+        spriteBatch.Draw(_scanlineTexture, destRect, Color.White);
+    }
 
     /// <summary>
     /// Releases all resources
@@ -218,6 +190,11 @@ public class CreateNightVisionTexture
         if (_texture != null && !_texture.IsDisposed)
         {
             _texture.Dispose();
+        }
+
+        if (_scanlineTexture != null && !_scanlineTexture.IsDisposed)
+        {
+            _scanlineTexture.Dispose();
         }
 
         // Clear references to help GC

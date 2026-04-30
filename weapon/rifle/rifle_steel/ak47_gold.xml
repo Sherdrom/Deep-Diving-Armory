@@ -16,7 +16,6 @@
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="deep_gold" amount="1" />
-      <Item identifier="carbon" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel_45.png" sourcerect="3,383,144,137" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel.png" sourcerect="0,0,600,114" depth="0.55" origin="0.5,0.5" />
@@ -193,8 +192,13 @@
     </ItemContainer>
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
     <Quality >
-      <QualityStat stattype="FirepowerMultiplier" value="0.1" />
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.35" />
+      <ModifyStat stattype="FiringRateMultiplier" value="0.1" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.5" />
+    </Modify>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="70" />
   </Item>

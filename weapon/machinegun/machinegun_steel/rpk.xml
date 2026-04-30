@@ -17,8 +17,7 @@
 	  <RequiredItem identifier="carbon" amount="4"/>
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="steel" />
-	  <Item identifier="steel" />
+      <Item identifier="steel" amount="2" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/machinegun/machinegun45.png" sourcerect="259,173,183,162" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/machinegun/machinegun_steel/Sprite/RPK.png" sourcerect="7,7,439,83" depth="0.55" origin="0.5,0.5" />
@@ -213,6 +212,11 @@
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.05" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.35" />
+      <ModifyStat stattype="FiringRateMultiplier" value="0.1" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.5" />
+    </Modify>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="50" />
   </Item>

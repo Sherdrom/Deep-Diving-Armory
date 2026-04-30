@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item name="" identifier="deep_AK12" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.25" impactsoundtag="impact_metal_light" health="140" >
-    <Price baseprice="800" sold="true" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="800" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -16,8 +16,6 @@
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="physicorium" />
-      <Item identifier="physicorium" />
-      <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_45.png" sourcerect="185,559,130,119" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/rifle/rifle_phy/rifle_phy_ak.png" sourcerect="13,0,504,117" depth="0.55" origin="0.5,0.5" >
@@ -260,7 +258,7 @@
       <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SlotIcon slotindex="8" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_grip" hide="false" itempos="15,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable tags="deep_grip" hide="false" itempos="15,-3" setactive="true" containedspritedepth="0.45" depth="0.55" />
         <Containable items="deep_sub_hanging_master_key" hide="false" itempos="29,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
         <Containable items="deep_sub_hanging_gp25" hide="false" itempos="29,-8" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>

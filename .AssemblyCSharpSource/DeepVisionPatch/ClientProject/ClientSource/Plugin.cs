@@ -1,17 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-using Barotrauma;
+﻿using Barotrauma.Lights;
+using Barotrauma.LuaCs.Data;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Barotrauma.Items.Components;
-using Barotrauma.Lights;
+
 
 namespace DeepVisionPatch
 {
+    partial class DeepVisionPatch
+    {
+        private Harmony? _harmonyInstance;
+        private static String CurrentColorMode;
+
+        // Texture creators - initialized during OnLoadCompleted
+        public static CreateViewTexture ViewTexture { get; } = new CreateViewTexture();
+        private static CreateNightVisionTexture GreenNightVisionTexture { get; } = new CreateNightVisionTexture();
+        private static CreateNightVisionTexture BlueNightVisionTexture { get; } = new CreateNightVisionTexture();
+
+        public static CreateNightVisionTexture CurrentNVTexture 
+        { 
+            get
+            {
+                if (CurrentColorMode == "White Phosphorus") { return BlueNightVisionTexture; }
+                return GreenNightVisionTexture;
+            }
+        }
+
+        partial void InitlizeProjSpecific()
+        {
+            LuaCsPluginService.TryGetPackageForPlugin<DeepVisionPatch>(out ContentPackage ResultPackage);
+            Package = ResultPackage;
+
+            LuaCsConfigService.TryGetConfig(Package, "NVGColorMode", out ISettingBase SetColor);
+            CurrentColorMode = SetColor.GetStringValue();
+            SetColor.OnValueChanged += _ =>
+            {
+                CurrentColorMode = SetColor.GetStringValue();
+            };
+
+            // Called when plugin is loading - use for initialization that doesn't depend on other plugins
+            _harmonyInstance = new Harmony("DeepVisionPatch");
+        }
+
+        partial void OnLoadCompletedProjSpecific()
+        {
+            // Called after all plugins have loaded - use for plugin interactions and final initialization
+            _harmonyInstance?.PatchAll();
+            // Initialize texture creators with their specific parameters
+            ViewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
+            GreenNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));
+            BlueNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 0, 255, 50));
+        }
+
+        partial void DisposeProjSpecific()
+        {
+            // Cleanup resources
+            _harmonyInstance?.UnpatchSelf();
+        }
+    }
+
     [HarmonyPatch(typeof(LightManager),nameof(LightManager.UpdateObstructVision))]
     public static class Patch_LightManager_UpdateObstructVision
     {
@@ -34,7 +79,7 @@ namespace DeepVisionPatch
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
             if (rightHand == null && leftHand == null && headItem == null) { return true; }
             if (!((rightHand != null && (rightHand.HasTag("weapon")||rightHand.HasTag("ObstructVision")))|| (leftHand != null && (leftHand.HasTag("weapon")||leftHand.HasTag("ObstructVision"))) || headItem != null && headItem.HasTag("ObstructVision"))) { return true; }
-            if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || headItem?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
+            if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name)) { return true; }
             if (character == null || (!character.IsKeyDown(InputType.Aim)&& !((rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")) || headItem != null && headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
@@ -52,7 +97,7 @@ namespace DeepVisionPatch
                     {
                         headItem = null;
                         if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon")))) { return true; }
-                        if (!(rightHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory" || leftHand?.Prefab.ContentPackage?.Name == "Deep Diving Armory")) { return true; }
+                        if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name)) { return true; }
                     }
                 }
             }
