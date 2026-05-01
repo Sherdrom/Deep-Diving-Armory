@@ -43,7 +43,7 @@ parts.hk416_receiver_std = {
     nameKey = "deep.gunsmith.part.hk416_receiver_std",
     provides = { "HK416_receiver" },
     item = { identifier = "deep_gunsmith_hk416_receiver_std" },
-    stats = { weight = 1.08, ergonomics = 9, recoilControl = 0.03 },
+    stats = { weight = 1.08, ergonomics = 100, recoilControl = 0.03 },
     visual = {
         texture = texture,
         source = { x = 13, y = 372, w = 139, h = 89 },

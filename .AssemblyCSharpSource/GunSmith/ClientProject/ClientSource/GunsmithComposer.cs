@@ -277,6 +277,34 @@ namespace GunSmith
             return settings;
         }
 
+        private static GunsmithRuntimeStats ParseRuntimeStats(string value)
+        {
+            GunsmithRuntimeStats stats = GunsmithRuntimeStats.Empty;
+            if (string.IsNullOrWhiteSpace(value)) { return stats; }
+
+            foreach (string entry in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                string[] parts = entry.Split('=', 2, StringSplitOptions.TrimEntries);
+                if (parts.Length != 2 || !float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float parsed))
+                {
+                    continue;
+                }
+
+                stats = parts[0] switch
+                {
+                    "weight" => stats with { Weight = parsed },
+                    "ergonomics" => stats with { Ergonomics = parsed },
+                    "recoilControl" => stats with { RecoilControl = parsed },
+                    "spreadReduction" => stats with { SpreadReduction = parsed },
+                    "fireRateMultiplier" => stats with { FireRateMultiplier = parsed },
+                    "damageMultiplier" => stats with { DamageMultiplier = parsed },
+                    _ => stats
+                };
+            }
+
+            return stats;
+        }
+
         private static string ResolvePath(string path)
         {
             string resolved = path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar);

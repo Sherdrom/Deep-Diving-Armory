@@ -33,6 +33,7 @@ namespace GunSmith
         public Sprite InventorySprite { get; init; } = null!;
         public Rectangle ContentBounds { get; init; }
         public IReadOnlyList<GunsmithLayer> Layers { get; init; } = Array.Empty<GunsmithLayer>();
+        public GunsmithRuntimeStats Stats { get; init; } = GunsmithRuntimeStats.Empty;
     }
 
     internal sealed record GunsmithInventorySettings(float Scale, float RotationDegrees, float Padding)
@@ -43,5 +44,16 @@ namespace GunSmith
     internal sealed record GunsmithWorldSettings(float Scale, float RotationDegrees, float Padding, Vector2 Offset)
     {
         public static GunsmithWorldSettings Default { get; } = new(1.0f, 0.0f, 0.0f, Vector2.Zero);
+    }
+
+    internal sealed record GunsmithRuntimeStats(
+        float Weight,
+        float Ergonomics,
+        float RecoilControl,
+        float SpreadReduction,
+        float FireRateMultiplier,
+        float DamageMultiplier)
+    {
+        public static GunsmithRuntimeStats Empty { get; } = new(0, 0, 0, 0, 0, 0);
     }
 }

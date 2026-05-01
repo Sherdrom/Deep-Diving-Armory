@@ -5,6 +5,7 @@ local Core = Gunsmith.Core
 local Persistence = Gunsmith.Persistence
 local UiSpec = Gunsmith.UiSpec
 local Inventory = Gunsmith.Inventory
+local Stats = Gunsmith.Stats
 local Runtime = {}
 
 Gunsmith.Runtime = Runtime
@@ -188,12 +189,13 @@ function Runtime.Apply(item)
     local selection = Runtime.GetSelection(item)
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
-    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec
+    local statsSpec = Stats.Encode(Stats.SumSelection(selection))
+    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|stats:" .. statsSpec
     if State.appliedSignatures[item] == signature then return end
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
-        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, platform.canvas.w, platform.canvas.h)
+        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, platform.canvas.w, platform.canvas.h)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")

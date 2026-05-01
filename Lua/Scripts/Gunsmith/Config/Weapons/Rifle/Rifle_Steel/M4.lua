@@ -57,7 +57,7 @@ parts.M4_receiver_std = {
     item = { identifier = "deep_gunsmith_M4_receiver_std" },
 
     -- 目前只用于 UI 展示，不直接影响武器实际数值。
-    stats = { weight = 1.0, ergonomics = 8, recoilControl = 0.02 },
+    stats = { weight = 1.0, ergonomics = 0, recoilControl = 0.02 },
 
     -- visual 是运行时合成图层。根部件用自己的 attachPoint 对齐当前武器 rootSockets[path]。
     -- attachPoint 是配件 source 内部的本地连接点。

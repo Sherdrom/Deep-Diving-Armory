@@ -15,7 +15,7 @@ namespace GunSmith
             spriteBatch = new SpriteBatch(graphics);
         }
 
-        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, int width, int height)
+        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, int width, int height)
         {
             if (!IsReady || item == null || item.Removed) { return; }
             if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return; }
@@ -30,6 +30,7 @@ namespace GunSmith
             if (layers.Count == 0) { return; }
             GunsmithInventorySettings inventorySettings = ParseInventorySettings(inventorySpec);
             GunsmithWorldSettings worldSettings = ParseWorldSettings(worldSpec);
+            GunsmithRuntimeStats stats = ParseRuntimeStats(statsSpec);
 
             bool shouldOwnWorldSprite = item.HasTag("deep_gunsmith");
             bool shouldReplaceActiveSprite =
@@ -75,7 +76,8 @@ namespace GunSmith
                 WorldSprite = worldSprite,
                 InventorySprite = inventorySprite,
                 ContentBounds = contentBounds,
-                Layers = layers
+                Layers = layers,
+                Stats = stats
             };
 
             itemStates[item] = state;
@@ -116,6 +118,12 @@ namespace GunSmith
                 ClearFromLua(item);
             }
             return false;
+        }
+
+        internal static bool TryGetGameplayState(Item? item, out GunsmithSpriteState state)
+        {
+            state = null!;
+            return item != null && !item.Removed && TryGetValidState(item, out state);
         }
 
         internal static void RemoveState(Item item)
