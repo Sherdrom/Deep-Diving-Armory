@@ -15,7 +15,7 @@ parts.deep_holo_sight = {
         texture = sightTexture,
         source = { x = 5, y = 5, w = 97, h = 62 },
         attachPoint = { x = 48, y = 57 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -30,7 +30,7 @@ parts.deep_red_dot = {
         texture = sightTexture,
         source = { x = 106, y = 2, w = 105, h = 66 },
         attachPoint = { x = 52, y = 61 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -45,7 +45,7 @@ parts.deep_thermalgoggles_sight = {
         texture = sightTexture,
         source = { x = 219, y = 3, w = 90, h = 69 },
         attachPoint = { x = 45, y = 63 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -60,7 +60,7 @@ parts.deep_2x_sight = {
         texture = sightTexture,
         source = { x = 5, y = 71, w = 129, h = 81 },
         attachPoint = { x = 64, y = 74 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -75,7 +75,7 @@ parts.deep_2x5x_sight = {
         texture = sightTexture,
         source = { x = 6, y = 154, w = 219, h = 82 },
         attachPoint = { x = 109, y = 74 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -90,7 +90,7 @@ parts.deep_1_3x_sight = {
         texture = sightTexture,
         source = { x = 5, y = 236, w = 199, h = 80 },
         attachPoint = { x = 99, y = 75 },
-        order = 20,
+        order = 70,
         scale = 0.55
     }
 }
@@ -105,7 +105,7 @@ parts.deep_1_6x_sight = {
         texture = sightTexture,
         source = { x = 5, y = 537, w = 381, h = 103 },
         attachPoint = { x = 190, y = 97 },
-        order = 20,
+        order = 70,
         scale = 0.45
     }
 }
@@ -120,7 +120,7 @@ parts.deep_thermalgoggles_sight_6x = {
         texture = sightTexture,
         source = { x = 401, y = 535, w = 393, h = 103 },
         attachPoint = { x = 196, y = 97 },
-        order = 20,
+        order = 70,
         scale = 0.45
     }
 }
@@ -135,7 +135,7 @@ parts.deep_8x_sight = {
         texture = sightTexture,
         source = { x = 5, y = 667, w = 469, h = 106 },
         attachPoint = { x = 234, y = 98 },
-        order = 20,
+        order = 70,
         scale = 0.45
     }
 }

@@ -11,7 +11,8 @@ local files = {
     "AR/Structural/Stock.lua",
     "AR/VirtualParts/Receiver_top_rail.lua",
     "Shared/Rails.lua",
-    "Shared/Sight.lua"
+    "Shared/Sight.lua",
+    "Shared/Grip.lua"
 }
 
 for _, file in ipairs(files) do

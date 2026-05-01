@@ -48,6 +48,7 @@ parts.hk416_handguard_std = {
         { path = "top_rail", accepts = { "picatinny_rail" }, anchor = { x = 16, y = 44 } },
         { path = "bottom_rail", accepts = { "picatinny_rail" }, anchor = { x = 32, y = 104 } },
         { path = "left_rail", accepts = { "picatinny_rail" }, anchor = { x = 14, y = 74 } },
-        { path = "right_rail", accepts = { "picatinny_rail" }, anchor = { x = 46, y = 74 } }
+        { path = "right_rail", accepts = { "picatinny_rail" }, anchor = { x = 46, y = 74 } },
+        { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", accepts = { "small_grip", "medium_grip" }, anchor = { x = 56, y = 20 } }
     }
 }
