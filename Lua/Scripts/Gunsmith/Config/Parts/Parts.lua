@@ -15,6 +15,7 @@ local files = {
     "Shared/Grip.lua",
     "Shared/SubHanging.lua",
     "Shared/Accessory.lua",
+    "Shared/Muzzle.lua",
 }
 
 for _, file in ipairs(files) do

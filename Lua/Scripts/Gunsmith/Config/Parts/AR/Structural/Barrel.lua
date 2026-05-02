@@ -33,9 +33,12 @@ parts.hk416_barrel_std = {
     stats = { weight = 0.9, ergonomics = -1, recoilControl = 0.05, spreadReduction = 0.07 },
     visual = {
         texture = texture,
-        source = { x = -143, y = 688, w = 203, h = 54 },
+        source = { x = -143, y = 688, w = 243, h = 54 },
         attachPoint = { x = 1, y = 46 },
         order = 20,
         scale = 1.0
+    },
+    mounts = {
+        { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.hk416_barrel_std.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 220, y = 1 } },
     }
 }
