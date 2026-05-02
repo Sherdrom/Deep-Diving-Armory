@@ -16,7 +16,7 @@ parts.focusingflashlight = {
         texture = accessoryTexture,
         source = { x = 451, y = 340, w = 188, h = 51 },
         attachPoint = { x = 94, y = 25 },
-        order = 5,
+        order = 70,
         scale = 0.5
     }
 }
@@ -32,7 +32,7 @@ parts.spreadflashlight = {
         texture = accessoryTexture,
         source = { x = 451, y = 422, w = 162, h = 81 },
         attachPoint = { x = 80, y = 42 },
-        order = 5,
+        order = 70,
         scale = 0.45
     }
 }
@@ -48,7 +48,7 @@ parts.deep_laser = {
         texture = laserTexture,
         source = { x = 21, y = 9, w = 976, h = 93 },
         attachPoint = { x = 68, y = 47 },
-        order = 5,
+        order = 70,
         scale = 0.45
     }
 }

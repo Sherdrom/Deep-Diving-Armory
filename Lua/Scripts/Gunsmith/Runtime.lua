@@ -141,13 +141,15 @@ local function buildLayerSpecForItem(item, selection, platform)
             local drawOffset = resolveDrawOffset(selection, platform, weapon, path, visual)
             if drawOffset then
                 local scale = visual.scale or 1.0
+                local mount = Core.MountForPath(selection, path)
+                local order = mount and mount.visualOrder or visual.order or 0
                 table.insert(layers, table.concat({
                     path,
                     selection[path],
                     visual.texture,
                     string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
                     string.format("%.4f,%.4f", drawOffset.x, drawOffset.y),
-                    tostring(visual.order or 0),
+                    tostring(order),
                     string.format("%.4f", scale)
                 }, "|"))
             end

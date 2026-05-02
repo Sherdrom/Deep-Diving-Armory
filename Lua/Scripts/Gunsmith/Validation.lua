@@ -560,6 +560,9 @@ function Validation.Run(configOverride, label)
                         if not validOptionalPoint(mount.anchor) then
                             table.insert(errors, mountLabel .. " anchor must contain numeric x/y.")
                         end
+                        if mount.visualOrder ~= nil and type(mount.visualOrder) ~= "number" then
+                            table.insert(errors, mountLabel .. " visualOrder must be a number when declared.")
+                        end
                     end
                 end
             end
@@ -769,7 +772,7 @@ function Validation.RunSelfTest()
                 provides = { "unused_test_type" },
                 item = { virtual = true },
                 mounts = {
-                    { slot = "old_path_field", path = "optic_mount", name = "Old Mount Name", nameKey = "", partSlot = "", partType = "", anchor = { x = "bad", y = 0 } }
+                    { slot = "old_path_field", path = "optic_mount", name = "Old Mount Name", nameKey = "", partSlot = "", partType = "", anchor = { x = "bad", y = 0 }, visualOrder = "bad" }
                 }
             }
         }
