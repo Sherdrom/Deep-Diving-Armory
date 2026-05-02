@@ -5,7 +5,7 @@ local gripTexture = Deep_Lua.Path .. "/weapon/sight/grip.png"
 
 -- 通用握把。能否安装由父挂点 accepts 和这里的 provides 共同决定。
 parts.deep_vertical_grip = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_vertical_grip",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
@@ -21,7 +21,7 @@ parts.deep_vertical_grip = {
 }
 
 parts.deep_vertical_grips_short = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_vertical_grips_short",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
@@ -37,7 +37,7 @@ parts.deep_vertical_grips_short = {
 }
 
 parts.deep_vertical_grips_hollow_out = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_vertical_grips_hollow_out",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
@@ -53,7 +53,7 @@ parts.deep_vertical_grips_hollow_out = {
 }
 
 parts.deep_cqr_grips = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_cqr_grips",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
@@ -69,7 +69,7 @@ parts.deep_cqr_grips = {
 }
 
 parts.deep_oblique_grips = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_oblique_grips",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
@@ -85,7 +85,7 @@ parts.deep_oblique_grips = {
 }
 
 parts.deep_corner_grip = {
-    type = "grip_mount",
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_corner_grip",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
