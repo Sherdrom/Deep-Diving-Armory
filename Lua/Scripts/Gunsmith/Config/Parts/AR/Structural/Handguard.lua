@@ -45,12 +45,8 @@ parts.hk416_handguard_std = {
     -- HK416 护木提供和 AR 通用护木相同的四向导轨挂点。
     -- anchor 相对 HK416 护木 visual.attachPoint，让同一批 AR 共享导轨能跟随 HK416 独有护木定位。
     mounts = {
-        { path = "top_rail", accepts = { "picatinny_rail" }, anchor = { x = 16, y = 44 } },
-        { path = "bottom_rail", accepts = { "picatinny_rail" }, anchor = { x = 32, y = 104 } },
-        { path = "left_rail", accepts = { "picatinny_rail" }, anchor = { x = 14, y = 74 } },
-        { path = "right_rail", accepts = { "picatinny_rail" }, anchor = { x = 46, y = 74 } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 56, y = 20 } },
-        { path = "Right_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Right_rail_mount", accepts = { "right_rail_mount" }, anchor = { x = 79, y = 0 } },
-        { path = "Left_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Left_rail_mount", accepts = { "left_rail_mount" }, anchor = { x = 79, y = 0 } }
+        { path = "Right_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 79, y = 0 } },
+        { path = "Left_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 79, y = 0 } }
     }
 }
