@@ -16,6 +16,16 @@ config.weapons.deep_hk416 = {
         receiver = { x = 184, y = 158 }
     },
 
+    -- QuickMod maps vanilla ItemContainer slots to terminal GunSmith paths.
+    -- slot uses Barotrauma targetslot's zero-based numbering.
+    quickSlots = {
+        { slot = 1, path = "receiver/handguard/Lower_rail_mount" },
+        { slot = 2, path = "receiver/handguard/Right_rail_mount" },
+        { slot = 3, path = "receiver/handguard/Left_rail_mount" },
+        { slot = 4, path = "receiver/optic_mount" },
+        { slot = 5, path = "receiver/barrel/muzzle_mount" }
+    },
+
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
     preview = {
         padding = 0,

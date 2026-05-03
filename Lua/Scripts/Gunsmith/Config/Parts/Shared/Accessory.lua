@@ -53,5 +53,3 @@ parts.deep_laser = {
     }
 }
 
-
-

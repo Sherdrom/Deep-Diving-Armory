@@ -22,6 +22,8 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V1.0 Content Production Guide](./V1.0_Content_Production_Guide.md)
 - [V1.1 Summary](./V1.1_Gunsmith_Summary.md)
 - [V1.2 Summary](./V1.2_Gunsmith_Summary.md)
+- [V1.2.1 Summary](./V1.2.1_Gunsmith_Summary.md)
+- [V1.3 Summary](./V1.3_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -45,6 +47,7 @@ Current new-system tag:
 Current validated slots:
 
 - `receiver`
+- HK416 quick-mod ItemContainer bridge for terminal attachment slots
 
 Current nested validation paths include:
 
@@ -61,6 +64,10 @@ Current nested validation paths include:
 - `receiver/handguard/left_rail`
 - `receiver/handguard/right_rail`
 - `receiver/handguard/top_rail/optic_mount`
+- `receiver/handguard/Lower_rail_mount`
+- `receiver/handguard/Right_rail_mount`
+- `receiver/handguard/Left_rail_mount`
+- `receiver/barrel/muzzle_mount`
 
 ## Notes
 

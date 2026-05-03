@@ -6,6 +6,7 @@ local Persistence = Gunsmith.Persistence
 local UiSpec = Gunsmith.UiSpec
 local Inventory = Gunsmith.Inventory
 local Stats = Gunsmith.Stats
+local QuickMod = Gunsmith.QuickMod
 local Runtime = {}
 
 Gunsmith.Runtime = Runtime
@@ -189,6 +190,10 @@ function Runtime.Apply(item)
     if not platform then return end
 
     local selection = Runtime.GetSelection(item)
+    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        State.appliedSignatures[item] = nil
+        Persistence.Save(item)
+    end
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
     local statsSpec = Stats.Encode(Stats.SumSelection(selection))
@@ -287,6 +292,34 @@ function Runtime.SetPart(item, slotPath, partId)
     if not selection or not platform or not Core.IsValidPath(selection, platform, slotPath) then return end
 
     local character = Inventory and Inventory.ActorForItem(item) or nil
+
+    if QuickMod and QuickMod.IsQuickPath(item, slotPath) then
+        local slotIndex = QuickMod.SlotForPath(item, slotPath)
+        if slotIndex == nil then return end
+
+        if partId == Gunsmith.EmptyPartId then
+            if Core.IsRequiredSlot(platform, slotPath) then return end
+            if not QuickMod.ClearSlot(item, character, slotIndex) then return end
+        else
+            local part = Gunsmith.Config.parts[partId]
+            if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
+            if selection[slotPath] == partId then return true end
+            if not Inventory or not Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part)) then
+                print("[Gunsmith] Missing quick-mod part item for " .. tostring(partId))
+                return
+            end
+            if not QuickMod.ClearSlot(item, character, slotIndex) then return end
+            if not QuickMod.InstallPartItem(item, character, part, slotIndex) then return end
+        end
+
+        QuickMod.SyncFromContainer(item, selection, platform)
+        Core.PruneInvalidSelections(selection, platform, weapon)
+        Persistence.Save(item)
+        State.appliedSignatures[item] = nil
+        Runtime.Apply(item)
+        return true
+    end
+
     local returnedParts = 0
     local refreshWhenReturned = function()
         if item and not item.removed then
@@ -343,6 +376,11 @@ function Runtime.Open(item)
         if not Hook or not Hook.Call then
             print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith UI.")
             return
+        end
+
+        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+            State.appliedSignatures[item] = nil
+            Persistence.Save(item)
         end
 
         local currentPath = Runtime.GetCurrentUiPath(item)
