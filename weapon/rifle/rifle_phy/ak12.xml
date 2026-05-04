@@ -33,6 +33,10 @@
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
 
+      <StatusEffect type="NotInWater" interval="0.9" targettype="This" Modifylevel="-1" comparison="and" setvalue="true" >
+        <Conditional firecount="gt 30" />
+      </StatusEffect>
+
       <!-- 有碎甲芯片时，增加1级穿甲（已换为性能更好的Containable实现）
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -352,6 +356,11 @@
     <Quality>
       <QualityStat stattype="FirepowerMultiplier" value="0.15" />
     </Quality>
+    <Modify>
+      <ModifyStat stattype="FirepowerMultiplier" value="0.05" />
+      <ModifyStat stattype="RangedSpreadReduction" value="0.1" />
+    </Modify>
+    <FireCounter firecount="0" />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="80" />
   </Item>
