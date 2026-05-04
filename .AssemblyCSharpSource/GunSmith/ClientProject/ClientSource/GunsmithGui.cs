@@ -14,6 +14,12 @@ namespace GunSmith
         private static GUIFrame? detailPanel;
         private static GUIListBox? partList;
         private static GUIFrame? partDetailPanel;
+        private static GUITextBlock? partListTitle;
+        private static readonly Dictionary<string, GUIButton> partButtons = new(StringComparer.Ordinal);
+        private static GUITextBlock? partDetailStats;
+        private static GUIButton? partDetailActionButton;
+        private static string? partListSlotPath;
+        private static string? partDetailSlotPath;
         private static string? selectedPartId;
         private static GunsmithPreviewSettings activePreviewSettings = GunsmithPreviewSettings.Default;
 
@@ -61,6 +67,28 @@ namespace GunSmith
             {
                 LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to add window to GUI update list: {ex.Message}");
             }
+        }
+
+        public static void RefreshPartsFromLua(Item item, string slotSpec)
+        {
+            if (item == null || item.Removed || activeWindow == null || !ReferenceEquals(activeItem, item)) { return; }
+
+            GunsmithGuiSpec spec = ParseSpec(slotSpec);
+            if (spec.Slots.Count == 0) { return; }
+
+            string previousPath = activeContext.CurrentPath;
+            activeContext = spec.Context;
+            activeSlots = spec.Slots;
+            activeWeaponStats = spec.WeaponStats;
+            SelectSlotAfterRefresh(previousPath, activeContext.CurrentPath);
+
+            GunsmithGuiSlot? slot = activeSlots.FirstOrDefault(slot => slot.Path == selectedSlot) ?? activeSlots.FirstOrDefault();
+            if (slot == null) { return; }
+
+            selectedSlot = slot.Path;
+            SelectDefaultPart(slot);
+            RefreshPartList(slot);
+            RefreshPartDetailPanel(slot);
         }
 
         private static void BuildHeader(string title)
@@ -184,8 +212,8 @@ namespace GunSmith
             {
                 _ = new GunsmithPreviewImage(
                     new RectTransform(new Vector2(0.92f, 0.86f), previewPanel.RectTransform, Anchor.Center),
-                    state.Texture,
-                    CreatePreviewSourceRect(state, activePreviewSettings));
+                    activeItem,
+                    activePreviewSettings);
             }
             else
             {
@@ -212,30 +240,74 @@ namespace GunSmith
         {
             if (partList == null) { return; }
             partList.Content.ClearChildren();
+            partButtons.Clear();
+            partListSlotPath = slot.Path;
 
-            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), partList.Content.RectTransform), FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey)), textAlignment: Alignment.Center);
+            partListTitle = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), partList.Content.RectTransform), FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey)), textAlignment: Alignment.Center);
 
             foreach (GunsmithGuiPart part in slot.Parts)
             {
-                bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-                bool selected = part.Id == selectedPartId;
-                string label = PartLabel(part, installed);
-                if (selected) { label = FormatLValue("deep.gunsmith.ui.selected_prefix", label); }
-                GUIButton button = new(new RectTransform(new Vector2(1.0f, 0.14f), partList.Content.RectTransform), (LocalizedString)label, Alignment.Center);
-                button.OnClicked = (_, _) =>
-                {
-                    selectedPartId = part.Id;
-                    RebuildPartList(slot);
-                    RebuildPartDetailPanel(slot);
-                    return true;
-                };
+                GUIButton button = new(new RectTransform(new Vector2(1.0f, 0.14f), partList.Content.RectTransform), (LocalizedString)PartButtonText(slot, part), Alignment.Center);
+                partButtons[part.Id] = button;
+                UpdatePartButton(slot, part, button);
             }
+        }
+
+        private static void RefreshPartList(GunsmithGuiSlot slot)
+        {
+            if (partList == null) { return; }
+            if (!CanUpdatePartList(slot))
+            {
+                RebuildPartList(slot);
+                return;
+            }
+
+            if (partListTitle != null)
+            {
+                partListTitle.Text = FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey));
+            }
+
+            foreach (GunsmithGuiPart part in slot.Parts)
+            {
+                if (partButtons.TryGetValue(part.Id, out GUIButton? button))
+                {
+                    UpdatePartButton(slot, part, button);
+                }
+            }
+        }
+
+        private static bool CanUpdatePartList(GunsmithGuiSlot slot)
+            => string.Equals(partListSlotPath, slot.Path, StringComparison.Ordinal) &&
+               partListTitle != null &&
+               partButtons.Count == slot.Parts.Count &&
+               slot.Parts.All(part => partButtons.ContainsKey(part.Id));
+
+        private static void UpdatePartButton(GunsmithGuiSlot slot, GunsmithGuiPart part, GUIButton button)
+        {
+            button.Text = (LocalizedString)PartButtonText(slot, part);
+            button.OnClicked = (_, _) =>
+            {
+                selectedPartId = part.Id;
+                RefreshPartList(slot);
+                RefreshPartDetailPanel(slot);
+                return true;
+            };
+        }
+
+        private static string PartButtonText(GunsmithGuiSlot slot, GunsmithGuiPart part)
+        {
+            bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
+            string label = PartLabel(part, installed);
+            return part.Id == selectedPartId
+                ? FormatLValue("deep.gunsmith.ui.selected_prefix", label)
+                : label;
         }
 
         private static void RebuildPartDetailPanel(GunsmithGuiSlot slot)
         {
             if (partDetailPanel == null) { return; }
             partDetailPanel.ClearChildren();
+            partDetailSlotPath = slot.Path;
 
             GunsmithGuiPart? part = slot.Parts.FirstOrDefault(part => part.Id == selectedPartId) ?? slot.Parts.FirstOrDefault();
             if (part == null) { return; }
@@ -243,12 +315,43 @@ namespace GunSmith
 
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
             _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.18f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.44f), partDetailPanel.RectTransform, Anchor.Center), (LocalizedString)FormatPartStats(part.Stats), textAlignment: Alignment.Center);
+            partDetailStats = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.44f), partDetailPanel.RectTransform, Anchor.Center), (LocalizedString)FormatPartStats(part.Stats), textAlignment: Alignment.Center);
 
             string buttonText = InstallButtonText(part, installed);
-            GUIButton installButton = new(new RectTransform(new Vector2(0.72f, 0.22f), partDetailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)buttonText, Alignment.Center);
-            installButton.Enabled = !installed && part.IsActionable;
-            installButton.OnClicked = (_, _) =>
+            partDetailActionButton = new GUIButton(new RectTransform(new Vector2(0.72f, 0.22f), partDetailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)buttonText, Alignment.Center);
+            UpdatePartDetailAction(slot, part, installed);
+        }
+
+        private static void RefreshPartDetailPanel(GunsmithGuiSlot slot)
+        {
+            if (partDetailPanel == null) { return; }
+            if (!string.Equals(partDetailSlotPath, slot.Path, StringComparison.Ordinal) ||
+                partDetailStats == null ||
+                partDetailActionButton == null)
+            {
+                RebuildPartDetailPanel(slot);
+                return;
+            }
+
+            GunsmithGuiPart? part = slot.Parts.FirstOrDefault(part => part.Id == selectedPartId) ?? slot.Parts.FirstOrDefault();
+            if (part == null)
+            {
+                RebuildPartDetailPanel(slot);
+                return;
+            }
+
+            selectedPartId = part.Id;
+            bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
+            partDetailStats.Text = (LocalizedString)FormatPartStats(part.Stats);
+            UpdatePartDetailAction(slot, part, installed);
+        }
+
+        private static void UpdatePartDetailAction(GunsmithGuiSlot slot, GunsmithGuiPart part, bool installed)
+        {
+            if (partDetailActionButton == null) { return; }
+            partDetailActionButton.Text = (LocalizedString)InstallButtonText(part, installed);
+            partDetailActionButton.Enabled = !installed && part.IsActionable;
+            partDetailActionButton.OnClicked = (_, _) =>
             {
                 if (!installed && part.IsActionable && activeItem != null && !activeItem.Removed)
                 {
@@ -352,6 +455,12 @@ namespace GunSmith
             detailPanel = null;
             partList = null;
             partDetailPanel = null;
+            partListTitle = null;
+            partButtons.Clear();
+            partDetailStats = null;
+            partDetailActionButton = null;
+            partListSlotPath = null;
+            partDetailSlotPath = null;
             selectedPartId = null;
             activePreviewSettings = GunsmithPreviewSettings.Default;
             activeWeaponStats = GunsmithStats.Empty;
@@ -499,24 +608,26 @@ namespace GunSmith
 
         private sealed class GunsmithPreviewImage : GUIFrame
         {
-            private readonly Texture2D texture;
-            private readonly Rectangle sourceRect;
+            private readonly Item item;
+            private readonly GunsmithPreviewSettings settings;
 
-            public GunsmithPreviewImage(RectTransform rectT, Texture2D texture, Rectangle sourceRect)
+            public GunsmithPreviewImage(RectTransform rectT, Item item, GunsmithPreviewSettings settings)
                 : base(rectT, "GUIFrame", Color.Transparent)
             {
-                this.texture = texture;
-                this.sourceRect = sourceRect;
+                this.item = item;
+                this.settings = settings;
             }
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                if (!Visible || texture.IsDisposed)
+                if (!Visible || item.Removed || !TryGetValidState(item, out GunsmithSpriteState state))
                 {
                     return;
                 }
 
                 base.Draw(spriteBatch);
+                Texture2D texture = state.Texture;
+                Rectangle sourceRect = CreatePreviewSourceRect(state, settings);
                 if (sourceRect.Width <= 0 || sourceRect.Height <= 0 || Rect.Width <= 0 || Rect.Height <= 0)
                 {
                     return;

@@ -111,6 +111,10 @@ function Persistence.Receive(item, json)
     State.selections[key] = selection
     State.loadedStates[key] = true
     State.appliedSignatures[item] = nil
+
+    if Gunsmith.Runtime then
+        Gunsmith.Runtime.Apply(item)
+    end
 end
 
 function Persistence.Request(item)

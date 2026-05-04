@@ -28,7 +28,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
             status = "installed"
         elseif not Core.IsPartCompatible(selection, platform, slotPath, partId) then
             status = "incompatible"
-        elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part) then
+        elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part, item) then
             status = "missing"
         end
         table.insert(entries, partId .. ":" .. part.nameKey .. ":" .. status .. ":" .. Stats.Encode(Stats.PartStats(part), "~"))

@@ -24,6 +24,7 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V1.2 Summary](./V1.2_Gunsmith_Summary.md)
 - [V1.2.1 Summary](./V1.2.1_Gunsmith_Summary.md)
 - [V1.3 Summary](./V1.3_Gunsmith_Summary.md)
+- [V1.3.1 Summary](./V1.3.1_Gunsmith_Summary.md)
 
 ## Current Direction
 

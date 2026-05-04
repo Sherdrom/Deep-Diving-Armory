@@ -4,9 +4,12 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Inventory = {}
 Gunsmith.Inventory = Inventory
 
+local parentInventory
+
 local function currentCharacter(item)
-    if item and item.ParentInventory and item.ParentInventory.Owner then
-        return item.ParentInventory.Owner
+    local inventory = parentInventory(item)
+    if inventory and inventory.Owner then
+        return inventory.Owner
     end
     if Character and Character.Controlled then
         return Character.Controlled
@@ -26,6 +29,67 @@ local function itemIdentifier(item)
     return item.Prefab.Identifier.Value
 end
 
+local function inventoryOwner(inventory)
+    if not inventory then return nil end
+    local ok, owner = pcall(function() return inventory.Owner end)
+    if ok then return owner end
+    return nil
+end
+
+parentInventory = function(item)
+    if not item then return nil end
+    local ok, inventory = pcall(function() return item.ParentInventory end)
+    if ok then return inventory end
+    return nil
+end
+
+local function isSourceInventory(inventory, sourceItem)
+    if not inventory or not sourceItem then return false end
+    if sourceItem.OwnInventory and inventory == sourceItem.OwnInventory then return true end
+    return inventoryOwner(inventory) == sourceItem
+end
+
+local function isInSourceItemInventory(item, sourceItem)
+    if not item or not sourceItem then return false end
+    if item == sourceItem then return true end
+
+    local inventory = parentInventory(item)
+    while inventory do
+        if isSourceInventory(inventory, sourceItem) then return true end
+
+        local owner = inventoryOwner(inventory)
+        inventory = parentInventory(owner)
+    end
+
+    return false
+end
+
+local function findItemInInventory(inventory, identifier, sourceItem, visited)
+    if not inventory or not inventory.slots then return nil end
+    visited = visited or {}
+    if visited[inventory] then return nil end
+    visited[inventory] = true
+
+    if isSourceInventory(inventory, sourceItem) then return nil end
+
+    for _, slot in pairs(inventory.slots) do
+        if slot and slot.items then
+            for _, item in pairs(slot.items) do
+                if item and not item.removed and not isInSourceItemInventory(item, sourceItem) then
+                    if itemIdentifier(item) == identifier then
+                        return item
+                    end
+
+                    local nested = findItemInInventory(item.OwnInventory, identifier, sourceItem, visited)
+                    if nested then return nested end
+                end
+            end
+        end
+    end
+
+    return nil
+end
+
 function Inventory.ActorForItem(item)
     return currentCharacter(item)
 end
@@ -40,45 +104,33 @@ function Inventory.IsVirtualPart(part)
     return part and part.item and part.item.virtual == true
 end
 
-function Inventory.FindPartItem(character, identifier)
+function Inventory.FindPartItem(character, identifier, sourceItem)
     local inventory = characterInventory(character)
     if not inventory or not identifier or identifier == "" then return nil end
 
-    local ok, found = pcall(function()
-        return inventory.FindItemByIdentifier(identifier, true)
-    end)
-    if ok and found then return found end
-
-    if not inventory.slots then return nil end
-    for _, slot in pairs(inventory.slots) do
-        if slot and slot.items then
-            for _, item in pairs(slot.items) do
-                if itemIdentifier(item) == identifier then
-                    return item
-                end
-            end
-        end
-    end
-    return nil
+    return findItemInInventory(inventory, identifier, sourceItem, {})
 end
 
-function Inventory.HasPartItem(character, part)
+function Inventory.HasPartItem(character, part, sourceItem)
     local identifier = Inventory.ItemIdentifierForPart(part)
     if not identifier then return true end
-    return Inventory.FindPartItem(character, identifier) ~= nil
+    return Inventory.FindPartItem(character, identifier, sourceItem) ~= nil
 end
 
-function Inventory.ConsumePartItem(character, part)
+function Inventory.ConsumePartItem(character, part, sourceItem)
     local identifier = Inventory.ItemIdentifierForPart(part)
     if not identifier then return true end
 
-    local item = Inventory.FindPartItem(character, identifier)
+    local item = Inventory.FindPartItem(character, identifier, sourceItem)
     if not item then return false end
 
     if Entity and Entity.Spawner and Entity.Spawner.AddItemToRemoveQueue then
         Entity.Spawner.AddItemToRemoveQueue(item)
-    elseif item.ParentInventory and item.ParentInventory.RemoveItem then
-        item.ParentInventory.RemoveItem(item)
+    else
+        local parent = parentInventory(item)
+        if parent and parent.RemoveItem then
+            parent.RemoveItem(item)
+        end
     end
     return true
 end

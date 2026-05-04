@@ -33,6 +33,17 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithRefreshParts", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? slotSpec = FindStringArg(args, 0);
+                if (item != null && slotSpec != null)
+                {
+                    RefreshPartsFromLua(item, slotSpec);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithRequestState", args =>
             {
                 Item? item = FindArg<Item>(args);

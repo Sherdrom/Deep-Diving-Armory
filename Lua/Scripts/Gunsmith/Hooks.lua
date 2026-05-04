@@ -4,6 +4,7 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
 local Persistence = Gunsmith.Persistence
 local Runtime = Gunsmith.Runtime
+local QuickMod = Gunsmith.QuickMod
 local Hooks = {}
 
 Gunsmith.Hooks = Hooks
@@ -21,6 +22,12 @@ local function readItemAndStrings(args)
     end
 
     return item, strings
+end
+
+local function applyGunsmithItem(item)
+    if item and Core.WeaponConfig(item) then
+        Runtime.Apply(item)
+    end
 end
 
 function Hooks.Register()
@@ -73,18 +80,32 @@ function Hooks.Register()
         end
     end, Hook.HookMethodType.After)
 
-    Hook.Add("think", "DeepGunsmithApplyDefaults", function()
-        local currentTime = Timer.GetTime()
-        if currentTime - Gunsmith.State.lastScanTime < 1.0 then return end
-        Gunsmith.State.lastScanTime = currentTime
+    Hook.Patch("Barotrauma.Item", "OnMapLoaded", function(instance, ptable)
+        applyGunsmithItem(instance)
+    end, Hook.HookMethodType.After)
 
-        if not Item or not Item.ItemList then return end
-        for item in Item.ItemList do
-            if Core.WeaponConfig(item) then
-                Runtime.Apply(item)
-            end
-        end
+    pcall(function()
+        Hook.Patch("Barotrauma.Item", ".ctor", { "Microsoft.Xna.Framework.Rectangle", "Barotrauma.ItemPrefab", "Barotrauma.Submarine", "System.Boolean", "System.UInt16" }, function(instance, ptable)
+            applyGunsmithItem(instance)
+        end, Hook.HookMethodType.After)
     end)
+
+    local function syncQuickModContainer(instance)
+        if not instance then return end
+        local ok, item = pcall(function() return instance.Item end)
+        if not ok or not item then return end
+        if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
+            Runtime.SyncQuickModContainerItem(item)
+        end
+    end
+
+    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemContained", { "Barotrauma.Item", "System.Boolean" }, function(instance, ptable)
+        syncQuickModContainer(instance)
+    end, Hook.HookMethodType.After)
+
+    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemRemoved", { "Barotrauma.Item" }, function(instance, ptable)
+        syncQuickModContainer(instance)
+    end, Hook.HookMethodType.After)
 
     Hook.Add("item.removed", "DeepGunsmithCleanup", function(item)
         Runtime.Cleanup(item)

@@ -15,11 +15,11 @@ Gunsmith.State = Gunsmith.State or {
     selections = {},
     appliedSignatures = {},
     uiPaths = {},
-    loadedStates = {},
-    lastScanTime = 0
+    loadedStates = {}
 }
 
 local State = Gunsmith.State
+local finishQuickModChange
 
 function Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
@@ -46,6 +46,68 @@ function Runtime.SetCurrentUiPath(item, path)
     local key = Core.ItemKey(item)
     if not key then return end
     State.uiPaths[key] = Core.NormalizeUiPath(Core.PlatformConfig(item), path or "")
+end
+
+function Runtime.SchedulePartsRefresh(item, delay)
+    if SERVER then return end
+    if not item or item.removed then return end
+    Runtime.RefreshParts(item)
+end
+
+function Runtime.RefreshParts(item)
+    if SERVER then return end
+    if not item or not Core.PlatformConfig(item) then return end
+
+    local ok, err = pcall(function()
+        local platform = Core.PlatformConfig(item)
+        local selection = Runtime.GetSelection(item)
+        if not Hook or not Hook.Call then
+            print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith parts UI.")
+            return
+        end
+
+        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+            State.appliedSignatures[item] = nil
+            Persistence.Save(item)
+        end
+
+        local currentPath = Runtime.GetCurrentUiPath(item)
+        if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
+            currentPath = Core.UiParentPath(platform, currentPath)
+            Runtime.SetCurrentUiPath(item, currentPath)
+        end
+
+        Hook.Call("DeepGunsmithRefreshParts", item, UiSpec.Build(item, selection, platform, currentPath))
+    end)
+
+    if not ok then
+        print("[Gunsmith] Failed to refresh parts UI: " .. tostring(err))
+    end
+end
+
+function Runtime.SyncQuickModContainerItem(item)
+    if SERVER then return end
+    if not QuickMod then return end
+    if not item or item.removed then return end
+
+    local platform = Core.PlatformConfig(item)
+    if not platform then return end
+
+    local selection = Runtime.GetSelection(item)
+    if not selection then return end
+
+    if QuickMod.SyncFromContainer(item, selection, platform) then
+        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
+        Runtime.RefreshParts(item)
+    end
+end
+
+finishQuickModChange = function(item, selection, platform, weapon)
+    QuickMod.SyncFromContainer(item, selection, platform)
+    Core.PruneInvalidSelections(selection, platform, weapon)
+    Persistence.Save(item)
+    State.appliedSignatures[item] = nil
+    Runtime.Apply(item)
 end
 
 local function buildSignature(item, selection, platform)
@@ -296,28 +358,28 @@ function Runtime.SetPart(item, slotPath, partId)
     if QuickMod and QuickMod.IsQuickPath(item, slotPath) then
         local slotIndex = QuickMod.SlotForPath(item, slotPath)
         if slotIndex == nil then return end
+        local refreshAfterReturn = function()
+            Runtime.SchedulePartsRefresh(item, 0)
+        end
 
         if partId == Gunsmith.EmptyPartId then
             if Core.IsRequiredSlot(platform, slotPath) then return end
-            if not QuickMod.ClearSlot(item, character, slotIndex) then return end
+            if not QuickMod.ClearSlot(item, character, slotIndex, refreshAfterReturn) then return end
         else
             local part = Gunsmith.Config.parts[partId]
             if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
             if selection[slotPath] == partId then return true end
-            if not Inventory or not Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part)) then
+            if not Inventory or not Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part), item) then
                 print("[Gunsmith] Missing quick-mod part item for " .. tostring(partId))
                 return
             end
-            if not QuickMod.ClearSlot(item, character, slotIndex) then return end
+            if not QuickMod.ClearSlot(item, character, slotIndex, refreshAfterReturn) then return end
             if not QuickMod.InstallPartItem(item, character, part, slotIndex) then return end
         end
 
-        QuickMod.SyncFromContainer(item, selection, platform)
-        Core.PruneInvalidSelections(selection, platform, weapon)
-        Persistence.Save(item)
-        State.appliedSignatures[item] = nil
-        Runtime.Apply(item)
-        return true
+        finishQuickModChange(item, selection, platform, weapon)
+        Runtime.SchedulePartsRefresh(item, 0)
+        return false
     end
 
     local returnedParts = 0
@@ -335,7 +397,7 @@ function Runtime.SetPart(item, slotPath, partId)
         local part = Gunsmith.Config.parts[partId]
         if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
         if selection[slotPath] == partId then return end
-        if Inventory and not Inventory.ConsumePartItem(character, part) then
+        if Inventory and not Inventory.ConsumePartItem(character, part, item) then
             print("[Gunsmith] Missing part item for " .. tostring(partId))
             return
         end

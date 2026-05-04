@@ -66,6 +66,11 @@ function QuickMod.IsQuickPath(item, path)
     return false
 end
 
+function QuickMod.IsQuickItem(item)
+    local quickSlots = quickSlotsForItem(item)
+    return quickSlots ~= nil and #quickSlots > 0
+end
+
 function QuickMod.SlotForPath(item, path)
     local quickSlots = quickSlotsForItem(item)
     if not quickSlots or not path then return nil end
@@ -109,7 +114,7 @@ function QuickMod.InstallPartItem(item, character, part, slotIndex)
     local Inventory = Gunsmith.Inventory
     if not Inventory then return false end
 
-    local partItem = Inventory.FindPartItem(character, part.item.identifier)
+    local partItem = Inventory.FindPartItem(character, part.item.identifier, item)
     if not partItem then return false end
 
     local ok, result = pcall(function()
@@ -118,7 +123,7 @@ function QuickMod.InstallPartItem(item, character, part, slotIndex)
     return ok and result == true
 end
 
-function QuickMod.ClearSlot(item, character, slotIndex)
+function QuickMod.ClearSlot(item, character, slotIndex, onReturned)
     if SERVER then return false end
     local contained = slotItem(item, slotIndex)
     if not contained then return true end
@@ -126,14 +131,24 @@ function QuickMod.ClearSlot(item, character, slotIndex)
     local identifier = itemIdentifier(contained)
     local prefab = identifier and ItemPrefab and ItemPrefab.GetItemPrefab(identifier) or nil
     local inventory = character and character.Inventory or nil
+    local returnQueued = false
+
+    local function notifyReturned(spawned)
+        if onReturned then
+            onReturned(spawned)
+        end
+    end
 
     if prefab and Entity and Entity.Spawner then
         if inventory then
-            Entity.Spawner.AddItemToSpawnQueue(prefab, inventory, nil, nil, nil)
+            Entity.Spawner.AddItemToSpawnQueue(prefab, inventory, nil, nil, notifyReturned)
+            returnQueued = true
         elseif character and character.WorldPosition then
-            Entity.Spawner.AddItemToSpawnQueue(prefab, character.WorldPosition, nil, nil, nil)
+            Entity.Spawner.AddItemToSpawnQueue(prefab, character.WorldPosition, nil, nil, notifyReturned)
+            returnQueued = true
         elseif item.WorldPosition then
-            Entity.Spawner.AddItemToSpawnQueue(prefab, item.WorldPosition, nil, nil, nil)
+            Entity.Spawner.AddItemToSpawnQueue(prefab, item.WorldPosition, nil, nil, notifyReturned)
+            returnQueued = true
         end
     end
 
@@ -142,6 +157,10 @@ function QuickMod.ClearSlot(item, character, slotIndex)
     end
     if Entity and Entity.Spawner and Entity.Spawner.AddItemToRemoveQueue then
         Entity.Spawner.AddItemToRemoveQueue(contained)
+    end
+
+    if not returnQueued then
+        notifyReturned(nil)
     end
 
     return true
