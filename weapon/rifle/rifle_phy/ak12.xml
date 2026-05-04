@@ -23,102 +23,100 @@
     <Body width="500" height="120" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="65,5" handle1="-90,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
       <!-- 二战老兵合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deepgun_inwater_detect" strength="5" />
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
+
+      <!-- 有碎甲芯片时，增加1级穿甲（已换为性能更好的Containable实现）
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
       </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
+       有碎甲芯片时，增加1级穿甲
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
-      <!-- 有短枪口件时，略微增加枪口距离-->
+      </StatusEffect>-->
+
+      <!-- 有短枪口件时，略微增加枪口距离（已换为性能更好的Containable实现）
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="277,25" comparison="and" setvalue="true">
         <Conditional currentProjectileSelected="eq 0" />
         <Conditional deep_muzzle_short_detect="gte 1.0" />
       </StatusEffect>
-      <!-- 有长枪口件时，极大增加枪口距离-->
+       有长枪口件时，极大增加枪口距离
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="327,25" comparison="and" setvalue="true">
         <Conditional currentProjectileSelected="eq 0" />
         <Conditional deep_muzzle_long_detect="gte 1.0" />
       </StatusEffect>
-      <!-- 无枪口件时，恢复枪口距离-->
+       无枪口件时，恢复枪口距离
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="252,25" comparison="and" setvalue="true">
         <Conditional currentProjectileSelected="eq 0" />
         <Conditional deep_muzzle_none_detect="lte 0.0" />
-      </StatusEffect>
+      </StatusEffect>-->
 
       <!-- 使用光源组件作为自变量-->
-    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
-    </LightComponent>
-<!-- 右键瞄准时，设置电压为1.0-->
-    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" />
+      <!-- 右键瞄准时，设置电压为2.0-->
+    <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" Voltage="2.0" setvalue="true" >
+         <Conditional TargetContainedItem="true" HasTag="deep_thermalgoggles_sight" />
     </StatusEffect>
-<!-- 电压大于0.9时，开启热成像-->
-    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
-    <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+      <!-- 电压大于0.9时，开启热成像-->
+    <StatusEffect type="OnSecondaryUse" interval="0.9" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and"  >
+         <Conditional Voltage="gte 1.3" />
+         <Conditional TargetContainedItem="true" HasTag="deep_thermalgoggles_sight" />
     </StatusEffect>
-<!-- 松开右键，电压小于0.8时，关闭热成像-->
-    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-    <Conditional Voltage="lte 0.8" />
+      <!-- 松开右键，电压小于0.8时，关闭热成像-->
+    <StatusEffect type="OnContained" interval="0.9" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and"  >
+         <Conditional EntityType="eq character" TargetContainer="True" />
+         <Conditional Voltage="lte 1.0" />
     </StatusEffect>
 
     <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.9"  targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
+        <Affliction identifier="deep_Semi" strength="5" />
       </StatusEffect>
 
       <!-- 切换成下挂霰弹时，获得距离衰减 -->
-      <StatusEffect type="OnActive" interval="0.5" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.5"  targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true" >
         <Conditional currentProjectileSelected="eq 1" />
-        <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
-        <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
+        <Conditional TargetContainedItem="true" HasTag="deep_sub_hanging_master_key" />
+        <Affliction identifier="deep_shotgun_damgage_balance" strength="5" />
       </StatusEffect>
 
-      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.085" comparison="and" setvalue="true" >
+      <StatusEffect type="OnActive" target="This" reload="0.085" comparison="and" setvalue="true" >
       <Conditional currentProjectileSelected="eq 0" />
       </StatusEffect>
 
-      <StatusEffect type="OnActive" target="This" stackable="false" reload="0.4" barrelpos="252,-5" comparison="and" setvalue="true" >
+      <StatusEffect type="OnActive" target="This" reload="0.4" barrelpos="252,-5" comparison="and" setvalue="true" >
       <Conditional currentProjectileSelected="eq 1" />
       </StatusEffect>
 
       <!-- VCE检测 -->
       <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+        <Affliction identifier="deep_VCE_none" strength="5" />
       </StatusEffect>
     
     </Holdable>
     <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="1" holdtrigger="true" barrelpos="252,25" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
     <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+      <Affliction identifier="deep_VCE_yes" strength="5" />
       </StatusEffect>
     <!-- SwitchableRangedWeapon 相关-->
 
     <!--使用主弹药时,只使用0号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and" >
+      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true"  targetslot="0" comparison="and" >
       <Conditional currentProjectileSelected="eq 0" />
         <Use />
       </StatusEffect>
 
       <!--使用主弹药时,短枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
+      <StatusEffect type="OnUse" target="This"  disabledeltatime="true" comparison="and" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 0" />
       <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
@@ -129,7 +127,7 @@
       </StatusEffect>
 
       <!--使用主弹药时,延长枪管音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
+      <StatusEffect type="OnUse" target="This"  disabledeltatime="true" comparison="and" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 0" />
       <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
@@ -140,7 +138,7 @@
       </StatusEffect>
 
       <!--使用主弹药时,消音器音效与特效 -->
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true" >
+      <StatusEffect type="OnUse" target="This"  disabledeltatime="true" comparison="and" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 0" />
       <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
       <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
@@ -151,12 +149,12 @@
       </StatusEffect>
 
       <!-- 使用下挂弹药时,只使用1号位弹匣 -->
-      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="1" comparison="and" >
+      <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true"  targetslot="1" comparison="and" >
       <Conditional currentProjectileSelected="eq 1" />
         <Use />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
+      <StatusEffect type="OnUse" target="This"  disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 1" />
       <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
         <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
@@ -168,7 +166,7 @@
 	      <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
+      <StatusEffect type="OnUse" target="This"  disabledeltatime="true" comparison="and" setvalue="true" forceplaysounds="true" >
       <Conditional currentProjectileSelected="eq 1" />
       <RequiredItems items="deep_sub_hanging_gp25" type="Contained" targetslot="1" />
         <Explosion range="150.0" force="2" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
@@ -195,7 +193,7 @@
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true" >
       </StatusEffect>
       <!-- 枪械过热卡壳 -->
-      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
+      <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2"  />
       <StatusEffect type="NotInWater" target="This">
         <Conditional Condition="lt 50" />
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -242,7 +240,7 @@
         <!-- End. Sets everything to default values. -->
         <StatusEffect type="OnInserted" target="This" handle1="-90,-15" handle2="80,20" holdangle="-35" holdpos="40,-10" aimangle="0" aimpos="65,5" delay="2" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2"  />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
           <sound file="%ModDir%/weapon/ammo/akre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
@@ -283,8 +281,33 @@
 
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <!-- 枪口件，增加枪口距离 -->
-        <Containable tags="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="57,6" setactive="true" containedspritedepth="0.1" depth="0.1"></Containable>
+        <!-- 通用枪口件 -->
+        <Containable items="deep_muzzle_short,deep_muzzle_long" hide="false" itempos="57,6" setactive="true" >
+
+        <!-- 拿出时，枪口位置归位 -->
+        <StatusEffect type="OnRemoved" target="This" setvalue="true" barrelpos="252,25" >
+        </StatusEffect>
+
+        </Containable>
+
+        <!-- 短枪口件，增加枪口距离 -->
+        <Containable items="deep_muzzle_short" hide="false" itempos="57,6" setactive="true" >
+
+        <StatusEffect type="OnContaining" target="This" interval="0.9" setvalue="true" barrelpos="277,25" >
+            <Conditional barrelpos="!e 277,25" />
+        </StatusEffect>
+
+        </Containable>
+
+        <!-- 长枪口件，极大增加枪口距离 -->
+        <Containable items="deep_muzzle_long" hide="false" itempos="57,6" setactive="true" >
+
+        <StatusEffect type="OnContaining" target="This" interval="0.9" setvalue="true" barrelpos="327,25" >
+            <Conditional barrelpos="!e 327,25" />
+        </StatusEffect>
+
+        </Containable>
+
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="ak12_blackice" hide="false" itempos="-3,1" setactive="true">
@@ -293,10 +316,36 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_chip" hide="true" setactive="true" />
+        <!-- 碎甲弹头 -->
+        <Containable items="chip_bodyshot" hide="true" setactive="true" >
+
+        <!-- 放入时设置武器穿甲为0.1，且可在巡回切换中生效 -->
+        <StatusEffect type="OnContaining" target="This" interval="0.9" setvalue="true" penetration="0.1" >
+            <Conditional penetration="!e 0.1" />
+        </StatusEffect>
+
+        <!-- 拿出时，设置武器穿甲为0 -->
+        <StatusEffect type="OnRemoved" target="This" setvalue="true" penetration="0" >
+        </StatusEffect>
+
+        </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_chip" hide="true" setactive="true" />
+        <!-- 碎甲弹头 -->
+        <Containable items="chip_bodyshot" hide="true" setactive="true" >
+
+        <!-- 放入时设置武器穿甲为0.1，且可在巡回切换中生效 -->
+        <StatusEffect type="OnContaining" target="This" interval="0.9" setvalue="true" penetration="0.1" >
+            <Conditional penetration="!e 0.1" />
+        </StatusEffect>
+        
+        <!-- 拿出时，设置武器穿甲为0 -->
+        <StatusEffect type="OnRemoved" target="This" setvalue="true" penetration="0" >
+        </StatusEffect>
+
+        </Containable>
       </SubContainer>
     </ItemContainer>
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
