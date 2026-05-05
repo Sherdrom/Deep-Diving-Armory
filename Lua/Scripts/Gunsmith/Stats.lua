@@ -6,12 +6,19 @@ local Stats = {}
 Gunsmith.Stats = Stats
 
 Stats.Keys = {
-    "weight",
-    "ergonomics",
-    "recoilControl",
-    "spreadReduction",
-    "fireRateMultiplier",
-    "damageMultiplier"
+    "Ergonomics",
+    "RangedSpreadReduction",
+    "RangedAttackSpeed",
+    "RangedAttackMultiplier",
+    "WeaponsSkillBonus",
+    "WalkingSpeed",
+    "MovementSpeed",
+    "FlowResistance",
+    "StunResistance",
+    "WeaponsSkillGainSpeed",
+    "ExperienceGainMultiplier",
+    "SoundRangeMultiplier",
+    "MaximumHealthMultiplier"
 }
 
 function Stats.Empty()
@@ -24,11 +31,13 @@ end
 
 function Stats.PartStats(part)
     local result = Stats.Empty()
-    if not part or type(part.stats) ~= "table" then return result end
+    if not part then return result end
 
-    for _, key in ipairs(Stats.Keys) do
-        if type(part.stats[key]) == "number" then
-            result[key] = part.stats[key]
+    if type(part.stats) == "table" then
+        for _, key in ipairs(Stats.Keys) do
+            if type(part.stats[key]) == "number" then
+                result[key] = part.stats[key]
+            end
         end
     end
     return result
@@ -59,4 +68,18 @@ function Stats.Encode(stats, separator)
         table.insert(values, key .. "=" .. string.format("%.4f", source[key] or 0))
     end
     return table.concat(values, separator or ",")
+end
+
+function Stats.ManagedItemIdentifiers(selection)
+    local ids = {}
+    if type(selection) ~= "table" then return ids end
+
+    for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
+        local part = Core.GetPart(selection[path])
+        local itemId = part and part.item and part.item.identifier or nil
+        if type(itemId) == "string" and itemId ~= "" then
+            table.insert(ids, itemId)
+        end
+    end
+    return ids
 end

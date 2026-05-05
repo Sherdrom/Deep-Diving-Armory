@@ -33,7 +33,13 @@ namespace GunSmith
         public Sprite InventorySprite { get; init; } = null!;
         public Rectangle ContentBounds { get; init; }
         public IReadOnlyList<GunsmithLayer> Layers { get; init; } = Array.Empty<GunsmithLayer>();
+    }
+
+    internal sealed class GunsmithRuntimeState
+    {
+        public string Signature { get; init; } = string.Empty;
         public GunsmithRuntimeStats Stats { get; init; } = GunsmithRuntimeStats.Empty;
+        public IReadOnlySet<string> ManagedItemIdentifiers { get; init; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
     }
 
     internal sealed record GunsmithInventorySettings(float Scale, float RotationDegrees, float Padding)
@@ -47,13 +53,20 @@ namespace GunSmith
     }
 
     internal sealed record GunsmithRuntimeStats(
-        float Weight,
         float Ergonomics,
-        float RecoilControl,
-        float SpreadReduction,
-        float FireRateMultiplier,
-        float DamageMultiplier)
+        float RangedSpreadReduction,
+        float RangedAttackSpeed,
+        float RangedAttackMultiplier,
+        float WeaponsSkillBonus,
+        float WalkingSpeed,
+        float MovementSpeed,
+        float FlowResistance,
+        float StunResistance,
+        float WeaponsSkillGainSpeed,
+        float ExperienceGainMultiplier,
+        float SoundRangeMultiplier,
+        float MaximumHealthMultiplier)
     {
-        public static GunsmithRuntimeStats Empty { get; } = new(0, 0, 0, 0, 0, 0);
+        public static GunsmithRuntimeStats Empty { get; } = new(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 }

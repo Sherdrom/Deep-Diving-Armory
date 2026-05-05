@@ -4,22 +4,18 @@ local parts = Deep_Lua.Gunsmith.Config.parts
 local config = Deep_Lua.Gunsmith.Config
 local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
-config.weapons.deep_hk416 = {
-    platform = "AR",
+config.weapons.deep_hk416 = { platform = "AR",
 
     -- 具体武器只声明根身份件；子默认件由 receiver.mounts[].defaultPart 展开。
-    rootParts = {
-        receiver = "hk416_receiver_std"
+    rootParts = { receiver = "hk416_receiver_std"
     },
 
-    rootSockets = {
-        receiver = { x = 184, y = 158 }
+    rootSockets = { receiver = { x = 184, y = 158 }
     },
 
     -- QuickMod maps vanilla ItemContainer slots to terminal GunSmith paths.
     -- slot uses Barotrauma targetslot's zero-based numbering.
-    quickSlots = {
-        { slot = 1, path = "receiver/handguard/Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } },
+    quickSlots = { { slot = 1, path = "receiver/handguard/Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } },
         { slot = 2, path = "receiver/handguard/Right_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Right_rail_mount" },
         { slot = 3, path = "receiver/handguard/Left_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Left_rail_mount" },
         { slot = 4, path = "receiver/optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount" },
@@ -27,35 +23,30 @@ config.weapons.deep_hk416 = {
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
-    preview = {
-        padding = 0,
+    preview = { padding = 0,
         scale = 1.0,
         offset = { x = 0, y = 0 }
     },
 
-    inventory = {
-        scale = 0.35,   -- 库存图标缩放。
+    inventory = { scale = 0.35,   -- 库存图标缩放。
         rotation = 45,  -- 库存图标旋转角度，单位是度，正数为顺时针。
         padding = 6     -- 物品栏图标内边距，单位像素。旋转后边缘留白，避免裁切。
     },
 
     -- 只影响手持/掉落世界图。offset 是烘焙贴图内的视觉偏移，不移动物品物理位置。
-    world = {
-        scale = 1.0,
+    world = { scale = 1.0,
         rotation = 0.0,
         padding = 0,
         offset = { x = 140, y = -50 }
     }
 }
 
-parts.hk416_receiver_std = {
-    type = "receiver",
+parts.hk416_receiver_std = { type = "receiver",
     nameKey = "deep.gunsmith.part.hk416_receiver_std",
     provides = { "HK416_receiver" },
     item = { identifier = "deep_gunsmith_hk416_receiver_std" },
-    stats = { weight = 1.08, ergonomics = 100, recoilControl = 0.03 },
-    visual = {
-        texture = texture,
+    stats = { Ergonomics = 100 },
+    visual = { texture = texture,
         source = { x = 13, y = 372, w = 139, h = 89 },
         attachPoint = { x = 71, y = 33 },
         order = 30,
@@ -64,8 +55,7 @@ parts.hk416_receiver_std = {
 
     -- HK416 机匣顶部自带导轨。这里挂一个 virtual part，用它继续提供前/后瞄具挂点。
     -- anchor 相对 receiver.visual.attachPoint。
-    mounts = {
-        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
+    mounts = { { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
         { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
         { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
         { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },

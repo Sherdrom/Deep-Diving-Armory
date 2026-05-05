@@ -12,11 +12,12 @@ namespace GunSmith
                 string? inventorySpec = FindStringArg(args, 2);
                 string? worldSpec = FindStringArg(args, 3);
                 string? statsSpec = FindStringArg(args, 4);
+                string? managedItemSpec = FindStringArg(args, 5);
                 int width = FindIntArg(args, 0);
                 int height = FindIntArg(args, 1);
                 if (item != null && signature != null && layerSpec != null)
                 {
-                    ApplyFromLua(item, signature, layerSpec, inventorySpec ?? string.Empty, worldSpec ?? string.Empty, statsSpec ?? string.Empty, width, height);
+                    ApplyFromLua(item, signature, layerSpec, inventorySpec ?? string.Empty, worldSpec ?? string.Empty, statsSpec ?? string.Empty, managedItemSpec ?? string.Empty, width, height);
                 }
                 return null;
             });

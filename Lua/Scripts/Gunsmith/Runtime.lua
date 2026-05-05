@@ -270,6 +270,10 @@ local function encodeWorldSettings(item)
         offset.y or 0.0)
 end
 
+local function encodeManagedItems(selection)
+    return table.concat(Stats.ManagedItemIdentifiers(selection), ",")
+end
+
 function Runtime.Apply(item)
     if SERVER then return end
     if not item or item.removed then return end
@@ -285,12 +289,13 @@ function Runtime.Apply(item)
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
     local statsSpec = Stats.Encode(Stats.SumSelection(selection))
-    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|stats:" .. statsSpec
+    local managedItemSpec = encodeManagedItems(selection)
+    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|stats:" .. statsSpec .. "|items:" .. managedItemSpec
     if State.appliedSignatures[item] == signature then return end
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
-        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, platform.canvas.w, platform.canvas.h)
+        Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, managedItemSpec, platform.canvas.w, platform.canvas.h)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")

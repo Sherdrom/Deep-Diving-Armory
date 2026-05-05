@@ -2,7 +2,8 @@ namespace GunSmith
 {
     public static partial class GunsmithApi
     {
-        private static readonly ConcurrentDictionary<Item, GunsmithSpriteState> itemStates = new();
+        private static readonly ConcurrentDictionary<Item, GunsmithSpriteState> spriteStates = new();
+        private static readonly ConcurrentDictionary<Item, GunsmithRuntimeState> runtimeStates = new();
         private static readonly ConcurrentDictionary<string, Texture2D> textureCache = new(StringComparer.OrdinalIgnoreCase);
         private static GraphicsDevice? graphicsDevice;
         private static SpriteBatch? spriteBatch;
@@ -15,13 +16,24 @@ namespace GunSmith
             spriteBatch = new SpriteBatch(graphics);
         }
 
-        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, int width, int height)
+        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, string managedItemSpec, int width, int height)
         {
             if (!IsReady || item == null || item.Removed) { return; }
             if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return; }
 
-            if (itemStates.TryGetValue(item, out GunsmithSpriteState? existing) && existing.Signature == signature)
+            GunsmithRuntimeStats stats = ParseRuntimeStats(statsSpec);
+            IReadOnlySet<string> managedItemIdentifiers = ParseIdentifierSet(managedItemSpec);
+            GunsmithRuntimeState runtimeState = new()
             {
+                Signature = signature,
+                Stats = stats,
+                ManagedItemIdentifiers = managedItemIdentifiers
+            };
+
+            string spriteSignature = BuildSpriteSignature(layerSpec, inventorySpec, worldSpec, width, height);
+            if (spriteStates.TryGetValue(item, out GunsmithSpriteState? existing) && existing.Signature == spriteSignature)
+            {
+                runtimeStates[item] = runtimeState;
                 ApplyState(item, existing);
                 return;
             }
@@ -30,7 +42,6 @@ namespace GunSmith
             if (layers.Count == 0) { return; }
             GunsmithInventorySettings inventorySettings = ParseInventorySettings(inventorySpec);
             GunsmithWorldSettings worldSettings = ParseWorldSettings(worldSpec);
-            GunsmithRuntimeStats stats = ParseRuntimeStats(statsSpec);
 
             bool shouldOwnWorldSprite = item.HasTag("deep_gunsmith");
             bool shouldReplaceActiveSprite =
@@ -69,18 +80,18 @@ namespace GunSmith
 
             GunsmithSpriteState state = new()
             {
-                Signature = signature,
+                Signature = spriteSignature,
                 Texture = texture,
                 WorldTexture = worldTexture,
                 InventoryTexture = inventoryTexture,
                 WorldSprite = worldSprite,
                 InventorySprite = inventorySprite,
                 ContentBounds = contentBounds,
-                Layers = layers,
-                Stats = stats
+                Layers = layers
             };
 
-            itemStates[item] = state;
+            spriteStates[item] = state;
+            runtimeStates[item] = runtimeState;
             ApplyState(item, state, shouldReplaceActiveSprite);
 
             if (existing != null && ReferenceEquals(item.activeSprite, existing.WorldSprite))
@@ -104,11 +115,11 @@ namespace GunSmith
         }
 
         internal static bool TryGetState(Item item, out GunsmithSpriteState state)
-            => itemStates.TryGetValue(item, out state!);
+            => spriteStates.TryGetValue(item, out state!);
 
         internal static bool TryGetValidState(Item item, out GunsmithSpriteState state)
         {
-            if (itemStates.TryGetValue(item, out state!) && IsStateUsable(state))
+            if (spriteStates.TryGetValue(item, out state!) && IsStateUsable(state))
             {
                 return true;
             }
@@ -120,15 +131,16 @@ namespace GunSmith
             return false;
         }
 
-        internal static bool TryGetGameplayState(Item? item, out GunsmithSpriteState state)
+        internal static bool TryGetRuntimeState(Item? item, out GunsmithRuntimeState state)
         {
             state = null!;
-            return item != null && !item.Removed && TryGetValidState(item, out state);
+            return item != null && !item.Removed && runtimeStates.TryGetValue(item, out state!);
         }
 
         internal static void RemoveState(Item item)
         {
-            if (itemStates.TryRemove(item, out GunsmithSpriteState? state))
+            runtimeStates.TryRemove(item, out _);
+            if (spriteStates.TryRemove(item, out GunsmithSpriteState? state))
             {
                 if (!state.Texture.IsDisposed)
                 {
@@ -162,7 +174,7 @@ namespace GunSmith
 
         internal static void EnsureSafeSprite(Item item)
         {
-            if (itemStates.TryGetValue(item, out GunsmithSpriteState? state) && !IsStateUsable(state))
+            if (spriteStates.TryGetValue(item, out GunsmithSpriteState? state) && !IsStateUsable(state))
             {
                 ClearFromLua(item);
             }
@@ -184,9 +196,10 @@ namespace GunSmith
         {
             CloseWindow();
 
-            foreach (KeyValuePair<Item, GunsmithSpriteState> pair in itemStates.ToArray())
+            runtimeStates.Clear();
+            foreach (KeyValuePair<Item, GunsmithSpriteState> pair in spriteStates.ToArray())
             {
-                if (itemStates.TryRemove(pair.Key, out GunsmithSpriteState? state))
+                if (spriteStates.TryRemove(pair.Key, out GunsmithSpriteState? state))
                 {
                     if (!state.Texture.IsDisposed)
                     {

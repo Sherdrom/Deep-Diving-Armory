@@ -292,17 +292,43 @@ namespace GunSmith
 
                 stats = parts[0] switch
                 {
-                    "weight" => stats with { Weight = parsed },
-                    "ergonomics" => stats with { Ergonomics = parsed },
-                    "recoilControl" => stats with { RecoilControl = parsed },
-                    "spreadReduction" => stats with { SpreadReduction = parsed },
-                    "fireRateMultiplier" => stats with { FireRateMultiplier = parsed },
-                    "damageMultiplier" => stats with { DamageMultiplier = parsed },
+                    "Ergonomics" => stats with { Ergonomics = parsed },
+                    nameof(StatTypes.RangedSpreadReduction) => stats with { RangedSpreadReduction = parsed },
+                    nameof(StatTypes.RangedAttackSpeed) => stats with { RangedAttackSpeed = parsed },
+                    nameof(StatTypes.RangedAttackMultiplier) => stats with { RangedAttackMultiplier = parsed },
+                    nameof(StatTypes.WeaponsSkillBonus) => stats with { WeaponsSkillBonus = parsed },
+                    nameof(StatTypes.WalkingSpeed) => stats with { WalkingSpeed = parsed },
+                    nameof(StatTypes.MovementSpeed) => stats with { MovementSpeed = parsed },
+                    nameof(StatTypes.FlowResistance) => stats with { FlowResistance = parsed },
+                    "StunResistance" => stats with { StunResistance = parsed },
+                    nameof(StatTypes.WeaponsSkillGainSpeed) => stats with { WeaponsSkillGainSpeed = parsed },
+                    nameof(StatTypes.ExperienceGainMultiplier) => stats with { ExperienceGainMultiplier = parsed },
+                    nameof(StatTypes.SoundRangeMultiplier) => stats with { SoundRangeMultiplier = parsed },
+                    nameof(StatTypes.MaximumHealthMultiplier) => stats with { MaximumHealthMultiplier = parsed },
                     _ => stats
                 };
             }
 
             return stats;
+        }
+
+        private static string BuildSpriteSignature(string layerSpec, string inventorySpec, string worldSpec, int width, int height)
+            => string.Concat(layerSpec, "|inventory:", inventorySpec, "|world:", worldSpec, "|canvas:", width, "x", height);
+
+        private static IReadOnlySet<string> ParseIdentifierSet(string value)
+        {
+            HashSet<string> identifiers = new(StringComparer.OrdinalIgnoreCase);
+            if (string.IsNullOrWhiteSpace(value)) { return identifiers; }
+
+            foreach (string identifier in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                if (!string.IsNullOrWhiteSpace(identifier))
+                {
+                    identifiers.Add(identifier);
+                }
+            }
+
+            return identifiers;
         }
 
         private static string ResolvePath(string path)

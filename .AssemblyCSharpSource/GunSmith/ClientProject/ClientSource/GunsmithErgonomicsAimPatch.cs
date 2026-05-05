@@ -40,7 +40,7 @@ namespace GunSmith
                 return true;
             }
 
-            if (item.GetComponent<RangedWeapon>() == null || !GunsmithApi.TryGetGameplayState(item, out GunsmithSpriteState state))
+            if (item.GetComponent<RangedWeapon>() == null || !GunsmithApi.TryGetRuntimeState(item, out GunsmithRuntimeState state))
             {
                 ClearIfOwned(picker, item);
                 return true;
@@ -155,14 +155,14 @@ namespace GunSmith
             }
         }
 
-        private static float AimFollowRadiansPerSecond(GunsmithSpriteState state)
+        private static float AimFollowRadiansPerSecond(GunsmithRuntimeState state)
         {
             float degrees = 60.0f + state.Stats.Ergonomics * 0.5f;
             degrees = MathHelper.Clamp(degrees, 45.0f, 360.0f);
             return MathHelper.ToRadians(degrees);
         }
 
-        private static float RaiseDurationSeconds(GunsmithSpriteState state)
+        private static float RaiseDurationSeconds(GunsmithRuntimeState state)
             => RaiseTravelRadians / AimFollowRadiansPerSecond(state);
 
         private static float CurrentTransformedRotation(Item item)

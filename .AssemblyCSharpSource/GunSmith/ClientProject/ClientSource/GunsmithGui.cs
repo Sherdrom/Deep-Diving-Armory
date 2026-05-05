@@ -16,7 +16,7 @@ namespace GunSmith
         private static GUIFrame? partDetailPanel;
         private static GUITextBlock? partListTitle;
         private static readonly Dictionary<string, GUIButton> partButtons = new(StringComparer.Ordinal);
-        private static GUITextBlock? partDetailStats;
+        private static GUIListBox? partDetailStats;
         private static GUIButton? partDetailActionButton;
         private static string? partListSlotPath;
         private static string? partDetailSlotPath;
@@ -133,8 +133,8 @@ namespace GunSmith
             previewPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.66f), middle.RectTransform, Anchor.TopCenter), color: Color.Black * 0.25f);
             detailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.30f), middle.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
             GUIFrame rightPanel = new(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterRight), color: Color.Transparent);
-            partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.62f), rightPanel.RectTransform, Anchor.TopCenter));
-            partDetailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.34f), rightPanel.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
+            partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.54f), rightPanel.RectTransform, Anchor.TopCenter));
+            partDetailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.42f), rightPanel.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
 
             RefreshSelectionPanels();
         }
@@ -330,11 +330,12 @@ namespace GunSmith
             selectedPartId = part.Id;
 
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.18f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
-            partDetailStats = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.44f), partDetailPanel.RectTransform, Anchor.Center), (LocalizedString)FormatPartStats(part.Stats), textAlignment: Alignment.Center);
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.14f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
+            partDetailStats = new GUIListBox(new RectTransform(new Vector2(0.92f, 0.56f), partDetailPanel.RectTransform, Anchor.Center));
+            PopulatePartStats(partDetailStats, part.Stats);
 
             string buttonText = InstallButtonText(part, installed);
-            partDetailActionButton = new GUIButton(new RectTransform(new Vector2(0.72f, 0.22f), partDetailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)buttonText, Alignment.Center);
+            partDetailActionButton = new GUIButton(new RectTransform(new Vector2(0.72f, 0.18f), partDetailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)buttonText, Alignment.Center);
             UpdatePartDetailAction(slot, part, installed);
         }
 
@@ -358,7 +359,7 @@ namespace GunSmith
 
             selectedPartId = part.Id;
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            partDetailStats.Text = (LocalizedString)FormatPartStats(part.Stats);
+            PopulatePartStats(partDetailStats, part.Stats);
             UpdatePartDetailAction(slot, part, installed);
         }
 
@@ -440,10 +441,55 @@ namespace GunSmith
         }
 
         private static string FormatStatsLine(GunsmithStats stats)
-            => $"{LocalizeKey("deep.gunsmith.stat.weight")} {stats.Weight:0.##} | {LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeKey("deep.gunsmith.stat.recoil_control")} {stats.RecoilControl * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.spread_reduction")} {stats.SpreadReduction * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.fire_rate")} {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.damage")} {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
+            => $"{LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeKey("deep.gunsmith.stat.spread_reduction")} {stats.SpreadReduction * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.fire_rate")} {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.damage")} {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
 
-        private static string FormatPartStats(GunsmithStats stats)
-            => $"{LocalizeKey("deep.gunsmith.stat.weight")}: {stats.Weight:+0.##;-0.##;0}\n{LocalizeKey("deep.gunsmith.stat.ergonomics")}: {stats.Ergonomics:+0.##;-0.##;0}\n{LocalizeKey("deep.gunsmith.stat.recoil_control")}: {stats.RecoilControl * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.spread_reduction")}: {stats.SpreadReduction * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.fire_rate")}: {stats.FireRateMultiplier * 100:+0.#;-0.#;0}%\n{LocalizeKey("deep.gunsmith.stat.damage")}: {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
+        private static void PopulatePartStats(GUIListBox list, GunsmithStats stats)
+        {
+            list.Content.ClearChildren();
+            foreach (string line in FormatPartStats(stats))
+            {
+                _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.0f), list.Content.RectTransform)
+                {
+                    MinSize = new Point(0, 22)
+                }, (LocalizedString)line, textAlignment: Alignment.Center);
+            }
+        }
+
+        private static List<string> FormatPartStats(GunsmithStats stats)
+        {
+            List<string> lines = new();
+
+            AddNonZeroStatLine(lines, "deep.gunsmith.stat.ergonomics", stats.Ergonomics, "0.##");
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.spread_reduction", stats.SpreadReduction);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.fire_rate", stats.FireRateMultiplier);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.damage", stats.DamageMultiplier);
+            AddNonZeroStatLine(lines, "deep.gunsmith.stat.weapon_skill", stats.WeaponSkillBonus, "0.#");
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.walking_speed", stats.WalkingSpeed);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.movement_speed", stats.MovementSpeed);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.flow_resistance", stats.FlowResistance);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.stun_resistance", stats.StunResistance);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.weapons_skill_gain", stats.WeaponsSkillGainSpeed);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.experience_gain", stats.ExperienceGainMultiplier);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.sound_range", stats.SoundRangeMultiplier);
+            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.max_health", stats.MaximumHealthMultiplier);
+            if (lines.Count == 0)
+            {
+                lines.Add(LocalizeKey("deep.gunsmith.stat.none"));
+            }
+            return lines;
+        }
+
+        private static void AddNonZeroPercentLine(List<string> lines, string key, float value)
+        {
+            if (Math.Abs(value) < 0.0001f) { return; }
+            lines.Add($"{LocalizeKey(key)}: {value * 100:+0.#;-0.#;0}%");
+        }
+
+        private static void AddNonZeroStatLine(List<string> lines, string key, float value, string format)
+        {
+            if (Math.Abs(value) < 0.0001f) { return; }
+            lines.Add($"{LocalizeKey(key)}: {value.ToString("+" + format + ";-" + format + ";0", System.Globalization.CultureInfo.InvariantCulture)}");
+        }
 
         private static Rectangle CreatePreviewSourceRect(GunsmithSpriteState state, GunsmithPreviewSettings settings)
         {
@@ -566,12 +612,19 @@ namespace GunSmith
                 if (parts.Length != 2 || !float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value)) { continue; }
                 stats = parts[0] switch
                 {
-                    "weight" => stats with { Weight = value },
-                    "ergonomics" => stats with { Ergonomics = value },
-                    "recoilControl" => stats with { RecoilControl = value },
-                    "spreadReduction" => stats with { SpreadReduction = value },
-                    "fireRateMultiplier" => stats with { FireRateMultiplier = value },
-                    "damageMultiplier" => stats with { DamageMultiplier = value },
+                    "Ergonomics" => stats with { Ergonomics = value },
+                    nameof(StatTypes.RangedSpreadReduction) => stats with { SpreadReduction = value },
+                    nameof(StatTypes.RangedAttackSpeed) => stats with { FireRateMultiplier = value },
+                    nameof(StatTypes.RangedAttackMultiplier) => stats with { DamageMultiplier = value },
+                    nameof(StatTypes.WeaponsSkillBonus) => stats with { WeaponSkillBonus = value },
+                    nameof(StatTypes.WalkingSpeed) => stats with { WalkingSpeed = value },
+                    nameof(StatTypes.MovementSpeed) => stats with { MovementSpeed = value },
+                    nameof(StatTypes.FlowResistance) => stats with { FlowResistance = value },
+                    "StunResistance" => stats with { StunResistance = value },
+                    nameof(StatTypes.WeaponsSkillGainSpeed) => stats with { WeaponsSkillGainSpeed = value },
+                    nameof(StatTypes.ExperienceGainMultiplier) => stats with { ExperienceGainMultiplier = value },
+                    nameof(StatTypes.SoundRangeMultiplier) => stats with { SoundRangeMultiplier = value },
+                    nameof(StatTypes.MaximumHealthMultiplier) => stats with { MaximumHealthMultiplier = value },
                     _ => stats
                 };
             }
@@ -613,9 +666,22 @@ namespace GunSmith
             public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }
 
-        private sealed record GunsmithStats(float Weight, float Ergonomics, float RecoilControl, float SpreadReduction, float FireRateMultiplier, float DamageMultiplier)
+        private sealed record GunsmithStats(
+            float Ergonomics,
+            float SpreadReduction,
+            float FireRateMultiplier,
+            float DamageMultiplier,
+            float WeaponSkillBonus,
+            float WalkingSpeed,
+            float MovementSpeed,
+            float FlowResistance,
+            float StunResistance,
+            float WeaponsSkillGainSpeed,
+            float ExperienceGainMultiplier,
+            float SoundRangeMultiplier,
+            float MaximumHealthMultiplier)
         {
-            public static GunsmithStats Empty { get; } = new(0, 0, 0, 0, 0, 0);
+            public static GunsmithStats Empty { get; } = new(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
         private sealed record GunsmithPreviewSettings(float Padding, float Scale, Vector2 Offset)
@@ -662,5 +728,6 @@ namespace GunSmith
                 spriteBatch.Draw(texture, destination, sourceRect, Color.White);
             }
         }
+
     }
 }

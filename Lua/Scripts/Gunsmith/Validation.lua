@@ -7,12 +7,19 @@ Gunsmith.Validation = Validation
 local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier", "slot" }
 local oldConfigFields = { "defaults", "rootAccepts", "slots", "requiredRootSlots", "hiddenRootSlots", "slotNames", "pathNames" }
 local knownStatFields = {
-    weight = true,
-    ergonomics = true,
-    recoilControl = true,
-    spreadReduction = true,
-    fireRateMultiplier = true,
-    damageMultiplier = true
+    Ergonomics = true,
+    RangedSpreadReduction = true,
+    RangedAttackSpeed = true,
+    RangedAttackMultiplier = true,
+    WeaponsSkillBonus = true,
+    WalkingSpeed = true,
+    MovementSpeed = true,
+    FlowResistance = true,
+    StunResistance = true,
+    WeaponsSkillGainSpeed = true,
+    ExperienceGainMultiplier = true,
+    SoundRangeMultiplier = true,
+    MaximumHealthMultiplier = true
 }
 
 local fixedLocalizationKeys = {
@@ -39,9 +46,7 @@ local fixedLocalizationKeys = {
     "deep.gunsmith.action.disabled",
     "deep.gunsmith.action.remove",
     "deep.gunsmith.action.install",
-    "deep.gunsmith.stat.weight",
     "deep.gunsmith.stat.ergonomics",
-    "deep.gunsmith.stat.recoil_control",
     "deep.gunsmith.stat.spread_reduction",
     "deep.gunsmith.stat.fire_rate",
     "deep.gunsmith.stat.damage"
@@ -758,7 +763,7 @@ function Validation.RunSelfTest()
                 provides = { "test_receiver" },
                 item = { virtual = true },
                 stats = {
-                    weight = "heavy",
+                    Ergonomics = "heavy",
                     mysteryStat = 1
                 },
                 visual = {
