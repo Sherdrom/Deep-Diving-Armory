@@ -57,6 +57,18 @@ local function findCompatiblePartId(selection, platform, path, identifier)
     return nil
 end
 
+local function beginQuickSlotMutation(item)
+    if Hook and Hook.Call then
+        Hook.Call("DeepGunsmithBeginQuickSlotMutation", item)
+    end
+end
+
+local function endQuickSlotMutation(item)
+    if Hook and Hook.Call then
+        Hook.Call("DeepGunsmithEndQuickSlotMutation", item)
+    end
+end
+
 function QuickMod.IsQuickPath(item, path)
     local quickSlots = quickSlotsForItem(item)
     if not quickSlots or not path then return false end
@@ -117,9 +129,11 @@ function QuickMod.InstallPartItem(item, character, part, slotIndex)
     local partItem = Inventory.FindPartItem(character, part.item.identifier, item)
     if not partItem then return false end
 
+    beginQuickSlotMutation(item)
     local ok, result = pcall(function()
         return item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
     end)
+    endQuickSlotMutation(item)
     return ok and result == true
 end
 
@@ -153,7 +167,9 @@ function QuickMod.ClearSlot(item, character, slotIndex, onReturned)
     end
 
     if item.OwnInventory and item.OwnInventory.RemoveItem then
+        beginQuickSlotMutation(item)
         item.OwnInventory.RemoveItem(contained)
+        endQuickSlotMutation(item)
     end
     if Entity and Entity.Spawner and Entity.Spawner.AddItemToRemoveQueue then
         Entity.Spawner.AddItemToRemoveQueue(contained)

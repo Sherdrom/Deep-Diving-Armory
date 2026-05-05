@@ -26,6 +26,7 @@ This folder stores development notes for the `GunSmith` prototype under Deep-Div
 - [V1.3 Summary](./V1.3_Gunsmith_Summary.md)
 - [V1.3.1 Summary](./V1.3.1_Gunsmith_Summary.md)
 - [V1.3.2 Summary](./V1.3.2_Gunsmith_Summary.md)
+- [V1.3.3 Summary](./V1.3.3_Gunsmith_Summary.md)
 
 ## Current Direction
 
@@ -75,6 +76,7 @@ Current quick-mod UI validation paths include:
 
 - HK416 hidden original ItemContainer slots `1-5`
 - HK416 quick-mod UI through `Shift+G`
+- HK416 `showWhenContained` visible underbarrel slot with managed drag/drop blocking
 
 ## Notes
 

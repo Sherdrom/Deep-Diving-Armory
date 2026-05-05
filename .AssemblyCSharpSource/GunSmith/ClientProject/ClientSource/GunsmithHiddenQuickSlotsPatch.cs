@@ -3,8 +3,10 @@ namespace GunSmith
     [HarmonyPatch]
     public static class GunsmithHiddenQuickSlotsPatch
     {
-        private static readonly Dictionary<string, HashSet<int>> HiddenSlotsByItemIdentifier = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, HashSet<int>> ManagedSlotsByItemIdentifier = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, Dictionary<int, HashSet<string>>> VisibleWhenContainedByItemIdentifier = new(StringComparer.OrdinalIgnoreCase);
         private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Inventory, LayoutCache> OriginalLayoutsByInventory = new();
+        private static readonly HashSet<Item> QuickMutationItems = new();
 
         public static void RegisterHiddenSlots(string itemIdentifier, string slotSpec)
         {
@@ -24,11 +26,59 @@ namespace GunSmith
 
             if (slots.Count == 0)
             {
-                HiddenSlotsByItemIdentifier.Remove(itemIdentifier);
+                ManagedSlotsByItemIdentifier.Remove(itemIdentifier);
                 return;
             }
 
-            HiddenSlotsByItemIdentifier[itemIdentifier] = slots;
+            ManagedSlotsByItemIdentifier[itemIdentifier] = slots;
+        }
+
+        public static void RegisterVisibleWhenContained(string itemIdentifier, int slotIndex, string identifierSpec)
+        {
+            if (string.IsNullOrWhiteSpace(itemIdentifier) || slotIndex < 0)
+            {
+                return;
+            }
+
+            HashSet<string> identifiers = new(StringComparer.OrdinalIgnoreCase);
+            foreach (string rawIdentifier in identifierSpec.Split(','))
+            {
+                string identifier = rawIdentifier.Trim();
+                if (!string.IsNullOrWhiteSpace(identifier))
+                {
+                    identifiers.Add(identifier);
+                }
+            }
+
+            if (!VisibleWhenContainedByItemIdentifier.TryGetValue(itemIdentifier, out Dictionary<int, HashSet<string>>? rules))
+            {
+                rules = new Dictionary<int, HashSet<string>>();
+                VisibleWhenContainedByItemIdentifier[itemIdentifier] = rules;
+            }
+
+            if (identifiers.Count == 0)
+            {
+                rules.Remove(slotIndex);
+                if (rules.Count == 0)
+                {
+                    VisibleWhenContainedByItemIdentifier.Remove(itemIdentifier);
+                }
+                return;
+            }
+
+            rules[slotIndex] = identifiers;
+        }
+
+        public static void BeginQuickSlotMutation(Item item)
+        {
+            if (item == null || item.Removed) { return; }
+            QuickMutationItems.Add(item);
+        }
+
+        public static void EndQuickSlotMutation(Item item)
+        {
+            if (item == null) { return; }
+            QuickMutationItems.Remove(item);
         }
 
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.HideSlot))]
@@ -40,7 +90,7 @@ namespace GunSmith
                 PackVisibleSlotsFirst(__instance);
             }
 
-            if (IsManagedQuickSlot(__instance, __0))
+            if (IsManagedSlot(__instance, __0) && !ShouldShowManagedSlot(__instance, __0))
             {
                 __result = true;
                 return false;
@@ -65,6 +115,40 @@ namespace GunSmith
             CaptureOriginalLayouts(__instance);
             PackVisibleSlotsFirst(__instance);
             Inventory.RefreshMouseOnInventory();
+        }
+
+        [HarmonyPatch(typeof(ItemInventory), nameof(ItemInventory.FindAllowedSlot))]
+        [HarmonyPrefix]
+        private static bool SkipManagedSlotsWhenAutoPutting(ItemInventory __instance, Item item, bool ignoreCondition, ref int __result)
+        {
+            if (!HasManagedSlots(__instance) || IsQuickMutationAllowed(__instance))
+            {
+                return true;
+            }
+
+            __result = FindAllowedNonManagedSlot(__instance, item, ignoreCondition);
+            return false;
+        }
+
+        [HarmonyPatch(typeof(ItemInventory), nameof(ItemInventory.TryPutItem), typeof(Item), typeof(int), typeof(bool), typeof(bool), typeof(Character), typeof(bool), typeof(bool), typeof(bool))]
+        [HarmonyPrefix]
+        private static bool BlockDirectManagedSlotPut(ItemInventory __instance, Item item, int i, Character user, bool createNetworkEvent, bool ignoreCondition, bool triggerOnInsertedEffects, ref bool __result)
+        {
+            if (!IsManagedSlot(__instance, i) || IsQuickMutationAllowed(__instance))
+            {
+                return true;
+            }
+
+            Item? containedItem = i >= 0 && i < __instance.slots.Length ? __instance.slots[i].FirstOrDefault() : null;
+            ItemInventory? containedInventory = containedItem?.OwnInventory;
+            if (containedInventory != null && containedInventory.CanBePut(item))
+            {
+                __result = containedInventory.TryPutItem(item, user, null, createNetworkEvent, ignoreCondition, triggerOnInsertedEffects);
+                return false;
+            }
+
+            __result = false;
+            return false;
         }
 
         private static void CaptureOriginalLayouts(Inventory inventory)
@@ -92,11 +176,16 @@ namespace GunSmith
             }
 
             List<int> visibleIndices = new();
+            List<int> hiddenIndices = new();
             for (int i = 0; i < __instance.visualSlots.Length; i++)
             {
-                if (!hiddenSlots.Contains(i))
+                if (!hiddenSlots.Contains(i) || ShouldShowManagedSlot(__instance, i))
                 {
                     visibleIndices.Add(i);
+                }
+                else
+                {
+                    hiddenIndices.Add(i);
                 }
             }
 
@@ -125,7 +214,7 @@ namespace GunSmith
             }
 
             SlotLayout hiddenLayout = originalLayouts[0];
-            foreach (int hiddenIndex in hiddenSlots)
+            foreach (int hiddenIndex in hiddenIndices)
             {
                 if (hiddenIndex >= 0 && hiddenIndex < __instance.visualSlots.Length)
                 {
@@ -134,17 +223,88 @@ namespace GunSmith
             }
         }
 
-        private static bool IsManagedQuickSlot(Inventory inventory, int slotIndex)
+        private static bool IsManagedSlot(Inventory inventory, int slotIndex)
         {
             return GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots
                 && hiddenSlots.Contains(slotIndex);
+        }
+
+        private static bool HasManagedSlots(Inventory inventory)
+        {
+            return GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots
+                && hiddenSlots.Count > 0;
+        }
+
+        private static bool IsQuickMutationAllowed(Inventory inventory)
+        {
+            return inventory.Owner is Item item && QuickMutationItems.Contains(item);
+        }
+
+        private static int FindAllowedNonManagedSlot(ItemInventory inventory, Item item, bool ignoreCondition)
+        {
+            if (inventory.ItemOwnsSelf(item) || inventory.Contains(item) || !inventory.container.CanBeContained(item))
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < inventory.capacity; i++)
+            {
+                if (!IsManagedSlot(inventory, i) && inventory.slots[i].Any() && inventory.CanBePutInSlot(item, i, ignoreCondition))
+                {
+                    return i;
+                }
+            }
+
+            for (int i = 0; i < inventory.capacity; i++)
+            {
+                if (!IsManagedSlot(inventory, i) && inventory.CanBePutInSlot(item, i, ignoreCondition))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        private static bool ShouldShowManagedSlot(Inventory inventory, int slotIndex)
+        {
+            if (inventory.Owner is not Item ownerItem || ownerItem.Removed || ownerItem.Prefab == null) { return false; }
+            string ownerIdentifier = ownerItem.Prefab.Identifier.Value;
+            if (!VisibleWhenContainedByItemIdentifier.TryGetValue(ownerIdentifier, out Dictionary<int, HashSet<string>>? rules) ||
+                !rules.TryGetValue(slotIndex, out HashSet<string>? identifiers) ||
+                identifiers.Count == 0 ||
+                slotIndex < 0 ||
+                slotIndex >= inventory.slots.Length)
+            {
+                return false;
+            }
+
+            foreach (Item contained in inventory.slots[slotIndex].Items)
+            {
+                if (contained?.Prefab == null || contained.Removed) { continue; }
+                string containedIdentifier = contained.Prefab.Identifier.Value;
+                if (identifiers.Contains(containedIdentifier))
+                {
+                    return true;
+                }
+
+                foreach (string identifierOrTag in identifiers)
+                {
+                    if (contained.HasTag(identifierOrTag))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static HashSet<int>? GetManagedHiddenSlots(Inventory inventory)
         {
             if (inventory.Owner is not Item item || item.Removed || item.Prefab == null) { return null; }
             string itemIdentifier = item.Prefab.Identifier.Value;
-            return HiddenSlotsByItemIdentifier.TryGetValue(itemIdentifier, out HashSet<int>? hiddenSlots) ? hiddenSlots : null;
+            return ManagedSlotsByItemIdentifier.TryGetValue(itemIdentifier, out HashSet<int>? hiddenSlots) ? hiddenSlots : null;
         }
 
         private sealed class LayoutCache

@@ -78,6 +78,38 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithRegisterQuickSlotVisibility", args =>
+            {
+                string? itemIdentifier = FindStringArg(args, 0);
+                int slotIndex = FindIntArg(args, 0);
+                string? identifierSpec = FindStringArg(args, 1);
+                if (itemIdentifier != null && slotIndex >= 0 && identifierSpec != null)
+                {
+                    GunsmithHiddenQuickSlotsPatch.RegisterVisibleWhenContained(itemIdentifier, slotIndex, identifierSpec);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithBeginQuickSlotMutation", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithHiddenQuickSlotsPatch.BeginQuickSlotMutation(item);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithEndQuickSlotMutation", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithHiddenQuickSlotsPatch.EndQuickSlotMutation(item);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithRequestState", args =>
             {
                 Item? item = FindArg<Item>(args);

@@ -19,7 +19,7 @@ config.weapons.deep_hk416 = {
     -- QuickMod maps vanilla ItemContainer slots to terminal GunSmith paths.
     -- slot uses Barotrauma targetslot's zero-based numbering.
     quickSlots = {
-        { slot = 1, path = "receiver/handguard/Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount" },
+        { slot = 1, path = "receiver/handguard/Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } },
         { slot = 2, path = "receiver/handguard/Right_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Right_rail_mount" },
         { slot = 3, path = "receiver/handguard/Left_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Left_rail_mount" },
         { slot = 4, path = "receiver/optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount" },

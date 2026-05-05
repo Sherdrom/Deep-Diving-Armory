@@ -48,6 +48,22 @@ local function registerHiddenQuickSlots()
             if #slots > 0 then
                 Hook.Call("DeepGunsmithRegisterHiddenQuickSlots", tostring(identifier), table.concat(slots, ","))
             end
+
+            for _, quickSlot in ipairs(weapon.quickSlots) do
+                local slotIndex = tonumber(quickSlot.slot)
+                if slotIndex and type(quickSlot.showWhenContained) == "table" then
+                    local visibleIdentifiers = {}
+                    for _, value in ipairs(quickSlot.showWhenContained) do
+                        if value and tostring(value) ~= "" then
+                            table.insert(visibleIdentifiers, tostring(value))
+                        end
+                    end
+
+                    if #visibleIdentifiers > 0 then
+                        Hook.Call("DeepGunsmithRegisterQuickSlotVisibility", tostring(identifier), slotIndex, table.concat(visibleIdentifiers, ","))
+                    end
+                end
+            end
         end
     end
 end
