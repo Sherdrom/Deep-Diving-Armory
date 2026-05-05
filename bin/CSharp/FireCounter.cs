@@ -11,8 +11,10 @@ namespace Barotrauma.Items.Components
     {
         private int fireCount;
         private bool wasUsedLastFrame;
+        private float syncTimer = 0f;
+        private const float SyncDelay = 1.0f;
 
-        [Editable(MinValueInt = 0), Serialize(0, IsPropertySaveable.Yes, description: "记录枪械的总开火次数")]
+        [Editable(MinValueInt = 0), Serialize(0, IsPropertySaveable.Yes, description: "记录枪械的总开火次数", alwaysUseInstanceValues: true)]
         public int FireCount
         {
             get { return fireCount; }
@@ -24,14 +26,51 @@ namespace Barotrauma.Items.Components
             IsActive = true;
         }
 
+        public override void Reset()
+        {
+            int savedFireCount = fireCount;
+            base.Reset();
+            fireCount = savedFireCount;
+            syncTimer = 0f;
+        }
+
+        public override void Load(ContentXElement componentElement, bool usePrefabValues, IdRemap idRemap, bool isItemSwap)
+        {
+            int savedFireCount = fireCount;
+            base.Load(componentElement, usePrefabValues, idRemap, isItemSwap);
+            
+            if (isItemSwap)
+            {
+                return;
+            }
+            
+            if (savedFireCount > fireCount)
+            {
+                fireCount = savedFireCount;
+            }
+            syncTimer = 0f;
+        }
+
         public override void Update(float deltaTime, Camera cam)
         {
+#if SERVER
+            if (syncTimer < SyncDelay && fireCount > 0)
+            {
+                syncTimer += deltaTime;
+                if (syncTimer >= SyncDelay)
+                {
+                    item.CreateServerEvent(this);
+                }
+            }
+#endif
+
             var switchableRangedWeapon = item.GetComponent<SwitchableRangedWeapon>();
             if (switchableRangedWeapon == null) { return; }
 
             if (switchableRangedWeapon.WasUsed && !wasUsedLastFrame)
             {
                 fireCount++;
+                syncTimer = SyncDelay + 1.0f;
 #if SERVER
                 item.CreateServerEvent(this);
 #endif
@@ -42,7 +81,7 @@ namespace Barotrauma.Items.Components
 #if SERVER
         public void ServerEventWrite(IWriteMessage msg, Client c, NetEntityEvent.IData extraData = null)
         {
-            msg.Write(fireCount);
+            msg.WriteInt32(fireCount);
         }
 #endif
 
