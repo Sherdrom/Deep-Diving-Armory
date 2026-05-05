@@ -33,6 +33,18 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithOpenQuick", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? title = FindStringArg(args, 0);
+                string? slotSpec = FindStringArg(args, 1);
+                if (item != null && title != null && slotSpec != null)
+                {
+                    OpenQuickFromLua(item, title, slotSpec);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithRefreshParts", args =>
             {
                 Item? item = FindArg<Item>(args);
@@ -40,6 +52,28 @@ namespace GunSmith
                 if (item != null && slotSpec != null)
                 {
                     RefreshPartsFromLua(item, slotSpec);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithRefreshQuick", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? slotSpec = FindStringArg(args, 0);
+                if (item != null && slotSpec != null)
+                {
+                    RefreshQuickFromLua(item, slotSpec);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithRegisterHiddenQuickSlots", args =>
+            {
+                string? itemIdentifier = FindStringArg(args, 0);
+                string? slotSpec = FindStringArg(args, 1);
+                if (itemIdentifier != null && slotSpec != null)
+                {
+                    GunsmithHiddenQuickSlotsPatch.RegisterHiddenSlots(itemIdentifier, slotSpec);
                 }
                 return null;
             });

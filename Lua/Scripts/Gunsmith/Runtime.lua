@@ -4,6 +4,7 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
 local Persistence = Gunsmith.Persistence
 local UiSpec = Gunsmith.UiSpec
+local QuickUiSpec = Gunsmith.QuickUiSpec
 local Inventory = Gunsmith.Inventory
 local Stats = Gunsmith.Stats
 local QuickMod = Gunsmith.QuickMod
@@ -82,6 +83,31 @@ function Runtime.RefreshParts(item)
 
     if not ok then
         print("[Gunsmith] Failed to refresh parts UI: " .. tostring(err))
+    end
+end
+
+function Runtime.RefreshQuick(item)
+    if SERVER then return end
+    if not item or not Core.PlatformConfig(item) then return end
+
+    local ok, err = pcall(function()
+        local platform = Core.PlatformConfig(item)
+        local selection = Runtime.GetSelection(item)
+        if not Hook or not Hook.Call then
+            print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith quick UI.")
+            return
+        end
+
+        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+            State.appliedSignatures[item] = nil
+            Persistence.Save(item)
+        end
+
+        Hook.Call("DeepGunsmithRefreshQuick", item, QuickUiSpec.Build(item, selection, platform))
+    end)
+
+    if not ok then
+        print("[Gunsmith] Failed to refresh quick UI: " .. tostring(err))
     end
 end
 
@@ -347,7 +373,7 @@ local function returnSelectionSubtree(character, sourceItem, selection, slotPath
     return pending
 end
 
-function Runtime.SetPart(item, slotPath, partId)
+function Runtime.SetPart(item, slotPath, partId, refreshMode)
     local selection = Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
     local weapon = Core.WeaponConfig(item)
@@ -356,10 +382,15 @@ function Runtime.SetPart(item, slotPath, partId)
     local character = Inventory and Inventory.ActorForItem(item) or nil
 
     if QuickMod and QuickMod.IsQuickPath(item, slotPath) then
+        local refreshQuick = refreshMode == "quick"
         local slotIndex = QuickMod.SlotForPath(item, slotPath)
         if slotIndex == nil then return end
         local refreshAfterReturn = function()
-            Runtime.SchedulePartsRefresh(item, 0)
+            if refreshQuick then
+                Runtime.RefreshQuick(item)
+            else
+                Runtime.SchedulePartsRefresh(item, 0)
+            end
         end
 
         if partId == Gunsmith.EmptyPartId then
@@ -378,7 +409,11 @@ function Runtime.SetPart(item, slotPath, partId)
         end
 
         finishQuickModChange(item, selection, platform, weapon)
-        Runtime.SchedulePartsRefresh(item, 0)
+        if refreshQuick then
+            Runtime.RefreshQuick(item)
+        else
+            Runtime.SchedulePartsRefresh(item, 0)
+        end
         return false
     end
 
@@ -460,6 +495,32 @@ function Runtime.Open(item)
     end
 end
 
+function Runtime.OpenQuick(item)
+    if SERVER then return end
+    if not item or not Core.PlatformConfig(item) or not QuickMod or not QuickMod.IsQuickItem(item) then return end
+
+    local ok, err = pcall(function()
+        local platform = Core.PlatformConfig(item)
+        local selection = Runtime.GetSelection(item)
+        if not Hook or not Hook.Call then
+            print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith quick UI.")
+            return
+        end
+
+        if QuickMod.SyncFromContainer(item, selection, platform) then
+            State.appliedSignatures[item] = nil
+            Persistence.Save(item)
+        end
+
+        Runtime.Apply(item)
+        Hook.Call("DeepGunsmithOpenQuick", item, "deep.gunsmith.ui.quick_title", QuickUiSpec.Build(item, selection, platform))
+    end)
+
+    if not ok then
+        print("[Gunsmith] Failed to open quick UI: " .. tostring(err))
+    end
+end
+
 function Runtime.Cleanup(item)
     local key = Core.ItemKey(item)
     if not key then return end
@@ -471,3 +532,4 @@ end
 
 Gunsmith.Apply = Runtime.Apply
 Gunsmith.Open = Runtime.Open
+Gunsmith.OpenQuick = Runtime.OpenQuick

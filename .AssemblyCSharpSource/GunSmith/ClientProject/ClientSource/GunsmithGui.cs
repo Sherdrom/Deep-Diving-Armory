@@ -22,8 +22,15 @@ namespace GunSmith
         private static string? partDetailSlotPath;
         private static string? selectedPartId;
         private static GunsmithPreviewSettings activePreviewSettings = GunsmithPreviewSettings.Default;
+        private static bool activeQuickMode;
 
         public static void OpenFromLua(Item item, string title, string slotSpec)
+            => OpenInternal(item, title, slotSpec, quickMode: false);
+
+        public static void OpenQuickFromLua(Item item, string title, string slotSpec)
+            => OpenInternal(item, title, slotSpec, quickMode: true);
+
+        private static void OpenInternal(Item item, string title, string slotSpec, bool quickMode)
         {
             if (item == null || item.Removed) { return; }
 
@@ -32,6 +39,7 @@ namespace GunSmith
 
             if (activeWindow != null && ReferenceEquals(activeItem, item))
             {
+                activeQuickMode = quickMode;
                 string previousPath = activeContext.CurrentPath;
                 activeContext = spec.Context;
                 activeSlots = spec.Slots;
@@ -51,6 +59,7 @@ namespace GunSmith
             CloseWindow();
 
             activeItem = item;
+            activeQuickMode = quickMode;
             activeContext = spec.Context;
             activeSlots = spec.Slots;
             activePreviewSettings = spec.PreviewSettings;
@@ -70,12 +79,19 @@ namespace GunSmith
         }
 
         public static void RefreshPartsFromLua(Item item, string slotSpec)
+            => RefreshInternal(item, slotSpec, quickMode: false);
+
+        public static void RefreshQuickFromLua(Item item, string slotSpec)
+            => RefreshInternal(item, slotSpec, quickMode: true);
+
+        private static void RefreshInternal(Item item, string slotSpec, bool quickMode)
         {
             if (item == null || item.Removed || activeWindow == null || !ReferenceEquals(activeItem, item)) { return; }
 
             GunsmithGuiSpec spec = ParseSpec(slotSpec);
             if (spec.Slots.Count == 0) { return; }
 
+            activeQuickMode = quickMode;
             string previousPath = activeContext.CurrentPath;
             activeContext = spec.Context;
             activeSlots = spec.Slots;
@@ -355,7 +371,7 @@ namespace GunSmith
             {
                 if (!installed && part.IsActionable && activeItem != null && !activeItem.Removed)
                 {
-                    CallLuaHook("DeepGunsmithSetPart", activeItem, slot.Path, part.Id);
+                    CallLuaHook(activeQuickMode ? "DeepGunsmithSetQuickPart" : "DeepGunsmithSetPart", activeItem, slot.Path, part.Id);
                 }
                 return true;
             };
@@ -464,6 +480,7 @@ namespace GunSmith
             selectedPartId = null;
             activePreviewSettings = GunsmithPreviewSettings.Default;
             activeWeaponStats = GunsmithStats.Empty;
+            activeQuickMode = false;
         }
 
         internal static void RefreshWindow()

@@ -30,10 +30,34 @@ local function applyGunsmithItem(item)
     end
 end
 
+local function registerHiddenQuickSlots()
+    if not Hook or not Hook.Call then return end
+    local config = Gunsmith.Config
+    if not config or type(config.weapons) ~= "table" then return end
+
+    for identifier, weapon in pairs(config.weapons) do
+        if type(weapon.quickSlots) == "table" then
+            local slots = {}
+            for _, quickSlot in ipairs(weapon.quickSlots) do
+                local slotIndex = tonumber(quickSlot.slot)
+                if slotIndex then
+                    table.insert(slots, tostring(slotIndex))
+                end
+            end
+
+            if #slots > 0 then
+                Hook.Call("DeepGunsmithRegisterHiddenQuickSlots", tostring(identifier), table.concat(slots, ","))
+            end
+        end
+    end
+end
+
 function Hooks.Register()
     if not CLIENT then return end
     if Hooks.Registered then return end
     Hooks.Registered = true
+
+    registerHiddenQuickSlots()
 
     Hook.Add("DeepGunsmithReceiveState", "DeepGunsmithReceiveState", function(...)
         local item, strings = readItemAndStrings({ ... })
@@ -60,6 +84,16 @@ function Hooks.Register()
         end
     end)
 
+    Hook.Add("DeepGunsmithSetQuickPart", "DeepGunsmithSetQuickPart", function(...)
+        local item, strings = readItemAndStrings({ ... })
+        if item and strings[1] and strings[2] then
+            local shouldOpenNow = Runtime.SetPart(item, strings[1], strings[2], "quick")
+            if shouldOpenNow ~= false then
+                Runtime.OpenQuick(item)
+            end
+        end
+    end)
+
     Hook.Add("DeepGunsmithEnterPath", "DeepGunsmithEnterPath", function(...)
         local item, strings = readItemAndStrings({ ... })
         if item and strings[1] then
@@ -73,10 +107,19 @@ function Hooks.Register()
         local keyOk, keyHit = pcall(function() return PlayerInput.KeyHit(Keys.G) end)
         if not keyOk or not keyHit then return end
 
+        local shiftDown = false
+        pcall(function()
+            shiftDown = PlayerInput.KeyDown(Keys.LeftShift) or PlayerInput.KeyDown(Keys.RightShift)
+        end)
+
         local item = Runtime.SelectedHandWeapon(instance)
         if item then
-            Runtime.SetCurrentUiPath(item, Runtime.GetCurrentUiPath(item))
-            Runtime.Open(item)
+            if shiftDown and QuickMod and QuickMod.IsQuickItem(item) then
+                Runtime.OpenQuick(item)
+            else
+                Runtime.SetCurrentUiPath(item, Runtime.GetCurrentUiPath(item))
+                Runtime.Open(item)
+            end
         end
     end, Hook.HookMethodType.After)
 

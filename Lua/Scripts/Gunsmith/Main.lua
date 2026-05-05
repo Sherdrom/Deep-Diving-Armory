@@ -9,6 +9,7 @@ dofile(basePath .. "/Inventory.lua")
 dofile(basePath .. "/Stats.lua")
 dofile(basePath .. "/QuickMod.lua")
 dofile(basePath .. "/UiSpec.lua")
+dofile(basePath .. "/QuickUiSpec.lua")
 dofile(basePath .. "/Runtime.lua")
 dofile(basePath .. "/Hooks.lua")
 
