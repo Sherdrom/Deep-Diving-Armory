@@ -111,7 +111,7 @@ parts.deep_thermalgoggles_sight_6x = { type = "optic_mount",
 
 parts.deep_8x_sight = { type = "optic_mount",
     nameKey = "deep.gunsmith.part.deep_8x_sight",
-    provides = { "medium_optic" },
+    provides = { "large_optic" },
     item = { identifier = "8x_sight" },
     stats = { Ergonomics = -2, RangedSpreadReduction = 0.80, WeaponsSkillBonus = 30, WalkingSpeed = -0.25 },
     visual = { texture = sightTexture,

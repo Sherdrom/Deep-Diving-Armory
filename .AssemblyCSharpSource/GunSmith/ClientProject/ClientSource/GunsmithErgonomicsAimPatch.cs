@@ -157,8 +157,8 @@ namespace GunSmith
 
         private static float AimFollowRadiansPerSecond(GunsmithRuntimeState state)
         {
-            float degrees = 60.0f + state.Stats.Ergonomics * 0.5f;
-            degrees = MathHelper.Clamp(degrees, 45.0f, 360.0f);
+            float degrees = 270.0f + state.Stats.Ergonomics * 3.15f;   // Base 180 degrees per second, plus 2 degrees per ergonomics point, clamped to a reasonable range.
+            degrees = MathHelper.Clamp(degrees, 180.0f, 900.0f);     // Minimum 45 degrees per second (very slow), maximum 360 degrees per second (very fast).
             return MathHelper.ToRadians(degrees);
         }
 
