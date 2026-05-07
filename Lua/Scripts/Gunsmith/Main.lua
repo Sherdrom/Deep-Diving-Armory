@@ -3,10 +3,10 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 local basePath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith"
 
 dofile(basePath .. "/Core.lua")
+dofile(basePath .. "/Stats.lua")
 dofile(basePath .. "/Validation.lua")
 dofile(basePath .. "/Persistence.lua")
 dofile(basePath .. "/Inventory.lua")
-dofile(basePath .. "/Stats.lua")
 dofile(basePath .. "/QuickMod.lua")
 dofile(basePath .. "/UiSpec.lua")
 dofile(basePath .. "/QuickUiSpec.lua")

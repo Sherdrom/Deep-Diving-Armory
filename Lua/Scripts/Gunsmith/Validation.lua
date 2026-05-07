@@ -6,21 +6,10 @@ Gunsmith.Validation = Validation
 
 local oldPartFields = { "texture", "source", "offset", "order", "itemIdentifier", "slot" }
 local oldConfigFields = { "defaults", "rootAccepts", "slots", "requiredRootSlots", "hiddenRootSlots", "slotNames", "pathNames" }
-local knownStatFields = {
-    Ergonomics = true,
-    RangedSpreadReduction = true,
-    RangedAttackSpeed = true,
-    RangedAttackMultiplier = true,
-    WeaponsSkillBonus = true,
-    WalkingSpeed = true,
-    MovementSpeed = true,
-    FlowResistance = true,
-    StunResistance = true,
-    WeaponsSkillGainSpeed = true,
-    ExperienceGainMultiplier = true,
-    SoundRangeMultiplier = true,
-    MaximumHealthMultiplier = true
-}
+local knownStatFields = {}
+for _, key in ipairs(Gunsmith.Stats and Gunsmith.Stats.Keys or {}) do
+    knownStatFields[key] = true
+end
 
 local fixedLocalizationKeys = {
     "deep.gunsmith.ui.title",
@@ -46,9 +35,7 @@ local fixedLocalizationKeys = {
     "deep.gunsmith.action.remove",
     "deep.gunsmith.action.install",
     "deep.gunsmith.stat.ergonomics",
-    "deep.gunsmith.stat.spread_reduction",
-    "deep.gunsmith.stat.fire_rate",
-    "deep.gunsmith.stat.damage"
+    "deep.gunsmith.stat.none"
 }
 
 local function isArray(value)
@@ -244,6 +231,11 @@ function Validation.Run(configOverride, label)
     local localizationKeys = {}
     for _, key in ipairs(fixedLocalizationKeys) do
         addLocalizationKey(localizationKeys, key)
+    end
+    for _, statName in ipairs(Gunsmith.Stats and Gunsmith.Stats.Keys or {}) do
+        if statName ~= "Ergonomics" then
+            addLocalizationKey(localizationKeys, "deep.gunsmith.stattypes." .. statName)
+        end
     end
 
     local function validateDefaultChildren(parentPartId, parentPart, path, stack, depth)

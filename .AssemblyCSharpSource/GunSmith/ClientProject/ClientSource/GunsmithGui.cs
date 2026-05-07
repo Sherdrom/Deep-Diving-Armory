@@ -632,25 +632,17 @@ namespace GunSmith
         }
 
         private static string FormatStatsLine(GunsmithStats stats)
-            => $"{LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeKey("deep.gunsmith.stat.spread_reduction")} {stats.SpreadReduction * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.fire_rate")} {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.damage")} {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
+            => $"{LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeStatType(StatTypes.RangedSpreadReduction)} {stats.Get(StatTypes.RangedSpreadReduction) * 100:+0.#;-0.#;0}% | {LocalizeStatType(StatTypes.RangedAttackSpeed)} {stats.Get(StatTypes.RangedAttackSpeed) * 100:+0.#;-0.#;0}% | {LocalizeStatType(StatTypes.RangedAttackMultiplier)} {stats.Get(StatTypes.RangedAttackMultiplier) * 100:+0.#;-0.#;0}%";
 
         private static List<string> FormatPartStats(GunsmithStats stats)
         {
             List<string> lines = new();
 
             AddNonZeroStatLine(lines, "deep.gunsmith.stat.ergonomics", stats.Ergonomics, "0.##");
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.spread_reduction", stats.SpreadReduction);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.fire_rate", stats.FireRateMultiplier);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.damage", stats.DamageMultiplier);
-            AddNonZeroStatLine(lines, "deep.gunsmith.stat.weapon_skill", stats.WeaponSkillBonus, "0.#");
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.walking_speed", stats.WalkingSpeed);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.movement_speed", stats.MovementSpeed);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.flow_resistance", stats.FlowResistance);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.stun_resistance", stats.StunResistance);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.weapons_skill_gain", stats.WeaponsSkillGainSpeed);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.experience_gain", stats.ExperienceGainMultiplier);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.sound_range", stats.SoundRangeMultiplier);
-            AddNonZeroPercentLine(lines, "deep.gunsmith.stat.max_health", stats.MaximumHealthMultiplier);
+            foreach (KeyValuePair<StatTypes, float> stat in stats.Values.OrderBy(stat => stat.Key))
+            {
+                AddNonZeroStatTypeLine(lines, stat.Key, stat.Value);
+            }
             if (lines.Count == 0)
             {
                 lines.Add(LocalizeKey("deep.gunsmith.stat.none"));
@@ -664,11 +656,40 @@ namespace GunSmith
             lines.Add($"{LocalizeKey(key)}: {value * 100:+0.#;-0.#;0}%");
         }
 
+        private static void AddNonZeroStatTypeLine(List<string> lines, StatTypes statType, float value)
+        {
+            if (Math.Abs(value) < 0.0001f) { return; }
+            if (IsFlatStat(statType))
+            {
+                lines.Add($"{LocalizeStatType(statType)}: {value:+0.#;-0.#;0}");
+            }
+            else
+            {
+                lines.Add($"{LocalizeStatType(statType)}: {value * 100:+0.#;-0.#;0}%");
+            }
+        }
+
         private static void AddNonZeroStatLine(List<string> lines, string key, float value, string format)
         {
             if (Math.Abs(value) < 0.0001f) { return; }
             lines.Add($"{LocalizeKey(key)}: {value.ToString("+" + format + ";-" + format + ";0", System.Globalization.CultureInfo.InvariantCulture)}");
         }
+
+        private static string LocalizeStatType(StatTypes statType)
+        {
+            string key = $"deep.gunsmith.stattypes.{statType}";
+            return TextManager.Get(key).Fallback(statType.ToString()).Value;
+        }
+
+        private static bool IsFlatStat(StatTypes statType)
+            => statType.ToString().EndsWith("SkillBonus", StringComparison.Ordinal) ||
+               statType.ToString().EndsWith("SkillOverride", StringComparison.Ordinal) ||
+               statType is StatTypes.ExtraLevelGain or
+                   StatTypes.ExtraMissionCount or
+                   StatTypes.ExtraSpecialSalesCount or
+                   StatTypes.MaxAttachableCount or
+                   StatTypes.LockedTalents or
+                   StatTypes.InventoryExtraStackSize;
 
         private static string FormatPartStatsBlock(GunsmithStats stats)
             => string.Join("\n", FormatPartStats(stats));
@@ -1003,30 +1024,24 @@ namespace GunSmith
 
         private static GunsmithStats ParseStats(string statSpec)
         {
-            GunsmithStats stats = GunsmithStats.Empty;
+            float ergonomics = 0.0f;
+            Dictionary<StatTypes, float> values = new();
             foreach (string entry in statSpec.Split(new[] { ',', '~' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
                 string[] parts = entry.Split('=', 2, StringSplitOptions.TrimEntries);
                 if (parts.Length != 2 || !float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value)) { continue; }
-                stats = parts[0] switch
+                if (string.Equals(parts[0], "Ergonomics", StringComparison.Ordinal))
                 {
-                    "Ergonomics" => stats with { Ergonomics = value },
-                    nameof(StatTypes.RangedSpreadReduction) => stats with { SpreadReduction = value },
-                    nameof(StatTypes.RangedAttackSpeed) => stats with { FireRateMultiplier = value },
-                    nameof(StatTypes.RangedAttackMultiplier) => stats with { DamageMultiplier = value },
-                    nameof(StatTypes.WeaponsSkillBonus) => stats with { WeaponSkillBonus = value },
-                    nameof(StatTypes.WalkingSpeed) => stats with { WalkingSpeed = value },
-                    nameof(StatTypes.MovementSpeed) => stats with { MovementSpeed = value },
-                    nameof(StatTypes.FlowResistance) => stats with { FlowResistance = value },
-                    "StunResistance" => stats with { StunResistance = value },
-                    nameof(StatTypes.WeaponsSkillGainSpeed) => stats with { WeaponsSkillGainSpeed = value },
-                    nameof(StatTypes.ExperienceGainMultiplier) => stats with { ExperienceGainMultiplier = value },
-                    nameof(StatTypes.SoundRangeMultiplier) => stats with { SoundRangeMultiplier = value },
-                    nameof(StatTypes.MaximumHealthMultiplier) => stats with { MaximumHealthMultiplier = value },
-                    _ => stats
-                };
+                    ergonomics = value;
+                    continue;
+                }
+
+                if (Enum.TryParse(parts[0], ignoreCase: false, out StatTypes statType) && statType != StatTypes.None)
+                {
+                    values[statType] = value;
+                }
             }
-            return stats;
+            return new GunsmithStats { Ergonomics = ergonomics, Values = values };
         }
 
         private static GunsmithPreviewSettings ParsePreviewSettings(string previewSpec)
@@ -1071,22 +1086,15 @@ namespace GunSmith
             public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }
 
-        private sealed record GunsmithStats(
-            float Ergonomics,
-            float SpreadReduction,
-            float FireRateMultiplier,
-            float DamageMultiplier,
-            float WeaponSkillBonus,
-            float WalkingSpeed,
-            float MovementSpeed,
-            float FlowResistance,
-            float StunResistance,
-            float WeaponsSkillGainSpeed,
-            float ExperienceGainMultiplier,
-            float SoundRangeMultiplier,
-            float MaximumHealthMultiplier)
+        private sealed class GunsmithStats
         {
-            public static GunsmithStats Empty { get; } = new(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            public float Ergonomics { get; init; }
+            public IReadOnlyDictionary<StatTypes, float> Values { get; init; } = new Dictionary<StatTypes, float>();
+
+            public float Get(StatTypes statType)
+                => Values.TryGetValue(statType, out float value) ? value : 0.0f;
+
+            public static GunsmithStats Empty { get; } = new();
         }
 
         private sealed record GunsmithPreviewSettings(float Padding, float Scale, Vector2 Offset)

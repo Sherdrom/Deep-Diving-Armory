@@ -52,21 +52,14 @@ namespace GunSmith
         public static GunsmithWorldSettings Default { get; } = new(1.0f, 0.0f, 0.0f, Vector2.Zero);
     }
 
-    internal sealed record GunsmithRuntimeStats(
-        float Ergonomics,
-        float RangedSpreadReduction,
-        float RangedAttackSpeed,
-        float RangedAttackMultiplier,
-        float WeaponsSkillBonus,
-        float WalkingSpeed,
-        float MovementSpeed,
-        float FlowResistance,
-        float StunResistance,
-        float WeaponsSkillGainSpeed,
-        float ExperienceGainMultiplier,
-        float SoundRangeMultiplier,
-        float MaximumHealthMultiplier)
+    internal sealed class GunsmithRuntimeStats
     {
-        public static GunsmithRuntimeStats Empty { get; } = new(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        public float Ergonomics { get; init; }
+        public IReadOnlyDictionary<StatTypes, float> Values { get; init; } = new Dictionary<StatTypes, float>();
+
+        public float Get(StatTypes statType)
+            => Values.TryGetValue(statType, out float value) ? value : 0.0f;
+
+        public static GunsmithRuntimeStats Empty { get; } = new();
     }
 }

@@ -14,21 +14,7 @@ namespace GunSmith
                 return;
             }
 
-            __result += statType switch
-            {
-                StatTypes.RangedSpreadReduction => state.Stats.RangedSpreadReduction ,
-                StatTypes.RangedAttackMultiplier => state.Stats.RangedAttackMultiplier,
-                StatTypes.RangedAttackSpeed => state.Stats.RangedAttackSpeed,
-                StatTypes.WeaponsSkillBonus => state.Stats.WeaponsSkillBonus,
-                StatTypes.WalkingSpeed => state.Stats.WalkingSpeed,
-                StatTypes.MovementSpeed => state.Stats.MovementSpeed,
-                StatTypes.FlowResistance => state.Stats.FlowResistance,
-                StatTypes.WeaponsSkillGainSpeed => state.Stats.WeaponsSkillGainSpeed,
-                StatTypes.ExperienceGainMultiplier => state.Stats.ExperienceGainMultiplier,
-                StatTypes.SoundRangeMultiplier => state.Stats.SoundRangeMultiplier,
-                StatTypes.MaximumHealthMultiplier => state.Stats.MaximumHealthMultiplier,
-                _ => 0.0f
-            };
+            __result += state.Stats.Get(statType);
         }
 
         internal static bool ShouldSuppressManagedQuickSlotAfflictions(StatusEffect statusEffect, object[] args)

@@ -279,8 +279,9 @@ namespace GunSmith
 
         private static GunsmithRuntimeStats ParseRuntimeStats(string value)
         {
-            GunsmithRuntimeStats stats = GunsmithRuntimeStats.Empty;
-            if (string.IsNullOrWhiteSpace(value)) { return stats; }
+            float ergonomics = 0.0f;
+            Dictionary<StatTypes, float> values = new();
+            if (string.IsNullOrWhiteSpace(value)) { return GunsmithRuntimeStats.Empty; }
 
             foreach (string entry in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
@@ -290,26 +291,19 @@ namespace GunSmith
                     continue;
                 }
 
-                stats = parts[0] switch
+                if (string.Equals(parts[0], "Ergonomics", StringComparison.Ordinal))
                 {
-                    "Ergonomics" => stats with { Ergonomics = parsed },
-                    nameof(StatTypes.RangedSpreadReduction) => stats with { RangedSpreadReduction = parsed },
-                    nameof(StatTypes.RangedAttackSpeed) => stats with { RangedAttackSpeed = parsed },
-                    nameof(StatTypes.RangedAttackMultiplier) => stats with { RangedAttackMultiplier = parsed },
-                    nameof(StatTypes.WeaponsSkillBonus) => stats with { WeaponsSkillBonus = parsed },
-                    nameof(StatTypes.WalkingSpeed) => stats with { WalkingSpeed = parsed },
-                    nameof(StatTypes.MovementSpeed) => stats with { MovementSpeed = parsed },
-                    nameof(StatTypes.FlowResistance) => stats with { FlowResistance = parsed },
-                    "StunResistance" => stats with { StunResistance = parsed },
-                    nameof(StatTypes.WeaponsSkillGainSpeed) => stats with { WeaponsSkillGainSpeed = parsed },
-                    nameof(StatTypes.ExperienceGainMultiplier) => stats with { ExperienceGainMultiplier = parsed },
-                    nameof(StatTypes.SoundRangeMultiplier) => stats with { SoundRangeMultiplier = parsed },
-                    nameof(StatTypes.MaximumHealthMultiplier) => stats with { MaximumHealthMultiplier = parsed },
-                    _ => stats
-                };
+                    ergonomics = parsed;
+                    continue;
+                }
+
+                if (Enum.TryParse(parts[0], ignoreCase: false, out StatTypes statType) && statType != StatTypes.None)
+                {
+                    values[statType] = parsed;
+                }
             }
 
-            return stats;
+            return new GunsmithRuntimeStats { Ergonomics = ergonomics, Values = values };
         }
 
         private static string BuildSpriteSignature(string layerSpec, string inventorySpec, string worldSpec, int width, int height)
