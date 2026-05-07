@@ -27,7 +27,6 @@ local fixedLocalizationKeys = {
     "deep.gunsmith.ui.close",
     "deep.gunsmith.ui.current_slots",
     "deep.gunsmith.ui.back",
-    "deep.gunsmith.ui.selected_prefix",
     "deep.gunsmith.ui.preview_placeholder",
     "deep.gunsmith.ui.path_line",
     "deep.gunsmith.ui.enter_mounts",

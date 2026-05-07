@@ -15,14 +15,16 @@ namespace GunSmith
         private static GUIListBox? partList;
         private static GUIFrame? partDetailPanel;
         private static GUITextBlock? partListTitle;
-        private static readonly Dictionary<string, GUIButton> partButtons = new(StringComparer.Ordinal);
-        private static GUIListBox? partDetailStats;
+        private static readonly Dictionary<string, GunsmithPartRow> partRows = new(StringComparer.Ordinal);
         private static GUIButton? partDetailActionButton;
         private static string? partListSlotPath;
         private static string? partDetailSlotPath;
         private static string? selectedPartId;
         private static GunsmithPreviewSettings activePreviewSettings = GunsmithPreviewSettings.Default;
         private static bool activeQuickMode;
+        private static QuickOverlayFrame? quickOverlayFrame;
+        private static readonly HashSet<string> warnedQuickAnchorPaths = new(StringComparer.Ordinal);
+        private static readonly Dictionary<string, Rectangle> partIconSourceCache = new(StringComparer.Ordinal);
 
         public static void OpenFromLua(Item item, string title, string slotSpec)
             => OpenInternal(item, title, slotSpec, quickMode: false);
@@ -37,6 +39,11 @@ namespace GunSmith
             GunsmithGuiSpec spec = ParseSpec(slotSpec);
             if (spec.Slots.Count == 0) { return; }
 
+            if (activeWindow != null && ReferenceEquals(activeItem, item) && activeQuickMode != quickMode)
+            {
+                CloseWindow();
+            }
+
             if (activeWindow != null && ReferenceEquals(activeItem, item))
             {
                 activeQuickMode = quickMode;
@@ -45,9 +52,16 @@ namespace GunSmith
                 activeSlots = spec.Slots;
                 activePreviewSettings = spec.PreviewSettings;
                 activeWeaponStats = spec.WeaponStats;
-                SelectSlotAfterRefresh(previousPath, activeContext.CurrentPath);
-                RebuildSlotList();
-                RefreshSelectionPanels();
+                if (quickMode)
+                {
+                    RebuildQuickOverlay(title);
+                }
+                else
+                {
+                    SelectSlotAfterRefresh(previousPath, activeContext.CurrentPath);
+                    RebuildSlotList();
+                    RefreshSelectionPanels();
+                }
                 return;
             }
 
@@ -64,9 +78,17 @@ namespace GunSmith
             activeSlots = spec.Slots;
             activePreviewSettings = spec.PreviewSettings;
             activeWeaponStats = spec.WeaponStats;
-            activeWindow = new GUIFrame(new RectTransform(new Vector2(0.74f, 0.62f), GUI.Canvas, Anchor.Center), color: Color.Black * 0.85f);
-            BuildHeader(title);
-            BuildBody();
+            if (quickMode)
+            {
+                activeWindow = new GunsmithWindowFrame(new RectTransform(new Vector2(0.96f, 0.88f), GUI.Canvas, Anchor.Center), CloseWindow, Color.Black * 0.58f);
+                BuildQuickOverlay(title);
+            }
+            else
+            {
+                activeWindow = new GunsmithWindowFrame(new RectTransform(new Vector2(0.74f, 0.62f), GUI.Canvas, Anchor.Center), CloseWindow, Color.Black * 0.85f);
+                BuildHeader(title);
+                BuildBody();
+            }
 
             try
             {
@@ -96,6 +118,13 @@ namespace GunSmith
             activeContext = spec.Context;
             activeSlots = spec.Slots;
             activeWeaponStats = spec.WeaponStats;
+            activePreviewSettings = spec.PreviewSettings;
+            if (quickMode)
+            {
+                RebuildQuickOverlay("deep.gunsmith.ui.quick_title");
+                return;
+            }
+
             SelectSlotAfterRefresh(previousPath, activeContext.CurrentPath);
 
             GunsmithGuiSlot? slot = activeSlots.FirstOrDefault(slot => slot.Path == selectedSlot) ?? activeSlots.FirstOrDefault();
@@ -133,15 +162,49 @@ namespace GunSmith
             previewPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.66f), middle.RectTransform, Anchor.TopCenter), color: Color.Black * 0.25f);
             detailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.30f), middle.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
             GUIFrame rightPanel = new(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterRight), color: Color.Transparent);
-            partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.54f), rightPanel.RectTransform, Anchor.TopCenter));
+            partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.54f), rightPanel.RectTransform, Anchor.TopCenter), style: null)
+            {
+                PlaySoundOnSelect = true
+            };
             partDetailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.42f), rightPanel.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
 
             RefreshSelectionPanels();
         }
 
+        private static void BuildQuickOverlay(string title)
+        {
+            if (activeWindow == null) { return; }
+            activeWindow.ClearChildren();
+
+            GUIFrame header = new(new RectTransform(new Vector2(0.42f, 0.07f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.72f, 0.72f), header.RectTransform, Anchor.CenterLeft), FormatL(title, LocalizedItemName(activeItem)), textAlignment: Alignment.CenterLeft);
+            GUIButton closeButton = new(new RectTransform(new Vector2(0.20f, 0.72f), header.RectTransform, Anchor.CenterRight), L("deep.gunsmith.ui.close"), Alignment.Center);
+            closeButton.OnClicked = (_, _) =>
+            {
+                CloseWindow();
+                return true;
+            };
+
+            quickOverlayFrame = new QuickOverlayFrame(
+                new RectTransform(new Vector2(0.96f, 0.86f), activeWindow.RectTransform, Anchor.Center),
+                activeItem,
+                activePreviewSettings,
+                activeSlots);
+        }
+
+        private static void RebuildQuickOverlay(string title)
+        {
+            if (!activeQuickMode || activeWindow == null) { return; }
+            BuildQuickOverlay(title);
+            activeWindow.AddToGUIUpdateList();
+        }
+
         private static void BuildSlotPanel(GUIFrame body)
         {
-            slotList = new GUIListBox(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterLeft));
+            slotList = new GUIListBox(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterLeft), style: null)
+            {
+                PlaySoundOnSelect = true
+            };
             RebuildSlotList();
         }
 
@@ -150,34 +213,58 @@ namespace GunSmith
             if (slotList == null) { return; }
             slotList.Content.ClearChildren();
 
-            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), slotList.Content.RectTransform), L("deep.gunsmith.ui.current_slots"), textAlignment: Alignment.Center);
+            _ = CreateListTitle(slotList, L("deep.gunsmith.ui.current_slots"));
 
             if (!string.IsNullOrWhiteSpace(activeContext.CurrentPath))
             {
-                GUIButton backButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), L("deep.gunsmith.ui.back"), Alignment.Center);
-                backButton.OnClicked = (_, _) =>
+                GUIFrame backRow = CreateListRow(slotList, L("deep.gunsmith.ui.back").Value, Color.Cyan, null);
+                backRow.UserData = "__back";
+            }
+
+            slotList.OnSelected = (_, userData) =>
+            {
+                if (userData is string back && back == "__back")
                 {
                     if (activeItem != null && !activeItem.Removed)
                     {
                         CallLuaHook("DeepGunsmithEnterPath", activeItem, activeContext.ParentPath);
                     }
                     return true;
-                };
-            }
+                }
+
+                if (userData is not GunsmithGuiSlot slot) { return false; }
+                selectedSlot = slot.Path;
+                RebuildSlotList();
+                RefreshSelectionPanels();
+                return true;
+            };
 
             foreach (GunsmithGuiSlot slot in activeSlots)
             {
                 string label = LocalizeKey(slot.NameKey);
-                if (slot.Path == selectedSlot) { label = FormatLValue("deep.gunsmith.ui.selected_prefix", label); }
-                GUIButton selectButton = new(new RectTransform(new Vector2(1.0f, 0.13f), slotList.Content.RectTransform), (LocalizedString)label, Alignment.Center);
-                selectButton.OnClicked = (_, _) =>
-                {
-                    selectedSlot = slot.Path;
-                    RebuildSlotList();
-                    RefreshSelectionPanels();
-                    return true;
-                };
+                GUIFrame row = CreateListRow(slotList, label, slot.Path == selectedSlot ? Color.LightGreen : Color.Cyan, slot);
+                row.Color = slot.Path == selectedSlot ? Color.DarkOliveGreen * 0.55f : Color.Transparent;
             }
+        }
+
+        private static GUITextBlock CreateListTitle(GUIListBox list, LocalizedString text)
+            => new(new RectTransform(new Point(list.Content.Rect.Width, (int)(40 * GUI.yScale)), list.Content.RectTransform), text, textAlignment: Alignment.Center);
+
+        private static GUIFrame CreateListRow(GUIListBox list, string labelText, Color indicatorColor, object? userData)
+        {
+            GUIFrame frame = new(new RectTransform(new Point(list.Content.Rect.Width, (int)(40 * GUI.yScale)), list.Content.RectTransform), style: null)
+            {
+                UserData = userData,
+                HoverColor = Color.Gold * 0.2f,
+                SelectedColor = Color.Gold * 0.5f
+            };
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 1.0f), frame.RectTransform, Anchor.Center), (LocalizedString)labelText, font: GUIStyle.SmallFont, textAlignment: Alignment.CenterLeft)
+            {
+                Padding = Vector4.Zero,
+                AutoScaleVertical = true,
+                CanBeFocused = false
+            };
+            return frame;
         }
 
         private static void RefreshSelectionPanels()
@@ -256,17 +343,47 @@ namespace GunSmith
         {
             if (partList == null) { return; }
             partList.Content.ClearChildren();
-            partButtons.Clear();
+            partRows.Clear();
             partListSlotPath = slot.Path;
+            SetPartListSelectionHandler(slot.Path);
 
-            partListTitle = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.12f), partList.Content.RectTransform), FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey)), textAlignment: Alignment.Center);
+            partListTitle = CreateListTitle(partList, FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey)));
 
             foreach (GunsmithGuiPart part in slot.Parts)
             {
-                GUIButton button = new(new RectTransform(new Vector2(1.0f, 0.14f), partList.Content.RectTransform), (LocalizedString)PartButtonText(slot, part), Alignment.Center);
-                partButtons[part.Id] = button;
-                UpdatePartButton(slot, part, button);
+                GunsmithPartRow row = CreatePartRow(slot, part);
+                partRows[part.Id] = row;
+                UpdatePartRow(slot, part, row);
             }
+            GunsmithGuiPart? selectedPart = slot.Parts.FirstOrDefault(part => part.Id == selectedPartId);
+            if (selectedPart != null)
+            {
+                partList.Select(selectedPart);
+            }
+        }
+
+        private static GunsmithPartRow CreatePartRow(GunsmithGuiSlot slot, GunsmithGuiPart part)
+        {
+            GUIFrame frame = new(new RectTransform(new Point(partList!.Content.Rect.Width, (int)(40 * GUI.yScale)), partList.Content.RectTransform), style: null)
+            {
+                UserData = part,
+                HoverColor = Color.Gold * 0.2f,
+                SelectedColor = Color.Gold * 0.5f
+            };
+            AddPartPrefabImage(new RectTransform(new Point(frame.Rect.Height, frame.Rect.Height), frame.RectTransform, Anchor.CenterLeft), part, 0.82f);
+            GUITextBlock label = new(new RectTransform(new Vector2(0.70f, 1.0f), frame.RectTransform, Anchor.CenterLeft), (LocalizedString)LocalizeKey(part.NameKey), font: GUIStyle.SmallFont, textAlignment: Alignment.CenterLeft)
+            {
+                Padding = new Vector4(frame.Rect.Height + (int)(6 * GUI.xScale), 0, 0, 0),
+                AutoScaleVertical = true,
+                CanBeFocused = false
+            };
+            GUITextBlock status = new(new RectTransform(new Vector2(0.26f, 1.0f), frame.RectTransform, Anchor.CenterRight), (LocalizedString)PartStatusText(slot, part), font: GUIStyle.SmallFont, textAlignment: Alignment.CenterRight)
+            {
+                Padding = Vector4.Zero,
+                AutoScaleVertical = true,
+                CanBeFocused = false
+            };
+            return new GunsmithPartRow(frame, label, status);
         }
 
         private static void RefreshPartList(GunsmithGuiSlot slot)
@@ -278,6 +395,7 @@ namespace GunSmith
                 return;
             }
 
+            SetPartListSelectionHandler(slot.Path);
             if (partListTitle != null)
             {
                 partListTitle.Text = FormatL("deep.gunsmith.ui.part_list_title", LocalizeKey(slot.NameKey));
@@ -285,9 +403,9 @@ namespace GunSmith
 
             foreach (GunsmithGuiPart part in slot.Parts)
             {
-                if (partButtons.TryGetValue(part.Id, out GUIButton? button))
+                if (partRows.TryGetValue(part.Id, out GunsmithPartRow? row))
                 {
-                    UpdatePartButton(slot, part, button);
+                    UpdatePartRow(slot, part, row);
                 }
             }
         }
@@ -295,28 +413,64 @@ namespace GunSmith
         private static bool CanUpdatePartList(GunsmithGuiSlot slot)
             => string.Equals(partListSlotPath, slot.Path, StringComparison.Ordinal) &&
                partListTitle != null &&
-               partButtons.Count == slot.Parts.Count &&
-               slot.Parts.All(part => partButtons.ContainsKey(part.Id));
+               partRows.Count == slot.Parts.Count &&
+               slot.Parts.All(part => partRows.ContainsKey(part.Id));
 
-        private static void UpdatePartButton(GunsmithGuiSlot slot, GunsmithGuiPart part, GUIButton button)
+        private static void UpdatePartRow(GunsmithGuiSlot slot, GunsmithGuiPart part, GunsmithPartRow row)
         {
-            button.Text = (LocalizedString)PartButtonText(slot, part);
-            button.OnClicked = (_, _) =>
+            bool selected = part.Id == selectedPartId;
+            row.Frame.UserData = part;
+            row.Frame.Color = selected ? Color.DarkOliveGreen * 0.55f : Color.Transparent;
+            row.Label.Text = (LocalizedString)LocalizeKey(part.NameKey);
+            row.Status.Text = (LocalizedString)PartStatusText(slot, part);
+            row.Status.TextColor = PartStatusColor(slot, part);
+        }
+
+        private static void SetPartListSelectionHandler(string slotPath)
+        {
+            if (partList == null) { return; }
+            partList.OnSelected = (_, userData) =>
             {
+                if (userData is not GunsmithGuiPart part) { return false; }
+                GunsmithGuiSlot? latestSlot = activeSlots.FirstOrDefault(slot => slot.Path == slotPath);
+                if (latestSlot == null) { return false; }
+
+                selectedSlot = latestSlot.Path;
                 selectedPartId = part.Id;
-                RefreshPartList(slot);
-                RefreshPartDetailPanel(slot);
+                RefreshPartList(latestSlot);
+                RebuildPartDetailPanel(latestSlot);
                 return true;
             };
         }
 
-        private static string PartButtonText(GunsmithGuiSlot slot, GunsmithGuiPart part)
+        private static bool IsPartInstalled(GunsmithGuiSlot slot, GunsmithGuiPart part)
+            => part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
+
+        private static string PartStatusText(GunsmithGuiSlot slot, GunsmithGuiPart part)
         {
-            bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            string label = PartLabel(part, installed);
-            return part.Id == selectedPartId
-                ? FormatLValue("deep.gunsmith.ui.selected_prefix", label)
-                : label;
+            string key = IsPartInstalled(slot, part)
+                ? "deep.gunsmith.status.installed"
+                : part.Status switch
+                {
+                    "missing" => "deep.gunsmith.status.missing",
+                    "incompatible" => "deep.gunsmith.status.incompatible",
+                    "disabled" => "deep.gunsmith.status.disabled",
+                    _ => string.Empty
+                };
+            if (string.IsNullOrWhiteSpace(key)) { return string.Empty; }
+            return FormatLValue(key, string.Empty).Trim();
+        }
+
+        private static Color PartStatusColor(GunsmithGuiSlot slot, GunsmithGuiPart part)
+        {
+            if (IsPartInstalled(slot, part)) { return Color.LightGreen; }
+            return part.Status switch
+            {
+                "missing" => Color.DarkRed,
+                "incompatible" => Color.OrangeRed,
+                "disabled" => Color.Gray,
+                _ => Color.Cyan
+            };
         }
 
         private static void RebuildPartDetailPanel(GunsmithGuiSlot slot)
@@ -330,11 +484,53 @@ namespace GunSmith
             selectedPartId = part.Id;
 
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.14f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
-            partDetailStats = new GUIListBox(new RectTransform(new Vector2(0.92f, 0.56f), partDetailPanel.RectTransform, Anchor.Center));
-            PopulatePartStats(partDetailStats, part.Stats);
+            // 右下详情面板标题：“选中配件属性”。第一个 Vector2 控制标题占面板宽高，Anchor.TopCenter 固定在面板顶部居中。
+            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.12f), partDetailPanel.RectTransform, Anchor.TopCenter), L("deep.gunsmith.ui.part_detail_title"), textAlignment: Alignment.Center);
 
+            // 右下详情面板中部内容容器：左侧预览图 + 右侧名称/属性。调这里可整体移动或缩放中部内容。
+            // Vector2.X 控制宽度比例，Vector2.Y 控制高度比例；Anchor.Center 表示内容块以详情面板中心为基准。
+            // RelativeOffset.Y 控制整个“预览图 + 属性文字”上下位置：负数往上，正数往下。
+            GUIFrame content = new(new RectTransform(new Vector2(0.94f, 0.42f), partDetailPanel.RectTransform, Anchor.Center), style: null, color: Color.Transparent)
+            {
+                RectTransform = { RelativeOffset = new Vector2(0.0f, -0.14f) }
+            };
+
+            // 左侧预览图区域。Vector2.X 是左栏宽度比例；Anchor.CenterLeft 表示贴在 content 左侧并垂直居中。
+            GUIFrame left = new(new RectTransform(new Vector2(0.34f, 1.0f), content.RectTransform, Anchor.CenterLeft), style: null, color: Color.Transparent);
+
+            // 预览图正方形边长。0.78f 越大，预览框越大；48 是最小像素尺寸。
+            int imageSize = Math.Max((int)Math.Round(Math.Min(left.Rect.Width, left.Rect.Height) * 0.78f), 48);
+
+            // 配件预览框。Anchor.Center 表示预览框在左栏中居中；OutlineColor/OutlineThickness 控制边框颜色和粗细。
+            GUIFrame imageFrame = new(new RectTransform(new Point(imageSize, imageSize), left.RectTransform, Anchor.Center), color: Color.Black * 0.35f)
+            {
+                OutlineColor = GUIStyle.Green * 0.85f,
+                OutlineThickness = 2
+            };
+            // 预览框内部图片。Vector2 控制图片在边框内可用空间比例，fill 控制图片最终填充比例。
+            AddPartPrefabImage(new RectTransform(new Vector2(0.88f, 0.88f), imageFrame.RectTransform, Anchor.Center), part, 0.92f);
+
+            // 右侧文字区域：配件名称 + 属性。Vector2.X 是右栏宽度比例；Anchor.CenterRight 表示贴在 content 右侧。
+            GUIFrame right = new(new RectTransform(new Vector2(0.62f, 1.0f), content.RectTransform, Anchor.CenterRight), style: null, color: Color.Transparent);
+
+            // 配件名称文本。Vector2.Y 控制名称区域高度；Anchor.TopLeft 表示从右侧文字区域左上角开始。
+            _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.22f), right.RectTransform, Anchor.TopLeft), (LocalizedString)LocalizeKey(part.NameKey), font: GUIStyle.SmallFont, textAlignment: Alignment.TopLeft)
+            {
+                TextColor = Color.Cyan,
+                Padding = Vector4.Zero,
+                Wrap = true
+            };
+
+            // 属性文本。Vector2.Y 控制属性区域高度；Anchor.BottomLeft 表示贴在右侧文字区域左下方。
+            // 如果属性太靠下，可改 Anchor.CenterLeft 或增大/减小此处高度比例。
+            GUITextBlock statsText = new(new RectTransform(new Vector2(1.0f, 0.76f), right.RectTransform, Anchor.BottomLeft), (LocalizedString)FormatPartStatsBlock(part.Stats), font: GUIStyle.SmallFont, textAlignment: Alignment.TopLeft)
+            {
+                Padding = Vector4.Zero,
+                Wrap = true
+            };
             string buttonText = InstallButtonText(part, installed);
+
+            // 底部安装按钮。Vector2 控制按钮宽高比例；Anchor.BottomCenter 表示固定在详情面板底部居中。
             partDetailActionButton = new GUIButton(new RectTransform(new Vector2(0.72f, 0.18f), partDetailPanel.RectTransform, Anchor.BottomCenter), (LocalizedString)buttonText, Alignment.Center);
             UpdatePartDetailAction(slot, part, installed);
         }
@@ -343,7 +539,6 @@ namespace GunSmith
         {
             if (partDetailPanel == null) { return; }
             if (!string.Equals(partDetailSlotPath, slot.Path, StringComparison.Ordinal) ||
-                partDetailStats == null ||
                 partDetailActionButton == null)
             {
                 RebuildPartDetailPanel(slot);
@@ -359,7 +554,6 @@ namespace GunSmith
 
             selectedPartId = part.Id;
             bool installed = part.Id == slot.CurrentPartId || (part.Id == EmptyPartId && string.IsNullOrWhiteSpace(slot.CurrentPartId));
-            PopulatePartStats(partDetailStats, part.Stats);
             UpdatePartDetailAction(slot, part, installed);
         }
 
@@ -425,9 +619,6 @@ namespace GunSmith
                 : TextManager.Get("entityname." + identifier).Fallback(identifier).Value;
         }
 
-        private static string PartLabel(GunsmithGuiPart part, bool installed)
-            => FormatLValue("deep.gunsmith.status." + (installed ? "installed" : part.Status), LocalizeKey(part.NameKey));
-
         private static string InstallButtonText(GunsmithGuiPart part, bool installed)
         {
             if (installed || part.Status == "installed") { return LocalizeKey("deep.gunsmith.action.installed"); }
@@ -442,18 +633,6 @@ namespace GunSmith
 
         private static string FormatStatsLine(GunsmithStats stats)
             => $"{LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeKey("deep.gunsmith.stat.spread_reduction")} {stats.SpreadReduction * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.fire_rate")} {stats.FireRateMultiplier * 100:+0.#;-0.#;0}% | {LocalizeKey("deep.gunsmith.stat.damage")} {stats.DamageMultiplier * 100:+0.#;-0.#;0}%";
-
-        private static void PopulatePartStats(GUIListBox list, GunsmithStats stats)
-        {
-            list.Content.ClearChildren();
-            foreach (string line in FormatPartStats(stats))
-            {
-                _ = new GUITextBlock(new RectTransform(new Vector2(1.0f, 0.0f), list.Content.RectTransform)
-                {
-                    MinSize = new Point(0, 22)
-                }, (LocalizedString)line, textAlignment: Alignment.Center);
-            }
-        }
 
         private static List<string> FormatPartStats(GunsmithStats stats)
         {
@@ -491,6 +670,145 @@ namespace GunSmith
             lines.Add($"{LocalizeKey(key)}: {value.ToString("+" + format + ";-" + format + ";0", System.Globalization.CultureInfo.InvariantCulture)}");
         }
 
+        private static string FormatPartStatsBlock(GunsmithStats stats)
+            => string.Join("\n", FormatPartStats(stats));
+
+        private static void AddPartPrefabImage(RectTransform rectT, GunsmithGuiPart part, float fill)
+        {
+            if (TryGetPartSprite(part, out Sprite? sprite, out Color spriteColor))
+            {
+                _ = new GunsmithPartIcon(rectT, sprite!, spriteColor, fill);
+                return;
+            }
+
+            if (TryGetPartVisual(part, out Texture2D? texture, out Rectangle sourceRect))
+            {
+                _ = new GunsmithPartIcon(rectT, texture!, sourceRect, Color.White, fill);
+                return;
+            }
+
+            rectT.Parent = null;
+        }
+
+        private static bool TryGetPartVisual(GunsmithGuiPart part, out Texture2D? texture, out Rectangle sourceRect)
+        {
+            texture = null;
+            sourceRect = Rectangle.Empty;
+            if (string.IsNullOrWhiteSpace(part.VisualTexturePath) ||
+                part.VisualSourceRect.Width <= 0 ||
+                part.VisualSourceRect.Height <= 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                string resolvedPath = ResolvePath(part.VisualTexturePath);
+                texture = GetTexture(resolvedPath);
+                sourceRect = Rectangle.Intersect(part.VisualSourceRect, new Rectangle(0, 0, texture.Width, texture.Height));
+                if (sourceRect.Width <= 0 || sourceRect.Height <= 0)
+                {
+                    return false;
+                }
+
+                string cacheKey = $"{resolvedPath}|{sourceRect.X},{sourceRect.Y},{sourceRect.Width},{sourceRect.Height}";
+                if (!partIconSourceCache.TryGetValue(cacheKey, out Rectangle trimmedRect))
+                {
+                    trimmedRect = TrimTransparentBounds(texture, sourceRect);
+                    partIconSourceCache[cacheKey] = trimmedRect;
+                }
+
+                sourceRect = trimmedRect;
+                return sourceRect.Width > 0 && sourceRect.Height > 0;
+            }
+            catch (Exception ex)
+            {
+                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to load part icon texture '{part.VisualTexturePath}': {ex.Message}");
+                texture = null;
+                sourceRect = Rectangle.Empty;
+                return false;
+            }
+        }
+
+        private static Rectangle TrimTransparentBounds(Texture2D texture, Rectangle rect)
+        {
+            Color[] pixels = new Color[rect.Width * rect.Height];
+            texture.GetData(0, rect, pixels, 0, pixels.Length);
+
+            int minX = rect.Width;
+            int minY = rect.Height;
+            int maxX = -1;
+            int maxY = -1;
+            for (int y = 0; y < rect.Height; y++)
+            {
+                int rowOffset = y * rect.Width;
+                for (int x = 0; x < rect.Width; x++)
+                {
+                    if (pixels[rowOffset + x].A <= 8) { continue; }
+                    minX = Math.Min(minX, x);
+                    minY = Math.Min(minY, y);
+                    maxX = Math.Max(maxX, x);
+                    maxY = Math.Max(maxY, y);
+                }
+            }
+
+            if (maxX < minX || maxY < minY)
+            {
+                return rect;
+            }
+
+            return new Rectangle(
+                rect.X + minX,
+                rect.Y + minY,
+                maxX - minX + 1,
+                maxY - minY + 1);
+        }
+
+        private static bool TryGetPartSprite(GunsmithGuiPart part, out Sprite? sprite, out Color color)
+        {
+            sprite = null;
+            color = Color.White;
+            ItemPrefab? prefab = PartPrefab(part);
+            if (prefab == null)
+            {
+                return false;
+            }
+
+            if (prefab.InventoryIcon != null)
+            {
+                color = prefab.InventoryIconColor;
+                sprite = prefab.InventoryIcon;
+            }
+            else
+            {
+                color = prefab.SpriteColor;
+                sprite = prefab.Sprite;
+            }
+
+            if (color.A == 0)
+            {
+                color = Color.White;
+            }
+            return sprite != null;
+        }
+
+        private static ItemPrefab? PartPrefab(GunsmithGuiPart part)
+        {
+            if (string.IsNullOrWhiteSpace(part.ItemIdentifier))
+            {
+                return null;
+            }
+
+            Identifier identifier = part.ItemIdentifier.ToIdentifier();
+            if (ItemPrefab.Prefabs.TryGet(identifier, out ItemPrefab? prefab))
+            {
+                return prefab;
+            }
+
+            return (MapEntityPrefab.FindByIdentifier(identifier) ??
+                    MapEntityPrefab.FindByName(part.ItemIdentifier)) as ItemPrefab;
+        }
+
         private static Rectangle CreatePreviewSourceRect(GunsmithSpriteState state, GunsmithPreviewSettings settings)
         {
             Rectangle bounds = state.ContentBounds;
@@ -506,6 +824,23 @@ namespace GunSmith
             return clipped.Width > 0 && clipped.Height > 0 ? clipped : textureRect;
         }
 
+        private static bool TryCreatePreviewGeometry(Rectangle rect, GunsmithSpriteState state, GunsmithPreviewSettings settings, out Rectangle sourceRect, out Rectangle destination, out float scale)
+        {
+            sourceRect = CreatePreviewSourceRect(state, settings);
+            destination = Rectangle.Empty;
+            scale = 1.0f;
+            if (sourceRect.Width <= 0 || sourceRect.Height <= 0 || rect.Width <= 0 || rect.Height <= 0)
+            {
+                return false;
+            }
+
+            scale = Math.Min(rect.Width / (float)sourceRect.Width, rect.Height / (float)sourceRect.Height);
+            int width = Math.Max((int)Math.Round(sourceRect.Width * scale), 1);
+            int height = Math.Max((int)Math.Round(sourceRect.Height * scale), 1);
+            destination = new Rectangle(rect.Center.X - width / 2, rect.Center.Y - height / 2, width, height);
+            return true;
+        }
+
         private static void CloseWindow()
         {
             if (activeWindow == null) { return; }
@@ -518,8 +853,7 @@ namespace GunSmith
             partList = null;
             partDetailPanel = null;
             partListTitle = null;
-            partButtons.Clear();
-            partDetailStats = null;
+            partRows.Clear();
             partDetailActionButton = null;
             partListSlotPath = null;
             partDetailSlotPath = null;
@@ -527,12 +861,22 @@ namespace GunSmith
             activePreviewSettings = GunsmithPreviewSettings.Default;
             activeWeaponStats = GunsmithStats.Empty;
             activeQuickMode = false;
+            quickOverlayFrame = null;
+            warnedQuickAnchorPaths.Clear();
         }
 
         internal static void RefreshWindow()
         {
             if (activeWindow == null) { return; }
-            activeWindow.AddToGUIUpdateList();
+            try
+            {
+                activeWindow.AddToGUIUpdateList();
+            }
+            catch (Exception ex)
+            {
+                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to refresh window: {ex.Message}");
+                CloseWindow();
+            }
         }
 
         private static GunsmithGuiSpec ParseSpec(string slotSpec)
@@ -577,30 +921,84 @@ namespace GunSmith
         {
             foreach (string entry in slotsText.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                string[] parts = entry.Split('|', 5, StringSplitOptions.TrimEntries);
-                if (parts.Length != 5 || string.IsNullOrWhiteSpace(parts[0])) { continue; }
+                string[] parts = entry.Split('|', 6, StringSplitOptions.TrimEntries);
+                if (parts.Length < 5 || string.IsNullOrWhiteSpace(parts[0])) { continue; }
 
                 yield return new GunsmithGuiSlot(
                     parts[0],
                     string.IsNullOrWhiteSpace(parts[1]) ? parts[0] : parts[1],
                     parts[2],
                     parts[3] == "1",
-                    ParseParts(parts[4]).ToList());
+                    ParseParts(parts[4]).ToList(),
+                    parts.Length > 5 ? ParseQuickMeta(parts[5]) : GunsmithQuickSlotMeta.Empty);
             }
+        }
+
+        private static GunsmithQuickSlotMeta ParseQuickMeta(string metaSpec)
+        {
+            int slotIndex = -1;
+            float anchorX = 0.0f;
+            float anchorY = 0.0f;
+            bool anchorValid = false;
+            HashSet<string> allowedItems = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (string entry in metaSpec.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                string[] parts = entry.Split('=', 2, StringSplitOptions.TrimEntries);
+                if (parts.Length != 2) { continue; }
+                switch (parts[0])
+                {
+                    case "slot":
+                        int.TryParse(parts[1], out slotIndex);
+                        break;
+                    case "anchorX":
+                        float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out anchorX);
+                        break;
+                    case "anchorY":
+                        float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out anchorY);
+                        break;
+                    case "anchorValid":
+                        anchorValid = parts[1] == "1";
+                        break;
+                    case "items":
+                        foreach (string identifier in parts[1].Split('~', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                        {
+                            allowedItems.Add(identifier);
+                        }
+                        break;
+                }
+            }
+
+            return new GunsmithQuickSlotMeta(slotIndex, new Vector2(anchorX, anchorY), anchorValid, allowedItems);
         }
 
         private static IEnumerable<GunsmithGuiPart> ParseParts(string partSpec)
         {
             foreach (string entry in partSpec.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                string[] parts = entry.Split(':', 4, StringSplitOptions.TrimEntries);
+                string[] parts = entry.Split(':', 7, StringSplitOptions.TrimEntries);
                 if (parts.Length < 2 || string.IsNullOrWhiteSpace(parts[0])) { continue; }
                 yield return new GunsmithGuiPart(
                     parts[0],
                     string.IsNullOrWhiteSpace(parts[1]) ? parts[0] : parts[1],
                     parts.Length > 2 && !string.IsNullOrWhiteSpace(parts[2]) ? parts[2] : "available",
-                    parts.Length > 3 ? ParseStats(parts[3]) : GunsmithStats.Empty);
+                    parts.Length > 3 ? ParseStats(parts[3]) : GunsmithStats.Empty,
+                    parts.Length > 4 ? DecodeText(parts[4]) : string.Empty,
+                    parts.Length > 5 ? DecodeText(parts[5]) : string.Empty,
+                    parts.Length > 6 && TryParseRectangle(DecodeText(parts[6]), out Rectangle visualSourceRect) ? visualSourceRect : Rectangle.Empty);
             }
+        }
+
+        private static string DecodeText(string value)
+        {
+            return value
+                .Replace("%3D", "=", StringComparison.OrdinalIgnoreCase)
+                .Replace("%7E", "~", StringComparison.OrdinalIgnoreCase)
+                .Replace("%3B", ";", StringComparison.OrdinalIgnoreCase)
+                .Replace("%2C", ",", StringComparison.OrdinalIgnoreCase)
+                .Replace("%7C", "|", StringComparison.OrdinalIgnoreCase)
+                .Replace("%3A", ":", StringComparison.OrdinalIgnoreCase)
+                .Replace("%25", "%", StringComparison.OrdinalIgnoreCase);
         }
 
         private static GunsmithStats ParseStats(string statSpec)
@@ -659,9 +1057,16 @@ namespace GunSmith
             public static GunsmithGuiContext Empty { get; } = new(string.Empty, "deep.gunsmith.ui.weapon_root", string.Empty);
         }
 
-        private sealed record GunsmithGuiSlot(string Path, string NameKey, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts);
+        private sealed record GunsmithGuiSlot(string Path, string NameKey, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts, GunsmithQuickSlotMeta QuickMeta);
 
-        private sealed record GunsmithGuiPart(string Id, string NameKey, string Status, GunsmithStats Stats)
+        private sealed record GunsmithQuickSlotMeta(int SlotIndex, Vector2 Anchor, bool AnchorValid, IReadOnlySet<string> AllowedItemIdentifiers)
+        {
+            public static GunsmithQuickSlotMeta Empty { get; } = new(-1, Vector2.Zero, false, new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+        }
+
+        private sealed record GunsmithPartRow(GUIFrame Frame, GUITextBlock Label, GUITextBlock Status);
+
+        private sealed record GunsmithGuiPart(string Id, string NameKey, string Status, GunsmithStats Stats, string ItemIdentifier, string VisualTexturePath, Rectangle VisualSourceRect)
         {
             public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }
@@ -689,13 +1094,64 @@ namespace GunSmith
             public static GunsmithPreviewSettings Default { get; } = new(12.0f, 1.0f, Vector2.Zero);
         }
 
+        private sealed class GunsmithWindowFrame : GUIFrame
+        {
+            private readonly Action close;
+            private bool dragging;
+
+            public GunsmithWindowFrame(RectTransform rectT, Action close, Color color)
+                : base(rectT, style: null, color: color)
+            {
+                this.close = close;
+                CanBeFocused = true;
+            }
+
+            public override void Update(float deltaTime)
+            {
+                base.Update(deltaTime);
+                if (!Visible) { return; }
+
+                if (Rect.Contains(PlayerInput.MousePosition) && PlayerInput.SecondaryMouseButtonClicked())
+                {
+                    close();
+                    return;
+                }
+
+                Rectangle dragArea = new(Rect.X, Rect.Y, Rect.Width, Math.Max((int)(Rect.Height * 0.14f), 28));
+                if (dragArea.Contains(PlayerInput.MousePosition) && PlayerInput.PrimaryMouseButtonDown())
+                {
+                    dragging = true;
+                }
+
+                if (!PlayerInput.PrimaryMouseButtonHeld())
+                {
+                    dragging = false;
+                    return;
+                }
+
+                if (!dragging)
+                {
+                    return;
+                }
+
+                Vector2 speed = PlayerInput.MouseSpeed;
+                if (speed == Vector2.Zero)
+                {
+                    return;
+                }
+
+                RectTransform.ScreenSpaceOffset += new Point((int)Math.Round(speed.X), (int)Math.Round(speed.Y));
+                ClampToArea(new Rectangle(0, 0, GameMain.GraphicsWidth, GameMain.GraphicsHeight));
+            }
+        }
+
         private sealed class GunsmithPreviewImage : GUIFrame
         {
             private readonly Item item;
             private readonly GunsmithPreviewSettings settings;
 
             public GunsmithPreviewImage(RectTransform rectT, Item item, GunsmithPreviewSettings settings)
-                : base(rectT, "GUIFrame", Color.Transparent)
+                : base(rectT, style: null, color: Color.Transparent)
             {
                 this.item = item;
                 this.settings = settings;
@@ -710,22 +1166,201 @@ namespace GunSmith
 
                 base.Draw(spriteBatch);
                 Texture2D texture = state.Texture;
-                Rectangle sourceRect = CreatePreviewSourceRect(state, settings);
-                if (sourceRect.Width <= 0 || sourceRect.Height <= 0 || Rect.Width <= 0 || Rect.Height <= 0)
+                if (!TryCreatePreviewGeometry(Rect, state, settings, out Rectangle sourceRect, out Rectangle destination, out _))
                 {
                     return;
                 }
 
-                float scale = Math.Min(Rect.Width / (float)sourceRect.Width, Rect.Height / (float)sourceRect.Height);
-                int width = Math.Max((int)Math.Round(sourceRect.Width * scale), 1);
-                int height = Math.Max((int)Math.Round(sourceRect.Height * scale), 1);
-                Rectangle destination = new(
-                    Rect.Center.X - width / 2,
-                    Rect.Center.Y - height / 2,
-                    width,
-                    height);
-
                 spriteBatch.Draw(texture, destination, sourceRect, Color.White);
+            }
+        }
+
+        private sealed class GunsmithPartIcon : GUIFrame
+        {
+            private readonly Sprite? sprite;
+            private readonly Texture2D? texture;
+            private readonly Rectangle sourceRect;
+            private readonly Color iconColor;
+            private readonly float fill;
+
+            public GunsmithPartIcon(RectTransform rectT, Sprite sprite, Color color, float fill)
+                : base(rectT, style: null, color: Color.Transparent)
+            {
+                this.sprite = sprite;
+                texture = null;
+                sourceRect = Rectangle.Empty;
+                iconColor = color;
+                this.fill = Math.Clamp(fill, 0.1f, 1.0f);
+                CanBeFocused = false;
+            }
+
+            public GunsmithPartIcon(RectTransform rectT, Texture2D texture, Rectangle sourceRect, Color color, float fill)
+                : base(rectT, style: null, color: Color.Transparent)
+            {
+                sprite = null;
+                this.texture = texture;
+                this.sourceRect = sourceRect;
+                iconColor = color;
+                this.fill = Math.Clamp(fill, 0.1f, 1.0f);
+                CanBeFocused = false;
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                if (!Visible)
+                {
+                    return;
+                }
+
+                base.Draw(spriteBatch);
+                if (Rect.Width <= 0 || Rect.Height <= 0)
+                {
+                    return;
+                }
+
+                if (sprite != null)
+                {
+                    if (sprite.size.X <= 0.0f || sprite.size.Y <= 0.0f)
+                    {
+                        return;
+                    }
+
+                    float scale = Math.Min(Rect.Width / sprite.size.X, Rect.Height / sprite.size.Y) * fill;
+                    sprite.Draw(spriteBatch, Rect.Center.ToVector2(), iconColor, scale: scale);
+                    return;
+                }
+
+                if (texture == null || sourceRect.Width <= 0 || sourceRect.Height <= 0)
+                {
+                    return;
+                }
+
+                float textureScale = Math.Min(Rect.Width / (float)sourceRect.Width, Rect.Height / (float)sourceRect.Height) * fill;
+                int width = Math.Max((int)Math.Round(sourceRect.Width * textureScale), 1);
+                int height = Math.Max((int)Math.Round(sourceRect.Height * textureScale), 1);
+                Rectangle destination = new(Rect.Center.X - width / 2, Rect.Center.Y - height / 2, width, height);
+                spriteBatch.Draw(texture, destination, sourceRect, iconColor);
+            }
+        }
+
+        private sealed class QuickOverlayFrame : GUIFrame
+        {
+            private readonly Item? item;
+            private readonly GunsmithPreviewSettings settings;
+            private readonly List<GunsmithGuiSlot> slots;
+            private static Texture2D? lineTexture;
+
+            public QuickOverlayFrame(RectTransform rectT, Item? item, GunsmithPreviewSettings settings, List<GunsmithGuiSlot> slots)
+                : base(rectT, style: null, color: Color.Transparent)
+            {
+                this.item = item;
+                this.settings = settings;
+                this.slots = slots;
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                if (!Visible || item == null || item.Removed || !TryGetValidState(item, out GunsmithSpriteState state))
+                {
+                    base.Draw(spriteBatch);
+                    return;
+                }
+
+                base.Draw(spriteBatch);
+                if (!TryCreatePreviewGeometry(Rect, state, settings, out Rectangle sourceRect, out Rectangle destination, out float scale))
+                {
+                    return;
+                }
+
+                spriteBatch.Draw(state.Texture, destination, sourceRect, Color.White);
+                Texture2D line = GetLineTexture();
+
+                for (int i = 0; i < slots.Count; i++)
+                {
+                    GunsmithGuiSlot slot = slots[i];
+                    if (slot.QuickMeta.SlotIndex < 0)
+                    {
+                        continue;
+                    }
+
+                    Vector2 anchor = slot.QuickMeta.AnchorValid
+                        ? new Vector2(
+                            destination.X + (slot.QuickMeta.Anchor.X - sourceRect.X) * scale,
+                            destination.Y + (slot.QuickMeta.Anchor.Y - sourceRect.Y) * scale)
+                        : FallbackAnchor(destination, i, slots.Count);
+                    Rectangle slotRect = SlotRectForAnchor(anchor, destination, sourceRect, scale);
+
+                    DrawLine(spriteBatch, line, anchor, new Vector2(slotRect.Center.X, slotRect.Center.Y), Color.LightGreen * 0.55f, 1.0f);
+                    DrawSlotOutline(spriteBatch, line, slotRect, slot.QuickMeta.AnchorValid ? Color.LightGreen * 0.85f : Color.Yellow * 0.85f);
+                    DrawSlotLabel(spriteBatch, slotRect, LocalizeKey(slot.NameKey));
+
+                    if (!slot.QuickMeta.AnchorValid && warnedQuickAnchorPaths.Add(slot.Path))
+                    {
+                        LuaCsSetup.PrintCsMessage($"[Gunsmith] Quick slot '{slot.Path}' has no resolved anchor; using fallback UI position.");
+                    }
+                }
+            }
+
+            private static Vector2 FallbackAnchor(Rectangle destination, int index, int count)
+            {
+                float step = destination.Width / (float)Math.Max(count + 1, 2);
+                return new Vector2(destination.X + step * (index + 1), destination.Y - 12);
+            }
+
+            private static Rectangle SlotRectForAnchor(Vector2 anchor, Rectangle destination, Rectangle sourceRect, float scale)
+            {
+                const int slotSize = 54;
+                const int gap = 82;
+                float sourceCenterX = sourceRect.X + sourceRect.Width * 0.5f;
+                float sourceCenterY = sourceRect.Y + sourceRect.Height * 0.5f;
+                float canvasX = sourceRect.X + (anchor.X - destination.X) / Math.Max(scale, 0.001f);
+                float canvasY = sourceRect.Y + (anchor.Y - destination.Y) / Math.Max(scale, 0.001f);
+                int x = (int)Math.Round(anchor.X + (canvasX < sourceCenterX ? -gap : gap) - slotSize / 2.0f);
+                int y = (int)Math.Round(anchor.Y + (canvasY < sourceCenterY ? -gap : gap) - slotSize / 2.0f);
+
+                int minX = Math.Max(destination.X - 120, 8);
+                int maxX = Math.Min(destination.Right + 120 - slotSize, GameMain.GraphicsWidth - slotSize - 8);
+                int minY = Math.Max(destination.Y - 80, 58);
+                int maxY = Math.Min(destination.Bottom + 80 - slotSize, GameMain.GraphicsHeight - slotSize - 8);
+                return new Rectangle(Math.Clamp(x, minX, maxX), Math.Clamp(y, minY, maxY), slotSize, slotSize);
+            }
+
+            private static void DrawSlotOutline(SpriteBatch spriteBatch, Texture2D texture, Rectangle rect, Color color)
+            {
+                spriteBatch.Draw(texture, new Rectangle(rect.X, rect.Y, rect.Width, 1), color);
+                spriteBatch.Draw(texture, new Rectangle(rect.X, rect.Bottom - 1, rect.Width, 1), color);
+                spriteBatch.Draw(texture, new Rectangle(rect.X, rect.Y, 1, rect.Height), color);
+                spriteBatch.Draw(texture, new Rectangle(rect.Right - 1, rect.Y, 1, rect.Height), color);
+            }
+
+            private static void DrawLine(SpriteBatch spriteBatch, Texture2D texture, Vector2 from, Vector2 to, Color color, float thickness)
+            {
+                Vector2 edge = to - from;
+                float length = edge.Length();
+                if (length <= 0.1f) { return; }
+                float angle = MathF.Atan2(edge.Y, edge.X);
+                spriteBatch.Draw(texture, from, null, color, angle, Vector2.Zero, new Vector2(length, thickness), SpriteEffects.None, 0.0f);
+            }
+
+            private static void DrawSlotLabel(SpriteBatch spriteBatch, Rectangle slotRect, string label)
+            {
+                var font = GUIStyle.SmallFont ?? GUIStyle.Font;
+                if (font == null || string.IsNullOrWhiteSpace(label)) { return; }
+                Vector2 size = font.MeasureString(label);
+                Vector2 position = new(slotRect.Center.X - size.X * 0.5f, slotRect.Y - size.Y - 3);
+                GUI.DrawString(spriteBatch, position, label, Color.LightYellow, Color.Black * 0.65f, 0, font);
+            }
+
+            private static Texture2D GetLineTexture()
+            {
+                if (lineTexture != null && !lineTexture.IsDisposed)
+                {
+                    return lineTexture;
+                }
+
+                lineTexture = new Texture2D(GameMain.GraphicsDeviceManager.GraphicsDevice, 1, 1);
+                lineTexture.SetData(new[] { Color.White });
+                return lineTexture;
             }
         }
 

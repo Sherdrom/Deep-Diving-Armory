@@ -19,6 +19,17 @@ local function encodePreview(item, platform)
         offset.y or 0)
 end
 
+local function encodeText(value)
+    return tostring(value or "")
+        :gsub("%%", "%%25")
+        :gsub(":", "%%3A")
+        :gsub("|", "%%7C")
+        :gsub(",", "%%2C")
+        :gsub(";", "%%3B")
+        :gsub("~", "%%7E")
+        :gsub("=", "%%3D")
+end
+
 local function appendPartEntry(entries, item, selection, platform, slotPath, partId)
     local part = Gunsmith.Config.parts[partId]
     if part then
@@ -31,7 +42,17 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part, item) then
             status = "missing"
         end
-        table.insert(entries, partId .. ":" .. part.nameKey .. ":" .. status .. ":" .. Stats.Encode(Stats.PartStats(part), "~"))
+        local visual = part.visual or {}
+        local source = visual.source or {}
+        table.insert(entries, table.concat({
+            partId,
+            part.nameKey,
+            status,
+            Stats.Encode(Stats.PartStats(part), "~"),
+            encodeText(part.item and part.item.identifier or ""),
+            encodeText(visual.texture or ""),
+            encodeText(string.format("%d,%d,%d,%d", source.x or 0, source.y or 0, source.w or 0, source.h or 0))
+        }, ":"))
     end
 end
 
