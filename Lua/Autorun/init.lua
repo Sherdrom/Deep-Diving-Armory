@@ -30,6 +30,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOffToLeviathan.lua
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DeepGun_InWaterDetect.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/TruePercentDamage.lua")
 
+
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/ALTYN.lua")
@@ -83,4 +84,10 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/ShieldSprite/MobileShield.lua")
 
 --衣服贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/SuitSprite/MarkSuit.lua")
+
+--致命爆头only
+dofile(Deep_Lua.Path .. "/Lua/Scripts/HeadShot/HeadShotOnly.lua")
+
+--爆头倍率
+dofile(Deep_Lua.Path .. "/Lua/Scripts/HeadShot/HeadShotMultiplier.lua")
 
