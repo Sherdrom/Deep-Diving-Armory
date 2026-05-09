@@ -23,6 +23,7 @@ namespace GunSmith
         private static GunsmithPreviewSettings activePreviewSettings = GunsmithPreviewSettings.Default;
         private static bool activeQuickMode;
         private static QuickOverlayFrame? quickOverlayFrame;
+        private static bool suppressQuickUninstallRelease;
         private static readonly HashSet<string> warnedQuickAnchorPaths = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, Rectangle> partIconSourceCache = new(StringComparer.Ordinal);
 
@@ -80,7 +81,7 @@ namespace GunSmith
             activeWeaponStats = spec.WeaponStats;
             if (quickMode)
             {
-                activeWindow = new GunsmithWindowFrame(new RectTransform(new Vector2(0.96f, 0.88f), GUI.Canvas, Anchor.Center), CloseWindow, Color.Black * 0.58f);
+                activeWindow = new GunsmithWindowFrame(new RectTransform(new Vector2(0.78f, 0.68f), GUI.Canvas, Anchor.Center), CloseWindow, Color.Black * 0.62f);
                 BuildQuickOverlay(title);
             }
             else
@@ -176,7 +177,7 @@ namespace GunSmith
             if (activeWindow == null) { return; }
             activeWindow.ClearChildren();
 
-            GUIFrame header = new(new RectTransform(new Vector2(0.42f, 0.07f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
+            GUIFrame header = new(new RectTransform(new Vector2(0.48f, 0.09f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
             _ = new GUITextBlock(new RectTransform(new Vector2(0.72f, 0.72f), header.RectTransform, Anchor.CenterLeft), FormatL(title, LocalizedItemName(activeItem)), textAlignment: Alignment.CenterLeft);
             GUIButton closeButton = new(new RectTransform(new Vector2(0.20f, 0.72f), header.RectTransform, Anchor.CenterRight), L("deep.gunsmith.ui.close"), Alignment.Center);
             closeButton.OnClicked = (_, _) =>
@@ -186,7 +187,7 @@ namespace GunSmith
             };
 
             quickOverlayFrame = new QuickOverlayFrame(
-                new RectTransform(new Vector2(0.96f, 0.86f), activeWindow.RectTransform, Anchor.Center),
+                new RectTransform(new Vector2(0.92f, 0.78f), activeWindow.RectTransform, Anchor.Center),
                 activeItem,
                 activePreviewSettings,
                 activeSlots);
@@ -883,7 +884,23 @@ namespace GunSmith
             activeWeaponStats = GunsmithStats.Empty;
             activeQuickMode = false;
             quickOverlayFrame = null;
+            suppressQuickUninstallRelease = false;
             warnedQuickAnchorPaths.Clear();
+        }
+
+        internal static bool IsGunsmithWindowBlockingInput
+            => activeWindow is { Visible: true };
+
+        internal static GUIComponent? ActiveWindowForInputBlock => activeWindow;
+
+        internal static bool TryHandleQuickOverlayDragging()
+        {
+            if (!activeQuickMode || quickOverlayFrame == null)
+            {
+                return false;
+            }
+
+            return quickOverlayFrame.TryHandleDraggingRelease();
         }
 
         internal static void RefreshWindow()
@@ -1119,7 +1136,13 @@ namespace GunSmith
                 base.Update(deltaTime);
                 if (!Visible) { return; }
 
-                if (Rect.Contains(PlayerInput.MousePosition) && PlayerInput.SecondaryMouseButtonClicked())
+                bool mouseInsideWindow = Rect.Contains(PlayerInput.MousePosition);
+                if (!mouseInsideWindow)
+                {
+                    GUI.ForceMouseOn(this);
+                }
+
+                if (PlayerInput.SecondaryMouseButtonClicked())
                 {
                     close();
                     return;
@@ -1253,9 +1276,12 @@ namespace GunSmith
 
         private sealed class QuickOverlayFrame : GUIFrame
         {
+            private const int QuickSlotSize = 54;
+            private const int QuickSlotGap = 74;
             private readonly Item? item;
             private readonly GunsmithPreviewSettings settings;
             private readonly List<GunsmithGuiSlot> slots;
+            private readonly Dictionary<string, float> failedDropTimers = new(StringComparer.Ordinal);
             private static Texture2D? lineTexture;
 
             public QuickOverlayFrame(RectTransform rectT, Item? item, GunsmithPreviewSettings settings, List<GunsmithGuiSlot> slots)
@@ -1264,6 +1290,108 @@ namespace GunSmith
                 this.item = item;
                 this.settings = settings;
                 this.slots = slots;
+                CanBeFocused = true;
+            }
+
+            public override void Update(float deltaTime)
+            {
+                base.Update(deltaTime);
+                if (!Visible || item == null || item.Removed || !TryCreateQuickGeometry(out QuickGeometry geometry))
+                {
+                    return;
+                }
+
+                foreach (string key in failedDropTimers.Keys.ToList())
+                {
+                    failedDropTimers[key] -= deltaTime;
+                    if (failedDropTimers[key] <= 0.0f)
+                    {
+                        failedDropTimers.Remove(key);
+                    }
+                }
+
+                foreach (QuickSlotLayout layout in BuildSlotLayouts(geometry))
+                {
+                    if (!layout.Rect.Contains(PlayerInput.MousePosition) || string.IsNullOrWhiteSpace(layout.Slot.CurrentPartId))
+                    {
+                        continue;
+                    }
+
+                    Item? containedItem = GetContainedQuickItem(layout.Slot);
+                    if (containedItem == null)
+                    {
+                        continue;
+                    }
+
+                    GUI.MouseCursor = CursorState.Hand;
+                    if (Inventory.DraggingItems.Any() || !PlayerInput.PrimaryMouseButtonDown())
+                    {
+                        continue;
+                    }
+
+                    BeginDraggingQuickItem(layout.Slot, containedItem);
+                    return;
+                }
+
+                if (suppressQuickUninstallRelease && !PlayerInput.PrimaryMouseButtonHeld())
+                {
+                    suppressQuickUninstallRelease = false;
+                }
+            }
+
+            public bool TryHandleDraggingRelease()
+            {
+                if (!Visible || item == null || item.Removed || !Inventory.DraggingItems.Any() || !PlayerInput.PrimaryMouseButtonReleased() || !TryCreateQuickGeometry(out QuickGeometry geometry))
+                {
+                    return false;
+                }
+
+                foreach (QuickSlotLayout layout in BuildSlotLayouts(geometry))
+                {
+                    if (!layout.Rect.Contains(PlayerInput.MousePosition))
+                    {
+                        continue;
+                    }
+
+                    Item? draggedItem = Inventory.DraggingItems.FirstOrDefault();
+                    if (draggedItem != null)
+                    {
+                        if (CanAcceptDraggedItem(layout.Slot, draggedItem))
+                        {
+                            suppressQuickUninstallRelease = true;
+                            CallLuaHook("DeepGunsmithInstallQuickItem", item, layout.Slot.Path, draggedItem);
+                            Inventory.DraggingItems.Clear();
+                            SoundPlayer.PlayUISound(GUISoundType.PickItem);
+                        }
+                        else
+                        {
+                            suppressQuickUninstallRelease = true;
+                            failedDropTimers[layout.Slot.Path] = 0.45f;
+                            Inventory.DraggingItems.Clear();
+                            SoundPlayer.PlayUISound(GUISoundType.PickItemFail);
+                        }
+                        return true;
+                    }
+                }
+
+                if (Rect.Contains(PlayerInput.MousePosition))
+                {
+                    suppressQuickUninstallRelease = true;
+                    Inventory.DraggingItems.Clear();
+                    return true;
+                }
+
+                return false;
+            }
+
+            public bool ContainsMouseOrSlot(Point mousePosition)
+            {
+                if (!Visible || item == null || item.Removed || !TryCreateQuickGeometry(out QuickGeometry geometry))
+                {
+                    return false;
+                }
+
+                return Rect.Contains(mousePosition) || BuildSlotLayouts(geometry).Any(layout => layout.Rect.Contains(mousePosition));
             }
 
             public override void Draw(SpriteBatch spriteBatch)
@@ -1275,14 +1403,50 @@ namespace GunSmith
                 }
 
                 base.Draw(spriteBatch);
-                if (!TryCreatePreviewGeometry(Rect, state, settings, out Rectangle sourceRect, out Rectangle destination, out float scale))
+                if (!TryCreateQuickGeometry(state, out QuickGeometry geometry))
                 {
                     return;
                 }
 
-                spriteBatch.Draw(state.Texture, destination, sourceRect, Color.White);
+                spriteBatch.Draw(state.Texture, geometry.Destination, geometry.SourceRect, Color.White);
                 Texture2D line = GetLineTexture();
 
+                foreach (QuickSlotLayout layout in BuildSlotLayouts(geometry))
+                {
+                    Color lineColor = layout.AnchorValid ? Color.LightGreen * 0.55f : Color.Yellow * 0.55f;
+                    DrawLine(spriteBatch, line, layout.Anchor, new Vector2(layout.Rect.Center.X, layout.Rect.Center.Y), lineColor, 1.0f);
+                    DrawQuickSlot(spriteBatch, layout);
+                    DrawSlotLabel(spriteBatch, layout.Rect, LocalizeKey(layout.Slot.NameKey));
+
+                    if (!layout.AnchorValid && warnedQuickAnchorPaths.Add(layout.Slot.Path))
+                    {
+                        LuaCsSetup.PrintCsMessage($"[Gunsmith] Quick slot '{layout.Slot.Path}' has no resolved anchor; using fallback UI position.");
+                    }
+                }
+            }
+
+            private bool TryCreateQuickGeometry(out QuickGeometry geometry)
+            {
+                geometry = default;
+                return item != null && TryGetValidState(item, out GunsmithSpriteState state) && TryCreateQuickGeometry(state, out geometry);
+            }
+
+            private bool TryCreateQuickGeometry(GunsmithSpriteState state, out QuickGeometry geometry)
+            {
+                geometry = default;
+                Rectangle previewRect = Rect;
+                previewRect.Inflate(-(int)(48 * GUI.xScale), -(int)(28 * GUI.yScale));
+                if (!TryCreatePreviewGeometry(previewRect, state, settings, out Rectangle sourceRect, out Rectangle destination, out float scale))
+                {
+                    return false;
+                }
+
+                geometry = new QuickGeometry(sourceRect, destination, scale);
+                return true;
+            }
+
+            private IEnumerable<QuickSlotLayout> BuildSlotLayouts(QuickGeometry geometry)
+            {
                 for (int i = 0; i < slots.Count; i++)
                 {
                     GunsmithGuiSlot slot = slots[i];
@@ -1293,19 +1457,11 @@ namespace GunSmith
 
                     Vector2 anchor = slot.QuickMeta.AnchorValid
                         ? new Vector2(
-                            destination.X + (slot.QuickMeta.Anchor.X - sourceRect.X) * scale,
-                            destination.Y + (slot.QuickMeta.Anchor.Y - sourceRect.Y) * scale)
-                        : FallbackAnchor(destination, i, slots.Count);
-                    Rectangle slotRect = SlotRectForAnchor(anchor, destination, sourceRect, scale);
-
-                    DrawLine(spriteBatch, line, anchor, new Vector2(slotRect.Center.X, slotRect.Center.Y), Color.LightGreen * 0.55f, 1.0f);
-                    DrawSlotOutline(spriteBatch, line, slotRect, slot.QuickMeta.AnchorValid ? Color.LightGreen * 0.85f : Color.Yellow * 0.85f);
-                    DrawSlotLabel(spriteBatch, slotRect, LocalizeKey(slot.NameKey));
-
-                    if (!slot.QuickMeta.AnchorValid && warnedQuickAnchorPaths.Add(slot.Path))
-                    {
-                        LuaCsSetup.PrintCsMessage($"[Gunsmith] Quick slot '{slot.Path}' has no resolved anchor; using fallback UI position.");
-                    }
+                            geometry.Destination.X + (slot.QuickMeta.Anchor.X - geometry.SourceRect.X) * geometry.Scale,
+                            geometry.Destination.Y + (slot.QuickMeta.Anchor.Y - geometry.SourceRect.Y) * geometry.Scale)
+                        : FallbackAnchor(geometry.Destination, i, slots.Count);
+                    Rectangle slotRect = SlotRectForSlot(slot, anchor, geometry);
+                    yield return new QuickSlotLayout(slot, anchor, slotRect, slot.QuickMeta.AnchorValid);
                 }
             }
 
@@ -1315,22 +1471,145 @@ namespace GunSmith
                 return new Vector2(destination.X + step * (index + 1), destination.Y - 12);
             }
 
-            private static Rectangle SlotRectForAnchor(Vector2 anchor, Rectangle destination, Rectangle sourceRect, float scale)
+            private static Rectangle SlotRectForSlot(GunsmithGuiSlot slot, Vector2 anchor, QuickGeometry geometry)
             {
-                const int slotSize = 54;
-                const int gap = 82;
+                Rectangle destination = geometry.Destination;
+                Rectangle sourceRect = geometry.SourceRect;
+                float scale = geometry.Scale;
                 float sourceCenterX = sourceRect.X + sourceRect.Width * 0.5f;
                 float sourceCenterY = sourceRect.Y + sourceRect.Height * 0.5f;
                 float canvasX = sourceRect.X + (anchor.X - destination.X) / Math.Max(scale, 0.001f);
                 float canvasY = sourceRect.Y + (anchor.Y - destination.Y) / Math.Max(scale, 0.001f);
-                int x = (int)Math.Round(anchor.X + (canvasX < sourceCenterX ? -gap : gap) - slotSize / 2.0f);
-                int y = (int)Math.Round(anchor.Y + (canvasY < sourceCenterY ? -gap : gap) - slotSize / 2.0f);
+                string path = slot.Path.ToLowerInvariant();
 
-                int minX = Math.Max(destination.X - 120, 8);
-                int maxX = Math.Min(destination.Right + 120 - slotSize, GameMain.GraphicsWidth - slotSize - 8);
-                int minY = Math.Max(destination.Y - 80, 58);
-                int maxY = Math.Min(destination.Bottom + 80 - slotSize, GameMain.GraphicsHeight - slotSize - 8);
-                return new Rectangle(Math.Clamp(x, minX, maxX), Math.Clamp(y, minY, maxY), slotSize, slotSize);
+                int x;
+                int y;
+                if (path.Contains("lower_rail", StringComparison.Ordinal))
+                {
+                    x = (int)Math.Round(anchor.X - QuickSlotSize / 2.0f);
+                    y = (int)Math.Round(anchor.Y + QuickSlotGap - QuickSlotSize / 2.0f);
+                }
+                else if (path.Contains("left_rail", StringComparison.Ordinal))
+                {
+                    x = (int)Math.Round(anchor.X - QuickSlotGap - QuickSlotSize / 2.0f);
+                    y = (int)Math.Round(anchor.Y - QuickSlotSize / 2.0f);
+                }
+                else if (path.Contains("right_rail", StringComparison.Ordinal))
+                {
+                    x = (int)Math.Round(anchor.X + QuickSlotGap - QuickSlotSize / 2.0f);
+                    y = (int)Math.Round(anchor.Y - QuickSlotSize / 2.0f);
+                }
+                else
+                {
+                    x = (int)Math.Round(anchor.X + (canvasX < sourceCenterX ? -QuickSlotGap : QuickSlotGap) - QuickSlotSize / 2.0f);
+                    y = (int)Math.Round(anchor.Y + (canvasY < sourceCenterY ? -QuickSlotGap : QuickSlotGap) - QuickSlotSize / 2.0f);
+                }
+
+                int minX = Math.Max(destination.X - 110, 8);
+                int maxX = Math.Min(destination.Right + 110 - QuickSlotSize, GameMain.GraphicsWidth - QuickSlotSize - 8);
+                int minY = Math.Max(destination.Y - 76, 58);
+                int maxY = Math.Min(destination.Bottom + 76 - QuickSlotSize, GameMain.GraphicsHeight - QuickSlotSize - 8);
+                return new Rectangle(Math.Clamp(x, minX, maxX), Math.Clamp(y, minY, maxY), QuickSlotSize, QuickSlotSize);
+            }
+
+            private void DrawQuickSlot(SpriteBatch spriteBatch, QuickSlotLayout layout)
+            {
+                VisualSlot visualSlot = new(layout.Rect);
+                GunsmithGuiPart? installedPart = layout.Slot.Parts.FirstOrDefault(part => part.Id == layout.Slot.CurrentPartId);
+                Inventory.DrawSlot(spriteBatch, null, visualSlot, null, -1, drawItem: false);
+
+                bool mouseOn = layout.Rect.Contains(PlayerInput.MousePosition);
+                Item? draggedItem = Inventory.DraggingItems.FirstOrDefault();
+                bool canAccept = draggedItem != null && CanAcceptDraggedItem(layout.Slot, draggedItem);
+                bool failed = failedDropTimers.ContainsKey(layout.Slot.Path);
+                Color outlineColor = failed
+                    ? GUIStyle.Red
+                    : mouseOn && draggedItem != null
+                        ? canAccept ? GUIStyle.Green : GUIStyle.Red
+                        : layout.AnchorValid ? Color.LightGreen : Color.Yellow;
+                DrawSlotOutline(spriteBatch, GetLineTexture(), layout.Rect, outlineColor * 0.9f);
+
+                if (mouseOn && draggedItem != null)
+                {
+                    GUIStyle.UIGlow.Draw(spriteBatch, layout.Rect, canAccept ? GUIStyle.Green : GUIStyle.Red);
+                }
+
+                if (installedPart != null)
+                {
+                    DrawPartIcon(spriteBatch, layout.Rect, installedPart, 0.82f);
+                }
+            }
+
+            private static void DrawPartIcon(SpriteBatch spriteBatch, Rectangle rect, GunsmithGuiPart part, float fill)
+            {
+                if (TryGetPartSprite(part, out Sprite? sprite, out Color spriteColor) && sprite != null)
+                {
+                    float scale = Math.Min(rect.Width / sprite.size.X, rect.Height / sprite.size.Y) * fill;
+                    sprite.Draw(spriteBatch, rect.Center.ToVector2(), spriteColor, scale: scale);
+                    return;
+                }
+
+                if (!TryGetPartVisual(part, out Texture2D? texture, out Rectangle sourceRect) || texture == null)
+                {
+                    return;
+                }
+
+                float textureScale = Math.Min(rect.Width / (float)sourceRect.Width, rect.Height / (float)sourceRect.Height) * fill;
+                int width = Math.Max((int)Math.Round(sourceRect.Width * textureScale), 1);
+                int height = Math.Max((int)Math.Round(sourceRect.Height * textureScale), 1);
+                Rectangle destination = new(rect.Center.X - width / 2, rect.Center.Y - height / 2, width, height);
+                spriteBatch.Draw(texture, destination, sourceRect, Color.White);
+            }
+
+            private bool CanAcceptDraggedItem(GunsmithGuiSlot slot, Item draggedItem)
+            {
+                string identifier = draggedItem.Prefab?.Identifier.Value ?? string.Empty;
+                return !string.IsNullOrWhiteSpace(identifier) &&
+                    slot.QuickMeta.AllowedItemIdentifiers.Contains(identifier) &&
+                    item?.OwnInventory?.CanBePutInSlot(draggedItem, slot.QuickMeta.SlotIndex) == true;
+            }
+
+            private Item? GetContainedQuickItem(GunsmithGuiSlot slot)
+            {
+                int slotIndex = slot.QuickMeta.SlotIndex;
+                if (item?.OwnInventory == null || slotIndex < 0 || slotIndex >= item.OwnInventory.slots.Length)
+                {
+                    return null;
+                }
+
+                foreach (Item contained in item.OwnInventory.slots[slotIndex].Items)
+                {
+                    if (contained != null && !contained.Removed)
+                    {
+                        return contained;
+                    }
+                }
+                return null;
+            }
+
+            private void BeginDraggingQuickItem(GunsmithGuiSlot slot, Item containedItem)
+            {
+                if (item?.OwnInventory == null || containedItem.Removed)
+                {
+                    return;
+                }
+
+                GunsmithHiddenQuickSlotsPatch.BeginQuickSlotMutation(item);
+                try
+                {
+                    item.OwnInventory.RemoveItem(containedItem);
+                }
+                finally
+                {
+                    GunsmithHiddenQuickSlotsPatch.EndQuickSlotMutation(item);
+                }
+
+                Inventory.DraggingItems.Clear();
+                Inventory.DraggingItems.Add(containedItem);
+                Inventory.DraggingSlot = null;
+                suppressQuickUninstallRelease = true;
+                CallLuaHook("DeepGunsmithSetQuickPart", item, slot.Path, EmptyPartId);
+                SoundPlayer.PlayUISound(GUISoundType.PickItem);
             }
 
             private static void DrawSlotOutline(SpriteBatch spriteBatch, Texture2D texture, Rectangle rect, Color color)
@@ -1370,6 +1649,10 @@ namespace GunSmith
                 lineTexture.SetData(new[] { Color.White });
                 return lineTexture;
             }
+
+            private readonly record struct QuickGeometry(Rectangle SourceRect, Rectangle Destination, float Scale);
+
+            private readonly record struct QuickSlotLayout(GunsmithGuiSlot Slot, Vector2 Anchor, Rectangle Rect, bool AnchorValid);
         }
 
     }

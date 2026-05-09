@@ -117,6 +117,46 @@ namespace GunSmith
             Inventory.RefreshMouseOnInventory();
         }
 
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
+        [HarmonyPrefix]
+        private static bool HandleQuickOverlayDraggingBeforeWorldDrop()
+            => !GunsmithApi.TryHandleQuickOverlayDragging();
+
+        [HarmonyPatch(typeof(Character), nameof(Character.ControlLocalPlayer))]
+        [HarmonyPrefix]
+        private static bool BlockGunsmithWindowCharacterInput(Character __instance, ref bool moveCam)
+        {
+            if (__instance == Character.Controlled && GunsmithApi.IsGunsmithWindowBlockingInput && GunsmithApi.ActiveWindowForInputBlock != null)
+            {
+                moveCam = false;
+            }
+            return true;
+        }
+
+        [HarmonyPatch(typeof(Character), nameof(Character.ControlLocalPlayer))]
+        [HarmonyPostfix]
+        private static void BlockGunsmithWindowMouseInput(Character __instance)
+        {
+            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
+            {
+                return;
+            }
+
+            __instance.ClearInput(InputType.Aim);
+            __instance.ClearInput(InputType.Shoot);
+            __instance.ClearInput(InputType.Use);
+            __instance.ClearInput(InputType.Select);
+
+            Vector2 cursorOffset = PlayerInput.MouseSpeed;
+            if (cursorOffset.LengthSquared() > 100.0f)
+            {
+                cursorOffset.Normalize();
+                cursorOffset *= 10.0f;
+            }
+            __instance.CursorPosition = __instance.Position + cursorOffset;
+            __instance.SmoothedCursorPosition = __instance.CursorPosition;
+        }
+
         [HarmonyPatch(typeof(ItemInventory), nameof(ItemInventory.FindAllowedSlot))]
         [HarmonyPrefix]
         private static bool SkipManagedSlotsWhenAutoPutting(ItemInventory __instance, Item item, bool ignoreCondition, ref int __result)

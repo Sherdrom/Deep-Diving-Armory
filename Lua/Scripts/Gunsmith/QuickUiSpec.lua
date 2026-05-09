@@ -4,6 +4,7 @@ local Gunsmith = Deep_Lua.Gunsmith
 local Core = Gunsmith.Core
 local Inventory = Gunsmith.Inventory
 local Stats = Gunsmith.Stats
+local QuickMod = Gunsmith.QuickMod
 local QuickUiSpec = {}
 Gunsmith.QuickUiSpec = QuickUiSpec
 
@@ -30,14 +31,22 @@ local function encodeText(value)
         :gsub("=", "%%3D")
 end
 
-local function appendPartEntry(entries, item, selection, platform, slotPath, partId)
+local function canQuickSlotAccept(item, quickSlotIndex, identifier)
+    if not QuickMod or quickSlotIndex == nil then return true end
+    return QuickMod.CanSlotAcceptItemIdentifier(item, quickSlotIndex, identifier)
+end
+
+local function appendPartEntry(entries, item, selection, platform, slotPath, partId, quickSlotIndex)
     local part = Gunsmith.Config.parts[partId]
     if not part then return end
 
+    local identifier = part.item and part.item.identifier or nil
     local status = "available"
     if selection[slotPath] == partId then
         status = "installed"
     elseif not Core.IsPartCompatible(selection, platform, slotPath, partId) then
+        status = "incompatible"
+    elseif identifier and identifier ~= "" and not canQuickSlotAccept(item, quickSlotIndex, identifier) then
         status = "incompatible"
     elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part, item) then
         status = "missing"
@@ -140,14 +149,16 @@ resolveDrawOffset = function(selection, platform, weapon, path, visual)
     return nil
 end
 
-local function compatibleItemIdentifiers(selection, platform, slotPath)
+local function compatibleItemIdentifiers(item, selection, platform, slotPath, quickSlotIndex)
     local identifiers = {}
     local seen = {}
     local partType = Core.PartTypeForPath(selection, slotPath)
     for _, partId in ipairs(Core.GetPartsForType(partType)) do
         local part = Gunsmith.Config.parts[partId]
         local identifier = part and part.item and part.item.identifier or nil
-        if identifier and identifier ~= "" and not seen[identifier] and Core.IsPartCompatible(selection, platform, slotPath, partId) then
+        if identifier and identifier ~= "" and not seen[identifier] and
+            Core.IsPartCompatible(selection, platform, slotPath, partId) and
+            canQuickSlotAccept(item, quickSlotIndex, identifier) then
             seen[identifier] = true
             table.insert(identifiers, identifier)
         end
@@ -155,7 +166,7 @@ local function compatibleItemIdentifiers(selection, platform, slotPath)
     return table.concat(identifiers, "~")
 end
 
-local function quickMeta(selection, platform, weapon, quickSlot)
+local function quickMeta(item, selection, platform, weapon, quickSlot)
     local anchor = resolveMountAnchor(selection, platform, weapon, quickSlot.path)
     local valid = anchor and "1" or "0"
     anchor = anchor or { x = 0, y = 0 }
@@ -165,7 +176,7 @@ local function quickMeta(selection, platform, weapon, quickSlot)
         anchor.x or 0,
         anchor.y or 0,
         valid,
-        compatibleItemIdentifiers(selection, platform, quickSlot.path))
+        compatibleItemIdentifiers(item, selection, platform, quickSlot.path, quickSlot.slot))
 end
 
 function QuickUiSpec.Build(item, selection, platform)
@@ -184,7 +195,7 @@ function QuickUiSpec.Build(item, selection, platform)
 
             local partEntries = { Gunsmith.EmptyPartId .. ":deep.gunsmith.ui.empty_part:" .. emptyStatus }
             for _, partId in ipairs(Core.GetPartsForType(partType)) do
-                appendPartEntry(partEntries, item, selection, platform, quickSlot.path, partId)
+                appendPartEntry(partEntries, item, selection, platform, quickSlot.path, partId, quickSlot.slot)
             end
 
             table.insert(entries, table.concat({
@@ -193,7 +204,7 @@ function QuickUiSpec.Build(item, selection, platform)
                 tostring(selection[quickSlot.path] or ""),
                 "0",
                 table.concat(partEntries, ","),
-                quickMeta(selection, platform, weapon, quickSlot)
+                quickMeta(item, selection, platform, weapon, quickSlot)
             }, "|"))
         end
     end

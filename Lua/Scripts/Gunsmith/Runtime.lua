@@ -409,6 +409,11 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
                 print("[Gunsmith] Missing quick-mod part item for " .. tostring(partId))
                 return
             end
+            local partItem = Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part), item)
+            if not QuickMod.CanSlotAcceptItem(item, slotIndex, partItem) then
+                print("[Gunsmith] Quick-mod XML slot rejects part item for " .. tostring(partId))
+                return
+            end
             if not QuickMod.ClearSlot(item, character, slotIndex, refreshAfterReturn) then return end
             if not QuickMod.InstallPartItem(item, character, part, slotIndex) then return end
         end
@@ -456,6 +461,41 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
     if returnedParts and returnedParts > 0 then
         return false
     end
+    return true
+end
+
+function Runtime.InstallQuickItem(item, slotPath, draggedItem)
+    if SERVER then return false end
+    local selection = Runtime.GetSelection(item)
+    local platform = Core.PlatformConfig(item)
+    local weapon = Core.WeaponConfig(item)
+    if not selection or not platform or not draggedItem then return false end
+    if not Core.IsValidPath(selection, platform, slotPath) then return false end
+    if not QuickMod or not QuickMod.IsQuickPath(item, slotPath) then return false end
+
+    local slotIndex = QuickMod.SlotForPath(item, slotPath)
+    if slotIndex == nil then return false end
+
+    local partId = QuickMod.PartIdForItem(selection, platform, slotPath, draggedItem)
+    if not partId then return false end
+
+    local part = Gunsmith.Config.parts[partId]
+    if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return false end
+    if not QuickMod.CanSlotAcceptItem(item, slotIndex, draggedItem) then return false end
+
+    local character = Inventory and Inventory.ActorForItem(item) or nil
+    local refreshAfterReturn = function()
+        Runtime.RefreshQuick(item)
+    end
+
+    if not QuickMod.ClearSlot(item, character, slotIndex, refreshAfterReturn) then return false end
+    if not QuickMod.InstallSpecificPartItem(item, character, draggedItem, slotIndex) then
+        Runtime.RefreshQuick(item)
+        return false
+    end
+
+    finishQuickModChange(item, selection, platform, weapon)
+    Runtime.RefreshQuick(item)
     return true
 end
 

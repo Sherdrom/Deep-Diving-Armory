@@ -57,6 +57,10 @@ local function findCompatiblePartId(selection, platform, path, identifier)
     return nil
 end
 
+function QuickMod.PartIdForItem(selection, platform, path, item)
+    return findCompatiblePartId(selection, platform, path, itemIdentifier(item))
+end
+
 local function beginQuickSlotMutation(item)
     if Hook and Hook.Call then
         Hook.Call("DeepGunsmithBeginQuickSlotMutation", item)
@@ -90,6 +94,33 @@ function QuickMod.SlotForPath(item, path)
         if quickSlot.path == path then return quickSlot.slot end
     end
     return nil
+end
+
+function QuickMod.CanSlotAcceptItemIdentifier(item, slotIndex, identifier)
+    if not item or not item.OwnInventory or slotIndex == nil or not identifier or identifier == "" then return false end
+    if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
+
+    local prefab = ItemPrefab.GetItemPrefab(identifier)
+    if not prefab then return false end
+
+    local ok, result = pcall(function()
+        return item.OwnInventory.CanBePutInSlot(prefab, slotIndex, nil)
+    end)
+    if not ok then
+        ok, result = pcall(function()
+            return item.OwnInventory.CanBePutInSlot(prefab, slotIndex, 100)
+        end)
+    end
+    return ok and result == true
+end
+
+function QuickMod.CanSlotAcceptItem(item, slotIndex, partItem)
+    if not item or not item.OwnInventory or slotIndex == nil or not partItem then return false end
+
+    local ok, result = pcall(function()
+        return item.OwnInventory.CanBePutInSlot(partItem, slotIndex)
+    end)
+    return ok and result == true
 end
 
 function QuickMod.SyncFromContainer(item, selection, platform)
@@ -128,6 +159,18 @@ function QuickMod.InstallPartItem(item, character, part, slotIndex)
 
     local partItem = Inventory.FindPartItem(character, part.item.identifier, item)
     if not partItem then return false end
+
+    beginQuickSlotMutation(item)
+    local ok, result = pcall(function()
+        return item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
+    end)
+    endQuickSlotMutation(item)
+    return ok and result == true
+end
+
+function QuickMod.InstallSpecificPartItem(item, character, partItem, slotIndex)
+    if SERVER then return false end
+    if not item or not item.OwnInventory or not partItem then return false end
 
     beginQuickSlotMutation(item)
     local ok, result = pcall(function()

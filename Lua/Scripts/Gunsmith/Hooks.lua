@@ -24,6 +24,21 @@ local function readItemAndStrings(args)
     return item, strings
 end
 
+local function readItemsAndStrings(args)
+    local items = {}
+    local strings = {}
+
+    for _, value in ipairs(args) do
+        if LuaUserData.IsTargetType(value, "Barotrauma.Item") then
+            table.insert(items, value)
+        elseif type(value) == "string" then
+            table.insert(strings, value)
+        end
+    end
+
+    return items, strings
+end
+
 local function applyGunsmithItem(item)
     if item and Core.WeaponConfig(item) then
         Runtime.Apply(item)
@@ -107,6 +122,15 @@ function Hooks.Register()
             if shouldOpenNow ~= false then
                 Runtime.OpenQuick(item)
             end
+        end
+    end)
+
+    Hook.Add("DeepGunsmithInstallQuickItem", "DeepGunsmithInstallQuickItem", function(...)
+        local items, strings = readItemsAndStrings({ ... })
+        local weaponItem = items[1]
+        local draggedItem = items[2]
+        if weaponItem and draggedItem and strings[1] then
+            Runtime.InstallQuickItem(weaponItem, strings[1], draggedItem)
         end
     end)
 
