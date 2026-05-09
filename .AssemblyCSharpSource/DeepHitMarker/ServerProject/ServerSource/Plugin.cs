@@ -1,6 +1,6 @@
 namespace DeepHitMarker
 {
-    public partial class Plugin : IAssemblyPlugin
+    public partial class DeepHitMarker : IAssemblyPlugin
     {
         // Server-specific code
     }
