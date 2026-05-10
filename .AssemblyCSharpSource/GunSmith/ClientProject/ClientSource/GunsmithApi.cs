@@ -194,7 +194,7 @@ namespace GunSmith
 
         public static void Dispose()
         {
-            CloseWindow();
+            GunsmithGui.CloseWindow();
 
             runtimeStates.Clear();
             foreach (KeyValuePair<Item, GunsmithSpriteState> pair in spriteStates.ToArray())

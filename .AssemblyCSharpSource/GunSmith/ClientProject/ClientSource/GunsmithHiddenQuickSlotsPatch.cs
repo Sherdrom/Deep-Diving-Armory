@@ -122,13 +122,13 @@ namespace GunSmith
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
         [HarmonyPrefix]
         private static bool HandleQuickOverlayDraggingBeforeWorldDrop()
-            => !GunsmithApi.TryHandleQuickOverlayDragging();
+            => !GunsmithGui.TryHandleQuickOverlayDragging();
 
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RefreshMouseOnInventory))]
         [HarmonyPostfix]
         private static void IncludeGunsmithQuickBufferInventory()
         {
-            if (!GunsmithApi.IsMouseOnQuickBufferInventory)
+            if (!GunsmithGui.IsMouseOnQuickBufferInventory)
             {
                 return;
             }
@@ -141,7 +141,7 @@ namespace GunSmith
         [HarmonyPrefix]
         private static bool BlockGunsmithWindowCharacterInput(Character __instance, ref bool moveCam)
         {
-            if (__instance == Character.Controlled && GunsmithApi.IsGunsmithWindowBlockingInput && GunsmithApi.ActiveWindowForInputBlock != null)
+            if (__instance == Character.Controlled && GunsmithGui.IsGunsmithWindowBlockingInput && GunsmithGui.ActiveWindowForInputBlock != null)
             {
                 moveCam = false;
             }
@@ -152,7 +152,7 @@ namespace GunSmith
         [HarmonyPostfix]
         private static void BlockGunsmithWindowMouseInput(Character __instance)
         {
-            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
+            if (__instance != Character.Controlled || !GunsmithGui.IsGunsmithWindowBlockingInput || GunsmithGui.ActiveWindowForInputBlock == null)
             {
                 return;
             }
@@ -167,7 +167,7 @@ namespace GunSmith
         [HarmonyPrefix]
         private static bool KeepGunsmithWindowCursorLocal(Character __instance)
         {
-            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
+            if (__instance != Character.Controlled || !GunsmithGui.IsGunsmithWindowBlockingInput || GunsmithGui.ActiveWindowForInputBlock == null)
             {
                 return true;
             }
@@ -181,7 +181,7 @@ namespace GunSmith
         [HarmonyPrefix]
         private static bool SkipGunsmithWindowBackgroundInteractions(Character __instance)
         {
-            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
+            if (__instance != Character.Controlled || !GunsmithGui.IsGunsmithWindowBlockingInput || GunsmithGui.ActiveWindowForInputBlock == null)
             {
                 return true;
             }

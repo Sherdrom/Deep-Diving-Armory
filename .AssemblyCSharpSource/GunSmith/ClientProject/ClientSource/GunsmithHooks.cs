@@ -29,7 +29,7 @@ namespace GunSmith
                 string? slotSpec = FindStringArg(args, 1);
                 if (item != null && title != null && slotSpec != null)
                 {
-                    OpenFromLua(item, title, slotSpec);
+                    GunsmithGui.OpenFromLua(item, title, slotSpec);
                 }
                 return null;
             });
@@ -41,7 +41,7 @@ namespace GunSmith
                 string? slotSpec = FindStringArg(args, 1);
                 if (item != null && title != null && slotSpec != null)
                 {
-                    OpenQuickFromLua(item, title, slotSpec);
+                    GunsmithGui.OpenQuickFromLua(item, title, slotSpec);
                 }
                 return null;
             });
@@ -52,7 +52,7 @@ namespace GunSmith
                 string? slotSpec = FindStringArg(args, 0);
                 if (item != null && slotSpec != null)
                 {
-                    RefreshPartsFromLua(item, slotSpec);
+                    GunsmithGui.RefreshPartsFromLua(item, slotSpec);
                 }
                 return null;
             });
@@ -63,7 +63,7 @@ namespace GunSmith
                 string? slotSpec = FindStringArg(args, 0);
                 if (item != null && slotSpec != null)
                 {
-                    RefreshQuickFromLua(item, slotSpec);
+                    GunsmithGui.RefreshQuickFromLua(item, slotSpec);
                 }
                 return null;
             });
@@ -141,7 +141,7 @@ namespace GunSmith
             });
         }
 
-        private static void CallLuaHook(string hookName, params object[] args)
+        internal static void CallLuaHook(string hookName, params object[] args)
         {
             try
             {

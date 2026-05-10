@@ -173,7 +173,7 @@ namespace GunSmith
                 value.X * sin + value.Y * cos);
         }
 
-        private static Texture2D GetTexture(string path)
+        internal static Texture2D GetTexture(string path)
         {
             return textureCache.GetOrAdd(path, static p =>
             {
@@ -325,7 +325,7 @@ namespace GunSmith
             return identifiers;
         }
 
-        private static string ResolvePath(string path)
+        internal static string ResolvePath(string path)
         {
             string resolved = path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar);
             if (GunSmith.Package != null)
@@ -335,7 +335,7 @@ namespace GunSmith
             return resolved;
         }
 
-        private static bool TryParseRectangle(string value, out Rectangle rectangle)
+        internal static bool TryParseRectangle(string value, out Rectangle rectangle)
         {
             rectangle = default;
             string[] parts = value.Split(',', StringSplitOptions.TrimEntries);

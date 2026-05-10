@@ -59,7 +59,7 @@ namespace GunSmith
         [HarmonyPostfix]
         private static void KeepWindowVisible()
         {
-            GunsmithApi.RefreshWindow();
+            GunsmithGui.RefreshWindow();
         }
     }
 }
