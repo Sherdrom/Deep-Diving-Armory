@@ -128,6 +128,37 @@ function Runtime.SyncQuickModContainerItem(item)
     end
 end
 
+function Runtime.SyncQuickContainer(item)
+    if SERVER then return false end
+    if not QuickMod then return false end
+    if not item or item.removed then return false end
+
+    local platform = Core.PlatformConfig(item)
+    if not platform then return false end
+
+    local ok, err = pcall(function()
+        local selection = Runtime.GetSelection(item)
+        if not selection then return end
+
+        if QuickMod.SyncFromContainer(item, selection, platform) then
+            finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
+        else
+            Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
+            Persistence.Save(item)
+            State.appliedSignatures[item] = nil
+            Runtime.Apply(item)
+        end
+
+        Runtime.RefreshQuick(item)
+    end)
+
+    if not ok then
+        print("[Gunsmith] Failed to sync quick container: " .. tostring(err))
+        return false
+    end
+    return true
+end
+
 finishQuickModChange = function(item, selection, platform, weapon)
     QuickMod.SyncFromContainer(item, selection, platform)
     Core.PruneInvalidSelections(selection, platform, weapon)

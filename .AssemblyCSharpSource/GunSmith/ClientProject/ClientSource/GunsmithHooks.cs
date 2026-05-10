@@ -111,6 +111,12 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithIsQuickSlotMutation", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                return item != null && GunsmithHiddenQuickSlotsPatch.IsQuickSlotMutation(item);
+            });
+
             hook.Add("DeepGunsmithRequestState", args =>
             {
                 Item? item = FindArg<Item>(args);

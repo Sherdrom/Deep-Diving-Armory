@@ -81,6 +81,9 @@ namespace GunSmith
             QuickMutationItems.Remove(item);
         }
 
+        public static bool IsQuickSlotMutation(Item item)
+            => item != null && QuickMutationItems.Contains(item);
+
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.HideSlot))]
         [HarmonyPrefix]
         private static bool HideManagedQuickSlots(Inventory __instance, int __0, ref bool __result)
@@ -107,12 +110,11 @@ namespace GunSmith
                 return;
             }
 
-            if (__instance.visualSlots == null || __instance.visualSlots.Length == 0)
+            if (__instance.visualSlots == null || __instance.visualSlots.Length == 0 || !HasManagedSlots(__instance))
             {
                 return;
             }
 
-            CaptureOriginalLayouts(__instance);
             PackVisibleSlotsFirst(__instance);
             Inventory.RefreshMouseOnInventory();
         }
@@ -121,6 +123,19 @@ namespace GunSmith
         [HarmonyPrefix]
         private static bool HandleQuickOverlayDraggingBeforeWorldDrop()
             => !GunsmithApi.TryHandleQuickOverlayDragging();
+
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.RefreshMouseOnInventory))]
+        [HarmonyPostfix]
+        private static void IncludeGunsmithQuickBufferInventory()
+        {
+            if (!GunsmithApi.IsMouseOnQuickBufferInventory)
+            {
+                return;
+            }
+
+            HarmonyLib.AccessTools.PropertySetter(typeof(Inventory), nameof(Inventory.IsMouseOnInventory))?
+                .Invoke(null, new object[] { true });
+        }
 
         [HarmonyPatch(typeof(Character), nameof(Character.ControlLocalPlayer))]
         [HarmonyPrefix]
@@ -146,15 +161,34 @@ namespace GunSmith
             __instance.ClearInput(InputType.Shoot);
             __instance.ClearInput(InputType.Use);
             __instance.ClearInput(InputType.Select);
+        }
 
-            Vector2 cursorOffset = PlayerInput.MouseSpeed;
-            if (cursorOffset.LengthSquared() > 100.0f)
+        [HarmonyPatch(typeof(Character), nameof(Character.UpdateLocalCursor))]
+        [HarmonyPrefix]
+        private static bool KeepGunsmithWindowCursorLocal(Character __instance)
+        {
+            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
             {
-                cursorOffset.Normalize();
-                cursorOffset *= 10.0f;
+                return true;
             }
-            __instance.CursorPosition = __instance.Position + cursorOffset;
+
+            __instance.CursorPosition = __instance.Position + PlayerInput.MouseSpeed.ClampLength(10.0f);
             __instance.SmoothedCursorPosition = __instance.CursorPosition;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(Character), nameof(Character.DoInteractionUpdate))]
+        [HarmonyPrefix]
+        private static bool SkipGunsmithWindowBackgroundInteractions(Character __instance)
+        {
+            if (__instance != Character.Controlled || !GunsmithApi.IsGunsmithWindowBlockingInput || GunsmithApi.ActiveWindowForInputBlock == null)
+            {
+                return true;
+            }
+
+            __instance.FocusedItem = null;
+            __instance.FocusedCharacter = null;
+            return false;
         }
 
         [HarmonyPatch(typeof(ItemInventory), nameof(ItemInventory.FindAllowedSlot))]

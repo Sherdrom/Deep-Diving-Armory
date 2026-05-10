@@ -83,6 +83,14 @@ local function registerHiddenQuickSlots()
     end
 end
 
+local function isQuickSlotMutation(item)
+    if not Hook or not Hook.Call or not item then return false end
+    local ok, result = pcall(function()
+        return Hook.Call("DeepGunsmithIsQuickSlotMutation", item)
+    end)
+    return ok and result == true
+end
+
 function Hooks.Register()
     if not CLIENT then return end
     if Hooks.Registered then return end
@@ -134,6 +142,13 @@ function Hooks.Register()
         end
     end)
 
+    Hook.Add("DeepGunsmithSyncQuickContainer", "DeepGunsmithSyncQuickContainer", function(...)
+        local item = readItemAndStrings({ ... })
+        if item then
+            Runtime.SyncQuickContainer(item)
+        end
+    end)
+
     Hook.Add("DeepGunsmithEnterPath", "DeepGunsmithEnterPath", function(...)
         local item, strings = readItemAndStrings({ ... })
         if item and strings[1] then
@@ -177,6 +192,7 @@ function Hooks.Register()
         if not instance then return end
         local ok, item = pcall(function() return instance.Item end)
         if not ok or not item then return end
+        if isQuickSlotMutation(item) then return end
         if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
             Runtime.SyncQuickModContainerItem(item)
         end

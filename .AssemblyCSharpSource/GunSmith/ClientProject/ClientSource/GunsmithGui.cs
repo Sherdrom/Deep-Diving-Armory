@@ -24,6 +24,7 @@ namespace GunSmith
         private static bool activeQuickMode;
         private static QuickOverlayFrame? quickOverlayFrame;
         private static bool suppressQuickUninstallRelease;
+        private static PendingQuickDrag? pendingQuickDrag;
         private static readonly HashSet<string> warnedQuickAnchorPaths = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, Rectangle> partIconSourceCache = new(StringComparer.Ordinal);
 
@@ -175,6 +176,7 @@ namespace GunSmith
         private static void BuildQuickOverlay(string title)
         {
             if (activeWindow == null) { return; }
+            quickOverlayFrame?.RestoreBuffersToWeapon();
             activeWindow.ClearChildren();
 
             GUIFrame header = new(new RectTransform(new Vector2(0.48f, 0.09f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
@@ -866,6 +868,7 @@ namespace GunSmith
         private static void CloseWindow()
         {
             if (activeWindow == null) { return; }
+            quickOverlayFrame?.RestoreBuffersToWeapon();
             activeWindow.RectTransform.Parent = null;
             activeWindow = null;
             activeItem = null;
@@ -885,6 +888,7 @@ namespace GunSmith
             activeQuickMode = false;
             quickOverlayFrame = null;
             suppressQuickUninstallRelease = false;
+            pendingQuickDrag = null;
             warnedQuickAnchorPaths.Clear();
         }
 
@@ -892,6 +896,11 @@ namespace GunSmith
             => activeWindow is { Visible: true };
 
         internal static GUIComponent? ActiveWindowForInputBlock => activeWindow;
+
+        internal static bool IsMouseOnQuickBufferInventory
+            => activeQuickMode &&
+               activeWindow is { Visible: true } &&
+               quickOverlayFrame?.IsMouseOnBufferInventory() == true;
 
         internal static bool TryHandleQuickOverlayDragging()
         {
@@ -1274,6 +1283,24 @@ namespace GunSmith
             }
         }
 
+        private sealed class PendingQuickDrag
+        {
+            public readonly Item WeaponItem;
+            public readonly string SlotPath;
+            public readonly int SlotIndex;
+            public readonly Item DraggedItem;
+            public readonly string? OriginalPartId;
+
+            public PendingQuickDrag(Item weaponItem, string slotPath, int slotIndex, Item draggedItem, string? originalPartId)
+            {
+                WeaponItem = weaponItem;
+                SlotPath = slotPath;
+                SlotIndex = slotIndex;
+                DraggedItem = draggedItem;
+                OriginalPartId = originalPartId;
+            }
+        }
+
         private sealed class QuickOverlayFrame : GUIFrame
         {
             private const int QuickSlotSize = 54;
@@ -1297,6 +1324,11 @@ namespace GunSmith
             {
                 base.Update(deltaTime);
                 if (!Visible || item == null || item.Removed || !TryCreateQuickGeometry(out QuickGeometry geometry))
+                {
+                    return;
+                }
+
+                if (Inventory.DraggingItems.Any() && PlayerInput.PrimaryMouseButtonReleased() && TryHandleDraggingRelease(geometry))
                 {
                     return;
                 }
@@ -1339,12 +1371,37 @@ namespace GunSmith
                 }
             }
 
+            public bool IsMouseOnBufferInventory()
+            {
+                if (!Visible || item == null || item.Removed)
+                {
+                    return false;
+                }
+
+                return false;
+            }
+
+            public void RestoreBuffersToWeapon()
+            {
+            }
+
             public bool TryHandleDraggingRelease()
             {
                 if (!Visible || item == null || item.Removed || !Inventory.DraggingItems.Any() || !PlayerInput.PrimaryMouseButtonReleased() || !TryCreateQuickGeometry(out QuickGeometry geometry))
                 {
                     return false;
                 }
+
+                return TryHandleDraggingRelease(geometry);
+            }
+
+            private bool TryHandleDraggingRelease(QuickGeometry geometry)
+            {
+                if (item == null)
+                {
+                    return false;
+                }
+                Item weaponItem = item;
 
                 foreach (QuickSlotLayout layout in BuildSlotLayouts(geometry))
                 {
@@ -1356,10 +1413,9 @@ namespace GunSmith
                     Item? draggedItem = Inventory.DraggingItems.FirstOrDefault();
                     if (draggedItem != null)
                     {
-                        if (CanAcceptDraggedItem(layout.Slot, draggedItem))
+                        if (TryPlaceQuickDraggedItem(weaponItem, layout.Slot, draggedItem))
                         {
                             suppressQuickUninstallRelease = true;
-                            CallLuaHook("DeepGunsmithInstallQuickItem", item, layout.Slot.Path, draggedItem);
                             Inventory.DraggingItems.Clear();
                             SoundPlayer.PlayUISound(GUISoundType.PickItem);
                         }
@@ -1367,7 +1423,6 @@ namespace GunSmith
                         {
                             suppressQuickUninstallRelease = true;
                             failedDropTimers[layout.Slot.Path] = 0.45f;
-                            Inventory.DraggingItems.Clear();
                             SoundPlayer.PlayUISound(GUISoundType.PickItemFail);
                         }
                         return true;
@@ -1377,10 +1432,10 @@ namespace GunSmith
                 if (Rect.Contains(PlayerInput.MousePosition))
                 {
                     suppressQuickUninstallRelease = true;
-                    Inventory.DraggingItems.Clear();
                     return true;
                 }
 
+                FlushPendingQuickDragClear(syncLua: true);
                 return false;
             }
 
@@ -1515,12 +1570,17 @@ namespace GunSmith
             private void DrawQuickSlot(SpriteBatch spriteBatch, QuickSlotLayout layout)
             {
                 VisualSlot visualSlot = new(layout.Rect);
-                GunsmithGuiPart? installedPart = layout.Slot.Parts.FirstOrDefault(part => part.Id == layout.Slot.CurrentPartId);
+                bool pendingDragFromThisSlot = pendingQuickDrag != null &&
+                    ReferenceEquals(pendingQuickDrag.WeaponItem, item) &&
+                    string.Equals(pendingQuickDrag.SlotPath, layout.Slot.Path, StringComparison.Ordinal);
+                GunsmithGuiPart? installedPart = pendingDragFromThisSlot
+                    ? null
+                    : layout.Slot.Parts.FirstOrDefault(part => part.Id == layout.Slot.CurrentPartId);
                 Inventory.DrawSlot(spriteBatch, null, visualSlot, null, -1, drawItem: false);
 
                 bool mouseOn = layout.Rect.Contains(PlayerInput.MousePosition);
                 Item? draggedItem = Inventory.DraggingItems.FirstOrDefault();
-                bool canAccept = draggedItem != null && CanAcceptDraggedItem(layout.Slot, draggedItem);
+                bool canAccept = draggedItem != null && CanAcceptDraggedItemForDisplay(layout.Slot, draggedItem);
                 bool failed = failedDropTimers.ContainsKey(layout.Slot.Path);
                 Color outlineColor = failed
                     ? GUIStyle.Red
@@ -1561,12 +1621,34 @@ namespace GunSmith
                 spriteBatch.Draw(texture, destination, sourceRect, Color.White);
             }
 
-            private bool CanAcceptDraggedItem(GunsmithGuiSlot slot, Item draggedItem)
+            private bool CanAcceptDraggedItemForDisplay(GunsmithGuiSlot slot, Item draggedItem)
             {
+                if (item == null || item.OwnInventory == null)
+                {
+                    return false;
+                }
+
+                if (pendingQuickDrag != null &&
+                    ReferenceEquals(pendingQuickDrag.WeaponItem, item) &&
+                    ReferenceEquals(pendingQuickDrag.DraggedItem, draggedItem) &&
+                    string.Equals(pendingQuickDrag.SlotPath, slot.Path, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+
                 string identifier = draggedItem.Prefab?.Identifier.Value ?? string.Empty;
-                return !string.IsNullOrWhiteSpace(identifier) &&
-                    slot.QuickMeta.AllowedItemIdentifiers.Contains(identifier) &&
-                    item?.OwnInventory?.CanBePutInSlot(draggedItem, slot.QuickMeta.SlotIndex) == true;
+                if (string.IsNullOrWhiteSpace(identifier) || !slot.QuickMeta.AllowedItemIdentifiers.Contains(identifier))
+                {
+                    return false;
+                }
+
+                Item? existingItem = GetContainedQuickItem(slot);
+                if (existingItem == null)
+                {
+                    return item.OwnInventory.CanBePutInSlot(draggedItem, slot.QuickMeta.SlotIndex);
+                }
+
+                return Character.Controlled?.Inventory != null;
             }
 
             private Item? GetContainedQuickItem(GunsmithGuiSlot slot)
@@ -1608,8 +1690,132 @@ namespace GunSmith
                 Inventory.DraggingItems.Add(containedItem);
                 Inventory.DraggingSlot = null;
                 suppressQuickUninstallRelease = true;
-                CallLuaHook("DeepGunsmithSetQuickPart", item, slot.Path, EmptyPartId);
+                pendingQuickDrag = new PendingQuickDrag(item, slot.Path, slot.QuickMeta.SlotIndex, containedItem, slot.CurrentPartId);
                 SoundPlayer.PlayUISound(GUISoundType.PickItem);
+            }
+
+            private static bool TryPlaceQuickDraggedItem(Item weaponItem, GunsmithGuiSlot slot, Item draggedItem)
+            {
+                if (weaponItem.OwnInventory == null || slot.QuickMeta.SlotIndex < 0 || draggedItem.Removed)
+                {
+                    return false;
+                }
+
+                if (pendingQuickDrag != null &&
+                    ReferenceEquals(pendingQuickDrag.WeaponItem, weaponItem) &&
+                    ReferenceEquals(pendingQuickDrag.DraggedItem, draggedItem) &&
+                    string.Equals(pendingQuickDrag.SlotPath, slot.Path, StringComparison.Ordinal))
+                {
+                    bool restored = PutItemInWeaponSlot(weaponItem, draggedItem, slot.QuickMeta.SlotIndex);
+                    if (restored)
+                    {
+                        pendingQuickDrag = null;
+                    }
+                    return restored;
+                }
+
+                if (!IsDraggedItemAllowedByQuickSlot(slot, draggedItem))
+                {
+                    return false;
+                }
+
+                Item? existingItem = GetContainedQuickItem(weaponItem, slot.QuickMeta.SlotIndex);
+                if (existingItem != null)
+                {
+                    if (ReferenceEquals(existingItem, draggedItem))
+                    {
+                        pendingQuickDrag = null;
+                        CallLuaHook("DeepGunsmithSyncQuickContainer", weaponItem);
+                        return true;
+                    }
+
+                    if (!ReturnItemToControlledInventory(existingItem))
+                    {
+                        return false;
+                    }
+                }
+
+                if (!PutItemInWeaponSlot(weaponItem, draggedItem, slot.QuickMeta.SlotIndex))
+                {
+                    if (existingItem != null)
+                    {
+                        PutItemInWeaponSlot(weaponItem, existingItem, slot.QuickMeta.SlotIndex);
+                    }
+                    return false;
+                }
+
+                if (pendingQuickDrag != null && ReferenceEquals(pendingQuickDrag.DraggedItem, draggedItem))
+                {
+                    pendingQuickDrag = null;
+                }
+                CallLuaHook("DeepGunsmithSyncQuickContainer", weaponItem);
+                return true;
+            }
+
+            private static bool IsDraggedItemAllowedByQuickSlot(GunsmithGuiSlot slot, Item draggedItem)
+            {
+                string identifier = draggedItem.Prefab?.Identifier.Value ?? string.Empty;
+                return !string.IsNullOrWhiteSpace(identifier) &&
+                    slot.QuickMeta.AllowedItemIdentifiers.Contains(identifier);
+            }
+
+            private static bool PutItemInWeaponSlot(Item weaponItem, Item itemToPut, int slotIndex)
+            {
+                if (weaponItem.OwnInventory == null || slotIndex < 0 || slotIndex >= weaponItem.OwnInventory.slots.Length)
+                {
+                    return false;
+                }
+
+                GunsmithHiddenQuickSlotsPatch.BeginQuickSlotMutation(weaponItem);
+                try
+                {
+                    return weaponItem.OwnInventory.TryPutItem(itemToPut, slotIndex, allowSwapping: true, allowCombine: false, Character.Controlled, createNetworkEvent: false, ignoreCondition: false, triggerOnInsertedEffects: false);
+                }
+                finally
+                {
+                    GunsmithHiddenQuickSlotsPatch.EndQuickSlotMutation(weaponItem);
+                }
+            }
+
+            private static bool ReturnItemToControlledInventory(Item itemToReturn)
+            {
+                if (itemToReturn.Removed || Character.Controlled?.Inventory == null)
+                {
+                    return false;
+                }
+
+                return Character.Controlled.Inventory.TryPutItem(itemToReturn, Character.Controlled, CharacterInventory.AnySlot, createNetworkEvent: false, ignoreCondition: true, triggerOnInsertedEffects: false);
+            }
+
+            private static Item? GetContainedQuickItem(Item weaponItem, int slotIndex)
+            {
+                if (weaponItem.OwnInventory == null || slotIndex < 0 || slotIndex >= weaponItem.OwnInventory.slots.Length)
+                {
+                    return null;
+                }
+
+                foreach (Item contained in weaponItem.OwnInventory.slots[slotIndex].Items)
+                {
+                    if (contained != null && !contained.Removed)
+                    {
+                        return contained;
+                    }
+                }
+                return null;
+            }
+
+            private static void FlushPendingQuickDragClear(bool syncLua)
+            {
+                if (pendingQuickDrag == null)
+                {
+                    return;
+                }
+
+                if (syncLua && !pendingQuickDrag.WeaponItem.Removed)
+                {
+                    CallLuaHook("DeepGunsmithSyncQuickContainer", pendingQuickDrag.WeaponItem);
+                }
+                pendingQuickDrag = null;
             }
 
             private static void DrawSlotOutline(SpriteBatch spriteBatch, Texture2D texture, Rectangle rect, Color color)
