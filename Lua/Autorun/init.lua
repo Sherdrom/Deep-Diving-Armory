@@ -83,6 +83,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOff.lua")--伤�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.lua")--对巨兽的伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改
 --桃子科技
 
 

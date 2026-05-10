@@ -11,12 +11,30 @@ local function HasAffliction(character, identifier, minamount)
 	return res
 end
 
-local LimbType_Head = 11        -- 头    
+local LimbType_Head = 11        -- 头部
+local LimbType_Torso = 12       -- 躯干（默认瞄准目标）
 local LimbType_RightThigh = 15  -- 右大腿
 local LimbType_LeftThigh = 16   -- 左大腿
 local LimbType_LeftLeg = 7      -- 左小腿
 local LimbType_RightLeg = 8     -- 右小腿
-local LimbType_Legs = 14        -- 腿部（如果单个大腿不可用）
+local LimbType_Legs = 14        -- 腿部（备用）
+
+-- 辅助函数：设置目标光标位置
+local function SetAimTarget(target, limb)
+    if target == nil or limb == nil then
+        return false
+    end
+
+    -- 设置光标位置为肢体世界坐标
+    target.CursorPosition = limb.WorldPosition
+
+    -- 转换为潜艇相对坐标（如果在潜艇内）
+    if target.Submarine ~= nil then
+        target.CursorPosition = target.CursorPosition - target.Submarine.Position
+    end
+
+    return true
+end
 
 -- aff控制AI蹲下射击(26.4.1;3:40 By peach)
 Hook.Patch("Barotrauma.HumanAIController","Update",function(instance)
@@ -25,105 +43,57 @@ Hook.Patch("Barotrauma.HumanAIController","Update",function(instance)
 		end
 end,Hook.HookMethodType.After)
 
--- aff控制AI瞄准头部射击(26.4.1;5:13 By peach)
-Hook.Patch("Barotrauma.AIObjectiveCombat","Attack",{"System.Single"},function(instance)
-	    local enemy = instance.Enemy
-        local target = instance.character
-	if HasAffliction(instance.character, "deep_aim_head_detect", 1) then
-        if enemy ~= nil and target ~= nil then
-            local animController = enemy.AnimController
-            
-            if animController ~= nil then
-                -- 尝试获取头部肢体
-                local headLimb = animController.GetLimb(LimbType_Head)
-                
-                if headLimb ~= nil then
-                    -- 设置光标位置为头部世界坐标
-                    target.CursorPosition = headLimb.WorldPosition
-                    
-                    -- 转换为潜艇相对坐标（如果在潜艇内）
-                    if target.Submarine ~= nil then
-                        target.CursorPosition = target.CursorPosition - target.Submarine.Position
-                    end
-                end
-            end
-	end end 
-end,
-    Hook.HookMethodType.After
-)
-
--- aff控制AI瞄准大腿射击(26.4.1;15:41 By peach)
+-- 统一的AI瞄准控制系统(默认躯干 + Affliction优先级覆盖)
+-- 优先级: deep_aim_head_detect > deep_aim_thigh_detect > deep_aim_legs_detect > 默认躯干
 Hook.Patch("Barotrauma.AIObjectiveCombat","Attack",{"System.Single"},function(instance)
     local enemy = instance.Enemy
     local target = instance.character
-    if HasAffliction(instance.character, "deep_aim_thigh_detect", 1) then
-        if enemy ~= nil and target ~= nil then
-            local animController = enemy.AnimController
-            
-            if animController ~= nil then
-                -- 尝试获取大腿肢体（优先右大腿）
-                local thighLimb = animController.GetLimb(LimbType_RightThigh)
-                
-                -- 如果右大腿不可用，尝试左大腿
-                if thighLimb == nil then
-                    thighLimb = animController.GetLimb(LimbType_LeftThigh)
-                end
-                
-                -- 如果大腿都不可用，尝试腿部
-                if thighLimb == nil then
-                    thighLimb = animController.GetLimb(LimbType_Legs)
-                end
-                
-                if thighLimb ~= nil then
-                    -- 设置光标位置为大腿世界坐标
-                    target.CursorPosition = thighLimb.WorldPosition
-                    
-                    -- 转换为潜艇相对坐标（如果在潜艇内）
-                    if target.Submarine ~= nil then
-                        target.CursorPosition = target.CursorPosition - target.Submarine.Position
-                    end
-                end
-            end
-        end
-    end
-end,
-    Hook.HookMethodType.After
-)
 
--- aff控制AI瞄准小腿射击(26.4.1;15:49 By peach)
-Hook.Patch("Barotrauma.AIObjectiveCombat","Attack",{"System.Single"},function(instance)
-    local enemy = instance.Enemy
-    local target = instance.character
-    if HasAffliction(instance.character, "deep_aim_legs_detect", 1) then
-        if enemy ~= nil and target ~= nil then
-            local animController = enemy.AnimController
-            
-            if animController ~= nil then
-                -- 尝试获取小腿肢体（优先右腿）
-                local legLimb = animController.GetLimb(LimbType_RightLeg)
-                
-                -- 如果右腿不可用，尝试左腿
-                if legLimb == nil then
-                    legLimb = animController.GetLimb(LimbType_LeftLeg)
-                end
-                
-                -- 如果小腿都不可用，尝试腿部
-                if legLimb == nil then
-                    legLimb = animController.GetLimb(LimbType_Legs)
-                end
-                
-                if legLimb ~= nil then
-                    -- 设置光标位置为小腿世界坐标
-                    target.CursorPosition = legLimb.WorldPosition
-                    
-                    -- 转换为潜艇相对坐标（如果在潜艇内）
-                    if target.Submarine ~= nil then
-                        target.CursorPosition = target.CursorPosition - target.Submarine.Position
-                    end
-                end
-            end
-        end
+    if enemy == nil or target == nil then
+        return
     end
+
+    local animController = enemy.AnimController
+    if animController == nil then
+        return
+    end
+
+    local targetLimb = nil
+
+    -- 优先级1: 瞄准头部
+    if HasAffliction(instance.character, "deep_aim_head_detect", 1) then
+        targetLimb = animController.GetLimb(LimbType_Head)
+    -- 优先级2: 瞄准大腿
+    elseif HasAffliction(instance.character, "deep_aim_thigh_detect", 1) then
+        -- 尝试获取右大腿
+        targetLimb = animController.GetLimb(LimbType_RightThigh)
+        -- 如果右大腿不可用，尝试左大腿
+        if targetLimb == nil then
+            targetLimb = animController.GetLimb(LimbType_LeftThigh)
+        end
+        -- 如果大腿都不可用，尝试腿部
+        if targetLimb == nil then
+            targetLimb = animController.GetLimb(LimbType_Legs)
+        end
+    -- 优先级3: 瞄准小腿
+    elseif HasAffliction(instance.character, "deep_aim_legs_detect", 1) then
+        -- 尝试获取右腿
+        targetLimb = animController.GetLimb(LimbType_RightLeg)
+        -- 如果右腿不可用，尝试左腿
+        if targetLimb == nil then
+            targetLimb = animController.GetLimb(LimbType_LeftLeg)
+        end
+        -- 如果小腿都不可用，尝试腿部
+        if targetLimb == nil then
+            targetLimb = animController.GetLimb(LimbType_Legs)
+        end
+    -- 默认: 瞄准躯干
+    else
+        targetLimb = animController.GetLimb(LimbType_Torso)
+    end
+
+    -- 设置瞄准目标
+    SetAimTarget(target, targetLimb)
 end,
     Hook.HookMethodType.After
 )
