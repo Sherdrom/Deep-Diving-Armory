@@ -1,87 +1,77 @@
 Deep_Lua = {}
 Deep_Lua.Path = ...
 
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelpFunctions.lua")--Help Functions
-dofile(Deep_Lua.Path .. "/Lua/Scripts/armorconfigs.lua")--Armor configs
+--爱丽丝科技
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/HelpFunctions.lua")--Help Functions
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/armorconfigs.lua")--Armor configs
 
-dofile(Deep_Lua.Path .. "/Lua/Scripts/deployables.lua")--Deployables
-dofile(Deep_Lua.Path .. "/Lua/Scripts/APSList.lua")--APS List
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/deployables.lua")--Deployables
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/APSList.lua")--APS List
+
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/Airburst.lua")--Airburst stuff, work both side
 
 if SERVER or not Game.IsMultiplayer then
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/CorpseRemover.lua")--CR
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/missileconfigs.lua")--Missile configs, will load before missileframework
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/missileframework.lua")--Missile Main, will be override if Framework is already exist
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/LockFix.lua")--Locked Item Fixer
-    dofile(Deep_Lua.Path .. "/Lua/Scripts/RefreshTool.lua")--Item Refresh Tool
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/CorpseRemover.lua")--CR
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/missileconfigs.lua")--Missile configs, will load before missileframework
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/missileframework.lua")--Missile Main, will be override if Framework is already exist
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/LockFix.lua")--Locked Item Fixer
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/RefreshTool.lua")--Item Refresh Tool
 end
 
-dofile(Deep_Lua.Path .. "/Lua/Scripts/Airburst.lua")--Airburst stuff, work both side
+--爱丽丝科技
 
 
+
+--苯科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/zoom.lua")--瞄具视野
 dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
-
---敌人脑子修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
-
---伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOff.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOffToLeviathan.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DeepGun_InWaterDetect.lua")
-
---头盔贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/ALTYN.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/FAST.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/FAST_BLACK.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/GHOST.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/MASKA.lua")
-
+--头盔类贴图修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/6B47.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/ALTYN.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/FAST.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/FAST_BLACK.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/GHOST.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/MASKA.lua")
 --GL贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadGrenadeLauncher/M32.lua")
-
---火箭发射器贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadLaunchers/SaintPredator.lua")
-
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadGrenadeLauncher/M32.lua")
+--火箭筒贴图修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadLaunchers/SaintPredator.lua")
 --机枪贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/6P41.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/M60.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/M249.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/MG42.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/PKP.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadMachineGun/RM338.lua")
-
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/6P41.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/M60.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/M249.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/MG42.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/PKP.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadMachineGun/RM338.lua")
 --霰弹枪贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/M4_super90.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/M590.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/M870.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/M1887.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/ServerSync.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadShotGun/supernova.lua")
-
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/M4_super90.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/M590.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/M870.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/M1887.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/ServerSync.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/supernova.lua")
 --狙击枪贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/56BAN.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/AWM.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/FN49.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/GEW43.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/KAR98K.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/LEE.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/M700.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/M1903.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/MK22.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/MOSIN.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/MosinMagIcon.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/R93.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/SKS.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/SV98.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/TYPE_38.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ReloadSniperRifle/ZHONGZHENG.lua")
-
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/56BAN.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/AWM.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/FN49.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/GEW43.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/KAR98K.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/LEE.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/M700.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/M1903.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/MK22.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/MOSIN.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/MosinMagIcon.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/R93.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/SKS.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/SV98.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/TYPE_38.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/ZHONGZHENG.lua")
 --盾牌贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/ShieldSprite/MobileShield.lua")
-
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ShieldSprite/MobileShield.lua")
 --衣服贴图修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/SuitSprite/MarkSuit.lua")
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/SuitSprite/MarkSuit.lua")
+--苯科技
 
 --桃子科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
@@ -92,6 +82,12 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOff.lua")--伤害衰减
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.lua")--对巨兽的伤害衰减
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
+--桃子科技
+
 
 
 
