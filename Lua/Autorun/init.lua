@@ -17,14 +17,11 @@ if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/LockFix.lua")--Locked Item Fixer
     dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/RefreshTool.lua")--Item Refresh Tool
 end
-
 --爱丽丝科技
 
-
-
 --苯科技
-dofile(Deep_Lua.Path .. "/Lua/Scripts/zoom.lua")--瞄具视野
-dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/zoom.lua")--瞄具视野
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/reloadPatch.lua")--换弹自动填充
 --头盔类贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/6B47.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/ALTYN.lua")
