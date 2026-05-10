@@ -58,7 +58,7 @@
         <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.6" />
       </Abilities>
     </AbilityGroupInterval>-->
-    <!-- 致死爆头（对人） （已转为稳定的cs脚本）
+    <!-- 致死爆头（对人） （已转为稳定的lua脚本）
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -71,8 +71,8 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupEffect>-->
-    <!-- 致死爆头（对其他生物） （已转为稳定的cs脚本）
+    </AbilityGroupEffect>
+     致死爆头（对其他生物） （已转为稳定的lua脚本）
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -994,6 +994,7 @@
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" comparison="and" stackable="false" >
             <Conditional deep_enemy_affliction_resistance="lt 0.5" />
+            <Conditional HealthPercentage="lte 0" />
             <SpawnItem identifiers="deep_surrender_without_fight_handcuffs" spawnposition="SameInventory" Count="1" />
             <Affliction identifier="deep_contract_surrender_without_fight_no_bleeding_effect" strength="5" />
             </StatusEffect>

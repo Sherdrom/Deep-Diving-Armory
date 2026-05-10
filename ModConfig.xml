@@ -3,27 +3,10 @@
     <!--Lua-->
     <Lua File="%ModDir%/Lua/Autorun/init.lua" IsAutorun="true"/>
 
-    <!--In-Memory
-    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>
-    <Assembly File="%ModDir%/CSharp/Client/KillNotification.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>
-
-    <Assembly File="%ModDir%/CSharp/Shared/HeadshotOnlyMod.cs" IsScript="true" UseInternalAccessName="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/HumanAIIgnoreEnemyAIPatch.cs" IsScript="true" UseInternalAccessName="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/IgnoreArmLimbsMod.cs" IsScript="true" UseInternalAccessName="true"/>
-    <Assembly File="%ModDir%/CSharp/Shared/NoCollisionHoldable.cs" IsScript="true" UseInternalAccessName="true"/>-->
-
     <!--Assemblies-->
     <Assembly File="%ModDir%/bin/Client/Linux/DeepVisionPatch.dll" Target="Client" Platform="Linux"/>
     <Assembly File="%ModDir%/bin/Client/OSX/DeepVisionPatch.dll" Target="Client" Platform="OSX"/>
     <Assembly File="%ModDir%/bin/Client/Windows/DeepVisionPatch.dll" Target="Client" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/DeepHitMarker.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/DeepHitMarker.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/DeepHitMarker.dll" Target="Client" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/KillNotification.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/KillNotification.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/KillNotification.dll" Target="Client" Platform="Windows"/>
 
     <Assembly File="%ModDir%/bin/Client/Linux/RemainedAmmo.dll" Target="Client" Platform="Linux"/>
     <Assembly File="%ModDir%/bin/Client/OSX/RemainedAmmo.dll" Target="Client" Platform="OSX"/>
@@ -46,42 +29,6 @@
     <Assembly File="%ModDir%/bin/Server/Linux/ThermalVisablePatch.dll" Target="Server" Platform="Linux"/>
     <Assembly File="%ModDir%/bin/Server/OSX/ThermalVisablePatch.dll" Target="Server" Platform="OSX"/>
     <Assembly File="%ModDir%/bin/Server/Windows/ThermalVisablePatch.dll" Target="Server" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/HeadshotOnlyMod.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/HeadshotOnlyMod.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/HeadshotOnlyMod.dll" Target="Client" Platform="Windows"/>
-    <Assembly File="%ModDir%/bin/Server/Linux/HeadshotOnlyMod.dll" Target="Server" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Server/OSX/HeadshotOnlyMod.dll" Target="Server" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Server/Windows/HeadshotOnlyMod.dll" Target="Server" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/HumanAIIgnoreEnemyAIPatch.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/HumanAIIgnoreEnemyAIPatch.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/HumanAIIgnoreEnemyAIPatch.dll" Target="Client" Platform="Windows"/>
-    <Assembly File="%ModDir%/bin/Server/Linux/HumanAIIgnoreEnemyAIPatch.dll" Target="Server" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Server/OSX/HumanAIIgnoreEnemyAIPatch.dll" Target="Server" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Server/Windows/HumanAIIgnoreEnemyAIPatch.dll" Target="Server" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/IgnoreArmLimbsMod.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/IgnoreArmLimbsMod.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/IgnoreArmLimbsMod.dll" Target="Client" Platform="Windows"/>
-    <Assembly File="%ModDir%/bin/Server/Linux/IgnoreArmLimbsMod.dll" Target="Server" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Server/OSX/IgnoreArmLimbsMod.dll" Target="Server" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Server/Windows/IgnoreArmLimbsMod.dll" Target="Server" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/NoCollisionHoldable.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/NoCollisionHoldable.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/NoCollisionHoldable.dll" Target="Client" Platform="Windows"/>
-    <Assembly File="%ModDir%/bin/Server/Linux/NoCollisionHoldable.dll" Target="Server" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Server/OSX/NoCollisionHoldable.dll" Target="Server" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Server/Windows/NoCollisionHoldable.dll" Target="Server" Platform="Windows"/>
-
-    <Assembly File="%ModDir%/bin/Client/Linux/Modify.dll" Target="Client" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Client/OSX/Modify.dll" Target="Client" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Client/Windows/Modify.dll" Target="Client" Platform="Windows"/>
-    <Assembly File="%ModDir%/bin/Server/Linux/Modify.dll" Target="Server" Platform="Linux"/>
-    <Assembly File="%ModDir%/bin/Server/OSX/Modify.dll" Target="Server" Platform="OSX"/>
-    <Assembly File="%ModDir%/bin/Server/Windows/Modify.dll" Target="Server" Platform="Windows"/>
-
 
     <Config File="%ModDir%/Config/ConfigClient.xml" Target="Client" />
     <!-- Use the text replace function in your IDE to replace '[MODASSEMBLYNAME]' with the name of the dll -->
