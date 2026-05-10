@@ -19,17 +19,15 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/Airburst.lua")--Airburst stuff, work both 
 
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/zoom.lua")--瞄具视野
-dofile(Deep_Lua.Path .. "/Lua/Scripts/NoInjuryShaking.lua")--止痛药
 dofile(Deep_Lua.Path .. "/Lua/Scripts/reloadPatch.lua")--换弹自动填充
 
 --敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/Enemy/EnemyBattleBehavior.lua")
+
 --伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOff.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DamageFallOffToLeviathan.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/DamageFallOff/DeepGun_InWaterDetect.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/TruePercentDamage.lua")
-
 
 --头盔贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/HelmetTacSprite/6B47.lua")
@@ -85,9 +83,15 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/ShieldSprite/MobileShield.lua")
 --衣服贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/SuitSprite/MarkSuit.lua")
 
---致命爆头only
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HeadShot/HeadShotOnly.lua")
+--桃子科技
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoCollisionHoldable.lua")--盾牌不推人
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止痛药，受伤手臂不会乱晃
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
 
---爆头倍率
-dofile(Deep_Lua.Path .. "/Lua/Scripts/HeadShot/HeadShotMultiplier.lua")
+
 
