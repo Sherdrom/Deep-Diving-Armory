@@ -84,6 +84,9 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.l
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoKillDownedPlayer.lua")--击杀昏迷玩家
 --桃子科技
 
 

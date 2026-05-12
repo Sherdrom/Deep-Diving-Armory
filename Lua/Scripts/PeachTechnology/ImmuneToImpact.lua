@@ -266,14 +266,3 @@ if patchSuccess then
 else
     print("[ImmuneToImpact-ERROR] Hook.Patch 注册失败: " .. tostring(patchError))
 end
-
-print("[ImmuneToImpact] ✅ 灵活版本加载成功！")
-print("[ImmuneToImpact] 支持以下affliction（自动选择强度最高的）：")
-print("  • deep_immunetoimpact_0   → 不减少")
-print("  • deep_immunetoimpact_25  → 减少25%")
-print("  • deep_immunetoimpact_50  → 减少50%")
-print("  • deep_immunetoimpact_75  → 减少75%")
-print("  • deep_immunetoimpact_90  → 减少90%")
-print("  • deep_immunetoimpact_95  → 减少95%")
-print("  • deep_immunetoimpact_100 → 完全免疫")
-print("[ImmuneToImpact] (DEBUG=" .. tostring(DEBUG) .. ")")
