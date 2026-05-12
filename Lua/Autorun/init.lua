@@ -87,6 +87,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoKillDownedPlayer.lua")--击杀昏迷玩家
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SoundAdjustment.lua")--耳机放大脚步声
 --桃子科技
 
 
