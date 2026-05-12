@@ -10,7 +10,7 @@ config.platforms.AR = {
     -- 运行时合成贴图的画布尺寸。
     -- 根槽 rootSockets 使用这个平台 canvas 坐标系。
     -- 子配件可以用 visual.attachPoint 对齐父配件本地 mount.anchor。
-    canvas = { w = 768, h = 260 },
+    canvas = { w = 640, h = 260 },
 
     -- 平台根路径。V0.9.2 起平台只描述结构规则，不再声明默认枪型。
     -- receiver 是武器身份件，隐藏在普通改装列表外；其子路径会提升到 UI 首页。
