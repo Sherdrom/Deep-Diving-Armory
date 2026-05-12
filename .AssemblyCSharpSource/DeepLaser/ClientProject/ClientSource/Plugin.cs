@@ -28,9 +28,11 @@ namespace DeepLaser
                 if (editing || spriteBatch == null) { return; }
                 RangedWeapon? rangedWeapon = __instance.GetComponent<RangedWeapon>();
                 if (rangedWeapon == null) { return; }
+                Character? holder = GetHolder(__instance);
+                if (__instance.ParentInventory != null && holder == null) { return; }
                 if (!TryFindLaser(__instance, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
 
-                DrawLaser(rangedWeapon, spriteBatch, GetHolder(__instance), laserItem, laserColor);
+                DrawLaser(rangedWeapon, spriteBatch, holder, laserItem, laserColor);
             }
         }
 
@@ -116,14 +118,14 @@ namespace DeepLaser
 
         private static void DrawImpactDot(SpriteBatch spriteBatch, Vector2 position, Color laserColor, float depth)
         {
-            impactGlowTexture ??= GUI.CreateCircle(2, filled: true);
-            impactCoreTexture ??= GUI.CreateCircle(1, filled: true);
+            impactGlowTexture ??= GUI.CreateCircle(3, filled: true);
+            impactCoreTexture ??= GUI.CreateCircle(2, filled: true);
 
             spriteBatch.Draw(
                 impactGlowTexture,
                 position,
                 null,
-                laserColor * 0.35f,
+                laserColor * 0.8f,
                 0.0f,
                 new Vector2(impactGlowTexture.Width, impactGlowTexture.Height) / 2.0f,
                 1.0f,
@@ -134,7 +136,7 @@ namespace DeepLaser
                 impactCoreTexture,
                 position,
                 null,
-                laserColor * 0.9f,
+                laserColor * 1.2f,
                 0.0f,
                 new Vector2(impactCoreTexture.Width, impactCoreTexture.Height) / 2.0f,
                 1.0f,
