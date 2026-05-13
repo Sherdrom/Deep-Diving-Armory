@@ -122,8 +122,19 @@ namespace GunSmith
                 Item? item = FindArg<Item>(args);
                 if (item != null)
                 {
-                    string savedState = item.GetComponent<Barotrauma.Items.Components.GunsmithData>()?.SavedState ?? string.Empty;
-                    CallLuaHook("DeepGunsmithReceiveState", item, savedState);
+                    Barotrauma.Items.Components.GunsmithData? data = item.GetComponent<Barotrauma.Items.Components.GunsmithData>();
+                    if (data == null)
+                    {
+                        CallLuaHook("DeepGunsmithReceiveState", item, string.Empty);
+                    }
+                    else if (GameMain.Client != null)
+                    {
+                        data.RequestStateFromServer();
+                    }
+                    else
+                    {
+                        CallLuaHook("DeepGunsmithReceiveState", item, data.SavedState);
+                    }
                 }
                 return null;
             });
@@ -135,7 +146,14 @@ namespace GunSmith
                 Barotrauma.Items.Components.GunsmithData? data = item?.GetComponent<Barotrauma.Items.Components.GunsmithData>();
                 if (data != null && savedState != null)
                 {
-                    data.SavedState = savedState;
+                    if (GameMain.Client != null)
+                    {
+                        data.SubmitStateToServer(savedState);
+                    }
+                    else
+                    {
+                        data.SavedState = savedState;
+                    }
                 }
                 return null;
             });

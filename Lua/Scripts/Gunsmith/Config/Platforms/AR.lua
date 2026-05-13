@@ -4,7 +4,7 @@ local config = Deep_Lua.Gunsmith.Config
 
 -- 平台 = 一类枪械共用的改装骨架。
 -- deep_m4 和 deep_hk416 都挂在 AR 平台上，因此它们共用 receiver-led 结构、兼容规则和槽位显示名。
-config.platforms.AR = { 
+config.platforms.AR = {
     id = "AR",
 
     -- 运行时合成贴图的画布尺寸。
@@ -27,7 +27,7 @@ config.platforms.AR = {
 
     -- UI 显示文本只写本地化 key，实际文本放在 text/chinese.xml 等语言文件。
     -- 子挂点 path 也建议登记在这里，方便路径显示为“枪械 > 护木 > 上导轨”。
-    pathNameKeys = { 
+    pathNameKeys = {
         receiver = "deep.gunsmith.path.receiver",
         barrel = "deep.gunsmith.path.barrel",
         handguard = "deep.gunsmith.path.handguard",
