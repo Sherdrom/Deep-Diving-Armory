@@ -86,7 +86,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")-
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SoundAdjustment.lua")--耳机放大脚步声
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue.lua")--直接调整Statvalue（测试中）
 --桃子科技
 
 
