@@ -421,7 +421,6 @@
 
     <Affliction identifier="friendly_fire" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" >
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="TeamAttackMultiplier" value="-1" />
       </Effect>
     </Affliction>
 
@@ -1350,8 +1349,7 @@
       <Effect minstrength="0" maxstrength="2" strengthchange="-1"  >
       </Effect>
     </Affliction>
-
-
+    
     <Affliction identifier="deepgun_inwater_detect_chip" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" karmachangeonapplied="0" maxstrength="2" >
       <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="deepgun_inwater_detect" minresistance="1" maxresistance="1" >
       <StatusEffect target="Character" interval="0.25" multiplyafflictionsbymaxvitality="true" >
@@ -1838,7 +1836,7 @@
 
     <!--降低敌人身上的aff-->
     <Affliction identifier="deep_enemy_affliction_resistance" description="" isbuff="true" type="deep_enemy_affliction" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="100" showinhealthscannerthreshold="100" karmachangeonapplied="0" maxstrength="2" >
-      <Effect minstrength="0" maxstrength="2" resistancefor="deep_plate_debuff,deepgun_inwater_detect,deep_smg_buff,deep_machinegun_buff,deep_melee_buff,deep_pistol_buff,deep_sniperrifle_buff,deep_expansion_mag_buff,deep_grip_buff,deep_laser_buff,deep_sight_buff,deep_muzzle_buff,deep_rifleupgrade_buff,deep_armorupgrade_buff,deep_suit_buff,deep_tac_buff,deep_helmet_tac_detect,deep_headset_buff,deep_sub_hanging_buff" minresistance="10" maxresistance="10" strengthchange="-0" >
+      <Effect minstrength="0" maxstrength="2" resistancefor="deep_plate_debuff,deepgun_inwater_detect,deep_smg_buff,deep_machinegun_buff,deep_melee_buff,deep_pistol_buff,deep_sniperrifle_buff,deep_expansion_mag_buff,deep_grip_buff,deep_laser_buff,deep_sight_buff,deep_muzzle_buff,deep_rifleupgrade_buff,deep_armorupgrade_buff,deep_suit_buff,deep_tac_buff,deep_helmet_tac_detect,deep_headset_buff,deep_sub_hanging_buff,deep_lie_down_resistance" minresistance="10" maxresistance="10" strengthchange="-0" >
       </Effect>
     </Affliction>
 

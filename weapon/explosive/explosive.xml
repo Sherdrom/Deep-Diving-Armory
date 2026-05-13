@@ -586,25 +586,10 @@
       <StatusEffect type="OnBroken" target="This">
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" />
         <!-- Effect without distance fall off to ensure some stun and flash effect -->
-        <Explosion range="750" force="0" empstrength="10" penetration="1" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
-          <Affliction identifier="stun" strength="10" />
-          <Affliction identifier="blind" strength="15" />
-          <Affliction identifier="sensoryoverload" strength="15" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-        </Explosion>
-        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="stun" strength="20" />
-          <Affliction identifier="blind" strength="25" />
-          <Affliction identifier="sensoryoverload" strength="30" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
-        </Explosion>
-        <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
-        <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="explosiondamage" strength="10" />
-          <Affliction identifier="blind_hard" strength="10" />
-          <Affliction identifier="stun" strength="40" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        <Explosion range="750" force="0" empstrength="10" smoke="false" playtinnitus="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10" >
+          <Affliction identifier="blind_hard" strength="10" multiplybymaxvitality="true" />
+          <Affliction identifier="stun" strength="30" multiplybymaxvitality="true" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" multiplybymaxvitality="true" />
           <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
@@ -1983,25 +1968,10 @@
       <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
       <Conditional EntityType="neq character" TargetContainer="true" />
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="750" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
-          <Affliction identifier="stun" strength="10" />
-          <Affliction identifier="blind" strength="15" />
-          <Affliction identifier="sensoryoverload" strength="15" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-        </Explosion>
-        <Explosion range="500" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="stun" strength="20" />
-          <Affliction identifier="blind" strength="25" />
-          <Affliction identifier="sensoryoverload" strength="30" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
-        </Explosion>
-        <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
-        <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="explosiondamage" strength="10" />
-          <Affliction identifier="blind_hard" strength="10" />
-          <Affliction identifier="stun" strength="40" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        <Explosion range="750" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+          <Affliction identifier="blind_hard" strength="10" multiplybymaxvitality="true" />
+          <Affliction identifier="stun" strength="30" multiplybymaxvitality="true" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" multiplybymaxvitality="true" />
           <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
@@ -2009,25 +1979,10 @@
       <StatusEffect type="OnBroken" target="This" disabledeltatime="true" comparison="and" >
       <Conditional EntityType="eq character" TargetContainer="true" />
         <sound file="Content/Items/Weapons/TrueStunGrenade.ogg" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="300" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" DistanceFalloff="false" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
-          <Affliction identifier="stun" strength="10" />
-          <Affliction identifier="blind" strength="15" />
-          <Affliction identifier="sensoryoverload" strength="15" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-        </Explosion>
-        <Explosion range="200" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="stun" strength="20" />
-          <Affliction identifier="blind" strength="25" />
-          <Affliction identifier="sensoryoverload" strength="30" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
-          <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
-        </Explosion>
-        <!-- Secondary stronger blinding effect in the epicenter of the explosion -->
-        <Explosion range="100" force="0.1" empstrength="10" smoke="false" penetration="1">
-          <Affliction identifier="explosiondamage" strength="10" />
-          <Affliction identifier="blind_hard" strength="10" />
-          <Affliction identifier="stun" strength="40" />
-          <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
+        <Explosion range="300" penetration="1" empstrength="10" force="0" smoke="false" playtinnitus="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
+          <Affliction identifier="blind_hard" strength="10" multiplybymaxvitality="true" />
+          <Affliction identifier="stun" strength="30" multiplybymaxvitality="true" />
+          <Affliction identifier="deep_stun_grenade_reduce" strength="30" multiplybymaxvitality="true" />
           <Affliction identifier="emp" strength="100" multiplybymaxvitality="true" />
         </Explosion>
         <Remove />
