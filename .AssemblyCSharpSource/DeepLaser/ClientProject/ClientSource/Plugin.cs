@@ -208,31 +208,15 @@ namespace DeepLaser
                 return false;
             }
 
-            try
-            {
-                hulls = GetHullsInRangeMethod.Invoke(null, new object?[] { startWorld, range, sourceSubmarine }) as System.Collections.IEnumerable;
-                return hulls != null;
-            }
-            catch (Exception exception)
-            {
-                LogHullReflectionErrorOnce($"DeepLaser failed to query light hulls: {exception.Message}");
-                return false;
-            }
+            hulls = GetHullsInRangeMethod.Invoke(null, new object?[] { startWorld, range, sourceSubmarine }) as System.Collections.IEnumerable;
+            return hulls != null;
         }
 
         private static bool IsValidHull(object hull)
         {
-            try
-            {
-                if (HullEnabledProperty?.GetValue(hull) is bool enabled && !enabled) { return false; }
-                if (HullIsInvalidProperty?.GetValue(hull) is bool isInvalid && isInvalid) { return false; }
-                return true;
-            }
-            catch (Exception exception)
-            {
-                LogHullReflectionErrorOnce($"DeepLaser failed to inspect light hull: {exception.Message}");
-                return false;
-            }
+            if (HullEnabledProperty?.GetValue(hull) is bool enabled && !enabled) { return false; }
+            if (HullIsInvalidProperty?.GetValue(hull) is bool isInvalid && isInvalid) { return false; }
+            return true;
         }
 
         private static bool TryGetHullVertices(object hull, out Vector2[] vertices)
@@ -244,28 +228,20 @@ namespace DeepLaser
                 return false;
             }
 
-            try
-            {
-                RefreshWorldPositionsMethod.Invoke(hull, null);
-                if (HullVerticesField.GetValue(hull) is not Array rawVertices || rawVertices.Length < 3) { return false; }
+            RefreshWorldPositionsMethod.Invoke(hull, null);
+            if (HullVerticesField.GetValue(hull) is not Array rawVertices || rawVertices.Length < 3) { return false; }
 
-                List<Vector2> result = new(rawVertices.Length);
-                for (int i = 0; i < rawVertices.Length; i++)
-                {
-                    object? vertex = rawVertices.GetValue(i);
-                    if (vertex == null) { return false; }
-                    if (SegmentPointWorldPosField.GetValue(vertex) is not Vector2 worldPos || !IsFinite(worldPos)) { return false; }
-                    result.Add(worldPos);
-                }
-
-                vertices = result.ToArray();
-                return true;
-            }
-            catch (Exception exception)
+            List<Vector2> result = new(rawVertices.Length);
+            for (int i = 0; i < rawVertices.Length; i++)
             {
-                LogHullReflectionErrorOnce($"DeepLaser failed to read light hull vertices: {exception.Message}");
-                return false;
+                object? vertex = rawVertices.GetValue(i);
+                if (vertex == null) { return false; }
+                if (SegmentPointWorldPosField.GetValue(vertex) is not Vector2 worldPos || !IsFinite(worldPos)) { return false; }
+                result.Add(worldPos);
             }
+
+            vertices = result.ToArray();
+            return true;
         }
 
         private static LaserHit CastLevelRay(Vector2 startWorld, Vector2 endWorld)
