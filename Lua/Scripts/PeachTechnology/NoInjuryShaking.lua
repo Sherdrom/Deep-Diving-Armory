@@ -1,60 +1,29 @@
-local function HasAffliction(character, identifier, minamount)
+local AimWobbleBuffs = { "deep_calm_buff", "deep_stable_shooting", "deep_contract_harsh_training_detect" }
+local MovePenaltyBuffs = { "deep_calm_buff", "deep_contract_harsh_training_detect" }
+
+local function HasAnyBuff(character, buffs, minamount)
 	if character == nil or character.CharacterHealth == nil then
 		return false
 	end
-
-	local aff = character.CharacterHealth.GetAffliction(identifier)
-	local res = false
-	if aff ~= nil then
-		res = aff.Strength >= (minamount or 0.5)
+	for _, id in ipairs(buffs) do
+		local aff = character.CharacterHealth.GetAffliction(id)
+		if aff ~= nil and aff.Strength >= (minamount or 1) then
+			return true
+		end
 	end
-	return res
+	return false
 end
 
---移除手臂晃动惩罚
 Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptable)
-	if HasAffliction(instance.Character, "deep_calm_buff", 1) then
+	if HasAnyBuff(instance.Character, AimWobbleBuffs, 1) then
 		ptable.PreventExecution = true
 		return 0
 	end
 end, Hook.HookMethodType.Before)
 
---移除手臂晃动惩罚，稳定射击
-Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptable)
-	if HasAffliction(instance.Character, "deep_stable_shooting", 1) then
-		ptable.PreventExecution = true
-		return 0
-	end
-end, Hook.HookMethodType.Before)
-
---移除手臂晃动惩罚，严酷训练
-Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptable)
-	if HasAffliction(instance.Character, "deep_contract_harsh_training_detect", 1) then
-		ptable.PreventExecution = true
-		return 0
-	end
-end, Hook.HookMethodType.Before)
-
---移除腿部受伤移速惩罚
 Hook.Patch("Barotrauma.Character", "CalculateMovementPenalty", function(instance, ptable)
-	if HasAffliction(instance, "deep_calm_buff", 1) then
+	if HasAnyBuff(instance, MovePenaltyBuffs, 1) then
 		ptable.PreventExecution = true
-	return 0
+		return 0
 	end
 end, Hook.HookMethodType.Before)
-
---移除腿部受伤移速惩罚，严酷训练
-Hook.Patch("Barotrauma.Character", "CalculateMovementPenalty", function(instance, ptable)
-	if HasAffliction(instance, "deep_contract_harsh_training_detect", 1) then
-		ptable.PreventExecution = true
-	return 0
-	end
-end, Hook.HookMethodType.Before)
-
-
-
-
-
-
-
-
