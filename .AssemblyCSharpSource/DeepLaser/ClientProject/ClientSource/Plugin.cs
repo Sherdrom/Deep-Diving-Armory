@@ -9,24 +9,38 @@ namespace DeepLaser
     public partial class DeepLaser : IAssemblyPlugin
     {
         private const float MaxLaserLength = 4000.0f;
-        private static readonly Type? ConvexHullType = typeof(GameMain).Assembly.GetType("Barotrauma.Lights.ConvexHull");
-        private static readonly Type? SegmentPointType = typeof(GameMain).Assembly.GetType("Barotrauma.Lights.SegmentPoint");
-        private static readonly MethodInfo? GetHullsInRangeMethod = ConvexHullType?.GetMethod("GetHullsInRange", BindingFlags.Public | BindingFlags.Static);
-        private static readonly MethodInfo? RefreshWorldPositionsMethod = ConvexHullType?.GetMethod("RefreshWorldPositions", BindingFlags.Public | BindingFlags.Instance);
-        private static readonly PropertyInfo? HullEnabledProperty = ConvexHullType?.GetProperty("Enabled", BindingFlags.Public | BindingFlags.Instance);
-        private static readonly PropertyInfo? HullIsInvalidProperty = ConvexHullType?.GetProperty("IsInvalid", BindingFlags.Public | BindingFlags.Instance);
-        private static readonly FieldInfo? HullVerticesField = ConvexHullType?.GetField("vertices", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly FieldInfo? SegmentPointWorldPosField = SegmentPointType?.GetField("WorldPos", BindingFlags.Public | BindingFlags.Instance);
-        private static bool loggedHullReflectionError;
-        private static Texture2D? impactGlowTexture;
-        private static Texture2D? impactCoreTexture;
-
         private static readonly (string Tag, Color Color)[] LaserColors =
         {
             ("red_laser", new Color(255, 32, 32, 80)),
             ("green_laser", new Color(32, 255, 64, 80)),
             ("blue_laser", new Color(64, 128, 255, 80))
         };
+
+        private static readonly Type? ConvexHullType = AccessTools.TypeByName("Barotrauma.Lights.ConvexHull");
+        private static readonly Type? SegmentPointType = AccessTools.TypeByName("Barotrauma.Lights.SegmentPoint");
+        private static readonly MethodInfo? GetHullsInRangeMethod = AccessMethod(ConvexHullType, "GetHullsInRange");
+        private static readonly MethodInfo? RefreshWorldPositionsMethod = AccessMethod(ConvexHullType, "RefreshWorldPositions");
+        private static readonly PropertyInfo? HullEnabledProperty = AccessProperty(ConvexHullType, "Enabled");
+        private static readonly PropertyInfo? HullIsInvalidProperty = AccessProperty(ConvexHullType, "IsInvalid");
+        private static readonly FieldInfo? HullVerticesField = AccessField(ConvexHullType, "vertices");
+        private static readonly FieldInfo? SegmentPointWorldPosField = AccessField(SegmentPointType, "WorldPos");
+        private static bool loggedHullReflectionError;
+        private static Texture2D? impactGlowTexture;
+        private static Texture2D? impactCoreTexture;
+        private static MethodInfo? AccessMethod(Type? type, string name)
+        {
+            return type == null ? null : AccessTools.Method(type, name);
+        }
+
+        private static PropertyInfo? AccessProperty(Type? type, string name)
+        {
+            return type == null ? null : AccessTools.Property(type, name);
+        }
+
+        private static FieldInfo? AccessField(Type? type, string name)
+        {
+            return type == null ? null : AccessTools.Field(type, name);
+        }
 
         [HarmonyPatch(typeof(Item), nameof(Item.Draw), new[] { typeof(SpriteBatch), typeof(bool), typeof(bool), typeof(Color?), typeof(float?) })]
         private static class ItemDrawPatch
