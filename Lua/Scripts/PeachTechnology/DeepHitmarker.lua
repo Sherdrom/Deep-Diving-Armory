@@ -5,6 +5,8 @@ local HIT_HINT_DURATION = 0.25
 local KILL_HINT_DURATION = 0.5
 local DEBUG_MODE = false
 
+local GameMain = LuaUserData.CreateStatic("Barotrauma.GameMain")
+
 if not CLIENT then return end
 
 local HitHintTimer = 0
@@ -71,10 +73,42 @@ local function DrawHint(spriteBatch, position)
     end
 end
 
+local function GetCrosshairPosition(instance)
+    if instance == nil or instance.item == nil then
+        return PlayerInput.MousePosition
+    end
+    local item = instance.item
+    if item.body == nil then
+        return PlayerInput.MousePosition
+    end
+    local screen = Screen.Selected
+    if screen == nil or screen.Cam == nil then
+        return PlayerInput.MousePosition
+    end
+
+    local barrelWorldPos = item.WorldPosition + ConvertUnits.ToDisplayUnits(instance.TransformedBarrelPos)
+    local barrelScreenPos = screen.Cam.WorldToScreen(barrelWorldPos)
+
+    local rotation = item.body.TransformedRotation
+    local barrelDir = Vector2(math.cos(rotation), -math.sin(rotation))
+
+    local mouseDist = Vector2.Distance(barrelScreenPos, PlayerInput.MousePosition)
+
+    local rawPos = Vector2(
+        barrelScreenPos.X + barrelDir.X * mouseDist,
+        barrelScreenPos.Y + barrelDir.Y * mouseDist
+    )
+
+    return Vector2(
+        rawPos.X < 0 and 0 or rawPos.X > GameMain.GraphicsWidth and GameMain.GraphicsWidth or rawPos.X,
+        rawPos.Y < 0 and 0 or rawPos.Y > GameMain.GraphicsHeight and GameMain.GraphicsHeight or rawPos.Y
+    )
+end
+
 Hook.Patch("Barotrauma.Items.Components.RangedWeapon", "DrawHUD",
     { "Microsoft.Xna.Framework.Graphics.SpriteBatch", "Barotrauma.Character" },
     function(instance, ptable)
-        local position = PlayerInput.MousePosition
+        local position = GetCrosshairPosition(instance)
         if position == nil then return end
         DrawHint(ptable["spriteBatch"], position)
     end,
