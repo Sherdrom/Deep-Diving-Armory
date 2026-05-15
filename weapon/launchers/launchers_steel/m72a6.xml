@@ -20,11 +20,11 @@
       <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" setvalue="true" />
     </Wearable>
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,17" aimpos="38,18" handle1="-7,0" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.4" setvalue="true" />
       <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true" delay="0.5">
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.3" />
     </Holdable>
     <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="390,-16" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="0,256,256,256" />
