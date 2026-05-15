@@ -87,6 +87,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌（testing）
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透（testing）
 --桃子科技
 
 
