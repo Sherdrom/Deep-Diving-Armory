@@ -18,16 +18,14 @@ Hook.Patch(
 	},
 	function(instance, ptable)
 		local target = ptable["target"]
-		local result = ptable.ReturnValue
 
-		if result and target ~= nil and target:HasAbilityFlag(IGNORED_FLAG) then
+		if target ~= nil and target:HasAbilityFlag(IGNORED_FLAG) then
 			log("IsValidTarget: ignored flagged target " .. target.Name)
+			ptable.PreventExecution = true
 			return false
 		end
-
-		return result
 	end,
-	Hook.HookMethodType.After
+	Hook.HookMethodType.Before
 )
 
 Hook.Patch(
