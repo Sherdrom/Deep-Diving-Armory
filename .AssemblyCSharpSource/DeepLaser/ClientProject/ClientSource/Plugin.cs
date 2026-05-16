@@ -11,9 +11,9 @@ namespace DeepLaser
         private const float MaxLaserLength = 4000.0f;
         private static readonly (string Tag, Color Color)[] LaserColors =
         {
-            ("red_laser", new Color(255, 32, 32, 80)),
-            ("green_laser", new Color(32, 255, 64, 80)),
-            ("blue_laser", new Color(64, 128, 255, 80))
+            ("red_laser", new Color(255, 32, 32, 120)),
+            ("green_laser", new Color(32, 255, 64, 120)),
+            ("blue_laser", new Color(64, 128, 255, 120))
         };
 
         private static readonly Type? ConvexHullType = AccessTools.TypeByName("Barotrauma.Lights.ConvexHull");
@@ -42,27 +42,61 @@ namespace DeepLaser
             return type == null ? null : AccessTools.Field(type, name);
         }
 
-        [HarmonyPatch(typeof(Item), nameof(Item.Draw), new[] { typeof(SpriteBatch), typeof(bool), typeof(bool), typeof(Color?), typeof(float?) })]
-        private static class ItemDrawPatch
+        [HarmonyPatch]
+        private static class LightManagerDebugDrawVerticesPatch
         {
-            private static void Postfix(Item __instance, SpriteBatch spriteBatch, bool editing)
+            private static MethodBase? TargetMethod()
             {
-                if (editing || spriteBatch == null) { return; }
-                RangedWeapon? rangedWeapon = __instance.GetComponent<RangedWeapon>();
-                if (rangedWeapon == null) { return; }
-                Character? holder = GetHolder(__instance);
-                if (__instance.ParentInventory != null && holder == null) { return; }
-                if (!TryFindLaser(__instance, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
+                Type? lightManagerType = AccessTools.TypeByName("Barotrauma.Lights.LightManager");
+                return AccessTools.Method(lightManagerType, "DebugDrawVertices", new[] { typeof(SpriteBatch) });
+            }
 
-                DrawLaser(rangedWeapon, spriteBatch, holder, laserItem, laserColor);
+            private static void Postfix(SpriteBatch spriteBatch)
+            {
+                if (spriteBatch == null || Screen.Selected is not GameScreen) { return; }
+
+                DrawLasers(spriteBatch);
             }
         }
 
-        private static Character? GetHolder(Item item)
+        private static void DrawLasers(SpriteBatch spriteBatch)
         {
-            if (item.GetRootInventoryOwner() is not Character character) { return null; }
+            HashSet<Item> drawnWeapons = new();
 
-            return character.HeldItems.Contains(item) ? character : null;
+            foreach (Character character in Character.CharacterList)
+            {
+                if (character.Removed || !character.Enabled) { continue; }
+
+                foreach (Item weaponItem in character.HeldItems)
+                {
+                    if (weaponItem == null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                    RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
+                    if (rangedWeapon == null) { continue; }
+
+                    TryDrawWeaponLaser(rangedWeapon, spriteBatch, character);
+                }
+            }
+
+            foreach (Item weaponItem in Item.ItemList)
+            {
+                if (weaponItem == null || weaponItem.Removed || weaponItem.ParentInventory != null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
+                if (rangedWeapon == null) { continue; }
+
+                TryDrawWeaponLaser(rangedWeapon, spriteBatch, character: null);
+            }
+        }
+
+        private static void TryDrawWeaponLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character)
+        {
+            Item weaponItem = rangedWeapon.Item;
+            if (!TryFindLaser(weaponItem, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
+
+            weaponItem.body?.UpdateDrawPosition();
+            weaponItem.SetContainedItemPositions();
+            DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor);
         }
 
         private static bool TryFindLaser(Item weapon, out Item? laserItem, out Color color)
