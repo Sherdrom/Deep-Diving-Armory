@@ -15,5 +15,6 @@ local configPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config"
 
 -- 顶层只加载大类入口，具体文件清单放到各自目录的入口文件里维护。
 dofile(configPath .. "/Platforms/AR.lua")
+dofile(configPath .. "/Platforms/AK.lua")
 dofile(configPath .. "/Weapons/Weapons.lua")
 dofile(configPath .. "/Parts/Parts.lua")

@@ -73,24 +73,24 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ShieldSprite/MobileShiel
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/SuitSprite/MarkSuit.lua")
 --苯科技
 
---桃子科技
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoCollisionHoldable.lua")--盾牌不推人
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止痛药，受伤手臂不会乱晃
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOff.lua")--伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.lua")--对巨兽的伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SoundAdjustment.lua")--耳机放大脚步声
---桃子科技
+-- --桃子科技
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoCollisionHoldable.lua")--盾牌不推人
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止痛药，受伤手臂不会乱晃
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOff.lua")--伤害衰减
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.lua")--对巨兽的伤害衰减
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
+-- dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SoundAdjustment.lua")--耳机放大脚步声
+-- --桃子科技
 
 
 
