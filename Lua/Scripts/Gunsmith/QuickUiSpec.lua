@@ -65,7 +65,12 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
     }, ":"))
 end
 
-local function quickSlotsForWeapon(weapon)
+local function quickSlotsForItem(item, selection, platform)
+    if Core.QuickSlotsForSelection then
+        return Core.QuickSlotsForSelection(item, selection, platform)
+    end
+
+    local weapon = Core.WeaponConfig(item)
     if not weapon or type(weapon.quickSlots) ~= "table" then return {} end
     local slots = {}
     for _, quickSlot in ipairs(weapon.quickSlots) do
@@ -183,7 +188,7 @@ function QuickUiSpec.Build(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     local entries = {}
 
-    for _, quickSlot in ipairs(quickSlotsForWeapon(weapon)) do
+    for _, quickSlot in ipairs(quickSlotsForItem(item, selection, platform)) do
         if Core.IsValidPath(selection, platform, quickSlot.path) then
             local partType = Core.PartTypeForPath(selection, quickSlot.path)
             local emptyStatus = "available"

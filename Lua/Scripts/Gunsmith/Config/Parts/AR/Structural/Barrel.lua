@@ -37,6 +37,6 @@ parts.hk416_barrel_std = {
         scale = 1.0
     },
     mounts = {
-        { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.hk416_barrel_std.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 220, y = 1 } },
+        { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.hk416_barrel_std.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 220, y = 1 }, quick = { key = "muzzle" } },
     }
 }

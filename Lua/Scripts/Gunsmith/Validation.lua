@@ -235,6 +235,34 @@ function Validation.Run(configOverride, label)
         end
     end
 
+    local function collectQuickKeys(parentPart, quickKeys, visited, depth)
+        if type(parentPart) ~= "table" or type(parentPart.mounts) ~= "table" or depth > 32 then return end
+        for _, mount in ipairs(parentPart.mounts) do
+            local quick = mount.quick
+            if type(quick) == "table" and type(quick.key) == "string" and quick.key ~= "" then
+                quickKeys[quick.key] = true
+            end
+
+            local childPartId = mount.defaultPart
+            if type(childPartId) == "string" and childPartId ~= "" and not visited[childPartId] then
+                visited[childPartId] = true
+                collectQuickKeys(parts[childPartId], quickKeys, visited, depth + 1)
+            end
+        end
+    end
+
+    local function defaultQuickKeysForWeapon(weapon, platformRootSlots)
+        local quickKeys = {}
+        if type(weapon.rootParts) ~= "table" then return quickKeys end
+        for path, _ in pairs(platformRootSlots or {}) do
+            local rootPartId = weapon.rootParts[path]
+            if type(rootPartId) == "string" and rootPartId ~= "" then
+                collectQuickKeys(parts[rootPartId], quickKeys, { [rootPartId] = true }, 0)
+            end
+        end
+        return quickKeys
+    end
+
     local function validateDefaultChildren(parentPartId, parentPart, path, stack, depth)
         if type(parentPart.mounts) ~= "table" then return end
         if depth > 32 then
@@ -449,6 +477,36 @@ function Validation.Run(configOverride, label)
 
             validateSpriteTransform(errors, weaponId, "inventory", weapon.inventory, false)
             validateSpriteTransform(errors, weaponId, "world", weapon.world, true)
+
+            if weapon.quickSlotBindings ~= nil then
+                if type(weapon.quickSlotBindings) ~= "table" then
+                    table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings must be a table.")
+                else
+                    local quickKeys = defaultQuickKeysForWeapon(weapon, rootSlots)
+                    local usedSlots = {}
+                    for key, binding in pairs(weapon.quickSlotBindings) do
+                        local bindingLabel = "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings '" .. tostring(key) .. "'"
+                        if type(key) ~= "string" or key == "" then
+                            table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings key must be a non-empty string.")
+                        elseif not quickKeys[key] then
+                            table.insert(errors, bindingLabel .. " does not match a quick mount reachable from the default selection.")
+                        end
+
+                        if type(binding) ~= "table" then
+                            table.insert(errors, bindingLabel .. " must be a table.")
+                        else
+                            local slotIndex = binding.slot
+                            if type(slotIndex) ~= "number" or slotIndex < 0 or slotIndex % 1 ~= 0 then
+                                table.insert(errors, bindingLabel .. ".slot must be a non-negative integer.")
+                            elseif usedSlots[slotIndex] then
+                                table.insert(errors, bindingLabel .. ".slot duplicates slot " .. tostring(slotIndex) .. ".")
+                            else
+                                usedSlots[slotIndex] = true
+                            end
+                        end
+                    end
+                end
+            end
         end
     end
 
@@ -555,6 +613,25 @@ function Validation.Run(configOverride, label)
                         end
                         if mount.visualOrder ~= nil and type(mount.visualOrder) ~= "number" then
                             table.insert(errors, mountLabel .. " visualOrder must be a number when declared.")
+                        end
+                        if mount.quick ~= nil then
+                            if type(mount.quick) ~= "table" then
+                                table.insert(errors, mountLabel .. " quick must be a table when declared.")
+                            else
+                                if type(mount.quick.key) ~= "string" or mount.quick.key == "" then
+                                    table.insert(errors, mountLabel .. " quick.key must be a non-empty string.")
+                                end
+                                if mount.quick.nameKey ~= nil then
+                                    if type(mount.quick.nameKey) ~= "string" or mount.quick.nameKey == "" then
+                                        table.insert(errors, mountLabel .. " quick.nameKey must be a non-empty string when declared.")
+                                    else
+                                        addLocalizationKey(localizationKeys, mount.quick.nameKey)
+                                    end
+                                end
+                                if mount.quick.showWhenContained ~= nil and not hasStringArray(mount.quick.showWhenContained) then
+                                    table.insert(errors, mountLabel .. " quick.showWhenContained must be a non-empty string array when declared.")
+                                end
+                            end
                         end
                     end
                 end

@@ -14,8 +14,15 @@ end
 
 local function quickSlotsForItem(item)
     local weapon = Core.WeaponConfig(item)
-    if not weapon or type(weapon.quickSlots) ~= "table" then return nil end
-    return weapon.quickSlots
+    if not weapon then return nil end
+    local platform = Core.PlatformConfig(item)
+    local Runtime = Gunsmith.Runtime
+    local selection = Runtime and Runtime.GetSelection and Runtime.GetSelection(item) or nil
+    if selection and platform and Core.QuickSlotsForSelection then
+        return Core.QuickSlotsForSelection(item, selection, platform)
+    end
+    if type(weapon.quickSlots) == "table" then return weapon.quickSlots end
+    return nil
 end
 
 local function rebuildItemIndex()

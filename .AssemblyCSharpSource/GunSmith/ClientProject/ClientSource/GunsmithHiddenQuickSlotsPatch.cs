@@ -244,7 +244,8 @@ namespace GunSmith
             }
 
             HashSet<int>? hiddenSlots = GetManagedHiddenSlots(__instance);
-            if (hiddenSlots == null || hiddenSlots.Count == 0)
+            bool hasInjectedSlots = HasInjectedQuickSlots(__instance);
+            if ((hiddenSlots == null || hiddenSlots.Count == 0) && !hasInjectedSlots)
             {
                 return;
             }
@@ -253,7 +254,8 @@ namespace GunSmith
             List<int> hiddenIndices = new();
             for (int i = 0; i < __instance.visualSlots.Length; i++)
             {
-                if (!hiddenSlots.Contains(i) || ShouldShowManagedSlot(__instance, i))
+                bool shouldHide = (hiddenSlots?.Contains(i) == true || IsInjectedQuickSlot(__instance, i)) && !ShouldShowManagedSlot(__instance, i);
+                if (!shouldHide)
                 {
                     visibleIndices.Add(i);
                 }
@@ -299,14 +301,14 @@ namespace GunSmith
 
         private static bool IsManagedSlot(Inventory inventory, int slotIndex)
         {
-            return GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots
-                && hiddenSlots.Contains(slotIndex);
+            return (GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots && hiddenSlots.Contains(slotIndex)) ||
+                   IsInjectedQuickSlot(inventory, slotIndex);
         }
 
         private static bool HasManagedSlots(Inventory inventory)
         {
-            return GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots
-                && hiddenSlots.Count > 0;
+            return (GetManagedHiddenSlots(inventory) is HashSet<int> hiddenSlots && hiddenSlots.Count > 0) ||
+                   HasInjectedQuickSlots(inventory);
         }
 
         private static bool IsQuickMutationAllowed(Inventory inventory)
@@ -379,6 +381,35 @@ namespace GunSmith
             if (inventory.Owner is not Item item || item.Removed || item.Prefab == null) { return null; }
             string itemIdentifier = item.Prefab.Identifier.Value;
             return ManagedSlotsByItemIdentifier.TryGetValue(itemIdentifier, out HashSet<int>? hiddenSlots) ? hiddenSlots : null;
+        }
+
+        private static bool IsInjectedQuickSlot(Inventory inventory, int slotIndex)
+        {
+            if (inventory.Owner is not Item item || item.Removed || item.Prefab == null)
+            {
+                return false;
+            }
+
+            return GunsmithQuickSlotCapacityPatch.IsInjectedQuickSlot(item.Prefab.Identifier.Value, slotIndex);
+        }
+
+        private static bool HasInjectedQuickSlots(Inventory inventory)
+        {
+            if (inventory.Owner is not Item item || item.Removed || item.Prefab == null || item.OwnInventory == null)
+            {
+                return false;
+            }
+
+            string itemIdentifier = item.Prefab.Identifier.Value;
+            for (int i = 0; i < item.OwnInventory.slots.Length; i++)
+            {
+                if (GunsmithQuickSlotCapacityPatch.IsInjectedQuickSlot(itemIdentifier, i))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private sealed class LayoutCache

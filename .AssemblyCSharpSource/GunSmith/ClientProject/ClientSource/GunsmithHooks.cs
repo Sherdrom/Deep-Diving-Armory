@@ -91,6 +91,17 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithRegisterQuickSlotCapacity", args =>
+            {
+                string? itemIdentifier = FindStringArg(args, 0);
+                int maxSlot = FindIntArg(args, 0);
+                if (itemIdentifier != null && maxSlot >= 0)
+                {
+                    GunsmithQuickSlotCapacityPatch.RegisterQuickSlotCapacity(itemIdentifier, maxSlot);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithBeginQuickSlotMutation", args =>
             {
                 Item? item = FindArg<Item>(args);

@@ -76,22 +76,36 @@ local function registerHiddenQuickSlots()
     if not config or type(config.weapons) ~= "table" then return end
 
     for identifier, weapon in pairs(config.weapons) do
-        if type(weapon.quickSlots) == "table" then
+        local maxSlot = nil
+        local platform = config.platforms and config.platforms[weapon.platform] or nil
+        local selection = platform and Core.BuildDefaultSelection(platform, weapon) or nil
+        local quickSlots = nil
+
+        if selection and platform and Core.QuickSlotsForSelection then
+            quickSlots = Core.QuickSlotsForSelection({ Prefab = { Identifier = { Value = identifier } } }, selection, platform)
+        elseif type(weapon.quickSlots) == "table" then
+            quickSlots = weapon.quickSlots
+        end
+
+        if type(quickSlots) == "table" then
             local slots = {}
-            for _, quickSlot in ipairs(weapon.quickSlots) do
+            for _, quickSlot in ipairs(quickSlots) do
                 local slotIndex = tonumber(quickSlot.slot)
                 if slotIndex then
                     table.insert(slots, tostring(slotIndex))
+                    if not maxSlot or slotIndex > maxSlot then
+                        maxSlot = slotIndex
+                    end
                 end
             end
 
-            if #slots > 0 then
+            if CLIENT and #slots > 0 then
                 Hook.Call("DeepGunsmithRegisterHiddenQuickSlots", tostring(identifier), table.concat(slots, ","))
             end
 
-            for _, quickSlot in ipairs(weapon.quickSlots) do
+            for _, quickSlot in ipairs(quickSlots) do
                 local slotIndex = tonumber(quickSlot.slot)
-                if slotIndex and type(quickSlot.showWhenContained) == "table" then
+                if CLIENT and slotIndex and type(quickSlot.showWhenContained) == "table" then
                     local visibleIdentifiers = {}
                     for _, value in ipairs(quickSlot.showWhenContained) do
                         if value and tostring(value) ~= "" then
@@ -105,6 +119,19 @@ local function registerHiddenQuickSlots()
                 end
             end
         end
+
+        if type(weapon.quickSlotBindings) == "table" then
+            for _, binding in pairs(weapon.quickSlotBindings) do
+                local slotIndex = type(binding) == "table" and tonumber(binding.slot) or nil
+                if slotIndex and (not maxSlot or slotIndex > maxSlot) then
+                    maxSlot = slotIndex
+                end
+            end
+        end
+
+        if maxSlot then
+            Hook.Call("DeepGunsmithRegisterQuickSlotCapacity", tostring(identifier), maxSlot)
+        end
     end
 end
 
@@ -114,11 +141,12 @@ local function isQuickSlotMutation(item)
 end
 
 function Hooks.Register()
-    if not CLIENT then return end
     if Hooks.Registered then return end
     Hooks.Registered = true
 
     registerHiddenQuickSlots()
+
+    if not CLIENT then return end
 
     Hook.Add("DeepGunsmithReceiveState", "DeepGunsmithReceiveState", function(...)
         local item, strings = readItemAndStrings({ ... })

@@ -33,6 +33,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - V1.4-V1.4.3 moved attachment stats into GunSmith part data, polished the full and quick UI, stabilized quick drag/drop behavior, and split the C# GUI into focused partial files.
 - V1.5 moved saved selection sync onto native item component networking through `GunsmithData`.
 - V1.5.1 fixed client-side apply timing for existing weapons and Lua reloads, added container movement apply hooks, removed `pcall` from GunSmith Lua, and corrected exposed userdata/parameter assumptions.
+- V1.5.2 实现了动态maxslots用于quickSlots（快速改装），不需要再手动提前定义SubContainer了。
 
 ## Public Interfaces
 

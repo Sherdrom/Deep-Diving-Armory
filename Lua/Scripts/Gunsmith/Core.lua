@@ -140,6 +140,55 @@ function Core.GetInstalledPart(selection, path)
     return Core.GetPart(selection[path])
 end
 
+function Core.QuickSlotsForSelection(item, selection, platform)
+    local weapon = Core.WeaponConfig(item)
+    if not weapon or type(selection) ~= "table" or type(platform) ~= "table" then return {} end
+
+    local bindings = weapon.quickSlotBindings
+    if type(bindings) ~= "table" then
+        if type(weapon.quickSlots) == "table" then return weapon.quickSlots end
+        return {}
+    end
+
+    local slots = {}
+    local paths = {}
+    for path, _ in pairs(selection) do
+        table.insert(paths, path)
+    end
+    table.sort(paths)
+
+    for _, parentPath in ipairs(paths) do
+        local parentPart = Core.GetInstalledPart(selection, parentPath)
+        if type(parentPart) == "table" and type(parentPart.mounts) == "table" then
+            for _, mount in ipairs(parentPart.mounts) do
+                local quick = mount.quick
+                if type(quick) == "table" and type(quick.key) == "string" and quick.key ~= "" then
+                    local binding = bindings[quick.key]
+                    local slotIndex = type(binding) == "table" and tonumber(binding.slot) or nil
+                    local slotPath = Core.JoinPath(parentPath, mount.path)
+                    if slotIndex and Core.IsValidPath(selection, platform, slotPath) then
+                        table.insert(slots, {
+                            key = quick.key,
+                            path = slotPath,
+                            slot = slotIndex,
+                            nameKey = quick.nameKey or mount.nameKey or Core.PathNameKey(platform, mount.path),
+                            showWhenContained = quick.showWhenContained,
+                            hide = binding.hide,
+                            rotation = binding.rotation
+                        })
+                    end
+                end
+            end
+        end
+    end
+
+    table.sort(slots, function(left, right)
+        if left.slot == right.slot then return left.path < right.path end
+        return left.slot < right.slot
+    end)
+    return slots
+end
+
 function Core.PartVisual(part)
     if not part then return nil end
     return part.visual

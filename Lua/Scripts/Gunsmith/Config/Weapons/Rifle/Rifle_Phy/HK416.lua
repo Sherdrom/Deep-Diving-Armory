@@ -17,14 +17,13 @@ config.weapons.deep_hk416 = {
         receiver = { x = 184, y = 158 }
     },
 
-    -- QuickMod maps vanilla ItemContainer slots to terminal GunSmith paths.
-    -- slot uses Barotrauma targetslot's zero-based numbering.
-    quickSlots = {
-        { slot = 1, path = "receiver/handguard/Lower_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Lower_rail_mount", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } },
-        { slot = 2, path = "receiver/handguard/Right_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Right_rail_mount" },
-        { slot = 3, path = "receiver/handguard/Left_rail_mount", nameKey = "deep.gunsmith.mount.hk416_handguard_std.Left_rail_mount" },
-        { slot = 4, path = "receiver/optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount" },
-        { slot = 5, path = "receiver/barrel/muzzle_mount", nameKey = "deep.gunsmith.mount.hk416_barrel_std.muzzle_mount" }
+    -- QuickMod slot numbers are weapon XML ItemContainer targetslot indices.
+    quickSlotBindings = {
+        lower_rail = { slot = 1 },
+        right_rail = { slot = 2 },
+        left_rail = { slot = 3 },
+        optic = { slot = 4 },
+        muzzle = { slot = 10 }
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
@@ -70,7 +69,7 @@ parts.hk416_receiver_std = {
         { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
         { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
         { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },
-        { path = "optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 226-184, y = 35-58 } }
+        { path = "optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 226-184, y = 35-58 }, quick = { key = "optic" } }
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
         -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }
