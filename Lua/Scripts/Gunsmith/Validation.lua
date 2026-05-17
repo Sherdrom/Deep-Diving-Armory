@@ -144,10 +144,7 @@ end
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
-    local ok, prefab = pcall(function()
-        return ItemPrefab.GetItemPrefab(identifier)
-    end)
-    return ok and prefab ~= nil
+    return ItemPrefab.GetItemPrefab(identifier) ~= nil
 end
 
 local function reportPrefix(label, level)

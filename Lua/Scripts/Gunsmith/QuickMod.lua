@@ -103,24 +103,13 @@ function QuickMod.CanSlotAcceptItemIdentifier(item, slotIndex, identifier)
     local prefab = ItemPrefab.GetItemPrefab(identifier)
     if not prefab then return false end
 
-    local ok, result = pcall(function()
-        return item.OwnInventory.CanBePutInSlot(prefab, slotIndex, nil)
-    end)
-    if not ok then
-        ok, result = pcall(function()
-            return item.OwnInventory.CanBePutInSlot(prefab, slotIndex, 100)
-        end)
-    end
-    return ok and result == true
+    return item.OwnInventory.CanBePutInSlot(prefab, slotIndex, nil) == true
 end
 
 function QuickMod.CanSlotAcceptItem(item, slotIndex, partItem)
     if not item or not item.OwnInventory or slotIndex == nil or not partItem then return false end
 
-    local ok, result = pcall(function()
-        return item.OwnInventory.CanBePutInSlot(partItem, slotIndex)
-    end)
-    return ok and result == true
+    return item.OwnInventory.CanBePutInSlot(partItem, slotIndex) == true
 end
 
 function QuickMod.SyncFromContainer(item, selection, platform)
@@ -161,11 +150,9 @@ function QuickMod.InstallPartItem(item, character, part, slotIndex)
     if not partItem then return false end
 
     beginQuickSlotMutation(item)
-    local ok, result = pcall(function()
-        return item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
-    end)
+    local result = item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
     endQuickSlotMutation(item)
-    return ok and result == true
+    return result == true
 end
 
 function QuickMod.InstallSpecificPartItem(item, character, partItem, slotIndex)
@@ -173,11 +160,9 @@ function QuickMod.InstallSpecificPartItem(item, character, partItem, slotIndex)
     if not item or not item.OwnInventory or not partItem then return false end
 
     beginQuickSlotMutation(item)
-    local ok, result = pcall(function()
-        return item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
-    end)
+    local result = item.OwnInventory.TryPutItem(partItem, slotIndex, true, false, character, true, false)
     endQuickSlotMutation(item)
-    return ok and result == true
+    return result == true
 end
 
 function QuickMod.ClearSlot(item, character, slotIndex, onReturned)

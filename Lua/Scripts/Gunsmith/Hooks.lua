@@ -40,8 +40,33 @@ local function readItemsAndStrings(args)
 end
 
 local function applyGunsmithItem(item)
-    if item and Core.WeaponConfig(item) then
-        Runtime.Apply(item)
+    Runtime.EnsureApplied(item)
+end
+
+local function readContainedItem(ptable)
+    if not ptable then return nil end
+
+    local item = ptable["containedItem"]
+    if item and LuaUserData.IsTargetType(item, "Barotrauma.Item") then
+        return item
+    end
+    return nil
+end
+
+local function applyExistingGunsmithItems()
+    if not Item or not Item.ItemList then return end
+
+    for item in Item.ItemList do
+        applyGunsmithItem(item)
+    end
+end
+
+local function scheduleExistingItemApply()
+    if Timer and Timer.Wait then
+        Timer.Wait(applyExistingGunsmithItems, 100)
+        Timer.Wait(applyExistingGunsmithItems, 1000)
+    else
+        applyExistingGunsmithItems()
     end
 end
 
@@ -85,10 +110,7 @@ end
 
 local function isQuickSlotMutation(item)
     if not Hook or not Hook.Call or not item then return false end
-    local ok, result = pcall(function()
-        return Hook.Call("DeepGunsmithIsQuickSlotMutation", item)
-    end)
-    return ok and result == true
+    return Hook.Call("DeepGunsmithIsQuickSlotMutation", item) == true
 end
 
 function Hooks.Register()
@@ -159,13 +181,10 @@ function Hooks.Register()
 
     Hook.Patch("Barotrauma.Character", "ControlLocalPlayer", function(instance, ptable)
         if not PlayerInput or not Keys then return end
-        local keyOk, keyHit = pcall(function() return PlayerInput.KeyHit(Keys.G) end)
-        if not keyOk or not keyHit then return end
+        if not PlayerInput.KeyHit(Keys.G) then return end
 
         local shiftDown = false
-        pcall(function()
-            shiftDown = PlayerInput.KeyDown(Keys.LeftShift) or PlayerInput.KeyDown(Keys.RightShift)
-        end)
+        shiftDown = PlayerInput.KeyDown(Keys.LeftShift) or PlayerInput.KeyDown(Keys.RightShift)
 
         local item = Runtime.SelectedHandWeapon(instance)
         if item then
@@ -182,16 +201,14 @@ function Hooks.Register()
         applyGunsmithItem(instance)
     end, Hook.HookMethodType.After)
 
-    pcall(function()
-        Hook.Patch("Barotrauma.Item", ".ctor", { "Microsoft.Xna.Framework.Rectangle", "Barotrauma.ItemPrefab", "Barotrauma.Submarine", "System.Boolean", "System.UInt16" }, function(instance, ptable)
-            applyGunsmithItem(instance)
-        end, Hook.HookMethodType.After)
-    end)
+    Hook.Patch("Barotrauma.Item", ".ctor", { "Microsoft.Xna.Framework.Rectangle", "Barotrauma.ItemPrefab", "Barotrauma.Submarine", "System.Boolean", "System.UInt16" }, function(instance, ptable)
+        applyGunsmithItem(instance)
+    end, Hook.HookMethodType.After)
 
     local function syncQuickModContainer(instance)
         if not instance then return end
-        local ok, item = pcall(function() return instance.Item end)
-        if not ok or not item then return end
+        local item = instance.Item
+        if not item then return end
         if isQuickSlotMutation(item) then return end
         if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
             Runtime.SyncQuickModContainerItem(item)
@@ -199,14 +216,18 @@ function Hooks.Register()
     end
 
     Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemContained", { "Barotrauma.Item", "System.Boolean" }, function(instance, ptable)
+        applyGunsmithItem(readContainedItem(ptable))
         syncQuickModContainer(instance)
     end, Hook.HookMethodType.After)
 
     Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemRemoved", { "Barotrauma.Item" }, function(instance, ptable)
+        applyGunsmithItem(readContainedItem(ptable))
         syncQuickModContainer(instance)
     end, Hook.HookMethodType.After)
 
     Hook.Add("item.removed", "DeepGunsmithCleanup", function(item)
         Runtime.Cleanup(item)
     end)
+
+    scheduleExistingItemApply()
 end

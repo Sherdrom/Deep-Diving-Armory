@@ -59,56 +59,44 @@ function Runtime.RefreshParts(item)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) then return end
 
-    local ok, err = pcall(function()
-        local platform = Core.PlatformConfig(item)
-        local selection = Runtime.GetSelection(item)
-        if not Hook or not Hook.Call then
-            print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith parts UI.")
-            return
-        end
-
-        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-            State.appliedSignatures[item] = nil
-            Persistence.Save(item)
-        end
-
-        local currentPath = Runtime.GetCurrentUiPath(item)
-        if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
-            currentPath = Core.UiParentPath(platform, currentPath)
-            Runtime.SetCurrentUiPath(item, currentPath)
-        end
-
-        Hook.Call("DeepGunsmithRefreshParts", item, UiSpec.Build(item, selection, platform, currentPath))
-    end)
-
-    if not ok then
-        print("[Gunsmith] Failed to refresh parts UI: " .. tostring(err))
+    local platform = Core.PlatformConfig(item)
+    local selection = Runtime.GetSelection(item)
+    if not Hook or not Hook.Call then
+        print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith parts UI.")
+        return
     end
+
+    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        State.appliedSignatures[item] = nil
+        Persistence.Save(item)
+    end
+
+    local currentPath = Runtime.GetCurrentUiPath(item)
+    if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
+        currentPath = Core.UiParentPath(platform, currentPath)
+        Runtime.SetCurrentUiPath(item, currentPath)
+    end
+
+    Hook.Call("DeepGunsmithRefreshParts", item, UiSpec.Build(item, selection, platform, currentPath))
 end
 
 function Runtime.RefreshQuick(item)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) then return end
 
-    local ok, err = pcall(function()
-        local platform = Core.PlatformConfig(item)
-        local selection = Runtime.GetSelection(item)
-        if not Hook or not Hook.Call then
-            print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith quick UI.")
-            return
-        end
-
-        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-            State.appliedSignatures[item] = nil
-            Persistence.Save(item)
-        end
-
-        Hook.Call("DeepGunsmithRefreshQuick", item, QuickUiSpec.Build(item, selection, platform))
-    end)
-
-    if not ok then
-        print("[Gunsmith] Failed to refresh quick UI: " .. tostring(err))
+    local platform = Core.PlatformConfig(item)
+    local selection = Runtime.GetSelection(item)
+    if not Hook or not Hook.Call then
+        print("[Gunsmith] Hook.Call is unavailable; cannot refresh C# gunsmith quick UI.")
+        return
     end
+
+    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        State.appliedSignatures[item] = nil
+        Persistence.Save(item)
+    end
+
+    Hook.Call("DeepGunsmithRefreshQuick", item, QuickUiSpec.Build(item, selection, platform))
 end
 
 function Runtime.SyncQuickModContainerItem(item)
@@ -136,26 +124,19 @@ function Runtime.SyncQuickContainer(item)
     local platform = Core.PlatformConfig(item)
     if not platform then return false end
 
-    local ok, err = pcall(function()
-        local selection = Runtime.GetSelection(item)
-        if not selection then return end
+    local selection = Runtime.GetSelection(item)
+    if not selection then return false end
 
-        if QuickMod.SyncFromContainer(item, selection, platform) then
-            finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
-        else
-            Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
-            Persistence.Save(item)
-            State.appliedSignatures[item] = nil
-            Runtime.Apply(item)
-        end
-
-        Runtime.RefreshQuick(item)
-    end)
-
-    if not ok then
-        print("[Gunsmith] Failed to sync quick container: " .. tostring(err))
-        return false
+    if QuickMod.SyncFromContainer(item, selection, platform) then
+        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
+    else
+        Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
+        Persistence.Save(item)
+        State.appliedSignatures[item] = nil
+        Runtime.Apply(item)
     end
+
+    Runtime.RefreshQuick(item)
     return true
 end
 
@@ -331,6 +312,13 @@ function Runtime.Apply(item)
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")
     end
+end
+
+function Runtime.EnsureApplied(item)
+    if SERVER then return end
+    if not item or item.removed then return end
+    if not Core.WeaponConfig(item) then return end
+    Runtime.Apply(item)
 end
 
 function Runtime.CyclePart(item, slotPath)
@@ -543,58 +531,46 @@ function Runtime.Open(item)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) then return end
 
-    local ok, err = pcall(function()
-        local platform = Core.PlatformConfig(item)
-        local selection = Runtime.GetSelection(item)
-        if not Hook or not Hook.Call then
-            print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith UI.")
-            return
-        end
-
-        if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-            State.appliedSignatures[item] = nil
-            Persistence.Save(item)
-        end
-
-        local currentPath = Runtime.GetCurrentUiPath(item)
-        if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
-            currentPath = Core.UiParentPath(platform, currentPath)
-            Runtime.SetCurrentUiPath(item, currentPath)
-        end
-
-        Runtime.Apply(item)
-        Hook.Call("DeepGunsmithOpen", item, "deep.gunsmith.ui.title", UiSpec.Build(item, selection, platform, currentPath))
-    end)
-
-    if not ok then
-        print("[Gunsmith] Failed to open v0.2 nested UI: " .. tostring(err))
+    local platform = Core.PlatformConfig(item)
+    local selection = Runtime.GetSelection(item)
+    if not Hook or not Hook.Call then
+        print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith UI.")
+        return
     end
+
+    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        State.appliedSignatures[item] = nil
+        Persistence.Save(item)
+    end
+
+    local currentPath = Runtime.GetCurrentUiPath(item)
+    if currentPath ~= "" and #Core.SlotsForPath(selection, platform, currentPath) == 0 then
+        currentPath = Core.UiParentPath(platform, currentPath)
+        Runtime.SetCurrentUiPath(item, currentPath)
+    end
+
+    Runtime.Apply(item)
+    Hook.Call("DeepGunsmithOpen", item, "deep.gunsmith.ui.title", UiSpec.Build(item, selection, platform, currentPath))
 end
 
 function Runtime.OpenQuick(item)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) or not QuickMod or not QuickMod.IsQuickItem(item) then return end
 
-    local ok, err = pcall(function()
-        local platform = Core.PlatformConfig(item)
-        local selection = Runtime.GetSelection(item)
-        if not Hook or not Hook.Call then
-            print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith quick UI.")
-            return
-        end
-
-        if QuickMod.SyncFromContainer(item, selection, platform) then
-            State.appliedSignatures[item] = nil
-            Persistence.Save(item)
-        end
-
-        Runtime.Apply(item)
-        Hook.Call("DeepGunsmithOpenQuick", item, "deep.gunsmith.ui.quick_title", QuickUiSpec.Build(item, selection, platform))
-    end)
-
-    if not ok then
-        print("[Gunsmith] Failed to open quick UI: " .. tostring(err))
+    local platform = Core.PlatformConfig(item)
+    local selection = Runtime.GetSelection(item)
+    if not Hook or not Hook.Call then
+        print("[Gunsmith] Hook.Call is unavailable; cannot open C# gunsmith quick UI.")
+        return
     end
+
+    if QuickMod.SyncFromContainer(item, selection, platform) then
+        State.appliedSignatures[item] = nil
+        Persistence.Save(item)
+    end
+
+    Runtime.Apply(item)
+    Hook.Call("DeepGunsmithOpenQuick", item, "deep.gunsmith.ui.quick_title", QuickUiSpec.Build(item, selection, platform))
 end
 
 function Runtime.Cleanup(item)

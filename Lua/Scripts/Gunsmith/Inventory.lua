@@ -31,16 +31,13 @@ end
 
 local function inventoryOwner(inventory)
     if not inventory then return nil end
-    local ok, owner = pcall(function() return inventory.Owner end)
-    if ok then return owner end
-    return nil
+    return inventory.Owner
 end
 
 parentInventory = function(item)
     if not item then return nil end
-    local ok, inventory = pcall(function() return item.ParentInventory end)
-    if ok then return inventory end
-    return nil
+    if not LuaUserData.IsTargetType(item, "Barotrauma.Item") then return nil end
+    return item.ParentInventory
 end
 
 local function isSourceInventory(inventory, sourceItem)
