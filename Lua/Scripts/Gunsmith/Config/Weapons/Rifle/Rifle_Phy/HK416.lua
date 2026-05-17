@@ -23,7 +23,7 @@ config.weapons.deep_hk416 = {
         right_rail = { slot = 2 },
         left_rail = { slot = 3 },
         optic = { slot = 4 },
-        muzzle = { slot = 10 }
+        muzzle = { slot = 5 }
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
