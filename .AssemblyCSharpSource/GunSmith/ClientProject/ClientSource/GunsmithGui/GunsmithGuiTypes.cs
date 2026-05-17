@@ -2,28 +2,28 @@ namespace GunSmith
 {
     public static partial class GunsmithGui
     {
-        private sealed record GunsmithGuiSpec(GunsmithGuiContext Context, GunsmithPreviewSettings PreviewSettings, GunsmithStats WeaponStats, List<GunsmithGuiSlot> Slots);
+        internal sealed record GunsmithGuiSpec(GunsmithGuiContext Context, GunsmithPreviewSettings PreviewSettings, GunsmithStats WeaponStats, List<GunsmithGuiSlot> Slots);
 
-        private sealed record GunsmithGuiContext(string CurrentPath, string PathLabel, string ParentPath)
+        internal sealed record GunsmithGuiContext(string CurrentPath, string PathLabel, string ParentPath)
         {
             public static GunsmithGuiContext Empty { get; } = new(string.Empty, "deep.gunsmith.ui.weapon_root", string.Empty);
         }
 
-        private sealed record GunsmithGuiSlot(string Path, string NameKey, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts, GunsmithQuickSlotMeta QuickMeta);
+        internal sealed record GunsmithGuiSlot(string Path, string NameKey, string CurrentPartId, bool CanEnter, List<GunsmithGuiPart> Parts, GunsmithQuickSlotMeta QuickMeta);
 
-        private sealed record GunsmithQuickSlotMeta(int SlotIndex, Vector2 Anchor, bool AnchorValid, IReadOnlySet<string> AllowedItemIdentifiers)
+        internal sealed record GunsmithQuickSlotMeta(int SlotIndex, Vector2 Anchor, bool AnchorValid, IReadOnlySet<string> AllowedItemIdentifiers)
         {
             public static GunsmithQuickSlotMeta Empty { get; } = new(-1, Vector2.Zero, false, new HashSet<string>(StringComparer.OrdinalIgnoreCase));
         }
 
         private sealed record GunsmithPartRow(GUIFrame Frame, GUITextBlock Label, GUITextBlock Status);
 
-        private sealed record GunsmithGuiPart(string Id, string NameKey, string Status, GunsmithStats Stats, string ItemIdentifier, string VisualTexturePath, Rectangle VisualSourceRect)
+        internal sealed record GunsmithGuiPart(string Id, string NameKey, string Status, GunsmithStats Stats, string ItemIdentifier, string VisualTexturePath, Rectangle VisualSourceRect)
         {
             public bool IsActionable => Status != "missing" && Status != "disabled" && Status != "incompatible";
         }
 
-        private sealed class GunsmithStats
+        internal sealed class GunsmithStats
         {
             public float Ergonomics { get; init; }
             public IReadOnlyDictionary<StatTypes, float> Values { get; init; } = new Dictionary<StatTypes, float>();
@@ -34,7 +34,7 @@ namespace GunSmith
             public static GunsmithStats Empty { get; } = new();
         }
 
-        private sealed record GunsmithPreviewSettings(float Padding, float Scale, Vector2 Offset)
+        internal sealed record GunsmithPreviewSettings(float Padding, float Scale, Vector2 Offset)
         {
             public static GunsmithPreviewSettings Default { get; } = new(12.0f, 1.0f, Vector2.Zero);
         }
@@ -97,5 +97,4 @@ namespace GunSmith
         }
     }
 }
-
 

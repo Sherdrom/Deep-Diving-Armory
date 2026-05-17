@@ -18,5 +18,8 @@ global using Microsoft.Xna.Framework.Graphics;
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 [assembly: IgnoresAccessChecksTo("DedicatedServer")]
+[assembly: InternalsVisibleTo("GunsmithSharedTest")]
+[assembly: InternalsVisibleTo("GunsmithClientTest")]
+[assembly: InternalsVisibleTo("GunsmithServerTest")]
 
 namespace GunSmith;

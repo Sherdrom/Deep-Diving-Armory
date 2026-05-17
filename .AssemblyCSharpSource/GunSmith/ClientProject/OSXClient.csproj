@@ -25,7 +25,7 @@
     <DefineConstants>TRACE;OSX;CLIENT</DefineConstants>
   </PropertyGroup>
 
-  <Target Name="CopyFiles" AfterTargets="Build">
+  <Target Name="CopyFiles" AfterTargets="Build" Condition="'$(SkipModDeploy)' != 'true'">
     <ItemGroup>
       <Assemblies Include="$(TargetDir)$(TargetName).dll" />
       <DepsFiles Include="$(TargetDir)$(TargetName).deps.json" />

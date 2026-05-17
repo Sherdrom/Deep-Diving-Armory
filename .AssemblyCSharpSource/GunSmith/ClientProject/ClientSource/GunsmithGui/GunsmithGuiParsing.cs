@@ -2,7 +2,7 @@ namespace GunSmith
 {
     public static partial class GunsmithGui
     {
-        private static GunsmithGuiSpec ParseSpec(string slotSpec)
+        internal static GunsmithGuiSpec ParseSpec(string slotSpec)
         {
             string[] sections = slotSpec.Split(new[] { "::" }, 2, StringSplitOptions.None);
             GunsmithGuiContext context = ParseContext(sections[0]);
@@ -166,5 +166,4 @@ namespace GunSmith
         }
     }
 }
-
 

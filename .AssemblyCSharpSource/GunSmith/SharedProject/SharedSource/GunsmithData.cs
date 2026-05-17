@@ -108,14 +108,14 @@ namespace Barotrauma.Items.Components
             msg.WriteString(NormalizeSavedState(SavedState));
         }
 
-        private static string NormalizeSavedState(string value)
+        internal static string NormalizeSavedState(string value)
             => value == null
                 ? string.Empty
                 : value.Length > MaxSavedStateLength
                     ? value.Substring(0, MaxSavedStateLength)
                     : value;
 
-        private static bool IsValidSavedState(string value)
+        internal static bool IsValidSavedState(string value)
         {
             if (value.Length > MaxSavedStateLength)
             {
