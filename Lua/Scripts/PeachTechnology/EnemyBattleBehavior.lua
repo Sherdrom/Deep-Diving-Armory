@@ -4,190 +4,121 @@ local function HasAffliction(character, identifier, minamount)
 	end
 
 	local aff = character.CharacterHealth.GetAffliction(identifier)
-	local res = false
 	if aff ~= nil then
-		res = aff.Strength >= (minamount or 0.5)
+		return aff.Strength >= (minamount or 0.5)
 	end
-	return res
+	return false
 end
 
-local LimbType_Head = 11        -- 头部
-local LimbType_Torso = 12       -- 躯干（默认瞄准目标）
-local LimbType_RightThigh = 15  -- 右大腿
-local LimbType_LeftThigh = 16   -- 左大腿
-local LimbType_LeftLeg = 7      -- 左小腿
-local LimbType_RightLeg = 8     -- 右小腿
-local LimbType_Legs = 14        -- 腿部（备用）
+local LimbType_Head = 11
+local LimbType_Torso = 12
+local LimbType_RightThigh = 15
+local LimbType_LeftThigh = 16
+local LimbType_LeftLeg = 7
+local LimbType_RightLeg = 8
+local LimbType_Legs = 14
 
--- 辅助函数：设置目标光标位置
 local function SetAimTarget(target, limb)
-    if target == nil or limb == nil then
-        return false
-    end
+	if target == nil or limb == nil then
+		return false
+	end
 
-    -- 设置光标位置为肢体世界坐标
-    target.CursorPosition = limb.WorldPosition
+	target.CursorPosition = limb.WorldPosition
 
-    -- 转换为潜艇相对坐标（如果在潜艇内）
-    if target.Submarine ~= nil then
-        target.CursorPosition = target.CursorPosition - target.Submarine.Position
-    end
+	if target.Submarine ~= nil then
+		target.CursorPosition = target.CursorPosition - target.Submarine.Position
+	end
 
-    return true
+	return true
 end
 
--- aff控制AI蹲下射击(26.4.1;3:40 By peach)
-Hook.Patch("Barotrauma.HumanAIController","Update",function(instance)
-	if HasAffliction(instance.Character, "deep_no_crouching_detect", 1) then
-        instance.AnimController.Crouching = false
+Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
+	if instance.AnimController.Crouching then
+		if HasAffliction(instance.Character, "deep_no_crouching_detect", 1) then
+			instance.AnimController.Crouching = false
 		end
-end,Hook.HookMethodType.After)
+	end
+end, Hook.HookMethodType.After)
 
--- 统一的AI瞄准控制系统(默认躯干 + Affliction优先级覆盖)
--- 优先级: deep_aim_head_detect > deep_aim_thigh_detect > deep_aim_legs_detect > 默认躯干
-Hook.Patch("Barotrauma.AIObjectiveCombat","Attack",{"System.Single"},function(instance)
-    local enemy = instance.Enemy
-    local target = instance.character
+Hook.Patch("Barotrauma.AIObjectiveCombat", "Attack", {"System.Single"}, function(instance)
+	local enemy = instance.Enemy
+	local target = instance.character
 
-    if enemy == nil or target == nil then
-        return
-    end
+	if enemy == nil or target == nil then
+		return
+	end
 
-    local animController = enemy.AnimController
-    if animController == nil then
-        return
-    end
+	local animController = enemy.AnimController
+	if animController == nil then
+		return
+	end
 
-    local targetLimb = nil
+	local targetLimb = nil
 
-    -- 优先级1: 瞄准头部
-    if HasAffliction(instance.character, "deep_aim_head_detect", 1) then
-        targetLimb = animController.GetLimb(LimbType_Head)
-    -- 优先级2: 瞄准大腿
-    elseif HasAffliction(instance.character, "deep_aim_thigh_detect", 1) then
-        -- 尝试获取右大腿
-        targetLimb = animController.GetLimb(LimbType_RightThigh)
-        -- 如果右大腿不可用，尝试左大腿
-        if targetLimb == nil then
-            targetLimb = animController.GetLimb(LimbType_LeftThigh)
-        end
-        -- 如果大腿都不可用，尝试腿部
-        if targetLimb == nil then
-            targetLimb = animController.GetLimb(LimbType_Legs)
-        end
-    -- 优先级3: 瞄准小腿
-    elseif HasAffliction(instance.character, "deep_aim_legs_detect", 1) then
-        -- 尝试获取右腿
-        targetLimb = animController.GetLimb(LimbType_RightLeg)
-        -- 如果右腿不可用，尝试左腿
-        if targetLimb == nil then
-            targetLimb = animController.GetLimb(LimbType_LeftLeg)
-        end
-        -- 如果小腿都不可用，尝试腿部
-        if targetLimb == nil then
-            targetLimb = animController.GetLimb(LimbType_Legs)
-        end
-    -- 默认: 瞄准躯干
-    else
-        targetLimb = animController.GetLimb(LimbType_Torso)
-    end
+	if HasAffliction(instance.character, "deep_aim_head_detect", 1) then
+		targetLimb = animController.GetLimb(LimbType_Head)
+	elseif HasAffliction(instance.character, "deep_aim_thigh_detect", 1) then
+		targetLimb = animController.GetLimb(LimbType_RightThigh)
+		if targetLimb == nil then
+			targetLimb = animController.GetLimb(LimbType_LeftThigh)
+		end
+		if targetLimb == nil then
+			targetLimb = animController.GetLimb(LimbType_Legs)
+		end
+	elseif HasAffliction(instance.character, "deep_aim_legs_detect", 1) then
+		targetLimb = animController.GetLimb(LimbType_RightLeg)
+		if targetLimb == nil then
+			targetLimb = animController.GetLimb(LimbType_LeftLeg)
+		end
+		if targetLimb == nil then
+			targetLimb = animController.GetLimb(LimbType_Legs)
+		end
+	else
+		targetLimb = animController.GetLimb(LimbType_Torso)
+	end
 
-    -- 设置瞄准目标
-    SetAimTarget(target, targetLimb)
-end,
-    Hook.HookMethodType.After
-)
+	SetAimTarget(target, targetLimb)
+end, Hook.HookMethodType.After)
 
-
--- aff控制AI取消所有命令，用于交战区防止冲家(26.4.1;17:23 By peach)
-local TARGET_AFFLICTION = "deep_cancel_order_detect"
--- 执行间隔（秒）
+local TARGET_AFFLICTION_CANCEL = "deep_cancel_order_detect"
+local TARGET_AFFLICTION_HUNTING = "deep_hunting_order_detect"
 local CHECK_INTERVAL = 1
--- 上次执行时间
 local lastCheckTime = 0
 
--- 监听游戏更新事件
-Hook.Add("think", "CheckBurnAndCancelOrders", function()
-    -- 获取当前时间（秒）
-    local currentTime = Timer.GetTime()
-    
-    -- 检查是否达到执行间隔
-    if currentTime - lastCheckTime < CHECK_INTERVAL then
-        return -- 未达到间隔，跳过执行
-    end
-    
-    -- 更新上次执行时间
-    lastCheckTime = currentTime
-    
-    -- 遍历所有角色
-    for _, character in pairs(Character.CharacterList) do
-        -- 检查角色是否是人类
-        if character.IsHuman then
-            -- 检查角色是否有deep_cancel_order_detect Affliction
-            local afflictionStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION)
-            
-            -- 如果有deep_cancel_order_detect Affliction且强度大于0.5
-            if afflictionStrength > 0.5 then
-                    -- 创建取消命令的命令
-                    local dismissalOrder = OrderPrefab.Dismissal.CreateInstance(OrderPrefab.OrderTargetType.Entity, character)
-                    -- 设置命令，取消所有现有命令
-                    character.SetOrder(dismissalOrder, true, false)
-            end
-        end
-    end
+local DismissalOrderPrefab = OrderPrefab.Dismissal
+local FightIntrudersOrderPrefab = OrderPrefab.Prefabs["fightintruders"]
+
+Hook.Add("think", "EnemyBattleBehaviorOrders", function()
+	local currentTime = Timer.GetTime()
+
+	if currentTime - lastCheckTime < CHECK_INTERVAL then
+		return
+	end
+
+	lastCheckTime = currentTime
+
+	for _, character in pairs(Character.CharacterList) do
+		if character.IsHuman then
+			local cancelStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION_CANCEL)
+
+			if cancelStrength > 0.5 then
+				local dismissalOrder = DismissalOrderPrefab.CreateInstance(OrderPrefab.OrderTargetType.Entity, character)
+				character.SetOrder(dismissalOrder, true, false)
+			end
+
+			local huntingStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION_HUNTING)
+
+			if huntingStrength > 0.5 and FightIntrudersOrderPrefab then
+				local fightOrder = FightIntrudersOrderPrefab.CreateInstance(OrderPrefab.OrderTargetType.Entity, character)
+				character.SetOrder(fightOrder, true, false, true)
+
+				if character.AIController then
+					character.AIController.SetForcedOrder(fightOrder)
+				end
+			end
+		end
+	end
 end)
-
--- aff控制AI抵御入侵者，用于追猎者(26.4.1;18:25 By peach) 
-local TARGET_AFFLICTION_HUNTING = "deep_hunting_order_detect" 
-local CHECK_INTERVAL = 1.0 -- 检查间隔，单位秒
-local lastCheckTime = 0 -- 上次检查时间
-
--- 监听游戏更新事件 
-Hook.Add("think", "CheckGunshotWoundAndGiveFightOrderToAI", function() 
-    -- 获取当前时间（秒） 
-    local currentTime = Timer.GetTime() 
-    
-    -- 检查是否达到执行间隔 
-    if currentTime - lastCheckTime < CHECK_INTERVAL then 
-        return -- 未达到间隔，跳过执行 
-    end 
-    
-    -- 更新上次执行时间 
-    lastCheckTime = currentTime 
-    
-    -- 遍历所有角色 
-    for _, character in pairs(Character.CharacterList) do 
-        -- 只检查角色是否是人类 
-        if character.IsHuman then 
-            -- 检查角色是否有deep_hunting_order_detect Affliction（使用identifier） 
-            local afflictionStrength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(TARGET_AFFLICTION_HUNTING) 
-            
-            -- 如果有deep_hunting_order_detect Affliction且强度大于0.5 
-            if afflictionStrength > 0.5 then 
-                -- 检查fightintruders命令是否存在 
-                if OrderPrefab.Prefabs["fightintruders"] then 
-                    -- 创建fightintruders命令 
-                    local fightOrder = OrderPrefab.Prefabs["fightintruders"].CreateInstance(OrderPrefab.OrderTargetType.Entity, character) 
-                    -- 设置命令，使用force=true确保命令被强制设置
-                    character.SetOrder(fightOrder, true, false, true) 
-                    
-                    -- 尝试获取AI控制器并强制重新评估目标
-                    if character.AIController then
-                        -- 直接尝试调用SetForcedOrder，不需要检查类型
-                        -- 在Lua中，我们无法直接检查C#对象的类型，所以直接尝试调用
-                        pcall(function()
-                            character.AIController.SetForcedOrder(fightOrder)
-                        end)
-                    end
-                end 
-            end 
-        end 
-    end 
-end)
-
-
--- NoKillDownedPlayer.lua
--- 功能: 当人类敌人身上有 deep_execute_detect 的 affliction 时，无视玩家昏迷状态继续攻击直到杀死
 
 local AFFLICTION_ID = "deep_execute_detect"
 
@@ -195,63 +126,45 @@ local AIObjectiveDescriptor = LuaUserData.RegisterType("Barotrauma.AIObjective")
 LuaUserData.MakePropertyAccessible(AIObjectiveDescriptor, "Priority")
 
 local function HasRequiredAffliction(character)
-    if character == nil or character.CharacterHealth == nil then
-        return false
-    end
-    local strength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(AFFLICTION_ID)
-    return strength ~= nil and strength > 0
+	if character == nil or character.CharacterHealth == nil then
+		return false
+	end
+	local strength = character.CharacterHealth.GetAfflictionStrengthByIdentifier(AFFLICTION_ID)
+	return strength ~= nil and strength > 0
 end
 
--- Patch 1: 阻止 CheckObjectiveState 在玩家仅昏迷时返回 true
--- 当返回 true 时战斗目标被标记为完成，敌人停止攻击
 Hook.Patch(
-    "Barotrauma.AIObjectiveCombat",
-    "CheckObjectiveState",
-    function(instance, ptable)
-        local enemy = instance.Enemy
-        if enemy == nil then return end
-        if not enemy.IsPlayer then return end
-        if enemy.IsDead then return end
+	"Barotrauma.AIObjectiveCombat",
+	"CheckObjectiveState",
+	function(instance, ptable)
+		local enemy = instance.Enemy
+		if enemy == nil then return end
+		if not enemy.IsPlayer then return end
+		if enemy.IsDead then return end
 
-        if not HasRequiredAffliction(instance.character) then return end
+		if not HasRequiredAffliction(instance.character) then return end
 
-        ptable.PreventExecution = true
-        return false
-    end,
-    Hook.HookMethodType.Before
+		ptable.PreventExecution = true
+		return false
+	end,
+	Hook.HookMethodType.Before
 )
 
--- Patch 2: 防止 GetPriority 对昏迷玩家返回 0
--- 优先级为 0 会导致战斗目标被其他目标挤掉
 Hook.Patch(
-    "Barotrauma.AIObjectiveCombat",
-    "GetPriority",
-    function(instance, ptable)
-        local enemy = instance.Enemy
-        if enemy == nil then return end
-        if not enemy.IsPlayer then return end
-        if enemy.IsDead then return end
+	"Barotrauma.AIObjectiveCombat",
+	"GetPriority",
+	function(instance, ptable)
+		local enemy = instance.Enemy
+		if enemy == nil then return end
+		if not enemy.IsPlayer then return end
+		if enemy.IsDead then return end
 
-        if not HasRequiredAffliction(instance.character) then return end
+		if not HasRequiredAffliction(instance.character) then return end
 
-        if ptable.ReturnValue ~= nil and ptable.ReturnValue <= 0 then
-            instance.Priority = 91
-            return 91
-        end
-    end,
-    Hook.HookMethodType.After
+		if ptable.ReturnValue ~= nil and ptable.ReturnValue <= 0 then
+			instance.Priority = 91
+			return 91
+		end
+	end,
+	Hook.HookMethodType.After
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-

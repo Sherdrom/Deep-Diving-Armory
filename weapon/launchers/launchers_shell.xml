@@ -53,15 +53,15 @@
         <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
       </StatusEffect>
       <!--当接触到生物时，立即引爆-->
-      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and" >
-         <Conditional EntityType="eq character" />
+      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional EntityType="eq character" />
       </StatusEffect>
       <!--当接触到物品时，将在耐久归0时引爆-->
-      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-50" disabledeltatime="true" comparison="and" >
-         <Conditional EntityType="eq item" />
+      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-50" disabledeltatime="true" comparison="and">
+        <Conditional EntityType="eq item" />
       </StatusEffect>
       <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="1.5" />
-      <StatusEffect type="OnBroken" target="This" >
+      <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" ballastfloradamage="500" structuredamage="200" itemdamage="300" force="10" severlimbsprobability="1" debris="true" decal="explosion" decalsize="0.5" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="100">
           <Affliction identifier="Shrapnel_residue" strength="500" />
@@ -73,5 +73,217 @@
       </StatusEffect>
     </Projectile>
   </Item>
-  <!--e8 uses the same round-->
+  <Item identifier="deep_rpg22_shell" category="Weapon" cargocontaineridentifier="metalcrate" tags="rpg22_shell,smallitem" impactsoundtag="None" hideinmenus="true" scale="0.4" impacttolerance="0">
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,86,209,26" depth="0.55" origin="0.5,0.5" />
+    <Body width="190" height="25" Mass="0" gravityscale="0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="23.0" maxtargetstohit="3" damagedoors="true" spread="0">
+      <StatusEffect type="OnActive" target="This" lifetime="2">
+        <ParticleEmitter particle="ammotrailwater" copyentityangle="true" anglemin="-5" anglemax="5" particleamount="5" velocitymin="-10" velocitymax="-100" scalemin="0.9" scalemax="1.5" />
+      </StatusEffect>
+      <Attack targetforce="5" itemdamage="100" severlimbsprobability="1.0" penetration="1.0">
+        <Affliction identifier="Shrapnel_residue" strength="200" />
+        <Affliction identifier="explosiondamage" strength="150" />
+        <Affliction identifier="burn" strength="80" />
+      </Attack>
+      <!--当接触到生物时，立即引爆-->
+      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-50" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional EntityType="eq character" />
+      </StatusEffect>
+      <!--当接触到物品时，将在耐久归0时引爆-->
+      <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-34" disabledeltatime="true" comparison="and">
+        <Conditional EntityType="eq item" />
+      </StatusEffect>
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" />
+      <StatusEffect type="OnBroken" target="This">
+        <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <Explosion range="400.0" ballastfloradamage="400" structuredamage="250" itemdamage="350" force="12" severlimbsprobability="1" debris="true" decal="explosion" decalsize="0.5" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="100">
+          <Affliction identifier="Shrapnel_residue" strength="400" />
+          <Affliction identifier="explosiondamage" strength="250" />
+          <Affliction identifier="bleeding" strength="350" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item identifier="deep_rpg7_pg7vm" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="c4block" amount="4" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="11,208,179,183" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,118,316,32" depth="0.551" origin="0.5,0.5" />
+    <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
+      <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
+        <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
+        <Explosion range="1000.0" ballastfloradamage="1000" structuredamage="200" itemdamage="500" force="20" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="200">
+          <Affliction identifier="Shrapnel_residue" strength="100" MultiplyByMaxVitality="true" dividebylimbcount="false" />
+          <Affliction identifier="explosiondamage" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="bleeding" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="10" dividebylimbcount="false" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
+        <Conditional maxtargetstohit="1" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <LuaHook name="Deep_RocketEngine" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <Conditional maxtargetstohit="30" />
+        <LuaHook name="Deep_AirBurstControl" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" duration="5" />
+      <StatusEffect type="Always" target="This" checkconditionalalways="true">
+        <Conditional Condition="lt 100" />
+        <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
+      </StatusEffect>
+    </Projectile>
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+  <Item identifier="deep_rpg7_pg7vr" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="c4block" amount="4" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="204,180,207,210" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,156,441,39" depth="0.551" origin="0.5,0.5" />
+    <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
+      <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
+        <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
+        <Explosion range="1000.0" ballastfloradamage="1000" structuredamage="200" itemdamage="500" force="20" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="200">
+          <Affliction identifier="Shrapnel_residue" strength="100" MultiplyByMaxVitality="true" dividebylimbcount="false" />
+          <Affliction identifier="explosiondamage" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="bleeding" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="10" dividebylimbcount="false" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
+        <Conditional maxtargetstohit="1" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <LuaHook name="Deep_RocketEngine" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <Conditional maxtargetstohit="30" />
+        <LuaHook name="Deep_AirBurstControl" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" duration="5" />
+      <StatusEffect type="Always" target="This" checkconditionalalways="true">
+        <Conditional Condition="lt 100" />
+        <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
+      </StatusEffect>
+    </Projectile>
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+  <Item identifier="deep_rpg7_tbg7v" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="c4block" amount="4" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="417,222,165,168" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,205,331,40" depth="0.551" origin="0.5,0.5" />
+    <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
+      <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
+        <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
+        <Explosion range="1000.0" ballastfloradamage="1000" structuredamage="200" itemdamage="500" force="20" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="200">
+          <Affliction identifier="Shrapnel_residue" strength="100" MultiplyByMaxVitality="true" dividebylimbcount="false" />
+          <Affliction identifier="explosiondamage" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="bleeding" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="10" dividebylimbcount="false" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
+        <Conditional maxtargetstohit="1" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <LuaHook name="Deep_RocketEngine" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <Conditional maxtargetstohit="30" />
+        <LuaHook name="Deep_AirBurstControl" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" duration="5" />
+      <StatusEffect type="Always" target="This" checkconditionalalways="true">
+        <Conditional Condition="lt 100" />
+        <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
+      </StatusEffect>
+    </Projectile>
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+  <Item identifier="deep_rpg7_og7v" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredSkill identifier="electrical" level="100" />
+      <RequiredItem identifier="c4block" amount="4" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="deep_tungsten_phy" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="deep_tungsten" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="589,259,130,130" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,261,236,16" depth="0.551" origin="0.5,0.5" />
+    <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
+    <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
+      <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
+        <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
+        <SpawnItem identifier="deep_cluster_sp" spawnposition="This" count="15" aimspread="360" rotationtype="Collider" rotation="0" />
+        <Explosion range="1000.0" ballastfloradamage="1000" structuredamage="200" itemdamage="500" force="20" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="200">
+          <Affliction identifier="Shrapnel_residue" strength="100" MultiplyByMaxVitality="true" dividebylimbcount="false" />
+          <Affliction identifier="explosiondamage" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="burn" strength="200" dividebylimbcount="false" />
+          <Affliction identifier="bleeding" strength="400" dividebylimbcount="false" />
+          <Affliction identifier="stun" strength="10" dividebylimbcount="false" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="This" OneShot="true" Condition="-100" setvalue="true" checkconditionalalways="true">
+        <Conditional maxtargetstohit="1" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <LuaHook name="Deep_RocketEngine" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" OneShot="true">
+        <Conditional maxtargetstohit="30" />
+        <LuaHook name="Deep_AirBurstControl" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" Condition="-100" duration="5" />
+      <StatusEffect type="Always" target="This" checkconditionalalways="true">
+        <Conditional Condition="lt 100" />
+        <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
+      </StatusEffect>
+    </Projectile>
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
 </Items>

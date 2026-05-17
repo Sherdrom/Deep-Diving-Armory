@@ -1,46 +1,102 @@
 using Barotrauma.Items.Components;
 using FarseerPhysics;
-using FarseerPhysics.Dynamics;
 using HarmonyLib;
 using Microsoft.Xna.Framework.Graphics;
-using Voronoi2;
+using System.Reflection;
 
 namespace DeepLaser
 {
     public partial class DeepLaser : IAssemblyPlugin
     {
         private const float MaxLaserLength = 4000.0f;
-        private static Texture2D? impactGlowTexture;
-        private static Texture2D? impactCoreTexture;
-
         private static readonly (string Tag, Color Color)[] LaserColors =
         {
-            ("red_laser", new Color(255, 32, 32, 80)),
-            ("green_laser", new Color(32, 255, 64, 80)),
-            ("blue_laser", new Color(64, 128, 255, 80))
+            ("red_laser", new Color(255, 32, 32, 120)),
+            ("green_laser", new Color(32, 255, 64, 120)),
+            ("blue_laser", new Color(64, 128, 255, 120))
         };
 
-        [HarmonyPatch(typeof(Item), nameof(Item.Draw), new[] { typeof(SpriteBatch), typeof(bool), typeof(bool), typeof(Color?), typeof(float?) })]
-        private static class ItemDrawPatch
+        private static readonly Type? ConvexHullType = AccessTools.TypeByName("Barotrauma.Lights.ConvexHull");
+        private static readonly Type? SegmentPointType = AccessTools.TypeByName("Barotrauma.Lights.SegmentPoint");
+        private static readonly MethodInfo? GetHullsInRangeMethod = AccessMethod(ConvexHullType, "GetHullsInRange");
+        private static readonly MethodInfo? RefreshWorldPositionsMethod = AccessMethod(ConvexHullType, "RefreshWorldPositions");
+        private static readonly PropertyInfo? HullEnabledProperty = AccessProperty(ConvexHullType, "Enabled");
+        private static readonly PropertyInfo? HullIsInvalidProperty = AccessProperty(ConvexHullType, "IsInvalid");
+        private static readonly FieldInfo? HullVerticesField = AccessField(ConvexHullType, "vertices");
+        private static readonly FieldInfo? SegmentPointWorldPosField = AccessField(SegmentPointType, "WorldPos");
+        private static bool loggedHullReflectionError;
+        private static Texture2D? impactGlowTexture;
+        private static Texture2D? impactCoreTexture;
+        private static MethodInfo? AccessMethod(Type? type, string name)
         {
-            private static void Postfix(Item __instance, SpriteBatch spriteBatch, bool editing)
-            {
-                if (editing || spriteBatch == null) { return; }
-                RangedWeapon? rangedWeapon = __instance.GetComponent<RangedWeapon>();
-                if (rangedWeapon == null) { return; }
-                Character? holder = GetHolder(__instance);
-                if (__instance.ParentInventory != null && holder == null) { return; }
-                if (!TryFindLaser(__instance, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
+            return type == null ? null : AccessTools.Method(type, name);
+        }
 
-                DrawLaser(rangedWeapon, spriteBatch, holder, laserItem, laserColor);
+        private static PropertyInfo? AccessProperty(Type? type, string name)
+        {
+            return type == null ? null : AccessTools.Property(type, name);
+        }
+
+        private static FieldInfo? AccessField(Type? type, string name)
+        {
+            return type == null ? null : AccessTools.Field(type, name);
+        }
+
+        [HarmonyPatch]
+        private static class LightManagerDebugDrawVerticesPatch
+        {
+            private static MethodBase? TargetMethod()
+            {
+                Type? lightManagerType = AccessTools.TypeByName("Barotrauma.Lights.LightManager");
+                return AccessTools.Method(lightManagerType, "DebugDrawVertices", new[] { typeof(SpriteBatch) });
+            }
+
+            private static void Postfix(SpriteBatch spriteBatch)
+            {
+                if (spriteBatch == null || Screen.Selected is not GameScreen) { return; }
+
+                DrawLasers(spriteBatch);
             }
         }
 
-        private static Character? GetHolder(Item item)
+        private static void DrawLasers(SpriteBatch spriteBatch)
         {
-            if (item.GetRootInventoryOwner() is not Character character) { return null; }
+            HashSet<Item> drawnWeapons = new();
 
-            return character.HeldItems.Contains(item) ? character : null;
+            foreach (Character character in Character.CharacterList)
+            {
+                if (character.Removed || !character.Enabled) { continue; }
+
+                foreach (Item weaponItem in character.HeldItems)
+                {
+                    if (weaponItem == null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                    RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
+                    if (rangedWeapon == null) { continue; }
+
+                    TryDrawWeaponLaser(rangedWeapon, spriteBatch, character);
+                }
+            }
+
+            foreach (Item weaponItem in Item.ItemList)
+            {
+                if (weaponItem == null || weaponItem.Removed || weaponItem.ParentInventory != null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
+                if (rangedWeapon == null) { continue; }
+
+                TryDrawWeaponLaser(rangedWeapon, spriteBatch, character: null);
+            }
+        }
+
+        private static void TryDrawWeaponLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character)
+        {
+            Item weaponItem = rangedWeapon.Item;
+            if (!TryFindLaser(weaponItem, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
+
+            weaponItem.body?.UpdateDrawPosition();
+            weaponItem.SetContainedItemPositions();
+            DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor);
         }
 
         private static bool TryFindLaser(Item weapon, out Item? laserItem, out Color color)
@@ -147,117 +203,167 @@ namespace DeepLaser
         private static Vector2? FindLaserHit(Vector2 startWorld, Vector2 endWorld, Character? shooter, Item weaponItem, Item laserItem)
         {
             LaserHit closestHit = LaserHit.None;
-            Vector2 startWorldSim = ConvertUnits.ToSimUnits(startWorld);
-            Vector2 endWorldSim = ConvertUnits.ToSimUnits(endWorld);
             Submarine? sourceSubmarine = weaponItem.Submarine ?? laserItem.Submarine;
 
-            if (sourceSubmarine != null)
-            {
-                TryUpdateClosestHit(
-                    ref closestHit,
-                    CastLaserRay(startWorldSim - sourceSubmarine.SimPosition, endWorldSim - sourceSubmarine.SimPosition, sourceSubmarine, shooter, weaponItem, laserItem),
-                    sourceSubmarine.SimPosition);
-            }
-
-            TryUpdateClosestHit(
-                ref closestHit,
-                CastLaserRay(startWorldSim, endWorldSim, null, shooter, weaponItem, laserItem),
-                Vector2.Zero);
-
-            foreach (Submarine submarine in Submarine.Loaded)
-            {
-                if (submarine == sourceSubmarine) { continue; }
-
-                TryUpdateClosestHit(
-                    ref closestHit,
-                    CastLaserRay(startWorldSim - submarine.SimPosition, endWorldSim - submarine.SimPosition, submarine, shooter, weaponItem, laserItem),
-                    submarine.SimPosition);
-            }
-
+            TryUpdateClosestHit(ref closestHit, FindLightHullHit(startWorld, endWorld, sourceSubmarine));
+            TryUpdateClosestHit(ref closestHit, CastLevelRay(startWorld, endWorld));
             TryUpdateClosestHit(ref closestHit, FindCharacterHit(startWorld, endWorld, shooter));
 
             return closestHit.HasHit ? closestHit.WorldPosition : null;
         }
 
-        private static LaserHit CastLaserRay(Vector2 startSim, Vector2 endSim, Submarine? raySubmarine, Character? shooter, Item weaponItem, Item laserItem)
+        private static LaserHit FindLightHullHit(Vector2 startWorld, Vector2 endWorld, Submarine? sourceSubmarine)
         {
-            LaserHit closestHit = LaserHit.None;
-            List<Body> ignoredBodies = GetIgnoredBodies(shooter, weaponItem, laserItem);
-
-            GameMain.World.RayCast((fixture, point, normal, fraction) =>
+            Vector2 hullQueryStart = sourceSubmarine == null ? startWorld : startWorld - sourceSubmarine.DrawPosition;
+            if (!TryGetHullsInRange(hullQueryStart, Vector2.Distance(startWorld, endWorld), sourceSubmarine, out System.Collections.IEnumerable? hulls) || hulls == null)
             {
-                if (fixture == null) { return -1; }
+                return LaserHit.None;
+            }
 
-                Body? body = fixture.Body;
-                if (body == null || ignoredBodies.Contains(body)) { return -1; }
-                if (!LaserBlocksVisibility(fixture, point, raySubmarine, shooter, weaponItem, laserItem)) { return -1; }
+            Vector2 segment = endWorld - startWorld;
+            LaserHit closestHit = LaserHit.None;
 
-                if (!closestHit.HasHit || fraction < closestHit.Fraction)
+            foreach (object hull in hulls)
+            {
+                if (!IsValidHull(hull)) { continue; }
+                if (!TryGetHullVertices(hull, out Vector2[] vertices)) { continue; }
+
+                for (int i = 0; i < vertices.Length; i++)
                 {
-                    closestHit = new LaserHit(point, fraction);
+                    Vector2 edgeStart = vertices[i];
+                    Vector2 edgeEnd = vertices[(i + 1) % vertices.Length];
+                    if (TryGetSegmentIntersectionFraction(startWorld, segment, edgeStart, edgeEnd, out float fraction))
+                    {
+                        TryUpdateClosestHit(ref closestHit, new LaserHit(startWorld + segment * fraction, fraction));
+                    }
                 }
 
-                return fraction;
-            }, startSim, endSim, Physics.CollisionCharacter | Physics.CollisionWall | Physics.CollisionLevel | Physics.CollisionItemBlocking | Physics.CollisionProjectile | Physics.CollisionLagCompensationBody);
+                if (!closestHit.HasHit && IsPointInsidePolygon(startWorld, vertices))
+                {
+                    TryUpdateClosestHit(ref closestHit, new LaserHit(startWorld, 0.0f));
+                }
+            }
 
             return closestHit;
         }
 
-        private static bool LaserBlocksVisibility(Fixture fixture, Vector2 hitPointSim, Submarine? raySubmarine, Character? shooter, Item weaponItem, Item laserItem)
+        private static bool TryGetHullsInRange(Vector2 startWorld, float range, Submarine? sourceSubmarine, out System.Collections.IEnumerable? hulls)
         {
-            Body? body = fixture.Body;
-            if (body == null) { return false; }
-            if (fixture.IsSensor) { return false; }
-            if (fixture.UserData is Hull) { return false; }
-            if (body.UserData as string == "ruinroom") { return false; }
-
-            if (TryGetHitCharacter(fixture, out Character? hitCharacter))
+            hulls = null;
+            if (GetHullsInRangeMethod == null)
             {
-                if (raySubmarine != null && hitCharacter?.Submarine != raySubmarine) { return false; }
-                return hitCharacter != shooter;
+                LogHullReflectionErrorOnce("DeepLaser failed to find Barotrauma.Lights.ConvexHull.GetHullsInRange.");
+                return false;
             }
 
-            if (raySubmarine != null)
+            hulls = GetHullsInRangeMethod.Invoke(null, new object?[] { startWorld, range, sourceSubmarine }) as System.Collections.IEnumerable;
+            return hulls != null;
+        }
+
+        private static bool IsValidHull(object hull)
+        {
+            if (HullEnabledProperty?.GetValue(hull) is bool enabled && !enabled) { return false; }
+            if (HullIsInvalidProperty?.GetValue(hull) is bool isInvalid && isInvalid) { return false; }
+            return true;
+        }
+
+        private static bool TryGetHullVertices(object hull, out Vector2[] vertices)
+        {
+            vertices = Array.Empty<Vector2>();
+            if (RefreshWorldPositionsMethod == null || HullVerticesField == null || SegmentPointWorldPosField == null)
             {
-                if (body.UserData is VoronoiCell) { return false; }
-                if (body.UserData is Entity entity && entity.Submarine != raySubmarine) { return false; }
+                LogHullReflectionErrorOnce("DeepLaser failed to find light hull vertex reflection members.");
+                return false;
             }
 
-            if (body.UserData is Structure structure)
+            RefreshWorldPositionsMethod.Invoke(hull, null);
+            if (HullVerticesField.GetValue(hull) is not Array rawVertices || rawVertices.Length < 3) { return false; }
+
+            List<Vector2> result = new(rawVertices.Length);
+            for (int i = 0; i < rawVertices.Length; i++)
             {
-                if (structure.IsPlatform || structure.StairDirection != Direction.None) { return false; }
-
-                int sectionIndex = structure.FindSectionIndex(ConvertUnits.ToDisplayUnits(hitPointSim));
-                if (sectionIndex > -1 && structure.SectionBodyDisabled(sectionIndex)) { return false; }
-
-                return structure.CastShadow;
+                object? vertex = rawVertices.GetValue(i);
+                if (vertex == null) { return false; }
+                if (SegmentPointWorldPosField.GetValue(vertex) is not Vector2 worldPos || !IsFinite(worldPos)) { return false; }
+                result.Add(worldPos);
             }
 
-            if (body.UserData is Item item)
-            {
-                if (item == weaponItem || item == laserItem) { return false; }
-                if (item.Condition <= 0.0f) { return false; }
+            vertices = result.ToArray();
+            return true;
+        }
 
-                if (item.GetComponent<Door>() is { HasWindow: true } door &&
-                    door.IsPositionOnWindow(ConvertUnits.ToDisplayUnits(hitPointSim)))
+        private static LaserHit CastLevelRay(Vector2 startWorld, Vector2 endWorld)
+        {
+            LaserHit closestHit = LaserHit.None;
+            Vector2 startSim = ConvertUnits.ToSimUnits(startWorld);
+            Vector2 endSim = ConvertUnits.ToSimUnits(endWorld);
+
+            GameMain.World.RayCast((fixture, point, normal, fraction) =>
+            {
+                if (fixture == null || fixture.IsSensor) { return -1; }
+                if (fixture.Body == null) { return -1; }
+                if (fixture.Body.UserData as string == "ruinroom") { return -1; }
+
+                if (!closestHit.HasHit || fraction < closestHit.Fraction)
                 {
-                    return false;
+                    closestHit = new LaserHit(ConvertUnits.ToDisplayUnits(point), fraction);
                 }
 
-                return true;
-            }
+                return fraction;
+            }, startSim, endSim, Physics.CollisionLevel);
 
-            if (body.UserData is Limb limb)
+            return closestHit;
+        }
+
+        private static bool TryGetSegmentIntersectionFraction(Vector2 start, Vector2 segment, Vector2 edgeStart, Vector2 edgeEnd, out float fraction)
+        {
+            fraction = 0.0f;
+            Vector2 edgeSegment = edgeEnd - edgeStart;
+            float cross = Cross(segment, edgeSegment);
+            if (Math.Abs(cross) < 0.0001f) { return false; }
+
+            Vector2 diff = edgeStart - start;
+            float rayFraction = Cross(diff, edgeSegment) / cross;
+            float edgeFraction = Cross(diff, segment) / cross;
+            if (rayFraction is < 0.0f or > 1.0f || edgeFraction is < 0.0f or > 1.0f)
             {
-                return limb.character != shooter && !limb.IsSevered;
+                return false;
             }
 
-            if (body.UserData is Character character)
-            {
-                return character != shooter;
-            }
-
+            fraction = rayFraction;
             return true;
+        }
+
+        private static float Cross(Vector2 a, Vector2 b)
+        {
+            return a.X * b.Y - a.Y * b.X;
+        }
+
+        private static bool IsPointInsidePolygon(Vector2 point, Vector2[] vertices)
+        {
+            bool inside = false;
+            for (int i = 0, j = vertices.Length - 1; i < vertices.Length; j = i++)
+            {
+                Vector2 a = vertices[i];
+                Vector2 b = vertices[j];
+                if ((a.Y > point.Y) != (b.Y > point.Y))
+                {
+                    float intersectX = (b.X - a.X) * (point.Y - a.Y) / (b.Y - a.Y) + a.X;
+                    if (point.X < intersectX)
+                    {
+                        inside = !inside;
+                    }
+                }
+            }
+
+            return inside;
+        }
+
+        private static void LogHullReflectionErrorOnce(string message)
+        {
+            if (loggedHullReflectionError) { return; }
+            loggedHullReflectionError = true;
+            DebugConsole.ThrowError(message);
         }
 
         private static LaserHit FindCharacterHit(Vector2 startWorld, Vector2 endWorld, Character? shooter)
@@ -278,13 +384,30 @@ namespace DeepLaser
                 {
                     foreach (Limb limb in character.AnimController.Limbs)
                     {
-                        if (limb == null || limb.Removed || limb.IsSevered) { continue; }
+                        if (!IsValidLaserBlockingLimb(limb)) { continue; }
 
                         checkedLimbs = true;
                         float radius = GetLimbHitRadius(limb);
                         if (TryIntersectCircle(startWorld, direction, length, limb.WorldPosition, radius, out float fraction))
                         {
                             TryUpdateClosestHit(ref closestHit, new LaserHit(startWorld + direction * (fraction * length), fraction));
+                        }
+                    }
+
+                    if (character.AnimController.LimbJoints != null)
+                    {
+                        foreach (var joint in character.AnimController.LimbJoints)
+                        {
+                            if (joint == null || joint.IsSevered) { continue; }
+                            Limb limbA = joint.LimbA;
+                            Limb limbB = joint.LimbB;
+                            if (!IsValidLaserBlockingLimb(limbA) || !IsValidLaserBlockingLimb(limbB)) { continue; }
+
+                            float radius = MathHelper.Clamp(Math.Min(GetLimbHitRadius(limbA), GetLimbHitRadius(limbB)) * 0.55f, 8.0f, 28.0f);
+                            if (TryIntersectCapsule(startWorld, direction, length, limbA.WorldPosition, limbB.WorldPosition, radius, out float fraction))
+                            {
+                                TryUpdateClosestHit(ref closestHit, new LaserHit(startWorld + direction * (fraction * length), fraction));
+                            }
                         }
                     }
                 }
@@ -296,6 +419,11 @@ namespace DeepLaser
             }
 
             return closestHit;
+        }
+
+        private static bool IsValidLaserBlockingLimb(Limb? limb)
+        {
+            return limb != null && !limb.Removed && !limb.IsSevered && limb.body != null;
         }
 
         private static float GetLimbHitRadius(Limb limb)
@@ -337,11 +465,49 @@ namespace DeepLaser
             return true;
         }
 
-        private static void TryUpdateClosestHit(ref LaserHit closestHit, LaserHit candidate, Vector2 simOffset)
+        private static bool TryIntersectCapsule(Vector2 rayStart, Vector2 rayDirection, float rayLength, Vector2 capsuleStart, Vector2 capsuleEnd, float radius, out float fraction)
         {
-            if (!candidate.HasHit) { return; }
+            Vector2 capsuleSegment = capsuleEnd - capsuleStart;
+            float capsuleLengthSquared = capsuleSegment.LengthSquared();
+            if (capsuleLengthSquared < 0.001f)
+            {
+                return TryIntersectCircle(rayStart, rayDirection, rayLength, capsuleStart, radius, out fraction);
+            }
 
-            TryUpdateClosestHit(ref closestHit, new LaserHit(ConvertUnits.ToDisplayUnits(candidate.SimPosition + simOffset), candidate.Fraction));
+            if (TryIntersectCircle(rayStart, rayDirection, rayLength, capsuleStart, radius, out fraction) ||
+                TryIntersectCircle(rayStart, rayDirection, rayLength, capsuleEnd, radius, out fraction))
+            {
+                return true;
+            }
+
+            Vector2 raySegment = rayDirection * rayLength;
+            if (TryGetSegmentIntersectionFraction(rayStart, raySegment, capsuleStart, capsuleEnd, out fraction))
+            {
+                return true;
+            }
+
+            Vector2 relativeStart = rayStart - capsuleStart;
+            float a = Vector2.Dot(raySegment, raySegment);
+            float b = Vector2.Dot(raySegment, capsuleSegment);
+            float c = Vector2.Dot(capsuleSegment, capsuleSegment);
+            float d = Vector2.Dot(raySegment, relativeStart);
+            float e = Vector2.Dot(capsuleSegment, relativeStart);
+            float denominator = a * c - b * b;
+
+            float rayFraction = denominator > 0.0001f ? MathHelper.Clamp((b * e - c * d) / denominator, 0.0f, 1.0f) : 0.0f;
+            float capsuleFraction = MathHelper.Clamp((b * rayFraction + e) / c, 0.0f, 1.0f);
+            rayFraction = MathHelper.Clamp((b * capsuleFraction - d) / a, 0.0f, 1.0f);
+
+            Vector2 closestOnRay = rayStart + raySegment * rayFraction;
+            Vector2 closestOnCapsule = capsuleStart + capsuleSegment * capsuleFraction;
+            if (Vector2.DistanceSquared(closestOnRay, closestOnCapsule) > radius * radius)
+            {
+                fraction = 0.0f;
+                return false;
+            }
+
+            fraction = rayFraction;
+            return true;
         }
 
         private static void TryUpdateClosestHit(ref LaserHit closestHit, LaserHit candidate)
@@ -359,14 +525,12 @@ namespace DeepLaser
             public static LaserHit None => new(Vector2.Zero, 1.0f, false);
 
             public readonly Vector2 WorldPosition;
-            public readonly Vector2 SimPosition;
             public readonly float Fraction;
             public readonly bool HasHit;
 
             public LaserHit(Vector2 position, float fraction)
             {
                 WorldPosition = position;
-                SimPosition = position;
                 Fraction = fraction;
                 HasHit = true;
             }
@@ -374,65 +538,8 @@ namespace DeepLaser
             private LaserHit(Vector2 position, float fraction, bool hasHit)
             {
                 WorldPosition = position;
-                SimPosition = position;
                 Fraction = fraction;
                 HasHit = hasHit;
-            }
-        }
-
-        private static bool TryGetHitCharacter(Fixture fixture, out Character? character)
-        {
-            if (fixture.UserData is Limb fixtureLimb && !fixtureLimb.IsSevered)
-            {
-                character = fixtureLimb.character;
-                return character != null;
-            }
-
-            if (fixture.Body?.UserData is Limb bodyLimb && !bodyLimb.IsSevered)
-            {
-                character = bodyLimb.character;
-                return character != null;
-            }
-
-            if (fixture.UserData is Character fixtureCharacter)
-            {
-                character = fixtureCharacter;
-                return true;
-            }
-
-            if (fixture.Body?.UserData is Character bodyCharacter)
-            {
-                character = bodyCharacter;
-                return true;
-            }
-
-            character = null;
-            return false;
-        }
-
-        private static List<Body> GetIgnoredBodies(Character? character, Item weaponItem, Item laserItem)
-        {
-            List<Body> ignoredBodies = new();
-
-            if (character?.AnimController?.Limbs != null)
-            {
-                foreach (Limb limb in character.AnimController.Limbs)
-                {
-                    AddBody(ignoredBodies, limb.body?.FarseerBody);
-                }
-            }
-
-            AddBody(ignoredBodies, weaponItem.body?.FarseerBody);
-            AddBody(ignoredBodies, laserItem.body?.FarseerBody);
-
-            return ignoredBodies;
-        }
-
-        private static void AddBody(List<Body> bodies, Body? body)
-        {
-            if (body != null && !bodies.Contains(body))
-            {
-                bodies.Add(body);
             }
         }
 

@@ -1,242 +1,155 @@
-local DeepHitMarker = {
-    HitHintSize = 10,
-    KillHintSize = 30,
-    CrosshairDistance = 12,
-    HitHintDuration = 0.25,
-    KillHintDuration = 0.5,
-    DebugMode = false,
-}
+local HIT_HINT_SIZE = 10
+local KILL_HINT_SIZE = 30
+local CROSSHAIR_DISTANCE = 12
+local HIT_HINT_DURATION = 0.25
+local KILL_HINT_DURATION = 0.5
+local DEBUG_MODE = false
 
-if not CLIENT then
-    return
-end
+local GameMain = LuaUserData.CreateStatic("Barotrauma.GameMain")
+
+if not CLIENT then return end
 
 local HitHintTimer = 0
 local KillHintTimer = 0
-local HitHintColor = Color.White
 local IsHeadshot = false
-
 local lastThinkTime = Timer.Time
-local frameCount = 0
-local hitCount = 0
-local drawCount = 0
 
-local function dbg(...)
-    if not DeepHitMarker.DebugMode then return end
-    print("[DeepHitMarker]", ...)
+local dbg
+if not DEBUG_MODE then
+    dbg = function() end
+else
+    dbg = function(...) print("[DeepHitMarker]", ...) end
 end
 
 local function IsOutOfScreen(position)
-    if Screen.Selected == nil or Screen.Selected.Cam == nil then
-        dbg("IsOutOfScreen: Screen/Cam is nil → true")
-        return true
-    end
-    local view = Screen.Selected.Cam.WorldView
-    local result = position.X < view.X
+    local screen = Screen.Selected
+    if screen == nil or screen.Cam == nil then return true end
+    local view = screen.Cam.WorldView
+    return position.X < view.X
         or position.X > view.Right
         or position.Y > view.Y
         or position.Y < view.Y - view.Height
-    if result then
-        dbg("IsOutOfScreen: TRUE  pos=(", position.X, ",", position.Y, ") view=(", view.X, ",", view.Y, ",", view.Width, "x", view.Height, ")")
-    end
-    return result
 end
 
 local function IsDefaultAttackResult(result)
-    local isDefault = result.Damage == 0
+    return result.Damage == 0
         and result.Afflictions == nil
         and result.HitLimb == nil
         and result.AppliedDamageModifiers == nil
-    if isDefault then
-        dbg("IsDefaultAttackResult: TRUE (Damage=" .. tostring(result.Damage) .. ")")
-    end
-    return isDefault
 end
 
 local function DrawHint(spriteBatch, position)
-    if HitHintTimer <= 0 and KillHintTimer <= 0 then
-        return
-    end
+    if HitHintTimer <= 0 and KillHintTimer <= 0 then return end
 
-    drawCount = drawCount + 1
-    if drawCount <= 5 or drawCount % 30 == 0 then
-        dbg("DRAW#" .. drawCount .. " HitTimer=" .. string.format("%.4f", HitHintTimer) .. " KillTimer=" .. string.format("%.4f", KillHintTimer) .. " Headshot=" .. tostring(IsHeadshot) .. " pos=(" .. string.format("%.1f", position.X) .. "," .. string.format("%.1f", position.Y) .. ")")
-    end
-
-    local color = IsHeadshot and Color.Red or Color.White
-
-    if HitHintTimer > 0 then
-        HitHintColor = Color(color.R, color.G, color.B, 255)
-    else
-        HitHintColor = Color(color.R, color.G, color.B, 0)
-    end
-
-    local size = math.max(DeepHitMarker.HitHintSize, 1)
-    local distance = math.max(DeepHitMarker.CrosshairDistance, 0)
+    local baseColor = IsHeadshot and Color.Red or Color.White
+    local hintAlpha = HitHintTimer > 0 and 255 or 0
+    local hintColor = Color(baseColor.R, baseColor.G, baseColor.B, hintAlpha)
+    local distance = CROSSHAIR_DISTANCE
 
     GUI.DrawLine(spriteBatch,
         Vector2(position.X + distance, position.Y + distance),
-        Vector2(position.X + distance + size, position.Y + distance + size),
-        HitHintColor, 0, 4)
-
+        Vector2(position.X + distance + HIT_HINT_SIZE, position.Y + distance + HIT_HINT_SIZE),
+        hintColor, 0, 4)
     GUI.DrawLine(spriteBatch,
         Vector2(position.X - distance, position.Y + distance),
-        Vector2(position.X - distance - size, position.Y + distance + size),
-        HitHintColor, 0, 4)
-
+        Vector2(position.X - distance - HIT_HINT_SIZE, position.Y + distance + HIT_HINT_SIZE),
+        hintColor, 0, 4)
     GUI.DrawLine(spriteBatch,
         Vector2(position.X + distance, position.Y - distance),
-        Vector2(position.X + distance + size, position.Y - distance - size),
-        HitHintColor, 0, 4)
-
+        Vector2(position.X + distance + HIT_HINT_SIZE, position.Y - distance - HIT_HINT_SIZE),
+        hintColor, 0, 4)
     GUI.DrawLine(spriteBatch,
         Vector2(position.X - distance, position.Y - distance),
-        Vector2(position.X - distance - size, position.Y - distance - size),
-        HitHintColor, 0, 4)
+        Vector2(position.X - distance - HIT_HINT_SIZE, position.Y - distance - HIT_HINT_SIZE),
+        hintColor, 0, 4)
 
     if KillHintTimer > 0 then
-        local alpha = KillHintTimer / DeepHitMarker.KillHintDuration
-        local killAlpha = math.min(alpha, 1.0) * 255
-        local killColor = Color(255, 0, 0, math.floor(killAlpha))
-        local killSize = math.max(DeepHitMarker.KillHintSize, 1)
-
+        local alpha = KillHintTimer / KILL_HINT_DURATION
+        local killAlpha = alpha > 1.0 and 255 or math.floor(alpha * 255)
+        local killColor = Color(255, 0, 0, killAlpha)
         GUI.DrawRectangle(spriteBatch,
-            position, killSize * 2, killSize * 2,
+            position, KILL_HINT_SIZE * 2, KILL_HINT_SIZE * 2,
             math.pi / 4, killColor, 0, 2)
     end
 end
 
-Hook.Patch(
-    "Barotrauma.Items.Components.RangedWeapon",
-    "DrawHUD",
-    {
-        "Microsoft.Xna.Framework.Graphics.SpriteBatch",
-        "Barotrauma.Character"
-    },
+local function GetCrosshairPosition(instance)
+    if instance == nil or instance.item == nil then
+        return PlayerInput.MousePosition
+    end
+    local item = instance.item
+    if item.body == nil then
+        return PlayerInput.MousePosition
+    end
+    local screen = Screen.Selected
+    if screen == nil or screen.Cam == nil then
+        return PlayerInput.MousePosition
+    end
+
+    local barrelWorldPos = item.WorldPosition + ConvertUnits.ToDisplayUnits(instance.TransformedBarrelPos)
+    local barrelScreenPos = screen.Cam.WorldToScreen(barrelWorldPos)
+
+    local rotation = item.body.TransformedRotation
+    local barrelDir = Vector2(math.cos(rotation), -math.sin(rotation))
+
+    local mouseDist = Vector2.Distance(barrelScreenPos, PlayerInput.MousePosition)
+
+    local rawPos = Vector2(
+        barrelScreenPos.X + barrelDir.X * mouseDist,
+        barrelScreenPos.Y + barrelDir.Y * mouseDist
+    )
+
+    return Vector2(
+        rawPos.X < 0 and 0 or rawPos.X > GameMain.GraphicsWidth and GameMain.GraphicsWidth or rawPos.X,
+        rawPos.Y < 0 and 0 or rawPos.Y > GameMain.GraphicsHeight and GameMain.GraphicsHeight or rawPos.Y
+    )
+end
+
+Hook.Patch("Barotrauma.Items.Components.RangedWeapon", "DrawHUD",
+    { "Microsoft.Xna.Framework.Graphics.SpriteBatch", "Barotrauma.Character" },
     function(instance, ptable)
-        frameCount = frameCount + 1
-        if frameCount <= 3 then
-            dbg("DrawHUD hook #" .. frameCount)
-        end
-
-        local position = PlayerInput.MousePosition
-
-        if position == nil then
-            return
-        end
-
-        if frameCount <= 3 then
-            dbg("MousePosition = (" .. string.format("%.1f", position.X) .. "," .. string.format("%.1f", position.Y) .. ")")
-        end
-
+        local position = GetCrosshairPosition(instance)
+        if position == nil then return end
         DrawHint(ptable["spriteBatch"], position)
     end,
-    Hook.HookMethodType.After
-)
+    Hook.HookMethodType.After)
 
-Hook.Patch(
-    "Barotrauma.Character",
-    "ApplyAttack",
-    {
-        "Barotrauma.Character",
-        "Microsoft.Xna.Framework.Vector2",
-        "Barotrauma.Attack",
-        "System.Single",
-        "Microsoft.Xna.Framework.Vector2",
-        "System.Boolean",
-        "Barotrauma.Limb",
-        "System.Single"
-    },
+Hook.Patch("Barotrauma.Character", "ApplyAttack",
+    { "Barotrauma.Character", "Microsoft.Xna.Framework.Vector2", "Barotrauma.Attack",
+      "System.Single", "Microsoft.Xna.Framework.Vector2", "System.Boolean",
+      "Barotrauma.Limb", "System.Single" },
     function(instance, ptable)
-        hitCount = hitCount + 1
-
         local attacker = ptable["attacker"]
+        if instance == nil or attacker == nil then return end
+
         local result = ptable.ReturnValue
-
-        if instance == nil then
-            if hitCount <= 3 then dbg("ApplyAttack: instance is nil") end
-            return
-        end
-        if attacker == nil then
-            if hitCount <= 3 then dbg("ApplyAttack: attacker is nil") end
-            return
-        end
-
-        if hitCount <= 3 then
-            dbg("ApplyAttack #" .. hitCount .. " attacker=" .. tostring(attacker.Name) .. " target=" .. tostring(instance.Name) .. " Damage=" .. tostring(result.Damage))
-        end
-
         if IsDefaultAttackResult(result) then return end
+        if attacker ~= Character.Controlled then return end
+        if IsOutOfScreen(instance.WorldPosition) then return end
 
-        if hitCount <= 3 then
-            dbg("ApplyAttack: not default! Damage=" .. tostring(result.Damage) .. " attacker=" .. tostring(attacker.Name) .. " Controlled=" .. tostring(Character.Controlled ~= nil and Character.Controlled.Name or "nil"))
-        end
-
-        if attacker ~= Character.Controlled then
-            if hitCount <= 3 then
-                dbg("ApplyAttack: attacker is NOT controlled character, skipping")
-            end
-            return
-        end
-
-        if hitCount <= 3 then
-            dbg("ApplyAttack: attacker IS controlled character!")
-        end
-
-        if IsOutOfScreen(instance.WorldPosition) then
-            if hitCount <= 3 then dbg("ApplyAttack: target is out of screen") end
-            return
-        end
-
-        HitHintTimer = DeepHitMarker.HitHintDuration
-        dbg(">>> HIT! HitHintTimer set to " .. tostring(HitHintTimer))
-
+        HitHintTimer = HIT_HINT_DURATION
         if instance.IsDead then
-            KillHintTimer = DeepHitMarker.KillHintDuration
-            dbg(">>> KILL! KillHintTimer set to " .. tostring(KillHintTimer))
+            KillHintTimer = KILL_HINT_DURATION
         end
 
+        IsHeadshot = false
         local hitLimb = result.HitLimb
-        if hitLimb ~= nil then
-            dbg("HitLimb: " .. tostring(hitLimb.Name) .. " type=" .. tostring(hitLimb.type))
-            if hitLimb.type == LimbType.Head then
-                IsHeadshot = true
-                dbg(">>> HEADSHOT!")
-            else
-                IsHeadshot = false
-            end
-        else
-            dbg("HitLimb is nil")
-            IsHeadshot = false
+        if hitLimb ~= nil and hitLimb.type == LimbType.Head then
+            IsHeadshot = true
         end
     end,
-    Hook.HookMethodType.After
-)
+    Hook.HookMethodType.After)
 
 Hook.Add("think", "DeepHitMarkerUpdate", function()
     local now = Timer.Time
     local dt = now - lastThinkTime
     lastThinkTime = now
-
-    if dt > 0.1 then
-        dt = 0.1
-    end
-
-    local prevHit = HitHintTimer
-    local prevKill = KillHintTimer
+    if dt > 0.1 then dt = 0.1 end
 
     if HitHintTimer > 0 then
-        HitHintTimer = math.max(HitHintTimer - dt, 0)
+        HitHintTimer = HitHintTimer > dt and HitHintTimer - dt or 0
     end
-
     if KillHintTimer > 0 then
-        KillHintTimer = math.max(KillHintTimer - dt, 0)
-    end
-
-    if prevHit > 0 and HitHintTimer == 0 then
-        dbg("THINK: HitHintTimer expired")
-    end
-    if prevKill > 0 and KillHintTimer == 0 then
-        dbg("THINK: KillHintTimer expired")
+        KillHintTimer = KillHintTimer > dt and KillHintTimer - dt or 0
     end
 end)
