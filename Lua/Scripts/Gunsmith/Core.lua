@@ -115,13 +115,29 @@ function Core.ApplyMountDefaultsForPath(selection, path, visited, depth)
     end
 end
 
+function Core.RootConfig(weapon, path)
+    if not weapon or type(weapon.roots) ~= "table" then return nil end
+    local root = weapon.roots[path]
+    return type(root) == "table" and root or nil
+end
+
+function Core.RootPartId(weapon, path)
+    local root = Core.RootConfig(weapon, path)
+    return root and root.part or nil
+end
+
+function Core.RootSocket(weapon, path)
+    local root = Core.RootConfig(weapon, path)
+    return root and root.socket or nil
+end
+
 function Core.BuildDefaultSelection(platform, weapon)
     local selection = {}
-    if not platform or not weapon or type(weapon.rootParts) ~= "table" then return selection end
+    if not platform or not weapon or type(weapon.roots) ~= "table" then return selection end
 
     for _, root in ipairs(Core.RootSlotDefs(platform)) do
         local path = root.path
-        local partId = weapon.rootParts[path]
+        local partId = Core.RootPartId(weapon, path)
         local part = Core.GetPart(partId)
         if part and part.type == path then
             selection[path] = partId
@@ -138,6 +154,105 @@ end
 
 function Core.GetInstalledPart(selection, path)
     return Core.GetPart(selection[path])
+end
+
+local function visualScale(visual)
+    if type(visual) == "table" and type(visual.scale) == "number" and visual.scale > 0 then
+        return visual.scale
+    end
+    return 1.0
+end
+
+local resolveDrawOffset
+
+function Core.ResolveMountAnchor(selection, platform, weapon, path)
+    local mount = Core.MountForPath(selection, path)
+    local anchor = mount and mount.anchor or nil
+    if not anchor then return nil end
+
+    local parentPath = Core.ParentPath(path)
+    local parentPart = Core.GetInstalledPart(selection, parentPath)
+    local parentVisual = Core.PartVisual(parentPart)
+    if parentVisual then
+        local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
+        if parentOffset then
+            local parentAttachPoint = parentVisual.attachPoint or { x = 0, y = 0 }
+            local parentScale = visualScale(parentVisual)
+            return {
+                x = parentOffset.x + (parentAttachPoint.x + anchor.x) * parentScale,
+                y = parentOffset.y + (parentAttachPoint.y + anchor.y) * parentScale
+            }
+        end
+    end
+
+    local parentAnchor = nil
+    if Core.IsRootSlot(platform, parentPath) then
+        parentAnchor = Core.RootSocket(weapon, parentPath)
+    else
+        parentAnchor = Core.ResolveMountAnchor(selection, platform, weapon, parentPath)
+    end
+
+    if parentAnchor then
+        return {
+            x = parentAnchor.x + anchor.x,
+            y = parentAnchor.y + anchor.y
+        }
+    end
+
+    return nil
+end
+
+resolveDrawOffset = function(selection, platform, weapon, path, visual)
+    local anchor = nil
+    if Core.IsRootSlot(platform, path) then
+        local rootPath = Core.LeafPath(path)
+        anchor = Core.RootSocket(weapon, rootPath)
+    else
+        anchor = Core.ResolveMountAnchor(selection, platform, weapon, path)
+    end
+
+    if anchor and visual.attachPoint then
+        local scale = visualScale(visual)
+        return {
+            x = anchor.x - visual.attachPoint.x * scale,
+            y = anchor.y - visual.attachPoint.y * scale
+        }
+    end
+
+    if anchor and visual.relativeOffset then
+        return {
+            x = anchor.x + visual.relativeOffset.x,
+            y = anchor.y + visual.relativeOffset.y
+        }
+    end
+
+    return nil
+end
+
+function Core.ResolveDrawOffset(selection, platform, weapon, path, visual)
+    return resolveDrawOffset(selection, platform, weapon, path, visual)
+end
+
+function Core.QuickSlotCanvasOrigin(item, selection, platform, weapon)
+    if type(weapon) == "table" and type(weapon.roots) == "table" then
+        for _, rootDef in ipairs(Core.RootSlotDefs(platform)) do
+            local root = Core.RootConfig(weapon, rootDef.path)
+            local socket = root and root.socket or nil
+            local itemPosOrigin = root and root.itemPosOrigin or nil
+            if socket and itemPosOrigin then
+                return {
+                    x = (socket.x or 0) + (itemPosOrigin.x or 0),
+                    y = (socket.y or 0) + (itemPosOrigin.y or 0)
+                }
+            end
+        end
+    end
+
+    local canvas = platform and platform.canvas or nil
+    if canvas then
+        return { x = (canvas.w or 0) * 0.5, y = (canvas.h or 0) * 0.5 }
+    end
+    return { x = 0, y = 0 }
 end
 
 function Core.QuickSlotsForSelection(item, selection, platform)
@@ -167,11 +282,14 @@ function Core.QuickSlotsForSelection(item, selection, platform)
                     local slotIndex = type(binding) == "table" and tonumber(binding.slot) or nil
                     local slotPath = Core.JoinPath(parentPath, mount.path)
                     if slotIndex and Core.IsValidPath(selection, platform, slotPath) then
+                        local anchor = Core.ResolveMountAnchor(selection, platform, weapon, slotPath)
                         table.insert(slots, {
                             key = quick.key,
                             path = slotPath,
                             slot = slotIndex,
                             nameKey = quick.nameKey or mount.nameKey or Core.PathNameKey(platform, mount.path),
+                            anchor = anchor,
+                            itemPosOffset = binding.itemPosOffset,
                             showWhenContained = quick.showWhenContained,
                             hide = binding.hide,
                             rotation = binding.rotation

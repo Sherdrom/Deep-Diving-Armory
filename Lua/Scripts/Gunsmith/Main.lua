@@ -11,6 +11,7 @@ dofile(basePath .. "/QuickMod.lua")
 dofile(basePath .. "/UiSpec.lua")
 dofile(basePath .. "/QuickUiSpec.lua")
 dofile(basePath .. "/Runtime.lua")
+dofile(basePath .. "/Debug.lua")
 dofile(basePath .. "/Hooks.lua")
 
 local function runStartupValidation()
@@ -27,6 +28,10 @@ end
 
 if Deep_Lua.Gunsmith.Validation and Deep_Lua.Gunsmith.Validation.RegisterCommands then
     Deep_Lua.Gunsmith.Validation.RegisterCommands()
+end
+
+if Deep_Lua.Gunsmith.Debug and Deep_Lua.Gunsmith.Debug.RegisterCommands then
+    Deep_Lua.Gunsmith.Debug.RegisterCommands()
 end
 
 if Deep_Lua.Gunsmith.Hooks and Deep_Lua.Gunsmith.Hooks.Register then

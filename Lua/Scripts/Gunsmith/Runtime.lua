@@ -188,7 +188,7 @@ local function resolveMountAnchor(selection, platform, weapon, path)
 
     local parentAnchor = nil
     if Core.IsRootSlot(platform, parentPath) then
-        parentAnchor = weapon and weapon.rootSockets and weapon.rootSockets[parentPath] or nil
+        parentAnchor = Core.RootSocket(weapon, parentPath)
     else
         parentAnchor = resolveMountAnchor(selection, platform, weapon, parentPath)
     end
@@ -207,7 +207,7 @@ resolveDrawOffset = function(selection, platform, weapon, path, visual)
     local anchor = nil
     if Core.IsRootSlot(platform, path) then
         local rootPath = Core.LeafPath(path)
-        anchor = weapon and weapon.rootSockets and weapon.rootSockets[rootPath] or nil
+        anchor = Core.RootSocket(weapon, rootPath)
     else
         anchor = resolveMountAnchor(selection, platform, weapon, path)
     end
@@ -286,6 +286,33 @@ local function encodeManagedItems(selection)
     return table.concat(Stats.ManagedItemIdentifiers(selection), ",")
 end
 
+local function registerQuickSlotLayouts(item, selection, platform, weapon)
+    if not Hook or not Hook.Call then return end
+    Hook.Call("DeepGunsmithClearQuickSlotLayouts", item)
+
+    if not Core.QuickSlotsForSelection then return end
+    local quickOrigin = Core.QuickSlotCanvasOrigin and Core.QuickSlotCanvasOrigin(item, selection, platform, weapon) or nil
+    quickOrigin = quickOrigin or { x = 0, y = 0 }
+    for _, quickSlot in ipairs(Core.QuickSlotsForSelection(item, selection, platform)) do
+        local anchor = quickSlot.anchor
+        if anchor then
+            local offset = quickSlot.itemPosOffset or {}
+            Hook.Call(
+                "DeepGunsmithRegisterQuickSlotLayout",
+                item,
+                quickSlot.slot,
+                anchor.x or 0,
+                anchor.y or 0,
+                quickOrigin.x or 0,
+                quickOrigin.y or 0,
+                offset.x or 0,
+                offset.y or 0,
+                quickSlot.rotation or 0,
+                quickSlot.hide == true and 1 or 0)
+        end
+    end
+end
+
 function Runtime.Apply(item)
     if SERVER then return end
     if not item or item.removed then return end
@@ -303,11 +330,16 @@ function Runtime.Apply(item)
     local statsSpec = Stats.Encode(Stats.SumSelection(selection))
     local managedItemSpec = encodeManagedItems(selection)
     local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|stats:" .. statsSpec .. "|items:" .. managedItemSpec
-    if State.appliedSignatures[item] == signature then return end
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
+        registerQuickSlotLayouts(item, selection, platform, Core.WeaponConfig(item))
+        if State.appliedSignatures[item] == signature then
+            Hook.Call("DeepGunsmithApplyQuickSlotLayouts", item)
+            return
+        end
         Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, managedItemSpec, platform.canvas.w, platform.canvas.h)
+        Hook.Call("DeepGunsmithApplyQuickSlotLayouts", item)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")

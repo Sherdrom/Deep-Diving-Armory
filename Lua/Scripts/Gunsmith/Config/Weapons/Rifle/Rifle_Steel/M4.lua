@@ -11,14 +11,13 @@ config.weapons.deep_m4 = {
     -- 绑定到 Config/Platforms/AR.lua 中定义的平台 key。
     platform = "AR",
 
-    -- 具体武器只声明根身份件；子默认件由 receiver.mounts[].defaultPart 展开。
-    rootParts = {
-        receiver = "M4_receiver_std"
-    },
-
-    -- 根路径接口点。根部件会用 visual.attachPoint 对齐 rootSockets[path]。
-    rootSockets = {
-        receiver = { x = 209, y = 160 }
+    -- 根身份件、视觉接口点和可选 itempos 原点。
+    -- 子默认件由 receiver.mounts[].defaultPart 展开。
+    roots = {
+        receiver = {
+            part = "M4_receiver_std",
+            socket = { x = 209, y = 160 }
+        }
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
@@ -50,7 +49,7 @@ parts.M4_receiver_std = {
     type = "receiver",
     nameKey = "deep.gunsmith.part.M4_receiver_std",
 
-    -- provides 是兼容类型。根身份件由 weapon.rootParts 指定；子配件由挂点 accepts 接受。
+    -- provides 是兼容类型。根身份件由 weapon.roots 指定；子配件由挂点 accepts 接受。
     provides = { "M4_receiver" },
 
     -- 实体配件 item。可安装配件应有 item.identifier；virtual 配件可不消耗物品。
@@ -59,7 +58,7 @@ parts.M4_receiver_std = {
     -- 目前只用于 UI 展示，不直接影响武器实际数值。
     stats = { Ergonomics = 0 },
 
-    -- visual 是运行时合成图层。根部件用自己的 attachPoint 对齐当前武器 rootSockets[path]。
+    -- visual 是运行时合成图层。根部件用自己的 attachPoint 对齐当前武器 roots[path].socket。
     -- attachPoint 是配件 source 内部的本地连接点。
     -- 子配件同理：父配件 mounts.anchor 是父配件本地挂点，子配件 attachPoint 会对齐到该挂点。
     -- order 越小越早绘制，scale 是单个配件缩放。

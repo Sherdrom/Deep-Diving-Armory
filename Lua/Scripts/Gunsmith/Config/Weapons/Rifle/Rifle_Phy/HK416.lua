@@ -8,13 +8,12 @@ config.weapons.deep_hk416 = {
 
     platform = "AR",
 
-    -- 具体武器只声明根身份件；子默认件由 receiver.mounts[].defaultPart 展开。
-    rootParts = {
-        receiver = "hk416_receiver_std"
-    },
-
-    rootSockets = {
-        receiver = { x = 184, y = 158 }
+    roots = {
+        receiver = {
+            part = "hk416_receiver_std",
+            socket = { x = 184, y = 158 },
+            itemPosOrigin = { x = 124, y = -9 } -- 配件特效校准坐标，手动填写测试 控制台命令DeepGunsmithSetItemPosOrigin deep_hk416 receiver 124 -9
+        }
     },
 
     -- QuickMod slot numbers are weapon XML ItemContainer targetslot indices.

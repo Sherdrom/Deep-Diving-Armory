@@ -8,7 +8,7 @@ config.platforms.AR = {
     id = "AR",
 
     -- 运行时合成贴图的画布尺寸。
-    -- 根槽 rootSockets 使用这个平台 canvas 坐标系。
+    -- 根槽 roots[].socket 使用这个平台 canvas 坐标系。
     -- 子配件可以用 visual.attachPoint 对齐父配件本地 mount.anchor。
     canvas = { w = 640, h = 260 },
 

@@ -102,6 +102,52 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithClearQuickSlotLayouts", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithQuickSlotLayoutPatch.ClearLayouts(item);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithRegisterQuickSlotLayout", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                int slotIndex = FindIntArg(args, 0);
+                float anchorX = FindFloatArg(args, 1);
+                float anchorY = FindFloatArg(args, 2);
+                float originX = FindFloatArg(args, 3);
+                float originY = FindFloatArg(args, 4);
+                float offsetX = FindFloatArg(args, 5);
+                float offsetY = FindFloatArg(args, 6);
+                float rotation = FindFloatArg(args, 7);
+                bool hide = FindIntArg(args, 8) != 0;
+                if (item != null && slotIndex >= 0)
+                {
+                    GunsmithQuickSlotLayoutPatch.RegisterLayout(
+                        item,
+                        slotIndex,
+                        new Vector2(anchorX, anchorY),
+                        new Vector2(originX, originY),
+                        new Vector2(offsetX, offsetY),
+                        rotation,
+                        hide);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithApplyQuickSlotLayouts", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithQuickSlotLayoutPatch.ApplyLayouts(item);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithBeginQuickSlotMutation", args =>
             {
                 Item? item = FindArg<Item>(args);
@@ -230,6 +276,28 @@ namespace GunSmith
                 }
             }
             return 0;
+        }
+
+        private static float FindFloatArg(IReadOnlyList<object> args, int numberIndex)
+        {
+            int index = 0;
+            foreach (object arg in args)
+            {
+                float? value = arg switch
+                {
+                    int intValue => intValue,
+                    double doubleValue => (float)doubleValue,
+                    float floatValue => floatValue,
+                    _ => null
+                };
+
+                if (value.HasValue)
+                {
+                    if (index == numberIndex) { return value.Value; }
+                    index++;
+                }
+            }
+            return 0.0f;
         }
     }
 }

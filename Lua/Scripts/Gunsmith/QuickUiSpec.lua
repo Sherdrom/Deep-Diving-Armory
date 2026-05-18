@@ -112,7 +112,7 @@ local function resolveMountAnchor(selection, platform, weapon, path)
 
     local parentAnchor = nil
     if Core.IsRootSlot(platform, parentPath) then
-        parentAnchor = weapon and weapon.rootSockets and weapon.rootSockets[parentPath] or nil
+        parentAnchor = Core.RootSocket(weapon, parentPath)
     else
         parentAnchor = resolveMountAnchor(selection, platform, weapon, parentPath)
     end
@@ -131,7 +131,7 @@ resolveDrawOffset = function(selection, platform, weapon, path, visual)
     local anchor = nil
     if Core.IsRootSlot(platform, path) then
         local rootPath = Core.LeafPath(path)
-        anchor = weapon and weapon.rootSockets and weapon.rootSockets[rootPath] or nil
+        anchor = Core.RootSocket(weapon, rootPath)
     else
         anchor = resolveMountAnchor(selection, platform, weapon, path)
     end
@@ -172,7 +172,7 @@ local function compatibleItemIdentifiers(item, selection, platform, slotPath, qu
 end
 
 local function quickMeta(item, selection, platform, weapon, quickSlot)
-    local anchor = resolveMountAnchor(selection, platform, weapon, quickSlot.path)
+    local anchor = quickSlot.anchor or Core.ResolveMountAnchor(selection, platform, weapon, quickSlot.path)
     local valid = anchor and "1" or "0"
     anchor = anchor or { x = 0, y = 0 }
     return string.format(

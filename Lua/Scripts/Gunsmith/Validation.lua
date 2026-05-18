@@ -253,9 +253,10 @@ function Validation.Run(configOverride, label)
 
     local function defaultQuickKeysForWeapon(weapon, platformRootSlots)
         local quickKeys = {}
-        if type(weapon.rootParts) ~= "table" then return quickKeys end
+        if type(weapon.roots) ~= "table" then return quickKeys end
         for path, _ in pairs(platformRootSlots or {}) do
-            local rootPartId = weapon.rootParts[path]
+            local root = weapon.roots[path]
+            local rootPartId = type(root) == "table" and root.part or nil
             if type(rootPartId) == "string" and rootPartId ~= "" then
                 collectQuickKeys(parts[rootPartId], quickKeys, { [rootPartId] = true }, 0)
             end
@@ -413,23 +414,33 @@ function Validation.Run(configOverride, label)
         else
             if weapon.defaults ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'defaults'.") end
             if weapon.rootAccepts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootAccepts'.") end
+            if weapon.quickSlotCalibration ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'quickSlotCalibration'.") end
+            if weapon.rootParts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootParts'; use roots[].part.") end
+            if weapon.rootSockets ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootSockets'; use roots[].socket.") end
+            if weapon.quickSlotCanvasOrigin ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'quickSlotCanvasOrigin'; use roots[].itemPosOrigin.") end
             if weapon.scale ~= nil then
                 table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'scale'; use part.visual.scale, preview.scale, inventory.scale, or world.scale.")
             end
 
             local rootSlots = platformRootSlots[platformId] or {}
-            if type(weapon.rootParts) ~= "table" then
-                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootParts.")
+            if type(weapon.roots) ~= "table" then
+                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing roots.")
             else
                 for path, _ in pairs(rootSlots) do
-                    if weapon.rootParts[path] == nil then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts missing root path '" .. tostring(path) .. "'.")
+                    if weapon.roots[path] == nil then
+                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' roots missing root path '" .. tostring(path) .. "'.")
                     end
                 end
-                for path, partId in pairs(weapon.rootParts) do
+                for path, root in pairs(weapon.roots) do
+                    local rootLabel = "Weapon '" .. tostring(weaponId) .. "' roots '" .. tostring(path) .. "'"
+                    local partId = type(root) == "table" and root.part or nil
                     local part = parts[partId]
-                    if not rootSlots[path] then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootParts contains unknown root path '" .. tostring(path) .. "'.")
+                    if type(root) ~= "table" then
+                        table.insert(errors, rootLabel .. " must be a table.")
+                    elseif not rootSlots[path] then
+                        table.insert(errors, rootLabel .. " contains unknown root path.")
+                    elseif type(partId) ~= "string" or partId == "" then
+                        table.insert(errors, rootLabel .. ".part must be a non-empty part id string.")
                     elseif not part then
                         table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' root part '" .. tostring(partId) .. "' does not exist.")
                     elseif part.type ~= path then
@@ -438,20 +449,13 @@ function Validation.Run(configOverride, label)
                         defaultPartIds[partId] = true
                         validateDefaultChildren(partId, part, path, { [partId] = true }, 0)
                     end
-                end
-            end
-
-            if type(weapon.rootSockets) ~= "table" then
-                table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' is missing rootSockets.")
-            else
-                for path, _ in pairs(rootSlots) do
-                    if not validOptionalPoint(weapon.rootSockets[path]) or weapon.rootSockets[path] == nil then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets missing numeric x/y for root path '" .. tostring(path) .. "'.")
-                    end
-                end
-                for path, _ in pairs(weapon.rootSockets) do
-                    if not rootSlots[path] then
-                        table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' rootSockets contains unknown root path '" .. tostring(path) .. "'.")
+                    if type(root) == "table" then
+                        if not validOptionalPoint(root.socket) or root.socket == nil then
+                            table.insert(errors, rootLabel .. ".socket must contain numeric x/y.")
+                        end
+                        if root.itemPosOrigin ~= nil and not validOptionalPoint(root.itemPosOrigin) then
+                            table.insert(errors, rootLabel .. ".itemPosOrigin must contain numeric x/y when declared.")
+                        end
                     end
                 end
             end
@@ -495,6 +499,13 @@ function Validation.Run(configOverride, label)
                         if type(binding) ~= "table" then
                             table.insert(errors, bindingLabel .. " must be a table.")
                         else
+                            if binding.itemPos ~= nil then
+                                table.insert(errors, bindingLabel .. ".itemPos is removed; use mount anchor plus optional itemPosOffset.")
+                            end
+                            if binding.itemPosOffset ~= nil and not validOptionalPoint(binding.itemPosOffset) then
+                                table.insert(errors, bindingLabel .. ".itemPosOffset must contain numeric x/y when declared.")
+                            end
+
                             local slotIndex = binding.slot
                             if type(slotIndex) ~= "number" or slotIndex < 0 or slotIndex % 1 ~= 0 then
                                 table.insert(errors, bindingLabel .. ".slot must be a non-negative integer.")
@@ -533,6 +544,9 @@ function Validation.Run(configOverride, label)
                 if part[field] ~= nil then
                     table.insert(errors, "Part '" .. partId .. "' uses removed field '" .. field .. "'.")
                 end
+            end
+            if part.quickItemPosOffset ~= nil then
+                table.insert(errors, "Part '" .. partId .. "' uses removed field 'quickItemPosOffset'.")
             end
 
             if part.visual ~= nil and not visualComplete(part.visual) then
@@ -652,8 +666,9 @@ function Validation.Run(configOverride, label)
         if not acceptedTypes[provided] then
             local acceptedByRoot = false
             for _, weapon in pairs(weapons) do
-                if type(weapon) == "table" and type(weapon.rootParts) == "table" then
-                    for _, rootPartId in pairs(weapon.rootParts) do
+                if type(weapon) == "table" and type(weapon.roots) == "table" then
+                    for _, root in pairs(weapon.roots) do
+                        local rootPartId = type(root) == "table" and root.part or nil
                         local rootPart = parts[rootPartId]
                         if rootPart and partProvidesAccepted(rootPart, { provided }) then
                             acceptedByRoot = true

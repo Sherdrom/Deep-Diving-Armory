@@ -87,7 +87,9 @@ namespace GunSmith
                 WorldSprite = worldSprite,
                 InventorySprite = inventorySprite,
                 ContentBounds = contentBounds,
-                Layers = layers
+                Layers = layers,
+                CanvasOrigin = canvasOrigin,
+                WorldSettings = worldSettings
             };
 
             spriteStates[item] = state;
@@ -137,9 +139,27 @@ namespace GunSmith
             return item != null && !item.Removed && runtimeStates.TryGetValue(item, out state!);
         }
 
+        internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, out Vector2 localPoint)
+            => TryCanvasPointToItemLocal(item, canvasPoint, null, out localPoint);
+
+        internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, Vector2? canvasOriginOverride, out Vector2 localPoint)
+        {
+            localPoint = Vector2.Zero;
+            if (!TryGetValidState(item, out GunsmithSpriteState state))
+            {
+                return false;
+            }
+
+            Vector2 canvasOrigin = canvasOriginOverride ?? state.CanvasOrigin;
+            Vector2 delta = (canvasPoint - canvasOrigin) * Math.Max(state.WorldSettings.Scale, 0.01f);
+            localPoint = Rotate(delta, MathHelper.ToRadians(state.WorldSettings.RotationDegrees));
+            return true;
+        }
+
         internal static void RemoveState(Item item)
         {
             runtimeStates.TryRemove(item, out _);
+            GunsmithQuickSlotLayoutPatch.ClearLayouts(item);
             if (spriteStates.TryRemove(item, out GunsmithSpriteState? state))
             {
                 if (!state.Texture.IsDisposed)

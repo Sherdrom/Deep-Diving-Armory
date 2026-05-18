@@ -33,6 +33,8 @@ namespace GunSmith
         public Sprite InventorySprite { get; init; } = null!;
         public Rectangle ContentBounds { get; init; }
         public IReadOnlyList<GunsmithLayer> Layers { get; init; } = Array.Empty<GunsmithLayer>();
+        public Vector2 CanvasOrigin { get; init; }
+        public GunsmithWorldSettings WorldSettings { get; init; } = GunsmithWorldSettings.Default;
     }
 
     internal sealed class GunsmithRuntimeState

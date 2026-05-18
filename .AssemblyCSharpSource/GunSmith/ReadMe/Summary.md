@@ -12,11 +12,11 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
   - Weapons bind to a platform.
   - Platforms define root slots, canvas size, path names, required hidden slots, and slot layout semantics.
   - Parts define type, provided compatibility tags, optional item backing, visual source data, stats, and nested mounts.
-  - Weapon `rootParts` and `rootSockets` provide the default root assembly and per-weapon alignment.
+  - Weapon `roots` provide the default root assembly, root socket alignment, and optional `itemPosOrigin` calibration for quick-slot contained item placement.
 - Current interaction model:
   - `G` opens the full GunSmith UI for the selected hand weapon.
   - `Shift+G` opens the QuickMod UI for weapons with quick slots.
-  - HK416 QuickMod uses the weapon's real hidden Barotrauma `ItemContainer` slots as authoritative physical storage.
+  - HK416 QuickMod uses the weapon's real hidden Barotrauma `ItemContainer` slots as authoritative physical storage; dynamic quick-slot containers are injected from Lua quick slot bindings.
 - Current persistence/network model:
   - `GunsmithData.SavedState` stores the encoded selection JSON.
   - Single-player reads and writes the component field locally.
@@ -34,6 +34,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - V1.5 moved saved selection sync onto native item component networking through `GunsmithData`.
 - V1.5.1 fixed client-side apply timing for existing weapons and Lua reloads, added container movement apply hooks, removed `pcall` from GunSmith Lua, and corrected exposed userdata/parameter assumptions.
 - V1.5.2 实现了动态maxslots用于quickSlots（快速改装），不需要再手动提前定义SubContainer了。
+- V1.5.3 reworked quick-slot layout around `roots`, removed legacy `rootParts`/`rootSockets` compatibility reads, added `itemPosOrigin` based contained item placement, and added console commands for live `itemPosOrigin` tuning.
 
 ## Public Interfaces
 
@@ -51,11 +52,18 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
   - `DeepGunsmithBeginQuickSlotMutation`
   - `DeepGunsmithEndQuickSlotMutation`
   - `DeepGunsmithIsQuickSlotMutation`
+  - `DeepGunsmithRegisterQuickSlotCapacity`
+  - `DeepGunsmithClearQuickSlotLayouts`
+  - `DeepGunsmithRegisterQuickSlotLayout`
+  - `DeepGunsmithApplyQuickSlotLayouts`
 - Persisted state remains:
   - `{"v":1,"parts":{...}}`
 - Main console commands:
   - `DeepGunsmithValidate`
   - `DeepGunsmithValidationSelfTest`
+  - `DeepGunsmithPrintItemPosOrigin`
+  - `DeepGunsmithSetItemPosOrigin`
+  - `DeepGunsmithNudgeItemPosOrigin`
 
 ## Current Validation Notes
 
