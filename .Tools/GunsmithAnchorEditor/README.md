@@ -1,6 +1,6 @@
 # GunSmith Anchor Editor 使用说明
 
-`GunSmith Anchor Editor` 是 GunSmith 的外部坐标生产工具，用于快速制作 `source / attachPoint / rootSockets / mount.anchor`。它是单文件 HTML 工具，不需要安装依赖，也不会读取或修改 Lua 配置文件。
+`GunSmith Anchor Editor` 是 GunSmith 的外部坐标生产工具，用于快速制作 `source / attachPoint / roots.receiver.socket / mount.anchor`。它是单文件 HTML 工具，不需要安装依赖，也不会读取或修改 Lua 配置文件。
 
 打开方式：
 
@@ -16,7 +16,7 @@
 
 - 从精灵图上框选 `visual.source`。
 - 在 source 内取 `visual.attachPoint`。
-- 在平台预览画布上取 `weapon.rootSockets.receiver`。
+- 在平台预览画布上取 `weapon.roots.receiver.socket`。
 - 在父配件上取子配件的 `mount.anchor`。
 
 工具会在下方预览画布里按 GunSmith 当前坐标规则近似拼接整枪，帮助快速判断部件是否对齐。最终效果仍以游戏内 GunSmith 合成为准。
@@ -25,14 +25,15 @@
 
 左侧是项目与工具：
 
-- `精灵图`：导入 PNG/JPG 等图片。
+- `精灵图`：导入一张或多张 PNG/JPG 等图片。
+- `查看图片`：切换上方 source 编辑画布显示的图片，不会修改部件 texture。
 - `保存工程 JSON`：保存当前图片、部件、坐标和背景设置。
 - `载入工程 JSON`：继续之前的工具工程。
 - `模式`：切换当前鼠标操作。
 - `缩放`：调整上方精灵图画布缩放。
 - `背景`：切换深色、白色、绿色背景。
 - `画布宽/高`：平台 canvas 尺寸，AR 当前通常是 `512 x 260`。
-- `root x/y`：当前 `rootSockets.receiver`。
+- `root x/y`：当前 `roots.receiver.socket`。
 - `填入 M4 示例`：载入现有 M4 坐标示例，适合理解工具行为。
 
 中间是两个画布：
@@ -53,6 +54,7 @@
 - `part id`：Lua part id，例如 `AR_barrel_std`。
 - `名称`：显示名。
 - `type`：配件类型，例如 `receiver / barrel / handguard`。
+- `texture`：当前部件使用的图片。只有修改这个字段才会改变该部件导出的 `visual.texture`。
 - `父部件`：当前部件挂在哪个父部件上；receiver 通常是 root。
 - `path`：父部件 mount path，例如 `barrel / handguard / top_rail`。
 - `order`：绘制顺序，越小越早绘制。
@@ -99,7 +101,7 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 取点模式：
 
 - `取 attachPoint`：上方精灵图画布点击，设置当前部件的 `attachPoint`。
-- `取 rootSocket`：下方预览画布点击，设置 `rootSockets.receiver`。
+- `取 rootSocket`：下方预览画布点击，设置 `roots.receiver.socket`。
 - `取 mount.anchor`：下方预览画布点击，设置当前部件相对父部件的 `mount.anchor`。
 
 键盘微调：
@@ -112,7 +114,7 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 
 - `框 source`：移动 `source.x/y`。
 - `取 attachPoint`：移动 `attachPoint.x/y`。
-- `取 rootSocket`：移动 `rootSockets.receiver.x/y`。
+- `取 rootSocket`：移动 `roots.receiver.socket.x/y`。
 - `取 mount.anchor`：移动 `mount.anchor.x/y`。
 
 当输入框、下拉框或导出文本框正在聚焦时，方向键不会触发微调，避免影响文本编辑。
@@ -154,7 +156,7 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 
 点击 `生成 Lua 片段` 后，导出区会生成：
 
-- `weapon.rootSockets`
+- `weapon.roots`
 - 当前部件 `visual`
 - 当前部件的子挂点 `mounts`
 - 一个 receiver 风格的完整 part 示例
@@ -163,7 +165,7 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 
 导出后通常放到这些文件：
 
-- 武器 rootSockets：`Lua/Scripts/Gunsmith/Config/Weapons/.../<Weapon>.lua`
+- 武器 roots：`Lua/Scripts/Gunsmith/Config/Weapons/.../<Weapon>.lua`
 - receiver：当前武器配置文件中，或独立武器部件文件。
 - AR 共享结构件：`Lua/Scripts/Gunsmith/Config/Parts/AR/Structural/`
 - 共享附件：`Lua/Scripts/Gunsmith/Config/Parts/Shared/`
@@ -172,10 +174,10 @@ mount.anchor x / y     -> 当前部件挂到父部件时，父部件上的挂点
 
 `保存工程 JSON` 会保存：
 
-- 当前图片 DataURL。
+- 当前导入的多张图片 DataURL。
 - 当前部件列表。
 - source / attachPoint / anchor。
-- rootSocket。
+- roots.receiver.socket。
 - canvas 尺寸。
 - 背景色。
 

@@ -260,7 +260,8 @@
     <section>
       <div class="panel-title">项目与工具</div>
       <div class="group">
-        <div class="row"><label>精灵图</label><input id="imageFile" type="file" accept="image/*"></div>
+        <div class="row"><label>精灵图</label><input id="imageFile" type="file" accept="image/*" multiple></div>
+        <div class="row"><label>查看图片</label><select id="imageSelect"></select></div>
         <div class="buttons">
           <button id="saveProject">保存工程 JSON</button>
           <button id="loadProjectButton">载入工程 JSON</button>
@@ -340,6 +341,7 @@
         <div class="row"><label>part id</label><input id="partId"></div>
         <div class="row"><label>名称</label><input id="partName"></div>
         <div class="row"><label>type</label><input id="partType"></div>
+        <div class="row"><label>texture</label><select id="partImageIndex"></select></div>
         <div class="row"><label>父部件</label><select id="parentIndex"></select></div>
         <div class="row"><label>path</label><input id="mountPath" placeholder="barrel / handguard / top_rail"></div>
         <div class="row"><label>order</label><input id="order" type="number"></div>
@@ -386,9 +388,8 @@
 
   <script>
     const state = {
-      image: null,
-      imageName: "",
-      imageDataUrl: "",
+      images: [],
+      activeImageIndex: 0,
       mode: "source",
       sheet: { zoom: 1, panX: 0, panY: 0 },
       preview: { zoom: 1, panX: 0, panY: 0, fitted: false },
@@ -404,10 +405,10 @@
 
     const el = {};
     for (const id of [
-      "imageFile", "saveProject", "loadProjectButton", "loadProject", "fitImage", "zoom", "showGrid", "backgroundColor",
+      "imageFile", "imageSelect", "saveProject", "loadProjectButton", "loadProject", "fitImage", "zoom", "showGrid", "backgroundColor",
       "canvasW", "canvasH", "rootX", "rootY", "addPart", "duplicatePart", "deletePart", "loadM4Example",
       "sheetCanvas", "previewCanvas", "sheetHud", "previewHud", "partList", "partId", "partName", "partType",
-      "parentIndex", "mountPath", "order", "scale", "sourceX", "sourceY", "sourceW", "sourceH", "attachX",
+      "partImageIndex", "parentIndex", "mountPath", "order", "scale", "sourceX", "sourceY", "sourceW", "sourceH", "attachX",
       "attachY", "anchorX", "anchorY", "applyFields", "exportLua", "exportText", "modeLabel"
     ]) {
       el[id] = document.getElementById(id);
@@ -424,12 +425,39 @@
         attachPoint: { x: 0, y: 0 },
         anchor: { x: 0, y: 0 },
         order,
-        scale: 1
+        scale: 1,
+        imageIndex: 0
       };
     }
 
     function selectedPart() {
       return state.parts[state.selected] || null;
+    }
+
+    function activeImageEntry() {
+      return state.images[state.activeImageIndex] || null;
+    }
+
+    function imageEntryForPart(part) {
+      return state.images[part?.imageIndex] || activeImageEntry();
+    }
+
+    function normalizePart(part) {
+      if (!part) return part;
+      if (!Number.isInteger(part.imageIndex)) part.imageIndex = 0;
+      if (part.imageIndex < 0 || part.imageIndex >= state.images.length) part.imageIndex = 0;
+      return part;
+    }
+
+    function refreshImageSelects() {
+      const options = state.images
+        .map((entry, index) => `<option value="${index}">${escapeHtml(entry.name || `image_${index + 1}`)}</option>`)
+        .join("");
+      el.imageSelect.innerHTML = options || `<option value="">未导入图片</option>`;
+      el.partImageIndex.innerHTML = options || `<option value="">未导入图片</option>`;
+      el.imageSelect.value = state.images.length ? String(state.activeImageIndex) : "";
+      const part = selectedPart();
+      el.partImageIndex.value = part && state.images.length ? String(part.imageIndex || 0) : "";
     }
 
     function resizeCanvases() {
@@ -477,11 +505,12 @@
     }
 
     function fitImage() {
-      if (!state.image) return;
+      const entry = activeImageEntry();
+      if (!entry?.image) return;
       const rect = el.sheetCanvas.getBoundingClientRect();
-      state.sheet.zoom = Math.min(rect.width / state.image.width, rect.height / state.image.height, 1);
-      state.sheet.panX = Math.max((rect.width - state.image.width * state.sheet.zoom) / 2, 0);
-      state.sheet.panY = Math.max((rect.height - state.image.height * state.sheet.zoom) / 2, 0);
+      state.sheet.zoom = Math.min(rect.width / entry.image.width, rect.height / entry.image.height, 1);
+      state.sheet.panX = Math.max((rect.width - entry.image.width * state.sheet.zoom) / 2, 0);
+      state.sheet.panY = Math.max((rect.height - entry.image.height * state.sheet.zoom) / 2, 0);
       el.zoom.value = state.sheet.zoom;
       draw();
     }
@@ -607,6 +636,8 @@
     function selectPart(index) {
       if (!Number.isInteger(index) || index < 0 || index >= state.parts.length) return;
       state.selected = index;
+      const part = selectedPart();
+      if (part && Number.isInteger(part.imageIndex)) state.activeImageIndex = part.imageIndex;
       refreshPartPanel();
       drawSheet();
       drawPreview();
@@ -619,16 +650,19 @@
       ctx.clearRect(0, 0, rect.width, rect.height);
       ctx.fillStyle = backgroundFill();
       ctx.fillRect(0, 0, rect.width, rect.height);
-      if (!state.image) {
-        drawCenteredText(ctx, rect, "导入精灵图后开始取点");
+      const entry = activeImageEntry();
+      if (!entry?.image) {
+        drawCenteredText(ctx, rect, "导入一张或多张精灵图后开始取点");
         return;
       }
 
       ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(state.image, state.sheet.panX, state.sheet.panY, state.image.width * state.sheet.zoom, state.image.height * state.sheet.zoom);
+      ctx.drawImage(entry.image, state.sheet.panX, state.sheet.panY, entry.image.width * state.sheet.zoom, entry.image.height * state.sheet.zoom);
       if (el.showGrid.checked && state.sheet.zoom >= 3) drawGrid(ctx, rect, state.sheet);
 
       state.parts.forEach((part, index) => {
+        normalizePart(part);
+        if (part.imageIndex !== state.activeImageIndex) return;
         const color = index === state.selected ? "#65b7ff" : "rgba(255,255,255,0.45)";
         const a = sheetToScreen({ x: part.source.x, y: part.source.y });
         ctx.strokeStyle = color;
@@ -678,7 +712,7 @@
       ctx.strokeStyle = state.background === "dark" ? "#3a4452" : "rgba(0,0,0,0.35)";
       ctx.strokeRect(topLeft.x, topLeft.y, state.canvas.w * state.preview.zoom, state.canvas.h * state.preview.zoom);
 
-      if (!state.image) {
+      if (!state.images.length) {
         drawCenteredText(ctx, rect, "当前武器预览");
         return;
       }
@@ -689,10 +723,12 @@
       for (const index of sorted) {
         const part = state.parts[index];
         const layout = layouts[index];
+        const entry = imageEntryForPart(part);
         if (!layout) continue;
+        if (!entry?.image) continue;
         const dst = previewToScreen({ x: layout.x, y: layout.y });
         ctx.drawImage(
-          state.image,
+          entry.image,
           part.source.x, part.source.y, part.source.w, part.source.h,
           dst.x, dst.y,
           part.source.w * part.scale * state.preview.zoom,
@@ -819,8 +855,10 @@
       el.canvasH.value = state.canvas.h;
       el.rootX.value = state.rootSocket.x;
       el.rootY.value = state.rootSocket.y;
+      refreshImageSelects();
       const part = selectedPart();
       if (!part) return;
+      normalizePart(part);
       const previousParent = el.parentIndex.value;
       el.parentIndex.innerHTML = `<option value="">root</option>` + state.parts
         .map((candidate, index) => index === state.selected ? "" : `<option value="${index}">${escapeHtml(candidate.id)}</option>`)
@@ -830,6 +868,7 @@
       el.partId.value = part.id;
       el.partName.value = part.name;
       el.partType.value = part.type;
+      el.partImageIndex.value = state.images.length ? String(part.imageIndex || 0) : "";
       el.mountPath.value = part.mountPath;
       el.order.value = part.order;
       el.scale.value = part.scale;
@@ -854,6 +893,10 @@
         part.id = el.partId.value.trim() || part.id;
         part.name = el.partName.value.trim() || part.name;
         part.type = el.partType.value.trim() || part.type;
+        if (state.images.length && el.partImageIndex.value !== "") {
+          part.imageIndex = Number(el.partImageIndex.value);
+          state.activeImageIndex = part.imageIndex;
+        }
         part.parentIndex = el.parentIndex.value === "" ? null : Number(el.parentIndex.value);
         part.mountPath = el.mountPath.value.trim() || part.mountPath;
         part.order = number(el.order.value, part.order);
@@ -879,50 +922,45 @@
     function exportLua() {
       applyFields();
       const part = selectedPart();
-      const texture = state.imageName || "weapon/gunsmith/gunsmith_test_rifle.png";
-      const mountLines = state.parts
-        .filter(child => child.parentIndex === state.selected)
-        .map(child => `        { path = "${child.mountPath}", name = "${child.name}", accepts = { "" }, defaultPart = "${child.id}", anchor = { x = ${fmt(child.anchor.x)}, y = ${fmt(child.anchor.y)} } }`)
+      if (!part) return;
+      const textureEntry = imageEntryForPart(part);
+      const texture = textureEntry?.name || "weapon/gunsmith/gunsmith_test_rifle.png";
+      const texturePath = texture.replace(/\\/g, "/");
+      const childMounts = state.parts.filter(child => child.parentIndex === state.selected);
+      const mountLines = (indent) => childMounts
+        .map(child => `${indent}{ path = "${child.mountPath}", name = "${child.name}", accepts = { "" }, defaultPart = "${child.id}", anchor = { x = ${fmt(child.anchor.x)}, y = ${fmt(child.anchor.y)} } }`)
         .join(",\n");
-      const text = [
-        "-- weapon.rootSockets",
-        "rootSockets = {",
-        `    receiver = { x = ${fmt(state.rootSocket.x)}, y = ${fmt(state.rootSocket.y)} }`,
-        "}",
-        "",
-        "-- 当前 part.visual",
-        "visual = {",
-        `    texture = Deep_Lua.Path .. "/${texture.replace(/\\/g, "/")}",`,
-        `    source = { x = ${fmt(part.source.x)}, y = ${fmt(part.source.y)}, w = ${fmt(part.source.w)}, h = ${fmt(part.source.h)} },`,
-        `    attachPoint = { x = ${fmt(part.attachPoint.x)}, y = ${fmt(part.attachPoint.y)} },`,
-        `    order = ${fmt(part.order)},`,
-        `    scale = ${fmt(part.scale)}`,
-        "}",
-        "",
-        "-- 当前 part 的子挂点 mounts",
-        "mounts = {",
-        mountLines || "    -- 当前没有子部件；新增子部件并把 parent 指向当前 part 后会生成挂点。",
-        "}",
-        "",
-        "-- Receiver 示例片段",
+
+      const rootsText = [
+        "roots = {",
+        "    receiver = {",
+        `        part = "${part.id}",`,
+        `        socket = { x = ${fmt(state.rootSocket.x)}, y = ${fmt(state.rootSocket.y)} },`,
+        "        itemPosOrigin = { x = 0, y = 0 } -- 按游戏内预览手动校准",
+        "    }",
+        "}"
+      ].join("\n");
+
+      const partText = [
         `parts.${part.id} = {`,
         `    type = "${part.type}",`,
         `    name = "${part.name}",`,
         `    provides = { "" },`,
         "    item = { identifier = \"\" },",
         "    visual = {",
-        `        texture = Deep_Lua.Path .. "/${texture.replace(/\\/g, "/")}",`,
+        `        texture = Deep_Lua.Path .. "/${texturePath}",`,
         `        source = { x = ${fmt(part.source.x)}, y = ${fmt(part.source.y)}, w = ${fmt(part.source.w)}, h = ${fmt(part.source.h)} },`,
         `        attachPoint = { x = ${fmt(part.attachPoint.x)}, y = ${fmt(part.attachPoint.y)} },`,
         `        order = ${fmt(part.order)},`,
         `        scale = ${fmt(part.scale)}`,
         "    },",
         "    mounts = {",
-        mountLines || "        -- child mounts here",
+        mountLines("        ") || "        -- child mounts here",
         "    }",
         "}"
       ].join("\n");
-      el.exportText.value = text;
+
+      el.exportText.value = part.parentIndex === null ? `${rootsText}\n\n${partText}` : partText;
     }
 
     function setMode(mode) {
@@ -1049,27 +1087,89 @@
       }
     }
 
-    function loadImage(file) {
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
+    function loadImages(files) {
+      const list = Array.from(files || []);
+      if (!list.length) return;
+      const baseIndex = state.images.length;
+      state.images.length = baseIndex + list.length;
+      let remaining = list.length;
+      list.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            state.images[baseIndex + index] = { name: file.name, dataUrl: reader.result, image: img };
+            remaining -= 1;
+            if (remaining === 0) {
+              state.images = state.images.filter(Boolean);
+              state.activeImageIndex = Math.min(baseIndex + list.length - 1, state.images.length - 1);
+              const part = selectedPart();
+              if (part) part.imageIndex = state.activeImageIndex;
+              refreshImageSelects();
+              fitImage();
+            }
+          };
+          img.onerror = () => {
+            state.images[baseIndex + index] = null;
+            remaining -= 1;
+            if (remaining === 0) {
+              state.images = state.images.filter(Boolean);
+              state.activeImageIndex = Math.min(baseIndex + list.length - 1, Math.max(state.images.length - 1, 0));
+              refreshImageSelects();
+              draw();
+            }
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function loadImageEntries(entries, onDone) {
+      if (!Array.isArray(entries) || !entries.length) {
+        state.images = [];
+        onDone?.();
+        return;
+      }
+      state.images = new Array(entries.length);
+      let remaining = entries.length;
+      entries.forEach((entry, index) => {
         const img = new Image();
         img.onload = () => {
-          state.image = img;
-          state.imageName = file.name;
-          state.imageDataUrl = reader.result;
-          fitImage();
+          state.images[index] = { name: entry.name || "", dataUrl: entry.dataUrl || "", image: img };
+          remaining -= 1;
+          if (remaining === 0) {
+            state.images = state.images.filter(Boolean);
+            onDone?.();
+          }
         };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
+        img.onerror = () => {
+          state.images[index] = null;
+          remaining -= 1;
+          if (remaining === 0) {
+            state.images = state.images.filter(Boolean);
+            onDone?.();
+          }
+        };
+        img.src = entry.dataUrl;
+      });
+    }
+
+    function projectImageData() {
+      return state.images.map(entry => ({ name: entry.name, dataUrl: entry.dataUrl }));
+    }
+
+    function migrateProjectImages(data) {
+      if (Array.isArray(data.images)) return data.images;
+      if (data.imageDataUrl) return [{ name: data.imageName || "", dataUrl: data.imageDataUrl }];
+      return [];
     }
 
     function saveProject() {
       const data = JSON.stringify({
-        version: 1,
-        imageName: state.imageName,
-        imageDataUrl: state.imageDataUrl,
+        version: 2,
+        images: projectImageData(),
+        activeImageIndex: state.activeImageIndex,
         background: state.background,
         canvas: state.canvas,
         rootSocket: state.rootSocket,
@@ -1090,8 +1190,6 @@
       const reader = new FileReader();
       reader.onload = () => {
         const data = JSON.parse(reader.result);
-        state.imageName = data.imageName || "";
-        state.imageDataUrl = data.imageDataUrl || "";
         state.background = data.background || state.background;
         el.backgroundColor.value = state.background;
         state.canvas = data.canvas || state.canvas;
@@ -1099,15 +1197,13 @@
         state.rootSocket = data.rootSocket || state.rootSocket;
         state.parts = Array.isArray(data.parts) ? data.parts : state.parts;
         state.selected = Math.min(data.selected || 0, state.parts.length - 1);
-        if (state.imageDataUrl) {
-          const img = new Image();
-          img.onload = () => {
-            state.image = img;
-            fitImage();
-          };
-          img.src = state.imageDataUrl;
-        }
-        draw();
+        loadImageEntries(migrateProjectImages(data), () => {
+          state.activeImageIndex = Math.min(data.activeImageIndex || 0, Math.max(state.images.length - 1, 0));
+          state.parts.forEach(normalizePart);
+          refreshImageSelects();
+          if (state.images.length) fitImage();
+          else draw();
+        });
       };
       reader.readAsText(file);
     }
@@ -1204,7 +1300,19 @@
       if (!item || !el.partList.contains(item)) return;
       selectPart(Number(item.dataset.index));
     });
-    el.imageFile.onchange = event => loadImage(event.target.files[0]);
+    el.imageFile.onchange = event => loadImages(event.target.files);
+    el.imageSelect.onchange = () => {
+      if (!state.images.length) return;
+      state.activeImageIndex = Number(el.imageSelect.value);
+      fitImage();
+    };
+    el.partImageIndex.onchange = () => {
+      const part = selectedPart();
+      if (!part || !state.images.length) return;
+      part.imageIndex = Number(el.partImageIndex.value);
+      state.activeImageIndex = part.imageIndex;
+      fitImage();
+    };
     el.saveProject.onclick = saveProject;
     el.loadProjectButton.onclick = () => el.loadProject.click();
     el.loadProject.onchange = event => loadProject(event.target.files[0]);
@@ -1216,7 +1324,9 @@
       draw();
     };
     el.addPart.onclick = () => {
-      state.parts.push(createPart("new_part", "新部件", "part_type", state.selected, "mount_path", 30));
+      const part = createPart("new_part", "新部件", "part_type", state.selected, "mount_path", 30);
+      part.imageIndex = state.activeImageIndex;
+      state.parts.push(part);
       state.selected = state.parts.length - 1;
       draw();
     };
