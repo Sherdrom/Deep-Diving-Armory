@@ -75,6 +75,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 
 ## Deferred Work
 
+- Quick attachment transform architecture is planned in [QuickAttachmentTransformPlan.md](QuickAttachmentTransformPlan.md), covering the staged move from physical contained item placement to shared display/effect transforms.
 - Multiplayer validation still needs real multi-client testing.
 - Server-side anti-cheat validation is intentionally minimal; full Lua compatibility rule reconstruction on the server is deferred.
 - Server-authoritative runtime stat application beyond saved selection sync is deferred.
