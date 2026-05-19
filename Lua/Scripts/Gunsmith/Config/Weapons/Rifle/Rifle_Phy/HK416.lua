@@ -17,6 +17,7 @@ config.weapons.deep_hk416 = {
     },
 
     -- QuickMod slot numbers are weapon XML ItemContainer targetslot indices.
+    -- 可选参数itemPosOffset，可以微调槽位实际itemPos，达到调整特效位置的目的，例如激光、手电等。
     quickSlotBindings = {
         lower_rail = { slot = 1 },
         right_rail = { slot = 2 },
