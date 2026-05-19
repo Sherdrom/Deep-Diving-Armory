@@ -178,6 +178,10 @@ namespace GunSmith
         {
             if (activeWindow == null) { return; }
             quickOverlayFrame?.RestoreBuffersToWeapon();
+            if (activeItem != null)
+            {
+                GunsmithQuickSlotLayoutPatch.SuspendLayouts(activeItem);
+            }
             activeWindow.ClearChildren();
 
             GUIFrame header = new(new RectTransform(new Vector2(0.48f, 0.09f), activeWindow.RectTransform, Anchor.TopCenter), color: Color.Black * 0.35f);
@@ -592,7 +596,13 @@ namespace GunSmith
         internal static void CloseWindow()
         {
             if (activeWindow == null) { return; }
+            Item? closingItem = activeItem;
+            bool closingQuickMode = activeQuickMode;
             quickOverlayFrame?.RestoreBuffersToWeapon();
+            if (closingQuickMode && closingItem != null)
+            {
+                GunsmithQuickSlotLayoutPatch.ResumeLayouts(closingItem);
+            }
             activeWindow.RectTransform.Parent = null;
             activeWindow = null;
             activeItem = null;

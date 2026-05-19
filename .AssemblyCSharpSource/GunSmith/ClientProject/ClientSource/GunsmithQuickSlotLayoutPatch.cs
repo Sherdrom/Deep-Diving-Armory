@@ -7,6 +7,8 @@ namespace GunSmith
     public static class GunsmithQuickSlotLayoutPatch
     {
         private static readonly ConcurrentDictionary<Item, Dictionary<int, QuickSlotLayoutRule>> RulesByItem = new();
+        private static readonly HashSet<Item> SuspendedItems = new();
+        private static readonly object SuspendedItemsLock = new();
 
         public static void ClearLayouts(Item item)
         {
@@ -24,13 +26,13 @@ namespace GunSmith
             Dictionary<int, QuickSlotLayoutRule> rules = RulesByItem.GetOrAdd(item, _ => new Dictionary<int, QuickSlotLayoutRule>());
             lock (rules)
             {
-                rules[slotIndex] = new QuickSlotLayoutRule(canvasAnchor, canvasOrigin, itemPosOffset, rotation, hide);
+                rules[slotIndex] = new QuickSlotLayoutRule(canvasAnchor, canvasOrigin, itemPosOffset, rotation);
             }
         }
 
         public static void ApplyLayouts(Item item)
         {
-            if (item == null || item.Removed || item.OwnInventory == null)
+            if (item == null || item.Removed || item.OwnInventory == null || IsSuspended(item))
             {
                 return;
             }
@@ -60,13 +62,38 @@ namespace GunSmith
             }
         }
 
-        [HarmonyPatch(typeof(ItemContainer), nameof(ItemContainer.SetContainedItemPositions))]
-        [HarmonyPostfix]
-        private static void ApplyGunsmithQuickSlotLayouts(ItemContainer __instance)
+        public static void SuspendLayouts(Item item)
         {
-            if (__instance?.Item != null)
+            if (item == null || item.Removed) { return; }
+            lock (SuspendedItemsLock)
             {
-                ApplyLayouts(__instance.Item);
+                SuspendedItems.Add(item);
+            }
+            item.SetContainedItemPositions();
+        }
+
+        public static void ResumeLayouts(Item item)
+        {
+            if (item == null || item.Removed) { return; }
+            lock (SuspendedItemsLock)
+            {
+                SuspendedItems.Remove(item);
+            }
+            ApplyLayouts(item);
+        }
+
+        [HarmonyPatch(typeof(Item), nameof(Item.SetContainedItemPositions))]
+        [HarmonyPostfix]
+        private static void ApplyGunsmithQuickSlotLayouts(Item __instance)
+        {
+            ApplyLayouts(__instance);
+        }
+
+        private static bool IsSuspended(Item item)
+        {
+            lock (SuspendedItemsLock)
+            {
+                return SuspendedItems.Contains(item);
             }
         }
 
@@ -108,7 +135,6 @@ namespace GunSmith
                 containedItem.Rect.Height);
             containedItem.Submarine = owner.Submarine;
             containedItem.CurrentHull = owner.CurrentHull;
-            containedItem.SetContainedItemPositions();
 
             foreach (LightComponent lightComponent in containedItem.GetComponents<LightComponent>())
             {
@@ -146,6 +172,6 @@ namespace GunSmith
             return rotation;
         }
 
-        private readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees, bool Hide);
+        private readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees);
     }
 }
