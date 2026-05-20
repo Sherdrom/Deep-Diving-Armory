@@ -25,6 +25,10 @@ namespace DeepLaser
         private static readonly FieldInfo? HullVerticesField = AccessField(ConvexHullType, "vertices");
         private static readonly FieldInfo? SegmentPointWorldPosField = AccessField(SegmentPointType, "WorldPos");
         private static bool loggedHullReflectionError;
+        private static MethodInfo? gunsmithTryGetTransformMethod;
+        private static PropertyInfo? gunsmithTransformDrawPositionProperty;
+        private static PropertyInfo? gunsmithTransformDirectionProperty;
+        private static bool loggedGunsmithTransformReflectionError;
         private static Texture2D? impactGlowTexture;
         private static Texture2D? impactCoreTexture;
         private static MethodInfo? AccessMethod(Type? type, string name)
@@ -95,7 +99,6 @@ namespace DeepLaser
             if (!TryFindLaser(weaponItem, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
 
             weaponItem.body?.UpdateDrawPosition();
-            weaponItem.SetContainedItemPositions();
             DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor);
         }
 
@@ -134,20 +137,10 @@ namespace DeepLaser
         {
             if (rangedWeapon.Item.body == null) { return; }
 
-            Vector2 startWorld = laserItem.DrawPosition;
-            if (!IsFinite(startWorld) || startWorld == Vector2.Zero)
+            if (!TryGetLaserStartAndDirection(rangedWeapon.Item, laserItem, out Vector2 startWorld, out Vector2 directionWorld))
             {
-                startWorld = laserItem.WorldPosition;
+                return;
             }
-            if (!IsFinite(startWorld)) { return; }
-
-            float rotation = rangedWeapon.Item.body.Dir == 1.0f
-                ? rangedWeapon.Item.body.Rotation
-                : rangedWeapon.Item.body.Rotation - MathHelper.Pi;
-
-            Vector2 directionWorld = new(MathF.Cos(rotation), MathF.Sin(rotation));
-            if (directionWorld.LengthSquared() < 0.0001f) { return; }
-            directionWorld.Normalize();
 
             Vector2 endWorld = startWorld + directionWorld * MaxLaserLength;
 
@@ -170,6 +163,115 @@ namespace DeepLaser
             {
                 DrawImpactDot(spriteBatch, endDraw, laserColor, laserDepth );
             }
+        }
+
+        private static bool TryGetLaserStartAndDirection(Item weaponItem, Item laserItem, out Vector2 startWorld, out Vector2 directionWorld)
+        {
+            if (TryGetGunsmithLaserTransform(weaponItem, laserItem, out startWorld, out directionWorld))
+            {
+                return true;
+            }
+
+            startWorld = laserItem.DrawPosition;
+            if (!IsFinite(startWorld) || startWorld == Vector2.Zero)
+            {
+                startWorld = laserItem.WorldPosition;
+            }
+            if (!IsFinite(startWorld)) { return false; }
+
+            if (weaponItem.body == null) { return false; }
+
+            float rotation = weaponItem.body.Dir == 1.0f
+                ? weaponItem.body.Rotation
+                : weaponItem.body.Rotation - MathHelper.Pi;
+
+            directionWorld = new Vector2(MathF.Cos(rotation), MathF.Sin(rotation));
+            if (directionWorld.LengthSquared() < 0.0001f) { return false; }
+            directionWorld.Normalize();
+            return true;
+        }
+
+        private static bool TryGetGunsmithLaserTransform(Item weaponItem, Item laserItem, out Vector2 startWorld, out Vector2 directionWorld)
+        {
+            startWorld = default;
+            directionWorld = default;
+
+            if (!TryResolveGunsmithTransformApi())
+            {
+                return false;
+            }
+
+            object?[] args = { weaponItem, laserItem, null };
+            if (gunsmithTryGetTransformMethod!.Invoke(null, args) is not true)
+            {
+                return false;
+            }
+
+            object? transform = args[2];
+            if (transform == null)
+            {
+                return false;
+            }
+
+            if (gunsmithTransformDrawPositionProperty!.GetValue(transform) is not Vector2 drawPosition ||
+                gunsmithTransformDirectionProperty!.GetValue(transform) is not Vector2 direction)
+            {
+                DebugConsole.ThrowError("DeepLaser received an invalid GunSmith quick attachment transform payload.");
+                return false;
+            }
+
+            if (!IsFinite(drawPosition) || !IsFinite(direction) || direction.LengthSquared() < 0.0001f)
+            {
+                DebugConsole.ThrowError("DeepLaser received a non-finite GunSmith quick attachment transform.");
+                return false;
+            }
+
+            direction.Normalize();
+            startWorld = drawPosition;
+            directionWorld = direction;
+            return true;
+        }
+
+        private static bool TryResolveGunsmithTransformApi()
+        {
+            if (gunsmithTryGetTransformMethod != null &&
+                gunsmithTransformDrawPositionProperty != null &&
+                gunsmithTransformDirectionProperty != null)
+            {
+                return true;
+            }
+
+            Type? serviceType = AccessTools.TypeByName("GunSmith.GunsmithQuickAttachmentTransformService");
+            if (serviceType == null)
+            {
+                return false;
+            }
+
+            gunsmithTryGetTransformMethod = serviceType
+                .GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .FirstOrDefault(method =>
+                {
+                    if (method.Name != "TryGetTransform") { return false; }
+                    ParameterInfo[] parameters = method.GetParameters();
+                    return parameters.Length == 3 &&
+                           parameters[0].ParameterType == typeof(Item) &&
+                           parameters[1].ParameterType == typeof(Item) &&
+                           parameters[2].IsOut;
+                });
+
+            Type? transformType = gunsmithTryGetTransformMethod?.GetParameters()[2].ParameterType.GetElementType();
+            gunsmithTransformDrawPositionProperty = transformType?.GetProperty("DrawPosition", BindingFlags.Public | BindingFlags.Instance);
+            gunsmithTransformDirectionProperty = transformType?.GetProperty("Direction", BindingFlags.Public | BindingFlags.Instance);
+
+            bool resolved = gunsmithTryGetTransformMethod != null &&
+                            gunsmithTransformDrawPositionProperty != null &&
+                            gunsmithTransformDirectionProperty != null;
+            if (!resolved)
+            {
+                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunSmith quick attachment transform API.");
+            }
+
+            return resolved;
         }
 
         private static void DrawImpactDot(SpriteBatch spriteBatch, Vector2 position, Color laserColor, float depth)
@@ -363,6 +465,13 @@ namespace DeepLaser
         {
             if (loggedHullReflectionError) { return; }
             loggedHullReflectionError = true;
+            DebugConsole.ThrowError(message);
+        }
+
+        private static void LogGunsmithTransformReflectionErrorOnce(string message)
+        {
+            if (loggedGunsmithTransformReflectionError) { return; }
+            loggedGunsmithTransformReflectionError = true;
             DebugConsole.ThrowError(message);
         }
 

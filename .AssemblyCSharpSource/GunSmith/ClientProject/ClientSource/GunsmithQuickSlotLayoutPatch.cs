@@ -30,6 +30,25 @@ namespace GunSmith
             }
         }
 
+        internal static bool TryGetLayoutRule(Item item, int slotIndex, out QuickSlotLayoutRule rule)
+        {
+            rule = default;
+            if (item == null || item.Removed || slotIndex < 0)
+            {
+                return false;
+            }
+
+            if (!RulesByItem.TryGetValue(item, out Dictionary<int, QuickSlotLayoutRule>? rules))
+            {
+                return false;
+            }
+
+            lock (rules)
+            {
+                return rules.TryGetValue(slotIndex, out rule);
+            }
+        }
+
         public static void ApplyLayouts(Item item)
         {
             if (item == null || item.Removed || item.OwnInventory == null || IsSuspended(item))
@@ -57,7 +76,7 @@ namespace GunSmith
 
                 foreach (Item containedItem in item.OwnInventory.slots[slotIndex].Items.ToArray())
                 {
-                    ApplyLayoutToContainedItem(item, containedItem, rule);
+                    ApplyLayoutToContainedItem(item, containedItem, slotIndex, rule);
                 }
             }
         }
@@ -97,40 +116,29 @@ namespace GunSmith
             }
         }
 
-        private static void ApplyLayoutToContainedItem(Item owner, Item containedItem, QuickSlotLayoutRule rule)
+        private static void ApplyLayoutToContainedItem(Item owner, Item containedItem, int slotIndex, QuickSlotLayoutRule rule)
         {
             if (containedItem == null || containedItem.Removed)
             {
                 return;
             }
 
-            if (!GunsmithApi.TryCanvasPointToItemLocal(owner, rule.CanvasAnchor, rule.CanvasOrigin, out Vector2 itemLocalPos))
+            if (!GunsmithQuickAttachmentTransformService.TryCreateTransform(owner, containedItem, slotIndex, rule, out GunsmithQuickAttachmentTransform transform))
             {
                 return;
             }
 
-            itemLocalPos += rule.ItemPosOffset;
-            Vector2 worldPos = ToWorldPosition(owner, itemLocalPos);
-            float rotation = ToWorldRotation(owner, rule.RotationDegrees);
-
             if (containedItem.body != null)
             {
-                try
-                {
-                    Vector2 simPos = ConvertUnits.ToSimUnits(worldPos);
-                    containedItem.body.FarseerBody.SetTransformIgnoreContacts(ref simPos, rotation);
-                    containedItem.body.UpdateDrawPosition(interpolate: false);
-                    containedItem.body.Submarine = owner.Submarine;
-                }
-                catch (Exception ex)
-                {
-                    LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to apply quick slot layout to '{containedItem.Prefab?.Identifier.Value}': {ex.Message}");
-                }
+                Vector2 simPos = ConvertUnits.ToSimUnits(transform.WorldPosition);
+                containedItem.body.FarseerBody.SetTransformIgnoreContacts(ref simPos, transform.WorldRotation);
+                containedItem.body.UpdateDrawPosition(interpolate: false);
+                containedItem.body.Submarine = owner.Submarine;
             }
 
             containedItem.Rect = new Rectangle(
-                (int)(worldPos.X - containedItem.Rect.Width / 2.0f),
-                (int)(worldPos.Y + containedItem.Rect.Height / 2.0f),
+                (int)(transform.WorldPosition.X - containedItem.Rect.Width / 2.0f),
+                (int)(transform.WorldPosition.Y + containedItem.Rect.Height / 2.0f),
                 containedItem.Rect.Width,
                 containedItem.Rect.Height);
             containedItem.Submarine = owner.Submarine;
@@ -142,36 +150,6 @@ namespace GunSmith
             }
         }
 
-        private static Vector2 ToWorldPosition(Item owner, Vector2 itemLocalPos)
-        {
-            PhysicsBody? rootBody = owner.RootContainer?.body ?? owner.body;
-            if (owner.body != null)
-            {
-                Vector2 pos = itemLocalPos;
-                pos.X *= rootBody?.Dir ?? owner.body.Dir;
-                return Vector2.Transform(pos, Matrix.CreateRotationZ(owner.body.Rotation)) + owner.body.Position;
-            }
-
-            return owner.Position + itemLocalPos;
-        }
-
-        private static float ToWorldRotation(Item owner, float localRotationDegrees)
-        {
-            float rotation = MathHelper.ToRadians(localRotationDegrees);
-            PhysicsBody? rootBody = owner.RootContainer?.body ?? owner.body;
-            if (owner.body != null)
-            {
-                rotation *= rootBody?.Dir ?? owner.body.Dir;
-                rotation += owner.body.Rotation;
-            }
-            else
-            {
-                rotation += -owner.RotationRad;
-            }
-
-            return rotation;
-        }
-
-        private readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees);
+        internal readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees);
     }
 }

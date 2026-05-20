@@ -18,6 +18,15 @@ The long-term target is a Gunsmith-owned attachment transform layer. Attachment 
 
 Keep the current `GunsmithQuickSlotLayoutPatch` compatibility behavior while introducing read-only transform queries.
 
+### 实施原则：不要静默兜底
+
+During this migration, do not hide transform/runtime failures behind silent `try/catch` or silent fallback behavior.
+
+- If a `try/catch` is necessary, it must print the concrete error message and relevant context, such as weapon identifier, attachment identifier, quick slot index, and failing API path.
+- Prefer letting exceptions surface directly during early implementation when the failure indicates a bad transform, invalid reflection payload, or broken GunSmith integration.
+- Fallback behavior is only acceptable for expected compatibility cases, such as non-Gunsmith weapons or attachments with no registered GunSmith transform.
+- Compatibility fallback must not mask a malformed GunSmith transform. Invalid or non-finite transform data should produce an explicit error.
+
 1. Add a `GunsmithQuickAttachmentTransformService` or equivalent API that can answer:
    - weapon item
    - contained attachment item
