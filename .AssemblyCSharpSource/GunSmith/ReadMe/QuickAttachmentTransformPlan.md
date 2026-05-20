@@ -42,10 +42,13 @@ During this migration, do not hide transform/runtime failures behind silent `try
 4. Migrate quick-slot `LightComponent` handling:
    - If the light item has a Gunsmith transform, set the light source position and rotation from that transform.
    - Leave native Barotrauma light behavior unchanged when no transform is available.
-5. Migrate quick-slot attachment rendering:
-   - Draw Gunsmith quick slot attachments from the shared transform.
+5. QAT V0.2 decision: do not add a dynamic quick-slot attachment render path yet.
+   - HK416 quick-slot attachments are already visible through the GunSmith composed world sprite.
+   - A separate transform-driven render path would duplicate those visual layers unless quick-slot visuals are first excluded from composition.
+   - Keep dynamic quick-slot rendering deferred until there is a dedicated render metadata design.
+6. Remove the GunSmith quick-slot physical body/rect mutation path after laser and light transforms are stable.
+   - Keep `SuspendLayouts`/`ResumeLayouts` as compatibility wrappers until GUI call sites are cleaned up.
    - Leave QuickMod inventory slots and drag/drop interaction on the native contained item state.
-6. After laser, light, and rendering are stable, remove the physical body/rect mutation path and the temporary `SuspendLayouts`/`ResumeLayouts` protection.
 
 This path allows each subsystem to be validated independently and keeps the current muzzle fix in place until all consumers have moved off physical contained item placement.
 
@@ -113,12 +116,16 @@ Current mod reference points:
    - Transform-driven lights should match attachment display position and rotation.
    - Native lights should remain untouched.
 
-4. **Rendering migration**
-   - Draw quick slot attachments from transform service data.
+4. **Physical layout removal**
+   - Keep composed world sprite rendering as the visible quick-slot attachment source.
+   - Stop moving quick-slot contained item bodies/rects from the layout patch.
    - Keep inventory/QuickMod interaction based on native contained item storage.
 
-5. **Compatibility cleanup**
-   - Disable or remove body/rect mutation in quick slot layout application.
+5. **Optional rendering migration**
+   - Only add transform-driven quick-slot item rendering if quick-slot visual layers are removed from composed sprites first.
+   - Define render metadata separately before implementing this path.
+
+6. **Compatibility cleanup**
    - Remove `SuspendLayouts` and `ResumeLayouts`.
    - Keep Lua-facing hook names stable unless there is a deliberate config migration.
 

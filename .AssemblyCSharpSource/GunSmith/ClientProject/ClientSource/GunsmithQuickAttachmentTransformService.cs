@@ -85,8 +85,20 @@ namespace GunSmith
             float worldRotation = ToWorldRotation(weaponItem, rule.RotationDegrees, drawPosition: false);
             float drawRotation = ToWorldRotation(weaponItem, rule.RotationDegrees, drawPosition: true);
             Vector2 direction = ToForwardDirection(weaponItem, rule.RotationDegrees, drawPosition: true);
-            if (direction.LengthSquared() < 0.0001f)
+            if (!IsFinite(worldPosition) ||
+                !IsFinite(drawPosition) ||
+                !float.IsFinite(worldRotation) ||
+                !float.IsFinite(drawRotation) ||
+                !IsFinite(direction) ||
+                direction.LengthSquared() < 0.0001f)
             {
+                DebugConsole.ThrowError(
+                    $"GunSmith QAT produced an invalid quick attachment transform. " +
+                    $"weapon={weaponItem.Prefab.Identifier.Value}, " +
+                    $"attachment={attachmentItem.Prefab.Identifier.Value}, " +
+                    $"slot={quickSlotIndex}, " +
+                    $"worldPosition={worldPosition}, drawPosition={drawPosition}, " +
+                    $"worldRotation={worldRotation}, drawRotation={drawRotation}, direction={direction}");
                 return false;
             }
             direction.Normalize();
@@ -203,5 +215,8 @@ namespace GunSmith
 
             return owner.FlippedX && owner.Prefab.CanSpriteFlipX ? -1.0f : 1.0f;
         }
+
+        private static bool IsFinite(Vector2 value)
+            => float.IsFinite(value.X) && float.IsFinite(value.Y);
     }
 }

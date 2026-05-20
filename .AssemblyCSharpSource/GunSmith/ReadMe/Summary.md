@@ -36,6 +36,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - V1.5.2 实现了动态maxslots用于quickSlots（快速改装），不需要再手动提前定义SubContainer了。
 - V1.5.3 reworked quick-slot layout around `roots`, removed legacy `rootParts`/`rootSockets` compatibility reads, added `itemPosOrigin` based contained item placement, and added console commands for live `itemPosOrigin` tuning.
 - QAT V0.1 introduced a read-only quick attachment transform service, moved DeepLaser and quick-slot `LightComponent` effects onto that transform when available, and kept non-GunSmith/native fallback behavior stable.
+- QAT V0.2 removed GunSmith quick-slot body/rect mutation from layout application while keeping composed world sprite rendering, transform queries, and QuickMod storage compatibility intact.
 
 ## Public Interfaces
 
@@ -70,6 +71,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 
 - M4/HK416 full UI and QuickMod flows have been locally validated through repeated in-game passes.
 - HK416 QAT V0.1 validation confirms quick-slot flashlight light output is restored, DeepLaser uses the visible attachment transform, and QuickMod drag/drop behavior remains stable.
+- QAT V0.2 keeps quick-slot visible attachments in the composed world sprite and removes GunSmith physical layout writes from quick-slot contained items.
 - Existing weapons in cabinets, player inventories, and hands are now reapplied after map load and `cl_reloadlua`.
 - GunSmith Lua scripts intentionally avoid `pcall` so invalid hook parameters and userdata assumptions surface immediately during testing.
 - GunSmith solution build is expected to pass with:
@@ -77,7 +79,8 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 
 ## Deferred Work
 
-- Quick attachment transform architecture is in progress; QAT V0.1 is summarized in [V0.1_QAT_Summary.md](V0.1_QAT_Summary.md), with attachment rendering migration and physical layout cleanup still deferred.
+- Quick attachment transform architecture is in progress; QAT V0.1 is summarized in [V0.1_QAT_Summary.md](V0.1_QAT_Summary.md), and QAT V0.2 is summarized in [V0.2_QAT_Summary.md](V0.2_QAT_Summary.md).
+- Dynamic transform-driven quick-slot attachment rendering is deferred until quick-slot visual layers can be separated from composed world sprites.
 - Multiplayer validation still needs real multi-client testing.
 - Server-side anti-cheat validation is intentionally minimal; full Lua compatibility rule reconstruction on the server is deferred.
 - Server-authoritative runtime stat application beyond saved selection sync is deferred.
