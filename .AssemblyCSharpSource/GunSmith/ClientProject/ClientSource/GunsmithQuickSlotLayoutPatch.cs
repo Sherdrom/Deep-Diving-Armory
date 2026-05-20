@@ -44,29 +44,6 @@ namespace GunSmith
             }
         }
 
-        public static void ApplyLayouts(Item item)
-        {
-            // QAT V0.2: layout rules are read-only transform inputs. Real quick-slot
-            // items stay in native inventory storage and are no longer physically moved.
-        }
-
-        public static void SuspendLayouts(Item item)
-        {
-            // Compatibility wrapper retained for existing QuickMod GUI calls.
-        }
-
-        public static void ResumeLayouts(Item item)
-        {
-            // Compatibility wrapper retained for existing QuickMod GUI calls.
-        }
-
-        [HarmonyPatch(typeof(Item), nameof(Item.SetContainedItemPositions))]
-        [HarmonyPostfix]
-        private static void ApplyGunsmithQuickSlotLayouts(Item __instance)
-        {
-            ApplyLayouts(__instance);
-        }
-
         internal readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees);
     }
 }

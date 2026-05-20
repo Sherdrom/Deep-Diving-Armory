@@ -335,11 +335,9 @@ function Runtime.Apply(item)
     if Hook and Hook.Call then
         registerQuickSlotLayouts(item, selection, platform, Core.WeaponConfig(item))
         if State.appliedSignatures[item] == signature then
-            Hook.Call("DeepGunsmithApplyQuickSlotLayouts", item)
             return
         end
         Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, managedItemSpec, platform.canvas.w, platform.canvas.h)
-        Hook.Call("DeepGunsmithApplyQuickSlotLayouts", item)
         State.appliedSignatures[item] = signature
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")

@@ -138,16 +138,6 @@ namespace GunSmith
                 return null;
             });
 
-            hook.Add("DeepGunsmithApplyQuickSlotLayouts", args =>
-            {
-                Item? item = FindArg<Item>(args);
-                if (item != null)
-                {
-                    GunsmithQuickSlotLayoutPatch.ApplyLayouts(item);
-                }
-                return null;
-            });
-
             hook.Add("DeepGunsmithBeginQuickSlotMutation", args =>
             {
                 Item? item = FindArg<Item>(args);

@@ -34,7 +34,7 @@ During this migration, do not hide transform/runtime failures behind silent `try
    - world/draw position
    - rotation and direction
    - submarine/current hull context
-2. Keep `DeepGunsmithRegisterQuickSlotLayout` and `DeepGunsmithApplyQuickSlotLayouts` stable so existing Lua configs do not need a migration.
+2. Keep `DeepGunsmithRegisterQuickSlotLayout` stable so existing Lua configs do not need a migration.
 3. Migrate DeepLaser first:
    - Stop calling `weaponItem.SetContainedItemPositions()` in the laser draw path.
    - Use the Gunsmith transform as the laser start position and direction when available.
@@ -47,7 +47,7 @@ During this migration, do not hide transform/runtime failures behind silent `try
    - A separate transform-driven render path would duplicate those visual layers unless quick-slot visuals are first excluded from composition.
    - Keep dynamic quick-slot rendering deferred until there is a dedicated render metadata design.
 6. Remove the GunSmith quick-slot physical body/rect mutation path after laser and light transforms are stable.
-   - Keep `SuspendLayouts`/`ResumeLayouts` as compatibility wrappers until GUI call sites are cleaned up.
+   - QAT V0.3 removes the no-op `SuspendLayouts`/`ResumeLayouts` wrappers and GUI call sites.
    - Leave QuickMod inventory slots and drag/drop interaction on the native contained item state.
 
 This path allows each subsystem to be validated independently and keeps the current muzzle fix in place until all consumers have moved off physical contained item placement.
@@ -127,6 +127,7 @@ Current mod reference points:
 
 6. **Compatibility cleanup**
    - Remove `SuspendLayouts` and `ResumeLayouts`.
+   - Remove the obsolete `DeepGunsmithApplyQuickSlotLayouts` hook and Lua-side calls.
    - Keep Lua-facing hook names stable unless there is a deliberate config migration.
 
 ## 测试矩阵
