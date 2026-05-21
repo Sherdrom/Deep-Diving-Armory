@@ -7,29 +7,6 @@ local Stats = Gunsmith.Stats
 local UiSpec = {}
 Gunsmith.UiSpec = UiSpec
 
-local function encodePreview(item, platform)
-    local weapon = Core.WeaponConfig(item) or {}
-    local preview = weapon.preview or {}
-    local offset = preview.offset or { x = 0, y = 0 }
-    return string.format(
-        "padding=%.4f,scale=%.4f,offsetX=%.4f,offsetY=%.4f",
-        preview.padding or 12,
-        preview.scale or 1.0,
-        offset.x or 0,
-        offset.y or 0)
-end
-
-local function encodeText(value)
-    return tostring(value or "")
-        :gsub("%%", "%%25")
-        :gsub(":", "%%3A")
-        :gsub("|", "%%7C")
-        :gsub(",", "%%2C")
-        :gsub(";", "%%3B")
-        :gsub("~", "%%7E")
-        :gsub("=", "%%3D")
-end
-
 local function appendPartEntry(entries, item, selection, platform, slotPath, partId)
     local part = Gunsmith.Config.parts[partId]
     if part then
@@ -49,9 +26,9 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
             part.nameKey,
             status,
             Stats.Encode(Stats.PartStats(part), "~"),
-            encodeText(part.item and part.item.identifier or ""),
-            encodeText(visual.texture or ""),
-            encodeText(string.format("%d,%d,%d,%d", source.x or 0, source.y or 0, source.w or 0, source.h or 0))
+            Core.EncodeText(part.item and part.item.identifier or ""),
+            Core.EncodeText(visual.texture or ""),
+            Core.EncodeText(string.format("%d,%d,%d,%d", source.x or 0, source.y or 0, source.w or 0, source.h or 0))
         }, ":"))
     end
 end
@@ -88,5 +65,5 @@ function UiSpec.Build(item, selection, platform, currentPath)
         path,
         Core.PathLabel(selection, platform, path),
         Core.UiParentPath(platform, path)
-    }, "|") .. "::" .. encodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
+    }, "|") .. "::" .. Core.EncodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
 end

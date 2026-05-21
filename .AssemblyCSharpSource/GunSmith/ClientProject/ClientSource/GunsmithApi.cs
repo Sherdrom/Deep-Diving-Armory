@@ -116,9 +116,6 @@ namespace GunSmith
             RestoreVanillaSprite(item);
         }
 
-        internal static bool TryGetState(Item item, out GunsmithSpriteState state)
-            => spriteStates.TryGetValue(item, out state!);
-
         internal static bool TryGetValidState(Item item, out GunsmithSpriteState state)
         {
             if (spriteStates.TryGetValue(item, out state!) && IsStateUsable(state))

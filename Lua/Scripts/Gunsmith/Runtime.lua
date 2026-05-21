@@ -159,79 +159,6 @@ local function buildSignature(item, selection, platform)
     return table.concat(values, ",")
 end
 
-local resolveDrawOffset
-
-local function visualScale(visual)
-    if type(visual) == "table" and type(visual.scale) == "number" and visual.scale > 0 then
-        return visual.scale
-    end
-    return 1.0
-end
-
-local function resolveMountAnchor(selection, platform, weapon, path)
-    local mount = Core.MountForPath(selection, path)
-    local anchor = mount and mount.anchor or nil
-    if not anchor then return nil end
-
-    local parentPath = Core.ParentPath(path)
-    local parentPart = Core.GetInstalledPart(selection, parentPath)
-    local parentVisual = Core.PartVisual(parentPart)
-    if parentVisual then
-        local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
-        if parentOffset then
-            local parentAttachPoint = parentVisual.attachPoint or { x = 0, y = 0 }
-            local parentScale = visualScale(parentVisual)
-            return {
-                x = parentOffset.x + (parentAttachPoint.x + anchor.x) * parentScale,
-                y = parentOffset.y + (parentAttachPoint.y + anchor.y) * parentScale
-            }
-        end
-    end
-
-    local parentAnchor = nil
-    if Core.IsRootSlot(platform, parentPath) then
-        parentAnchor = Core.RootSocket(weapon, parentPath)
-    else
-        parentAnchor = resolveMountAnchor(selection, platform, weapon, parentPath)
-    end
-
-    if parentAnchor then
-        return {
-            x = parentAnchor.x + anchor.x,
-            y = parentAnchor.y + anchor.y
-        }
-    end
-
-    return nil
-end
-
-resolveDrawOffset = function(selection, platform, weapon, path, visual)
-    local anchor = nil
-    if Core.IsRootSlot(platform, path) then
-        local rootPath = Core.LeafPath(path)
-        anchor = Core.RootSocket(weapon, rootPath)
-    else
-        anchor = resolveMountAnchor(selection, platform, weapon, path)
-    end
-
-    if anchor and visual.attachPoint then
-        local scale = visualScale(visual)
-        return {
-            x = anchor.x - visual.attachPoint.x * scale,
-            y = anchor.y - visual.attachPoint.y * scale
-        }
-    end
-
-    if anchor and visual.relativeOffset then
-        return {
-            x = anchor.x + visual.relativeOffset.x,
-            y = anchor.y + visual.relativeOffset.y
-        }
-    end
-
-    return nil
-end
-
 local function buildLayerSpecForItem(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     Core.PruneInvalidSelections(selection, platform, weapon)
@@ -241,7 +168,7 @@ local function buildLayerSpecForItem(item, selection, platform)
         local visual = Core.PartVisual(part)
         if visual and visual.texture and visual.source then
             local source = visual.source
-            local drawOffset = resolveDrawOffset(selection, platform, weapon, path, visual)
+            local drawOffset = Core.ResolveDrawOffset(selection, platform, weapon, path, visual)
             if drawOffset then
                 local scale = visual.scale or 1.0
                 local mount = Core.MountForPath(selection, path)

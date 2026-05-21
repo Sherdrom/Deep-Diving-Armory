@@ -8,29 +8,6 @@ local QuickMod = Gunsmith.QuickMod
 local QuickUiSpec = {}
 Gunsmith.QuickUiSpec = QuickUiSpec
 
-local function encodePreview(item, platform)
-    local weapon = Core.WeaponConfig(item) or {}
-    local preview = weapon.preview or {}
-    local offset = preview.offset or { x = 0, y = 0 }
-    return string.format(
-        "padding=%.4f,scale=%.4f,offsetX=%.4f,offsetY=%.4f",
-        preview.padding or 12,
-        preview.scale or 1.0,
-        offset.x or 0,
-        offset.y or 0)
-end
-
-local function encodeText(value)
-    return tostring(value or "")
-        :gsub("%%", "%%25")
-        :gsub(":", "%%3A")
-        :gsub("|", "%%7C")
-        :gsub(",", "%%2C")
-        :gsub(";", "%%3B")
-        :gsub("~", "%%7E")
-        :gsub("=", "%%3D")
-end
-
 local function canQuickSlotAccept(item, quickSlotIndex, identifier)
     if not QuickMod or quickSlotIndex == nil then return true end
     return QuickMod.CanSlotAcceptItemIdentifier(item, quickSlotIndex, identifier)
@@ -59,9 +36,9 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         part.nameKey,
         status,
         Stats.Encode(Stats.PartStats(part), "~"),
-        encodeText(part.item and part.item.identifier or ""),
-        encodeText(visual.texture or ""),
-        encodeText(string.format("%d,%d,%d,%d", source.x or 0, source.y or 0, source.w or 0, source.h or 0))
+        Core.EncodeText(part.item and part.item.identifier or ""),
+        Core.EncodeText(visual.texture or ""),
+        Core.EncodeText(string.format("%d,%d,%d,%d", source.x or 0, source.y or 0, source.w or 0, source.h or 0))
     }, ":"))
 end
 
@@ -79,79 +56,6 @@ local function quickSlotsForItem(item, selection, platform)
         end
     end
     return slots
-end
-
-local function visualScale(visual)
-    if type(visual) == "table" and type(visual.scale) == "number" and visual.scale > 0 then
-        return visual.scale
-    end
-    return 1.0
-end
-
-local resolveDrawOffset
-
-local function resolveMountAnchor(selection, platform, weapon, path)
-    local mount = Core.MountForPath(selection, path)
-    local anchor = mount and mount.anchor or nil
-    if not anchor then return nil end
-
-    local parentPath = Core.ParentPath(path)
-    local parentPart = Core.GetInstalledPart(selection, parentPath)
-    local parentVisual = Core.PartVisual(parentPart)
-    if parentVisual then
-        local parentOffset = resolveDrawOffset(selection, platform, weapon, parentPath, parentVisual)
-        if parentOffset then
-            local parentAttachPoint = parentVisual.attachPoint or { x = 0, y = 0 }
-            local parentScale = visualScale(parentVisual)
-            return {
-                x = parentOffset.x + (parentAttachPoint.x + anchor.x) * parentScale,
-                y = parentOffset.y + (parentAttachPoint.y + anchor.y) * parentScale
-            }
-        end
-    end
-
-    local parentAnchor = nil
-    if Core.IsRootSlot(platform, parentPath) then
-        parentAnchor = Core.RootSocket(weapon, parentPath)
-    else
-        parentAnchor = resolveMountAnchor(selection, platform, weapon, parentPath)
-    end
-
-    if parentAnchor then
-        return {
-            x = parentAnchor.x + anchor.x,
-            y = parentAnchor.y + anchor.y
-        }
-    end
-
-    return nil
-end
-
-resolveDrawOffset = function(selection, platform, weapon, path, visual)
-    local anchor = nil
-    if Core.IsRootSlot(platform, path) then
-        local rootPath = Core.LeafPath(path)
-        anchor = Core.RootSocket(weapon, rootPath)
-    else
-        anchor = resolveMountAnchor(selection, platform, weapon, path)
-    end
-
-    if anchor and visual.attachPoint then
-        local scale = visualScale(visual)
-        return {
-            x = anchor.x - visual.attachPoint.x * scale,
-            y = anchor.y - visual.attachPoint.y * scale
-        }
-    end
-
-    if anchor and visual.relativeOffset then
-        return {
-            x = anchor.x + visual.relativeOffset.x,
-            y = anchor.y + visual.relativeOffset.y
-        }
-    end
-
-    return nil
 end
 
 local function compatibleItemIdentifiers(item, selection, platform, slotPath, quickSlotIndex)
@@ -218,5 +122,5 @@ function QuickUiSpec.Build(item, selection, platform)
         "",
         "deep.gunsmith.ui.quick_root",
         ""
-    }, "|") .. "::" .. encodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
+    }, "|") .. "::" .. Core.EncodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
 end

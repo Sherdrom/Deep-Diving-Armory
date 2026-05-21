@@ -7,11 +7,6 @@ Gunsmith.QuickMod = QuickMod
 
 local itemIdentifierToPartIds = nil
 
-local function itemIdentifier(item)
-    if not item or not item.Prefab then return nil end
-    return item.Prefab.Identifier.Value
-end
-
 local function quickSlotsForItem(item)
     local weapon = Core.WeaponConfig(item)
     if not weapon then return nil end
@@ -65,7 +60,7 @@ local function findCompatiblePartId(selection, platform, path, identifier)
 end
 
 function QuickMod.PartIdForItem(selection, platform, path, item)
-    return findCompatiblePartId(selection, platform, path, itemIdentifier(item))
+    return findCompatiblePartId(selection, platform, path, Core.ItemIdentifier(item))
 end
 
 local function beginQuickSlotMutation(item)
@@ -129,7 +124,7 @@ function QuickMod.SyncFromContainer(item, selection, platform)
         local contained = slotItem(item, quickSlot.slot)
         local newPartId = nil
         if contained then
-            newPartId = findCompatiblePartId(selection, platform, path, itemIdentifier(contained))
+            newPartId = findCompatiblePartId(selection, platform, path, Core.ItemIdentifier(contained))
         end
 
         if newPartId then
@@ -176,7 +171,7 @@ function QuickMod.ClearSlot(item, character, slotIndex, onReturned)
     local contained = slotItem(item, slotIndex)
     if not contained then return true end
 
-    local identifier = itemIdentifier(contained)
+    local identifier = Core.ItemIdentifier(contained)
     local prefab = identifier and ItemPrefab and ItemPrefab.GetItemPrefab(identifier) or nil
     local inventory = character and character.Inventory or nil
     local returnQueued = false

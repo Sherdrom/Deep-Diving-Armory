@@ -69,12 +69,6 @@ namespace GunSmith
             return lines;
         }
 
-        private static void AddNonZeroPercentLine(List<string> lines, string key, float value)
-        {
-            if (Math.Abs(value) < 0.0001f) { return; }
-            lines.Add($"{LocalizeKey(key)}: {value * 100:+0.#;-0.#;0}%");
-        }
-
         private static void AddNonZeroStatTypeLine(List<string> lines, StatTypes statType, float value)
         {
             if (Math.Abs(value) < 0.0001f) { return; }

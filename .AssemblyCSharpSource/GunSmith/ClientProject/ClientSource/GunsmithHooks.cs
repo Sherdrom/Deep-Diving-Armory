@@ -1,3 +1,5 @@
+using static GunSmith.GunsmithHookArgs;
+
 namespace GunSmith
 {
     public static partial class GunsmithApi
@@ -249,101 +251,5 @@ namespace GunSmith
             }
         }
 
-        private static T? FindArg<T>(IEnumerable<object> args) where T : class
-        {
-            foreach (object arg in args)
-            {
-                if (arg is T value) { return value; }
-            }
-            return null;
-        }
-
-        private static string? FindStringArg(IReadOnlyList<object> args, int stringIndex)
-        {
-            int index = 0;
-            foreach (object arg in args)
-            {
-                if (arg is string value)
-                {
-                    if (index == stringIndex) { return value; }
-                    index++;
-                }
-            }
-            return null;
-        }
-
-        private static int FindIntArg(IReadOnlyList<object> args, int intIndex)
-        {
-            int index = 0;
-            foreach (object arg in args)
-            {
-                if (arg is int intValue)
-                {
-                    if (index == intIndex) { return intValue; }
-                    index++;
-                }
-                if (arg is double doubleValue)
-                {
-                    if (index == intIndex) { return (int)doubleValue; }
-                    index++;
-                }
-                if (arg is float floatValue)
-                {
-                    if (index == intIndex) { return (int)floatValue; }
-                    index++;
-                }
-            }
-            return 0;
-        }
-
-        private static float FindFloatArg(IReadOnlyList<object> args, int numberIndex)
-        {
-            int index = 0;
-            foreach (object arg in args)
-            {
-                float? value = arg switch
-                {
-                    int intValue => intValue,
-                    double doubleValue => (float)doubleValue,
-                    float floatValue => floatValue,
-                    _ => null
-                };
-
-                if (value.HasValue)
-                {
-                    if (index == numberIndex) { return value.Value; }
-                    index++;
-                }
-            }
-            return 0.0f;
-        }
-
-        private static bool TryFindFloatArg(IReadOnlyList<object> args, int numberIndex, out float value)
-        {
-            int index = 0;
-            foreach (object arg in args)
-            {
-                float? number = arg switch
-                {
-                    int intValue => intValue,
-                    double doubleValue => (float)doubleValue,
-                    float floatValue => floatValue,
-                    _ => null
-                };
-
-                if (number.HasValue)
-                {
-                    if (index == numberIndex)
-                    {
-                        value = number.Value;
-                        return float.IsFinite(value);
-                    }
-                    index++;
-                }
-            }
-
-            value = 0.0f;
-            return false;
-        }
     }
 }

@@ -190,14 +190,6 @@ local function printReport(errors, warnings, label)
     print(string.format("%s %d errors, %d warnings.", reportPrefix(label), #errors, #warnings))
 end
 
-local function mountForPath(part, path)
-    if type(part) ~= "table" or type(part.mounts) ~= "table" then return nil end
-    for _, mount in ipairs(part.mounts) do
-        if mount.path == path then return mount end
-    end
-    return nil
-end
-
 function Validation.Run(configOverride, label)
     local errors = {}
     local warnings = {}

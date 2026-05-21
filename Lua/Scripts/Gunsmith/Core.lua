@@ -35,6 +35,29 @@ function Core.PathNameKey(platform, path)
     return "deep.gunsmith.path." .. tostring(path)
 end
 
+function Core.EncodePreview(item, platform)
+    local weapon = Core.WeaponConfig(item) or {}
+    local preview = weapon.preview or {}
+    local offset = preview.offset or { x = 0, y = 0 }
+    return string.format(
+        "padding=%.4f,scale=%.4f,offsetX=%.4f,offsetY=%.4f",
+        preview.padding or 12,
+        preview.scale or 1.0,
+        offset.x or 0,
+        offset.y or 0)
+end
+
+function Core.EncodeText(value)
+    return tostring(value or "")
+        :gsub("%%", "%%25")
+        :gsub(":", "%%3A")
+        :gsub("|", "%%7C")
+        :gsub(",", "%%2C")
+        :gsub(";", "%%3B")
+        :gsub("~", "%%7E")
+        :gsub("=", "%%3D")
+end
+
 function Core.JoinPath(parentPath, path)
     if not parentPath or parentPath == "" then return path end
     return parentPath .. "/" .. path
@@ -79,14 +102,6 @@ local function partProvidesAccepted(part, accepts)
         end
     end
     return false
-end
-
-function Core.DefaultChildMount(parentPart, childPath)
-    if not parentPart or type(parentPart.mounts) ~= "table" then return nil end
-    for _, mount in ipairs(parentPart.mounts) do
-        if mount.path == childPath then return mount end
-    end
-    return nil
 end
 
 function Core.ApplyMountDefaultsForPath(selection, path, visited, depth)

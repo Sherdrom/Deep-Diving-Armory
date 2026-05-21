@@ -1,6 +1,7 @@
 Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local Gunsmith = Deep_Lua.Gunsmith
+local Core = Gunsmith.Core
 local Inventory = {}
 Gunsmith.Inventory = Inventory
 
@@ -22,11 +23,6 @@ local function characterInventory(character)
         return character.Inventory
     end
     return nil
-end
-
-local function itemIdentifier(item)
-    if not item or not item.Prefab then return nil end
-    return item.Prefab.Identifier.Value
 end
 
 local function inventoryOwner(inventory)
@@ -73,7 +69,7 @@ local function findItemInInventory(inventory, identifier, sourceItem, visited)
         if slot and slot.items then
             for _, item in pairs(slot.items) do
                 if item and not item.removed and not isInSourceItemInventory(item, sourceItem) then
-                    if itemIdentifier(item) == identifier then
+                    if Core.ItemIdentifier(item) == identifier then
                         return item
                     end
 
@@ -95,10 +91,6 @@ function Inventory.ItemIdentifierForPart(part)
     if not part then return nil end
     if not part.item then return nil end
     return part.item.identifier
-end
-
-function Inventory.IsVirtualPart(part)
-    return part and part.item and part.item.virtual == true
 end
 
 function Inventory.FindPartItem(character, identifier, sourceItem)
