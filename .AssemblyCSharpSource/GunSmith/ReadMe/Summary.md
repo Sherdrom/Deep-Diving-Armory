@@ -38,6 +38,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - QAT V0.1 introduced a read-only quick attachment transform service, moved DeepLaser and quick-slot `LightComponent` effects onto that transform when available, and kept non-GunSmith/native fallback behavior stable.
 - QAT V0.2 removed GunSmith quick-slot body/rect mutation from layout application while keeping composed world sprite rendering, transform queries, and QuickMod storage compatibility intact.
 - QAT V0.3 removed the remaining no-op layout wrappers, the `Item.SetContainedItemPositions` postfix, QuickMod GUI suspend/resume calls, and the obsolete `DeepGunsmithApplyQuickSlotLayouts` Lua hook/calls.
+- QAT V0.4 moved HK416 primary muzzle `BarrelPos` onto low-frequency quick attachment transform updates, replaced `muzzleLength` with `quickAttachmentTransform.muzzleOutletOffset`, and patched tagged muzzle particles to use the visible draw transform.
 
 ## Public Interfaces
 
@@ -58,6 +59,8 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
   - `DeepGunsmithRegisterQuickSlotCapacity`
   - `DeepGunsmithClearQuickSlotLayouts`
   - `DeepGunsmithRegisterQuickSlotLayout`
+  - `DeepGunsmithClearQuickAttachmentBarrelTransforms`
+  - `DeepGunsmithRegisterQuickAttachmentBarrelTransform`
 - Persisted state remains:
   - `{"v":1,"parts":{...}}`
 - Main console commands:
@@ -73,6 +76,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - HK416 QAT V0.1 validation confirms quick-slot flashlight light output is restored, DeepLaser uses the visible attachment transform, and QuickMod drag/drop behavior remains stable.
 - QAT V0.2 keeps quick-slot visible attachments in the composed world sprite and removes GunSmith physical layout writes from quick-slot contained items.
 - QAT V0.3 removes the obsolete `DeepGunsmithApplyQuickSlotLayouts` hook and Lua-side calls; HK416 QAT regression confirms QuickMod, visible attachments, DeepLaser, and flashlight behavior remain normal.
+- QAT V0.4 moves HK416 main muzzle `BarrelPos` and tagged flash/spark particles onto QAT barrel transforms; in-game validation confirms the muzzle flash alignment, QuickMod, DeepLaser, and flashlight behavior remain normal.
 - Existing weapons in cabinets, player inventories, and hands are now reapplied after map load and `cl_reloadlua`.
 - GunSmith Lua scripts intentionally avoid `pcall` so invalid hook parameters and userdata assumptions surface immediately during testing.
 - GunSmith solution build is expected to pass with:
@@ -80,7 +84,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 
 ## Deferred Work
 
-- Quick attachment transform architecture is in progress; QAT V0.1 is summarized in [V0.1_QAT_Summary.md](V0.1_QAT_Summary.md), QAT V0.2 is summarized in [V0.2_QAT_Summary.md](V0.2_QAT_Summary.md), and QAT V0.3 is summarized in [V0.3_QAT_Summary.md](V0.3_QAT_Summary.md).
+- Quick attachment transform architecture is in progress; QAT V0.1 is summarized in [V0.1_QAT_Summary.md](V0.1_QAT_Summary.md), QAT V0.2 is summarized in [V0.2_QAT_Summary.md](V0.2_QAT_Summary.md), QAT V0.3 is summarized in [V0.3_QAT_Summary.md](V0.3_QAT_Summary.md), and QAT V0.4 is summarized in [V0.4_QAT_Summary.md](V0.4_QAT_Summary.md).
 - Dynamic transform-driven quick-slot attachment rendering is deferred until quick-slot visual layers can be separated from composed world sprites.
 - Multiplayer validation still needs real multi-client testing.
 - Server-side anti-cheat validation is intentionally minimal; full Lua compatibility rule reconstruction on the server is deferred.

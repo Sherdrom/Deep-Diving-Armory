@@ -31,7 +31,9 @@ function Runtime.GetSelection(item)
         State.selections[key] = Core.BuildDefaultSelection(platform, Core.WeaponConfig(item))
         if not State.loadedStates[key] then
             State.loadedStates[key] = true
-            Persistence.Request(item)
+            if not SERVER then
+                Persistence.Request(item)
+            end
         end
     end
     return State.selections[key]
@@ -313,17 +315,117 @@ local function registerQuickSlotLayouts(item, selection, platform, weapon)
     end
 end
 
+local function getPartQuickAttachmentTransform(part)
+    if type(part) ~= "table" or type(part.quickAttachmentTransform) ~= "table" then return nil end
+    return part.quickAttachmentTransform
+end
+
+local function isFiniteNumber(value)
+    return type(value) == "number" and value == value and value ~= math.huge and value ~= -math.huge
+end
+
+local function requireFiniteNumber(value, label)
+    local number = tonumber(value)
+    if not isFiniteNumber(number) then
+        error("[Gunsmith] " .. label .. " must be a finite number")
+    end
+    return number
+end
+
+local function getMuzzleOutletOffset(selection, path)
+    local part = Core.GetInstalledPart(selection, path)
+    local transform = getPartQuickAttachmentTransform(part)
+    if not transform then return { x = 0, y = 0 } end
+    if transform.muzzleOutletOffset == nil then return { x = 0, y = 0 } end
+    if type(transform.muzzleOutletOffset) ~= "table" then
+        error("[Gunsmith] quickAttachmentTransform.muzzleOutletOffset at " .. tostring(path) .. " must contain numeric x/y")
+    end
+
+    return {
+        x = requireFiniteNumber(transform.muzzleOutletOffset.x, "quickAttachmentTransform.muzzleOutletOffset.x at " .. tostring(path)),
+        y = requireFiniteNumber(transform.muzzleOutletOffset.y, "quickAttachmentTransform.muzzleOutletOffset.y at " .. tostring(path))
+    }
+end
+
+local function getCombinedMuzzleOutletOffset(selection, path)
+    local offset = getMuzzleOutletOffset(selection, path)
+    local parentPath = Core.ParentPath and Core.ParentPath(path) or nil
+    if type(parentPath) ~= "string" or parentPath == "" then
+        return offset
+    end
+
+    local parentOffset = getMuzzleOutletOffset(selection, parentPath)
+    return {
+        x = parentOffset.x + offset.x,
+        y = parentOffset.y + offset.y
+    }
+end
+
+local function canvasPointToItemLocal(weapon, canvasPoint, canvasOrigin)
+    local world = weapon and weapon.world or {}
+    local scale = requireFiniteNumber(world.scale or 1.0, "weapon.world.scale")
+    local rotationDegrees = requireFiniteNumber(world.rotation or 0.0, "weapon.world.rotation")
+    scale = math.max(scale, 0.01)
+
+    local dx = (requireFiniteNumber(canvasPoint.x, "muzzle quick-slot anchor.x") - requireFiniteNumber(canvasOrigin.x, "quick-slot origin.x")) * scale
+    local dy = (requireFiniteNumber(canvasPoint.y, "muzzle quick-slot anchor.y") - requireFiniteNumber(canvasOrigin.y, "quick-slot origin.y")) * scale
+    local radians = math.rad(rotationDegrees)
+    local cos = math.cos(radians)
+    local sin = math.sin(radians)
+    return {
+        x = dx * cos - dy * sin,
+        y = dx * sin + dy * cos
+    }
+end
+
+local function findQuickSlotByKey(item, selection, platform, key)
+    if not Core.QuickSlotsForSelection then return nil end
+    for _, quickSlot in ipairs(Core.QuickSlotsForSelection(item, selection, platform)) do
+        if quickSlot.key == key then
+            return quickSlot
+        end
+    end
+    return nil
+end
+
+local function registerQuickAttachmentBarrels(item, selection, platform, weapon)
+    if not Hook or not Hook.Call then return end
+    Hook.Call("DeepGunsmithClearQuickAttachmentBarrelTransforms", item)
+
+    local muzzleSlot = findQuickSlotByKey(item, selection, platform, "muzzle")
+    if not muzzleSlot or not muzzleSlot.anchor or type(muzzleSlot.path) ~= "string" then return end
+
+    local quickOrigin = Core.QuickSlotCanvasOrigin and Core.QuickSlotCanvasOrigin(item, selection, platform, weapon) or { x = 0, y = 0 }
+    local localPosition = canvasPointToItemLocal(weapon, muzzleSlot.anchor, quickOrigin)
+    local outletOffset = getCombinedMuzzleOutletOffset(selection, muzzleSlot.path)
+
+    Hook.Call(
+        "DeepGunsmithRegisterQuickAttachmentBarrelTransform",
+        item,
+        localPosition.x + outletOffset.x,
+        localPosition.y + outletOffset.y,
+        0)
+end
+
 function Runtime.Apply(item)
-    if SERVER then return end
     if not item or item.removed then return end
 
     local platform = Core.PlatformConfig(item)
     if not platform then return end
 
     local selection = Runtime.GetSelection(item)
+    if not selection then return end
     if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
         State.appliedSignatures[item] = nil
-        Persistence.Save(item)
+        if not SERVER then
+            Persistence.Save(item)
+        end
+    end
+
+    local weapon = Core.WeaponConfig(item)
+    registerQuickAttachmentBarrels(item, selection, platform, weapon)
+    if SERVER then
+        return
     end
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
@@ -333,7 +435,7 @@ function Runtime.Apply(item)
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
-        registerQuickSlotLayouts(item, selection, platform, Core.WeaponConfig(item))
+        registerQuickSlotLayouts(item, selection, platform, weapon)
         if State.appliedSignatures[item] == signature then
             return
         end
@@ -345,7 +447,6 @@ function Runtime.Apply(item)
 end
 
 function Runtime.EnsureApplied(item)
-    if SERVER then return end
     if not item or item.removed then return end
     if not Core.WeaponConfig(item) then return end
     Runtime.Apply(item)

@@ -138,6 +138,32 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithClearQuickAttachmentBarrelTransforms", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithQuickAttachmentBarrelTransforms.ClearTransforms(item);
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithRegisterQuickAttachmentBarrelTransform", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item == null ||
+                    !TryFindFloatArg(args, 0, out float localX) ||
+                    !TryFindFloatArg(args, 1, out float localY) ||
+                    !TryFindFloatArg(args, 2, out float rotation))
+                {
+                    DebugConsole.ThrowError("GunSmith QAT received a malformed barrel transform payload. Expected item, localX, localY, rotation.");
+                    return null;
+                }
+
+                GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, localX, localY, rotation);
+                return null;
+            });
+
             hook.Add("DeepGunsmithBeginQuickSlotMutation", args =>
             {
                 Item? item = FindArg<Item>(args);
@@ -288,6 +314,34 @@ namespace GunSmith
                 }
             }
             return 0.0f;
+        }
+
+        private static bool TryFindFloatArg(IReadOnlyList<object> args, int numberIndex, out float value)
+        {
+            int index = 0;
+            foreach (object arg in args)
+            {
+                float? number = arg switch
+                {
+                    int intValue => intValue,
+                    double doubleValue => (float)doubleValue,
+                    float floatValue => floatValue,
+                    _ => null
+                };
+
+                if (number.HasValue)
+                {
+                    if (index == numberIndex)
+                    {
+                        value = number.Value;
+                        return float.IsFinite(value);
+                    }
+                    index++;
+                }
+            }
+
+            value = 0.0f;
+            return false;
         }
     }
 }

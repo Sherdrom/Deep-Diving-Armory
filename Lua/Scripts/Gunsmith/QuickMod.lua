@@ -120,7 +120,6 @@ function QuickMod.CanSlotAcceptItem(item, slotIndex, partItem)
 end
 
 function QuickMod.SyncFromContainer(item, selection, platform)
-    if SERVER then return false end
     local quickSlots = quickSlotsForItem(item)
     if not quickSlots or not selection or not platform then return false end
 

@@ -44,23 +44,6 @@
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
-
-      <!-- 有短枪口件时，略微增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="264,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_short_detect="gte 1.0" />
-      </StatusEffect>
-      <!-- 有长枪口件时，极大增加枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="324,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_long_detect="gte 1.0" />
-      </StatusEffect>
-      <!-- 无枪口件时，恢复枪口距离-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="234,26" comparison="and" setvalue="true">
-        <Conditional currentProjectileSelected="eq 0" />
-        <Conditional deep_muzzle_none_detect="lte 0.0" />
-      </StatusEffect>
-      
 <!-- 使用光源组件作为自变量-->
     <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
     </LightComponent>
@@ -131,9 +114,13 @@
       <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
 	      <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" selectionmode="Random" />
-       <ParticleEmitter particle="deep_muzzleflash" Distance="60" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="60" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" statuseffecttags="Gunsmith_Barrel" >
+      <Conditional currentProjectileSelected="eq 0" />
+      <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
+       <ParticleEmitter particle="deep_muzzleflash" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+	     <ParticleEmitter particle="deep_plasmaspark" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
 
       <!--使用主弹药时,延长枪管音效与特效 -->
@@ -142,9 +129,13 @@
       <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
 	      <Sound file="%ModDir%/weapon/ammo/5.56x45.ogg" type="OnUse" range="3000" selectionmode="Random" />
-       <ParticleEmitter particle="deep_muzzleflash" Distance="80" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="80" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
        <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" statuseffecttags="Gunsmith_Barrel" >
+      <Conditional currentProjectileSelected="eq 0" />
+      <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
+       <ParticleEmitter particle="deep_muzzleflash" angle="6" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+	     <ParticleEmitter particle="deep_plasmaspark" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
 
       <!--使用主弹药时,消音器音效与特效 -->

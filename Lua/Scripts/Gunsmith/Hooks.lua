@@ -140,13 +140,30 @@ local function isQuickSlotMutation(item)
     return Hook.Call("DeepGunsmithIsQuickSlotMutation", item) == true
 end
 
+local function syncQuickModContainer(instance)
+    if not CLIENT then return end
+    if not instance then return end
+    local item = instance.Item
+    if not item then return end
+    if isQuickSlotMutation(item) then return end
+    if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
+        Runtime.SyncQuickModContainerItem(item)
+    end
+end
+
+local function applyContainerOwner(instance)
+    if not instance then return end
+    local item = instance.Item
+    if item and Core.WeaponConfig(item) then
+        Runtime.Apply(item)
+    end
+end
+
 function Hooks.Register()
     if Hooks.Registered then return end
     Hooks.Registered = true
 
     registerHiddenQuickSlots()
-
-    if not CLIENT then return end
 
     Hook.Add("DeepGunsmithReceiveState", "DeepGunsmithReceiveState", function(...)
         local item, strings = readItemAndStrings({ ... })
@@ -154,6 +171,35 @@ function Hooks.Register()
             Persistence.Receive(item, strings[1] or "")
         end
     end)
+
+    Hook.Patch("Barotrauma.Item", "OnMapLoaded", function(instance, ptable)
+        applyGunsmithItem(instance)
+    end, Hook.HookMethodType.After)
+
+    Hook.Patch("Barotrauma.Item", ".ctor", { "Microsoft.Xna.Framework.Rectangle", "Barotrauma.ItemPrefab", "Barotrauma.Submarine", "System.Boolean", "System.UInt16" }, function(instance, ptable)
+        applyGunsmithItem(instance)
+    end, Hook.HookMethodType.After)
+
+    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemContained", { "Barotrauma.Item", "System.Boolean" }, function(instance, ptable)
+        applyGunsmithItem(readContainedItem(ptable))
+        applyContainerOwner(instance)
+        syncQuickModContainer(instance)
+    end, Hook.HookMethodType.After)
+
+    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemRemoved", { "Barotrauma.Item" }, function(instance, ptable)
+        applyGunsmithItem(readContainedItem(ptable))
+        applyContainerOwner(instance)
+        syncQuickModContainer(instance)
+    end, Hook.HookMethodType.After)
+
+    Hook.Add("item.removed", "DeepGunsmithCleanup", function(item)
+        Runtime.Cleanup(item)
+    end)
+
+    if not CLIENT then
+        scheduleExistingItemApply()
+        return
+    end
 
     Hook.Add("DeepGunsmithCycle", "DeepGunsmithCycle", function(...)
         local item, strings = readItemAndStrings({ ... })
@@ -224,38 +270,6 @@ function Hooks.Register()
             end
         end
     end, Hook.HookMethodType.After)
-
-    Hook.Patch("Barotrauma.Item", "OnMapLoaded", function(instance, ptable)
-        applyGunsmithItem(instance)
-    end, Hook.HookMethodType.After)
-
-    Hook.Patch("Barotrauma.Item", ".ctor", { "Microsoft.Xna.Framework.Rectangle", "Barotrauma.ItemPrefab", "Barotrauma.Submarine", "System.Boolean", "System.UInt16" }, function(instance, ptable)
-        applyGunsmithItem(instance)
-    end, Hook.HookMethodType.After)
-
-    local function syncQuickModContainer(instance)
-        if not instance then return end
-        local item = instance.Item
-        if not item then return end
-        if isQuickSlotMutation(item) then return end
-        if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
-            Runtime.SyncQuickModContainerItem(item)
-        end
-    end
-
-    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemContained", { "Barotrauma.Item", "System.Boolean" }, function(instance, ptable)
-        applyGunsmithItem(readContainedItem(ptable))
-        syncQuickModContainer(instance)
-    end, Hook.HookMethodType.After)
-
-    Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemRemoved", { "Barotrauma.Item" }, function(instance, ptable)
-        applyGunsmithItem(readContainedItem(ptable))
-        syncQuickModContainer(instance)
-    end, Hook.HookMethodType.After)
-
-    Hook.Add("item.removed", "DeepGunsmithCleanup", function(item)
-        Runtime.Cleanup(item)
-    end)
 
     scheduleExistingItemApply()
 end

@@ -1,0 +1,114 @@
+using Barotrauma.Items.Components;
+using FarseerPhysics;
+
+namespace GunSmith
+{
+    [HarmonyPatch]
+    public static class GunsmithQuickAttachmentBarrelParticlePatch
+    {
+        private const string PrimaryBarrelTag = "Gunsmith_Barrel";
+
+        private static MethodBase? TargetMethod()
+        {
+            MethodInfo? method = AccessTools.Method(
+                typeof(StatusEffect),
+                "ApplyProjSpecific",
+                new[]
+                {
+                    typeof(float),
+                    typeof(Entity),
+                    typeof(IReadOnlyList<ISerializableEntity>),
+                    typeof(Hull),
+                    typeof(Vector2),
+                    typeof(bool)
+                });
+            if (method == null)
+            {
+                DebugConsole.ThrowError("GunSmith QAT failed to find StatusEffect.ApplyProjSpecific for barrel particle origin patch.");
+            }
+            return method;
+        }
+
+        [HarmonyPrefix]
+        private static void UseQuickAttachmentBarrelPosition(StatusEffect __instance, Entity entity, ref Vector2 worldPosition)
+        {
+            if (!HasQuickAttachmentBarrelTag(__instance))
+            {
+                return;
+            }
+
+            if (entity is not Item item)
+            {
+                DebugConsole.ThrowError($"GunSmith QAT barrel particle StatusEffect was applied by a non-item entity. entity={entity?.ToString() ?? "null"}");
+                return;
+            }
+
+            RangedWeapon? rangedWeapon = item.GetComponent<RangedWeapon>();
+            if (rangedWeapon == null)
+            {
+                DebugConsole.ThrowError($"GunSmith QAT barrel particle StatusEffect was applied by a non-ranged item. item={item.Prefab.Identifier.Value}");
+                return;
+            }
+
+            if (!TryGetBarrelDrawPosition(item, rangedWeapon, out Vector2 position))
+            {
+                return;
+            }
+
+            worldPosition = position;
+        }
+
+        private static bool TryGetBarrelDrawPosition(Item item, RangedWeapon rangedWeapon, out Vector2 position)
+        {
+            position = Vector2.Zero;
+
+            Vector2 localDisplayPosition = XMLExtensions.ParseVector2(rangedWeapon.BarrelPos);
+            if (!IsFinite(localDisplayPosition) || !float.IsFinite(item.Scale))
+            {
+                DebugConsole.ThrowError(
+                    $"GunSmith QAT produced an invalid barrel particle payload. " +
+                    $"item={item.Prefab.Identifier.Value}, barrelPos={rangedWeapon.BarrelPos}, itemScale={item.Scale}");
+                return false;
+            }
+
+            Vector2 localOffset = localDisplayPosition * item.Scale;
+            if (item.body != null)
+            {
+                if (item.body.Dir < 0.0f)
+                {
+                    localOffset.X = -localOffset.X;
+                }
+                position = item.body.DrawPosition + Vector2.Transform(localOffset, Matrix.CreateRotationZ(item.body.DrawRotation));
+            }
+            else
+            {
+                position = item.DrawPosition + Vector2.Transform(localOffset, Matrix.CreateRotationZ(item.RotationRad));
+            }
+
+            if (!IsFinite(position))
+            {
+                DebugConsole.ThrowError(
+                    $"GunSmith QAT produced an invalid barrel particle position. " +
+                    $"item={item.Prefab.Identifier.Value}, position={position}, barrelPos={rangedWeapon.BarrelPos}");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool HasQuickAttachmentBarrelTag(StatusEffect statusEffect)
+        {
+            foreach (string tag in statusEffect.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                if (tag.Equals(PrimaryBarrelTag, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool IsFinite(Vector2 value)
+            => float.IsFinite(value.X) && float.IsFinite(value.Y);
+    }
+}

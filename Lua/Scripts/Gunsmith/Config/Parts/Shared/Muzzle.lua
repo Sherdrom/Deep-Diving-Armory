@@ -16,6 +16,9 @@ parts.extended_barrel = { type = "muzzle_mount",
         attachPoint = { x = 0, y = 14 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 90, y = 0 }
     }
 }
 
@@ -31,6 +34,9 @@ parts.deep_muzzle_brake = { type = "muzzle_mount",
         attachPoint = { x = 3, y = 22 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 30, y = 0 }
     }
 }
 
@@ -46,6 +52,9 @@ parts.deep_compensator = { type = "muzzle_mount",
         attachPoint = { x = 3, y = 19 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 30, y = 0 }
     }
 }
 
@@ -61,6 +70,9 @@ parts.deep_flash_hider = { type = "muzzle_mount",
         attachPoint = { x = 5, y = 21 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 30, y = 0 }
     }
 }
 
@@ -76,6 +88,9 @@ parts.deep_muffler = { type = "muzzle_mount",
         attachPoint = { x = 1, y = 23 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 90, y = 0 }
     }
 }
 
