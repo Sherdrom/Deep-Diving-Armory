@@ -347,6 +347,12 @@ local function getMuzzleOutletOffset(selection, path)
     }
 end
 
+local function hasMuzzleOutletOffset(selection, path)
+    local part = Core.GetInstalledPart(selection, path)
+    local transform = getPartQuickAttachmentTransform(part)
+    return type(transform) == "table" and transform.muzzleOutletOffset ~= nil
+end
+
 local function getCombinedMuzzleOutletOffset(selection, path)
     local offset = getMuzzleOutletOffset(selection, path)
     local parentPath = Core.ParentPath and Core.ParentPath(path) or nil
@@ -388,23 +394,33 @@ local function findQuickSlotByKey(item, selection, platform, key)
     return nil
 end
 
-local function registerQuickAttachmentBarrels(item, selection, platform, weapon)
-    if not Hook or not Hook.Call then return end
-    Hook.Call("DeepGunsmithClearQuickAttachmentBarrelTransforms", item)
-
-    local muzzleSlot = findQuickSlotByKey(item, selection, platform, "muzzle")
-    if not muzzleSlot or not muzzleSlot.anchor or type(muzzleSlot.path) ~= "string" then return end
-
+local function registerQuickAttachmentBarrel(item, selection, platform, weapon, quickSlotKey, barrelKey)
+    local quickSlot = findQuickSlotByKey(item, selection, platform, quickSlotKey)
+    if not quickSlot or not quickSlot.anchor or type(quickSlot.path) ~= "string" then return false end
     local quickOrigin = Core.QuickSlotCanvasOrigin and Core.QuickSlotCanvasOrigin(item, selection, platform, weapon) or { x = 0, y = 0 }
-    local localPosition = canvasPointToItemLocal(weapon, muzzleSlot.anchor, quickOrigin)
-    local outletOffset = getCombinedMuzzleOutletOffset(selection, muzzleSlot.path)
+    local localPosition = canvasPointToItemLocal(weapon, quickSlot.anchor, quickOrigin)
+    local outletOffset = getCombinedMuzzleOutletOffset(selection, quickSlot.path)
 
     Hook.Call(
         "DeepGunsmithRegisterQuickAttachmentBarrelTransform",
         item,
+        barrelKey,
         localPosition.x + outletOffset.x,
         localPosition.y + outletOffset.y,
         0)
+    return true
+end
+
+local function registerQuickAttachmentBarrels(item, selection, platform, weapon)
+    if not Hook or not Hook.Call then return end
+    Hook.Call("DeepGunsmithClearQuickAttachmentBarrelTransforms", item)
+
+    registerQuickAttachmentBarrel(item, selection, platform, weapon, "muzzle", "primary")
+
+    local lowerRailSlot = findQuickSlotByKey(item, selection, platform, "lower_rail")
+    if lowerRailSlot and type(lowerRailSlot.path) == "string" and hasMuzzleOutletOffset(selection, lowerRailSlot.path) then
+        registerQuickAttachmentBarrel(item, selection, platform, weapon, "lower_rail", "lower_rail")
+    end
 end
 
 function Runtime.Apply(item)

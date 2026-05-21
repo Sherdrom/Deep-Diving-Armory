@@ -151,16 +151,18 @@ namespace GunSmith
             hook.Add("DeepGunsmithRegisterQuickAttachmentBarrelTransform", args =>
             {
                 Item? item = FindArg<Item>(args);
+                string? key = FindStringArg(args, 0);
                 if (item == null ||
+                    string.IsNullOrWhiteSpace(key) ||
                     !TryFindFloatArg(args, 0, out float localX) ||
                     !TryFindFloatArg(args, 1, out float localY) ||
                     !TryFindFloatArg(args, 2, out float rotation))
                 {
-                    DebugConsole.ThrowError("GunSmith QAT received a malformed barrel transform payload. Expected item, localX, localY, rotation.");
+                    DebugConsole.ThrowError("GunSmith QAT received a malformed barrel transform payload. Expected item, key, localX, localY, rotation.");
                     return null;
                 }
 
-                GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, localX, localY, rotation);
+                GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, key, localX, localY, rotation);
                 return null;
             });
 

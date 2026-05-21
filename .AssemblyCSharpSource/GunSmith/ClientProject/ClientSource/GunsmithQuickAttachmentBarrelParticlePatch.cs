@@ -6,7 +6,7 @@ namespace GunSmith
     [HarmonyPatch]
     public static class GunsmithQuickAttachmentBarrelParticlePatch
     {
-        private const string PrimaryBarrelTag = "Gunsmith_Barrel";
+        private const string QuickAttachmentBarrelParticleTag = "Gunsmith_BarrelParticle";
 
         private static MethodBase? TargetMethod()
         {
@@ -100,7 +100,7 @@ namespace GunSmith
         {
             foreach (string tag in statusEffect.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                if (tag.Equals(PrimaryBarrelTag, StringComparison.OrdinalIgnoreCase))
+                if (tag.Equals(QuickAttachmentBarrelParticleTag, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }

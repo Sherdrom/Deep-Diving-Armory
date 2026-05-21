@@ -4,7 +4,8 @@ local parts = Deep_Lua.Gunsmith.Config.parts
 local subhangingTexture = Deep_Lua.Path .. "/weapon/sight/sub_hanging.png"
 
 -- 通用下挂。能否安装由父挂点 accepts 和这里的 provides 共同决定。
-parts.deep_sub_hanging_master_key = { type = "Lower_rail_mount",
+parts.deep_sub_hanging_master_key = {
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_sub_hanging_master_key",
     -- AR_sub_hanging_gl 由护木的 optic_mount.accepts 决定。
     provides = { "sub_hanging_shotgun" },
@@ -16,10 +17,14 @@ parts.deep_sub_hanging_master_key = { type = "Lower_rail_mount",
         attachPoint = { x = 73, y = 5 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 226, y = -20 }
     }
 }
 
-parts.deep_sub_hanging_m203 = { type = "Lower_rail_mount",
+parts.deep_sub_hanging_m203 = {
+    type = "Lower_rail_mount",
     nameKey = "deep.gunsmith.part.deep_sub_hanging_m203",
     -- AR_sub_hanging_gl 由护木的 optic_mount.accepts 决定。
     provides = { "AR_sub_hanging_gl" },
@@ -31,6 +36,9 @@ parts.deep_sub_hanging_m203 = { type = "Lower_rail_mount",
         attachPoint = { x = 123, y = 8 },
         order = 70,
         scale = 0.5
+    },
+    quickAttachmentTransform = {
+        muzzleOutletOffset = { x = 226, y = -20 }
     }
 }
 

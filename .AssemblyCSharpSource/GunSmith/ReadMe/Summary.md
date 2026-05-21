@@ -39,6 +39,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - QAT V0.2 removed GunSmith quick-slot body/rect mutation from layout application while keeping composed world sprite rendering, transform queries, and QuickMod storage compatibility intact.
 - QAT V0.3 removed the remaining no-op layout wrappers, the `Item.SetContainedItemPositions` postfix, QuickMod GUI suspend/resume calls, and the obsolete `DeepGunsmithApplyQuickSlotLayouts` Lua hook/calls.
 - QAT V0.4 moved HK416 primary muzzle `BarrelPos` onto low-frequency quick attachment transform updates, replaced `muzzleLength` with `quickAttachmentTransform.muzzleOutletOffset`, and patched tagged muzzle particles to use the visible draw transform.
+- QAT V0.4.1 connected HK416 lower rail sub-weapons to the keyed barrel path through the VCE selector bridge, so Masterkey / M203 projectiles and tagged flash/spark use the `lower_rail` rule after switching.
 
 ## Public Interfaces
 
@@ -77,6 +78,7 @@ GunSmith is Deep-Diving-Armory's modular firearm customization system for Barotr
 - QAT V0.2 keeps quick-slot visible attachments in the composed world sprite and removes GunSmith physical layout writes from quick-slot contained items.
 - QAT V0.3 removes the obsolete `DeepGunsmithApplyQuickSlotLayouts` hook and Lua-side calls; HK416 QAT regression confirms QuickMod, visible attachments, DeepLaser, and flashlight behavior remain normal.
 - QAT V0.4 moves HK416 main muzzle `BarrelPos` and tagged flash/spark particles onto QAT barrel transforms; in-game validation confirms the muzzle flash alignment, QuickMod, DeepLaser, and flashlight behavior remain normal.
+- QAT V0.4.1 validation confirms the VCE selector bridge is active and HK416 Masterkey / M203 lower rail barrel positions no longer fall back to the primary muzzle.
 - Existing weapons in cabinets, player inventories, and hands are now reapplied after map load and `cl_reloadlua`.
 - GunSmith Lua scripts intentionally avoid `pcall` so invalid hook parameters and userdata assumptions surface immediately during testing.
 - GunSmith solution build is expected to pass with:
