@@ -2008,6 +2008,31 @@
       </Effect>
     </Affliction>
 
+    <Affliction
+    name="Hyperactivity"
+    identifier="deep_haste"
+    description="Gotta go fast."
+    type="haste"
+    isbuff="true"
+    limbspecific="false"
+    maxstrength="600"
+    MedicalSkillGain="0.01">
+    <Effect minstrength="0" maxstrength="600"
+      strengthchange="-1"
+      minspeedmultiplier="1.0"
+      maxspeedmultiplier="1.35"
+      minfacetint="255,0,0,0"
+      maxfacetint="255,0,0,200">
+      <StatValue stattype="MeleeAttackSpeed" minvalue="0" maxvalue="0.3" />
+      <StatValue stattype="MoveMentSpeed" minvalue="0" maxvalue="0.3" />
+      <StatusEffect target="Character">
+        <TriggerAnimation Type="Walk" filename="VigorousWalk" priority="5" ExpectedSpecies="Human" />
+      </StatusEffect>
+    </Effect>
+    <!-- Greater than 1.48 and the ragdolls start snapping when turning and characters take damage from colliding with doors & walls -->
+    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="128,896,128,128" color="10,193,114,255" origin="0,0"/>
+  </Affliction>
+
 
   </Override>
 </Afflictions>

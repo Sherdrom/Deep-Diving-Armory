@@ -17,8 +17,8 @@
       <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true">
         <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
-        <Affliction identifier="haste" amount="600" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+        <Affliction identifier="deep_haste" amount="300" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Remove />
