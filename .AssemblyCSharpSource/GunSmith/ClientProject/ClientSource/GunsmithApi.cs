@@ -137,9 +137,6 @@ namespace GunSmith
         }
 
         internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, out Vector2 localPoint)
-            => TryCanvasPointToItemLocal(item, canvasPoint, null, out localPoint);
-
-        internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, Vector2? canvasOriginOverride, out Vector2 localPoint)
         {
             localPoint = Vector2.Zero;
             if (!TryGetValidState(item, out GunsmithSpriteState state))
@@ -147,9 +144,9 @@ namespace GunSmith
                 return false;
             }
 
-            Vector2 canvasOrigin = canvasOriginOverride ?? state.CanvasOrigin;
-            Vector2 delta = (canvasPoint - canvasOrigin) * Math.Max(state.WorldSettings.Scale, 0.01f);
-            localPoint = Rotate(delta, MathHelper.ToRadians(state.WorldSettings.RotationDegrees));
+            Vector2 delta = (canvasPoint - state.CanvasOrigin) * Math.Max(state.WorldSettings.Scale, 0.01f);
+            Vector2 textureOffset = state.WorldSettings.Offset + Rotate(delta, MathHelper.ToRadians(state.WorldSettings.RotationDegrees));
+            localPoint = new Vector2(textureOffset.X, -textureOffset.Y);
             return true;
         }
 

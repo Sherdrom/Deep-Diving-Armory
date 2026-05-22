@@ -11,8 +11,7 @@ config.weapons.deep_hk416 = {
     roots = {
         receiver = {
             part = "hk416_receiver_std",
-            socket = { x = 184, y = 158 },
-            itemPosOrigin = { x = 124, y = -9 } -- 配件特效校准坐标，手动填写测试 控制台命令DeepGunsmithSetItemPosOrigin deep_hk416 receiver 124 -9
+            socket = { x = 184, y = 158 }
         }
     },
 

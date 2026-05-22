@@ -248,28 +248,6 @@ function Core.ResolveDrawOffset(selection, platform, weapon, path, visual)
     return resolveDrawOffset(selection, platform, weapon, path, visual)
 end
 
-function Core.QuickSlotCanvasOrigin(item, selection, platform, weapon)
-    if type(weapon) == "table" and type(weapon.roots) == "table" then
-        for _, rootDef in ipairs(Core.RootSlotDefs(platform)) do
-            local root = Core.RootConfig(weapon, rootDef.path)
-            local socket = root and root.socket or nil
-            local itemPosOrigin = root and root.itemPosOrigin or nil
-            if socket and itemPosOrigin then
-                return {
-                    x = (socket.x or 0) + (itemPosOrigin.x or 0),
-                    y = (socket.y or 0) + (itemPosOrigin.y or 0)
-                }
-            end
-        end
-    end
-
-    local canvas = platform and platform.canvas or nil
-    if canvas then
-        return { x = (canvas.w or 0) * 0.5, y = (canvas.h or 0) * 0.5 }
-    end
-    return { x = 0, y = 0 }
-end
-
 function Core.QuickSlotsForSelection(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     if not weapon or type(selection) ~= "table" or type(platform) ~= "table" then return {} end

@@ -11,7 +11,7 @@ namespace GunSmith
             RulesByItem.TryRemove(item, out _);
         }
 
-        public static void RegisterLayout(Item item, int slotIndex, Vector2 canvasAnchor, Vector2 canvasOrigin, Vector2 itemPosOffset, float rotation, bool hide)
+        public static void RegisterLayout(Item item, int slotIndex, Vector2 canvasAnchor, Vector2 itemPosOffset, float rotation, bool hide)
         {
             if (item == null || item.Removed || slotIndex < 0)
             {
@@ -21,7 +21,7 @@ namespace GunSmith
             Dictionary<int, QuickSlotLayoutRule> rules = RulesByItem.GetOrAdd(item, _ => new Dictionary<int, QuickSlotLayoutRule>());
             lock (rules)
             {
-                rules[slotIndex] = new QuickSlotLayoutRule(canvasAnchor, canvasOrigin, itemPosOffset, rotation);
+                rules[slotIndex] = new QuickSlotLayoutRule(canvasAnchor, itemPosOffset, rotation);
             }
         }
 
@@ -44,6 +44,6 @@ namespace GunSmith
             }
         }
 
-        internal readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 CanvasOrigin, Vector2 ItemPosOffset, float RotationDegrees);
+        internal readonly record struct QuickSlotLayoutRule(Vector2 CanvasAnchor, Vector2 ItemPosOffset, float RotationDegrees);
     }
 }

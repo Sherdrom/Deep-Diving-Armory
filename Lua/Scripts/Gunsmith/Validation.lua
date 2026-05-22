@@ -409,7 +409,7 @@ function Validation.Run(configOverride, label)
             if weapon.quickSlotCalibration ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'quickSlotCalibration'.") end
             if weapon.rootParts ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootParts'; use roots[].part.") end
             if weapon.rootSockets ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'rootSockets'; use roots[].socket.") end
-            if weapon.quickSlotCanvasOrigin ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'quickSlotCanvasOrigin'; use roots[].itemPosOrigin.") end
+            if weapon.quickSlotCanvasOrigin ~= nil then table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'quickSlotCanvasOrigin'.") end
             if weapon.scale ~= nil then
                 table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' uses removed field 'scale'; use part.visual.scale, preview.scale, inventory.scale, or world.scale.")
             end
@@ -444,9 +444,6 @@ function Validation.Run(configOverride, label)
                     if type(root) == "table" then
                         if not validOptionalPoint(root.socket) or root.socket == nil then
                             table.insert(errors, rootLabel .. ".socket must contain numeric x/y.")
-                        end
-                        if root.itemPosOrigin ~= nil and not validOptionalPoint(root.itemPosOrigin) then
-                            table.insert(errors, rootLabel .. ".itemPosOrigin must contain numeric x/y when declared.")
                         end
                     end
                 end

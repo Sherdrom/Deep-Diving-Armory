@@ -120,8 +120,6 @@ namespace GunSmith
                 int slotIndex = FindIntArg(args, 0);
                 float anchorX = FindFloatArg(args, 1);
                 float anchorY = FindFloatArg(args, 2);
-                float originX = FindFloatArg(args, 3);
-                float originY = FindFloatArg(args, 4);
                 float offsetX = FindFloatArg(args, 5);
                 float offsetY = FindFloatArg(args, 6);
                 float rotation = FindFloatArg(args, 7);
@@ -132,7 +130,6 @@ namespace GunSmith
                         item,
                         slotIndex,
                         new Vector2(anchorX, anchorY),
-                        new Vector2(originX, originY),
                         new Vector2(offsetX, offsetY),
                         rotation,
                         hide);
@@ -150,21 +147,32 @@ namespace GunSmith
                 return null;
             });
 
-            hook.Add("DeepGunsmithRegisterQuickAttachmentBarrelTransform", args =>
+            hook.Add("DeepGunsmithRegisterQuickAttachmentBarrelCanvasPoint", args =>
             {
                 Item? item = FindArg<Item>(args);
                 string? key = FindStringArg(args, 0);
                 if (item == null ||
                     string.IsNullOrWhiteSpace(key) ||
-                    !TryFindFloatArg(args, 0, out float localX) ||
-                    !TryFindFloatArg(args, 1, out float localY) ||
-                    !TryFindFloatArg(args, 2, out float rotation))
+                    !TryFindFloatArg(args, 0, out float canvasX) ||
+                    !TryFindFloatArg(args, 1, out float canvasY) ||
+                    !TryFindFloatArg(args, 2, out float outletOffsetX) ||
+                    !TryFindFloatArg(args, 3, out float outletOffsetY) ||
+                    !TryFindFloatArg(args, 4, out float rotation))
                 {
-                    DebugConsole.ThrowError("GunSmith QAT received a malformed barrel transform payload. Expected item, key, localX, localY, rotation.");
+                    DebugConsole.ThrowError("GunSmith QAT received a malformed barrel canvas payload. Expected item, key, canvasX, canvasY, outletOffsetX, outletOffsetY, rotation.");
                     return null;
                 }
 
-                GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, key, localX, localY, rotation);
+                Vector2 canvasPoint = new(canvasX + outletOffsetX, canvasY + outletOffsetY);
+                if (!TryCanvasPointToItemLocal(item, canvasPoint, out Vector2 localPosition))
+                {
+                    DebugConsole.ThrowError(
+                        $"GunSmith QAT could not convert a barrel canvas point to item local coordinates. " +
+                        $"weapon={item.Prefab.Identifier.Value}, key={key}, canvasPoint={canvasPoint}");
+                    return null;
+                }
+
+                GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, key, localPosition.X, localPosition.Y, rotation);
                 return null;
             });
 

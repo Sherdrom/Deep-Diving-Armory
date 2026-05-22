@@ -2,7 +2,7 @@
 
 ## 背景
 
-GunSmith quick slots currently use Barotrauma's real hidden `ItemContainer` slots as the authoritative storage for attachments. V1.5.3 added `itemPosOrigin` based quick-slot contained item placement so attachments such as muzzle devices, lasers, and lights can be calibrated against the composed weapon sprite.
+GunSmith quick slots currently use Barotrauma's real hidden `ItemContainer` slots as the authoritative storage for attachments. QAT now keeps attachment effect origins on a GunSmith-owned transform derived from the composed weapon sprite state.
 
 This works for visual/effect alignment, but it couples three different concerns:
 

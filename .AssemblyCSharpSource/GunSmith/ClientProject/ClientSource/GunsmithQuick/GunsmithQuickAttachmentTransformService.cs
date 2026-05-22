@@ -73,7 +73,7 @@ namespace GunSmith
                 return false;
             }
 
-            if (!GunsmithApi.TryCanvasPointToItemLocal(weaponItem, rule.CanvasAnchor, rule.CanvasOrigin, out Vector2 itemLocalPos))
+            if (!GunsmithApi.TryCanvasPointToItemLocal(weaponItem, rule.CanvasAnchor, out Vector2 itemLocalPos))
             {
                 return false;
             }
@@ -153,16 +153,17 @@ namespace GunSmith
         private static Vector2 ToWorldPosition(Item owner, Vector2 itemLocalPos, bool drawPosition)
         {
             PhysicsBody? rootBody = owner.RootContainer?.body ?? owner.body;
+            Vector2 scaledLocalPos = itemLocalPos * owner.Scale;
             if (owner.body != null)
             {
-                Vector2 pos = itemLocalPos;
+                Vector2 pos = scaledLocalPos;
                 pos.X *= rootBody?.Dir ?? owner.body.Dir;
                 float rotation = drawPosition ? owner.body.DrawRotation : owner.body.Rotation;
                 Vector2 bodyPosition = drawPosition ? owner.body.DrawPosition : owner.body.Position;
                 return Vector2.Transform(pos, Matrix.CreateRotationZ(rotation)) + bodyPosition;
             }
 
-            return (drawPosition ? owner.DrawPosition : owner.Position) + itemLocalPos;
+            return (drawPosition ? owner.DrawPosition : owner.Position) + scaledLocalPos;
         }
 
         private static float ToWorldRotation(Item owner, float localRotationDegrees, bool drawPosition)
