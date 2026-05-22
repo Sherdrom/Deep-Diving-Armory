@@ -168,8 +168,8 @@ local function loadChineseLocalizationKeys()
     if not io or not io.open or not Deep_Lua or type(Deep_Lua.Path) ~= "string" then
         return nil, "Lua io is unavailable"
     end
-    local file = io.open(Deep_Lua.Path .. "/text/chinese.xml", "r")
-    if not file then return nil, "text/chinese.xml cannot be opened" end
+    local file = io.open(Deep_Lua.Path .. "/text/ChineseGunSmith.xml", "r")
+    if not file then return nil, "text/ChineseGunSmith.xml cannot be opened" end
     local content = file:read("*a") or ""
     file:close()
 
@@ -678,11 +678,11 @@ function Validation.Run(configOverride, label)
         if chineseKeys then
             for key, _ in pairs(localizationKeys) do
                 if not chineseKeys[key] then
-                    table.insert(errors, "Missing Chinese localization key '" .. key .. "' in text/chinese.xml.")
+                    table.insert(errors, "Missing Chinese localization key '" .. key .. "' in text/ChineseGunSmith.xml.")
                 end
             end
         else
-            table.insert(warnings, "Could not verify text/chinese.xml localization keys: " .. tostring(localizationLoadError) .. ".")
+            table.insert(warnings, "Could not verify text/ChineseGunSmith.xml localization keys: " .. tostring(localizationLoadError) .. ".")
         end
     end
 
