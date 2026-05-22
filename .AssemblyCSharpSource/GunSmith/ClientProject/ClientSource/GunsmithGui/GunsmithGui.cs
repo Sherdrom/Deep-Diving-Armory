@@ -162,8 +162,8 @@ namespace GunSmith
             BuildSlotPanel(body);
 
             GUIFrame middle = new(new RectTransform(new Vector2(0.36f, 0.96f), body.RectTransform, Anchor.Center), color: Color.Transparent);
-            previewPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.66f), middle.RectTransform, Anchor.TopCenter), color: Color.Black * 0.25f);
-            detailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.30f), middle.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
+            previewPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.56f), middle.RectTransform, Anchor.TopCenter), color: Color.Black * 0.25f);
+            detailPanel = new GUIFrame(new RectTransform(new Vector2(1.0f, 0.40f), middle.RectTransform, Anchor.BottomCenter), color: Color.Black * 0.25f);
             GUIFrame rightPanel = new(new RectTransform(new Vector2(0.28f, 0.96f), body.RectTransform, Anchor.CenterRight), color: Color.Transparent);
             partList = new GUIListBox(new RectTransform(new Vector2(1.0f, 0.54f), rightPanel.RectTransform, Anchor.TopCenter), style: null)
             {
@@ -328,11 +328,15 @@ namespace GunSmith
             }
 
             if (detailPanel == null) { return; }
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.96f, 0.25f), detailPanel.RectTransform, Anchor.TopCenter), (LocalizedString)FormatStatsLine(activeWeaponStats), textAlignment: Alignment.Center);
-            _ = new GUITextBlock(new RectTransform(new Vector2(0.92f, 0.28f), detailPanel.RectTransform, Anchor.Center), FormatL("deep.gunsmith.ui.path_line", LocalizePathLabel(activeContext.PathLabel)), textAlignment: Alignment.Center);
+            _ = new GunsmithStatsText(new RectTransform(new Vector2(0.92f, 0.52f), detailPanel.RectTransform, Anchor.TopCenter), activeWeaponStats, inline: true);
+            GUITextBlock pathText = new(new RectTransform(new Vector2(0.92f, 0.18f), detailPanel.RectTransform, Anchor.Center), FormatL("deep.gunsmith.ui.path_line", LocalizePathLabel(activeContext.PathLabel)), font: GUIStyle.SmallFont, textAlignment: Alignment.Center)
+            {
+                AutoScaleVertical = true
+            };
+            pathText.RectTransform.RelativeOffset = new Vector2(0.0f, slot.CanEnter ? 0.18f : 0.28f);
 
             if (!slot.CanEnter) { return; }
-            GUIButton enterButton = new(new RectTransform(new Vector2(0.72f, 0.28f), detailPanel.RectTransform, Anchor.BottomCenter), L("deep.gunsmith.ui.enter_mounts"), Alignment.Center);
+            GUIButton enterButton = new(new RectTransform(new Vector2(0.72f, 0.20f), detailPanel.RectTransform, Anchor.BottomCenter), L("deep.gunsmith.ui.enter_mounts"), Alignment.Center);
             enterButton.OnClicked = (_, _) =>
             {
                 if (activeItem != null && !activeItem.Removed)
@@ -527,11 +531,7 @@ namespace GunSmith
 
             // 属性文本。Vector2.Y 控制属性区域高度；Anchor.BottomLeft 表示贴在右侧文字区域左下方。
             // 如果属性太靠下，可改 Anchor.CenterLeft 或增大/减小此处高度比例。
-            GUITextBlock statsText = new(new RectTransform(new Vector2(1.0f, 0.76f), right.RectTransform, Anchor.BottomLeft), (LocalizedString)FormatPartStatsBlock(part.Stats), font: GUIStyle.SmallFont, textAlignment: Alignment.TopLeft)
-            {
-                Padding = Vector4.Zero,
-                Wrap = true
-            };
+            _ = new GunsmithStatsText(new RectTransform(new Vector2(1.0f, 0.76f), right.RectTransform, Anchor.BottomLeft), part.Stats, inline: false);
             string buttonText = InstallButtonText(part, installed);
 
             // 底部安装按钮。Vector2 控制按钮宽高比例；Anchor.BottomCenter 表示固定在详情面板底部居中。

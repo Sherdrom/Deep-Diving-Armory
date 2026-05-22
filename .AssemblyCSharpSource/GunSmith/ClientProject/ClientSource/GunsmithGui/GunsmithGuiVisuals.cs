@@ -278,6 +278,99 @@ namespace GunSmith
                 spriteBatch.Draw(texture, destination, sourceRect, iconColor);
             }
         }
+
+        private sealed class GunsmithStatsText : GUIFrame
+        {
+            private const string Separator = " | ";
+
+            private readonly List<GunsmithStatDisplay> stats;
+            private readonly bool inline;
+
+            public GunsmithStatsText(RectTransform rectT, GunsmithStats stats, bool inline)
+                : base(rectT, style: null, color: Color.Transparent)
+            {
+                this.stats = FormatStats(stats);
+                this.inline = inline;
+                CanBeFocused = false;
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                if (!Visible || Rect.Width <= 0 || Rect.Height <= 0)
+                {
+                    return;
+                }
+
+                base.Draw(spriteBatch);
+
+                var font = GUIStyle.SmallFont ?? GUIStyle.Font;
+                if (font == null)
+                {
+                    return;
+                }
+
+                if (inline)
+                {
+                    DrawInline(spriteBatch, font);
+                }
+                else
+                {
+                    DrawVertical(spriteBatch, font);
+                }
+            }
+
+            private void DrawInline(SpriteBatch spriteBatch, GUIFont font)
+            {
+                float lineHeight = Math.Max(font.MeasureString("Mg").Y + 1.0f, 1.0f);
+                float x = Rect.X;
+                float y = Rect.Y;
+                bool hasTextOnLine = false;
+                Vector2 separatorSize = font.MeasureString(Separator);
+
+                foreach (GunsmithStatDisplay stat in stats)
+                {
+                    Vector2 textSize = font.MeasureString(stat.Text);
+                    float requiredWidth = textSize.X + (hasTextOnLine ? separatorSize.X : 0.0f);
+                    if (hasTextOnLine && x + requiredWidth > Rect.Right)
+                    {
+                        x = Rect.X;
+                        y += lineHeight;
+                        hasTextOnLine = false;
+                    }
+                    if (y + lineHeight > Rect.Bottom)
+                    {
+                        return;
+                    }
+
+                    if (hasTextOnLine)
+                    {
+                        GUI.DrawString(spriteBatch, new Vector2(x, y), Separator, Color.LightGray, Color.Black * 0.65f, 0, font);
+                        x += separatorSize.X;
+                    }
+
+                    GUI.DrawString(spriteBatch, new Vector2(x, y), stat.Text, StatDisplayColor(stat), Color.Black * 0.65f, 0, font);
+                    x += textSize.X;
+                    hasTextOnLine = true;
+                }
+            }
+
+            private void DrawVertical(SpriteBatch spriteBatch, GUIFont font)
+            {
+                float lineHeight = Math.Max(font.MeasureString("Mg").Y + 1.0f, 1.0f);
+                float y = Rect.Y;
+
+                foreach (GunsmithStatDisplay stat in stats)
+                {
+                    if (y + lineHeight > Rect.Bottom)
+                    {
+                        return;
+                    }
+
+                    GUI.DrawString(spriteBatch, new Vector2(Rect.X, y), stat.Text, StatDisplayColor(stat), Color.Black * 0.65f, 0, font);
+                    y += lineHeight;
+                }
+            }
+        }
     }
 }
 

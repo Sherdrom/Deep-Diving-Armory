@@ -50,42 +50,41 @@ namespace GunSmith
             };
         }
 
-        private static string FormatStatsLine(GunsmithStats stats)
-            => $"{LocalizeKey("deep.gunsmith.stat.ergonomics")} {stats.Ergonomics:+0.##;-0.##;0} | {LocalizeStatType(StatTypes.RangedSpreadReduction)} {stats.Get(StatTypes.RangedSpreadReduction) * 100:+0.#;-0.#;0}% | {LocalizeStatType(StatTypes.RangedAttackSpeed)} {stats.Get(StatTypes.RangedAttackSpeed) * 100:+0.#;-0.#;0}% | {LocalizeStatType(StatTypes.RangedAttackMultiplier)} {stats.Get(StatTypes.RangedAttackMultiplier) * 100:+0.#;-0.#;0}%";
+        private readonly record struct GunsmithStatDisplay(string Text, float Value);
 
-        private static List<string> FormatPartStats(GunsmithStats stats)
+        private static List<GunsmithStatDisplay> FormatStats(GunsmithStats stats)
         {
-            List<string> lines = new();
+            List<GunsmithStatDisplay> entries = new();
 
-            AddNonZeroStatLine(lines, "deep.gunsmith.stat.ergonomics", stats.Ergonomics, "0.##");
+            AddNonZeroStatLine(entries, "deep.gunsmith.stat.ergonomics", stats.Ergonomics, "0.##");
             foreach (KeyValuePair<StatTypes, float> stat in stats.Values.OrderBy(stat => stat.Key))
             {
-                AddNonZeroStatTypeLine(lines, stat.Key, stat.Value);
+                AddNonZeroStatTypeLine(entries, stat.Key, stat.Value);
             }
-            if (lines.Count == 0)
+            if (entries.Count == 0)
             {
-                lines.Add(LocalizeKey("deep.gunsmith.stat.none"));
+                entries.Add(new GunsmithStatDisplay(LocalizeKey("deep.gunsmith.stat.none"), 0.0f));
             }
-            return lines;
+            return entries;
         }
 
-        private static void AddNonZeroStatTypeLine(List<string> lines, StatTypes statType, float value)
+        private static void AddNonZeroStatTypeLine(List<GunsmithStatDisplay> entries, StatTypes statType, float value)
         {
             if (Math.Abs(value) < 0.0001f) { return; }
             if (IsFlatStat(statType))
             {
-                lines.Add($"{LocalizeStatType(statType)}: {value:+0.#;-0.#;0}");
+                entries.Add(new GunsmithStatDisplay($"{LocalizeStatType(statType)}: {value:+0.#;-0.#;0}", value));
             }
             else
             {
-                lines.Add($"{LocalizeStatType(statType)}: {value * 100:+0.#;-0.#;0}%");
+                entries.Add(new GunsmithStatDisplay($"{LocalizeStatType(statType)}: {value * 100:+0.#;-0.#;0}%", value));
             }
         }
 
-        private static void AddNonZeroStatLine(List<string> lines, string key, float value, string format)
+        private static void AddNonZeroStatLine(List<GunsmithStatDisplay> entries, string key, float value, string format)
         {
             if (Math.Abs(value) < 0.0001f) { return; }
-            lines.Add($"{LocalizeKey(key)}: {value.ToString("+" + format + ";-" + format + ";0", System.Globalization.CultureInfo.InvariantCulture)}");
+            entries.Add(new GunsmithStatDisplay($"{LocalizeKey(key)}: {value.ToString("+" + format + ";-" + format + ";0", System.Globalization.CultureInfo.InvariantCulture)}", value));
         }
 
         private static string LocalizeStatType(StatTypes statType)
@@ -104,8 +103,12 @@ namespace GunSmith
                    StatTypes.LockedTalents or
                    StatTypes.InventoryExtraStackSize;
 
-        private static string FormatPartStatsBlock(GunsmithStats stats)
-            => string.Join("\n", FormatPartStats(stats));
+        private static Color StatDisplayColor(GunsmithStatDisplay stat)
+        {
+            if (stat.Value > 0.0001f) { return Color.LightGreen; }
+            if (stat.Value < -0.0001f) { return Color.IndianRed; }
+            return Color.LightGray;
+        }
     }
 }
 
