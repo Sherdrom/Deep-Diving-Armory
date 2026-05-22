@@ -1,5 +1,3 @@
-using FarseerPhysics;
-
 namespace GunSmith
 {
     public readonly record struct GunsmithQuickAttachmentTransform(
@@ -80,16 +78,24 @@ namespace GunSmith
 
             itemLocalPos += rule.ItemPosOffset;
 
-            Vector2 worldPosition = ToWorldPosition(weaponItem, itemLocalPos, drawPosition: false);
-            Vector2 drawPosition = ToWorldPosition(weaponItem, itemLocalPos, drawPosition: true);
+            bool hasWorldPosition = GunsmithQuickTransformMath.TryItemLocalToWorldPosition(
+                weaponItem,
+                itemLocalPos,
+                drawPosition: false,
+                out Vector2 worldPosition);
+            bool hasDrawPosition = GunsmithQuickTransformMath.TryItemLocalToWorldPosition(
+                weaponItem,
+                itemLocalPos,
+                drawPosition: true,
+                out Vector2 drawPosition);
             float worldRotation = ToWorldRotation(weaponItem, rule.RotationDegrees, drawPosition: false);
             float drawRotation = ToWorldRotation(weaponItem, rule.RotationDegrees, drawPosition: true);
             Vector2 direction = ToForwardDirection(weaponItem, rule.RotationDegrees, drawPosition: true);
-            if (!IsFinite(worldPosition) ||
-                !IsFinite(drawPosition) ||
+            if (!hasWorldPosition ||
+                !hasDrawPosition ||
                 !float.IsFinite(worldRotation) ||
                 !float.IsFinite(drawRotation) ||
-                !IsFinite(direction) ||
+                !GunsmithQuickTransformMath.IsFinite(direction) ||
                 direction.LengthSquared() < 0.0001f)
             {
                 DebugConsole.ThrowError(
@@ -150,22 +156,6 @@ namespace GunSmith
                    weaponItem.OwnInventory.slots[quickSlotIndex].Items.Contains(attachmentItem);
         }
 
-        private static Vector2 ToWorldPosition(Item owner, Vector2 itemLocalPos, bool drawPosition)
-        {
-            PhysicsBody? rootBody = owner.RootContainer?.body ?? owner.body;
-            Vector2 scaledLocalPos = itemLocalPos * owner.Scale;
-            if (owner.body != null)
-            {
-                Vector2 pos = scaledLocalPos;
-                pos.X *= rootBody?.Dir ?? owner.body.Dir;
-                float rotation = drawPosition ? owner.body.DrawRotation : owner.body.Rotation;
-                Vector2 bodyPosition = drawPosition ? owner.body.DrawPosition : owner.body.Position;
-                return Vector2.Transform(pos, Matrix.CreateRotationZ(rotation)) + bodyPosition;
-            }
-
-            return (drawPosition ? owner.DrawPosition : owner.Position) + scaledLocalPos;
-        }
-
         private static float ToWorldRotation(Item owner, float localRotationDegrees, bool drawPosition)
         {
             float rotation = MathHelper.ToRadians(localRotationDegrees);
@@ -216,8 +206,5 @@ namespace GunSmith
 
             return owner.FlippedX && owner.Prefab.CanSpriteFlipX ? -1.0f : 1.0f;
         }
-
-        private static bool IsFinite(Vector2 value)
-            => float.IsFinite(value.X) && float.IsFinite(value.Y);
     }
 }

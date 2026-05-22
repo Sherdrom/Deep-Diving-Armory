@@ -63,7 +63,7 @@ namespace GunSmith
             position = Vector2.Zero;
 
             Vector2 localDisplayPosition = XMLExtensions.ParseVector2(rangedWeapon.BarrelPos);
-            if (!IsFinite(localDisplayPosition) || !float.IsFinite(item.Scale))
+            if (!GunsmithQuickTransformMath.IsFinite(localDisplayPosition) || !float.IsFinite(item.Scale))
             {
                 DebugConsole.ThrowError(
                     $"GunSmith QAT produced an invalid barrel particle payload. " +
@@ -71,21 +71,7 @@ namespace GunSmith
                 return false;
             }
 
-            Vector2 localOffset = localDisplayPosition * item.Scale;
-            if (item.body != null)
-            {
-                if (item.body.Dir < 0.0f)
-                {
-                    localOffset.X = -localOffset.X;
-                }
-                position = item.body.DrawPosition + Vector2.Transform(localOffset, Matrix.CreateRotationZ(item.body.DrawRotation));
-            }
-            else
-            {
-                position = item.DrawPosition + Vector2.Transform(localOffset, Matrix.CreateRotationZ(item.RotationRad));
-            }
-
-            if (!IsFinite(position))
+            if (!GunsmithQuickTransformMath.TryItemLocalToWorldPosition(item, localDisplayPosition, drawPosition: true, out position))
             {
                 DebugConsole.ThrowError(
                     $"GunSmith QAT produced an invalid barrel particle position. " +
@@ -107,8 +93,5 @@ namespace GunSmith
             }
             return false;
         }
-
-        private static bool IsFinite(Vector2 value)
-            => float.IsFinite(value.X) && float.IsFinite(value.Y);
     }
 }
