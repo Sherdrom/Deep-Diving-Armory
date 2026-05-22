@@ -43,7 +43,7 @@ parts.deep_laser = { type = "accessory_mount",
     stats = { Ergonomics = -1, RangedSpreadReduction = 0.03 },
     visual = { 
         texture = laserTexture,
-        source = { x = 21, y = 9, w = 976, h = 93 },
+        source = { x = 21, y = 9, w = 134, h = 93 },
         attachPoint = { x = 68, y = 47 },
         order = 70,
         scale = 0.45
