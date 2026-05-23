@@ -183,13 +183,17 @@ finishQuickModChange = function(item, selection, platform, weapon, alreadySynced
     if not alreadySynced then
         QuickMod.SyncFromContainer(item, selection, platform)
     end
-    Core.PruneInvalidSelections(selection, platform, weapon)
+    if not alreadySynced then
+        Core.PruneInvalidSelections(selection, platform, weapon)
+    end
     saveSelectionIfChanged(item, selection, platform, weapon)
     Runtime.Apply(item, true)
 end
 
-local function buildSignature(item, selection, platform)
-    Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
+local function buildSignature(item, selection, platform, skipPrune)
+    if not skipPrune then
+        Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
+    end
     local values = {}
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         table.insert(values, path .. ":" .. tostring(selection[path] or ""))
@@ -211,7 +215,6 @@ end
 
 local function buildLayerSpecForItem(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
-    Core.PruneInvalidSelections(selection, platform, weapon)
     local layers = {}
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])
@@ -390,10 +393,22 @@ function Runtime.Apply(item, alreadySynced)
         end
     end
 
+    local selectionSignature
+    if alreadySynced then
+        selectionSignature = buildSignature(item, selection, platform, true)
+        State.lastQuickSignatures = State.lastQuickSignatures or {}
+        if State.lastQuickSignatures[item] == selectionSignature then
+            return
+        end
+        State.lastQuickSignatures[item] = selectionSignature
+    end
+
     local weapon = Core.WeaponConfig(item)
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
-    local selectionSignature = buildSignature(item, selection, platform)
+    if not selectionSignature then
+        selectionSignature = buildSignature(item, selection, platform, false)
+    end
     local configSignature = selectionSignature .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec
     if State.appliedConfigSignatures[item] == configSignature then
         return
@@ -690,6 +705,7 @@ function Runtime.Cleanup(item)
     State.loadedStates[key] = nil
     State.savedSignatures[item] = nil
     State.pendingPartsRefresh[item] = nil
+    if State.lastQuickSignatures then State.lastQuickSignatures[item] = nil end
     invalidateAppliedState(item)
 end
 

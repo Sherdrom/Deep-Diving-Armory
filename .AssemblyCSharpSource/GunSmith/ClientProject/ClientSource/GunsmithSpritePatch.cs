@@ -8,6 +8,7 @@ namespace GunSmith
         [HarmonyPostfix]
         private static void KeepSpritesApplied(Item __instance)
         {
+            if (!GunsmithApi.IsReady || !GunsmithApi.HasAnySpriteState) { return; }
             if (GunsmithApi.TryGetValidState(__instance, out GunsmithSpriteState? state))
             {
                 GunsmithApi.ApplyState(__instance, state);
@@ -59,7 +60,10 @@ namespace GunSmith
         [HarmonyPostfix]
         private static void KeepWindowVisible()
         {
-            GunsmithGui.RefreshWindow();
+            if (GunsmithGui.ActiveWindowForInputBlock != null)
+            {
+                GunsmithGui.RefreshWindow();
+            }
         }
     }
 }

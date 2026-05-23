@@ -15,6 +15,7 @@ namespace GunSmith
         private static readonly ConcurrentDictionary<Item, ConcurrentDictionary<string, BarrelRule>> RulesByItem = new();
         private static readonly ConcurrentDictionary<Item, string> ActiveRuleKeyByItem = new();
         private static readonly ConcurrentDictionary<Item, int> ActiveProjectileSelectionByItem = new();
+        private static readonly ConcurrentDictionary<Item, Vector2> CachedLocalPositions = new();
 
         public static void ClearTransforms(Item item)
         {
@@ -22,6 +23,7 @@ namespace GunSmith
             RulesByItem.TryRemove(item, out _);
             ActiveRuleKeyByItem.TryRemove(item, out _);
             ActiveProjectileSelectionByItem.TryRemove(item, out _);
+            CachedLocalPositions.TryRemove(item, out _);
         }
 
         public static void RegisterTransform(Item item, string key, float localX, float localY, float rotationDegrees)
@@ -53,6 +55,7 @@ namespace GunSmith
                 item,
                 _ => new ConcurrentDictionary<string, BarrelRule>(StringComparer.OrdinalIgnoreCase));
             rules[normalizedKey] = new BarrelRule(localPosition, rotationDegrees);
+            CachedLocalPositions.TryRemove(item, out _);
             ApplyCurrentBarrelPos(item, reportMissingActiveRule: false);
         }
 
@@ -65,6 +68,7 @@ namespace GunSmith
 
             ActiveRuleKeyByItem[item] = KeyForProjectileSelection(selectedProjectile);
             ActiveProjectileSelectionByItem[item] = selectedProjectile;
+            CachedLocalPositions.TryRemove(item, out _);
             ApplyCurrentBarrelPos(item, reportMissingActiveRule: true);
         }
 
@@ -74,6 +78,11 @@ namespace GunSmith
             if (item == null || item.Removed)
             {
                 return false;
+            }
+
+            if (CachedLocalPositions.TryGetValue(item, out localPosition))
+            {
+                return true;
             }
 
             if (!RulesByItem.TryGetValue(item, out ConcurrentDictionary<string, BarrelRule>? rules))
@@ -89,6 +98,7 @@ namespace GunSmith
             }
 
             localPosition = rule.LocalPosition;
+            CachedLocalPositions[item] = localPosition;
             return true;
         }
 

@@ -146,10 +146,15 @@ function Core.RootSocket(weapon, path)
     return root and root.socket or nil
 end
 
-function Core.BuildDefaultSelection(platform, weapon)
-    local selection = {}
-    if not platform or not weapon or type(weapon.roots) ~= "table" then return selection end
+local defaultSelectionCache = {}
 
+function Core.BuildDefaultSelection(platform, weapon)
+    if not platform or not weapon or type(weapon.roots) ~= "table" then return {} end
+    local cached = defaultSelectionCache[weapon]
+    if cached then
+        return cached
+    end
+    local selection = {}
     for _, root in ipairs(Core.RootSlotDefs(platform)) do
         local path = root.path
         local partId = Core.RootPartId(weapon, path)
@@ -159,6 +164,7 @@ function Core.BuildDefaultSelection(platform, weapon)
             Core.ApplyMountDefaultsForPath(selection, path, {}, 0)
         end
     end
+    defaultSelectionCache[weapon] = selection
     return selection
 end
 

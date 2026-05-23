@@ -11,6 +11,8 @@ namespace GunSmith
             }
 
             Vector2 localOffset = itemLocalDisplayPos * item.Scale;
+            float rotation;
+            Vector2 bodyPosition;
             if (item.body != null)
             {
                 if (item.body.Dir < 0.0f)
@@ -18,15 +20,20 @@ namespace GunSmith
                     localOffset.X = -localOffset.X;
                 }
 
-                float rotation = drawPosition ? item.body.DrawRotation : item.body.Rotation;
-                Vector2 bodyPosition = drawPosition ? item.body.DrawPosition : item.body.Position;
-                position = bodyPosition + Vector2.Transform(localOffset, Matrix.CreateRotationZ(rotation));
+                rotation = drawPosition ? item.body.DrawRotation : item.body.Rotation;
+                bodyPosition = drawPosition ? item.body.DrawPosition : item.body.Position;
             }
             else
             {
-                float rotation = item.RotationRad;
-                position = (drawPosition ? item.DrawPosition : item.Position) + Vector2.Transform(localOffset, Matrix.CreateRotationZ(rotation));
+                rotation = item.RotationRad;
+                bodyPosition = drawPosition ? item.DrawPosition : item.Position;
             }
+
+            float sin = MathF.Sin(rotation);
+            float cos = MathF.Cos(rotation);
+            position = new Vector2(
+                bodyPosition.X + localOffset.X * cos - localOffset.Y * sin,
+                bodyPosition.Y + localOffset.X * sin + localOffset.Y * cos);
 
             return IsFinite(position);
         }

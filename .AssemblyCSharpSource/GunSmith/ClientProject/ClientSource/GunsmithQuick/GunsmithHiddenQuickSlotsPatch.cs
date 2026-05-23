@@ -6,6 +6,7 @@ namespace GunSmith
         private static readonly Dictionary<string, HashSet<int>> ManagedSlotsByItemIdentifier = new(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, Dictionary<int, HashSet<string>>> VisibleWhenContainedByItemIdentifier = new(StringComparer.OrdinalIgnoreCase);
         private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Inventory, LayoutCache> OriginalLayoutsByInventory = new();
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Inventory, FrameState> FrameStateByInventory = new();
         private static readonly HashSet<Item> QuickMutationItems = new();
 
         public static void RegisterHiddenSlots(string itemIdentifier, string slotSpec)
@@ -90,7 +91,18 @@ namespace GunSmith
         {
             if (!__instance.isSubInventory)
             {
-                PackVisibleSlotsFirst(__instance);
+                double now = Timing.TotalTime;
+                if (!FrameStateByInventory.TryGetValue(__instance, out FrameState? frameState))
+                {
+                    frameState = new FrameState();
+                    FrameStateByInventory.Add(__instance, frameState);
+                }
+
+                if (Math.Abs(frameState.LastPackTime - now) > 0.0001)
+                {
+                    frameState.LastPackTime = now;
+                    PackVisibleSlotsFirst(__instance);
+                }
             }
 
             if (IsManagedSlot(__instance, __0) && !ShouldShowManagedSlot(__instance, __0))
@@ -204,6 +216,22 @@ namespace GunSmith
 
             __result = FindAllowedNonManagedSlot(__instance, item, ignoreCondition);
             return false;
+        }
+
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.TryPutItem), typeof(Item), typeof(int), typeof(bool), typeof(bool), typeof(Character), typeof(bool), typeof(bool), typeof(bool))]
+        [HarmonyPrefix]
+        private static bool SkipSwapForUncontainableItem(Inventory __instance, Item item, int i, bool allowSwapping, ref bool __result)
+        {
+            if (!allowSwapping || item == null || item.ParentInventory == null) { return true; }
+            if (i < 0 || i >= __instance.slots.Length || !__instance.slots[i].Any()) { return true; }
+            if (item.ParentInventory == __instance) { return true; }
+            if (__instance is not ItemInventory itemInventory) { return true; }
+            if (!itemInventory.Container.CanBeContained(item, i))
+            {
+                __result = false;
+                return false;
+            }
+            return true;
         }
 
         [HarmonyPatch(typeof(ItemInventory), nameof(ItemInventory.TryPutItem), typeof(Item), typeof(int), typeof(bool), typeof(bool), typeof(Character), typeof(bool), typeof(bool), typeof(bool))]
@@ -504,6 +532,11 @@ namespace GunSmith
                 HiddenStates = new bool[visualSlots.Length];
                 LastPackHash = 0;
             }
+        }
+
+        private sealed class FrameState
+        {
+            public double LastPackTime;
         }
 
         private readonly struct SlotLayout

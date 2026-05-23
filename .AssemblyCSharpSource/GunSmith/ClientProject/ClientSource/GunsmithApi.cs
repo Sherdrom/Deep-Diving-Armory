@@ -11,6 +11,7 @@ namespace GunSmith
 
         public static bool IsReady => graphicsDevice != null && spriteBatch != null;
         internal static bool HasManagedRuntimeItems => System.Threading.Volatile.Read(ref managedRuntimeItemCount) > 0;
+        internal static bool HasAnySpriteState => !spriteStates.IsEmpty;
 
         public static void Initialize(GraphicsDevice graphics)
         {

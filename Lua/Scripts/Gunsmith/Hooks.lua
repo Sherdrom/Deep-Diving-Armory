@@ -158,13 +158,13 @@ local function syncQuickModContainer(instance)
     if not instance then return end
     local item = instance.Item
     if not item then return end
-    if isQuickSlotMutation(item) then return end
-    if not (Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item)) then return end
     if pendingQuickModContainerSync[item] then return end
+    if not (Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item)) then return end
+    if isQuickSlotMutation(item) then return end
 
     pendingQuickModContainerSync[item] = true
     if Timer and Timer.Wait then
-        Timer.Wait(function() flushQuickModContainerSync(item) end, 1)
+        Timer.Wait(function() flushQuickModContainerSync(item) end, 50)
     else
         flushQuickModContainerSync(item)
     end

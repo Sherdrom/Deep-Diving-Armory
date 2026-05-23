@@ -120,12 +120,18 @@ function Stats.Add(target, source)
 end
 
 function Stats.SumSelection(selection)
-    local result = Stats.Empty()
+    local result = {}
     if type(selection) ~= "table" then return result end
-
     for _, path in ipairs(Core.SortedSelectionPaths(selection)) do
         local part = Core.GetPart(selection[path])
-        Stats.Add(result, Stats.PartStats(part))
+        if part and type(part.stats) == "table" then
+            for _, key in ipairs(Stats.Keys) do
+                local value = part.stats[key]
+                if type(value) == "number" and value ~= 0 then
+                    result[key] = (result[key] or 0) + value
+                end
+            end
+        end
     end
     return result
 end
