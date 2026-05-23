@@ -69,7 +69,9 @@ namespace GunSmith
             }
 
             float rotation = MathF.Atan2(transform.Direction.Y, transform.Direction.X);
-            return Vector2.Transform(offset, Matrix.CreateRotationZ(rotation));
+            float sin = MathF.Sin(rotation);
+            float cos = MathF.Cos(rotation);
+            return new Vector2(offset.X * cos - offset.Y * sin, offset.X * sin + offset.Y * cos);
         }
 
         private static void RestoreNativeLightTransform(LightComponent lightComponent)

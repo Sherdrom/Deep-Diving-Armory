@@ -17,6 +17,39 @@ namespace GunSmith
         {
             graphicsDevice = graphics;
             spriteBatch = new SpriteBatch(graphics);
+            PreJitFirePathMethods();
+        }
+
+        private static void PreJitFirePathMethods()
+        {
+            PreJit(typeof(GunsmithRuntimeEffectsPatch).GetMethod(
+                "ApplyGunsmithCharacterStats",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithRuntimeEffectsPatch).GetMethod(
+                "TryGetHeldGunsmithState",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithRuntimeEffectsPatch).GetMethod(
+                "CanSuppressManagedQuickSlotAfflictions",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithManagedSingleItemAfflictionSuppressionPatch).GetMethod(
+                "Prefix",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithManagedTargetListAfflictionSuppressionPatch).GetMethod(
+                "Prefix",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithQuickAttachmentBarrelParticlePatch).GetMethod(
+                "UseQuickAttachmentBarrelPosition",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+            PreJit(typeof(GunsmithQuickAttachmentBarrelParticlePatch).GetMethod(
+                "HasQuickAttachmentBarrelTag",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic));
+        }
+
+        private static void PreJit(System.Reflection.MethodInfo? method)
+        {
+            if (method == null) { return; }
+            try { System.Runtime.CompilerServices.RuntimeHelpers.PrepareMethod(method.MethodHandle); }
+            catch { /* best-effort optimization */ }
         }
 
         public static bool ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, string managedItemSpec, int width, int height)
