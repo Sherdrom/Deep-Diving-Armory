@@ -57,8 +57,6 @@ namespace GunSmith
             rules[normalizedKey] = new BarrelRule(localPosition, rotationDegrees);
             CachedLocalPositions.TryRemove(item, out _);
             ApplyCurrentBarrelPos(item, reportMissingActiveRule: false);
-
-            TryGetCurrentLocalPosition(item, out _);
         }
 
         public static void ApplySelectedProjectile(Item item, int selectedProjectile)
