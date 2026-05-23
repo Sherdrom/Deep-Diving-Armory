@@ -115,8 +115,10 @@ namespace GunSmith
                 return;
             }
 
-            PackVisibleSlotsFirst(__instance);
-            Inventory.RefreshMouseOnInventory();
+            if (PackVisibleSlotsFirst(__instance))
+            {
+                Inventory.RefreshMouseOnInventory();
+            }
         }
 
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
@@ -236,67 +238,143 @@ namespace GunSmith
             OriginalLayoutsByInventory.Add(inventory, new LayoutCache(inventory.visualSlots, inventory.visualSlots.Select(SlotLayout.FromVisualSlot).ToArray()));
         }
 
-        private static void PackVisibleSlotsFirst(Inventory __instance)
+        private static bool PackVisibleSlotsFirst(Inventory __instance)
         {
-            if (__instance.visualSlots == null || __instance.visualSlots.Length == 0)
+            VisualSlot[]? visualSlots = __instance.visualSlots;
+            if (visualSlots == null || visualSlots.Length == 0)
             {
-                return;
+                return false;
             }
 
             HashSet<int>? hiddenSlots = GetManagedHiddenSlots(__instance);
             bool hasInjectedSlots = HasInjectedQuickSlots(__instance);
             if ((hiddenSlots == null || hiddenSlots.Count == 0) && !hasInjectedSlots)
             {
-                return;
-            }
-
-            List<int> visibleIndices = new();
-            List<int> hiddenIndices = new();
-            for (int i = 0; i < __instance.visualSlots.Length; i++)
-            {
-                bool shouldHide = (hiddenSlots?.Contains(i) == true || IsInjectedQuickSlot(__instance, i)) && !ShouldShowManagedSlot(__instance, i);
-                if (!shouldHide)
-                {
-                    visibleIndices.Add(i);
-                }
-                else
-                {
-                    hiddenIndices.Add(i);
-                }
-            }
-
-            if (visibleIndices.Count == 0 || visibleIndices.Count == __instance.visualSlots.Length)
-            {
-                return;
+                return false;
             }
 
             if (!OriginalLayoutsByInventory.TryGetValue(__instance, out LayoutCache? layoutCache) ||
-                layoutCache.VisualSlots != __instance.visualSlots ||
-                layoutCache.Layouts.Length != __instance.visualSlots.Length)
+                layoutCache.VisualSlots != visualSlots ||
+                layoutCache.Layouts.Length != visualSlots.Length ||
+                layoutCache.HiddenStates.Length != visualSlots.Length)
             {
                 CaptureOriginalLayouts(__instance);
                 if (!OriginalLayoutsByInventory.TryGetValue(__instance, out layoutCache) ||
-                    layoutCache.VisualSlots != __instance.visualSlots ||
-                    layoutCache.Layouts.Length != __instance.visualSlots.Length)
+                    layoutCache.VisualSlots != visualSlots ||
+                    layoutCache.Layouts.Length != visualSlots.Length ||
+                    layoutCache.HiddenStates.Length != visualSlots.Length)
                 {
-                    return;
+                    return false;
                 }
+            }
+
+            bool[] hiddenStates = layoutCache.HiddenStates;
+            int visibleCount = 0;
+            int hiddenCount = 0;
+            int layoutHash = 17;
+            for (int i = 0; i < visualSlots.Length; i++)
+            {
+                bool shouldHide = (hiddenSlots?.Contains(i) == true || IsInjectedQuickSlot(__instance, i)) && !ShouldShowManagedSlot(__instance, i);
+                hiddenStates[i] = shouldHide;
+                layoutHash = (layoutHash * 31) + (shouldHide ? 1 : 0);
+                if (!shouldHide)
+                {
+                    visibleCount++;
+                }
+                else
+                {
+                    hiddenCount++;
+                }
+            }
+
+            if (hiddenCount == 0)
+            {
+                if (layoutCache.LastPackHash == layoutHash && IsOriginalLayoutCurrent(layoutCache))
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < visualSlots.Length; i++)
+                {
+                    layoutCache.Layouts[i].ApplyTo(visualSlots[i]);
+                }
+                layoutCache.LastPackHash = layoutHash;
+                return true;
+            }
+
+            if (visibleCount == 0)
+            {
+                return false;
+            }
+
+            if (layoutCache.LastPackHash == layoutHash &&
+                IsPackedLayoutCurrent(layoutCache, hiddenStates))
+            {
+                return false;
             }
 
             SlotLayout[] originalLayouts = layoutCache.Layouts;
-            for (int displayIndex = 0; displayIndex < visibleIndices.Count; displayIndex++)
+            int displayIndex = 0;
+            for (int i = 0; i < visualSlots.Length; i++)
             {
-                originalLayouts[displayIndex].ApplyTo(__instance.visualSlots[visibleIndices[displayIndex]]);
+                if (!hiddenStates[i])
+                {
+                    originalLayouts[displayIndex].ApplyTo(visualSlots[i]);
+                    displayIndex++;
+                }
             }
 
             SlotLayout hiddenLayout = originalLayouts[0];
-            foreach (int hiddenIndex in hiddenIndices)
+            for (int i = 0; i < visualSlots.Length; i++)
             {
-                if (hiddenIndex >= 0 && hiddenIndex < __instance.visualSlots.Length)
+                if (hiddenStates[i])
                 {
-                    hiddenLayout.ApplyTo(__instance.visualSlots[hiddenIndex]);
+                    hiddenLayout.ApplyTo(visualSlots[i]);
                 }
             }
+
+            layoutCache.LastPackHash = layoutHash;
+            return true;
+        }
+
+        private static bool IsOriginalLayoutCurrent(LayoutCache layoutCache)
+        {
+            for (int i = 0; i < layoutCache.VisualSlots.Length; i++)
+            {
+                if (!layoutCache.Layouts[i].Matches(layoutCache.VisualSlots[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsPackedLayoutCurrent(LayoutCache layoutCache, bool[] hiddenStates)
+        {
+            VisualSlot[] visualSlots = layoutCache.VisualSlots;
+            SlotLayout[] originalLayouts = layoutCache.Layouts;
+            SlotLayout hiddenLayout = originalLayouts[0];
+            int displayIndex = 0;
+            for (int i = 0; i < visualSlots.Length; i++)
+            {
+                if (hiddenStates[i])
+                {
+                    if (!hiddenLayout.Matches(visualSlots[i]))
+                    {
+                        return false;
+                    }
+                    continue;
+                }
+
+                if (displayIndex >= originalLayouts.Length || !originalLayouts[displayIndex].Matches(visualSlots[i]))
+                {
+                    return false;
+                }
+                displayIndex++;
+            }
+
+            return true;
         }
 
         private static bool IsManagedSlot(Inventory inventory, int slotIndex)
@@ -416,11 +494,15 @@ namespace GunSmith
         {
             public readonly VisualSlot[] VisualSlots;
             public readonly SlotLayout[] Layouts;
+            public readonly bool[] HiddenStates;
+            public int LastPackHash;
 
             public LayoutCache(VisualSlot[] visualSlots, SlotLayout[] layouts)
             {
                 VisualSlots = visualSlots;
                 Layouts = layouts;
+                HiddenStates = new bool[visualSlots.Length];
+                LastPackHash = 0;
             }
         }
 
@@ -447,6 +529,13 @@ namespace GunSmith
                 slot.Rect = rect;
                 slot.InteractRect = interactRect;
                 slot.SubInventoryDir = subInventoryDir;
+            }
+
+            public bool Matches(VisualSlot slot)
+            {
+                return slot.Rect == rect &&
+                       slot.InteractRect == interactRect &&
+                       slot.SubInventoryDir == subInventoryDir;
             }
         }
     }

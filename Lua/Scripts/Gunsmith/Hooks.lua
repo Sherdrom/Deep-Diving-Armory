@@ -140,22 +140,33 @@ local function isQuickSlotMutation(item)
     return Hook.Call("DeepGunsmithIsQuickSlotMutation", item) == true
 end
 
+local pendingQuickModContainerSync = {}
+
+local function flushQuickModContainerSync(item)
+    if not item then return end
+    if not pendingQuickModContainerSync[item] then return end
+    pendingQuickModContainerSync[item] = nil
+
+    if item.removed or isQuickSlotMutation(item) then return end
+    if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
+        Runtime.SyncQuickModContainerItem(item)
+    end
+end
+
 local function syncQuickModContainer(instance)
     if not CLIENT then return end
     if not instance then return end
     local item = instance.Item
     if not item then return end
     if isQuickSlotMutation(item) then return end
-    if Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item) then
-        Runtime.SyncQuickModContainerItem(item)
-    end
-end
+    if not (Core.WeaponConfig(item) and QuickMod and QuickMod.IsQuickItem(item)) then return end
+    if pendingQuickModContainerSync[item] then return end
 
-local function applyContainerOwner(instance)
-    if not instance then return end
-    local item = instance.Item
-    if item and Core.WeaponConfig(item) then
-        Runtime.Apply(item)
+    pendingQuickModContainerSync[item] = true
+    if Timer and Timer.Wait then
+        Timer.Wait(function() flushQuickModContainerSync(item) end, 1)
+    else
+        flushQuickModContainerSync(item)
     end
 end
 
@@ -182,13 +193,11 @@ function Hooks.Register()
 
     Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemContained", { "Barotrauma.Item", "System.Boolean" }, function(instance, ptable)
         applyGunsmithItem(readContainedItem(ptable))
-        applyContainerOwner(instance)
         syncQuickModContainer(instance)
     end, Hook.HookMethodType.After)
 
     Hook.Patch("Barotrauma.Items.Components.ItemContainer", "OnItemRemoved", { "Barotrauma.Item" }, function(instance, ptable)
         applyGunsmithItem(readContainedItem(ptable))
-        applyContainerOwner(instance)
         syncQuickModContainer(instance)
     end, Hook.HookMethodType.After)
 

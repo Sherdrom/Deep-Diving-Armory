@@ -551,7 +551,7 @@ namespace GunSmith
                         return true;
                     }
 
-                    if (!ReturnItemToControlledInventory(existingItem))
+                    if (!ReturnItemToControlledInventory(weaponItem, existingItem))
                     {
                         return false;
                     }
@@ -599,14 +599,22 @@ namespace GunSmith
                 }
             }
 
-            private static bool ReturnItemToControlledInventory(Item itemToReturn)
+            private static bool ReturnItemToControlledInventory(Item weaponItem, Item itemToReturn)
             {
-                if (itemToReturn.Removed || Character.Controlled?.Inventory == null)
+                if (weaponItem.Removed || itemToReturn.Removed || Character.Controlled?.Inventory == null)
                 {
                     return false;
                 }
 
-                return Character.Controlled.Inventory.TryPutItem(itemToReturn, Character.Controlled, CharacterInventory.AnySlot, createNetworkEvent: false, ignoreCondition: true, triggerOnInsertedEffects: false);
+                GunsmithHiddenQuickSlotsPatch.BeginQuickSlotMutation(weaponItem);
+                try
+                {
+                    return Character.Controlled.Inventory.TryPutItem(itemToReturn, Character.Controlled, CharacterInventory.AnySlot, createNetworkEvent: false, ignoreCondition: true, triggerOnInsertedEffects: false);
+                }
+                finally
+                {
+                    GunsmithHiddenQuickSlotsPatch.EndQuickSlotMutation(weaponItem);
+                }
             }
 
             private static Item? GetContainedQuickItem(Item weaponItem, int slotIndex)

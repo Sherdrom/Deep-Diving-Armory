@@ -134,7 +134,10 @@ function Stats.Encode(stats, separator)
     local values = {}
     local source = stats or Stats.Empty()
     for _, key in ipairs(Stats.Keys) do
-        table.insert(values, key .. "=" .. string.format("%.4f", source[key] or 0))
+        local value = source[key] or 0
+        if value ~= 0 then
+            table.insert(values, key .. "=" .. string.format("%.4f", value))
+        end
     end
     return table.concat(values, separator or ",")
 end

@@ -619,6 +619,12 @@ namespace GunSmith
         internal static bool IsGunsmithWindowBlockingInput
             => activeWindow is { Visible: true };
 
+        internal static bool IsOpenForItem(Item item, bool quickMode)
+            => item != null &&
+               activeWindow is { Visible: true } &&
+               ReferenceEquals(activeItem, item) &&
+               activeQuickMode == quickMode;
+
         internal static GUIComponent? ActiveWindowForInputBlock => activeWindow;
 
         internal static bool IsMouseOnQuickBufferInventory

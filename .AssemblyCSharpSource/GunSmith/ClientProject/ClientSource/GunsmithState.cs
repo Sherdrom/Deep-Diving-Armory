@@ -62,6 +62,12 @@ namespace GunSmith
         public float Get(StatTypes statType)
             => Values.TryGetValue(statType, out float value) ? value : 0.0f;
 
+        public bool HasValue(StatTypes statType)
+            => Values.TryGetValue(statType, out float value) && value != 0.0f;
+
+        public bool TryGet(StatTypes statType, out float value)
+            => Values.TryGetValue(statType, out value) && value != 0.0f;
+
         public static GunsmithRuntimeStats Empty { get; } = new();
     }
 }

@@ -19,9 +19,9 @@ namespace GunSmith
                 int height = FindIntArg(args, 1);
                 if (item != null && signature != null && layerSpec != null)
                 {
-                    ApplyFromLua(item, signature, layerSpec, inventorySpec ?? string.Empty, worldSpec ?? string.Empty, statsSpec ?? string.Empty, managedItemSpec ?? string.Empty, width, height);
+                    return ApplyFromLua(item, signature, layerSpec, inventorySpec ?? string.Empty, worldSpec ?? string.Empty, statsSpec ?? string.Empty, managedItemSpec ?? string.Empty, width, height);
                 }
-                return null;
+                return false;
             });
 
             hook.Add("DeepGunsmithOpen", args =>
@@ -68,6 +68,14 @@ namespace GunSmith
                     GunsmithGui.RefreshQuickFromLua(item, slotSpec);
                 }
                 return null;
+            });
+
+            hook.Add("DeepGunsmithIsOpen", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? mode = FindStringArg(args, 0);
+                bool quickMode = string.Equals(mode, "quick", StringComparison.OrdinalIgnoreCase);
+                return item != null && GunsmithGui.IsOpenForItem(item, quickMode);
             });
 
             hook.Add("DeepGunsmithRegisterHiddenQuickSlots", args =>

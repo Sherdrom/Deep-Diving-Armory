@@ -297,7 +297,9 @@ namespace GunSmith
                     continue;
                 }
 
-                if (Enum.TryParse(parts[0], ignoreCase: false, out StatTypes statType) && statType != StatTypes.None)
+                if (parsed != 0.0f &&
+                    Enum.TryParse(parts[0], ignoreCase: false, out StatTypes statType) &&
+                    statType != StatTypes.None)
                 {
                     values[statType] = parsed;
                 }

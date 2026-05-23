@@ -5,10 +5,12 @@ namespace GunSmith
         private static readonly ConcurrentDictionary<Item, GunsmithSpriteState> spriteStates = new();
         private static readonly ConcurrentDictionary<Item, GunsmithRuntimeState> runtimeStates = new();
         private static readonly ConcurrentDictionary<string, Texture2D> textureCache = new(StringComparer.OrdinalIgnoreCase);
+        private static int managedRuntimeItemCount;
         private static GraphicsDevice? graphicsDevice;
         private static SpriteBatch? spriteBatch;
 
         public static bool IsReady => graphicsDevice != null && spriteBatch != null;
+        internal static bool HasManagedRuntimeItems => System.Threading.Volatile.Read(ref managedRuntimeItemCount) > 0;
 
         public static void Initialize(GraphicsDevice graphics)
         {
@@ -16,10 +18,10 @@ namespace GunSmith
             spriteBatch = new SpriteBatch(graphics);
         }
 
-        public static void ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, string managedItemSpec, int width, int height)
+        public static bool ApplyFromLua(Item item, string signature, string layerSpec, string inventorySpec, string worldSpec, string statsSpec, string managedItemSpec, int width, int height)
         {
-            if (!IsReady || item == null || item.Removed) { return; }
-            if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return; }
+            if (!IsReady || item == null || item.Removed) { return false; }
+            if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return false; }
 
             GunsmithRuntimeStats stats = ParseRuntimeStats(statsSpec);
             IReadOnlySet<string> managedItemIdentifiers = ParseIdentifierSet(managedItemSpec);
@@ -33,13 +35,13 @@ namespace GunSmith
             string spriteSignature = BuildSpriteSignature(layerSpec, inventorySpec, worldSpec, width, height);
             if (spriteStates.TryGetValue(item, out GunsmithSpriteState? existing) && existing.Signature == spriteSignature)
             {
-                runtimeStates[item] = runtimeState;
+                SetRuntimeState(item, runtimeState);
                 ApplyState(item, existing);
-                return;
+                return true;
             }
 
             List<GunsmithLayer> layers = ParseLayers(layerSpec);
-            if (layers.Count == 0) { return; }
+            if (layers.Count == 0) { return false; }
             GunsmithInventorySettings inventorySettings = ParseInventorySettings(inventorySpec);
             GunsmithWorldSettings worldSettings = ParseWorldSettings(worldSpec);
 
@@ -57,7 +59,7 @@ namespace GunSmith
             catch (Exception ex)
             {
                 LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to compose runtime texture: {ex.Message}");
-                return;
+                return false;
             }
 
             Rectangle contentBounds = CalculateContentBounds(layers, Math.Max(width, 1), Math.Max(height, 1));
@@ -75,7 +77,7 @@ namespace GunSmith
                 texture.Dispose();
                 worldTexture.Dispose();
                 inventoryTexture.Dispose();
-                return;
+                return false;
             }
 
             GunsmithSpriteState state = new()
@@ -93,7 +95,7 @@ namespace GunSmith
             };
 
             spriteStates[item] = state;
-            runtimeStates[item] = runtimeState;
+            SetRuntimeState(item, runtimeState);
             ApplyState(item, state, shouldReplaceActiveSprite);
 
             if (existing != null && ReferenceEquals(item.activeSprite, existing.WorldSprite))
@@ -107,6 +109,8 @@ namespace GunSmith
                 existing.WorldTexture.Dispose();
                 existing.InventoryTexture.Dispose();
             }
+
+            return true;
         }
 
         public static void ClearFromLua(Item item)
@@ -136,6 +140,39 @@ namespace GunSmith
             return item != null && !item.Removed && runtimeStates.TryGetValue(item, out state!);
         }
 
+        private static void SetRuntimeState(Item item, GunsmithRuntimeState state)
+        {
+            bool hadManagedItems = runtimeStates.TryGetValue(item, out GunsmithRuntimeState? existingState) &&
+                                   existingState.ManagedItemIdentifiers.Count > 0;
+            bool hasManagedItems = state.ManagedItemIdentifiers.Count > 0;
+
+            runtimeStates[item] = state;
+            if (hadManagedItems != hasManagedItems)
+            {
+                if (hasManagedItems)
+                {
+                    System.Threading.Interlocked.Increment(ref managedRuntimeItemCount);
+                }
+                else
+                {
+                    System.Threading.Interlocked.Decrement(ref managedRuntimeItemCount);
+                }
+            }
+
+            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
+        }
+
+        private static void RemoveRuntimeState(Item item)
+        {
+            if (runtimeStates.TryRemove(item, out GunsmithRuntimeState? removedState) &&
+                removedState.ManagedItemIdentifiers.Count > 0)
+            {
+                System.Threading.Interlocked.Decrement(ref managedRuntimeItemCount);
+            }
+
+            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
+        }
+
         internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, out Vector2 localPoint)
         {
             localPoint = Vector2.Zero;
@@ -152,7 +189,7 @@ namespace GunSmith
 
         internal static void RemoveState(Item item)
         {
-            runtimeStates.TryRemove(item, out _);
+            RemoveRuntimeState(item);
             GunsmithQuickSlotLayoutPatch.ClearLayouts(item);
             if (spriteStates.TryRemove(item, out GunsmithSpriteState? state))
             {
@@ -211,6 +248,8 @@ namespace GunSmith
             GunsmithGui.CloseWindow();
 
             runtimeStates.Clear();
+            managedRuntimeItemCount = 0;
+            GunsmithRuntimeEffectsPatch.ClearCaches();
             foreach (KeyValuePair<Item, GunsmithSpriteState> pair in spriteStates.ToArray())
             {
                 if (spriteStates.TryRemove(pair.Key, out GunsmithSpriteState? state))

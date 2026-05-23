@@ -15,12 +15,28 @@ Gunsmith.EmptyPartId = "__empty"
 Gunsmith.State = Gunsmith.State or {
     selections = {},
     appliedSignatures = {},
+    appliedConfigSignatures = {},
     uiPaths = {},
     loadedStates = {}
 }
 
 local State = Gunsmith.State
+State.appliedConfigSignatures = State.appliedConfigSignatures or {}
+State.savedSignatures = State.savedSignatures or {}
+State.pendingPartsRefresh = State.pendingPartsRefresh or {}
 local finishQuickModChange
+local saveSelectionIfChanged
+
+local function isGunsmithUiOpen(item, mode)
+    if not Hook or not Hook.Call or not item then return false end
+    return Hook.Call("DeepGunsmithIsOpen", item, mode or "") == true
+end
+
+local function invalidateAppliedState(item)
+    if not item then return end
+    State.appliedSignatures[item] = nil
+    State.appliedConfigSignatures[item] = nil
+end
 
 function Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
@@ -51,13 +67,35 @@ function Runtime.SetCurrentUiPath(item, path)
     State.uiPaths[key] = Core.NormalizeUiPath(Core.PlatformConfig(item), path or "")
 end
 
-function Runtime.SchedulePartsRefresh(item, delay)
+function Runtime.SchedulePartsRefresh(item, delay, alreadySynced)
     if SERVER then return end
     if not item or item.removed then return end
-    Runtime.RefreshParts(item)
+    local pending = State.pendingPartsRefresh[item]
+    if pending then
+        pending.alreadySynced = pending.alreadySynced and alreadySynced == true
+        return
+    end
+
+    pending = { alreadySynced = alreadySynced == true }
+    State.pendingPartsRefresh[item] = pending
+
+    local function flush()
+        local entry = State.pendingPartsRefresh[item]
+        if not entry then return end
+        State.pendingPartsRefresh[item] = nil
+        if item and not item.removed then
+            Runtime.RefreshParts(item, entry.alreadySynced)
+        end
+    end
+
+    if Timer and Timer.Wait then
+        Timer.Wait(flush, delay or 1)
+    else
+        flush()
+    end
 end
 
-function Runtime.RefreshParts(item)
+function Runtime.RefreshParts(item, alreadySynced)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) then return end
 
@@ -68,9 +106,10 @@ function Runtime.RefreshParts(item)
         return
     end
 
-    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-        State.appliedSignatures[item] = nil
-        Persistence.Save(item)
+    if not isGunsmithUiOpen(item, "parts") then return end
+
+    if not alreadySynced and QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        saveSelectionIfChanged(item, selection, platform, Core.WeaponConfig(item))
     end
 
     local currentPath = Runtime.GetCurrentUiPath(item)
@@ -82,7 +121,7 @@ function Runtime.RefreshParts(item)
     Hook.Call("DeepGunsmithRefreshParts", item, UiSpec.Build(item, selection, platform, currentPath))
 end
 
-function Runtime.RefreshQuick(item)
+function Runtime.RefreshQuick(item, alreadySynced)
     if SERVER then return end
     if not item or not Core.PlatformConfig(item) then return end
 
@@ -93,9 +132,10 @@ function Runtime.RefreshQuick(item)
         return
     end
 
-    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-        State.appliedSignatures[item] = nil
-        Persistence.Save(item)
+    if not isGunsmithUiOpen(item, "quick") then return end
+
+    if not alreadySynced and QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
+        saveSelectionIfChanged(item, selection, platform, Core.WeaponConfig(item))
     end
 
     Hook.Call("DeepGunsmithRefreshQuick", item, QuickUiSpec.Build(item, selection, platform))
@@ -113,8 +153,8 @@ function Runtime.SyncQuickModContainerItem(item)
     if not selection then return end
 
     if QuickMod.SyncFromContainer(item, selection, platform) then
-        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
-        Runtime.RefreshParts(item)
+        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item), true)
+        Runtime.RefreshParts(item, true)
     end
 end
 
@@ -130,24 +170,22 @@ function Runtime.SyncQuickContainer(item)
     if not selection then return false end
 
     if QuickMod.SyncFromContainer(item, selection, platform) then
-        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item))
+        finishQuickModChange(item, selection, platform, Core.WeaponConfig(item), true)
     else
         Core.PruneInvalidSelections(selection, platform, Core.WeaponConfig(item))
-        Persistence.Save(item)
-        State.appliedSignatures[item] = nil
-        Runtime.Apply(item)
     end
 
-    Runtime.RefreshQuick(item)
+    Runtime.RefreshQuick(item, true)
     return true
 end
 
-finishQuickModChange = function(item, selection, platform, weapon)
-    QuickMod.SyncFromContainer(item, selection, platform)
+finishQuickModChange = function(item, selection, platform, weapon, alreadySynced)
+    if not alreadySynced then
+        QuickMod.SyncFromContainer(item, selection, platform)
+    end
     Core.PruneInvalidSelections(selection, platform, weapon)
-    Persistence.Save(item)
-    State.appliedSignatures[item] = nil
-    Runtime.Apply(item)
+    saveSelectionIfChanged(item, selection, platform, weapon)
+    Runtime.Apply(item, true)
 end
 
 local function buildSignature(item, selection, platform)
@@ -157,6 +195,18 @@ local function buildSignature(item, selection, platform)
         table.insert(values, path .. ":" .. tostring(selection[path] or ""))
     end
     return table.concat(values, ",")
+end
+
+saveSelectionIfChanged = function(item, selection, platform, weapon)
+    if not item or not selection or not platform then return false end
+    local signature = buildSignature(item, selection, platform)
+    if State.savedSignatures[item] == signature then
+        return false
+    end
+
+    Persistence.Save(item)
+    State.savedSignatures[item] = signature
+    return true
 end
 
 local function buildLayerSpecForItem(item, selection, platform)
@@ -326,7 +376,7 @@ local function registerQuickAttachmentBarrels(item, selection, platform, weapon)
     end
 end
 
-function Runtime.Apply(item)
+function Runtime.Apply(item, alreadySynced)
     if not item or item.removed then return end
 
     local platform = Core.PlatformConfig(item)
@@ -334,32 +384,44 @@ function Runtime.Apply(item)
 
     local selection = Runtime.GetSelection(item)
     if not selection then return end
-    if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-        State.appliedSignatures[item] = nil
+    if not alreadySynced and QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
         if not SERVER then
-            Persistence.Save(item)
+            saveSelectionIfChanged(item, selection, platform, Core.WeaponConfig(item))
         end
     end
 
     local weapon = Core.WeaponConfig(item)
-    if SERVER then
-        registerQuickAttachmentBarrels(item, selection, platform, weapon)
-        return
-    end
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
+    local selectionSignature = buildSignature(item, selection, platform)
+    local configSignature = selectionSignature .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec
+    if State.appliedConfigSignatures[item] == configSignature then
+        return
+    end
+
+    if SERVER then
+        registerQuickAttachmentBarrels(item, selection, platform, weapon)
+        State.appliedConfigSignatures[item] = configSignature
+        return
+    end
     local statsSpec = Stats.Encode(Stats.SumSelection(selection))
     local managedItemSpec = encodeManagedItems(selection)
-    local signature = buildSignature(item, selection, platform) .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|stats:" .. statsSpec .. "|items:" .. managedItemSpec
+    local signature = configSignature .. "|stats:" .. statsSpec .. "|items:" .. managedItemSpec
 
     local layerSpec = buildLayerSpecForItem(item, selection, platform)
     if Hook and Hook.Call then
         registerQuickSlotLayouts(item, selection, platform, weapon)
+        local applied = true
         if State.appliedSignatures[item] ~= signature then
-            Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, managedItemSpec, platform.canvas.w, platform.canvas.h)
-            State.appliedSignatures[item] = signature
+            applied = Hook.Call("DeepGunsmithApply", item, signature, layerSpec, inventorySpec, worldSpec, statsSpec, managedItemSpec, platform.canvas.w, platform.canvas.h) == true
+            if applied then
+                State.appliedSignatures[item] = signature
+            end
         end
-        registerQuickAttachmentBarrels(item, selection, platform, weapon)
+        if applied then
+            registerQuickAttachmentBarrels(item, selection, platform, weapon)
+            State.appliedConfigSignatures[item] = configSignature
+        end
     else
         print("[Gunsmith] Hook.Call is unavailable; cannot apply composed sprite.")
     end
@@ -489,9 +551,9 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
 
         finishQuickModChange(item, selection, platform, weapon)
         if refreshQuick then
-            Runtime.RefreshQuick(item)
+            Runtime.RefreshQuick(item, true)
         else
-            Runtime.SchedulePartsRefresh(item, 0)
+            Runtime.SchedulePartsRefresh(item, 0, true)
         end
         return false
     end
@@ -524,8 +586,7 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
         Core.ApplyMountDefaultsForPath(selection, slotPath, {}, 0)
     end
     Core.PruneInvalidSelections(selection, platform, weapon)
-    Persistence.Save(item)
-    State.appliedSignatures[item] = nil
+    saveSelectionIfChanged(item, selection, platform, weapon)
     Runtime.Apply(item)
     if returnedParts and returnedParts > 0 then
         return false
@@ -564,7 +625,7 @@ function Runtime.InstallQuickItem(item, slotPath, draggedItem)
     end
 
     finishQuickModChange(item, selection, platform, weapon)
-    Runtime.RefreshQuick(item)
+    Runtime.RefreshQuick(item, true)
     return true
 end
 
@@ -589,8 +650,7 @@ function Runtime.Open(item)
     end
 
     if QuickMod and QuickMod.SyncFromContainer(item, selection, platform) then
-        State.appliedSignatures[item] = nil
-        Persistence.Save(item)
+        saveSelectionIfChanged(item, selection, platform, Core.WeaponConfig(item))
     end
 
     local currentPath = Runtime.GetCurrentUiPath(item)
@@ -615,8 +675,7 @@ function Runtime.OpenQuick(item)
     end
 
     if QuickMod.SyncFromContainer(item, selection, platform) then
-        State.appliedSignatures[item] = nil
-        Persistence.Save(item)
+        saveSelectionIfChanged(item, selection, platform, Core.WeaponConfig(item))
     end
 
     Runtime.Apply(item)
@@ -629,7 +688,9 @@ function Runtime.Cleanup(item)
     State.selections[key] = nil
     State.uiPaths[key] = nil
     State.loadedStates[key] = nil
-    State.appliedSignatures[item] = nil
+    State.savedSignatures[item] = nil
+    State.pendingPartsRefresh[item] = nil
+    invalidateAppliedState(item)
 end
 
 Gunsmith.Apply = Runtime.Apply

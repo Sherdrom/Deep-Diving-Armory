@@ -7,6 +7,7 @@ namespace GunSmith
     public static class GunsmithQuickAttachmentBarrelParticlePatch
     {
         private const string QuickAttachmentBarrelParticleTag = "Gunsmith_BarrelParticle";
+        private static readonly Identifier QuickAttachmentBarrelParticleIdentifier = QuickAttachmentBarrelParticleTag.ToIdentifier();
 
         private static MethodBase? TargetMethod()
         {
@@ -62,7 +63,11 @@ namespace GunSmith
         {
             position = Vector2.Zero;
 
-            Vector2 localDisplayPosition = XMLExtensions.ParseVector2(rangedWeapon.BarrelPos);
+            if (!GunsmithQuickAttachmentBarrelTransforms.TryGetCurrentLocalPosition(item, out Vector2 localDisplayPosition))
+            {
+                localDisplayPosition = XMLExtensions.ParseVector2(rangedWeapon.BarrelPos);
+            }
+
             if (!GunsmithQuickTransformMath.IsFinite(localDisplayPosition) || !float.IsFinite(item.Scale))
             {
                 DebugConsole.ThrowError(
@@ -83,15 +88,6 @@ namespace GunSmith
         }
 
         private static bool HasQuickAttachmentBarrelTag(StatusEffect statusEffect)
-        {
-            foreach (string tag in statusEffect.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-            {
-                if (tag.Equals(QuickAttachmentBarrelParticleTag, StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+            => statusEffect.HasTag(QuickAttachmentBarrelParticleIdentifier);
     }
 }

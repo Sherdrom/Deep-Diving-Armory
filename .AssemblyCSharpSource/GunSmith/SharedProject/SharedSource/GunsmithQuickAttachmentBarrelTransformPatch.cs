@@ -68,6 +68,30 @@ namespace GunSmith
             ApplyCurrentBarrelPos(item, reportMissingActiveRule: true);
         }
 
+        public static bool TryGetCurrentLocalPosition(Item item, out Vector2 localPosition)
+        {
+            localPosition = Vector2.Zero;
+            if (item == null || item.Removed)
+            {
+                return false;
+            }
+
+            if (!RulesByItem.TryGetValue(item, out ConcurrentDictionary<string, BarrelRule>? rules))
+            {
+                return false;
+            }
+
+            string activeKey = GetActiveRuleKey(item);
+            if (!rules.TryGetValue(activeKey, out BarrelRule rule) &&
+                !rules.TryGetValue(PrimaryKey, out rule))
+            {
+                return false;
+            }
+
+            localPosition = rule.LocalPosition;
+            return true;
+        }
+
         private static bool ApplyCurrentBarrelPos(Item item, bool reportMissingActiveRule)
         {
             if (item == null || item.Removed)
