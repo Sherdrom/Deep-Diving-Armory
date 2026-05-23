@@ -13,7 +13,7 @@ local function canQuickSlotAccept(item, quickSlotIndex, identifier)
     return QuickMod.CanSlotAcceptItemIdentifier(item, quickSlotIndex, identifier)
 end
 
-local function appendPartEntry(entries, item, selection, platform, slotPath, partId, quickSlotIndex)
+local function appendPartEntry(entries, item, selection, platform, slotPath, partId, quickSlotIndex, availableIds)
     local part = Gunsmith.Config.parts[partId]
     if not part then return end
 
@@ -25,7 +25,7 @@ local function appendPartEntry(entries, item, selection, platform, slotPath, par
         status = "incompatible"
     elseif identifier and identifier ~= "" and not canQuickSlotAccept(item, quickSlotIndex, identifier) then
         status = "incompatible"
-    elseif Inventory and not Inventory.HasPartItem(Inventory.ActorForItem(item), part, item) then
+    elseif availableIds and identifier and identifier ~= "" and not availableIds[identifier] then
         status = "missing"
     end
 
@@ -88,8 +88,17 @@ local function quickMeta(item, selection, platform, weapon, quickSlot)
         compatibleItemIdentifiers(item, selection, platform, quickSlot.path, quickSlot.slot))
 end
 
+local buildCache = {}
+
 function QuickUiSpec.Build(item, selection, platform)
+    local cached = buildCache[item]
+    if cached and cached.selection == selection then
+        return cached.spec
+    end
+
     local weapon = Core.WeaponConfig(item)
+    local character = Inventory and Inventory.ActorForItem(item) or nil
+    local availableIds = Inventory and Inventory.CollectAvailableItemIds(character, item) or {}
     local entries = {}
 
     for _, quickSlot in ipairs(quickSlotsForItem(item, selection, platform)) do
@@ -104,7 +113,7 @@ function QuickUiSpec.Build(item, selection, platform)
 
             local partEntries = { Gunsmith.EmptyPartId .. ":deep.gunsmith.ui.empty_part:" .. emptyStatus }
             for _, partId in ipairs(Core.GetPartsForType(partType)) do
-                appendPartEntry(partEntries, item, selection, platform, quickSlot.path, partId, quickSlot.slot)
+                appendPartEntry(partEntries, item, selection, platform, quickSlot.path, partId, quickSlot.slot, availableIds)
             end
 
             table.insert(entries, table.concat({
@@ -118,9 +127,15 @@ function QuickUiSpec.Build(item, selection, platform)
         end
     end
 
-    return table.concat({
+    local spec = table.concat({
         "",
         "deep.gunsmith.ui.quick_root",
         ""
     }, "|") .. "::" .. Core.EncodePreview(item, platform) .. "::" .. Stats.Encode(Stats.SumSelection(selection)) .. "::" .. table.concat(entries, ";")
+    buildCache[item] = { spec = spec, selection = selection }
+    return spec
+end
+
+function QuickUiSpec.InvalidateCache(item)
+    if item then buildCache[item] = nil end
 end

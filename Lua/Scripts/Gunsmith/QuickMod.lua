@@ -138,6 +138,10 @@ function QuickMod.SyncFromContainer(item, selection, platform)
         end
     end
 
+    if changed then
+        Core.InvalidateQuickSlotsCache(item)
+        if Gunsmith.QuickUiSpec then Gunsmith.QuickUiSpec.InvalidateCache(item) end
+    end
     return changed
 end
 

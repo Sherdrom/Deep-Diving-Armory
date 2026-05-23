@@ -158,3 +158,24 @@ function Inventory.ReturnPartItem(character, part, onReturned, sourceItem)
 
     return false
 end
+
+function Inventory.CollectAvailableItemIds(character, sourceItem)
+    local ids = {}
+    if not character or not character.Inventory then return ids end
+    local function collect(inv)
+        if not inv or not inv.slots then return end
+        for _, slot in pairs(inv.slots) do
+            if slot and slot.items then
+                for _, slotItem in pairs(slot.items) do
+                    if slotItem and not slotItem.removed and not isInSourceItemInventory(slotItem, sourceItem) then
+                        local id = Core.ItemIdentifier(slotItem)
+                        if id then ids[id] = true end
+                        if slotItem.OwnInventory then collect(slotItem.OwnInventory) end
+                    end
+                end
+            end
+        end
+    end
+    collect(character.Inventory)
+    return ids
+end

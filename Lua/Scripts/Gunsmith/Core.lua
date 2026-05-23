@@ -254,9 +254,20 @@ function Core.ResolveDrawOffset(selection, platform, weapon, path, visual)
     return resolveDrawOffset(selection, platform, weapon, path, visual)
 end
 
+local quickSlotsCache = {}
+
+function Core.InvalidateQuickSlotsCache(item)
+    if item then quickSlotsCache[item] = nil end
+end
+
 function Core.QuickSlotsForSelection(item, selection, platform)
     local weapon = Core.WeaponConfig(item)
     if not weapon or type(selection) ~= "table" or type(platform) ~= "table" then return {} end
+
+    local cached = quickSlotsCache[item]
+    if cached and cached.selection == selection then
+        return cached.slots
+    end
 
     local bindings = weapon.quickSlotBindings
     if type(bindings) ~= "table" then
@@ -303,6 +314,7 @@ function Core.QuickSlotsForSelection(item, selection, platform)
         if left.slot == right.slot then return left.path < right.path end
         return left.slot < right.slot
     end)
+    quickSlotsCache[item] = { slots = slots, selection = selection }
     return slots
 end
 

@@ -601,6 +601,8 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
         Core.ApplyMountDefaultsForPath(selection, slotPath, {}, 0)
     end
     Core.PruneInvalidSelections(selection, platform, weapon)
+    Core.InvalidateQuickSlotsCache(item)
+    if Gunsmith.QuickUiSpec then Gunsmith.QuickUiSpec.InvalidateCache(item) end
     saveSelectionIfChanged(item, selection, platform, weapon)
     Runtime.Apply(item)
     if returnedParts and returnedParts > 0 then

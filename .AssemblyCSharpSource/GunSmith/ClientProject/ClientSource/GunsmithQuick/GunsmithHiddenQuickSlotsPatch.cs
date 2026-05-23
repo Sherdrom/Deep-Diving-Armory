@@ -97,7 +97,6 @@ namespace GunSmith
                     frameState = new FrameState();
                     FrameStateByInventory.Add(__instance, frameState);
                 }
-
                 if (Math.Abs(frameState.LastPackTime - now) > 0.0001)
                 {
                     frameState.LastPackTime = now;
@@ -136,7 +135,13 @@ namespace GunSmith
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
         [HarmonyPrefix]
         private static bool HandleQuickOverlayDraggingBeforeWorldDrop()
-            => !GunsmithGui.TryHandleQuickOverlayDragging();
+        {
+            if (GunsmithGui.TryHandleQuickOverlayDragging())
+                return false;
+            if (GunsmithGui.IsMouseOnQuickBufferInventory && Inventory.DraggingItems.Any())
+                return false;
+            return true;
+        }
 
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RefreshMouseOnInventory))]
         [HarmonyPostfix]
