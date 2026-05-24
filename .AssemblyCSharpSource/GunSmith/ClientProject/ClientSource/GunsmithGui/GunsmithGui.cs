@@ -26,6 +26,8 @@ namespace GunSmith
         private static QuickOverlayFrame? quickOverlayFrame;
         private static bool suppressQuickUninstallRelease;
         private static PendingQuickDrag? pendingQuickDrag;
+        private static bool handlingNativeQuickDragDrop;
+        private static Item? pendingNativeQuickDragDropClearItem;
         private static readonly HashSet<string> warnedQuickAnchorPaths = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, Rectangle> partIconSourceCache = new(StringComparer.Ordinal);
 
@@ -613,6 +615,7 @@ namespace GunSmith
             quickOverlayFrame = null;
             suppressQuickUninstallRelease = false;
             pendingQuickDrag = null;
+            pendingNativeQuickDragDropClearItem = null;
             warnedQuickAnchorPaths.Clear();
         }
 
@@ -641,6 +644,30 @@ namespace GunSmith
 
             return quickOverlayFrame.TryHandleDraggingRelease();
         }
+
+        internal static bool TryHandlePendingQuickDragNativeSlotDrop(
+            Inventory targetInventory,
+            Item draggedItem,
+            int targetSlotIndex,
+            bool allowSwapping,
+            Character user,
+            bool createNetworkEvent,
+            bool ignoreCondition,
+            bool triggerOnInsertedEffects,
+            ref bool result)
+            => QuickOverlayFrame.TryHandlePendingQuickDragNativeSlotDrop(
+                targetInventory,
+                draggedItem,
+                targetSlotIndex,
+                allowSwapping,
+                user,
+                createNetworkEvent,
+                ignoreCondition,
+                triggerOnInsertedEffects,
+                ref result);
+
+        internal static void ReconcilePendingQuickDragAfterNativeDragging()
+            => QuickOverlayFrame.ReconcilePendingQuickDragAfterNativeDragging();
 
         internal static void RefreshWindow()
         {

@@ -50,6 +50,10 @@ local function slotItem(item, slotIndex)
     return nil
 end
 
+function QuickMod.HasSlotItem(item, slotIndex)
+    return slotItem(item, slotIndex) ~= nil
+end
+
 local function findCompatiblePartId(selection, platform, path, identifier)
     for _, partId in ipairs(partIdsForItemIdentifier(identifier)) do
         if Core.IsValidPath(selection, platform, path) and Core.IsPartCompatible(selection, platform, path, partId) then
@@ -100,6 +104,7 @@ end
 
 function QuickMod.CanSlotAcceptItemIdentifier(item, slotIndex, identifier)
     if not item or not item.OwnInventory or slotIndex == nil or not identifier or identifier == "" then return false end
+    if QuickMod.HasSlotItem(item, slotIndex) then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
 
     local prefab = ItemPrefab.GetItemPrefab(identifier)
@@ -110,6 +115,7 @@ end
 
 function QuickMod.CanSlotAcceptItem(item, slotIndex, partItem)
     if not item or not item.OwnInventory or slotIndex == nil or not partItem then return false end
+    if QuickMod.HasSlotItem(item, slotIndex) then return true end
 
     return item.OwnInventory.CanBePutInSlot(partItem, slotIndex) == true
 end

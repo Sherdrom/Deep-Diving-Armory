@@ -153,6 +153,11 @@ namespace GunSmith
             return true;
         }
 
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
+        [HarmonyPostfix]
+        private static void RestoreQuickOverlayDragAfterNativeDragging()
+            => GunsmithGui.ReconcilePendingQuickDragAfterNativeDragging();
+
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.RefreshMouseOnInventory))]
         [HarmonyPostfix]
         private static void IncludeGunsmithQuickBufferInventory()
@@ -235,8 +240,32 @@ namespace GunSmith
 
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.TryPutItem), typeof(Item), typeof(int), typeof(bool), typeof(bool), typeof(Character), typeof(bool), typeof(bool), typeof(bool))]
         [HarmonyPrefix]
-        private static bool SkipSwapForUncontainableItem(Inventory __instance, Item item, int i, bool allowSwapping, ref bool __result)
+        private static bool SkipSwapForUncontainableItem(
+            Inventory __instance,
+            Item item,
+            int i,
+            bool allowSwapping,
+            bool allowCombine,
+            Character user,
+            bool createNetworkEvent,
+            bool ignoreCondition,
+            bool triggerOnInsertedEffects,
+            ref bool __result)
         {
+            if (GunsmithGui.TryHandlePendingQuickDragNativeSlotDrop(
+                    __instance,
+                    item,
+                    i,
+                    allowSwapping,
+                    user,
+                    createNetworkEvent,
+                    ignoreCondition,
+                    triggerOnInsertedEffects,
+                    ref __result))
+            {
+                return false;
+            }
+
             if (!allowSwapping || item == null || item.ParentInventory == null) { return true; }
             if (i < 0 || i >= __instance.slots.Length || !__instance.slots[i].Any()) { return true; }
             if (item.ParentInventory == __instance) { return true; }

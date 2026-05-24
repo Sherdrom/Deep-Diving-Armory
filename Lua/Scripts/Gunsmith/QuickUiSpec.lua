@@ -13,17 +13,23 @@ local function canQuickSlotAccept(item, quickSlotIndex, identifier)
     return QuickMod.CanSlotAcceptItemIdentifier(item, quickSlotIndex, identifier)
 end
 
+local function quickSlotHasItem(item, quickSlotIndex)
+    if not QuickMod or not QuickMod.HasSlotItem or quickSlotIndex == nil then return false end
+    return QuickMod.HasSlotItem(item, quickSlotIndex) == true
+end
+
 local function appendPartEntry(entries, item, selection, platform, slotPath, partId, quickSlotIndex, availableIds)
     local part = Gunsmith.Config.parts[partId]
     if not part then return end
 
     local identifier = part.item and part.item.identifier or nil
     local status = "available"
+    local replacingExisting = quickSlotHasItem(item, quickSlotIndex)
     if selection[slotPath] == partId then
         status = "installed"
     elseif not Core.IsPartCompatible(selection, platform, slotPath, partId) then
         status = "incompatible"
-    elseif identifier and identifier ~= "" and not canQuickSlotAccept(item, quickSlotIndex, identifier) then
+    elseif identifier and identifier ~= "" and not replacingExisting and not canQuickSlotAccept(item, quickSlotIndex, identifier) then
         status = "incompatible"
     elseif availableIds and identifier and identifier ~= "" and not availableIds[identifier] then
         status = "missing"
@@ -62,12 +68,13 @@ local function compatibleItemIdentifiers(item, selection, platform, slotPath, qu
     local identifiers = {}
     local seen = {}
     local partType = Core.PartTypeForPath(selection, slotPath)
+    local replacingExisting = quickSlotHasItem(item, quickSlotIndex)
     for _, partId in ipairs(Core.GetPartsForType(partType)) do
         local part = Gunsmith.Config.parts[partId]
         local identifier = part and part.item and part.item.identifier or nil
         if identifier and identifier ~= "" and not seen[identifier] and
             Core.IsPartCompatible(selection, platform, slotPath, partId) and
-            canQuickSlotAccept(item, quickSlotIndex, identifier) then
+            (replacingExisting or canQuickSlotAccept(item, quickSlotIndex, identifier)) then
             seen[identifier] = true
             table.insert(identifiers, identifier)
         end
