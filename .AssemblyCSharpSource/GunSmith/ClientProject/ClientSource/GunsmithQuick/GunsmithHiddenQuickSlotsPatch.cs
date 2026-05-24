@@ -116,12 +116,22 @@ namespace GunSmith
         [HarmonyPrefix]
         private static void PackSubInventoryBeforeSlotUpdate(Inventory __instance, bool subInventory)
         {
-            if (!subInventory)
+            if (!CanPackManagedSubInventory(__instance, subInventory))
             {
                 return;
             }
 
-            if (__instance.visualSlots == null || __instance.visualSlots.Length == 0 || !HasManagedSlots(__instance))
+            if (PackVisibleSlotsFirst(__instance, deferRecaptureOnOwnerPlacementChange: true))
+            {
+                Inventory.RefreshMouseOnInventory();
+            }
+        }
+
+        [HarmonyPatch(typeof(Inventory), nameof(Inventory.Update))]
+        [HarmonyPostfix]
+        private static void PackSubInventoryAfterSlotUpdate(Inventory __instance, bool subInventory)
+        {
+            if (!CanPackManagedSubInventory(__instance, subInventory))
             {
                 return;
             }
@@ -248,6 +258,12 @@ namespace GunSmith
                 return true;
             }
 
+            if (IsQuickUiOpenForInventory(__instance))
+            {
+                __result = false;
+                return false;
+            }
+
             Item? containedItem = i >= 0 && i < __instance.slots.Length ? __instance.slots[i].FirstOrDefault() : null;
             ItemInventory? containedInventory = containedItem?.OwnInventory;
             if (containedInventory != null && containedInventory.CanBePut(item))
@@ -260,7 +276,15 @@ namespace GunSmith
             return false;
         }
 
-        private static void CaptureOriginalLayouts(Inventory inventory)
+        private static bool CanPackManagedSubInventory(Inventory inventory, bool subInventory)
+        {
+            return subInventory &&
+                   inventory.visualSlots != null &&
+                   inventory.visualSlots.Length > 0 &&
+                   HasManagedSlots(inventory);
+        }
+
+        private static void CaptureOriginalLayouts(Inventory inventory, OwnerPlacement ownerPlacement)
         {
             if (inventory.visualSlots == null || inventory.visualSlots.Length == 0)
             {
@@ -268,10 +292,10 @@ namespace GunSmith
             }
 
             OriginalLayoutsByInventory.Remove(inventory);
-            OriginalLayoutsByInventory.Add(inventory, new LayoutCache(inventory.visualSlots, inventory.visualSlots.Select(SlotLayout.FromVisualSlot).ToArray()));
+            OriginalLayoutsByInventory.Add(inventory, new LayoutCache(inventory.visualSlots, inventory.visualSlots.Select(SlotLayout.FromVisualSlot).ToArray(), ownerPlacement));
         }
 
-        private static bool PackVisibleSlotsFirst(Inventory __instance)
+        private static bool PackVisibleSlotsFirst(Inventory __instance, bool deferRecaptureOnOwnerPlacementChange = false)
         {
             VisualSlot[]? visualSlots = __instance.visualSlots;
             if (visualSlots == null || visualSlots.Length == 0)
@@ -286,19 +310,10 @@ namespace GunSmith
                 return false;
             }
 
-            if (!OriginalLayoutsByInventory.TryGetValue(__instance, out LayoutCache? layoutCache) ||
-                layoutCache.VisualSlots != visualSlots ||
-                layoutCache.Layouts.Length != visualSlots.Length ||
-                layoutCache.HiddenStates.Length != visualSlots.Length)
+            OwnerPlacement ownerPlacement = GetOwnerPlacement(__instance);
+            if (!TryGetReusableLayoutCache(__instance, visualSlots, ownerPlacement, deferRecaptureOnOwnerPlacementChange, out LayoutCache layoutCache))
             {
-                CaptureOriginalLayouts(__instance);
-                if (!OriginalLayoutsByInventory.TryGetValue(__instance, out layoutCache) ||
-                    layoutCache.VisualSlots != visualSlots ||
-                    layoutCache.Layouts.Length != visualSlots.Length ||
-                    layoutCache.HiddenStates.Length != visualSlots.Length)
-                {
-                    return false;
-                }
+                return false;
             }
 
             bool[] hiddenStates = layoutCache.HiddenStates;
@@ -383,6 +398,47 @@ namespace GunSmith
             return true;
         }
 
+        private static bool TryGetReusableLayoutCache(
+            Inventory inventory,
+            VisualSlot[] visualSlots,
+            OwnerPlacement ownerPlacement,
+            bool deferRecaptureOnOwnerPlacementChange,
+            out LayoutCache layoutCache)
+        {
+            if (OriginalLayoutsByInventory.TryGetValue(inventory, out LayoutCache? existingLayoutCache))
+            {
+                layoutCache = existingLayoutCache;
+                bool ownerPlacementChanged = layoutCache.OwnerPlacement != ownerPlacement;
+                if (ownerPlacementChanged && deferRecaptureOnOwnerPlacementChange)
+                {
+                    OriginalLayoutsByInventory.Remove(inventory);
+                    layoutCache = null!;
+                    return false;
+                }
+
+                if (!ownerPlacementChanged &&
+                    layoutCache.VisualSlots == visualSlots &&
+                    layoutCache.Layouts.Length == visualSlots.Length &&
+                    layoutCache.HiddenStates.Length == visualSlots.Length)
+                {
+                    return true;
+                }
+            }
+
+            CaptureOriginalLayouts(inventory, ownerPlacement);
+            if (!OriginalLayoutsByInventory.TryGetValue(inventory, out existingLayoutCache))
+            {
+                layoutCache = null!;
+                return false;
+            }
+
+            layoutCache = existingLayoutCache;
+            return
+                   layoutCache.VisualSlots == visualSlots &&
+                   layoutCache.Layouts.Length == visualSlots.Length &&
+                   layoutCache.HiddenStates.Length == visualSlots.Length;
+        }
+
         private static bool IsPackedLayoutCurrent(LayoutCache layoutCache, bool[] hiddenStates)
         {
             VisualSlot[] visualSlots = layoutCache.VisualSlots;
@@ -456,6 +512,8 @@ namespace GunSmith
         private static bool ShouldShowManagedSlot(Inventory inventory, int slotIndex)
         {
             if (inventory.Owner is not Item ownerItem || ownerItem.Removed || ownerItem.Prefab == null) { return false; }
+            if (GunsmithGui.IsOpenForItem(ownerItem, quickMode: true)) { return false; }
+
             string ownerIdentifier = ownerItem.Prefab.Identifier.Value;
             if (!VisibleWhenContainedByItemIdentifier.TryGetValue(ownerIdentifier, out Dictionary<int, HashSet<string>>? rules) ||
                 !rules.TryGetValue(slotIndex, out HashSet<string>? identifiers) ||
@@ -486,6 +544,11 @@ namespace GunSmith
 
             return false;
         }
+
+        private static bool IsQuickUiOpenForInventory(Inventory inventory)
+            => inventory.Owner is Item ownerItem &&
+               !ownerItem.Removed &&
+               GunsmithGui.IsOpenForItem(ownerItem, quickMode: true);
 
         private static HashSet<int>? GetManagedHiddenSlots(Inventory inventory)
         {
@@ -523,18 +586,43 @@ namespace GunSmith
             return false;
         }
 
+        private static OwnerPlacement GetOwnerPlacement(Inventory inventory)
+        {
+            if (inventory.Owner is not Item ownerItem || ownerItem.Removed)
+            {
+                return default;
+            }
+
+            Inventory? parentInventory = ownerItem.ParentInventory;
+            int parentSlotIndex = parentInventory?.FindIndex(ownerItem) ?? -1;
+            Rectangle parentSlotRect = default;
+            VisualSlot[]? parentVisualSlots = parentInventory?.visualSlots;
+            if (parentVisualSlots != null &&
+                parentSlotIndex >= 0 &&
+                parentSlotIndex < parentVisualSlots.Length)
+            {
+                parentSlotRect = parentVisualSlots[parentSlotIndex].Rect;
+            }
+
+            return new OwnerPlacement(ownerItem, parentInventory, parentSlotIndex, parentSlotRect);
+        }
+
+        private readonly record struct OwnerPlacement(Item? OwnerItem, Inventory? ParentInventory, int ParentSlotIndex, Rectangle ParentSlotRect);
+
         private sealed class LayoutCache
         {
             public readonly VisualSlot[] VisualSlots;
             public readonly SlotLayout[] Layouts;
             public readonly bool[] HiddenStates;
+            public readonly OwnerPlacement OwnerPlacement;
             public int LastPackHash;
 
-            public LayoutCache(VisualSlot[] visualSlots, SlotLayout[] layouts)
+            public LayoutCache(VisualSlot[] visualSlots, SlotLayout[] layouts, OwnerPlacement ownerPlacement)
             {
                 VisualSlots = visualSlots;
                 Layouts = layouts;
                 HiddenStates = new bool[visualSlots.Length];
+                OwnerPlacement = ownerPlacement;
                 LastPackHash = 0;
             }
         }

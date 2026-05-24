@@ -19,7 +19,7 @@ parts.deep_sub_hanging_master_key = {
         scale = 0.5
     },
     quickAttachmentTransform = {
-        muzzleOutletOffset = { x = 116, y = 10 }
+        muzzleOutletOffset = { x = 140, y = 15 }
     }
 }
 
@@ -38,7 +38,7 @@ parts.deep_sub_hanging_m203 = {
         scale = 0.5
     },
     quickAttachmentTransform = {
-        muzzleOutletOffset = { x = 116, y = 10 }
+        muzzleOutletOffset = { x = 135, y = 23 }
     }
 }
 
