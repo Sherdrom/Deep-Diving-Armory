@@ -257,6 +257,7 @@ namespace GunSmith
                     item,
                     i,
                     allowSwapping,
+                    allowCombine,
                     user,
                     createNetworkEvent,
                     ignoreCondition,

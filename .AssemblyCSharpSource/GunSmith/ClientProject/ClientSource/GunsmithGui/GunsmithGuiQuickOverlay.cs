@@ -580,6 +580,7 @@ namespace GunSmith
                 Item draggedItem,
                 int targetSlotIndex,
                 bool allowSwapping,
+                bool allowCombine,
                 Character user,
                 bool createNetworkEvent,
                 bool ignoreCondition,
@@ -620,6 +621,11 @@ namespace GunSmith
                     }
                 }
                 if (existingItem == null)
+                {
+                    return false;
+                }
+
+                if (CanNativeInventoryCombine(draggedItem, existingItem, allowCombine))
                 {
                     return false;
                 }
@@ -666,6 +672,19 @@ namespace GunSmith
                 {
                     handlingNativeQuickDragDrop = false;
                 }
+            }
+
+            private static bool CanNativeInventoryCombine(Item draggedItem, Item existingItem, bool allowCombine)
+            {
+                if (!allowCombine || draggedItem.Removed || existingItem.Removed)
+                {
+                    return false;
+                }
+
+                string draggedIdentifier = draggedItem.Prefab?.Identifier.Value ?? string.Empty;
+                string existingIdentifier = existingItem.Prefab?.Identifier.Value ?? string.Empty;
+                return !string.IsNullOrWhiteSpace(draggedIdentifier) &&
+                    string.Equals(draggedIdentifier, existingIdentifier, StringComparison.OrdinalIgnoreCase);
             }
 
             internal static void ReconcilePendingQuickDragAfterNativeDragging()
