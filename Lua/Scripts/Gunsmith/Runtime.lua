@@ -21,9 +21,14 @@ Gunsmith.State = Gunsmith.State or {
 }
 
 local State = Gunsmith.State
+State.appliedSignatures = State.appliedSignatures or {}
 State.appliedConfigSignatures = State.appliedConfigSignatures or {}
 State.savedSignatures = State.savedSignatures or {}
 State.pendingPartsRefresh = State.pendingPartsRefresh or {}
+setmetatable(State.appliedSignatures, { __mode = "k" })
+setmetatable(State.appliedConfigSignatures, { __mode = "k" })
+setmetatable(State.savedSignatures, { __mode = "k" })
+setmetatable(State.pendingPartsRefresh, { __mode = "k" })
 local finishQuickModChange
 local saveSelectionIfChanged
 
@@ -437,6 +442,9 @@ function Runtime.Apply(item, alreadySynced)
         quickAttachmentBarrelSpec = buildQuickAttachmentBarrelSignature(item, selection, platform, weapon)
         local quickSignature = selectionSignature .. "|qatBarrels:" .. quickAttachmentBarrelSpec
         State.lastQuickSignatures = State.lastQuickSignatures or {}
+        if not getmetatable(State.lastQuickSignatures) then
+            setmetatable(State.lastQuickSignatures, { __mode = "k" })
+        end
         if State.lastQuickSignatures[item] == quickSignature then
             return
         end
@@ -572,10 +580,10 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
 
     local character = Inventory and Inventory.ActorForItem(item) or nil
 
-    if QuickMod and QuickMod.IsQuickPath(item, slotPath) then
+    local quickSlotIndex = QuickMod and QuickMod.SlotForPath(item, slotPath) or nil
+    if quickSlotIndex ~= nil then
         local refreshQuick = refreshMode == "quick"
-        local slotIndex = QuickMod.SlotForPath(item, slotPath)
-        if slotIndex == nil then return end
+        local slotIndex = quickSlotIndex
         local refreshAfterReturn = function()
             if refreshQuick then
                 Runtime.RefreshQuick(item)
@@ -591,17 +599,17 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
             local part = Gunsmith.Config.parts[partId]
             if not part or not Core.IsPartCompatible(selection, platform, slotPath, partId) then return end
             if selection[slotPath] == partId then return true end
-            if not Inventory or not Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part), item) then
+            local partItem = Inventory and Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part), item) or nil
+            if not partItem then
                 print("[Gunsmith] Missing quick-mod part item for " .. tostring(partId))
                 return
             end
-            local partItem = Inventory.FindPartItem(character, Inventory.ItemIdentifierForPart(part), item)
             if not QuickMod.CanSlotAcceptItem(item, slotIndex, partItem) then
                 print("[Gunsmith] Quick-mod XML slot rejects part item for " .. tostring(partId))
                 return
             end
             if not QuickMod.ClearSlot(item, character, slotIndex, refreshAfterReturn) then return end
-            if not QuickMod.InstallPartItem(item, character, part, slotIndex) then return end
+            if not QuickMod.InstallSpecificPartItem(item, character, partItem, slotIndex) then return end
         end
 
         finishQuickModChange(item, selection, platform, weapon)
@@ -658,7 +666,7 @@ function Runtime.InstallQuickItem(item, slotPath, draggedItem)
     local weapon = Core.WeaponConfig(item)
     if not selection or not platform or not draggedItem then return false end
     if not Core.IsValidPath(selection, platform, slotPath) then return false end
-    if not QuickMod or not QuickMod.IsQuickPath(item, slotPath) then return false end
+    if not QuickMod then return false end
 
     local slotIndex = QuickMod.SlotForPath(item, slotPath)
     if slotIndex == nil then return false end
@@ -748,6 +756,8 @@ function Runtime.Cleanup(item)
     State.savedSignatures[item] = nil
     State.pendingPartsRefresh[item] = nil
     if State.lastQuickSignatures then State.lastQuickSignatures[item] = nil end
+    Core.InvalidateQuickSlotsCache(item)
+    if Gunsmith.QuickUiSpec then Gunsmith.QuickUiSpec.InvalidateCache(item) end
     invalidateAppliedState(item)
 end
 

@@ -5,7 +5,7 @@ namespace GunSmith
     [HarmonyPatch]
     public static class GunsmithRuntimeEffectsPatch
     {
-        private static readonly Dictionary<Character, HeldGunsmithStateCache> HeldStateCacheByCharacter = new();
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Character, HeldGunsmithStateCacheBox> HeldStateCacheByCharacter = new();
 
         [HarmonyPatch(typeof(Character), nameof(Character.GetStatValue), new[] { typeof(StatTypes), typeof(bool) })]
         [HarmonyPostfix]
@@ -78,24 +78,35 @@ namespace GunSmith
             }
 
             double cacheTime = Timing.TotalTime;
-            if (HeldStateCacheByCharacter.TryGetValue(character, out HeldGunsmithStateCache cache) &&
-                cache.TotalTime == cacheTime)
+            if (HeldStateCacheByCharacter.TryGetValue(character, out HeldGunsmithStateCacheBox? cache) &&
+                cache.Value.TotalTime == cacheTime)
             {
-                state = cache.State!;
-                return cache.Found;
+                state = cache.Value.State!;
+                return cache.Value.Found;
             }
 
             foreach (Item item in character.HeldItems)
             {
                 if (GunsmithApi.TryGetRuntimeState(item, out state))
                 {
-                    HeldStateCacheByCharacter[character] = new HeldGunsmithStateCache(cacheTime, true, state);
+                    SetHeldStateCache(character, new HeldGunsmithStateCache(cacheTime, true, state));
                     return true;
                 }
             }
 
-            HeldStateCacheByCharacter[character] = new HeldGunsmithStateCache(cacheTime, false, null);
+            SetHeldStateCache(character, new HeldGunsmithStateCache(cacheTime, false, null));
             return false;
+        }
+
+        private static void SetHeldStateCache(Character character, HeldGunsmithStateCache value)
+        {
+            if (HeldStateCacheByCharacter.TryGetValue(character, out HeldGunsmithStateCacheBox? cache))
+            {
+                cache.Value = value;
+                return;
+            }
+
+            HeldStateCacheByCharacter.Add(character, new HeldGunsmithStateCacheBox(value));
         }
 
         private static bool TryGetTargetItem(ISerializableEntity target, out Item item)
@@ -118,8 +129,23 @@ namespace GunSmith
         {
             string itemIdentifier = item.Prefab.Identifier.Value;
             Inventory? inventory = item.ParentInventory;
+            HashSet<Inventory>? visited = null;
+            int depth = 0;
             while (inventory != null)
             {
+                if (++depth > 16)
+                {
+                    visited ??= new HashSet<Inventory>();
+                    if (!visited.Add(inventory))
+                    {
+                        return false;
+                    }
+                }
+                else if (ReferenceEquals(inventory.Owner, item))
+                {
+                    return false;
+                }
+
                 if (inventory.Owner is Item ownerItem && IsManagedByGunsmithState(ownerItem, itemIdentifier))
                 {
                     return true;
@@ -134,6 +160,14 @@ namespace GunSmith
         private static bool IsManagedByGunsmithState(Item ownerItem, string itemIdentifier)
             => GunsmithApi.TryGetRuntimeState(ownerItem, out GunsmithRuntimeState? state) &&
                state.ManagedItemIdentifiers.Contains(itemIdentifier);
+
+        private sealed class HeldGunsmithStateCacheBox
+        {
+            public HeldGunsmithStateCacheBox(HeldGunsmithStateCache value)
+                => Value = value;
+
+            public HeldGunsmithStateCache Value { get; set; }
+        }
 
         private readonly record struct HeldGunsmithStateCache(double TotalTime, bool Found, GunsmithRuntimeState? State);
     }

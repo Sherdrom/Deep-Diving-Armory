@@ -55,8 +55,9 @@ function QuickMod.HasSlotItem(item, slotIndex)
 end
 
 local function findCompatiblePartId(selection, platform, path, identifier)
+    if not Core.IsValidPath(selection, platform, path) then return nil end
     for _, partId in ipairs(partIdsForItemIdentifier(identifier)) do
-        if Core.IsValidPath(selection, platform, path) and Core.IsPartCompatible(selection, platform, path, partId) then
+        if Core.IsPartCompatible(selection, platform, path, partId) then
             return partId
         end
     end

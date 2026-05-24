@@ -47,10 +47,15 @@ local function isInSourceItemInventory(item, sourceItem)
     if item == sourceItem then return true end
 
     local inventory = parentInventory(item)
+    local visited = {}
     while inventory do
+        if visited[inventory] then return false end
+        visited[inventory] = true
+
         if isSourceInventory(inventory, sourceItem) then return true end
 
         local owner = inventoryOwner(inventory)
+        if not owner or owner == item then return false end
         inventory = parentInventory(owner)
     end
 
@@ -60,21 +65,28 @@ end
 local function findItemInInventory(inventory, identifier, sourceItem, visited)
     if not inventory or not inventory.slots then return nil end
     visited = visited or {}
-    if visited[inventory] then return nil end
-    visited[inventory] = true
 
-    if isSourceInventory(inventory, sourceItem) then return nil end
+    local stack = { inventory }
+    while #stack > 0 do
+        local inv = table.remove(stack)
+        if inv and inv.slots and not visited[inv] then
+            visited[inv] = true
 
-    for _, slot in pairs(inventory.slots) do
-        if slot and slot.items then
-            for _, item in pairs(slot.items) do
-                if item and not item.removed and not isInSourceItemInventory(item, sourceItem) then
-                    if Core.ItemIdentifier(item) == identifier then
-                        return item
+            if not isSourceInventory(inv, sourceItem) then
+                for _, slot in pairs(inv.slots) do
+                    if slot and slot.items then
+                        for _, item in pairs(slot.items) do
+                            if item and not item.removed and item ~= sourceItem and not isInSourceItemInventory(item, sourceItem) then
+                                if Core.ItemIdentifier(item) == identifier then
+                                    return item
+                                end
+
+                                if item.OwnInventory then
+                                    table.insert(stack, item.OwnInventory)
+                                end
+                            end
+                        end
                     end
-
-                    local nested = findItemInInventory(item.OwnInventory, identifier, sourceItem, visited)
-                    if nested then return nested end
                 end
             end
         end
@@ -162,20 +174,29 @@ end
 function Inventory.CollectAvailableItemIds(character, sourceItem)
     local ids = {}
     if not character or not character.Inventory then return ids end
-    local function collect(inv)
-        if not inv or not inv.slots then return end
-        for _, slot in pairs(inv.slots) do
-            if slot and slot.items then
-                for _, slotItem in pairs(slot.items) do
-                    if slotItem and not slotItem.removed and not isInSourceItemInventory(slotItem, sourceItem) then
-                        local id = Core.ItemIdentifier(slotItem)
-                        if id then ids[id] = true end
-                        if slotItem.OwnInventory then collect(slotItem.OwnInventory) end
+    local visited = {}
+    local stack = { character.Inventory }
+    while #stack > 0 do
+        local inv = table.remove(stack)
+        if inv and inv.slots and not visited[inv] then
+            visited[inv] = true
+
+            if not isSourceInventory(inv, sourceItem) then
+                for _, slot in pairs(inv.slots) do
+                    if slot and slot.items then
+                        for _, slotItem in pairs(slot.items) do
+                            if slotItem and not slotItem.removed and slotItem ~= sourceItem and not isInSourceItemInventory(slotItem, sourceItem) then
+                                local id = Core.ItemIdentifier(slotItem)
+                                if id then ids[id] = true end
+                                if slotItem.OwnInventory then
+                                    table.insert(stack, slotItem.OwnInventory)
+                                end
+                            end
+                        end
                     end
                 end
             end
         end
     end
-    collect(character.Inventory)
     return ids
 end

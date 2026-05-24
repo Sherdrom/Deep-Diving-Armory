@@ -15,6 +15,32 @@ namespace GunSmith
 
     public static class GunsmithQuickAttachmentTransformService
     {
+        private static readonly ConditionalWeakTable<Item, QuickSlotIndexCacheBox> QuickSlotIndexCacheByAttachment = new();
+        private static readonly ConditionalWeakTable<Item, Dictionary<int, ItemLocalPositionCache>> ItemLocalPositionCacheByWeapon = new();
+
+        internal static void ClearItemState(Item item)
+        {
+            if (item == null) { return; }
+
+            QuickSlotIndexCacheByAttachment.Remove(item);
+            ItemLocalPositionCacheByWeapon.Remove(item);
+            if (item.OwnInventory?.slots == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < item.OwnInventory.slots.Length; i++)
+            {
+                foreach (Item contained in item.OwnInventory.slots[i].Items)
+                {
+                    if (contained != null)
+                    {
+                        QuickSlotIndexCacheByAttachment.Remove(contained);
+                    }
+                }
+            }
+        }
+
         public static bool TryGetTransform(Item attachmentItem, out GunsmithQuickAttachmentTransform transform)
         {
             transform = default;
@@ -39,7 +65,7 @@ namespace GunSmith
                 return false;
             }
 
-            return TryGetTransform(weaponItem, attachmentItem, quickSlotIndex, out transform);
+            return TryGetTransformForSlot(weaponItem, attachmentItem, quickSlotIndex, out transform);
         }
 
         public static bool TryGetTransform(Item weaponItem, Item attachmentItem, int quickSlotIndex, out GunsmithQuickAttachmentTransform transform)
@@ -50,6 +76,12 @@ namespace GunSmith
                 return false;
             }
 
+            return TryGetTransformForSlot(weaponItem, attachmentItem, quickSlotIndex, out transform);
+        }
+
+        private static bool TryGetTransformForSlot(Item weaponItem, Item attachmentItem, int quickSlotIndex, out GunsmithQuickAttachmentTransform transform)
+        {
+            transform = default;
             if (!GunsmithQuickSlotLayoutPatch.TryGetLayoutRule(weaponItem, quickSlotIndex, out GunsmithQuickSlotLayoutPatch.QuickSlotLayoutRule rule))
             {
                 return false;
@@ -71,12 +103,10 @@ namespace GunSmith
                 return false;
             }
 
-            if (!GunsmithApi.TryCanvasPointToItemLocal(weaponItem, rule.CanvasAnchor, out Vector2 itemLocalPos))
+            if (!TryGetItemLocalPosition(weaponItem, quickSlotIndex, rule, out Vector2 itemLocalPos))
             {
                 return false;
             }
-
-            itemLocalPos += rule.ItemPosOffset;
 
             bool hasWorldPosition = GunsmithQuickTransformMath.TryItemLocalToWorldPosition(
                 weaponItem,
@@ -127,33 +157,143 @@ namespace GunSmith
         private static bool TryGetDirectQuickSlotIndex(Item weaponItem, Item attachmentItem, out int quickSlotIndex)
         {
             quickSlotIndex = -1;
-            if (weaponItem == null || weaponItem.Removed || attachmentItem == null || attachmentItem.Removed || weaponItem.OwnInventory == null)
+            if (weaponItem == null || weaponItem.Removed || attachmentItem == null || attachmentItem.Removed || weaponItem.OwnInventory?.slots == null)
             {
                 return false;
             }
 
-            for (int i = 0; i < weaponItem.OwnInventory.slots.Length; i++)
+            Inventory inventory = weaponItem.OwnInventory;
+            if (TryGetCachedQuickSlotIndex(attachmentItem, inventory, out quickSlotIndex))
             {
-                if (weaponItem.OwnInventory.slots[i].Items.Contains(attachmentItem))
+                return true;
+            }
+
+            for (int i = 0; i < inventory.slots.Length; i++)
+            {
+                if (inventory.slots[i].Items.Contains(attachmentItem))
                 {
                     quickSlotIndex = i;
+                    SetCachedQuickSlotIndex(attachmentItem, inventory, quickSlotIndex);
                     return true;
                 }
             }
 
+            QuickSlotIndexCacheByAttachment.Remove(attachmentItem);
             return false;
         }
 
         private static bool IsValidQuickSlotAttachment(Item weaponItem, Item attachmentItem, int quickSlotIndex)
         {
-            if (weaponItem == null || weaponItem.Removed || attachmentItem == null || attachmentItem.Removed || weaponItem.OwnInventory == null)
+            if (weaponItem == null || weaponItem.Removed || attachmentItem == null || attachmentItem.Removed || weaponItem.OwnInventory?.slots == null)
             {
                 return false;
             }
 
-            return quickSlotIndex >= 0 &&
-                   quickSlotIndex < weaponItem.OwnInventory.slots.Length &&
-                   weaponItem.OwnInventory.slots[quickSlotIndex].Items.Contains(attachmentItem);
+            return IsCachedSlotStillValid(weaponItem.OwnInventory, attachmentItem, quickSlotIndex);
+        }
+
+        private static bool TryGetItemLocalPosition(
+            Item weaponItem,
+            int quickSlotIndex,
+            GunsmithQuickSlotLayoutPatch.QuickSlotLayoutRule rule,
+            out Vector2 itemLocalPosition)
+        {
+            itemLocalPosition = Vector2.Zero;
+            if (!GunsmithApi.TryGetSpriteSignature(weaponItem, out string spriteSignature))
+            {
+                return false;
+            }
+
+            if (TryGetCachedItemLocalPosition(weaponItem, quickSlotIndex, rule, spriteSignature, out itemLocalPosition))
+            {
+                return true;
+            }
+
+            if (!GunsmithApi.TryCanvasPointToItemLocal(weaponItem, rule.CanvasAnchor, out itemLocalPosition))
+            {
+                return false;
+            }
+
+            itemLocalPosition += rule.ItemPosOffset;
+            SetCachedItemLocalPosition(weaponItem, quickSlotIndex, rule, spriteSignature, itemLocalPosition);
+            return true;
+        }
+
+        private static bool TryGetCachedItemLocalPosition(
+            Item weaponItem,
+            int quickSlotIndex,
+            GunsmithQuickSlotLayoutPatch.QuickSlotLayoutRule rule,
+            string spriteSignature,
+            out Vector2 itemLocalPosition)
+        {
+            itemLocalPosition = Vector2.Zero;
+            if (!ItemLocalPositionCacheByWeapon.TryGetValue(weaponItem, out Dictionary<int, ItemLocalPositionCache>? cacheBySlot))
+            {
+                return false;
+            }
+
+            lock (cacheBySlot)
+            {
+                if (!cacheBySlot.TryGetValue(quickSlotIndex, out ItemLocalPositionCache cache) ||
+                    cache.SpriteSignature != spriteSignature ||
+                    cache.CanvasAnchor != rule.CanvasAnchor ||
+                    cache.ItemPosOffset != rule.ItemPosOffset)
+                {
+                    return false;
+                }
+
+                itemLocalPosition = cache.ItemLocalPosition;
+                return true;
+            }
+        }
+
+        private static void SetCachedItemLocalPosition(
+            Item weaponItem,
+            int quickSlotIndex,
+            GunsmithQuickSlotLayoutPatch.QuickSlotLayoutRule rule,
+            string spriteSignature,
+            Vector2 itemLocalPosition)
+        {
+            Dictionary<int, ItemLocalPositionCache> cacheBySlot = ItemLocalPositionCacheByWeapon.GetValue(weaponItem, _ => new Dictionary<int, ItemLocalPositionCache>());
+            lock (cacheBySlot)
+            {
+                cacheBySlot[quickSlotIndex] = new ItemLocalPositionCache(spriteSignature, rule.CanvasAnchor, rule.ItemPosOffset, itemLocalPosition);
+            }
+        }
+
+        private static bool TryGetCachedQuickSlotIndex(Item attachmentItem, Inventory inventory, out int quickSlotIndex)
+        {
+            quickSlotIndex = -1;
+            if (QuickSlotIndexCacheByAttachment.TryGetValue(attachmentItem, out QuickSlotIndexCacheBox? cache) &&
+                ReferenceEquals(cache.Inventory, inventory) &&
+                IsCachedSlotStillValid(inventory, attachmentItem, cache.QuickSlotIndex))
+            {
+                quickSlotIndex = cache.QuickSlotIndex;
+                return true;
+            }
+
+            QuickSlotIndexCacheByAttachment.Remove(attachmentItem);
+            return false;
+        }
+
+        private static void SetCachedQuickSlotIndex(Item attachmentItem, Inventory inventory, int quickSlotIndex)
+        {
+            if (QuickSlotIndexCacheByAttachment.TryGetValue(attachmentItem, out QuickSlotIndexCacheBox? cache))
+            {
+                cache.Inventory = inventory;
+                cache.QuickSlotIndex = quickSlotIndex;
+                return;
+            }
+
+            QuickSlotIndexCacheByAttachment.Add(attachmentItem, new QuickSlotIndexCacheBox(inventory, quickSlotIndex));
+        }
+
+        private static bool IsCachedSlotStillValid(Inventory inventory, Item attachmentItem, int quickSlotIndex)
+        {
+            return inventory?.slots != null &&
+                   quickSlotIndex >= 0 &&
+                   quickSlotIndex < inventory.slots.Length &&
+                   inventory.slots[quickSlotIndex].Items.Contains(attachmentItem);
         }
 
         private static float ToWorldRotation(Item owner, float localRotationDegrees, bool drawPosition)
@@ -206,5 +346,23 @@ namespace GunSmith
 
             return owner.FlippedX && owner.Prefab.CanSpriteFlipX ? -1.0f : 1.0f;
         }
+
+        private sealed class QuickSlotIndexCacheBox
+        {
+            public QuickSlotIndexCacheBox(Inventory inventory, int quickSlotIndex)
+            {
+                Inventory = inventory;
+                QuickSlotIndex = quickSlotIndex;
+            }
+
+            public Inventory Inventory { get; set; }
+            public int QuickSlotIndex { get; set; }
+        }
+
+        private readonly record struct ItemLocalPositionCache(
+            string SpriteSignature,
+            Vector2 CanvasAnchor,
+            Vector2 ItemPosOffset,
+            Vector2 ItemLocalPosition);
     }
 }

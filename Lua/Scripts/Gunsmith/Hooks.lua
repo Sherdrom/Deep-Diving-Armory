@@ -140,7 +140,7 @@ local function isQuickSlotMutation(item)
     return Hook.Call("DeepGunsmithIsQuickSlotMutation", item) == true
 end
 
-local pendingQuickModContainerSync = {}
+local pendingQuickModContainerSync = setmetatable({}, { __mode = "k" })
 
 local function flushQuickModContainerSync(item)
     if not item then return end

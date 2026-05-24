@@ -8,6 +8,25 @@ namespace GunSmith
     {
         private static readonly HashSet<LightComponent> ManagedLights = new();
 
+        internal static void ClearItemState(Item item)
+        {
+            if (item == null) { return; }
+
+            List<LightComponent> matchingLights = new();
+            foreach (LightComponent lightComponent in ManagedLights)
+            {
+                if (ReferenceEquals(lightComponent.Item, item))
+                {
+                    matchingLights.Add(lightComponent);
+                }
+            }
+
+            foreach (LightComponent lightComponent in matchingLights)
+            {
+                RestoreNativeLightTransform(lightComponent);
+            }
+        }
+
         [HarmonyPatch(typeof(LightComponent), nameof(LightComponent.SetLightSourceTransform))]
         [HarmonyPostfix]
         private static void ApplyQuickAttachmentLightTransform(LightComponent __instance)

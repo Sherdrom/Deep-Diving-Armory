@@ -95,7 +95,7 @@ local function quickMeta(item, selection, platform, weapon, quickSlot)
         compatibleItemIdentifiers(item, selection, platform, quickSlot.path, quickSlot.slot))
 end
 
-local buildCache = {}
+local buildCache = setmetatable({}, { __mode = "k" })
 
 function QuickUiSpec.Build(item, selection, platform)
     local cached = buildCache[item]

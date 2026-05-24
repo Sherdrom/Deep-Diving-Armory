@@ -221,10 +221,26 @@ namespace GunSmith
             return true;
         }
 
+        internal static bool TryGetSpriteSignature(Item item, out string signature)
+        {
+            signature = string.Empty;
+            if (!TryGetValidState(item, out GunsmithSpriteState state))
+            {
+                return false;
+            }
+
+            signature = state.Signature;
+            return true;
+        }
+
         internal static void RemoveState(Item item)
         {
             RemoveRuntimeState(item);
             GunsmithQuickSlotLayoutPatch.ClearLayouts(item);
+            GunsmithQuickAttachmentBarrelTransforms.ClearTransforms(item);
+            GunsmithQuickAttachmentTransformService.ClearItemState(item);
+            GunsmithHiddenQuickSlotsPatch.ClearItemState(item);
+            GunsmithQuickSlotLightPatch.ClearItemState(item);
             if (spriteStates.TryRemove(item, out GunsmithSpriteState? state))
             {
                 if (!state.Texture.IsDisposed)

@@ -74,24 +74,26 @@ function Core.LeafPath(path)
     return string.match(path, "([^/]+)$") or path
 end
 
-function Core.RootSlotDefs(platform)
-    local result = {}
-    if not platform then return result end
-    if type(platform.rootSlots) == "table" then
-        for _, entry in ipairs(platform.rootSlots) do
-            if type(entry) == "table" and type(entry.path) == "string" then
-                table.insert(result, entry)
-            end
-        end
-    end
-    return result
-end
+local rootSlotDefsCache = setmetatable({}, { __mode = "k" })
+local rootSlotDefByPathCache = setmetatable({}, { __mode = "k" })
+local mountByParentPartCache = setmetatable({}, { __mode = "k" })
+local requiredSlotSetByPlatformCache = setmetatable({}, { __mode = "k" })
+local hiddenHomeRootPathCache = setmetatable({}, { __mode = "k" })
+local noHiddenHomeRootPath = {}
 
 function Core.RootSlotDef(platform, path)
-    for _, entry in ipairs(Core.RootSlotDefs(platform)) do
-        if entry.path == path then return entry end
+    if not platform or not path then return nil end
+
+    local byPath = rootSlotDefByPathCache[platform]
+    if not byPath then
+        byPath = {}
+        for _, entry in ipairs(Core.RootSlotDefs(platform)) do
+            byPath[entry.path] = entry
+        end
+        rootSlotDefByPathCache[platform] = byPath
     end
-    return nil
+
+    return byPath[path]
 end
 
 local function partProvidesAccepted(part, accepts)
@@ -146,13 +148,39 @@ function Core.RootSocket(weapon, path)
     return root and root.socket or nil
 end
 
+local function copySelection(selection)
+    local copy = {}
+    for path, partId in pairs(selection or {}) do
+        copy[path] = partId
+    end
+    return copy
+end
+
+function Core.RootSlotDefs(platform)
+    if not platform then return {} end
+
+    local cached = rootSlotDefsCache[platform]
+    if cached then return cached end
+
+    local result = {}
+    if type(platform.rootSlots) == "table" then
+        for _, entry in ipairs(platform.rootSlots) do
+            if type(entry) == "table" and type(entry.path) == "string" then
+                table.insert(result, entry)
+            end
+        end
+    end
+    rootSlotDefsCache[platform] = result
+    return result
+end
+
 local defaultSelectionCache = {}
 
 function Core.BuildDefaultSelection(platform, weapon)
     if not platform or not weapon or type(weapon.roots) ~= "table" then return {} end
     local cached = defaultSelectionCache[weapon]
     if cached then
-        return cached
+        return copySelection(cached)
     end
     local selection = {}
     for _, root in ipairs(Core.RootSlotDefs(platform)) do
@@ -165,7 +193,7 @@ function Core.BuildDefaultSelection(platform, weapon)
         end
     end
     defaultSelectionCache[weapon] = selection
-    return selection
+    return copySelection(selection)
 end
 
 function Core.GetPart(partId)
@@ -254,7 +282,7 @@ function Core.ResolveDrawOffset(selection, platform, weapon, path, visual)
     return resolveDrawOffset(selection, platform, weapon, path, visual)
 end
 
-local quickSlotsCache = {}
+local quickSlotsCache = setmetatable({}, { __mode = "k" })
 
 function Core.InvalidateQuickSlotsCache(item)
     if item then quickSlotsCache[item] = nil end
@@ -328,7 +356,14 @@ function Core.PartProvides(part)
     return part.provides
 end
 
+local partsByTypeCache = {}
+
 function Core.GetPartsForType(partType)
+    if not partType then return {} end
+
+    local cached = partsByTypeCache[partType]
+    if cached then return cached end
+
     local parts = {}
     for partId, part in pairs(Gunsmith.Config.parts) do
         if part.type == partType then
@@ -336,6 +371,7 @@ function Core.GetPartsForType(partType)
         end
     end
     table.sort(parts)
+    partsByTypeCache[partType] = parts
     return parts
 end
 
@@ -360,14 +396,6 @@ local function intersects(left, right)
     return false
 end
 
-local function arrayContains(values, target)
-    if type(values) ~= "table" then return false end
-    for _, value in ipairs(values) do
-        if value == target then return true end
-    end
-    return false
-end
-
 function Core.AcceptsForPath(selection, platform, path)
     if not platform or not path or path == "" then return nil end
     if Core.IsRootSlot(platform, path) then
@@ -385,23 +413,36 @@ function Core.MountForPath(selection, path)
     local parentPart = Core.GetInstalledPart(selection, parent)
     if not parentPart or not parentPart.mounts then return nil end
 
-    for _, mount in ipairs(parentPart.mounts) do
-        if mount.path == childPath then
-            return mount
+    local byPath = mountByParentPartCache[parentPart]
+    if not byPath then
+        byPath = {}
+        for _, mount in ipairs(parentPart.mounts) do
+            if type(mount.path) == "string" then
+                byPath[mount.path] = mount
+            end
         end
+        mountByParentPartCache[parentPart] = byPath
     end
-    return nil
+
+    return byPath[childPath]
 end
 
-function Core.IsPartCompatible(selection, platform, path, partId)
-    local part = Core.GetPart(partId)
-    if not part or not platform or not path or path == "" then return false end
-    if part.type ~= Core.PartTypeForPath(selection, path) then return false end
-    if Core.IsRootSlot(platform, path) then return true end
+local function requiredSlotSet(platform)
+    if not platform then return {} end
 
-    local accepts = Core.AcceptsForPath(selection, platform, path)
-    if type(accepts) ~= "table" then return false end
-    return intersects(accepts, Core.PartProvides(part))
+    local cached = requiredSlotSetByPlatformCache[platform]
+    if cached then return cached end
+
+    local set = {}
+    if type(platform.requiredSlots) == "table" then
+        for _, path in ipairs(platform.requiredSlots) do
+            if type(path) == "string" then
+                set[path] = true
+            end
+        end
+    end
+    requiredSlotSetByPlatformCache[platform] = set
+    return set
 end
 
 function Core.IsRequiredSlot(platform, path)
@@ -418,25 +459,48 @@ function Core.IsRequiredSlot(platform, path)
                 relativePath = string.sub(path, #prefix + 1)
             end
         end
-        return arrayContains(platform.requiredSlots, relativePath)
+        return requiredSlotSet(platform)[relativePath] == true
     end
     return false
+end
+
+function Core.HiddenHomeRootPath(platform)
+    if not platform then return nil end
+
+    local cached = hiddenHomeRootPathCache[platform]
+    if cached ~= nil then
+        return cached ~= noHiddenHomeRootPath and cached or nil
+    end
+
+    local hiddenPath = nil
+    for _, root in ipairs(Core.RootSlotDefs(platform)) do
+        if root.hidden == true then
+            if hiddenPath ~= nil then
+                hiddenHomeRootPathCache[platform] = noHiddenHomeRootPath
+                return nil
+            end
+            hiddenPath = root.path
+        end
+    end
+
+    hiddenHomeRootPathCache[platform] = hiddenPath or noHiddenHomeRootPath
+    return hiddenPath
+end
+
+function Core.IsPartCompatible(selection, platform, path, partId)
+    local part = Core.GetPart(partId)
+    if not part or not platform or not path or path == "" then return false end
+    if part.type ~= Core.PartTypeForPath(selection, path) then return false end
+    if Core.IsRootSlot(platform, path) then return true end
+
+    local accepts = Core.AcceptsForPath(selection, platform, path)
+    if type(accepts) ~= "table" then return false end
+    return intersects(accepts, Core.PartProvides(part))
 end
 
 function Core.IsHiddenRootSlot(platform, path)
     local root = Core.RootSlotDef(platform, path)
     return root and root.hidden == true
-end
-
-function Core.HiddenHomeRootPath(platform)
-    local hiddenPath = nil
-    for _, root in ipairs(Core.RootSlotDefs(platform)) do
-        if root.hidden == true then
-            if hiddenPath ~= nil then return nil end
-            hiddenPath = root.path
-        end
-    end
-    return hiddenPath
 end
 
 function Core.NormalizeUiPath(platform, path)

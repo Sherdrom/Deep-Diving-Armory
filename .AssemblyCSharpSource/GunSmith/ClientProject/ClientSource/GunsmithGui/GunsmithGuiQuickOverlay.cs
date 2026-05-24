@@ -52,12 +52,15 @@ namespace GunSmith
                     return;
                 }
 
-                foreach (string key in failedDropTimers.Keys.ToList())
+                if (failedDropTimers.Count > 0)
                 {
-                    failedDropTimers[key] -= deltaTime;
-                    if (failedDropTimers[key] <= 0.0f)
+                    foreach (string key in failedDropTimers.Keys.ToList())
                     {
-                        failedDropTimers.Remove(key);
+                        failedDropTimers[key] -= deltaTime;
+                        if (failedDropTimers[key] <= 0.0f)
+                        {
+                            failedDropTimers.Remove(key);
+                        }
                     }
                 }
 

@@ -26,6 +26,13 @@ namespace GunSmith
                    slots.Contains(slotIndex);
         }
 
+        public static bool HasInjectedQuickSlots(string itemIdentifier)
+        {
+            return !string.IsNullOrWhiteSpace(itemIdentifier) &&
+                   InjectedSlotsByItemIdentifier.TryGetValue(itemIdentifier, out HashSet<int>? slots) &&
+                   slots.Count > 0;
+        }
+
         [HarmonyPatch(typeof(Barotrauma.Items.Components.ItemContainer), MethodType.Constructor, typeof(Item), typeof(ContentXElement))]
         [HarmonyPrefix]
         private static void InjectGunsmithQuickSubContainers(Item item, ContentXElement element)

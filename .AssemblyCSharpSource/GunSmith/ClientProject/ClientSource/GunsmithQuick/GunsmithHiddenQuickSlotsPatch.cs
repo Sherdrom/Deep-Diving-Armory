@@ -85,6 +85,12 @@ namespace GunSmith
         public static bool IsQuickSlotMutation(Item item)
             => item != null && QuickMutationItems.Contains(item);
 
+        public static void ClearItemState(Item item)
+        {
+            if (item == null) { return; }
+            QuickMutationItems.Remove(item);
+        }
+
         [HarmonyPatch(typeof(Inventory), nameof(Inventory.HideSlot))]
         [HarmonyPrefix]
         private static bool HideManagedQuickSlots(Inventory __instance, int __0, ref bool __result)
@@ -599,21 +605,12 @@ namespace GunSmith
 
         private static bool HasInjectedQuickSlots(Inventory inventory)
         {
-            if (inventory.Owner is not Item item || item.Removed || item.Prefab == null || item.OwnInventory == null)
+            if (inventory.Owner is not Item item || item.Removed || item.Prefab == null)
             {
                 return false;
             }
 
-            string itemIdentifier = item.Prefab.Identifier.Value;
-            for (int i = 0; i < item.OwnInventory.slots.Length; i++)
-            {
-                if (GunsmithQuickSlotCapacityPatch.IsInjectedQuickSlot(itemIdentifier, i))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return GunsmithQuickSlotCapacityPatch.HasInjectedQuickSlots(item.Prefab.Identifier.Value);
         }
 
         private static OwnerPlacement GetOwnerPlacement(Inventory inventory)
