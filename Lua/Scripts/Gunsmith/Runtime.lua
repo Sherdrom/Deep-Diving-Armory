@@ -379,6 +379,42 @@ local function registerQuickAttachmentBarrels(item, selection, platform, weapon)
     end
 end
 
+local function appendQuickAttachmentBarrelSignature(values, item, selection, platform, weapon, quickSlotKey, barrelKey)
+    local quickSlot = findQuickSlotByKey(item, selection, platform, quickSlotKey)
+    if not quickSlot or not quickSlot.anchor or type(quickSlot.path) ~= "string" then return end
+    local outletOffset = getMuzzleOutletOffset(selection, quickSlot.path)
+    local world = weapon and weapon.world or {}
+    local worldOffset = world.offset or {}
+    local canvas = platform and platform.canvas or {}
+
+    table.insert(values, string.format(
+        "%s:%s:anchor=%.4f,%.4f:outlet=%.4f,%.4f:canvas=%.4f,%.4f:world=%.4f,%.4f,%.4f,%.4f",
+        barrelKey,
+        quickSlot.path,
+        quickSlot.anchor.x or 0,
+        quickSlot.anchor.y or 0,
+        outletOffset.x or 0,
+        outletOffset.y or 0,
+        canvas.w or 0,
+        canvas.h or 0,
+        world.scale or 1.0,
+        world.rotation or 0.0,
+        worldOffset.x or 0.0,
+        worldOffset.y or 0.0))
+end
+
+local function buildQuickAttachmentBarrelSignature(item, selection, platform, weapon)
+    local values = {}
+    appendQuickAttachmentBarrelSignature(values, item, selection, platform, weapon, "muzzle", "primary")
+
+    local lowerRailSlot = findQuickSlotByKey(item, selection, platform, "lower_rail")
+    if lowerRailSlot and type(lowerRailSlot.path) == "string" and hasMuzzleOutletOffset(selection, lowerRailSlot.path) then
+        appendQuickAttachmentBarrelSignature(values, item, selection, platform, weapon, "lower_rail", "lower_rail")
+    end
+
+    return table.concat(values, "|")
+end
+
 function Runtime.Apply(item, alreadySynced)
     if not item or item.removed then return end
 
@@ -394,22 +430,26 @@ function Runtime.Apply(item, alreadySynced)
     end
 
     local selectionSignature
+    local weapon = Core.WeaponConfig(item)
+    local quickAttachmentBarrelSpec
     if alreadySynced then
         selectionSignature = buildSignature(item, selection, platform, true)
+        quickAttachmentBarrelSpec = buildQuickAttachmentBarrelSignature(item, selection, platform, weapon)
+        local quickSignature = selectionSignature .. "|qatBarrels:" .. quickAttachmentBarrelSpec
         State.lastQuickSignatures = State.lastQuickSignatures or {}
-        if State.lastQuickSignatures[item] == selectionSignature then
+        if State.lastQuickSignatures[item] == quickSignature then
             return
         end
-        State.lastQuickSignatures[item] = selectionSignature
+        State.lastQuickSignatures[item] = quickSignature
     end
 
-    local weapon = Core.WeaponConfig(item)
     local inventorySpec = encodeInventorySettings(item)
     local worldSpec = encodeWorldSettings(item)
     if not selectionSignature then
         selectionSignature = buildSignature(item, selection, platform, false)
     end
-    local configSignature = selectionSignature .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec
+    quickAttachmentBarrelSpec = quickAttachmentBarrelSpec or buildQuickAttachmentBarrelSignature(item, selection, platform, weapon)
+    local configSignature = selectionSignature .. "|inventory:" .. inventorySpec .. "|world:" .. worldSpec .. "|qatBarrels:" .. quickAttachmentBarrelSpec
     if State.appliedConfigSignatures[item] == configSignature then
         return
     end

@@ -15,7 +15,8 @@ namespace GunSmith
         private static readonly ConcurrentDictionary<Item, ConcurrentDictionary<string, BarrelRule>> RulesByItem = new();
         private static readonly ConcurrentDictionary<Item, string> ActiveRuleKeyByItem = new();
         private static readonly ConcurrentDictionary<Item, int> ActiveProjectileSelectionByItem = new();
-        private static readonly ConcurrentDictionary<Item, Vector2> CachedLocalPositions = new();
+        private static readonly ConcurrentDictionary<Item, CachedLocalPosition> CachedLocalPositions = new();
+        private static readonly ConcurrentDictionary<Item, string> ReportedMissingRuleSignatureByItem = new();
 
         public static void ClearTransforms(Item item)
         {
@@ -24,6 +25,7 @@ namespace GunSmith
             ActiveRuleKeyByItem.TryRemove(item, out _);
             ActiveProjectileSelectionByItem.TryRemove(item, out _);
             CachedLocalPositions.TryRemove(item, out _);
+            ReportedMissingRuleSignatureByItem.TryRemove(item, out _);
         }
 
         public static void RegisterTransform(Item item, string key, float localX, float localY, float rotationDegrees)
@@ -66,9 +68,9 @@ namespace GunSmith
                 return;
             }
 
+            CachedLocalPositions.TryRemove(item, out _);
             ActiveRuleKeyByItem[item] = KeyForProjectileSelection(selectedProjectile);
             ActiveProjectileSelectionByItem[item] = selectedProjectile;
-            CachedLocalPositions.TryRemove(item, out _);
             ApplyCurrentBarrelPos(item, reportMissingActiveRule: true);
         }
 
@@ -80,8 +82,11 @@ namespace GunSmith
                 return false;
             }
 
-            if (CachedLocalPositions.TryGetValue(item, out localPosition))
+            string activeKey = GetActiveRuleKey(item);
+            if (CachedLocalPositions.TryGetValue(item, out CachedLocalPosition cached) &&
+                cached.ActiveKey.Equals(activeKey, StringComparison.OrdinalIgnoreCase))
             {
+                localPosition = cached.LocalPosition;
                 return true;
             }
 
@@ -90,7 +95,6 @@ namespace GunSmith
                 return false;
             }
 
-            string activeKey = GetActiveRuleKey(item);
             if (!rules.TryGetValue(activeKey, out BarrelRule rule) &&
                 !rules.TryGetValue(PrimaryKey, out rule))
             {
@@ -98,7 +102,7 @@ namespace GunSmith
             }
 
             localPosition = rule.LocalPosition;
-            CachedLocalPositions[item] = localPosition;
+            CachedLocalPositions[item] = new CachedLocalPosition(activeKey, localPosition);
             return true;
         }
 
@@ -119,7 +123,7 @@ namespace GunSmith
             {
                 if (reportMissingActiveRule && activeKey.Equals(LowerRailKey, StringComparison.OrdinalIgnoreCase))
                 {
-                    ReportMissingActiveRule(item, activeKey, rules);
+                    ReportMissingActiveRuleOnce(item, activeKey, rules);
                 }
 
                 if (!rules.TryGetValue(PrimaryKey, out rule))
@@ -165,23 +169,37 @@ namespace GunSmith
         private static string NormalizeKey(string? key)
             => string.IsNullOrWhiteSpace(key) ? string.Empty : key.Trim().ToLowerInvariant();
 
-        private static void ReportMissingActiveRule(Item item, string activeKey, ConcurrentDictionary<string, BarrelRule> rules)
+        private static void ReportMissingActiveRuleOnce(Item item, string activeKey, ConcurrentDictionary<string, BarrelRule> rules)
         {
             string selected = ActiveProjectileSelectionByItem.TryGetValue(item, out int selectedProjectile)
                 ? selectedProjectile.ToString(CultureInfo.InvariantCulture)
                 : "unknown";
             string registeredKeys = rules.IsEmpty ? "<none>" : string.Join(", ", rules.Keys);
-            DebugConsole.ThrowError(
-                $"GunSmith QAT selected a barrel rule that is not registered. " +
+            string signature = string.Create(
+                CultureInfo.InvariantCulture,
+                $"{selected}|{activeKey}|{registeredKeys}");
+
+            if (ReportedMissingRuleSignatureByItem.TryGetValue(item, out string? previousSignature) &&
+                previousSignature.Equals(signature, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            ReportedMissingRuleSignatureByItem[item] = signature;
+            DebugConsole.NewMessage(
+                $"GunSmith QAT selected a barrel rule that is not registered; falling back to primary. " +
                 $"weapon={item.Prefab.Identifier.Value}, " +
                 $"selectedProjectile={selected}, " +
                 $"activeKey={activeKey}, " +
-                $"registeredKeys={registeredKeys}");
+                $"registeredKeys={registeredKeys}",
+                Color.Yellow,
+                false);
         }
 
         private static bool IsFinite(Vector2 value)
             => float.IsFinite(value.X) && float.IsFinite(value.Y);
 
+        private readonly record struct CachedLocalPosition(string ActiveKey, Vector2 LocalPosition);
         private readonly record struct BarrelRule(Vector2 LocalPosition, float RotationDegrees);
     }
 }
