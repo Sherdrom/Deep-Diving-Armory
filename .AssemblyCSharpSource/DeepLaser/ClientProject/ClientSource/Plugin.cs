@@ -27,6 +27,41 @@ namespace DeepLaser
         private static bool loggedHullReflectionError;
         private static Texture2D? impactGlowTexture;
         private static Texture2D? impactCoreTexture;
+        private static RenderTarget2D? laserOverlayTarget;
+        private static RenderTarget2D? waterLaserSourceTarget;
+        private static RenderTarget2D? distortedLaserOverlayTarget;
+        private static bool renderingDistortedLaserOverlay;
+        private static bool distortedLaserOverlayReady;
+        private static readonly BlendState LaserEraseBlendState = new()
+        {
+            ColorSourceBlend = Blend.Zero,
+            ColorDestinationBlend = Blend.InverseSourceAlpha,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.Zero,
+            AlphaDestinationBlend = Blend.InverseSourceAlpha,
+            AlphaBlendFunction = BlendFunction.Add
+        };
+        private static readonly BlendState LaserOnOpaqueBackgroundBlendState = new()
+        {
+            ColorSourceBlend = Blend.SourceAlpha,
+            ColorDestinationBlend = Blend.InverseSourceAlpha,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.Zero,
+            AlphaDestinationBlend = Blend.One,
+            AlphaBlendFunction = BlendFunction.Add
+        };
+        private static readonly DepthStencilState LaserDepthWriteState = new()
+        {
+            DepthBufferEnable = true,
+            DepthBufferWriteEnable = true,
+            DepthBufferFunction = CompareFunction.LessEqual
+        };
+        private static readonly DepthStencilState LaserOccluderDepthState = new()
+        {
+            DepthBufferEnable = true,
+            DepthBufferWriteEnable = false,
+            DepthBufferFunction = CompareFunction.Less
+        };
         private static MethodInfo? AccessMethod(Type? type, string name)
         {
             return type == null ? null : AccessTools.Method(type, name);
@@ -43,6 +78,31 @@ namespace DeepLaser
         }
 
         [HarmonyPatch]
+        private static class GameScreenDrawMapPatch
+        {
+            private static MethodBase? TargetMethod()
+            {
+                return AccessTools.Method(typeof(GameScreen), nameof(GameScreen.DrawMap), new[] { typeof(GraphicsDevice), typeof(SpriteBatch), typeof(double) });
+            }
+
+            private static void Prefix(GameScreen __instance, GraphicsDevice __0, SpriteBatch __1)
+            {
+                PrepareLaserOverlay(__0, __1, __instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(WaterRenderer), nameof(WaterRenderer.RenderWater))]
+        private static class WaterRendererRenderWaterPatch
+        {
+            private static void Prefix(WaterRenderer __instance, SpriteBatch spriteBatch, Camera cam)
+            {
+                if (renderingDistortedLaserOverlay || laserOverlayTarget == null || laserOverlayTarget.IsDisposed) { return; }
+
+                PrepareDistortedLaserOverlay(__instance, spriteBatch, cam);
+            }
+        }
+
+        [HarmonyPatch]
         private static class LightManagerDebugDrawVerticesPatch
         {
             private static MethodBase? TargetMethod()
@@ -53,13 +113,277 @@ namespace DeepLaser
 
             private static void Postfix(SpriteBatch spriteBatch)
             {
-                if (spriteBatch == null || Screen.Selected is not GameScreen) { return; }
+                if (spriteBatch == null || Screen.Selected is not GameScreen gameScreen) { return; }
 
-                DrawLasers(spriteBatch);
+                CompositeLaserOverlay(spriteBatch, gameScreen);
             }
         }
 
-        private static void DrawLasers(SpriteBatch spriteBatch)
+        private static void PrepareLaserOverlay(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GameScreen gameScreen)
+        {
+            distortedLaserOverlayReady = false;
+            RenderTargetBinding[] sceneTargets = graphicsDevice.GetRenderTargets();
+            int targetWidth = graphicsDevice.PresentationParameters.BackBufferWidth;
+            int targetHeight = graphicsDevice.PresentationParameters.BackBufferHeight;
+
+            if (sceneTargets.Length > 0 && sceneTargets[0].RenderTarget is Texture2D sceneTarget)
+            {
+                targetWidth = sceneTarget.Width;
+                targetHeight = sceneTarget.Height;
+            }
+
+            RenderTarget2D overlayTarget = GetLaserOverlayTarget(graphicsDevice, targetWidth, targetHeight);
+
+            graphicsDevice.SetRenderTarget(overlayTarget);
+            graphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Transparent, 1.0f, 0);
+
+            // Store the source color and alpha once; the final composite performs the original blending.
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, GUI.SamplerState, LaserDepthWriteState, GameMain.ScissorTestEnable, transformMatrix: gameScreen.Cam.Transform);
+            DrawLasers(spriteBatch, drawImpactDot: false);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, GUI.SamplerState, LaserDepthWriteState, GameMain.ScissorTestEnable, transformMatrix: gameScreen.Cam.Transform);
+            DrawLasers(spriteBatch, drawBeam: false);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, LaserEraseBlendState, GUI.SamplerState, LaserOccluderDepthState, GameMain.ScissorTestEnable, transformMatrix: gameScreen.Cam.Transform);
+            DrawWorldOccluders(spriteBatch);
+            DrawLaserOccluders(spriteBatch);
+            spriteBatch.End();
+
+            if (sceneTargets.Length == 0)
+            {
+                graphicsDevice.SetRenderTarget(null);
+            }
+            else
+            {
+                graphicsDevice.SetRenderTargets(sceneTargets);
+            }
+        }
+
+        private static void PrepareDistortedLaserOverlay(WaterRenderer waterRenderer, SpriteBatch spriteBatch, Camera cam)
+        {
+            if (laserOverlayTarget == null || laserOverlayTarget.IsDisposed) { return; }
+
+            GraphicsDevice graphicsDevice = spriteBatch.GraphicsDevice;
+            RenderTargetBinding[] sceneTargets = graphicsDevice.GetRenderTargets();
+            RenderTarget2D waterSourceTarget = GetWaterLaserSourceTarget(graphicsDevice, laserOverlayTarget.Width, laserOverlayTarget.Height);
+            RenderTarget2D distortedTarget = GetDistortedLaserOverlayTarget(graphicsDevice, laserOverlayTarget.Width, laserOverlayTarget.Height);
+
+            // Opaque black lets the game's air pass erase water-distorted pixels that drift into dry areas.
+            graphicsDevice.SetRenderTarget(waterSourceTarget);
+            graphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                LaserOnOpaqueBackgroundBlendState,
+                SamplerState.PointClamp,
+                DepthStencilState.None,
+                null);
+            spriteBatch.Draw(laserOverlayTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            graphicsDevice.SetRenderTarget(distortedTarget);
+            graphicsDevice.Clear(Color.Black);
+
+            renderingDistortedLaserOverlay = true;
+            try
+            {
+                waterRenderer.RenderWater(spriteBatch, waterSourceTarget, cam);
+                waterRenderer.RenderAir(graphicsDevice, cam, waterSourceTarget, cam.ShaderTransform);
+                distortedLaserOverlayReady = true;
+            }
+            finally
+            {
+                renderingDistortedLaserOverlay = false;
+                if (sceneTargets.Length == 0)
+                {
+                    graphicsDevice.SetRenderTarget(null);
+                }
+                else
+                {
+                    graphicsDevice.SetRenderTargets(sceneTargets);
+                }
+            }
+        }
+
+        private static void CompositeLaserOverlay(SpriteBatch spriteBatch, GameScreen gameScreen)
+        {
+            if (laserOverlayTarget == null || laserOverlayTarget.IsDisposed) { return; }
+
+            bool useDistortedOverlay = distortedLaserOverlayReady &&
+                distortedLaserOverlayTarget != null &&
+                !distortedLaserOverlayTarget.IsDisposed;
+            Texture2D overlayTarget = useDistortedOverlay
+                ? distortedLaserOverlayTarget!
+                : laserOverlayTarget;
+
+            Matrix inverseTransform = Matrix.Invert(gameScreen.Cam.Transform);
+            Vector2 topLeft = Vector2.Transform(Vector2.Zero, inverseTransform);
+            Vector2 topRight = Vector2.Transform(new Vector2(overlayTarget.Width, 0.0f), inverseTransform);
+            Vector2 bottomLeft = Vector2.Transform(new Vector2(0.0f, overlayTarget.Height), inverseTransform);
+            Vector2 right = topRight - topLeft;
+            Vector2 down = bottomLeft - topLeft;
+            Vector2 scale = new(right.Length() / overlayTarget.Width, down.Length() / overlayTarget.Height);
+            float rotation = MathF.Atan2(right.Y, right.X);
+
+            // Water rendering outputs an opaque dark background; add only its illuminated laser pixels.
+            spriteBatch.End();
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                useDistortedOverlay ? BlendState.Additive : BlendState.NonPremultiplied,
+                SamplerState.LinearWrap,
+                DepthStencilState.None,
+                null,
+                null,
+                transformMatrix: gameScreen.Cam.Transform);
+            spriteBatch.Draw(overlayTarget, topLeft, null, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.0f);
+            spriteBatch.End();
+            spriteBatch.Begin(
+                SpriteSortMode.Deferred,
+                BlendState.NonPremultiplied,
+                SamplerState.LinearWrap,
+                DepthStencilState.None,
+                null,
+                null,
+                transformMatrix: gameScreen.Cam.Transform);
+        }
+
+        private static RenderTarget2D GetLaserOverlayTarget(GraphicsDevice graphicsDevice, int width, int height)
+        {
+            if (laserOverlayTarget == null ||
+                laserOverlayTarget.IsDisposed ||
+                laserOverlayTarget.Width != width ||
+                laserOverlayTarget.Height != height)
+            {
+                laserOverlayTarget?.Dispose();
+                laserOverlayTarget = new RenderTarget2D(graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            }
+
+            return laserOverlayTarget;
+        }
+
+        private static RenderTarget2D GetWaterLaserSourceTarget(GraphicsDevice graphicsDevice, int width, int height)
+        {
+            if (waterLaserSourceTarget == null ||
+                waterLaserSourceTarget.IsDisposed ||
+                waterLaserSourceTarget.Width != width ||
+                waterLaserSourceTarget.Height != height)
+            {
+                waterLaserSourceTarget?.Dispose();
+                waterLaserSourceTarget = new RenderTarget2D(graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.None);
+            }
+
+            return waterLaserSourceTarget;
+        }
+
+        private static RenderTarget2D GetDistortedLaserOverlayTarget(GraphicsDevice graphicsDevice, int width, int height)
+        {
+            if (distortedLaserOverlayTarget == null ||
+                distortedLaserOverlayTarget.IsDisposed ||
+                distortedLaserOverlayTarget.Width != width ||
+                distortedLaserOverlayTarget.Height != height)
+            {
+                distortedLaserOverlayTarget?.Dispose();
+                distortedLaserOverlayTarget = new RenderTarget2D(graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.None);
+            }
+
+            return distortedLaserOverlayTarget;
+        }
+
+        private static void DrawWorldOccluders(SpriteBatch spriteBatch)
+        {
+            foreach (MapEntity mapEntity in Submarine.VisibleEntities)
+            {
+                if (mapEntity == null || mapEntity.Removed) { continue; }
+                if (mapEntity is Item item &&
+                    item.GetComponent<RangedWeapon>() != null &&
+                    TryFindLaser(item, out _, out _))
+                {
+                    continue;
+                }
+
+                mapEntity.Draw(spriteBatch, false, true);
+                mapEntity.Draw(spriteBatch, false, false);
+            }
+        }
+
+        private static void DrawLaserOccluders(SpriteBatch spriteBatch)
+        {
+            HashSet<Item> drawnWeapons = new();
+
+            foreach (Character character in Character.CharacterList)
+            {
+                if (character.Removed || !character.Enabled) { continue; }
+
+                foreach (Item weaponItem in character.HeldItems)
+                {
+                    if (weaponItem == null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                    DrawWeaponOccluder(weaponItem, spriteBatch, character);
+                }
+            }
+
+            foreach (Item weaponItem in Item.ItemList)
+            {
+                if (weaponItem == null || weaponItem.Removed || weaponItem.ParentInventory != null || !drawnWeapons.Add(weaponItem)) { continue; }
+
+                DrawWeaponOccluder(weaponItem, spriteBatch, holder: null);
+            }
+        }
+
+        private static void DrawWeaponOccluder(Item weaponItem, SpriteBatch spriteBatch, Character? holder)
+        {
+            if (weaponItem.GetComponent<RangedWeapon>() == null ||
+                !TryFindLaser(weaponItem, out Item? laserItem, out _) ||
+                laserItem == null)
+            {
+                return;
+            }
+
+            weaponItem.body?.UpdateDrawPosition();
+            weaponItem.SetContainedItemPositions();
+            bool isOuterRail = laserItem.Sprite != null &&
+                weaponItem.Sprite != null &&
+                laserItem.Sprite.Depth < weaponItem.Sprite.Depth;
+            if (isOuterRail)
+            {
+                DrawItemSpriteOccluder(spriteBatch, weaponItem, laserItem);
+                return;
+            }
+
+            weaponItem.Draw(spriteBatch, false, true, Color.White, null);
+            weaponItem.Draw(spriteBatch, false, false, Color.White, null);
+            if (holder?.IsClimbing == true && weaponItem.body?.Dir == -1.0f)
+            {
+                DrawItemSpriteOccluder(spriteBatch, weaponItem, weaponItem);
+                DrawItemSpriteOccluder(spriteBatch, weaponItem, laserItem);
+            }
+        }
+
+        private static void DrawItemSpriteOccluder(SpriteBatch spriteBatch, Item weaponItem, Item occluderItem)
+        {
+            if (occluderItem.Sprite == null || !IsFinite(occluderItem.DrawPosition)) { return; }
+
+            bool flipX = weaponItem.body?.Dir == -1.0f;
+            SpriteEffects effects = flipX ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            Vector2 origin = occluderItem.Sprite.Origin;
+            if (flipX)
+            {
+                origin.X = occluderItem.Sprite.SourceRect.Width - origin.X;
+            }
+
+            occluderItem.Sprite.Draw(
+                spriteBatch,
+                new Vector2(occluderItem.DrawPosition.X, -occluderItem.DrawPosition.Y),
+                Color.White,
+                origin,
+                -(occluderItem.body?.DrawRotation ?? 0.0f),
+                occluderItem.Scale,
+                effects,
+                depth: occluderItem.Sprite.Depth);
+        }
+
+        private static void DrawLasers(SpriteBatch spriteBatch, bool drawBeam = true, bool drawImpactDot = true)
         {
             HashSet<Item> drawnWeapons = new();
 
@@ -74,7 +398,7 @@ namespace DeepLaser
                     RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
                     if (rangedWeapon == null) { continue; }
 
-                    TryDrawWeaponLaser(rangedWeapon, spriteBatch, character);
+                    TryDrawWeaponLaser(rangedWeapon, spriteBatch, character, drawBeam, drawImpactDot);
                 }
             }
 
@@ -85,18 +409,18 @@ namespace DeepLaser
                 RangedWeapon? rangedWeapon = weaponItem.GetComponent<RangedWeapon>();
                 if (rangedWeapon == null) { continue; }
 
-                TryDrawWeaponLaser(rangedWeapon, spriteBatch, character: null);
+                TryDrawWeaponLaser(rangedWeapon, spriteBatch, character: null, drawBeam, drawImpactDot);
             }
         }
 
-        private static void TryDrawWeaponLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character)
+        private static void TryDrawWeaponLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character, bool drawBeam, bool drawImpactDot)
         {
             Item weaponItem = rangedWeapon.Item;
             if (!TryFindLaser(weaponItem, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
 
             weaponItem.body?.UpdateDrawPosition();
             weaponItem.SetContainedItemPositions();
-            DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor);
+            DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor, drawBeam, drawImpactDot);
         }
 
         private static bool TryFindLaser(Item weapon, out Item? laserItem, out Color color)
@@ -130,7 +454,7 @@ namespace DeepLaser
             return false;
         }
 
-        private static void DrawLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character, Item laserItem, Color laserColor)
+        private static void DrawLaser(RangedWeapon rangedWeapon, SpriteBatch spriteBatch, Character? character, Item laserItem, Color laserColor, bool drawBeam, bool drawImpactDot)
         {
             if (rangedWeapon.Item.body == null) { return; }
 
@@ -164,11 +488,14 @@ namespace DeepLaser
 
             float laserDepth = MathHelper.Clamp((laserItem.Sprite?.Depth ?? 0.0f) + 0.001f, 0.0f, 0.999f);
 
-            GUI.DrawLine(spriteBatch, startDraw, endDraw, laserColor , depth: laserDepth, width: 1.0f);
-
-            if (hitObstacle)
+            if (drawBeam)
             {
-                DrawImpactDot(spriteBatch, endDraw, laserColor, laserDepth );
+                GUI.DrawLine(spriteBatch, startDraw, endDraw, laserColor, depth: laserDepth, width: 1.0f);
+            }
+
+            if (hitObstacle && drawImpactDot)
+            {
+                DrawImpactDot(spriteBatch, endDraw, laserColor, laserDepth);
             }
         }
 
