@@ -80,7 +80,7 @@
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper_tun/sniper_tun.png" sourcerect="13,601,1187,249" canbehiddenbyotherwearables="false" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.23" origin="0.35,0.9" />
       <StatValue stattype="MovementSpeed" value="-0.3" />
     </Wearable>
-    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="594,1" spread="0" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" penetration="1" botreload="0.1" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
+    <SwitchableRangedWeapon reload="0.1" MaxChargeTime="0.5" weapondamagemodifier="1" holdtrigger="true" barrelpos="594,1" spread="0" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" penetration="1" botreload="0.1" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
     <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
       <Affliction identifier="deep_VCE_yes" strength="100" />
@@ -154,7 +154,7 @@
         <StatusEffect type="OnInserted" target="This" handle2="-100,20" delay="2.5" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" holdpos="150,-120" aimpos="160,15" handle1="-350,-60" handle2="50,5" holdangle="0" aimangle="0" delay="3" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0.5" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
           <sound file="%ModDir%/weapon/ammo/ptrd_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />

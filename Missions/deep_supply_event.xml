@@ -267,12 +267,16 @@
 
         <RNGAction Chance="0.5">
         <Success>
-        <!-- 40%出货 -->
-        <SpawnAction ItemIdentifier="deep_tungsten_phy" targetinventory="player" amount="12" />
+        <!-- 20%出货 -->
+        <SpawnAction ItemIdentifier="deep_tungsten_phy" targetinventory="player" amount="8" />
         </Success>
         <Failure>
-        <!-- 40%出货 -->
-        <SpawnAction ItemIdentifier="ammobox_tun_ful" targetinventory="player" amount="1" />
+        <!-- 20%出货 -->
+        <SpawnAction ItemIdentifier="ammobox_tun_ful" targetinventory="player" amount="1" TargetTag="ammobox_tun_ful_50" />
+        <WaitAction time="0.25" />
+        <StatusEffectAction targettag="ammobox_tun_ful_50">
+              <StatusEffect target="This" condition="50" setvalue="true" />
+        </StatusEffectAction>
         </Failure>
         </RNGAction>
 
@@ -282,12 +286,14 @@
 
         <RNGAction Chance="0.5">
         <Success>
-        <!-- 40%出货 -->
+        <!-- 20%出货 -->
         <SpawnAction ItemIdentifier="deep_gold_bar" targetinventory="player" amount="3" />
+        <SpawnAction ItemIdentifier="deep_medical_kit_grizzly" targetinventory="player" amount="1" />
         </Success>
         <Failure>
-        <!-- 40%出货 -->
+        <!-- 20%出货 -->
         <SpawnAction ItemIdentifier="ak12_blackice" targetinventory="player" amount="1" />
+        <SpawnAction ItemIdentifier="endocrinebooster" targetinventory="player" amount="4" />
         </Failure>
         </RNGAction>
 
