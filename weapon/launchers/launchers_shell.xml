@@ -108,7 +108,7 @@
   </Item>
   <Item identifier="deep_rpg7_pg7vm" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="120" />
+      <RequiredSkill identifier="weapons" level="90" />
       <RequiredSkill identifier="electrical" level="100" />
       <RequiredItem identifier="c4block" amount="4" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
@@ -163,7 +163,7 @@
       <Item identifier="deep_tungsten" amount="1" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="204,180,207,210" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,156,441,39" depth="0.551" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,156,441,39" depth="0.551" origin="0.39,0.5" />
     <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
     <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
       <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
@@ -194,7 +194,9 @@
         <sound file="%ModDir%/weapon/explosive/sound/msl_engine.ogg" range="2000.0" volume="2" loop="true" />
       </StatusEffect>
     </Projectile>
-    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" />
+    <Holdable canBeCombined="true" slots="RightHand+LeftHand,Any" handle1="0,0" msg="ItemMsgPickUpSelect" >
+      <StatValue stattype="MovementSpeed" value="-0.3" />
+    </Holdable>
   </Item>
   <Item identifier="deep_rpg7_tbg7v" category="weapon" subcategory="deep_launcher_mags" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="metalcrate" scale="0.35" tags="mediumitem,deep_rpg7_ammo" impactsoundtag="impact_metal_light" hideinmenus="false">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
@@ -208,7 +210,7 @@
       <Item identifier="deep_tungsten" amount="1" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="417,222,165,168" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,205,331,40" depth="0.551" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,205,331,40" depth="0.551" origin="0.51,0.5" />
     <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
     <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
       <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
@@ -253,7 +255,7 @@
       <Item identifier="deep_tungsten" amount="1" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell_45.png" sourcerect="589,259,130,130" origin="0.5,0.5" />
-    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,261,236,16" depth="0.551" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_shell/launchers_shell.png" sourcerect="13,261,236,16" depth="0.551" origin="0.62,0.5" />
     <Body width="200" height="20" Mass="0" linearDamping="0.0" gravityscale="0.0" />
     <Projectile characterusable="false" hitscan="false" launchimpulse="25.0" maxtargetstohit="10" damagedoors="true" spread="0">
       <StatusEffect type="OnBroken" target="This" stackable="false" OneShot="true">
