@@ -9,7 +9,7 @@ if not CLIENT then
 	return
 end
 
-local EnableKillNotification = false
+local EnableKillNotification = true
 local _, myPackage = trygetpackage("Deep-Diving-Armory")
 local success, var = ConfigService.TryGetConfig(SettingBase.Boolean, myPackage, "KillNotification")
 
