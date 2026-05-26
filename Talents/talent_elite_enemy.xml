@@ -92,6 +92,7 @@
       </Abilities>
     </AbilityGroupEffect>
     
+    
     <!-- 多人游戏动态抗性调整，20米范围内有敌人时，增加战斗能力，附近5人时达到最大 -->
 
 	<!--<AbilityGroupInterval interval="0.9" >
@@ -196,6 +197,19 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
+
+    <!--敌人受到攻击时会反击，平时攻击距离为1300-->
+    <AbilityGroupEffect abilityeffecttype="OnAttackedResult">
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true">
+              <Affliction identifier="deep_enemy_attacked_result" amount="1.0"/>
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
 
       <!-- 天神射手——5倍致命爆头 -->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction" >
