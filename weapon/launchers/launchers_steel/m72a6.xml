@@ -4,7 +4,7 @@
   <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="gun_powder" amount="2" />
+      <RequiredItem identifier="gun_powder" amount="1" />
       <RequiredItem identifier="c4block" amount="1" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
     </Fabricate>
@@ -19,6 +19,11 @@
       <sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72a6.png" canbehiddenbyotherwearables="false" sourcerect="12,219,778,214" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.15" origin="0.7,1.1" />
     </Wearable>
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,17" aimpos="38,18" handle1="-7,0" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+    <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.4" setvalue="true" />
       <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true" delay="0.5">
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
@@ -77,6 +82,9 @@
         <Containable items="deep_backblast_exec" />
       </SubContainer>
     </ItemContainer>
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+    </Quality>
     <SkillRequirementHint identifier="weapons" level="80" />
     <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
   </Item>

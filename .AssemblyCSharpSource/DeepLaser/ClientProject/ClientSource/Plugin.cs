@@ -19,7 +19,6 @@ namespace DeepLaser
         private static readonly Type? ConvexHullType = AccessTools.TypeByName("Barotrauma.Lights.ConvexHull");
         private static readonly Type? SegmentPointType = AccessTools.TypeByName("Barotrauma.Lights.SegmentPoint");
         private static readonly MethodInfo? GetHullsInRangeMethod = AccessMethod(ConvexHullType, "GetHullsInRange");
-        private static readonly MethodInfo? RefreshWorldPositionsMethod = AccessMethod(ConvexHullType, "RefreshWorldPositions");
         private static readonly PropertyInfo? HullEnabledProperty = AccessProperty(ConvexHullType, "Enabled");
         private static readonly PropertyInfo? HullIsInvalidProperty = AccessProperty(ConvexHullType, "IsInvalid");
         private static readonly FieldInfo? HullVerticesField = AccessField(ConvexHullType, "vertices");
@@ -878,13 +877,14 @@ namespace DeepLaser
         private static bool TryGetHullVertices(object hull, out Vector2[] vertices)
         {
             vertices = Array.Empty<Vector2>();
-            if (RefreshWorldPositionsMethod == null || HullVerticesField == null || SegmentPointWorldPosField == null)
+            if (HullVerticesField == null || SegmentPointWorldPosField == null)
             {
                 LogHullReflectionErrorOnce("DeepLaser failed to find light hull vertex reflection members.");
                 return false;
             }
 
-            RefreshWorldPositionsMethod.Invoke(hull, null);
+            // RefreshWorldPositions mutates SegmentPoint.WorldPos, which the game's ray-cast sorting
+            // also reads on another thread. Snapshot the current world positions without writing them.
             if (HullVerticesField.GetValue(hull) is not Array rawVertices || rawVertices.Length < 3) { return false; }
 
             List<Vector2> result = new(rawVertices.Length);

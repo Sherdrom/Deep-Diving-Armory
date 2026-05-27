@@ -32,13 +32,14 @@ local function SetAimTarget(target, limb)
 	return true
 end
 
-Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
-	if instance.AnimController.Crouching then
-		if HasAffliction(instance.Character, "deep_no_crouching_detect", 1) then
-			instance.AnimController.Crouching = false
-		end
-	end
-end, Hook.HookMethodType.After)
+--Affliction控制敌人是否蹲下
+--Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
+	--if instance.AnimController.Crouching then
+		--if HasAffliction(instance.Character, "deep_enemy_affliction_resistance", 1) then
+			--instance.AnimController.Crouching = false
+		--end
+	--end
+--end, Hook.HookMethodType.After)
 
 Hook.Patch("Barotrauma.AIObjectiveCombat", "Attack", {"System.Single"}, function(instance)
 	local enemy = instance.Enemy
@@ -167,4 +168,123 @@ Hook.Patch(
 		end
 	end,
 	Hook.HookMethodType.After
+)
+
+--深潜ai射击距离修改及限制
+local JOB_CONFIGS = {
+    ["deep_securityofficer_enemy"] = {
+        AttackDistanceLimit = 1200,
+        CanReport = false,
+        BlockedByAffliction = {
+            Identifier = "deep_enemy_attacked_result",
+            MinStrength = 0.1,
+        },
+    },
+    ["deep_medicaldoctor_enemy"] = {
+        AttackDistanceLimit = 1200,
+        CanReport = false,
+        BlockedByAffliction = {
+            Identifier = "deep_enemy_attacked_result",
+            MinStrength = 0.1,
+        },
+    },
+}
+
+for _, config in pairs(JOB_CONFIGS) do
+    if config.AttackDistanceLimit ~= nil then
+        config.AttackDistanceLimitSqr = config.AttackDistanceLimit * config.AttackDistanceLimit
+    end
+end
+
+local function GetJobConfig(character)
+    if character == nil or not character.IsHuman then
+        return nil
+    end
+    for jobId, config in pairs(JOB_CONFIGS) do
+        if character:HasJob(jobId) then
+            local block = config.BlockedByAffliction
+            if block ~= nil then
+                local affliction = character.CharacterHealth:GetAffliction(block.Identifier)
+                if affliction ~= nil and affliction.Strength > block.MinStrength then
+                    return nil
+                end
+            end
+            return config
+        end
+    end
+    return nil
+end
+
+Hook.Patch(
+    "AttackDistanceLimit_Attack",
+    "Barotrauma.AIObjectiveCombat",
+    "Attack",
+    { "System.Single" },
+    function(instance, ptable)
+        local character = instance.character
+        local config = GetJobConfig(character)
+        if config == nil then
+            return
+        end
+
+        local limitSqr = config.AttackDistanceLimitSqr
+        if limitSqr == nil then
+            return
+        end
+
+        local enemy = instance.Enemy
+        if enemy == nil or enemy.Removed then
+            return
+        end
+
+        local weapon = instance.Weapon
+        if weapon == nil then
+            return
+        end
+
+        local rc = weapon:GetComponentString("RangedWeapon")
+            or weapon:GetComponentString("SwitchableRangedWeapon")
+        if rc == nil then
+            return
+        end
+
+        local charPos = character.WorldPosition
+        local enemyPos = enemy.WorldPosition
+        local dx = charPos.X - enemyPos.X
+        local dy = charPos.Y - enemyPos.Y
+
+        if dx * dx + dy * dy > limitSqr then
+            ptable.PreventExecution = true
+        end
+    end,
+    Hook.HookMethodType.Before
+)
+
+Hook.Patch(
+    "AttackDistanceLimit_NoReport",
+    "Barotrauma.HumanAIController",
+    "RespondToAttack",
+    { "Barotrauma.Character", "Barotrauma.AttackResult" },
+    function(instance, ptable)
+        local config = GetJobConfig(instance.Character)
+        if config == nil then
+            return
+        end
+
+        if config.CanReport ~= false then
+            return
+        end
+
+        local attacker = ptable["attacker"]
+        if attacker ~= nil and instance:IsFriendly(attacker) then
+            return
+        end
+
+        ptable.PreventExecution = true
+
+        if instance.Character.IsBot and attacker ~= nil then
+            instance:AddCombatObjective(CombatMode.Offensive, attacker, 0)
+        end
+    end,
+    Hook.HookMethodType.Before
 )

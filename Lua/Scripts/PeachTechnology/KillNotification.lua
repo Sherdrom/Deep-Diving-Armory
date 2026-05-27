@@ -9,6 +9,20 @@ if not CLIENT then
 	return
 end
 
+local EnableKillNotification = true
+local _, myPackage = trygetpackage("Deep-Diving-Armory")
+local success, var = ConfigService.TryGetConfig(SettingBase.Boolean, myPackage, "KillNotification")
+
+if not success then
+	print("[Deep-Diving-Armory] Failed to get KillNotification configs.")
+end
+
+function onValueChanged(cfg)
+	EnableKillNotification = cfg.Value
+end
+
+var.OnValueChanged.add(onValueChanged)
+
 local killInfos = {}
 local lastThinkTime = Timer.Time
 local alertedVictims = {}
@@ -69,6 +83,7 @@ local function GetCharacterName(character)
 end
 
 Hook.Add("character.damageLimb", "KillNotificationDamage", function(character, _, _, _, _, _, _, attacker, _)
+	if not EnableKillNotification then return end
 	if attacker == nil or character == nil then
 		return
 	end
@@ -84,6 +99,7 @@ Hook.Add("character.damageLimb", "KillNotificationDamage", function(character, _
 end)
 
 Hook.Add("characterDeath", "KillNotification", function(character)
+	if not EnableKillNotification then return end
 	if character == nil then
 		return
 	end
@@ -136,6 +152,7 @@ end)
 local lastPendingCleanup = 0
 
 Hook.Add("think", "KillNotificationThink", function()
+	if not EnableKillNotification then return end
 	local now = Timer.Time
 	local dt = now - lastThinkTime
 	lastThinkTime = now
@@ -224,6 +241,7 @@ Hook.Patch(
 	"Draw",
 	{ "Barotrauma.Camera", "Microsoft.Xna.Framework.Graphics.SpriteBatch" },
 	function(_, ptable)
+		if not EnableKillNotification then return end
 		if #killInfos == 0 then
 			return
 		end
