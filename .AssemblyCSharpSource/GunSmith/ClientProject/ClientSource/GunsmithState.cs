@@ -4,6 +4,7 @@ namespace GunSmith
     {
         public string SlotPath { get; init; } = string.Empty;
         public string PartId { get; init; } = string.Empty;
+        public string ItemIdentifier { get; init; } = string.Empty;
         public string TexturePath { get; init; } = string.Empty;
         public Rectangle SourceRect { get; init; }
         public Vector2 Offset { get; init; }

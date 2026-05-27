@@ -26,8 +26,11 @@ namespace DeepLaser
         private static readonly FieldInfo? SegmentPointWorldPosField = AccessField(SegmentPointType, "WorldPos");
         private static bool loggedHullReflectionError;
         private static MethodInfo? gunsmithTryGetTransformMethod;
+        private static MethodInfo? gunsmithTryGetAttachmentDepthMethod;
         private static PropertyInfo? gunsmithTransformDrawPositionProperty;
+        private static PropertyInfo? gunsmithTransformDrawRotationProperty;
         private static PropertyInfo? gunsmithTransformDirectionProperty;
+        private static PropertyInfo? gunsmithTransformFacingDirectionProperty;
         private static bool loggedGunsmithTransformReflectionError;
         private static Texture2D? impactGlowTexture;
         private static Texture2D? impactCoreTexture;
@@ -300,8 +303,8 @@ namespace DeepLaser
             {
                 if (mapEntity == null || mapEntity.Removed) { continue; }
                 if (mapEntity is Item item &&
-                    item.GetComponent<RangedWeapon>() != null &&
-                    TryFindLaser(item, out _, out _))
+                    (item.HasTag("deep_gunsmith") ||
+                     (item.GetComponent<RangedWeapon>() != null && TryFindLaser(item, out _, out _))))
                 {
                     continue;
                 }
@@ -345,6 +348,26 @@ namespace DeepLaser
             }
 
             weaponItem.body?.UpdateDrawPosition();
+            if (TryGetGunsmithAttachmentDrawTransform(weaponItem, laserItem, out Vector2 gunsmithDrawPosition, out float gunsmithDrawRotation, out float gunsmithFacingDirection))
+            {
+                float gunsmithAttachmentDepth = laserItem.Sprite?.Depth ?? weaponItem.activeSprite?.Depth ?? weaponItem.Sprite?.Depth ?? 0.0f;
+                if (TryGetGunsmithAttachmentDepth(weaponItem, laserItem, out float resolvedAttachmentDepth))
+                {
+                    gunsmithAttachmentDepth = resolvedAttachmentDepth;
+                }
+
+                DrawWeaponSpriteOccluder(spriteBatch, weaponItem, gunsmithFacingDirection);
+                DrawSpriteOccluder(
+                    spriteBatch,
+                    laserItem,
+                    gunsmithDrawPosition,
+                    gunsmithDrawRotation,
+                    gunsmithFacingDirection < 0.0f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                    mirrorOriginForHorizontalFlip: gunsmithFacingDirection < 0.0f,
+                    depthOverride: gunsmithAttachmentDepth);
+                return;
+            }
+
             weaponItem.SetContainedItemPositions();
             bool isOuterRail = laserItem.Sprite != null &&
                 weaponItem.Sprite != null &&
@@ -366,25 +389,16 @@ namespace DeepLaser
 
         private static void DrawItemSpriteOccluder(SpriteBatch spriteBatch, Item weaponItem, Item occluderItem)
         {
-            if (occluderItem.Sprite == null || !IsFinite(occluderItem.DrawPosition)) { return; }
+            if (occluderItem.Sprite == null) { return; }
 
             bool flipX = weaponItem.body?.Dir == -1.0f;
-            SpriteEffects effects = flipX ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            Vector2 origin = occluderItem.Sprite.Origin;
-            if (flipX)
-            {
-                origin.X = occluderItem.Sprite.SourceRect.Width - origin.X;
-            }
-
-            occluderItem.Sprite.Draw(
+            DrawSpriteOccluder(
                 spriteBatch,
-                new Vector2(occluderItem.DrawPosition.X, -occluderItem.DrawPosition.Y),
-                Color.White,
-                origin,
-                -(occluderItem.body?.DrawRotation ?? 0.0f),
-                occluderItem.Scale,
-                effects,
-                depth: occluderItem.Sprite.Depth);
+                occluderItem,
+                occluderItem.DrawPosition,
+                occluderItem.body?.DrawRotation ?? 0.0f,
+                flipX ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                mirrorOriginForHorizontalFlip: flipX);
         }
 
         private static void DrawLasers(SpriteBatch spriteBatch, bool drawBeam = true, bool drawImpactDot = true)
@@ -423,7 +437,6 @@ namespace DeepLaser
             if (!TryFindLaser(weaponItem, out Item? laserItem, out Color laserColor) || laserItem == null) { return; }
 
             weaponItem.body?.UpdateDrawPosition();
-            weaponItem.SetContainedItemPositions();
             DrawLaser(rangedWeapon, spriteBatch, character, laserItem, laserColor, drawBeam, drawImpactDot);
         }
 
@@ -462,6 +475,7 @@ namespace DeepLaser
         {
             if (rangedWeapon.Item.body == null) { return; }
 
+            bool hasGunsmithTransform = TryGetGunsmithTransformPayload(rangedWeapon.Item, laserItem, out _);
             if (!TryGetLaserStartAndDirection(rangedWeapon.Item, laserItem, out Vector2 startWorld, out Vector2 directionWorld))
             {
                 return;
@@ -480,7 +494,18 @@ namespace DeepLaser
             Vector2 endDraw = new(endWorld.X, -endWorld.Y);
             if (!IsFinite(startDraw) || !IsFinite(endDraw)) { return; }
 
-            float laserDepth = MathHelper.Clamp((laserItem.Sprite?.Depth ?? 0.0f) + 0.001f, 0.0f, 0.999f);
+            float laserDepth;
+            if (hasGunsmithTransform && TryGetGunsmithAttachmentDepth(rangedWeapon.Item, laserItem, out float attachmentDepth))
+            {
+                laserDepth = MathHelper.Clamp(attachmentDepth + 0.001f, 0.0f, 0.999f);
+            }
+            else
+            {
+                float baseDepth = hasGunsmithTransform
+                    ? (rangedWeapon.Item.activeSprite?.Depth ?? rangedWeapon.Item.Sprite?.Depth ?? laserItem.Sprite?.Depth ?? 0.0f)
+                    : (laserItem.Sprite?.Depth ?? 0.0f);
+                laserDepth = MathHelper.Clamp(baseDepth + 0.001f, 0.0f, 0.999f);
+            }
 
             if (drawBeam)
             {
@@ -524,19 +549,7 @@ namespace DeepLaser
             startWorld = default;
             directionWorld = default;
 
-            if (!TryResolveGunsmithTransformApi())
-            {
-                return false;
-            }
-
-            object?[] args = { weaponItem, laserItem, null };
-            if (gunsmithTryGetTransformMethod!.Invoke(null, args) is not true)
-            {
-                return false;
-            }
-
-            object? transform = args[2];
-            if (transform == null)
+            if (!TryGetGunsmithTransformPayload(weaponItem, laserItem, out object transform))
             {
                 return false;
             }
@@ -560,11 +573,104 @@ namespace DeepLaser
             return true;
         }
 
+        private static bool TryGetGunsmithAttachmentDrawTransform(Item weaponItem, Item attachmentItem, out Vector2 drawPosition, out float drawRotation, out float facingDirection)
+        {
+            drawPosition = default;
+            drawRotation = 0.0f;
+            facingDirection = 0.0f;
+
+            if (!TryGetGunsmithTransformPayload(weaponItem, attachmentItem, out object transform))
+            {
+                return false;
+            }
+
+            if (gunsmithTransformDrawPositionProperty!.GetValue(transform) is not Vector2 payloadDrawPosition ||
+                gunsmithTransformDrawRotationProperty!.GetValue(transform) is not float payloadDrawRotation ||
+                gunsmithTransformFacingDirectionProperty!.GetValue(transform) is not float payloadFacingDirection)
+            {
+                DebugConsole.ThrowError("DeepLaser received an invalid GunSmith quick attachment draw transform payload.");
+                return false;
+            }
+
+            if (!IsFinite(payloadDrawPosition) || !float.IsFinite(payloadDrawRotation) || !float.IsFinite(payloadFacingDirection))
+            {
+                DebugConsole.ThrowError("DeepLaser received a non-finite GunSmith quick attachment draw transform.");
+                return false;
+            }
+
+            drawPosition = payloadDrawPosition;
+            drawRotation = payloadDrawRotation;
+            facingDirection = payloadFacingDirection;
+            return true;
+        }
+
+        private static bool TryGetGunsmithAttachmentDepth(Item weaponItem, Item attachmentItem, out float depth)
+        {
+            depth = 0.0f;
+            if (!TryResolveGunsmithDepthApi())
+            {
+                return false;
+            }
+
+            object?[] args = { weaponItem, attachmentItem, 0.0f };
+            if (gunsmithTryGetAttachmentDepthMethod!.Invoke(null, args) is not true ||
+                args[2] is not float resolvedDepth ||
+                !float.IsFinite(resolvedDepth))
+            {
+                return false;
+            }
+
+            depth = resolvedDepth;
+            return true;
+        }
+
+        private static bool TryGetGunsmithTransformPayload(Item weaponItem, Item attachmentItem, out object transform)
+        {
+            transform = null!;
+            if (!TryResolveGunsmithTransformApi())
+            {
+                return false;
+            }
+
+            object?[] args = { weaponItem, attachmentItem, null };
+            if (gunsmithTryGetTransformMethod!.Invoke(null, args) is not true)
+            {
+                return false;
+            }
+
+            transform = args[2]!;
+            return transform != null;
+        }
+
+        private static bool TryResolveGunsmithDepthApi()
+        {
+            if (gunsmithTryGetAttachmentDepthMethod != null)
+            {
+                return true;
+            }
+
+            Type? gunsmithApiType = AccessTools.TypeByName("GunSmith.GunsmithApi");
+            gunsmithTryGetAttachmentDepthMethod = AccessTools.Method(
+                gunsmithApiType,
+                "TryGetAttachmentDepth",
+                new[] { typeof(Item), typeof(Item), typeof(float).MakeByRefType() });
+
+            if (gunsmithTryGetAttachmentDepthMethod == null)
+            {
+                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunSmith attachment depth API.");
+                return false;
+            }
+
+            return true;
+        }
+
         private static bool TryResolveGunsmithTransformApi()
         {
             if (gunsmithTryGetTransformMethod != null &&
                 gunsmithTransformDrawPositionProperty != null &&
-                gunsmithTransformDirectionProperty != null)
+                gunsmithTransformDrawRotationProperty != null &&
+                gunsmithTransformDirectionProperty != null &&
+                gunsmithTransformFacingDirectionProperty != null)
             {
                 return true;
             }
@@ -589,17 +695,89 @@ namespace DeepLaser
 
             Type? transformType = gunsmithTryGetTransformMethod?.GetParameters()[2].ParameterType.GetElementType();
             gunsmithTransformDrawPositionProperty = transformType?.GetProperty("DrawPosition", BindingFlags.Public | BindingFlags.Instance);
+            gunsmithTransformDrawRotationProperty = transformType?.GetProperty("DrawRotation", BindingFlags.Public | BindingFlags.Instance);
             gunsmithTransformDirectionProperty = transformType?.GetProperty("Direction", BindingFlags.Public | BindingFlags.Instance);
+            gunsmithTransformFacingDirectionProperty = transformType?.GetProperty("FacingDirection", BindingFlags.Public | BindingFlags.Instance);
 
             bool resolved = gunsmithTryGetTransformMethod != null &&
                             gunsmithTransformDrawPositionProperty != null &&
-                            gunsmithTransformDirectionProperty != null;
+                            gunsmithTransformDrawRotationProperty != null &&
+                            gunsmithTransformDirectionProperty != null &&
+                            gunsmithTransformFacingDirectionProperty != null;
             if (!resolved)
             {
                 LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunSmith quick attachment transform API.");
             }
 
             return resolved;
+        }
+
+        private static void DrawSpriteOccluder(
+            SpriteBatch spriteBatch,
+            Item occluderItem,
+            Vector2 drawPosition,
+            float drawRotation,
+            SpriteEffects effects,
+            bool mirrorOriginForHorizontalFlip = false,
+            float? depthOverride = null)
+        {
+            if (occluderItem.Sprite == null || !IsFinite(drawPosition) || !float.IsFinite(drawRotation)) { return; }
+
+            DrawSpriteOccluder(
+                spriteBatch,
+                occluderItem.Sprite,
+                occluderItem.Scale,
+                drawPosition,
+                drawRotation,
+                effects,
+                mirrorOriginForHorizontalFlip,
+                depthOverride);
+        }
+
+        private static void DrawWeaponSpriteOccluder(SpriteBatch spriteBatch, Item weaponItem, float facingDirection)
+        {
+            Sprite? weaponSprite = weaponItem.activeSprite ?? weaponItem.Sprite;
+            Vector2 drawPosition = weaponItem.body?.DrawPosition ?? weaponItem.DrawPosition;
+            float drawRotation = weaponItem.body?.DrawRotation ?? -weaponItem.RotationRad;
+            if (weaponSprite == null || !IsFinite(drawPosition) || !float.IsFinite(drawRotation)) { return; }
+
+            DrawSpriteOccluder(
+                spriteBatch,
+                weaponSprite,
+                weaponItem.Scale,
+                drawPosition,
+                drawRotation,
+                facingDirection < 0.0f ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                mirrorOriginForHorizontalFlip: facingDirection < 0.0f);
+        }
+
+        private static void DrawSpriteOccluder(
+            SpriteBatch spriteBatch,
+            Sprite sprite,
+            float scale,
+            Vector2 drawPosition,
+            float drawRotation,
+            SpriteEffects effects,
+            bool mirrorOriginForHorizontalFlip = false,
+            float? depthOverride = null)
+        {
+            if (sprite == null || !IsFinite(drawPosition) || !float.IsFinite(drawRotation) || !float.IsFinite(scale)) { return; }
+
+            Vector2 origin = sprite.Origin;
+            if (mirrorOriginForHorizontalFlip)
+            {
+                origin.X = sprite.SourceRect.Width - origin.X;
+            }
+
+            sprite.Draw(
+                spriteBatch,
+                new Vector2(drawPosition.X, -drawPosition.Y),
+                Color.White,
+                origin,
+                -drawRotation,
+                scale,
+                effects,
+                depth: depthOverride ?? sprite.Depth);
         }
 
         private static void DrawImpactDot(SpriteBatch spriteBatch, Vector2 position, Color laserColor, float depth)

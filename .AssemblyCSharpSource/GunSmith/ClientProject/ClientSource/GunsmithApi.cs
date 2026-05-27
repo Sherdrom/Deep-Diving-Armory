@@ -233,6 +233,68 @@ namespace GunSmith
             return true;
         }
 
+        public static bool TryGetAttachmentDepth(Item weaponItem, Item attachmentItem, out float depth)
+        {
+            depth = 0.0f;
+            if (weaponItem == null || attachmentItem == null || weaponItem.Removed || attachmentItem.Removed)
+            {
+                return false;
+            }
+
+            if (!TryGetValidState(weaponItem, out GunsmithSpriteState state) || state.Layers.Count == 0)
+            {
+                return false;
+            }
+
+            if (!TryGetAttachmentLayer(state, attachmentItem, out GunsmithLayer layer))
+            {
+                return false;
+            }
+
+            float baseDepth = weaponItem.activeSprite?.Depth ?? weaponItem.Sprite?.Depth ?? attachmentItem.Sprite?.Depth ?? 0.0f;
+            int minOrder = state.Layers[0].Order;
+            int maxOrder = state.Layers[^1].Order;
+            if (minOrder == maxOrder)
+            {
+                depth = MathHelper.Clamp(baseDepth, 0.0f, 0.999f);
+                return true;
+            }
+
+            float normalizedOrder = MathHelper.Clamp((layer.Order - minOrder) / (float)(maxOrder - minOrder), 0.0f, 1.0f);
+            const float maxDepthOffset = 0.0025f;
+            float depthOffset = MathHelper.Lerp(maxDepthOffset, -maxDepthOffset, normalizedOrder);
+            depth = MathHelper.Clamp(baseDepth + depthOffset, 0.0f, 0.999f);
+            return true;
+        }
+
+        private static bool TryGetAttachmentLayer(GunsmithSpriteState state, Item attachmentItem, out GunsmithLayer layer)
+        {
+            string itemIdentifier = attachmentItem.Prefab.Identifier.Value;
+            if (!string.IsNullOrWhiteSpace(itemIdentifier))
+            {
+                foreach (GunsmithLayer candidate in state.Layers)
+                {
+                    if (string.Equals(candidate.ItemIdentifier, itemIdentifier, StringComparison.OrdinalIgnoreCase))
+                    {
+                        layer = candidate;
+                        return true;
+                    }
+                }
+
+                foreach (GunsmithLayer candidate in state.Layers)
+                {
+                    if (string.Equals(candidate.PartId, itemIdentifier, StringComparison.OrdinalIgnoreCase))
+                    {
+                        layer = candidate;
+                        return true;
+                    }
+                }
+            }
+
+            layer = null!;
+            return false;
+        }
+
         internal static void RemoveState(Item item)
         {
             RemoveRuntimeState(item);

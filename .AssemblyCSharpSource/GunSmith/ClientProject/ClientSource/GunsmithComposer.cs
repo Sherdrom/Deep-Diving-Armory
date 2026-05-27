@@ -9,11 +9,18 @@ namespace GunSmith
             {
                 string[] parts = layerText.Split('|', StringSplitOptions.TrimEntries);
                 if (parts.Length < 7) { continue; }
-                if (!TryParseRectangle(parts[3], out Rectangle sourceRect)) { continue; }
-                if (!TryParseVector2(parts[4], out Vector2 offset)) { continue; }
-                if (!int.TryParse(parts[5], out int order)) { order = 0; }
+                bool hasItemIdentifier = parts.Length >= 8;
+                int texturePathIndex = hasItemIdentifier ? 3 : 2;
+                int sourceRectIndex = hasItemIdentifier ? 4 : 3;
+                int offsetIndex = hasItemIdentifier ? 5 : 4;
+                int orderIndex = hasItemIdentifier ? 6 : 5;
+                int scaleIndex = hasItemIdentifier ? 7 : 6;
+
+                if (!TryParseRectangle(parts[sourceRectIndex], out Rectangle sourceRect)) { continue; }
+                if (!TryParseVector2(parts[offsetIndex], out Vector2 offset)) { continue; }
+                if (!int.TryParse(parts[orderIndex], out int order)) { order = 0; }
                 float scale = 1.0f;
-                if (!float.TryParse(parts[6], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out scale) || scale <= 0)
+                if (!float.TryParse(parts[scaleIndex], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out scale) || scale <= 0)
                 {
                     scale = 1.0f;
                 }
@@ -22,7 +29,8 @@ namespace GunSmith
                 {
                     SlotPath = parts[0],
                     PartId = parts[1],
-                    TexturePath = ResolvePath(parts[2]),
+                    ItemIdentifier = hasItemIdentifier ? parts[2] : string.Empty,
+                    TexturePath = ResolvePath(parts[texturePathIndex]),
                     SourceRect = sourceRect,
                     Offset = offset,
                     Scale = scale,

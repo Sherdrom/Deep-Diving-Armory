@@ -231,9 +231,14 @@ local function buildLayerSpecForItem(item, selection, platform)
                 local scale = visual.scale or 1.0
                 local mount = Core.MountForPath(selection, path)
                 local order = mount and mount.visualOrder or visual.order or 0
+                local itemIdentifier = ""
+                if type(part) == "table" and type(part.item) == "table" and type(part.item.identifier) == "string" then
+                    itemIdentifier = part.item.identifier
+                end
                 table.insert(layers, table.concat({
                     path,
                     selection[path],
+                    itemIdentifier,
                     visual.texture,
                     string.format("%d,%d,%d,%d", source.x, source.y, source.w, source.h),
                     string.format("%.4f,%.4f", drawOffset.x, drawOffset.y),
