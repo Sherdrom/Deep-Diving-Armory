@@ -315,68 +315,6 @@
       <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true">
         <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-      <!-- 钢制插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_3" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_4" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_5" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_6" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_7" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_8" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_9" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
-        <Affliction identifier="steel_plate_heavy_run" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_10" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
-        <Affliction identifier="steel_plate_heavy_run" strength="1" />
-      </StatusEffect>
-      <!-- 陶瓷插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems tags="deep_plate_ceramic" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
-      </StatusEffect>
-      <!-- 复合插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems tags="deep_plate_composite" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_composite_debuff" strength="1" />
-      </StatusEffect>
-      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_ergonomics" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_ergonomics_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_heavy_armor" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_heavy_armor" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_strengthening_of_limbs" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_emergency_defibrillation" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
-      </StatusEffect>
       <sprite texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.46" origin="0.52,0.6" sourcerect="441,6,65,74" />
       <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="Torso" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
       <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
@@ -399,11 +337,11 @@
       <SkillModifier skillidentifier="medical" skillvalue="5" />
     </Wearable>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
-      <Containable tags="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
+      <Containable items="deep_plate" hide="true" itempos="2,-8" rotation="0" setactive="true" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="207,118,55,65" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="270,111,93,80" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip_armor" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="deep_chip_armor" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
       <SubContainer capacity="14" maxstacksize="32">
         <Containable items="smallitem" excludedidentifiers="deep_plate,deep_chip_armor,deep_plate_arm,toolbelt,toolbox,bandolier,deep_rig" hide="true" />
