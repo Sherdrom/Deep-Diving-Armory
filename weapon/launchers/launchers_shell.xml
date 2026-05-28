@@ -131,13 +131,17 @@
       </Attack>
       <!--当接触到生物时，立即引爆-->
       <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
         <Conditional EntityType="eq character" />
       </StatusEffect>
       <!--当接触到物品时，将在耐久归0时引爆-->
       <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-34" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
         <Conditional EntityType="eq item" />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" >
+        <Conditional speed="gte 2" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="400.0" ballastfloradamage="400" structuredamage="250" itemdamage="350" force="10" severlimbsprobability="1" debris="true" decal="explosion" decalsize="0.5" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="100" >
@@ -176,13 +180,17 @@
       </Attack>
       <!--当接触到生物时，立即引爆-->
       <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
         <Conditional EntityType="eq character" />
       </StatusEffect>
       <!--当接触到物品时，将在耐久归0时引爆-->
       <StatusEffect type="OnImpact" target="This,UseTarget" Condition="-20" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
         <Conditional EntityType="eq item" />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" >
+        <Conditional speed="gte 2" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="600.0" ballastfloradamage="600" structuredamage="500" itemdamage="500" force="15" severlimbsprobability="1" debris="true" decal="explosion" decalsize="0.8" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="150" >
@@ -218,12 +226,16 @@
       </StatusEffect>
 
       <!--立即引爆-->
-      <StatusEffect type="OnImpact" target="This" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and"/>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
+      </StatusEffect>
 
-      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="2" >
+        <Conditional speed="gte 2" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/launchers/Sound/rocket_explosion_1.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
-        <Explosion range="1200.0" ballastfloradamage="1000" structuredamage="50" itemdamage="50" force="10" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1.0" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="180" ignoreCover="true" OnlyInside="true" >
+        <Explosion range="1200.0" ballastfloradamage="1000" structuredamage="50" itemdamage="50" force="10" severlimbsprobability="1.0" debris="true" decal="explosion" decalsize="1.0" flashrange="3000" flashduration="5.0" screencolor="255,255,255,255" screencolorrange="3000" screencolorduration="3.0" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="180" ignoreCover="true" OnlyInside="true" >
           <Affliction identifier="Shrapnel_residue" strength="1000" />
           <Affliction identifier="explosiondamage" strength="200" />
           <Affliction identifier="burn" strength="600" />
@@ -254,9 +266,13 @@
       </StatusEffect>
 
       <!--立即引爆-->
-      <StatusEffect type="OnImpact" target="This" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and"/>
+      <StatusEffect type="OnImpact" target="This" Condition="-100" setvalue="true" disabledeltatime="true" comparison="and">
+        <Conditional speed="gte 2" />
+      </StatusEffect>
 
-      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="3" />
+      <StatusEffect type="OnNotContained" target="This" stackable="false" Condition="-100" setvalue="true" delay="3" >
+        <Conditional speed="gte 2" />
+      </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500.0" ballastfloradamage="200" structuredamage="80" itemdamage="80" force="3" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="0.3" shockwave="true" smoke="true" flames="true" sparks="true" underwaterbubble="true" camerashake="80" >
