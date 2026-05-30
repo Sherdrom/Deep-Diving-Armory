@@ -42,6 +42,7 @@ namespace GunSmith
             bool hasManagedItems = state.ManagedItemIdentifiers.Count > 0;
 
             States[item] = state;
+            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
             if (hadManagedItems == hasManagedItems)
             {
                 return;
@@ -73,6 +74,7 @@ namespace GunSmith
             {
                 Interlocked.Decrement(ref managedRuntimeItemCount);
             }
+            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
             return true;
         }
 
@@ -80,6 +82,7 @@ namespace GunSmith
         {
             States.Clear();
             managedRuntimeItemCount = 0;
+            GunsmithRuntimeEffectsPatch.ClearCaches();
         }
 
         private static GunsmithRuntimeStats ParseRuntimeStats(string value)

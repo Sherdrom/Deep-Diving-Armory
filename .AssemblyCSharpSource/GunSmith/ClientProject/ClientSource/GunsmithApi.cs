@@ -165,16 +165,10 @@ namespace GunSmith
         }
 
         private static void SetRuntimeState(Item item, GunsmithRuntimeState state)
-        {
-            GunsmithRuntimeStates.Set(item, state);
-            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
-        }
+            => GunsmithRuntimeStates.Set(item, state);
 
         private static void RemoveRuntimeState(Item item)
-        {
-            GunsmithRuntimeStates.Remove(item);
-            GunsmithRuntimeEffectsPatch.InvalidateItem(item);
-        }
+            => GunsmithRuntimeStates.Remove(item);
 
         internal static bool TryCanvasPointToItemLocal(Item item, Vector2 canvasPoint, out Vector2 localPoint)
         {
@@ -329,7 +323,6 @@ namespace GunSmith
             GunsmithGui.CloseWindow();
 
             GunsmithRuntimeStates.Clear();
-            GunsmithRuntimeEffectsPatch.ClearCaches();
             foreach (KeyValuePair<Item, GunsmithSpriteState> pair in spriteStates.ToArray())
             {
                 if (spriteStates.TryRemove(pair.Key, out GunsmithSpriteState? state))

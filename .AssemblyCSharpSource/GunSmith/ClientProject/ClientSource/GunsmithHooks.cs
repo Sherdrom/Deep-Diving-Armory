@@ -293,19 +293,7 @@ namespace GunSmith
         }
 
         internal static void CallLuaHook(string hookName, params object[] args)
-        {
-            try
-            {
-                if (LuaCsSetup.Instance?.Hook is Barotrauma.LuaCs.Compatibility.ILuaCsHook hook)
-                {
-                    hook.Call(hookName, args);
-                }
-            }
-            catch (Exception ex)
-            {
-                LuaCsSetup.PrintCsMessage($"[Gunsmith] Failed to call Lua hook '{hookName}': {ex.Message}");
-            }
-        }
+            => GunsmithLuaHooks.Call(hookName, args);
 
     }
 }

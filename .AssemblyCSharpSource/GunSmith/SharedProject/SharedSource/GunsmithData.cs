@@ -77,7 +77,7 @@ namespace Barotrauma.Items.Components
         {
             SavedState = NormalizeSavedState(msg.ReadString());
 #if CLIENT
-            GunSmith.GunsmithApi.CallLuaHook("DeepGunsmithReceiveState", item, SavedState);
+            global::GunSmith.GunsmithLuaHooks.Call("DeepGunsmithReceiveState", item, SavedState);
 #endif
         }
 
@@ -98,6 +98,9 @@ namespace Barotrauma.Items.Components
                     }
 
                     SavedState = NormalizeSavedState(rawState);
+#if SERVER
+                    global::GunSmith.GunsmithLuaHooks.Call("DeepGunsmithReceiveState", item, SavedState);
+#endif
                     BroadcastState();
                     break;
             }

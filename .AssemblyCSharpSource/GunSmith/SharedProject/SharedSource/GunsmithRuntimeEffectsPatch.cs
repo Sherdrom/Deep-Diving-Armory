@@ -56,7 +56,7 @@ namespace GunSmith
 
         private static bool CanSuppressManagedQuickSlotAfflictions(StatusEffect statusEffect)
         {
-            if (!GunsmithApi.HasManagedRuntimeItems)
+            if (!GunsmithRuntimeStates.HasManagedRuntimeItems)
             {
                 return false;
             }
@@ -87,7 +87,7 @@ namespace GunSmith
 
             foreach (Item item in character.HeldItems)
             {
-                if (GunsmithApi.TryGetRuntimeState(item, out state))
+                if (GunsmithRuntimeStates.TryGet(item, out state))
                 {
                     SetHeldStateCache(character, new HeldGunsmithStateCache(cacheTime, true, state));
                     return true;
@@ -158,7 +158,7 @@ namespace GunSmith
         }
 
         private static bool IsManagedByGunsmithState(Item ownerItem, string itemIdentifier)
-            => GunsmithApi.TryGetRuntimeState(ownerItem, out GunsmithRuntimeState? state) &&
+            => GunsmithRuntimeStates.TryGet(ownerItem, out GunsmithRuntimeState? state) &&
                state.ManagedItemIdentifiers.Contains(itemIdentifier);
 
         private sealed class HeldGunsmithStateCacheBox

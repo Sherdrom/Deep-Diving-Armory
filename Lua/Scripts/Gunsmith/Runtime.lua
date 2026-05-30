@@ -43,16 +43,28 @@ local function invalidateAppliedState(item)
     State.appliedConfigSignatures[item] = nil
 end
 
+local function applyServerSavedSelection(item, selection, platform, weapon)
+    if not SERVER or not Hook or not Hook.Call then return end
+    local savedState = Hook.Call("DeepGunsmithGetSavedState", item)
+    if type(savedState) ~= "string" or savedState == "" then return end
+
+    Persistence.ApplySavedParts(selection, platform, weapon, Persistence.Decode(savedState))
+    Core.PruneInvalidSelections(selection, platform, weapon)
+end
+
 function Runtime.GetSelection(item)
     local platform = Core.PlatformConfig(item)
     if not platform then return nil end
 
     local key = Core.ItemKey(item)
     if not State.selections[key] then
-        State.selections[key] = Core.BuildDefaultSelection(platform, Core.WeaponConfig(item))
+        local weapon = Core.WeaponConfig(item)
+        State.selections[key] = Core.BuildDefaultSelection(platform, weapon)
         if not State.loadedStates[key] then
             State.loadedStates[key] = true
-            if not SERVER then
+            if SERVER then
+                applyServerSavedSelection(item, State.selections[key], platform, weapon)
+            else
                 Persistence.Request(item)
             end
         end
