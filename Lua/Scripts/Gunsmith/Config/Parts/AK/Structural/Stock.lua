@@ -3,18 +3,18 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 local parts = Deep_Lua.Gunsmith.Config.parts
 
 -- 强烈建议这里的配件放到一个png里
-local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
+local texture = Deep_Lua.Path .. "/GunSmith/SharedParts/Stock/SharedStockAK.png"
 
-parts.AK74M_stock = {
+parts.deep_6p20_sb5_ak_stock = {
     type = "stock",
-    nameKey = "deep.gunsmith.part.AK74M_stock",
+    nameKey = "deep.gunsmith.part.deep_6p20_sb5_ak_stock",
     provides = { "AK_stock" },
-    item = { identifier = "deep_gunsmith_AK74M_stock" },
+    item = { identifier = "deep_6p20_sb5_ak_stock" },
     stats = { Ergonomics = 2 },
     visual = { 
         texture = texture,
-        source = { x = 537, y = 199, w = 150, h = 67 },
-        attachPoint = { x = 146, y = 17 },
+        source = { x = 10, y = 10, w = 142, h = 60 },
+        attachPoint = { x = 142, y = 14 },
         order = 30,
         scale = 1
     }

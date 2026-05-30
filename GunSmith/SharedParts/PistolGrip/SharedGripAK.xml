@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="6P4 Sb.9手枪握把（AK）" identifier="deep_6p4_sb9_ak_pistol_grip" subcategory="deep_gunsmith_part_ak_pistol_grip" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_gunsmith_part_ak_pistol_grip" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.25" impactsoundtag="impact_metal_light">
+    <Price baseprice="220" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false" />
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="6">
+      <RequiredSkill identifier="weapons" level="20" />
+      <RequiredItem identifier="steel" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="4">
+      <Item identifier="steel" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/GunSmith/SharedParts/PistolGrip/SharedGripAK.png" sourcerect="7,11,42,59" depth="0.55" origin="0.5,0.5" />
+    <Body width="42" height="59" density="10" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+</Items>
