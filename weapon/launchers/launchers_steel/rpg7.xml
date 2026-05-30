@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item identifier="deep_rpg7" subcategory="deep_launchers" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.22" impactsoundtag="impact_metal_heavy" >
+  <Item identifier="deep_rpg7" subcategory="deep_launchers" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.22" impactsoundtag="impact_metal_heavy">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="steel_part" amount="4" />
@@ -18,7 +18,7 @@
       <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="20,6" aimpos="12,8" handle1="90,-40" handle2="200,-30" holdangle="-30" msg="ItemMsgPickUpSelect">
-    <!-- 禁用爆破物合约-->
+      <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
         <dropitem />
@@ -26,7 +26,7 @@
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
-    <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="337,20" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5" >
+    <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="337,20" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="0,256,256,256" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="256,256,256,256" />
       <!-- 筒口特效 -->
@@ -62,7 +62,7 @@
     <!--BACKBLAST-->
     <ItemContainer hideitems="false" capacity="1" maxstacksize="1" drawinventory="true" containedstateindicatorslot="0" removecontaineditemsondeconstruct="false" containedstateindicatorstyle="bullet">
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <Containable tags="deep_rpg7_ammo" hide="false" setactive="true" itempos="65,5" >
+      <Containable tags="deep_rpg7_ammo" hide="false" setactive="true" itempos="65,5">
         <StatusEffect type="OnContaining" target="This">
           <SpawnItem identifiers="deep_backblast_exec" spawnposition="ThisInventory" />
           <Conditional ReloadTimer="lte 0.1" />
@@ -87,7 +87,7 @@
         <StatusEffect type="OnInserted" target="This" condition="100" setValue="true" disabledeltatime="true" delay="4" stackable="false">
         </StatusEffect>
         <StatusEffect type="OnInserted" target="This" condition="0" setValue="true" disabledeltatime="true" delay="0.01" />
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true">
           <sound file="%ModDir%/weapon/launchers/Sound/rocket_re_1.ogg" type="OnUse" range="500.0" loop="false" volume="0.5" />
         </StatusEffect>
       </Containable>

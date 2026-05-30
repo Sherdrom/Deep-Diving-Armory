@@ -1,47 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-  <Talents>
+<Talents>
   <Talent identifier="deep_talent_ghost_soldier">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_talent_ghost_soldier">
     </Description>
     <!-- 士兵天赋 -->
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 攻击时降低玩家35%伤害抗性 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+    <!-- 攻击时降低玩家35%伤害抗性 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 突击手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-	        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.25"/>
-            <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.35"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.25"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.35"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -52,38 +52,38 @@
     <Description tag="talentdescription.deep_talent_ghost_striker">
     </Description>
     <!-- 强攻手天赋 -->
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 攻击时降低玩家35%伤害抗性 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+    <!-- 攻击时降低玩家35%伤害抗性 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 强攻手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 强攻手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1.2"/>
@@ -97,56 +97,56 @@
     <Description tag="talentdescription.deep_talent_ghost_Fearless_Vanguard">
     </Description>
     <!-- 重装天赋 -->
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-		<CharacterAbilityModifyStat stattype="MovementSpeed" value="0.8"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.8"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 攻击时降低玩家35%伤害抗性 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+    <!-- 攻击时降低玩家35%伤害抗性 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
-    <AbilityGroupInterval interval="0.9" >
+    <!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true">
               <Affliction identifier="deep_enemy_resistance_heavy_sp" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装近距离薄弱 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 重装近距离薄弱 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.4"/>
-    <CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.4"/>
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true">
               <Affliction identifier="deep_enemy_resistance_heavy_sp_near" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
@@ -161,42 +161,42 @@
     <Description tag="talentdescription.deep_talent_ghost_sniper">
     </Description>
     <!-- 狙击手天赋 -->
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
-		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1.5"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1.5"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 攻击时降低玩家35%伤害抗性 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+    <!-- 攻击时降低玩家35%伤害抗性 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 狙击手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 狙击手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-1"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
@@ -207,37 +207,37 @@
     <Description tag="talentdescription.deep_talent_ghost_leader">
     </Description>
     <!-- 重炮手天赋 -->
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 攻击时降低玩家35%伤害抗性 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+    <!-- 攻击时降低玩家35%伤害抗性 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 暴力军阀 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+    <!-- 暴力军阀 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>

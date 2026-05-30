@@ -20,7 +20,7 @@
       <sprite texture="%ModDir%/weapon/explosive/launchers/rpg22/rpg22.png" canbehiddenbyotherwearables="false" sourcerect="28,398,575,96" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.18" origin="0.6,1.7" />
     </Wearable>
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,17" aimpos="30,15" handle1="-7,0" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
-    <!-- 禁用爆破物合约-->
+      <!-- 禁用爆破物合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_explosive_detect="gt 0.0" />
         <dropitem />

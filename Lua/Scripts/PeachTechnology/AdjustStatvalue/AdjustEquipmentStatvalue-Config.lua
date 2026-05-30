@@ -34,10 +34,15 @@
 --     例: flags = { "ImmuneToPressure", "MustWalk" }
 --
 --   affliction (table) 装备时向角色 Head 肢体施加指定 Affliction，脱下时移除。
---     { id = "Affliction Prefab 标识名", strength = number }
+--     单个: { id = "Affliction Prefab 标识名", strength = number }
+--     复数: { { id = "id1", strength = 10 }, { id = "id2", strength = 20 } }
 --     - id: AfflictionPrefab 的 Identifier 名称
---     - strength: 强度值
+--     - strength: 强度值（默认 1）
 --     例: affliction = { id = "burn", strength = 50 }
+--     例(多个): affliction = {
+--                  { id = "deep_helmet_tac_detect", strength = 1 },
+--                  { id = "deep_gpnvg18", strength = 1 },
+--              }
 --
 --   以上 stats / flags / affliction 均为选填，不填则跳过，无副作用。
 --
@@ -162,6 +167,141 @@ local CONFIG = {
         ["deep_heyuanmu_suit"] = {
             IsMain = true,
         },
+
+        --主体（头盔）
+        ["6b47"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost"] = {
+            IsMain = true,
+        },
+
+        ["deep_altyn"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_maska"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_kiver_m"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_Fearless_Vanguard"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_zsh_1_2_m"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["6b47_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_black_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["6b47_npc"] = {
+            IsMain = true,
+        },
+
+
+        ["6b47_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["6b47_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+
 
 
 
@@ -605,10 +745,301 @@ local CONFIG = {
             affliction = { id = "chip_emergency_defibrillation_detect", strength = 1 },
         },
 
+        --子体（头盔战术设备）
+        ["gpnvg_18"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_helmet_tac_detect", strength = 1 },
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        --子体（神经调整）
+        ["chip_cqb"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+            affliction = {
+              { id = "deep_chip_cqb_1", strength = 1 },
+            },
+        },
+
+        ["chip_frogman"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_chip_frogman_1", strength = 1 },
+            },
+        },
+
+        ["chip_marksman"] = {
+            IsSub = true,
+            stats = {
+                { statType = "AttackMultiplier", value = 0.5 },
+                { statType = "RangedSpreadReduction", value = 0.5 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_marksman_1", strength = 1 },
+            },
+        },
+
+        ["chip_commando"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "RangedSpreadReduction", value = -0.5 },
+            },
+            affliction = {
+              { id = "deep_chip_commando_1", strength = 1 },
+            },
+        },
+
+        ["chip_heavy_defender"] = {
+            IsSub = true,
+            stats = {
+                { statType = "AttackMultiplier", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.3 },
+            },
+            affliction = {
+              { id = "deep_chip_heavy_defender", strength = 1 },
+            },
+        },
+
+        ["chip_blaster"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ExplosionDamageMultiplier", value = 0.5 },
+                { statType = "ExplosionRadiusMultiplier", value = 0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_blaster", strength = 1 },
+            },
+        },
+
+        ["chip_machinegunner"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_machinegunner_detect", strength = 1 },
+            },
+        },
+
+        ["chip_striker"] = {
+            IsSub = true,
+            stats = {
+                { statType = "RangedSpreadReduction", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
+                { statType = "WalkingSpeed", value = 0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_striker", strength = 1 },
+            },
+        },
+
+        ["chip_doc"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillOverride", value = 60 },
+                { statType = "WeaponsSkillOverride", value = 60 },
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "DebuffDurationMultiplier", value = 0.5 },
+            },
+            flags = { "MoveNormallyWhileDragging"}
+        },
+
+        --子体（辅助升级）
+        ["chip_learn"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 1 },
+            },
+        },
+
+        ["chip_learn_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 2 },
+                { statType = "HelmSkillOverride", value = 60 },
+                { statType = "MedicalSkillOverride", value = 60 },
+                { statType = "WeaponsSkillOverride", value = 60 },
+                { statType = "ElectricalSkillOverride", value = 60 },
+                { statType = "MechanicalSkillOverride", value = 60 },
+            },
+        },
+
+        ["chip_learn_3"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 3 },
+                { statType = "HelmSkillOverride", value = 80 },
+                { statType = "MedicalSkillOverride", value = 80 },
+                { statType = "WeaponsSkillOverride", value = 80 },
+                { statType = "ElectricalSkillOverride", value = 80 },
+                { statType = "MechanicalSkillOverride", value = 80 },
+            },
+            flags = { "GainSkillPastMaximum"}
+        },
+
+        ["chip_mechanical"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MechanicalSkillGainSpeed", value = 1 },
+                { statType = "MechanicalRepairSpeed", value = 0.3 },
+                { statType = "RepairToolStructureRepairMultiplier", value = 0.3 },
+                { statType = "RepairToolStructureDamageMultiplier", value = 0.3 },
+                { statType = "RepairToolDeattachTimeMultiplier", value = 0.3 },
+                { statType = "FlowResistance", value = 0.5 },
+            },
+        },
+
+        ["chip_mechanical_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MechanicalSkillGainSpeed", value = 2 },
+                { statType = "MechanicalSkillOverride", value = 55 },
+                { statType = "MechanicalRepairSpeed", value = 0.5 },
+                { statType = "RepairToolStructureRepairMultiplier", value = 0.5 },
+                { statType = "RepairToolStructureDamageMultiplier", value = 0.5 },
+                { statType = "RepairToolDeattachTimeMultiplier", value = 0.5 },
+                { statType = "DeconstructorSpeedMultiplier", value = 0.5 },
+                { statType = "FabricationSpeed", value = 0.5 },
+                { statType = "IncreaseFabricationQuality", value = 1 },
+                { statType = "FlowResistance", value = 0.8 },
+            },
+        },
+
+        ["chip_electrician"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ElectricalSkillGainSpeed", value = 1 },
+                { statType = "MaxRepairConditionMultiplierElectrical", value = 0.3 },
+                { statType = "RepairSpeed", value = 0.5 },
+                { statType = "FlowResistance", value = 0.5 },
+            },
+        },
+
+        ["chip_electrician_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ElectricalSkillGainSpeed", value = 2 },
+                { statType = "ElectricalSkillOverride", value = 55 },
+                { statType = "MaxRepairConditionMultiplierElectrical", value = 0.5 },
+                { statType = "RepairSpeed", value = 0.7 },
+                { statType = "DeconstructorSpeedMultiplier", value = 0.5 },
+                { statType = "FabricationSpeed", value = 0.5 },
+                { statType = "IncreaseFabricationQuality", value = 1 },
+                { statType = "FlowResistance", value = 0.8 },
+            },
+        },
+
+        ["chip_security"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillGainSpeed", value = 1 },
+                { statType = "MovementSpeed", value = 0.1 },
+                { statType = "MaximumHealthMultiplier", value = 0.1 },
+                { statType = "MeleeAttackMultiplier", value = 0.2 },
+                { statType = "MeleeAttackSpeed", value = 0.2 },
+                { statType = "FlowResistance", value = 0.5 },
+                { statType = "RangedSpreadReduction", value = 0.2 },
+                { statType = "TurretAttackSpeed", value = 0.1 },
+            },
+        },
+
+        ["chip_security_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillGainSpeed", value = 2 },
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "MaximumHealthMultiplier", value = 0.2 },
+                { statType = "MeleeAttackMultiplier", value = 0.4 },
+                { statType = "MeleeAttackSpeed", value = 0.4 },
+                { statType = "FlowResistance", value = 0.8 },
+                { statType = "RangedSpreadReduction", value = 0.25 },
+                { statType = "TurretAttackSpeed", value = 0.15 },
+                { statType = "TeamAttackMultiplier", value = -0.5 },
+                { statType = "TurretPowerCostReduction", value = 0.2 },
+            },
+        },
+
+        ["chip_medic"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillGainSpeed", value = 1 },
+                { statType = "WalkingSpeed", value = 0.1 },
+                { statType = "PoisonMultiplier", value = 0.2 },
+                { statType = "CPRBoost", value = 0.5 },
+                { statType = "GeneticMaterialRefineBonus", value = 0.1 },
+                { statType = "GeneticMaterialTaintedProbabilityReductionOnCombine", value = 0.5 },
+            },
+        },
+
+        ["chip_medic_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillGainSpeed", value = 2 },
+                { statType = "WalkingSpeed", value = 0.2 },
+                { statType = "PoisonMultiplier", value = 0.3 },
+                { statType = "CPRBoost", value = 0.7 },
+                { statType = "GeneticMaterialRefineBonus", value = 0.2 },
+                { statType = "GeneticMaterialTaintedProbabilityReductionOnCombine", value = 0.7 },
+            },
+        },
+
+        ["chip_captain"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_captain_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_assistant"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_assistant_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["deep_ten_star_general_assist_upgrading"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
         -- 主体 Affliction 示例（装备此物品时施加指定 affliction）
         -- ["example_main_with_affliction"] = {
         --     IsMain = true,
         --     affliction = { id = "some_affliction_id", strength = 10 },
+        -- },
+
+        -- 主体复数 Affliction 示例
+        -- ["example_main_with_multi_affliction"] = {
+        --     IsMain = true,
+        --     affliction = {
+        --         { id = "burn", strength = 30 },
+        --         { id = "bleeding", strength = 10 },
+        --     },
         -- },
 
         -- 子体 Affliction 示例

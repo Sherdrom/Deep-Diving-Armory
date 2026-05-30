@@ -12,8 +12,8 @@
 
 
 -- 主要目的，将甲鱼的StatusEffect——Affliction——StatValue的流程，简化为Lua脚本直接修改 StatValue，减少不必要的性能损失
--- 有些功能必须要用Affliction，比如护甲升级的效果，设置护甲升级芯片的Affliction的strengthchange=0，做到最小的性能损失
--- 移除xml代码中的StatusEffect，将脉冲周期施加Affliction的方法彻底移除
+-- 有些功能必须要用Affliction，比如护甲升级的效果，设置护甲升级芯片的Affliction的strengthchange=0，在玩家穿戴装备时施加一次Affliction，解除装备时取消Affliction，做到最小的性能损失
+-- 移除xml代码中的所有StatusEffect，StatusEffect在未激活的情况下仍有性能损失
 
 
 
@@ -139,34 +139,63 @@ local function removeFlags(character, flagsRecord)
 end
 
 local function applyAfflictionItem(character, afflictionCfg)
-    if not afflictionCfg or not afflictionCfg.id then return nil end
-    local prefab = AfflictionPrefab.Prefabs[afflictionCfg.id]
-    if not prefab then
-        dbgPrint("ERROR: affliction prefab not found:", afflictionCfg.id)
-        return nil
+    if not afflictionCfg then return nil end
+
+    if afflictionCfg.id then
+        local prefab = AfflictionPrefab.Prefabs[afflictionCfg.id]
+        if not prefab then
+            dbgPrint("ERROR: affliction prefab not found:", afflictionCfg.id)
+            return nil
+        end
+        local strength = afflictionCfg.strength or 1
+        local instance = prefab:Instantiate(strength)
+
+        local headLimb = nil
+        if character.AnimController then
+            headLimb = character.AnimController:GetLimb(LimbType.Head)
+        end
+
+        character.CharacterHealth:ApplyAffliction(headLimb, instance)
+        dbgPrint("affliction applied:", afflictionCfg.id, "strength=" .. strength)
+        return { id = afflictionCfg.id, strength = strength }
     end
-    local strength = afflictionCfg.strength or 1
-    local instance = prefab:Instantiate(strength)
 
     local headLimb = nil
     if character.AnimController then
-        for _, limb in pairs(character.AnimController.Limbs) do
-            if limb.type == LimbType.Head then
-                headLimb = limb
-                break
+        headLimb = character.AnimController:GetLimb(LimbType.Head)
+    end
+
+    local results = {}
+    for _, cfg in ipairs(afflictionCfg) do
+        if cfg.id then
+            local prefab = AfflictionPrefab.Prefabs[cfg.id]
+            if not prefab then
+                dbgPrint("ERROR: affliction prefab not found:", cfg.id)
+            else
+                local strength = cfg.strength or 1
+                local instance = prefab:Instantiate(strength)
+
+                character.CharacterHealth:ApplyAffliction(headLimb, instance)
+                dbgPrint("affliction applied:", cfg.id, "strength=" .. strength)
+                results[#results + 1] = { id = cfg.id, strength = strength }
             end
         end
     end
-
-    character.CharacterHealth:ApplyAffliction(headLimb, instance)
-    dbgPrint("affliction applied:", afflictionCfg.id, "strength=" .. strength)
-    return { id = afflictionCfg.id, strength = strength }
+    if #results == 0 then return nil end
+    return results
 end
 
 local function removeAfflictionItem(character, afflictionInfo)
-    if not afflictionInfo or not afflictionInfo.id then return end
-    character.CharacterHealth:ReduceAfflictionOnAllLimbs(afflictionInfo.id, afflictionInfo.strength or 999)
-    dbgPrint("affliction removed:", afflictionInfo.id)
+    if not afflictionInfo then return end
+    if afflictionInfo.id then
+        character.CharacterHealth:ReduceAfflictionOnAllLimbs(afflictionInfo.id, afflictionInfo.strength or 999)
+        dbgPrint("affliction removed:", afflictionInfo.id)
+    else
+        for _, info in ipairs(afflictionInfo) do
+            character.CharacterHealth:ReduceAfflictionOnAllLimbs(info.id, info.strength or 999)
+            dbgPrint("affliction removed:", info.id)
+        end
+    end
 end
 
 local function removeAllEffects(character, state)
@@ -435,10 +464,11 @@ Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
                 local lastSubItems = state.lastSubItems or {}
 
                 for subId, subCfg in pairs(currentSubItems) do
-                    if not state.subStats[subId] then
+                    if not state.lastSubItems[subId] then
                         state.subStats[subId] = applyStats(character, subCfg.stats)
                         state.subFlags[subId] = applyFlags(character, subCfg.flags)
                         state.subAfflictions[subId] = applyAfflictionItem(character, subCfg.affliction)
+                        state.lastSubItems[subId] = true
                         logSubEquip(character.Name, subId, state.itemId, subCfg, state.subStats[subId], state.subFlags[subId])
                     end
                 end

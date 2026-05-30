@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_rpd_thesun" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,exotic_supply_create_4,deep_upgrade_tool_tun_phy" Scale="0.21" impactsoundtag="impact_metal_light" health="220" >
+  <Item name="" identifier="deep_rpd_thesun" subcategory="deep_special" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,exotic_supply_create_4,deep_upgrade_tool_tun_phy" Scale="0.21" impactsoundtag="impact_metal_light" health="220">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="tungsten_phy_barrel" amount="2" />
@@ -63,33 +63,33 @@
       </StatusEffect>
 
       <!-- 使用光源组件作为自变量-->
-    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
-    </LightComponent>
-<!-- 右键瞄准时，设置电压为1.0-->
-    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
-    </StatusEffect>
-<!-- 电压大于0.9时，开启热成像-->
-    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
-    <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
-    </StatusEffect>
-<!-- 松开右键，电压小于0.8时，关闭热成像-->
-    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-    <Conditional Voltage="lte 0.8" />
-    </StatusEffect>
+      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">
+      </LightComponent>
+      <!-- 右键瞄准时，设置电压为1.0-->
+      <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false">
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+      </StatusEffect>
+      <!-- 电压大于0.9时，开启热成像-->
+      <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false">
+        <Conditional Voltage="gte 0.9" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+      </StatusEffect>
+      <!-- 松开右键，电压小于0.8时，关闭热成像-->
+      <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false">
+        <Conditional EntityType="eq character" TargetContainer="True" />
+        <Conditional Voltage="lte 0.8" />
+      </StatusEffect>
 
-    <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
 
     </Holdable>
-    <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="285,32" spread="8" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V" >
-    <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+    <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="285,32" spread="8" unskilledspread="12" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
+      <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -99,16 +99,16 @@
       <Sound file="%ModDir%/weapon/ammo/rpd.ogg" type="OnUse" range="3000" volume="1.5" frequencymultiplier="0.98" />
       <Sound file="%ModDir%/weapon/ammo/rpd.ogg" type="OnUse" range="3000" volume="1.5" frequencymultiplier="1.02" />
       <!-- 枪械过热卡壳 -->
-	    <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true"  />
+      <StatusEffect type="OnUse" target="This" Condition="-1" disableDeltaTime="true" />
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
-	    <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
-      <StatusEffect type="OnBroken" target="This"  disableDeltaTime="true" forceplaysounds="true" >
-         <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+      <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true" >
-         <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true" >
+      <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true">
       </StatusEffect>
       <!-- 枪械过热卡壳 -->
       <StatusEffect type="OnUse" target="This">
@@ -127,11 +127,11 @@
         <Conditional skillrequirement="true" weapons="lt 80" />
         <Affliction identifier="blunttrauma" strength="1" />
       </StatusEffect>
-      <StatusEffect type="OnUse" Condition="-0.5" target="This" disabledeltatime="true" >
-	  <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-0.5" target="This" disabledeltatime="true">
+        <RequiredItems items="chip_unstable_gunpowder" type="Contained" />
       </StatusEffect>
-	  <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true" >
-	  <RequiredItems items="chip_oc_gun" type="Contained" />
+      <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
+        <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_rpd_mag_sun" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
@@ -159,14 +159,14 @@
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-19,15" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true">
+          </StatusEffect>
         </Containable>
 
       </SubContainer>

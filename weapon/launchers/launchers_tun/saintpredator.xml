@@ -78,29 +78,29 @@
         <!-- 打开盖子，左手准备打开 -->
         <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="-340,-20" holdangle="-95" delay="1" setvalue="true" />
         <!--打开盖子，左手打开 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,-5" handle2="-320,0" holdangle="-95" delay="2" setvalue="true" >
-               <LuaHook name="SaintOpenLidSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,-5" handle2="-320,0" holdangle="-95" delay="2" setvalue="true">
+          <LuaHook name="SaintOpenLidSprite" />
         </StatusEffect>
         <!--打开盖子，左手准备拿弹药 -->
         <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,0" handle2="200,-30" holdangle="-95" delay="3" setvalue="true" />
         <!--打开盖子，左手第一步放弹药 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="30,0" handle2="-340,-40" holdangle="-95" delay="4" setvalue="true" >
-               <LuaHook name="SaintReloadSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="30,0" handle2="-340,-40" holdangle="-95" delay="4" setvalue="true">
+          <LuaHook name="SaintReloadSprite" />
         </StatusEffect>
         <!--打开盖子，左手第二步放弹药 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,0" handle2="-320,20" holdangle="-95" delay="5" setvalue="true" >
-               <LuaHook name="SaintOpenLidSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,0" handle2="-320,20" holdangle="-95" delay="5" setvalue="true">
+          <LuaHook name="SaintOpenLidSprite" />
         </StatusEffect>
         <!--关闭盖子 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="-340,-20" holdangle="-95" delay="5.5" setvalue="true" >
-               <LuaHook name="SaintOriginSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="80,40" aimpos="20,6" handle1="-30,25" handle2="-340,-20" holdangle="-95" delay="5.5" setvalue="true">
+          <LuaHook name="SaintOriginSprite" />
         </StatusEffect>
 
 
         <!-- 回归常态  -->
         <StatusEffect type="OnInserted" target="This" holdpos="20,6" aimpos="20,6" handle1="40,-40" handle2="200,-30" holdangle="-30" delay="6.5" setvalue="true" />
-        <StatusEffect type="OnInserted" target="This" condition="100"  setValue="true" disabledeltatime="true" delay="6.5" stackable="false" >
-               <LuaHook name="SaintOriginSprite" />
+        <StatusEffect type="OnInserted" target="This" condition="100" setValue="true" disabledeltatime="true" delay="6.5" stackable="false">
+          <LuaHook name="SaintOriginSprite" />
         </StatusEffect>
         <StatusEffect type="OnInserted" target="This" condition="0" setValue="true" disabledeltatime="true" delay="0.01"/>
         <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.5">

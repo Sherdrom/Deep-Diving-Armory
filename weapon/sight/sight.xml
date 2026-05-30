@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-    <Item name="" identifier="holographic_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="holographic_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -15,7 +15,7 @@
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
@@ -25,14 +25,14 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="holographic_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="holographic_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-<Item name="" identifier="2x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom2x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
-<Price baseprice="700" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+
+  <Item name="" identifier="2x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom2x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+    <Price baseprice="700" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -45,8 +45,8 @@
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
-	  <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="208,76,81,52" />
@@ -55,19 +55,19 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="2x_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="2x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
-  
+
   <Item name="" identifier="2.5x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom2_5x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
-  <Price baseprice="900" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="900" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -80,8 +80,8 @@
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="glassfibre" />
     </Fabricate>
-	<Deconstruct time="5">
-	  <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,140,113,57" />
@@ -90,19 +90,19 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="2.5x_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="2.5x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
-  
-<Item name="" identifier="3x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom1-6x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
-<Price baseprice="1300" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+
+  <Item name="" identifier="3x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom1-6x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+    <Price baseprice="1300" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -114,10 +114,10 @@
       <RequiredItem identifier="groundglass" amount="3" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="1" />
-	    <RequiredItem identifier="deep_ssd" amount="4" />
+      <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	    <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,202,184,70" />
@@ -125,23 +125,23 @@
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	          <Affliction identifier="3x_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="3x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
-  
-<Item name="" identifier="red_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+
+  <Item name="" identifier="red_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -156,8 +156,8 @@
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
-	<Deconstruct time="5">
-	  <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="101,9,71,55" />
@@ -166,15 +166,15 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="red_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="red_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-<Item name="" identifier="thermalgoggles_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_thermalgoggles_sight" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
-<Price baseprice="1200" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+
+
+  <Item name="" identifier="thermalgoggles_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_thermalgoggles_sight" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
+    <Price baseprice="1200" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -185,26 +185,26 @@
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" />
       <RequiredItem identifier="engineeringplastic" />
-	  <RequiredItem identifier="fulgurium" />
-	  <RequiredItem identifier="deep_ssd" amount="1" />
+      <RequiredItem identifier="fulgurium" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
-	  <Item identifier="fulgurium" />
+      <Item identifier="fulgurium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="182,3,90,67" />
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="182,3,90,67" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-  <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="thermalgoggles_sight" strength="5" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="thermalgoggles_sight" strength="5" />
       </StatusEffect>
     </Holdable>
   </Item>
-  
+
   <Item name="" identifier="thermalgoggles_sight_6x" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom6x,deep_thermalgoggles_sight" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.18" impactsoundtag="impact_metal_light">
-  <Price baseprice="1500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="1500" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -215,36 +215,36 @@
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="2" />
-	  <RequiredItem identifier="fulgurium" amount="3" />
-	  <RequiredItem identifier="deep_ssd" amount="4" />
+      <RequiredItem identifier="fulgurium" amount="3" />
+      <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
+    <Deconstruct time="5">
       <Item identifier="fpgacircuit" />
-	  <Item identifier="fulgurium" />
+      <Item identifier="fulgurium" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="284,276,226,59" />
     <Sprite texture="%ModDir%/weapon/sight/sight.png" sourcerect="284,276,226,59" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-	<StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and" >
-    <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="thermalgoggles_sight_6x" strength="5" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="thermalgoggles_sight_6x" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
 
-<Item name="" identifier="8x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom8x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.28" impactsoundtag="impact_metal_light">
-<Price baseprice="2000" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Item name="" identifier="8x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom8x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.28" impactsoundtag="impact_metal_light">
+    <Price baseprice="2000" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -256,10 +256,10 @@
       <RequiredItem identifier="groundglass" amount="4" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
       <RequiredItem identifier="engineeringplastic" amount="2" />
-	    <RequiredItem identifier="deep_ssd" amount="4" />
+      <RequiredItem identifier="deep_ssd" amount="4" />
     </Fabricate>
-	  <Deconstruct time="5">
-	    <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="18,284,233,48" />
@@ -268,24 +268,24 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	        <Affliction identifier="8x_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="8x_sight" strength="5" />
       </StatusEffect>
       <!-- 中距离作战合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_6x_8x_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
-  
+
   <Item name="" identifier="1_3x_sight" subcategory="accessory" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,zoom1-3x" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" scale="0.16" impactsoundtag="impact_metal_light">
-  <Price baseprice="1200" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="1200" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -297,10 +297,10 @@
       <RequiredItem identifier="groundglass" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
       <RequiredItem identifier="glassfibre" amount="1" />
-	    <RequiredItem identifier="deep_ssd" amount="1" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
     </Fabricate>
-	<Deconstruct time="5">
-	  <Item identifier="fpgacircuit"/>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit"/>
       <Item identifier="plastic" />
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/weapon/sight/sight.png" sourcerect="289,3,153,65" />
@@ -309,15 +309,15 @@
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- Remove the item when fully used -->
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-      <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-	  <Affliction identifier="1_3x_sight" strength="5" />
+        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
+        <Affliction identifier="1_3x_sight" strength="5" />
       </StatusEffect>
       <!-- 抵近射击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sight_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  </Items>
+
+</Items>

@@ -16,7 +16,7 @@
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_tun/sniper_tun.png" sourcerect="737,30,544,122" depth="0.55" origin="0.5,0.5" />
     <Body width="300" height="70" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="50,-10" aimpos="65,0" handle1="-75,-12" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-    <StatusEffect type="OnActive" target="This" Scale="0.25" setvalue="true"></StatusEffect>
+      <StatusEffect type="OnActive" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -49,34 +49,34 @@
       </StatusEffect>-->
 
       <!-- 使用光源组件作为自变量-->
-    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
-    </LightComponent>
-<!-- 右键瞄准时，设置电压为1.0-->
-    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
-    </StatusEffect>
-<!-- 电压大于0.9时，开启热成像-->
-    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
-    <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
-    </StatusEffect>
-<!-- 松开右键，电压小于0.8时，关闭热成像-->
-    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-    <Conditional Voltage="lte 0.8" />
-    </StatusEffect>
+      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">
+      </LightComponent>
+      <!-- 右键瞄准时，设置电压为1.0-->
+      <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false">
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+      </StatusEffect>
+      <!-- 电压大于0.9时，开启热成像-->
+      <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false">
+        <Conditional Voltage="gte 0.9" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+      </StatusEffect>
+      <!-- 松开右键，电压小于0.8时，关闭热成像-->
+      <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false">
+        <Conditional EntityType="eq character" TargetContainer="True" />
+        <Conditional Voltage="lte 0.8" />
+      </StatusEffect>
 
-    <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
 
       <StatValue stattype="MovementSpeed" value="-0.1" />
     </Holdable>
-    <SwitchableRangedWeapon reload="0.6" weapondamagemodifier="1" holdtrigger="true" barrelpos="272,34" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.6" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
-    <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+    <SwitchableRangedWeapon reload="0.6" weapondamagemodifier="1" holdtrigger="true" barrelpos="272,34" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.6" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
+      <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
@@ -187,14 +187,14 @@
         </Containable>
         <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-15,18" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true"></StatusEffect>
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
-        </StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true">
+          </StatusEffect>
           <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true"></StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-15,18" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-15,18" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
+          </StatusEffect>
         </Containable>
 
       </SubContainer>

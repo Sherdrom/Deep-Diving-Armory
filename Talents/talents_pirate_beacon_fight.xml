@@ -1,133 +1,133 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-  <Talents>
+<Talents>
   <!-- 短兵相接 -->
   <Talent identifier="deep_talent_pirate_beacon_fight_soldier">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_talent_pirate_beacon_fight_soldier">
     </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-	    <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.32"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.32"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="5"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="0.1">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.8"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.8"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
-  
+
   <Talent identifier="deep_elite_talent_pirate_heavy_beacon_fight">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_elite_talent_pirate_heavy_beacon_fight">
     </Description>
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="0.1">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装防御者 -->
-	<AbilityGroupInterval interval="0.1" >
+    <!-- 重装防御者 -->
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="-3"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.5"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 多人游戏血量动态调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 多人游戏血量动态调整 -->
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="6"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="6"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
-  
+
   <Talent identifier="deep_elite_talent_pirate_leader_normal_beacon_fight">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_elite_talent_pirate_leader_normal_beacon_fight">
     </Description>
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="3"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.15"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.15"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="0.1">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 首领 -->
-	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
+    <!-- 首领 -->
+    <AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
           <StatusEffects>
@@ -138,50 +138,50 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 多人游戏血量动态调整 -->
-    <AbilityGroupInterval interval="0.1" >
+    <!-- 多人游戏血量动态调整 -->
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
       </Abilities>
     </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="6"/>
+        <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="6"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>

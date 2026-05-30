@@ -1,187 +1,187 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="6b47_test_18" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet,deep_cloth_invisible,deep_variable_sprite" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325" hideinmenus="true" >
-    <Sprite texture="%ModDir%/jobgear/helmet/6B47.png" sourcerect="9,9,98,93" depth="0.55" origin="0.5,0.5" /> 
-    <Body radius="30" density="10" />
-    <Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
-	<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
-	  <StatusEffect type="OnWearing" interval="3" target="Character" setvalue="true" >
-	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	  </StatusEffect>
-	  <damagemodifier afflictionidentifiers="gunshotwound,deep_headshot_deadly" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="LimbArmor" deflectprojectiles="true" />
-      <damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
-      <damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
-	  <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.55" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="9,9,98,93"  origin="0.55,0.62" > 
-	  <LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" >
-	  </LightComponent>
-	  </sprite> 
+	<Item name="" identifier="6b47_test_18" InvulnerabletoDamage="true" subcategory="deep_helmet" category="Equipment" tags="smallitem,deep_helmet,deep_cloth_invisible,deep_variable_sprite" cargocontaineridentifier="metalcrate" description="" impactsoundtag="impact_metal_heavy" scale="0.325" hideinmenus="true">
+		<Sprite texture="%ModDir%/jobgear/helmet/6B47.png" sourcerect="9,9,98,93" depth="0.55" origin="0.5,0.5" />
+		<Body radius="30" density="10" />
+		<Wearable slots="Any,Head" armorvalue="20.0" msg="ItemMsgPickUpSelect">
+			<StatusHUD drawhudwhenequipped="true" overlaycolor="176,0,0,120" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+			<StatusEffect type="OnWearing" interval="3" target="Character" setvalue="true">
+				<GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
+			</StatusEffect>
+			<damagemodifier afflictionidentifiers="gunshotwound,deep_headshot_deadly" armorsector="0.0,360.0" probabilitymultiplier="0.8" damagesound="LimbArmor" deflectprojectiles="true" />
+			<damagemodifier afflictiontypes="burn" armorsector="0.0,360.0" damagemultiplier="0.5" />
+			<damagemodifier afflictionidentifiers="blunttrauma,lacerations,gunshotwound" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
+			<damagemodifier afflictionidentifiers="bitewounds,explosiondamage" armorsector="0.0,360.0" damagemultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
+			<damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
+			<damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
+			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.55" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="9,9,98,93" origin="0.55,0.62">
+				<LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0">
+				</LightComponent>
+			</sprite>
 
-	  <StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-        <Affliction identifier="deep_gpnvg18" amount="1" />
-        <Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
-      </StatusEffect>
+			<StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_gpnvg18" amount="1" />
+				<Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
+			</StatusEffect>
 
-      <StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" disabledeltatime="true" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
+			<StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" disabledeltatime="true" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+				<Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
+				<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
+			</StatusEffect>
 
-	  <StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="chip_cqb_1" strength="100" />
-		<RequiredItems items="chip_cqb" type="Contained"  targetslot="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_chip_marksman_1" strength="100" />
-		<RequiredItems items="chip_marksman" type="Contained" targetslot="1" />
-      </StatusEffect>	 
-      <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_commando_1" strength="100" />
-		<RequiredItems items="chip_commando" type="Contained" targetslot="1" />
-      </StatusEffect>	
-      <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="chip_doc_1" strength="100" />
-		<RequiredItems items="chip_doc" type="Contained" targetslot="1" />
-      </StatusEffect>
-	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="chip_frogman_1" strength="100" />
-		<RequiredItems items="chip_frogman" type="Contained" targetslot="1" />
-      </StatusEffect>
-	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_chip_heavy_defender" strength="100" />
-		<RequiredItems items="chip_heavy_defender" type="Contained" targetslot="1" />
-      </StatusEffect>
-	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_chip_blaster" strength="100" />
-		<RequiredItems items="chip_blaster" type="Contained" targetslot="1" />
-      </StatusEffect>
-	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_machinegunner_detect" strength="100" />
-		<RequiredItems items="chip_machinegunner" type="Contained" targetslot="1" />
-      </StatusEffect>
-	  <StatusEffect type="OnWearing"  interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_chip_striker" strength="100" />
-		<RequiredItems items="chip_striker" type="Contained" targetslot="1" />
-      </StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" OnlyInside="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="chip_cqb_1" strength="100" />
+				<RequiredItems items="chip_cqb" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_chip_marksman_1" strength="100" />
+				<RequiredItems items="chip_marksman" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_commando_1" strength="100" />
+				<RequiredItems items="chip_commando" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="chip_doc_1" strength="100" />
+				<RequiredItems items="chip_doc" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="chip_frogman_1" strength="100" />
+				<RequiredItems items="chip_frogman" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_chip_heavy_defender" strength="100" />
+				<RequiredItems items="chip_heavy_defender" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_chip_blaster" strength="100" />
+				<RequiredItems items="chip_blaster" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_machinegunner_detect" strength="100" />
+				<RequiredItems items="chip_machinegunner" type="Contained" targetslot="1" />
+			</StatusEffect>
+			<StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_chip_striker" strength="100" />
+				<RequiredItems items="chip_striker" type="Contained" targetslot="1" />
+			</StatusEffect>
 
-      <!-- 戴上战术设备时，启动面板-->
-	  <StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.25" multiplyafflictionsbymaxvitality="true">
-		<Affliction identifier="deep_helmet_tac_detect" strength="4" />
-		<RequiredItems tags="deep_helmet_tac" type="Contained" targetslot="0" />
-      </StatusEffect>
+			<!-- 戴上战术设备时，启动面板-->
+			<StatusEffect type="OnWearing" target="Character" setvalue="true" interval="0.25" multiplyafflictionsbymaxvitality="true">
+				<Affliction identifier="deep_helmet_tac_detect" strength="4" />
+				<RequiredItems tags="deep_helmet_tac" type="Contained" targetslot="0" />
+			</StatusEffect>
 
-	  <!-- 因甲鱼的大手，不得不走aff -->
-      <StatusEffect type="OnWearing" targettype="This,Character" interval="0.25" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
-        <Conditional deep_helmet_tac_detect="gte 1.0" />
-      </StatusEffect>
+			<!-- 因甲鱼的大手，不得不走aff -->
+			<StatusEffect type="OnWearing" targettype="This,Character" interval="0.25" targetitemcomponent="CustomInterface" drawhudwhenequipped="true" comparison="and" setvalue="true">
+				<Conditional deep_helmet_tac_detect="gte 1.0" />
+			</StatusEffect>
 
-	  <StatusEffect type="OnWearing" targettype="This,Character" interval="0.25" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
-        <Conditional deep_helmet_tac_detect="lt 1.0" />
-      </StatusEffect>
+			<StatusEffect type="OnWearing" targettype="This,Character" interval="0.25" targetitemcomponent="CustomInterface" drawhudwhenequipped="false" comparison="and" setvalue="true">
+				<Conditional deep_helmet_tac_detect="lt 1.0" />
+			</StatusEffect>
 
-      <StatusEffect type="OnWearing" target="This" setvalue="true" interval="60" >
-	  <LuaHook name="NightVision_Off" />
-	  <RequiredItems items="114" matchonempty="true" type="Contained" targetslot="0" />
-	  </StatusEffect>
+			<StatusEffect type="OnWearing" target="This" setvalue="true" interval="60">
+				<LuaHook name="NightVision_Off" />
+				<RequiredItems items="114" matchonempty="true" type="Contained" targetslot="0" />
+			</StatusEffect>
 
-    </Wearable>
-	<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="战术设备开关" >
-	    <!-- 开启热成像 -->
-        <StatusEffect type="OnUse" target="This" interval="60" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
-		</StatusEffect>
-        <!-- 战术装备开启时，锁定，以免出现bug -->
-		<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true" >
-		</StatusEffect>
-		<!-- 关闭热成像 -->
-        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
-		</StatusEffect>
-		<!-- 确保热成像默认关闭 -->
-		<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		</StatusEffect>
-		<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
-		<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
-		</StatusEffect>
-		<!-- 检测到热成像关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
-      </StatusEffect>
-	    <!-- 检测到热成像开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" target="This" interval="60" disabledeltatime="true" setValue="true" >
-		<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
-      </StatusEffect>
-	  <!-- 夜视仪开关 -->
-	  <StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60" >
-		  </StatusEffect>
-          <StatusEffect type="OnSecondaryUse"  target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
-		  <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
-		<LuaHook name="NightVision_Off" />
-		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
-	  <!-- 检测到夜视仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
-		<LuaHook name="NightVision_On"/>
-		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
+		</Wearable>
+		<CustomInterface canbeselected="false" drawhudwhenequipped="false" allowuioverlap="true">
+			<GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
+			<TickBox text="战术设备开关">
+				<!-- 开启热成像 -->
+				<StatusEffect type="OnUse" target="This" interval="60" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="176,0,0,120" thermalgoggles="true" drawhudwhenequipped="true" setvalue="true">
+					<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 战术装备开启时，锁定，以免出现bug -->
+				<StatusEffect type="OnUse" interval="60" target="Contained" targetslot="0" NonInteractable="true" setvalue="true">
+				</StatusEffect>
+				<!-- 关闭热成像 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" thermalgoggles="false" drawhudwhenequipped="false" setvalue="true" currentmode="Passive">
+					<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 确保热成像默认关闭 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" setvalue="true" currentmode="Passive">
+				</StatusEffect>
+				<!-- 战术装备关闭时，解除锁定，可以更换设备 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true">
+				</StatusEffect>
+				<!-- 检测到热成像关闭时，更换关闭的贴图 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true">
+					<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 检测到热成像开启时，更换开启的贴图 -->
+				<StatusEffect type="OnUse" target="This" interval="60" disabledeltatime="true" setValue="true">
+					<RequiredItems items="thermalgoggles_t7" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 夜视仪开关 -->
+				<StatusEffect type="OnUse" target="This" IsOn="true" HudTint="0,255,0,200" setvalue="true" Interval="60">
+				</StatusEffect>
+				<StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" Interval="60" />
+				<!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true">
+					<LuaHook name="NightVision_Off" />
+					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 检测到夜视仪开启时，更换开启的贴图 -->
+				<StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true">
+					<LuaHook name="NightVision_On"/>
+					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
+				</StatusEffect>
 
-       <!-- 新版  检测到夜视仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="0.5" target="Contained" Condition="99" disabledeltatime="true" setValue="true" targetslot="0" >
-		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
-       <!-- 新版  检测到夜视仪关闭时，更换关闭的贴图 -->
-	  <StatusEffect type="OnSecondaryUse" interval="0.5" target="Contained" Condition="100" disabledeltatime="true" setValue="true" targetslot="0" >
-		<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
-      </StatusEffect>
+				<!-- 新版  检测到夜视仪开启时，更换开启的贴图 -->
+				<StatusEffect type="OnUse" interval="0.5" target="Contained" Condition="99" disabledeltatime="true" setValue="true" targetslot="0">
+					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 新版  检测到夜视仪关闭时，更换关闭的贴图 -->
+				<StatusEffect type="OnSecondaryUse" interval="0.5" target="Contained" Condition="100" disabledeltatime="true" setValue="true" targetslot="0">
+					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
+				</StatusEffect>
 
-	  <!-- 开启健康扫描仪 -->
-        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
-		</StatusEffect>
-		<!-- 关闭健康扫描仪 -->
-        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
-		</StatusEffect>
+				<!-- 开启健康扫描仪 -->
+				<StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="StatusHUD" overlaycolor="0,255,0,120" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="true" setvalue="true">
+					<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 关闭健康扫描仪 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="StatusHUD" showdeadcharacters="true" showtexts="true" drawhudwhenequipped="false" setvalue="true" currentmode="Passive">
+					<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
+				</StatusEffect>
 
-		<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
-		<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
-      </StatusEffect>
-	  <!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
-	  <StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true" >
-		<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0"  />
-      </StatusEffect>
+				<!-- 检测到健康扫描仪关闭时，更换关闭的贴图 -->
+				<StatusEffect type="OnSecondaryUse" interval="60" target="This" disabledeltatime="true" setValue="true">
+					<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
+				</StatusEffect>
+				<!-- 检测到健康扫描仪开启时，更换开启的贴图 -->
+				<StatusEffect type="OnUse" interval="60" target="This" disabledeltatime="true" setValue="true">
+					<RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
+				</StatusEffect>
 
-      </TickBox>
-    </CustomInterface>
-	<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" >
-      <Containable tags="deep_helmet_tac" hide="false" itempos="20,12" setactive="true" >
-	  <!-- 插入战术设备时，启动面板 -->
-	  <StatusEffect type="OnInserted" interval="0.9" target="This"  disabledeltatime="true" setValue="true" >
-	  <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-      </StatusEffect>
-	  <!-- 拔出战术设备时，还原贴图，关闭面板 -->
-	  <StatusEffect type="OnRemoved" interval="0.9" target="This" disabledeltatime="true" setValue="true" >
-		<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-      </StatusEffect>
-	  <!-- 拔出战术设备时，确保所有显示关闭 -->
-	  <StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true" >
-      </StatusEffect>
-	  <!-- 拆解设备开启的头盔时，确保设备不锁定 -->
-	  <StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true" >
-		</StatusEffect>
-	  </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
-	  <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
-	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_head_chip" hide="true"  itempos="0,0" setactive="true" />
-      </SubContainer>
-    </ItemContainer>
-  </Item>
+			</TickBox>
+		</CustomInterface>
+		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<Containable tags="deep_helmet_tac" hide="false" itempos="20,12" setactive="true">
+				<!-- 插入战术设备时，启动面板 -->
+				<StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
+					<sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+				</StatusEffect>
+				<!-- 拔出战术设备时，还原贴图，关闭面板 -->
+				<StatusEffect type="OnRemoved" interval="0.9" target="This" disabledeltatime="true" setValue="true">
+					<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+				</StatusEffect>
+				<!-- 拔出战术设备时，确保所有显示关闭 -->
+				<StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true">
+				</StatusEffect>
+				<!-- 拆解设备开启的头盔时，确保设备不锁定 -->
+				<StatusEffect type="OnRemoved" interval="60" target="Contained" targetslot="0" NonInteractable="false" setvalue="true">
+				</StatusEffect>
+			</Containable>
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="13,346,120,68" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<Containable tags="deep_head_chip" hide="true" itempos="0,0" setactive="true" />
+			</SubContainer>
+		</ItemContainer>
+	</Item>
 
 </Items>

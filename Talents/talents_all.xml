@@ -85,7 +85,7 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>-->
-    
+
     <!-- 卧倒（获得90%破片残留抗性） -->
     <AbilityGroupInterval interval="0.25">
       <Conditions>
@@ -926,7 +926,7 @@
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies allowself="true" requiresalive="false">
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" >
+            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
               <removecharacter />
               <dropitem />
             </StatusEffect>
@@ -993,11 +993,11 @@
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" comparison="and" stackable="false" >
-            <Conditional deep_enemy_affliction_resistance="lt 0.5" />
-            <Conditional HealthPercentage="lte 0" />
-            <SpawnItem identifiers="deep_surrender_without_fight_handcuffs" spawnposition="SameInventory" Count="1" />
-            <Affliction identifier="deep_contract_surrender_without_fight_no_bleeding_effect" strength="5" />
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" comparison="and" stackable="false">
+              <Conditional deep_enemy_affliction_resistance="lt 0.5" />
+              <Conditional HealthPercentage="lte 0" />
+              <SpawnItem identifiers="deep_surrender_without_fight_handcuffs" spawnposition="SameInventory" Count="1" />
+              <Affliction identifier="deep_contract_surrender_without_fight_no_bleeding_effect" strength="5" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
@@ -1006,7 +1006,7 @@
 
     <!-- LUA 缺失 -->
 
-    <!--<AbilityGroupInterval maxtriggercount="1" >
+    <!--<AbilityGroupInterval maxtriggercount="1">
       <Conditions>
         <AbilityConditionAboveVitality vitalitypercentage="0"/>
       </Conditions>

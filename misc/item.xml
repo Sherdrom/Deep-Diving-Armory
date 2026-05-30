@@ -111,8 +111,8 @@
       </Button>
     </CustomInterface>
   </Item>
-  
-  <Item name="" identifier="deep_reinforce_transmitter" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_importantitem_del" scale="0.2" impactsoundtag="impact_metal_light" isshootable="true" InvulnerabletoDamage="true" >
+
+  <Item name="" identifier="deep_reinforce_transmitter" subcategory="deep_tac" category="Equipment" maxstacksize="1" Tags="smallitem,deep_importantitem_del" scale="0.2" impactsoundtag="impact_metal_light" isshootable="true" InvulnerabletoDamage="true">
     <InventoryIcon texture="%ModDir%/jobgear/tac/tac.png" sourcerect="10,747,168,166" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/tac/tac.png" depth="0.65" sourcerect="206,758,37,147" origin="0.5,0.5" />
     <Body width="110" height="160" density="20" />
@@ -126,13 +126,13 @@
     </Holdable>
   </Item>
 
-   <!--<Item name="" identifier="deep_meet_on_the_battleground_clear" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="deep_clear_item" scale="0.5" impactsoundtag="impact_metal_light">
+  <!--<Item name="" identifier="deep_meet_on_the_battleground_clear" subcategory="deep_machine" category="Machine" maxstacksize="1" Tags="deep_clear_item" scale="0.5" impactsoundtag="impact_metal_light">
     <Sprite texture="Content/Map/Outposts/Art/FactionItems.png" depth="0.55" sourcerect="448,198,38,76" origin="0.5,0.5" />
     <Body width="40" height="80" density="10" />
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand+LeftHand" msg="ItemMsgPickUpSelect" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
     <StatusEffect type="OnNotContained" target="This" Condition="-30" stackable="false" />
 
-    <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+    <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
     <TriggerEvent identifier="deep_meet_on_the_battleground_clear" />
     <remove />
     </StatusEffect>
@@ -168,21 +168,7 @@
     </Fabricate>
     <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="832,256,64,64" origin="0.5,0.5" />
     <Sprite texture="signalcomp.png" depth="0.8" sourcerect="0,288,48,48" origin="0.5,0.5" />
-    <FactionMotionSensor 
-      rangeX="200" 
-      rangeY="100" 
-      detectoffset="0,0"
-      updateinterval="0.1"
-      minimumvelocity="0"
-      target="Human"
-      factiontarget="Any"
-      friendlyoutput="1"
-      enemyoutput="1"
-      neutraloutput="1"
-      output="1"
-      falseoutput="0"
-      ignoredelay="1"
-    />
+    <FactionMotionSensor rangeX="200" rangeY="100" detectoffset="0,0" updateinterval="0.1" minimumvelocity="0" target="Human" factiontarget="Any" friendlyoutput="1" enemyoutput="1" neutraloutput="1" output="1" falseoutput="0" ignoredelay="1" />
     <Body width="42" height="36" density="15" />
     <Holdable selectkey="Select" pickkey="Use" slots="Any,RightHand,LeftHand" msg="ItemMsgDetachWrench" MsgWhenDropped="ItemMsgPickupSelect" PickingTime="5.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="true">
       <RequiredItem items="wrench,deattachtool" excludeditems="multitool" type="Equipped" />

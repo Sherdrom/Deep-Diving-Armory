@@ -127,55 +127,55 @@
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="8" setvalue="true" />
         <!-- 弹匣隐藏 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="4.6" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="4.6" setvalue="true" disabledeltatime="true" />
         <!-- 放平机枪 -->
-        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" delay="0.01" setvalue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" handle2="-50,20" holdangle="0" delay="0.01" setvalue="true" disabledeltatime="true">
         </StatusEffect>
         <!-- 打开机枪盖子1 -->
-        <StatusEffect type="OnInserted" target="This" handle2="-80,20" delay="1.5" setvalue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" handle2="-80,20" delay="1.5" setvalue="true" disabledeltatime="true">
         </StatusEffect>
         <!-- 打开机枪盖子2 -->
-        <StatusEffect type="OnInserted" target="This" hideitems="true" holdpos="50,-5" handle1="-65,-110" handle2="-80,20" holdangle="10" delay="2.1" setvalue="true" disabledeltatime="true" >
-        <LuaHook name="RM338OpenTheLidSprite" />
+        <StatusEffect type="OnInserted" target="This" hideitems="true" holdpos="50,-5" handle1="-65,-110" handle2="-80,20" holdangle="10" delay="2.1" setvalue="true" disabledeltatime="true">
+          <LuaHook name="RM338OpenTheLidSprite" />
         </StatusEffect>
         <!-- 放入弹匣 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-30,-100" holdangle="10" delay="2.7" setvalue="true" disabledeltatime="true" >
-        <LuaHook name="RM338PutOnMagSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-30,-100" holdangle="10" delay="2.7" setvalue="true" disabledeltatime="true">
+          <LuaHook name="RM338PutOnMagSprite" />
         </StatusEffect>
         <!-- 准备拿弹链 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-60,-100" holdangle="10" delay="3.3" setvalue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-60,-100" holdangle="10" delay="3.3" setvalue="true" disabledeltatime="true">
         </StatusEffect>
         <!-- 放入弹链 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,0" handle2="-60,-80" holdangle="10" delay="3.9" setvalue="true" disabledeltatime="true" >
-        <LuaHook name="RM338PutOnAmmoSprite" />
+        <StatusEffect type="OnInserted" target="This" holdpos="50,0" handle2="-60,-80" holdangle="10" delay="3.9" setvalue="true" disabledeltatime="true">
+          <LuaHook name="RM338PutOnAmmoSprite" />
         </StatusEffect>
         <!-- 准备关闭盖子 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-80,20" holdangle="10" delay="4.5" setvalue="true" disabledeltatime="true" >
+        <StatusEffect type="OnInserted" target="This" holdpos="50,-5" handle1="-65,-110" handle2="-80,20" holdangle="10" delay="4.5" setvalue="true" disabledeltatime="true">
         </StatusEffect>
         <!-- 关闭盖子 -->
-        <StatusEffect type="OnInserted" target="This" hideitems="false" holdpos="45,-15" handle1="-65,-30" handle2="-80,20" holdangle="10" delay="5" setvalue="true" disabledeltatime="true" >
-        <LuaHook name="RM338CloseTheLidSprite" />
+        <StatusEffect type="OnInserted" target="This" hideitems="false" holdpos="45,-15" handle1="-65,-30" handle2="-80,20" holdangle="10" delay="5" setvalue="true" disabledeltatime="true">
+          <LuaHook name="RM338CloseTheLidSprite" />
         </StatusEffect>
         <!-- 准备拉栓-->
         <StatusEffect type="OnInserted" target="This" holdangle="-10" handle1="-50,10" handle2="80,20" delay="6.3" setvalue="true" />
         <!-- 拉栓 -->
         <StatusEffect type="OnInserted" target="This" handle1="-90,10" delay="6.8" forceplaysounds="true" />
         <!-- 复原 -->
-        <StatusEffect type="OnInserted" target="This" holdpos="65,-12" aimpos="100,3" handle1="-160,-35" handle2="60,20" holdangle="-35" aimangle="0" delay="8" setvalue="true" >
+        <StatusEffect type="OnInserted" target="This" holdpos="65,-12" aimpos="100,3" handle1="-160,-35" handle2="60,20" holdangle="-35" aimangle="0" delay="8" setvalue="true">
         </StatusEffect>
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="8" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" />
         <!-- 换弹声音 -->
-        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
-        <sound file="%ModDir%/weapon/ammo/PKPre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
+          <sound file="%ModDir%/weapon/ammo/PKPre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
         <!-- 拔出弹匣时，回归初始贴图 -->
-        <StatusEffect type="OnRemoved" target="This" setvalue="true" disabledeltatime="true" >
-        <LuaHook name="RM338OriginSprite" />
+        <StatusEffect type="OnRemoved" target="This" setvalue="true" disabledeltatime="true">
+          <LuaHook name="RM338OriginSprite" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />

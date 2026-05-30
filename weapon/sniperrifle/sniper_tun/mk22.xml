@@ -41,7 +41,7 @@
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
       <!--6倍镜
-      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
@@ -83,33 +83,33 @@
         <Use />
       </StatusEffect>
       <!--8倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="8x_sight_reduce" strength="3" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 0.5" />
       <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>-->
       <!--6倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight_reduce" strength="3.5" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="6x_sight_reduce" strength="1.8" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 3" />
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
@@ -155,51 +155,51 @@
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-            <Containable items="deep_mk22_mag" hide="false" itempos="-22,-3" setactive="true" rotation="0">
-      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
-      <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-      <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-      <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
-      <!-- ============== 换弹动画开始 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
-      <!-- 先拉栓 -->
-      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="70,10" holdangle="10" aimangle="10" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" range="200" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-190,30" handle2="100,-10" holdpos="70,-10" aimpos="70,10" holdangle="20" aimangle="20" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
+      <Containable items="deep_mk22_mag" hide="false" itempos="-22,-3" setactive="true" rotation="0">
+        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
+        <!-- ============== 换弹动画开始 ================= -->
+        <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
+        <!-- 先拉栓 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="70,10" holdangle="10" aimangle="10" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
+          <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" range="200" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-190,30" handle2="100,-10" holdpos="70,-10" aimpos="70,10" holdangle="20" aimangle="20" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
           <LuaHook name="MK22BoltOutSprite" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-180,-30" />
-      <!-- 左手拿下弹匣 -->
-      <StatusEffect type="OnInserted" target="This" delay="0.8" setValue="true" handle2="40,-80">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipout.ogg" range="200" />
-      </StatusEffect>
-      <!-- 隐藏弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="0.8" setvalue="true" />
-      <!-- 左手放下 -->
-      <StatusEffect type="OnInserted" target="This" delay="0.9" setValue="true" handle2="-350,-100" />
-      <!-- 左手装弹匣 -->
-      <StatusEffect type="OnInserted" target="This" delay="1.6" setValue="true" handle2="40,-80">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipin.ogg" range="200" />
-      </StatusEffect>
-      <!-- 显示弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="1.6" setvalue="true" />
-      <!-- 左手归位 -->
-      <StatusEffect type="OnInserted" target="This" delay="1.9" setValue="true" holdangle="10" aimangle="10" handle2="100,-10" />
-      <!-- 再推栓 -->
-      <StatusEffect type="OnInserted" target="This" delay="2.1" setValue="true" handle1="-190,40">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" range="200" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" handle1="-170,10" holdpos="70,-10" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="2.3" disabledeltatime="true">
-        <LuaHook name="MK22BoltInSprite" />
-      </StatusEffect>
-      <!-- 回归常态 -->
-      <StatusEffect type="OnInserted" target="This" delay="2.4" setvalue="true" holdpos="70,-10" aimpos="80,0" holdangle="-35" aimangle="0" />
-      <StatusEffect type="OnInserted" target="This" delay="2.5" setvalue="true" holdpos="60,-12" aimpos="90,-2" handle1="-170,-20" handle2="80,20" holdangle="-35" />
-      <!-- ============== 换弹动画结束 ================= -->
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-180,-30" />
+        <!-- 左手拿下弹匣 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.8" setValue="true" handle2="40,-80">
+          <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipout.ogg" range="200" />
+        </StatusEffect>
+        <!-- 隐藏弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="0.8" setvalue="true" />
+        <!-- 左手放下 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.9" setValue="true" handle2="-350,-100" />
+        <!-- 左手装弹匣 -->
+        <StatusEffect type="OnInserted" target="This" delay="1.6" setValue="true" handle2="40,-80">
+          <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_clipin.ogg" range="200" />
+        </StatusEffect>
+        <!-- 显示弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="1.6" setvalue="true" />
+        <!-- 左手归位 -->
+        <StatusEffect type="OnInserted" target="This" delay="1.9" setValue="true" holdangle="10" aimangle="10" handle2="100,-10" />
+        <!-- 再推栓 -->
+        <StatusEffect type="OnInserted" target="This" delay="2.1" setValue="true" handle1="-190,40">
+          <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" range="200" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" handle1="-170,10" holdpos="70,-10" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="2.3" disabledeltatime="true">
+          <LuaHook name="MK22BoltInSprite" />
+        </StatusEffect>
+        <!-- 回归常态 -->
+        <StatusEffect type="OnInserted" target="This" delay="2.4" setvalue="true" holdpos="70,-10" aimpos="80,0" holdangle="-35" aimangle="0" />
+        <StatusEffect type="OnInserted" target="This" delay="2.5" setvalue="true" holdpos="60,-12" aimpos="90,-2" handle1="-170,-20" handle2="80,20" holdangle="-35" />
+        <!-- ============== 换弹动画结束 ================= -->
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2.5" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
         </StatusEffect>
@@ -219,32 +219,32 @@
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
-        <Containable items="8x_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="1.2" setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true" >
-        </StatusEffect>
+        <Containable items="8x_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="1.2" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="3x_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true" >
-        </StatusEffect>
+        <Containable items="3x_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-19,17" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
+          </StatusEffect>
         </Containable>
 
       </SubContainer>

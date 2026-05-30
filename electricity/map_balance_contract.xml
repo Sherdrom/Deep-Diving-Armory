@@ -6,7 +6,7 @@
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1">
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -17,12 +17,12 @@
       </StatusEffect>
 
       <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
-      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
-      <TriggerEvent identifier="deep_map_debuff_select_night" />
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true">
+        <TriggerEvent identifier="deep_map_debuff_select_night" />
       </StatusEffect>
 
       <!-- 物品损坏时触给予补给箱 -->
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1" >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1">
       </StatusEffect>
 
     </Holdable>
@@ -34,7 +34,7 @@
     <Sprite texture="contract.png" sourcerect="16,64,104,102" depth="0.8" origin="0.5,0.5" />
     <Body width="36" height="40" density="20" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" aimpos="35,-10" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1" >
+      <StatusEffect type="OnUse" target="this" setValue="true" condition="-1">
       </StatusEffect>
       <StatusEffect type="NotInwater" target="this" condition="-20"></StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" setValue="true ">
@@ -45,12 +45,12 @@
       </StatusEffect>
 
       <!-- 物品损坏时触发事件，损坏可以做到只触发1次事件 -->
-      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true" >
-      <TriggerEvent identifier="deep_map_debuff_select_night_farport" />
+      <StatusEffect type="OnBroken" target="this" disableDeltaTime="true" setValue="true">
+        <TriggerEvent identifier="deep_map_debuff_select_night_farport" />
       </StatusEffect>
 
       <!-- 物品损坏时触给予补给箱 -->
-      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1" >
+      <StatusEffect type="OnBroken" target="NearbyItems" targettags="deep_balance_relaycomponent_map_debuff_night" Range="1500" disableDeltaTime="true" setValue="true" condition="-1">
       </StatusEffect>
 
     </Holdable>

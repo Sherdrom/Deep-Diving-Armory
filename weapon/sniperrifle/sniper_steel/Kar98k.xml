@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_98k" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_sniper_upgrade_tool_steel_tit" Scale="0.25" impactsoundtag="impact_metal_light" >
-  <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
+  <Item name="" identifier="deep_98k" subcategory="sniper" category="Weapon" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_sniper_upgrade_tool_steel_tit" Scale="0.25" impactsoundtag="impact_metal_light">
+    <PreferredContainer primary="secarmcab" amount="1" spawnprobability="0.02" notcampaign="true" />
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" amount="1" spawnprobability="0.02" />
-  <Price baseprice="300" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="steel_barrel" amount="2" />
-	  <RequiredItem identifier="steel_part" amount="2" />	  
-	  <RequiredItem identifier="carbon" amount="4"/>
+      <RequiredItem identifier="steel_part" amount="2" />
+      <RequiredItem identifier="carbon" amount="4"/>
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" />
@@ -22,75 +22,75 @@
     <InventoryIcon texture="%ModDir%/weapon/sniperrifle/sniper45.png" sourcerect="729,821,215,183" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_steel/sniper_steel.png" sourcerect="636,10,525,84" depth="0.55" origin="0.5,0.5" />
     <Body width="250" height="50" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="60,-20" aimpos="70,0" handle1="-120,-5" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect" >
-	<!-- 禁用狙击合约-->
-      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="60,-20" aimpos="70,0" handle1="-120,-5" handle2="80,-5" holdangle="-35" msg="ItemMsgPickUpSelect">
+      <!-- 禁用狙击合约-->
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_no_sniper_detect="gt 0.0" />
         <dropitem/>
       </StatusEffect>
 
       <!-- 装备升级的钢制，钛制枪械加成 -->
-      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Conditional HasTag="deep_upgrade_tool_steel_tit_confirm" />
         <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_sniper" strength="10" />
       </StatusEffect>
-      
-	<StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
-	<StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true" >
-	  <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-	 </StatusEffect>
-	 <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true" >
-	  <Affliction identifier="deepgun_inwater_detect" strength="100" />
-     </StatusEffect>
-     <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1" >
-    <Conditional chip_bodyshot_detect="gt 10.0" />
+
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
+        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
       </StatusEffect>
-     <!-- 有碎甲芯片时，增加1级穿甲-->
-    <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0" >
-    <Conditional chip_bodyshot_detect="lt 10.0" />
+      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deepgun_inwater_detect" strength="100" />
+      </StatusEffect>
+      <!-- 有碎甲芯片时，增加1级穿甲-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
+        <Conditional chip_bodyshot_detect="gt 10.0" />
+      </StatusEffect>
+      <!-- 有碎甲芯片时，增加1级穿甲-->
+      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
+        <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
 
       <!--6倍镜
-      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
 
       <!-- 使用光源组件作为自变量-->
-    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
-    </LightComponent>
-<!-- 右键瞄准时，设置电压为1.0-->
-    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
-    </StatusEffect>
-<!-- 电压大于0.9时，开启热成像-->
-    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
-    <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
-    </StatusEffect>
-<!-- 松开右键，电压小于0.8时，关闭热成像-->
-    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-    <Conditional Voltage="lte 0.8" />
-    </StatusEffect>
+      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">
+      </LightComponent>
+      <!-- 右键瞄准时，设置电压为1.0-->
+      <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false">
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
+      </StatusEffect>
+      <!-- 电压大于0.9时，开启热成像-->
+      <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false">
+        <Conditional Voltage="gte 0.9" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
+      </StatusEffect>
+      <!-- 松开右键，电压小于0.8时，关闭热成像-->
+      <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false">
+        <Conditional EntityType="eq character" TargetContainer="True" />
+        <Conditional Voltage="lte 0.8" />
+      </StatusEffect>
 
-    <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
 
       <StatValue stattype="MovementSpeed" value="0.1" />
-	</Holdable>
-    <SwitchableRangedWeapon reload="1.5" weapondamagemodifier="1" holdtrigger="true" barrelpos="263,29" spread="2" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" >
-    <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+    </Holdable>
+    <SwitchableRangedWeapon reload="1.5" weapondamagemodifier="1" holdtrigger="true" barrelpos="263,29" spread="2" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
+      <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
-	  <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <ParticleEmitter particle="deep_plasmaspark" particlespersecond="10" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
       <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunFire/kar98k_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.5" />
       <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunFire/kar98k_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.5" />
       <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunFire/kar98k_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.5" />
@@ -103,148 +103,148 @@
       </StatusEffect>
 
       <!--6倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight_reduce" strength="3.5" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="6x_sight_reduce" strength="1.8" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 3" />
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
 
       <!-- ============== 拉栓动画开始 ================= -->
-    <!-- Locks the ammunition, preventing the person from adding more or removing. -->
-    <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-    <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-    <StatusEffect type="OnUse" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1.4" setvalue="true" />
-    <!-- 拉 -->
-    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" forceplaysounds="true" disabledeltatime="true">
-      <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt.ogg" type="OnUse" range="200" volume="0.5" />
-    </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="0.8" setValue="true" handle1="-150,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
+      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+      <StatusEffect type="OnUse" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+      <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+      <StatusEffect type="OnUse" target="Contained" NonInteractable="false" disabledeltatime="true" delay="1.4" setvalue="true" />
+      <!-- 拉 -->
+      <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+      <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" forceplaysounds="true" disabledeltatime="true">
+        <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt.ogg" type="OnUse" range="200" volume="0.5" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" delay="0.8" setValue="true" handle1="-150,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+      <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
         <LuaHook name="KAR98KBoltOutSprite" />
-    </StatusEffect>
-    <!-- ================== 抛壳 ==================== -->
-    <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
-	    <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-    </StatusEffect>
-    <!-- 推 -->
-    <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" forceplaysounds="true" disabledeltatime="true">
-      <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt_forward.ogg" type="OnUse" range="200" volume="0.5" />
-    </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="1.1" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
-    <StatusEffect type="OnUse" target="This" delay="1.1" disabledeltatime="true">
+      </StatusEffect>
+      <!-- ================== 抛壳 ==================== -->
+      <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
+        <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+      </StatusEffect>
+      <!-- 推 -->
+      <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" forceplaysounds="true" disabledeltatime="true">
+        <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt_forward.ogg" type="OnUse" range="200" volume="0.5" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" delay="1.1" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
+      <StatusEffect type="OnUse" target="This" delay="1.1" disabledeltatime="true">
         <LuaHook name="KAR98KBoltInSprite" />
-    </StatusEffect>
-    <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
-    <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="80,-5" handle1="-120,-5" />
-    <!-- ============== 拉栓动画结束 ================= -->
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
+      <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="80,-5" handle1="-120,-5" />
+      <!-- ============== 拉栓动画结束 ================= -->
       <RequiredItems items="792_57_sniper_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
-	  <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
+      <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="792_57_sniper_mag" hide="false" itempos="-15,10" setactive="true" rotation="0" >
-      <!-- Locks the ammunition, preventing the person from adding more or removing. -->
-      <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
-      <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
-      <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
-      <!-- ============== 换弹动画开始 ================= -->
-      <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
-      <!-- 先拉栓 -->
-      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-120,-5" holdpos="60,-10" aimpos="70,10" holdangle="15" aimangle="10" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt.ogg" range="200" volume="0.5" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-150,20" handle2="100,-10" holdpos="60,-10" aimpos="70,10" holdangle="35" aimangle="20" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
+      <Containable items="792_57_sniper_mag" hide="false" itempos="-15,10" setactive="true" rotation="0">
+        <!-- Locks the ammunition, preventing the person from adding more or removing. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
+        <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
+        <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" disabledeltatime="true" delay="2.6" setvalue="true" />
+        <!-- ============== 换弹动画开始 ================= -->
+        <StatusEffect type="OnInserted" target="This" delay="0.01" setValue="true" />
+        <!-- 先拉栓 -->
+        <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" handle1="-120,-5" holdpos="60,-10" aimpos="70,10" holdangle="15" aimangle="10" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="0.1" setValue="true" disabledeltatime="true">
+          <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt.ogg" range="200" volume="0.5" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="0.3" setValue="true" handle1="-150,20" handle2="100,-10" holdpos="60,-10" aimpos="70,10" holdangle="35" aimangle="20" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="0.3" disabledeltatime="true">
           <LuaHook name="KAR98KBoltOutSprite" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-100,-10" />
-      <!-- 左手拿下弹匣 -->
-      <StatusEffect type="OnInserted" target="This" delay="1.2" holdpos="50,-30" setValue="true" handle2="-50,20">
-      </StatusEffect>
-      <!-- 立即隐藏弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" setvalue="true" />
-      <!-- 左手放下 -->
-      <StatusEffect type="OnInserted" target="This" delay="1.3" setValue="true" handle2="-350,-100" />
-      <!-- 左手装弹匣 -->
-      <StatusEffect type="OnInserted" target="This" delay="2" setValue="true" handle2="-50,20">
-      </StatusEffect>
-      <!-- 显示弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="2.1" setvalue="true" />
-      <!-- 隐藏弹匣 -->
-      <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="2.4" setvalue="true" />
-      <!-- 拔出弹匣恢复255 -->
-      <StatusEffect type="OnRemoved" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" setvalue="true" />
-      <!-- 左手归位 -->
-      <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" holdangle="35" aimangle="10" handle2="-50,20" />
-      <!-- 再推栓 -->
-      <StatusEffect type="OnInserted" target="This" delay="2.5" setValue="true" handle1="-100,30">
-        <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt_forward.ogg" range="200" volume="0.5" />
-      </StatusEffect>
-      <StatusEffect type="OnInserted" target="This" delay="2.7" setValue="true" handle1="-100,-5" holdpos="60,-20" disabledeltatime="true" />
-      <StatusEffect type="OnInserted" target="This" delay="2.7" disabledeltatime="true">
-        <LuaHook name="KAR98KBoltInSprite" />
-      </StatusEffect>
-      <!-- 回归常态 -->
-      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
-      <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" handle2="40,-5" handle1="-120,-5" />
-      <!-- ============== 换弹动画结束 ================= -->
-      <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
-      <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
-      <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01" >
-      <sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
-		<ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="0.5" setValue="true" handle1="-100,-10" />
+        <!-- 左手拿下弹匣 -->
+        <StatusEffect type="OnInserted" target="This" delay="1.2" holdpos="50,-30" setValue="true" handle2="-50,20">
+        </StatusEffect>
+        <!-- 立即隐藏弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" setvalue="true" />
+        <!-- 左手放下 -->
+        <StatusEffect type="OnInserted" target="This" delay="1.3" setValue="true" handle2="-350,-100" />
+        <!-- 左手装弹匣 -->
+        <StatusEffect type="OnInserted" target="This" delay="2" setValue="true" handle2="-50,20">
+        </StatusEffect>
+        <!-- 显示弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" delay="2.1" setvalue="true" />
+        <!-- 隐藏弹匣 -->
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="2.4" setvalue="true" />
+        <!-- 拔出弹匣恢复255 -->
+        <StatusEffect type="OnRemoved" target="Contained" spritecolor="255,255,255,255" disabledeltatime="true" setvalue="true" />
+        <!-- 左手归位 -->
+        <StatusEffect type="OnInserted" target="This" delay="2.3" setValue="true" holdangle="35" aimangle="10" handle2="-50,20" />
+        <!-- 再推栓 -->
+        <StatusEffect type="OnInserted" target="This" delay="2.5" setValue="true" handle1="-100,30">
+          <Sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_bolt_forward.ogg" range="200" volume="0.5" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" target="This" delay="2.7" setValue="true" handle1="-100,-5" holdpos="60,-20" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="This" delay="2.7" disabledeltatime="true">
+          <LuaHook name="KAR98KBoltInSprite" />
+        </StatusEffect>
+        <!-- 回归常态 -->
+        <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
+        <StatusEffect type="OnInserted" target="This" delay="3" setvalue="true" handle2="40,-5" handle1="-120,-5" />
+        <!-- ============== 换弹动画结束 ================= -->
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
+        <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
+          <sound file="%ModDir%/Sound/Weapons/KAR98K/gunOther/kar98k_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
+          <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
-	    <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
-	    <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
-	  <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
+      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
+      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
+      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="29,7" setactive="true" />
       </SubContainer>
-	  <SubContainer capacity="1" maxstacksize="1">
+      <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="29,7" setactive="true" />
       </SubContainer>
-	  <SubContainer capacity="1" maxstacksize="1">
+      <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
-        <Containable items="3x_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true" >
-        </StatusEffect>
+        <Containable items="3x_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000"  setValue="true" >
-        </StatusEffect>
-        <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.8" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true">
+          </StatusEffect>
+          <StatusEffect type="OnRemoved" target="This" TargetItemComponent="SwitchableRangedWeapon" crosshairscale="0.5" setValue="true">
+          </StatusEffect>
         </Containable>
 
-        <Containable items="thermalgoggles_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight" hide="false" itempos="-2,14" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
+          </StatusEffect>
         </Containable>
 
       </SubContainer>
-	  <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true"  itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable tags="deep_chip" excludedidentifiers="chip_light_mag" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
       </SubContainer>
     </ItemContainer>
     <Quality>
@@ -253,4 +253,4 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />
   </Item>
-  </Items>
+</Items>

@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-  <Talents>
+<Talents>
   <Talent identifier="deep_elite_talent_pirate_soidier">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_elite_talent_pirate_soidier">
     </Description>
     <!-- 海盗精英士兵天赋 -->
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		    <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		    <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.1"/>
-		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.1"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 突击手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.1"/>
@@ -39,26 +39,26 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_scout">
     </Description>
     <!-- 海盗精英强攻手天赋 -->
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 强攻手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 强攻手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
@@ -71,74 +71,74 @@
     <Description tag="talentdescription.deep_elite_talent_pirate_heavy">
     </Description>
     <!-- 海盗精英重装天赋 -->
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 重装远距离抗伤，30%枪伤与致命爆头抗性 -->
-    <AbilityGroupInterval interval="0.9" >
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true">
               <Affliction identifier="deep_enemy_resistance_heavy_pirate" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 重装近距离薄弱 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 重装近距离薄弱 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.4"/>
-    <CharacterAbilityApplyStatusEffects>
+        <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="-0.4"/>
+        <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disableDeltaTime="true">
               <Affliction identifier="deep_enemy_resistance_heavy_pirate_near" amount="10.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-    </Talent>
+  </Talent>
 
-    <Talent identifier="deep_elite_talent_pirate_leader_normal">
+  <Talent identifier="deep_elite_talent_pirate_leader_normal">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_elite_talent_pirate_leader_normal">
     </Description>
     <!-- 海盗精英首领天赋 -->
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
+    <!-- 多人游戏数值调整 -->
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		    <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
-		    <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 暴力军阀 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+    <!-- 暴力军阀 -->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionAttackData weapontype="handheldranged" />
         <AbilityConditionNearbyCharacterCount distance="1200" targettypes="Enemy" count="1"/>

@@ -7,9 +7,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.3" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.3">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.25" probability="0.2" />
@@ -17,11 +17,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -37,7 +37,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_9mm_round_tit" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
@@ -45,9 +45,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.5" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.5">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.25" probability="0.2" />
@@ -55,11 +55,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -81,11 +81,11 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,233,0,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.5" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.5">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="deep_du_buff" strength="20" />
         <Affliction identifier="bleeding" strength="5" />
@@ -94,7 +94,7 @@
           <Conditional radiationsickness="lt 150" />
           <Affliction identifier="radiationsickness" strength="5" />
         </StatusEffect>
-		    <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
           <Conditional nausea="lt 50" />
           <Affliction identifier="nausea" strength="10" />
         </StatusEffect>
@@ -102,11 +102,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -122,7 +122,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_9mm_round_phy" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
@@ -130,9 +130,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.6" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.6">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.25" probability="0.2" />
@@ -140,11 +140,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -168,9 +168,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.7" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.7">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.25" probability="0.2" />
@@ -178,11 +178,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -204,11 +204,11 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,10,17,7" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.8" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="7" severlimbsprobability="0.3" penetration="0.8">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="25" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.25" probability="0.2" />
@@ -216,11 +216,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -236,8 +236,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
+
+
   <Item name="" identifier="smg_1143_round" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -245,10 +245,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -256,11 +256,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -276,7 +276,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_1143_round_tit" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -284,10 +284,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -295,11 +295,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -315,7 +315,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_1143_round_phy" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -323,10 +323,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.5" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.5">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -334,11 +334,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -354,7 +354,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_mac_round" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -362,10 +362,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3" >
-		<Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3">
+        <Affliction identifier="deep_headshot_deadly" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="5" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -373,11 +373,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -399,13 +399,13 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,233,0,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
-    <Affliction identifier="deep_du_buff" strength="20" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
+        <Affliction identifier="deep_du_buff" strength="20" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -413,7 +413,7 @@
           <Conditional radiationsickness="lt 150" />
           <Affliction identifier="radiationsickness" strength="5" />
         </StatusEffect>
-		<StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
           <Conditional nausea="lt 50" />
           <Affliction identifier="nausea" strength="10" />
         </StatusEffect>
@@ -421,11 +421,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -441,8 +441,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
+
+
   <Item name="" identifier="smg_vector_round_tit" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -450,10 +450,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -461,11 +461,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -487,12 +487,12 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="185,92,67,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.1" >
-		<Affliction identifier="deep_headshot_deadly" strength="6" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="1" MultiplyByMaxVitality="true" />
-    <Affliction identifier="deep_legshot_120_smg" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.1">
+        <Affliction identifier="deep_headshot_deadly" strength="6" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_legshot_120_smg" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -500,11 +500,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -520,8 +520,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
+
+
   <Item name="" identifier="smg_ump45_round" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -529,10 +529,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.3">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -540,11 +540,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -560,7 +560,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_ump45_round_tit" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -568,10 +568,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.4">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -579,11 +579,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -599,7 +599,7 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="smg_ump45_round_phy" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="68,29,15,8" depth="0.55" origin="0.5,0.5" />
@@ -607,10 +607,10 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.5" >
-		<Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2" strength="100" />
-    <Affliction identifier="deep_legshot_2_smg" strength="100" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="8" severlimbsprobability="0.3" penetration="0.5">
+        <Affliction identifier="deep_headshot_deadly" strength="3" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2" strength="100" />
+        <Affliction identifier="deep_legshot_2_smg" strength="100" />
         <Affliction identifier="gunshotwound" strength="30" />
         <Affliction identifier="bleeding" strength="6" />
         <Affliction identifier="stun" strength="0.3" probability="0.2" />
@@ -618,11 +618,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -638,8 +638,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  
+
+
   <Item name="" identifier="smg_57mm_round_tit" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
@@ -647,9 +647,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -657,11 +657,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -683,12 +683,12 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,233,0,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
-    <Affliction identifier="deep_du_buff" strength="20" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_du_buff" strength="20" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -696,7 +696,7 @@
           <Conditional radiationsickness="lt 150" />
           <Affliction identifier="radiationsickness" strength="5" />
         </StatusEffect>
-		<StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
           <Conditional nausea="lt 50" />
           <Affliction identifier="nausea" strength="10" />
         </StatusEffect>
@@ -704,11 +704,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -732,9 +732,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.7" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.7">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -742,11 +742,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -770,9 +770,9 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.8" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.8">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -780,11 +780,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -806,11 +806,11 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.9" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.9">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -818,11 +818,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -838,18 +838,18 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  <Item name="" identifier="smg_46mm_round_du" category="Weapon"  maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+
+  <Item name="" identifier="smg_46mm_round_du" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true" friendlyfire="false">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,233,0,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
-    <Affliction identifier="deep_du_buff" strength="20" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.6">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_du_buff" strength="20" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -857,7 +857,7 @@
           <Conditional radiationsickness="lt 150" />
           <Affliction identifier="radiationsickness" strength="5" />
         </StatusEffect>
-		<StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
           <Conditional nausea="lt 50" />
           <Affliction identifier="nausea" strength="10" />
         </StatusEffect>
@@ -865,11 +865,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -886,16 +886,16 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="smg_46mm_round_phy" category="Weapon"  maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+  <Item name="" identifier="smg_46mm_round_phy" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.7" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.7">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -903,11 +903,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -924,16 +924,16 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-<Item name="" identifier="smg_46mm_round_fu" category="Weapon"  maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+  <Item name="" identifier="smg_46mm_round_fu" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.8" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.8">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -941,11 +941,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -962,16 +962,16 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="smg_46mm_round_ap" category="Weapon"  maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+  <Item name="" identifier="smg_46mm_round_ap" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="67,19,19,6" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2" >
+    <Projectile characterusable="false" hitscan="true" removeonhit="true" maxtargetstohit="2">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.9" >
-		<Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
-		<Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.5" targetforce="0.6" itemdamage="3" severlimbsprobability="0.3" penetration="0.9">
+        <Affliction identifier="deep_headshot_deadly" strength="0.8" MultiplyByMaxVitality="true" />
+        <Affliction identifier="deep_headshot_2_5" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" />
         <Affliction identifier="bleeding" strength="4" />
         <Affliction identifier="stun" strength="0.2" probability="0.2" />
@@ -979,11 +979,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -1000,4 +1000,4 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  </Items>
+</Items>
