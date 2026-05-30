@@ -8,7 +8,12 @@ Deep_Lua.Gunsmith.Config = {
     weapons = {},
 
     -- 配件定义：所有可安装部件。part id 必须在整个 GunSmith 配置中唯一。
-    parts = {}
+    parts = {},
+
+    -- NPC preset definitions selected by item XML gunsmithpreset attributes.
+    npcPresets = {
+        profiles = {}
+    }
 }
 
 local configPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config"
@@ -18,3 +23,4 @@ dofile(configPath .. "/Platforms/AR.lua")
 dofile(configPath .. "/Platforms/AK.lua")
 dofile(configPath .. "/Weapons/Weapons.lua")
 dofile(configPath .. "/Parts/Parts.lua")
+dofile(configPath .. "/NPC/NpcPresets.lua")

@@ -5,6 +5,7 @@ local Core = Gunsmith.Core
 local Persistence = Gunsmith.Persistence
 local Runtime = Gunsmith.Runtime
 local QuickMod = Gunsmith.QuickMod
+local NpcPresets = Gunsmith.NpcPresets
 local Hooks = {}
 
 Gunsmith.Hooks = Hooks
@@ -39,7 +40,10 @@ local function readItemsAndStrings(args)
     return items, strings
 end
 
-local function applyGunsmithItem(item)
+local function applyGunsmithItem(item, diagnoseNpcPreset, npcPresetName)
+    if NpcPresets and NpcPresets.TryApply and NpcPresets.TryApply(item, diagnoseNpcPreset, npcPresetName) then
+        return
+    end
     Runtime.EnsureApplied(item)
 end
 
@@ -180,6 +184,14 @@ function Hooks.Register()
         local item, strings = readItemAndStrings({ ... })
         if item then
             Persistence.Receive(item, strings[1] or "")
+        end
+    end)
+
+    Hook.Add("DeepGunsmithNpcPresetRegistered", "DeepGunsmithNpcPresetRegistered", function(...)
+        local item, strings = readItemAndStrings({ ... })
+        if item then
+            local profileName = strings[1] or ""
+            applyGunsmithItem(item, true, profileName)
         end
     end)
 

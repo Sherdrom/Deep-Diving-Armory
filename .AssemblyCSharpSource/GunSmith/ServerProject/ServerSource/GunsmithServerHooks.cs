@@ -1,3 +1,4 @@
+using Barotrauma.Items.Components;
 using Microsoft.Xna.Framework;
 using System;
 using static GunSmith.GunsmithHookArgs;
@@ -62,6 +63,45 @@ namespace GunSmith
 
                 GunsmithQuickAttachmentBarrelTransforms.RegisterTransform(item, key, localPosition.X, localPosition.Y, rotation);
                 return null;
+            });
+
+            hook.Add("DeepGunsmithGetSavedState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                GunsmithData? data = item?.GetComponent<GunsmithData>();
+                return data?.SavedState ?? string.Empty;
+            });
+
+            hook.Add("DeepGunsmithGetNpcPreset", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                return GunsmithNpcPresetPatch.GetPreset(item);
+            });
+
+            hook.Add("DeepGunsmithSaveState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? savedState = FindStringArg(args, 0);
+                GunsmithData? data = item?.GetComponent<GunsmithData>();
+                if (data != null && savedState != null)
+                {
+                    data.SavedState = GunsmithData.NormalizeSavedState(savedState);
+                    data.BroadcastState();
+                }
+                return null;
+            });
+
+            hook.Add("DeepGunsmithCanEnsureQuickPartItem", args => true);
+
+            hook.Add("DeepGunsmithEnsureQuickPartItem", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                int slotIndex = FindIntArg(args, 0, defaultValue: -1);
+                string? itemIdentifier = FindStringArg(args, 0);
+                return item != null &&
+                       slotIndex >= 0 &&
+                       !string.IsNullOrWhiteSpace(itemIdentifier) &&
+                       GunsmithQuickPartItemSpawner.Ensure(item, slotIndex, itemIdentifier, createNetworkEvent: true);
             });
         }
 

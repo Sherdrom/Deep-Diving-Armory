@@ -104,6 +104,7 @@ function Persistence.Receive(item, json)
     local key = Core.ItemKey(item)
     if not State or not platform or not key then return end
 
+    local hasSavedState = type(json) == "string" and json ~= ""
     local selection = Core.BuildDefaultSelection(platform, weapon)
     Persistence.ApplySavedParts(selection, platform, weapon, Persistence.Decode(json))
     Core.PruneInvalidSelections(selection, platform, weapon)
@@ -113,7 +114,7 @@ function Persistence.Receive(item, json)
     State.appliedSignatures[item] = nil
 
     if Gunsmith.Runtime then
-        Gunsmith.Runtime.Apply(item)
+        Gunsmith.Runtime.Apply(item, hasSavedState)
     end
 end
 

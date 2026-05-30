@@ -6,6 +6,9 @@ namespace GunSmith
     {
         public static void RegisterLuaHooks(Barotrauma.LuaCs.Compatibility.ILuaCsHook hook)
         {
+            GunsmithQuickPartItemSpawner.BeginQuickSlotMutation = GunsmithHiddenQuickSlotsPatch.BeginQuickSlotMutation;
+            GunsmithQuickPartItemSpawner.EndQuickSlotMutation = GunsmithHiddenQuickSlotsPatch.EndQuickSlotMutation;
+
             hook.Add("DeepGunsmithApply", args =>
             {
                 Item? item = FindArg<Item>(args);
@@ -210,6 +213,19 @@ namespace GunSmith
                 return item != null && GunsmithHiddenQuickSlotsPatch.IsQuickSlotMutation(item);
             });
 
+            hook.Add("DeepGunsmithGetSavedState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                Barotrauma.Items.Components.GunsmithData? data = item?.GetComponent<Barotrauma.Items.Components.GunsmithData>();
+                return data?.SavedState ?? string.Empty;
+            });
+
+            hook.Add("DeepGunsmithGetNpcPreset", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                return GunsmithNpcPresetPatch.GetPreset(item);
+            });
+
             hook.Add("DeepGunsmithRequestState", args =>
             {
                 Item? item = FindArg<Item>(args);
@@ -249,6 +265,20 @@ namespace GunSmith
                     }
                 }
                 return null;
+            });
+
+            hook.Add("DeepGunsmithCanEnsureQuickPartItem", args => GameMain.Client == null);
+
+            hook.Add("DeepGunsmithEnsureQuickPartItem", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                int slotIndex = FindIntArg(args, 0, defaultValue: -1);
+                string? itemIdentifier = FindStringArg(args, 0);
+                return GameMain.Client == null &&
+                       item != null &&
+                       slotIndex >= 0 &&
+                       !string.IsNullOrWhiteSpace(itemIdentifier) &&
+                       GunsmithQuickPartItemSpawner.Ensure(item, slotIndex, itemIdentifier, createNetworkEvent: true);
             });
         }
 

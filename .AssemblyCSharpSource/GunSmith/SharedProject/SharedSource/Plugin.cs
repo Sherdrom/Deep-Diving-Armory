@@ -24,6 +24,7 @@ namespace GunSmith
         public void OnLoadCompleted()
         {
             harmonyInstance?.PatchAll();
+            GunsmithNpcPresetPatch.ReportReady();
             if (harmonyInstance != null)
             {
                 GunsmithQuickAttachmentBarrelSelectorPatch.PatchOptionalVce(harmonyInstance);

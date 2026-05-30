@@ -11,6 +11,7 @@ dofile(basePath .. "/QuickMod.lua")
 dofile(basePath .. "/UiSpec.lua")
 dofile(basePath .. "/QuickUiSpec.lua")
 dofile(basePath .. "/Runtime.lua")
+dofile(basePath .. "/NpcPresets.lua")
 dofile(basePath .. "/Debug.lua")
 dofile(basePath .. "/Hooks.lua")
 
