@@ -227,7 +227,14 @@ function Validation.Run(configOverride, label)
         end
     end
 
-    local function collectQuickKeys(parentPart, quickKeys, visited, depth)
+    local function partCanAttachToMount(part, mount)
+        if type(part) ~= "table" or type(mount) ~= "table" then return false end
+        local expectedType = mount.partType or mount.path
+        return type(expectedType) == "string" and expectedType ~= "" and
+            part.type == expectedType and partProvidesAccepted(part, mount.accepts)
+    end
+
+    local function collectQuickKeys(parentPart, quickKeys, visited, depth, includeOptional)
         if type(parentPart) ~= "table" or type(parentPart.mounts) ~= "table" or depth > 32 then return end
         for _, mount in ipairs(parentPart.mounts) do
             local quick = mount.quick
@@ -238,19 +245,28 @@ function Validation.Run(configOverride, label)
             local childPartId = mount.defaultPart
             if type(childPartId) == "string" and childPartId ~= "" and not visited[childPartId] then
                 visited[childPartId] = true
-                collectQuickKeys(parts[childPartId], quickKeys, visited, depth + 1)
+                collectQuickKeys(parts[childPartId], quickKeys, visited, depth + 1, includeOptional)
+            end
+
+            if includeOptional then
+                for candidateId, candidatePart in pairs(parts) do
+                    if not visited[candidateId] and partCanAttachToMount(candidatePart, mount) then
+                        visited[candidateId] = true
+                        collectQuickKeys(candidatePart, quickKeys, visited, depth + 1, includeOptional)
+                    end
+                end
             end
         end
     end
 
-    local function defaultQuickKeysForWeapon(weapon, platformRootSlots)
+    local function reachableQuickKeysForWeapon(weapon, platformRootSlots)
         local quickKeys = {}
         if type(weapon.roots) ~= "table" then return quickKeys end
         for path, _ in pairs(platformRootSlots or {}) do
             local root = weapon.roots[path]
             local rootPartId = type(root) == "table" and root.part or nil
             if type(rootPartId) == "string" and rootPartId ~= "" then
-                collectQuickKeys(parts[rootPartId], quickKeys, { [rootPartId] = true }, 0)
+                collectQuickKeys(parts[rootPartId], quickKeys, { [rootPartId] = true }, 0, true)
             end
         end
         return quickKeys
@@ -475,14 +491,14 @@ function Validation.Run(configOverride, label)
                 if type(weapon.quickSlotBindings) ~= "table" then
                     table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings must be a table.")
                 else
-                    local quickKeys = defaultQuickKeysForWeapon(weapon, rootSlots)
+                    local quickKeys = reachableQuickKeysForWeapon(weapon, rootSlots)
                     local usedSlots = {}
                     for key, binding in pairs(weapon.quickSlotBindings) do
                         local bindingLabel = "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings '" .. tostring(key) .. "'"
                         if type(key) ~= "string" or key == "" then
                             table.insert(errors, "Weapon '" .. tostring(weaponId) .. "' quickSlotBindings key must be a non-empty string.")
                         elseif not quickKeys[key] then
-                            table.insert(errors, bindingLabel .. " does not match a quick mount reachable from the default selection.")
+                            table.insert(errors, bindingLabel .. " does not match a quick mount reachable from this weapon.")
                         end
 
                         if type(binding) ~= "table" then

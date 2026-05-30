@@ -74,6 +74,27 @@ local function scheduleExistingItemApply()
     end
 end
 
+local function addHiddenQuickSlot(slotSet, slotValue)
+    local slotIndex = tonumber(slotValue)
+    if slotIndex and slotIndex >= 0 and slotIndex % 1 == 0 then
+        slotSet[slotIndex] = true
+        return slotIndex
+    end
+    return nil
+end
+
+local function hiddenQuickSlotSpec(slotSet)
+    local slots = {}
+    for slotIndex, _ in pairs(slotSet) do
+        table.insert(slots, slotIndex)
+    end
+    table.sort(slots)
+    for index, slotIndex in ipairs(slots) do
+        slots[index] = tostring(slotIndex)
+    end
+    return slots
+end
+
 local function registerHiddenQuickSlots()
     if not Hook or not Hook.Call then return end
     local config = Gunsmith.Config
@@ -81,6 +102,7 @@ local function registerHiddenQuickSlots()
 
     for identifier, weapon in pairs(config.weapons) do
         local maxSlot = nil
+        local hiddenSlots = {}
         local platform = config.platforms and config.platforms[weapon.platform] or nil
         local selection = platform and Core.BuildDefaultSelection(platform, weapon) or nil
         local quickSlots = nil
@@ -91,20 +113,21 @@ local function registerHiddenQuickSlots()
             quickSlots = weapon.quickSlots
         end
 
-        if type(quickSlots) == "table" then
-            local slots = {}
-            for _, quickSlot in ipairs(quickSlots) do
-                local slotIndex = tonumber(quickSlot.slot)
-                if slotIndex then
-                    table.insert(slots, tostring(slotIndex))
-                    if not maxSlot or slotIndex > maxSlot then
-                        maxSlot = slotIndex
-                    end
+        if type(weapon.quickSlotBindings) == "table" then
+            for _, binding in pairs(weapon.quickSlotBindings) do
+                local slotIndex = type(binding) == "table" and addHiddenQuickSlot(hiddenSlots, binding.slot) or nil
+                if slotIndex and (not maxSlot or slotIndex > maxSlot) then
+                    maxSlot = slotIndex
                 end
             end
+        end
 
-            if CLIENT and #slots > 0 then
-                Hook.Call("DeepGunsmithRegisterHiddenQuickSlots", tostring(identifier), table.concat(slots, ","))
+        if type(quickSlots) == "table" then
+            for _, quickSlot in ipairs(quickSlots) do
+                local slotIndex = addHiddenQuickSlot(hiddenSlots, quickSlot.slot)
+                if slotIndex and (not maxSlot or slotIndex > maxSlot) then
+                    maxSlot = slotIndex
+                end
             end
 
             for _, quickSlot in ipairs(quickSlots) do
@@ -124,12 +147,10 @@ local function registerHiddenQuickSlots()
             end
         end
 
-        if type(weapon.quickSlotBindings) == "table" then
-            for _, binding in pairs(weapon.quickSlotBindings) do
-                local slotIndex = type(binding) == "table" and tonumber(binding.slot) or nil
-                if slotIndex and (not maxSlot or slotIndex > maxSlot) then
-                    maxSlot = slotIndex
-                end
+        if CLIENT then
+            local slots = hiddenQuickSlotSpec(hiddenSlots)
+            if #slots > 0 then
+                Hook.Call("DeepGunsmithRegisterHiddenQuickSlots", tostring(identifier), table.concat(slots, ","))
             end
         end
 
