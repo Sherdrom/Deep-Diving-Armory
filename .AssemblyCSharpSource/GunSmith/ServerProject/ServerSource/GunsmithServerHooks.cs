@@ -20,6 +20,28 @@ namespace GunSmith
                 return null;
             });
 
+            hook.Add("DeepGunsmithApplyRuntimeState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                string? signature = FindStringArg(args, 0);
+                string? statsSpec = FindStringArg(args, 1);
+                string? managedItemSpec = FindStringArg(args, 2);
+                return item != null &&
+                       signature != null &&
+                       GunsmithRuntimeStates.ApplyFromLua(item, signature, statsSpec ?? string.Empty, managedItemSpec ?? string.Empty);
+            });
+
+            hook.Add("DeepGunsmithClearRuntimeState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    GunsmithRuntimeStates.Remove(item);
+                    GunsmithQuickAttachmentBarrelTransforms.ClearTransforms(item);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithClearQuickAttachmentBarrelTransforms", args =>
             {
                 Item? item = FindArg<Item>(args);

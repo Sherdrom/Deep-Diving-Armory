@@ -3,14 +3,12 @@ namespace GunSmith
     public static partial class GunsmithApi
     {
         private static readonly ConcurrentDictionary<Item, GunsmithSpriteState> spriteStates = new();
-        private static readonly ConcurrentDictionary<Item, GunsmithRuntimeState> runtimeStates = new();
         private static readonly ConcurrentDictionary<string, Texture2D> textureCache = new(StringComparer.OrdinalIgnoreCase);
-        private static int managedRuntimeItemCount;
         private static GraphicsDevice? graphicsDevice;
         private static SpriteBatch? spriteBatch;
 
         public static bool IsReady => graphicsDevice != null && spriteBatch != null;
-        internal static bool HasManagedRuntimeItems => System.Threading.Volatile.Read(ref managedRuntimeItemCount) > 0;
+        internal static bool HasManagedRuntimeItems => GunsmithRuntimeStates.HasManagedRuntimeItems;
         internal static bool HasAnySpriteState => !spriteStates.IsEmpty;
 
         public static void Initialize(GraphicsDevice graphics)
@@ -57,14 +55,7 @@ namespace GunSmith
             if (!IsReady || item == null || item.Removed) { return false; }
             if (string.IsNullOrWhiteSpace(signature) || string.IsNullOrWhiteSpace(layerSpec)) { return false; }
 
-            GunsmithRuntimeStats stats = ParseRuntimeStats(statsSpec);
-            IReadOnlySet<string> managedItemIdentifiers = ParseIdentifierSet(managedItemSpec);
-            GunsmithRuntimeState runtimeState = new()
-            {
-                Signature = signature,
-                Stats = stats,
-                ManagedItemIdentifiers = managedItemIdentifiers
-            };
+            GunsmithRuntimeState runtimeState = GunsmithRuntimeStates.CreateState(signature, statsSpec, managedItemSpec);
 
             string spriteSignature = BuildSpriteSignature(layerSpec, inventorySpec, worldSpec, width, height);
             if (spriteStates.TryGetValue(item, out GunsmithSpriteState? existing) && existing.Signature == spriteSignature)
@@ -170,40 +161,18 @@ namespace GunSmith
 
         internal static bool TryGetRuntimeState(Item? item, out GunsmithRuntimeState state)
         {
-            state = null!;
-            return item != null && !item.Removed && runtimeStates.TryGetValue(item, out state!);
+            return GunsmithRuntimeStates.TryGet(item, out state);
         }
 
         private static void SetRuntimeState(Item item, GunsmithRuntimeState state)
         {
-            bool hadManagedItems = runtimeStates.TryGetValue(item, out GunsmithRuntimeState? existingState) &&
-                                   existingState.ManagedItemIdentifiers.Count > 0;
-            bool hasManagedItems = state.ManagedItemIdentifiers.Count > 0;
-
-            runtimeStates[item] = state;
-            if (hadManagedItems != hasManagedItems)
-            {
-                if (hasManagedItems)
-                {
-                    System.Threading.Interlocked.Increment(ref managedRuntimeItemCount);
-                }
-                else
-                {
-                    System.Threading.Interlocked.Decrement(ref managedRuntimeItemCount);
-                }
-            }
-
+            GunsmithRuntimeStates.Set(item, state);
             GunsmithRuntimeEffectsPatch.InvalidateItem(item);
         }
 
         private static void RemoveRuntimeState(Item item)
         {
-            if (runtimeStates.TryRemove(item, out GunsmithRuntimeState? removedState) &&
-                removedState.ManagedItemIdentifiers.Count > 0)
-            {
-                System.Threading.Interlocked.Decrement(ref managedRuntimeItemCount);
-            }
-
+            GunsmithRuntimeStates.Remove(item);
             GunsmithRuntimeEffectsPatch.InvalidateItem(item);
         }
 
@@ -359,8 +328,7 @@ namespace GunSmith
         {
             GunsmithGui.CloseWindow();
 
-            runtimeStates.Clear();
-            managedRuntimeItemCount = 0;
+            GunsmithRuntimeStates.Clear();
             GunsmithRuntimeEffectsPatch.ClearCaches();
             foreach (KeyValuePair<Item, GunsmithSpriteState> pair in spriteStates.ToArray())
             {

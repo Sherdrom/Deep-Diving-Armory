@@ -23,7 +23,18 @@ namespace GunSmith
         private static readonly AccessTools.FieldRef<Pickable, Character> pickerRef = AccessTools.FieldRefAccess<Pickable, Character>("picker");
 
         private static MethodBase TargetMethod()
-            => AccessTools.Method(typeof(Holdable), nameof(Holdable.Update), new[] { typeof(float), typeof(Camera) });
+        {
+            MethodInfo? method = AccessTools.GetDeclaredMethods(typeof(Holdable))
+                .FirstOrDefault(candidate =>
+                {
+                    ParameterInfo[] parameters = candidate.GetParameters();
+                    return candidate.Name == nameof(Holdable.Update) &&
+                           parameters.Length == 2 &&
+                           parameters[0].ParameterType == typeof(float);
+                });
+
+            return method ?? throw new MissingMethodException(typeof(Holdable).FullName, nameof(Holdable.Update));
+        }
 
         private static bool Prefix(Holdable __instance, float deltaTime)
         {
@@ -33,14 +44,14 @@ namespace GunSmith
                 return true;
             }
 
-            Character picker = pickerRef(__instance);
-            if (picker == null || picker != Character.Controlled || picker.Removed || !picker.HasEquippedItem(item) || !picker.HeldItems.Contains(item))
+            Character? picker = pickerRef(__instance);
+            if (!ShouldHandlePicker(picker, item))
             {
                 ClearIfOwned(picker, item);
                 return true;
             }
 
-            if (item.GetComponent<RangedWeapon>() == null || !GunsmithApi.TryGetRuntimeState(item, out GunsmithRuntimeState state))
+            if (item.GetComponent<RangedWeapon>() == null || !GunsmithRuntimeStates.TryGet(item, out GunsmithRuntimeState state))
             {
                 ClearIfOwned(picker, item);
                 return true;
@@ -58,8 +69,7 @@ namespace GunSmith
                 runtime.StartAngle = 0.0f;
             }
 
-            bool aimInputDown = picker.IsKeyDown(InputType.Aim) && picker.CanAim && __instance.AimPos != Vector2.Zero;
-            if (!aimInputDown)
+            if (!IsAimInputDown(__instance, picker))
             {
                 runtime.WasAiming = false;
                 runtime.IsRaising = false;
@@ -93,6 +103,51 @@ namespace GunSmith
             }
             return false;
         }
+
+        internal static bool ShouldSuppressUse(Character? picker, Item item)
+        {
+            if (item == null || item.body == null || !item.body.Enabled || !ShouldHandlePicker(picker, item))
+            {
+                return false;
+            }
+
+            Holdable? holdable = item.GetComponent<Holdable>();
+            if (holdable == null || !GunsmithRuntimeStates.TryGet(item, out _) || !IsAimInputDown(holdable, picker!))
+            {
+                return false;
+            }
+
+            if (runtimes.TryGetValue(picker!, out AimRaiseRuntime? runtime) && ReferenceEquals(runtime.Item, item))
+            {
+                return !runtime.WasAiming || runtime.IsRaising;
+            }
+
+            return true;
+        }
+
+        private static bool ShouldHandlePicker(Character? picker, Item item)
+        {
+            if (picker == null ||
+                picker.Removed ||
+                picker.HeldItems == null ||
+                !picker.HasEquippedItem(item) ||
+                !picker.HeldItems.Contains(item))
+            {
+                return false;
+            }
+
+#if CLIENT
+            if (picker != Character.Controlled)
+            {
+                return false;
+            }
+#endif
+
+            return true;
+        }
+
+        private static bool IsAimInputDown(Holdable holdable, Character picker)
+            => picker.IsKeyDown(InputType.Aim) && picker.CanAim && holdable.AimPos != Vector2.Zero;
 
         private static void ApplyManualHold(Holdable holdable, Character picker, Item item, AimRaiseRuntime runtime, float deltaTime)
         {
@@ -157,8 +212,8 @@ namespace GunSmith
 
         private static float AimFollowRadiansPerSecond(GunsmithRuntimeState state)
         {
-            float degrees = 270.0f + state.Stats.Ergonomics * 3.15f;   // Base 180 degrees per second, plus 2 degrees per ergonomics point, clamped to a reasonable range.
-            degrees = MathHelper.Clamp(degrees, 180.0f, 900.0f);     // Minimum 45 degrees per second (very slow), maximum 360 degrees per second (very fast).
+            float degrees = 270.0f + state.Stats.Ergonomics * 3.15f;
+            degrees = MathHelper.Clamp(degrees, 180.0f, 900.0f);
             return MathHelper.ToRadians(degrees);
         }
 
@@ -198,5 +253,20 @@ namespace GunSmith
 
         private static float SmoothStep(float value)
             => value * value * (3.0f - 2.0f * value);
+    }
+
+    [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.Use), new[] { typeof(float), typeof(Character) })]
+    public static class GunsmithErgonomicsRangedWeaponUsePatch
+    {
+        private static bool Prefix(RangedWeapon __instance, Character? character, ref bool __result)
+        {
+            if (!GunsmithErgonomicsAimPatch.ShouldSuppressUse(character, __instance.Item))
+            {
+                return true;
+            }
+
+            __result = false;
+            return false;
+        }
     }
 }

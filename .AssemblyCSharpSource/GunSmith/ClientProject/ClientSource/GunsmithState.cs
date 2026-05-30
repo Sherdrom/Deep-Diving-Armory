@@ -38,13 +38,6 @@ namespace GunSmith
         public GunsmithWorldSettings WorldSettings { get; init; } = GunsmithWorldSettings.Default;
     }
 
-    internal sealed class GunsmithRuntimeState
-    {
-        public string Signature { get; init; } = string.Empty;
-        public GunsmithRuntimeStats Stats { get; init; } = GunsmithRuntimeStats.Empty;
-        public IReadOnlySet<string> ManagedItemIdentifiers { get; init; } = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-    }
-
     internal sealed record GunsmithInventorySettings(float Scale, float RotationDegrees, float Padding)
     {
         public static GunsmithInventorySettings Default { get; } = new(1.0f, 0.0f, 0.0f);
@@ -55,20 +48,4 @@ namespace GunSmith
         public static GunsmithWorldSettings Default { get; } = new(1.0f, 0.0f, 0.0f, Vector2.Zero);
     }
 
-    internal sealed class GunsmithRuntimeStats
-    {
-        public float Ergonomics { get; init; }
-        public IReadOnlyDictionary<StatTypes, float> Values { get; init; } = new Dictionary<StatTypes, float>();
-
-        public float Get(StatTypes statType)
-            => Values.TryGetValue(statType, out float value) ? value : 0.0f;
-
-        public bool HasValue(StatTypes statType)
-            => Values.TryGetValue(statType, out float value) && value != 0.0f;
-
-        public bool TryGet(StatTypes statType, out float value)
-            => Values.TryGetValue(statType, out value) && value != 0.0f;
-
-        public static GunsmithRuntimeStats Empty { get; } = new();
-    }
 }

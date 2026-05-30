@@ -468,6 +468,16 @@ function Runtime.Apply(item, alreadySynced)
     end
 
     if SERVER then
+        local statsSpec = Stats.Encode(Stats.SumSelection(selection))
+        local managedItemSpec = encodeManagedItems(selection)
+        if Hook and Hook.Call then
+            Hook.Call(
+                "DeepGunsmithApplyRuntimeState",
+                item,
+                configSignature .. "|stats:" .. statsSpec .. "|items:" .. managedItemSpec,
+                statsSpec,
+                managedItemSpec)
+        end
         registerQuickAttachmentBarrels(item, selection, platform, weapon)
         State.appliedConfigSignatures[item] = configSignature
         return
@@ -753,6 +763,10 @@ function Runtime.OpenQuick(item)
 end
 
 function Runtime.Cleanup(item)
+    if Hook and Hook.Call and item then
+        Hook.Call("DeepGunsmithClearRuntimeState", item)
+    end
+
     local key = Core.ItemKey(item)
     if not key then return end
     State.selections[key] = nil

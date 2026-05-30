@@ -27,6 +27,16 @@ namespace GunSmith
                 return false;
             });
 
+            hook.Add("DeepGunsmithClearRuntimeState", args =>
+            {
+                Item? item = FindArg<Item>(args);
+                if (item != null)
+                {
+                    RemoveState(item);
+                }
+                return null;
+            });
+
             hook.Add("DeepGunsmithOpen", args =>
             {
                 Item? item = FindArg<Item>(args);

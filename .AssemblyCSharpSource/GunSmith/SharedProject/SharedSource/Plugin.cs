@@ -39,6 +39,7 @@ namespace GunSmith
         public void Dispose()
         {
             DisposePlatform();
+            GunsmithRuntimeStates.Clear();
             harmonyInstance?.UnpatchSelf();
         }
 
