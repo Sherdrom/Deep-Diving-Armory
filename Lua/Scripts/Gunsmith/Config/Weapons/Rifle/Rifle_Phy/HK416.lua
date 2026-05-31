@@ -2,7 +2,7 @@ Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local parts = Deep_Lua.Gunsmith.Config.parts
 local config = Deep_Lua.Gunsmith.Config
-local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
+local texture = Deep_Lua.Path .. "/GunSmith/AR/Main/HK416.png"
 
 config.weapons.deep_hk416 = {
 
@@ -10,7 +10,7 @@ config.weapons.deep_hk416 = {
 
     roots = {
         receiver = {
-            part = "hk416_receiver_std",
+            part = "deep_hk416_receiver_main",
             socket = { x = 184, y = 158 }
         }
     },
@@ -47,16 +47,16 @@ config.weapons.deep_hk416 = {
     }
 }
 
-parts.hk416_receiver_std = {
+parts.deep_hk416_receiver_main = {
     type = "receiver",
-    nameKey = "deep.gunsmith.part.hk416_receiver_std",
+    nameKey = "deep.gunsmith.part.deep_hk416_receiver_main",
     provides = { "HK416_receiver" },
-    item = { identifier = "deep_gunsmith_hk416_receiver_std" },
+    item = { identifier = "deep_hk416_receiver_main" },
     stats = { Ergonomics = 200 },
     visual = {
         texture = texture,
-        source = { x = 13, y = 372, w = 139, h = 89 },
-        attachPoint = { x = 71, y = 33 },
+        source = { x = 63, y = 28, w = 129, h = 72 },
+        attachPoint = { x = 58, y = 17 },
         order = 30,
         scale = 1.0
     },
@@ -64,11 +64,11 @@ parts.hk416_receiver_std = {
     -- HK416 机匣顶部自带导轨。这里挂一个 virtual part，用它继续提供前/后瞄具挂点。
     -- anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 250-184, y = 55-58 } },
-        { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 250-184, y = 55-58 } },
-        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = 166-184, y = 88-58 } },
-        { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = 114-184, y = 59-58 } },
-        { path = "optic_mount", nameKey = "deep.gunsmith.mount.hk416_receiver_std.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 226-184, y = 35-58 }, quick = { key = "optic" } }
+        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 66, y = -3 } },
+        { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 66, y = -3 } },
+        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = -18, y = 30 } },
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = -70, y = 1 } },
+        { path = "upperreceiver", accepts = { "AR_upperreceiver" }, defaultPart = "deep_hk416a5_upper_receiver", anchor = { x = 0, y = 0 } }
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
         -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }

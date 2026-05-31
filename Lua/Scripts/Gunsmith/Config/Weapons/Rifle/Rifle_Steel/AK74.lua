@@ -15,7 +15,7 @@ config.weapons.deep_AK74 = {
     -- 子默认件由 receiver.mounts[].defaultPart 展开。
     roots = {
         receiver = {
-            part = "deep_ak74_receiver",
+            part = "deep_ak_receiver_main",
             socket = { x = 226, y = 116 }
         }
     },
@@ -54,16 +54,16 @@ config.weapons.deep_AK74 = {
 }
 
 -- 枪械主题机匣的 part 挪到这里，和平台、武器配置放在一起，方便对照。
-parts.deep_ak74_receiver = { 
+parts.deep_ak_receiver_main = { 
     -- type 是配件自身类型，必须匹配平台根路径或父挂点的 partType。
     type = "receiver",
-    nameKey = "deep.gunsmith.part.deep_ak74_receiver",
+    nameKey = "deep.gunsmith.part.deep_ak_receiver_main",
 
     -- provides 是兼容类型。根身份件由 weapon.roots 指定；子配件由挂点 accepts 接受。
-    provides = { "deep_ak74_receiver" },
+    provides = { "deep_ak_receiver_main" },
 
     -- 实体配件 item。可安装配件应有 item.identifier；virtual 配件可不消耗物品。
-    item = { identifier = "deep_ak74_receiver" },
+    item = { identifier = "deep_ak_receiver_main" },
 
     -- 目前只用于 UI 展示，不直接影响武器实际数值。
     stats = { Ergonomics = 0 },

@@ -19,8 +19,6 @@ config.platforms.AK = {
     -- 相对平台本体 receiver 的必填配件列表。
     -- 不在这里的挂点都是可选项，例如 optic_mount、top_rail。
     requiredSlots = {
-        "barrel",
-        "pistol_grip"
     },
 
     -- UI 显示文本只写本地化 key，实际文本放在 text/chinese.xml 等语言文件。

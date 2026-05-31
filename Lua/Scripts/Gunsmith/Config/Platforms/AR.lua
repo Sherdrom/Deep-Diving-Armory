@@ -29,6 +29,7 @@ config.platforms.AR = {
     -- 子挂点 path 也建议登记在这里，方便路径显示为“枪械 > 护木 > 上导轨”。
     pathNameKeys = {
         receiver = "deep.gunsmith.path.receiver",
+        upperreceiver = "deep.gunsmith.path.upperreceiver",
         barrel = "deep.gunsmith.path.barrel",
         handguard = "deep.gunsmith.path.handguard",
         pistol_grip = "deep.gunsmith.path.pistol_grip",
