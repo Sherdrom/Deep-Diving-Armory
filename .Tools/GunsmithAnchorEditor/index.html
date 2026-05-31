@@ -204,6 +204,10 @@
       border: 1px solid var(--line);
       background: #151b23;
       cursor: pointer;
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
     }
 
     .part-item.active {
@@ -211,10 +215,33 @@
       background: #1b3146;
     }
 
+    .part-item.hidden-layer .part-info {
+      opacity: 0.45;
+    }
+
     .part-item small {
       display: block;
       color: var(--muted);
       margin-top: 2px;
+    }
+
+    .visibility-toggle {
+      width: 28px;
+      min-height: 28px;
+      padding: 0;
+      display: inline-grid;
+      place-items: center;
+      color: var(--muted);
+      background: #11161d;
+    }
+
+    .visibility-toggle.visible {
+      color: var(--accent);
+    }
+
+    .visibility-toggle.hidden {
+      color: var(--muted);
+      text-decoration: line-through;
     }
 
     .hint {
@@ -263,11 +290,14 @@
         <div class="row"><label>精灵图</label><input id="imageFile" type="file" accept="image/*" multiple></div>
         <div class="row"><label>查看图片</label><select id="imageSelect"></select></div>
         <div class="buttons">
-          <button id="saveProject">保存工程 JSON</button>
-          <button id="loadProjectButton">载入工程 JSON</button>
+          <button id="saveProject" class="primary">保存工程</button>
+          <button id="saveProjectAs">工程另存为</button>
+          <button id="loadProjectButton">打开工程 JSON</button>
+          <button id="importProjectImages">导入项目图片目录</button>
         </div>
         <input id="loadProject" type="file" accept="application/json" hidden>
-        <p class="hint">工程 JSON 会保存图片 DataURL 和当前部件列表，方便继续调参。</p>
+        <input id="imageDirectory" type="file" accept="image/*" multiple webkitdirectory hidden>
+        <p id="projectStatus" class="hint">工程 JSON 会优先保存项目内图片相对路径；普通图片会保存 DataURL。</p>
       </div>
 
       <div class="group">
@@ -396,6 +426,8 @@
       background: "dark",
       canvas: { w: 640, h: 260 },
       rootSocket: { x: 209, y: 160 },
+      projectHandle: null,
+      projectName: "",
       selected: 0,
       parts: [
         createPart("M4_receiver_std", "M4 标准机匣", "receiver", null, "receiver", 30)
@@ -405,7 +437,8 @@
 
     const el = {};
     for (const id of [
-      "imageFile", "imageSelect", "saveProject", "loadProjectButton", "loadProject", "fitImage", "zoom", "showGrid", "backgroundColor",
+      "imageFile", "imageDirectory", "imageSelect", "saveProject", "saveProjectAs", "loadProjectButton", "loadProject", "importProjectImages",
+      "projectStatus", "fitImage", "zoom", "showGrid", "backgroundColor",
       "canvasW", "canvasH", "rootX", "rootY", "addPart", "duplicatePart", "deletePart", "loadM4Example",
       "sheetCanvas", "previewCanvas", "sheetHud", "previewHud", "partList", "partId", "partName", "partType",
       "partImageIndex", "parentIndex", "mountPath", "order", "scale", "sourceX", "sourceY", "sourceW", "sourceH", "attachX",
@@ -426,7 +459,8 @@
         anchor: { x: 0, y: 0 },
         order,
         scale: 1,
-        imageIndex: 0
+        imageIndex: 0,
+        visible: true
       };
     }
 
@@ -442,16 +476,21 @@
       return state.images[part?.imageIndex] || activeImageEntry();
     }
 
+    function isPartVisible(part) {
+      return part?.visible !== false;
+    }
+
     function normalizePart(part) {
       if (!part) return part;
       if (!Number.isInteger(part.imageIndex)) part.imageIndex = 0;
       if (part.imageIndex < 0 || part.imageIndex >= state.images.length) part.imageIndex = 0;
+      if (typeof part.visible !== "boolean") part.visible = true;
       return part;
     }
 
     function refreshImageSelects() {
       const options = state.images
-        .map((entry, index) => `<option value="${index}">${escapeHtml(entry.name || `image_${index + 1}`)}</option>`)
+        .map((entry, index) => `<option value="${index}">${escapeHtml(entry.path || entry.name || `image_${index + 1}`)}</option>`)
         .join("");
       el.imageSelect.innerHTML = options || `<option value="">未导入图片</option>`;
       el.partImageIndex.innerHTML = options || `<option value="">未导入图片</option>`;
@@ -722,6 +761,8 @@
       ctx.imageSmoothingEnabled = false;
       for (const index of sorted) {
         const part = state.parts[index];
+        normalizePart(part);
+        if (!isPartVisible(part)) continue;
         const layout = layouts[index];
         const entry = imageEntryForPart(part);
         if (!layout) continue;
@@ -741,6 +782,8 @@
       drawLabel(ctx, root.x + 8, root.y - 10, "rootSocket", "#65b7ff");
 
       state.parts.forEach((part, index) => {
+        normalizePart(part);
+        if (!isPartVisible(part)) return;
         const layout = layouts[index];
         if (!layout) return;
         const attach = previewToScreen({
@@ -842,10 +885,15 @@
     function renderPartList() {
       el.partList.innerHTML = "";
       state.parts.forEach((part, index) => {
+        normalizePart(part);
+        const visible = isPartVisible(part);
         const item = document.createElement("div");
-        item.className = "part-item" + (index === state.selected ? " active" : "");
+        item.className = "part-item" + (index === state.selected ? " active" : "") + (visible ? "" : " hidden-layer");
         item.dataset.index = String(index);
-        item.innerHTML = `<strong>${escapeHtml(part.id)}</strong><small>${escapeHtml(part.type)} | parent: ${part.parentIndex === null ? "root" : state.parts[part.parentIndex]?.id || "?"}</small>`;
+        item.innerHTML = `
+          <button class="visibility-toggle ${visible ? "visible" : "hidden"}" data-action="toggle-visibility" title="${visible ? "隐藏图层" : "显示图层"}" aria-label="${visible ? "隐藏图层" : "显示图层"}">${visible ? "👁" : "⊘"}</button>
+          <div class="part-info"><strong>${escapeHtml(part.id)}</strong><small>${escapeHtml(part.type)} | parent: ${part.parentIndex === null ? "root" : state.parts[part.parentIndex]?.id || "?"}</small></div>
+        `;
         el.partList.appendChild(item);
       });
     }
@@ -924,7 +972,7 @@
       const part = selectedPart();
       if (!part) return;
       const textureEntry = imageEntryForPart(part);
-      const texture = textureEntry?.name || "weapon/gunsmith/gunsmith_test_rifle.png";
+      const texture = textureEntry?.path || textureEntry?.name || "weapon/gunsmith/gunsmith_test_rifle.png";
       const texturePath = texture.replace(/\\/g, "/");
       const childMounts = state.parts.filter(child => child.parentIndex === state.selected);
       const mountLines = (indent) => childMounts
@@ -1087,8 +1135,42 @@
       }
     }
 
-    function loadImages(files) {
-      const list = Array.from(files || []);
+    function normalizePath(path) {
+      return String(path || "").replace(/\\/g, "/").replace(/^\/+/, "");
+    }
+
+    function projectRootFolderName() {
+      const path = decodeURIComponent(location.pathname || "").replace(/\\/g, "/");
+      const beforeTool = path.split("/.Tools/GunsmithAnchorEditor/")[0];
+      return beforeTool.split("/").filter(Boolean).pop() || "";
+    }
+
+    function projectRelativePathFromFile(file, useProjectRelativePath) {
+      if (!useProjectRelativePath) return "";
+      const raw = normalizePath(file.webkitRelativePath || "");
+      if (!raw) return "";
+      const parts = raw.split("/").filter(Boolean);
+      const rootName = projectRootFolderName();
+      if (parts.length > 1 && rootName && parts[0] === rootName) return parts.slice(1).join("/");
+      return parts.join("/");
+    }
+
+    function projectImageUrl(path) {
+      const normalized = normalizePath(path);
+      return "../../" + normalized.split("/").map(encodeURIComponent).join("/");
+    }
+
+    function imageSource(entry) {
+      if (entry?.path) return projectImageUrl(entry.path);
+      return entry?.dataUrl || "";
+    }
+
+    function setProjectStatus(message) {
+      el.projectStatus.textContent = message;
+    }
+
+    function loadImages(files, options = {}) {
+      const list = Array.from(files || []).filter(file => file.type.startsWith("image/") || /\.(png|jpe?g|gif|webp|bmp)$/i.test(file.name));
       if (!list.length) return;
       const baseIndex = state.images.length;
       state.images.length = baseIndex + list.length;
@@ -1098,7 +1180,13 @@
         reader.onload = () => {
           const img = new Image();
           img.onload = () => {
-            state.images[baseIndex + index] = { name: file.name, dataUrl: reader.result, image: img };
+            const path = projectRelativePathFromFile(file, options.useProjectRelativePath);
+            state.images[baseIndex + index] = {
+              name: file.name,
+              path,
+              dataUrl: path ? "" : reader.result,
+              image: img
+            };
             remaining -= 1;
             if (remaining === 0) {
               state.images = state.images.filter(Boolean);
@@ -1106,6 +1194,7 @@
               const part = selectedPart();
               if (part) part.imageIndex = state.activeImageIndex;
               refreshImageSelects();
+              setProjectStatus(state.images.some(entry => entry.path) ? "已导入项目图片目录；另存为会使用项目相对路径。" : "已导入图片；没有项目相对路径的图片会写入 DataURL。");
               fitImage();
             }
           };
@@ -1135,8 +1224,14 @@
       let remaining = entries.length;
       entries.forEach((entry, index) => {
         const img = new Image();
+        let usingFallback = false;
         img.onload = () => {
-          state.images[index] = { name: entry.name || "", dataUrl: entry.dataUrl || "", image: img };
+          state.images[index] = {
+            name: entry.name || entry.path || "",
+            path: normalizePath(entry.path || ""),
+            dataUrl: entry.dataUrl || "",
+            image: img
+          };
           remaining -= 1;
           if (remaining === 0) {
             state.images = state.images.filter(Boolean);
@@ -1144,6 +1239,11 @@
           }
         };
         img.onerror = () => {
+          if (!usingFallback && entry.dataUrl && entry.path) {
+            usingFallback = true;
+            img.src = entry.dataUrl;
+            return;
+          }
           state.images[index] = null;
           remaining -= 1;
           if (remaining === 0) {
@@ -1151,12 +1251,17 @@
             onDone?.();
           }
         };
-        img.src = entry.dataUrl;
+        img.src = imageSource(entry);
       });
     }
 
     function projectImageData() {
-      return state.images.map(entry => ({ name: entry.name, dataUrl: entry.dataUrl }));
+      return state.images.map(entry => {
+        const data = { name: entry.name || "" };
+        if (entry.path) data.path = normalizePath(entry.path);
+        if (!entry.path && entry.dataUrl) data.dataUrl = entry.dataUrl;
+        return data;
+      });
     }
 
     function migrateProjectImages(data) {
@@ -1165,8 +1270,9 @@
       return [];
     }
 
-    function saveProject() {
-      const data = JSON.stringify({
+    function projectData() {
+      applyFields();
+      return {
         version: 2,
         images: projectImageData(),
         activeImageIndex: state.activeImageIndex,
@@ -1175,21 +1281,76 @@
         rootSocket: state.rootSocket,
         parts: state.parts,
         selected: state.selected
-      }, null, 2);
+      };
+    }
+
+    function projectJson() {
+      return JSON.stringify(projectData(), null, 2);
+    }
+
+    async function writeProjectToHandle(handle) {
+      const writable = await handle.createWritable();
+      await writable.write(projectJson());
+      await writable.close();
+      state.projectHandle = handle;
+      state.projectName = handle.name || state.projectName;
+      setProjectStatus(`已保存到 ${state.projectName || "当前工程 JSON"}。`);
+    }
+
+    async function saveProjectAs() {
+      if (window.showSaveFilePicker) {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: state.projectName || "gunsmith-anchor-project.json",
+          types: [{ description: "JSON", accept: { "application/json": [".json"] } }]
+        });
+        await writeProjectToHandle(handle);
+        return;
+      }
+      downloadProjectJson();
+      setProjectStatus("浏览器不支持直接写文件，已用下载方式另存为。");
+    }
+
+    function downloadProjectJson() {
+      const data = projectJson();
       const blob = new Blob([data], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "gunsmith-anchor-project.json";
+      a.download = state.projectName || "gunsmith-anchor-project.json";
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    function loadProject(file) {
+    async function saveProject() {
+      if (state.projectHandle) {
+        await writeProjectToHandle(state.projectHandle);
+        return;
+      }
+      await saveProjectAs();
+    }
+
+    async function openProject() {
+      if (window.showOpenFilePicker) {
+        const [handle] = await window.showOpenFilePicker({
+          types: [{ description: "JSON", accept: { "application/json": [".json"] } }],
+          multiple: false
+        });
+        const file = await handle.getFile();
+        state.projectHandle = handle;
+        state.projectName = handle.name || file.name || "";
+        loadProject(file, { handle });
+        return;
+      }
+      el.loadProject.click();
+    }
+
+    function loadProject(file, options = {}) {
       if (!file) return;
+      state.projectHandle = options.handle || null;
       const reader = new FileReader();
       reader.onload = () => {
         const data = JSON.parse(reader.result);
+        state.projectName = file.name || state.projectName;
         state.background = data.background || state.background;
         el.backgroundColor.value = state.background;
         state.canvas = data.canvas || state.canvas;
@@ -1201,6 +1362,7 @@
           state.activeImageIndex = Math.min(data.activeImageIndex || 0, Math.max(state.images.length - 1, 0));
           state.parts.forEach(normalizePart);
           refreshImageSelects();
+          setProjectStatus(`已打开 ${state.projectName || "工程 JSON"}。`);
           if (state.images.length) fitImage();
           else draw();
         });
@@ -1298,9 +1460,21 @@
     el.partList.addEventListener("click", event => {
       const item = event.target.closest(".part-item");
       if (!item || !el.partList.contains(item)) return;
-      selectPart(Number(item.dataset.index));
+      const index = Number(item.dataset.index);
+      if (event.target.closest("[data-action='toggle-visibility']")) {
+        const part = state.parts[index];
+        if (!part) return;
+        normalizePart(part);
+        part.visible = !isPartVisible(part);
+        renderPartList();
+        drawPreview();
+        return;
+      }
+      selectPart(index);
     });
     el.imageFile.onchange = event => loadImages(event.target.files);
+    el.importProjectImages.onclick = () => el.imageDirectory.click();
+    el.imageDirectory.onchange = event => loadImages(event.target.files, { useProjectRelativePath: true });
     el.imageSelect.onchange = () => {
       if (!state.images.length) return;
       state.activeImageIndex = Number(el.imageSelect.value);
@@ -1313,8 +1487,9 @@
       state.activeImageIndex = part.imageIndex;
       fitImage();
     };
-    el.saveProject.onclick = saveProject;
-    el.loadProjectButton.onclick = () => el.loadProject.click();
+    el.saveProject.onclick = () => saveProject().catch(error => setProjectStatus(`保存失败：${error.message}`));
+    el.saveProjectAs.onclick = () => saveProjectAs().catch(error => setProjectStatus(`另存为失败：${error.message}`));
+    el.loadProjectButton.onclick = () => openProject().catch(error => setProjectStatus(`打开失败：${error.message}`));
     el.loadProject.onchange = event => loadProject(event.target.files[0]);
     el.fitImage.onclick = fitImage;
     el.zoom.oninput = () => { state.sheet.zoom = Number(el.zoom.value); draw(); };
