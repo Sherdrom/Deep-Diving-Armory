@@ -337,7 +337,12 @@ namespace GunSmith
 
                 int x;
                 int y;
-                if (path.Contains("lower_rail", StringComparison.Ordinal))
+                if (TryGetAnchorRelativeQuickSlotOffsetForPath(path, out Point anchorOffset))
+                {
+                    x = (int)Math.Round(anchor.X + anchorOffset.X - QuickSlotSize / 2.0f);
+                    y = (int)Math.Round(anchor.Y + anchorOffset.Y - QuickSlotSize / 2.0f);
+                }
+                else if (path.Contains("lower_rail", StringComparison.Ordinal))
                 {
                     x = (int)Math.Round(anchor.X - QuickSlotSize / 2.0f);
                     y = (int)Math.Round(anchor.Y + QuickSlotGap - QuickSlotSize / 2.0f);
@@ -358,13 +363,6 @@ namespace GunSmith
                     y = (int)Math.Round(anchor.Y + (canvasY < sourceCenterY ? -QuickSlotGap : QuickSlotGap) - QuickSlotSize / 2.0f);
                 }
 
-                Point offset = QuickSlotPositionOffsetForPath(path);
-                if (offset != Point.Zero)
-                {
-                    x += offset.X;
-                    y += offset.Y;
-                }
-
                 int minX = Math.Max(destination.X - 110, 8);
                 int maxX = Math.Min(destination.Right + 110 - QuickSlotSize, GameMain.GraphicsWidth - QuickSlotSize - 8);
                 int minY = Math.Max(destination.Y - 76, 58);
@@ -372,29 +370,36 @@ namespace GunSmith
                 return new Rectangle(Math.Clamp(x, minX, maxX), Math.Clamp(y, minY, maxY), QuickSlotSize, QuickSlotSize);
             }
 
-            private static Point QuickSlotPositionOffsetForPath(string path)
+            private static bool TryGetAnchorRelativeQuickSlotOffsetForPath(string path, out Point offset)
             {
                 if (path.Contains("optic_mount", StringComparison.Ordinal))
                 {
-                    return new Point(0, -150);
+                    offset = new Point(-74, -76);
+                    return true;
                 }
                 if (path.Contains("left_rail", StringComparison.Ordinal))
                 {
-                    return new Point(80, -100);
+                    offset = new Point(6, -100);
+                    return true;
                 }
                 if (path.Contains("right_rail", StringComparison.Ordinal))
                 {
-                    return new Point(14, -100);
+                    offset = new Point(88, -100);
+                    return true;
                 }
                 if (path.Contains("lower_rail", StringComparison.Ordinal))
                 {
-                    return new Point(-72, 12);
+                    offset = new Point(-72, 86);
+                    return true;
                 }
                 if (path.Contains("muzzle_mount", StringComparison.Ordinal) || path.Contains("muzzle", StringComparison.Ordinal))
                 {
-                    return new Point(0, 0);
+                    offset = new Point(74, 74);
+                    return true;
                 }
-                return Point.Zero;
+
+                offset = Point.Zero;
+                return false;
             }
 
             private void DrawQuickSlot(SpriteBatch spriteBatch, QuickSlotLayout layout)
