@@ -9,6 +9,7 @@ local files = { "AR/Structural/Barrel.lua",
     "AR/Structural/PistolGrip.lua",
     "AR/Structural/Stock.lua",
     "AR/Structural/UpperReceiver.lua",
+    "AR/Structural/GasBlock.lua",
     "AK/Structural/Handguard.lua",
     "AK/Structural/PistolGrip.lua",
     "AK/Structural/Stock.lua",
@@ -19,6 +20,7 @@ local files = { "AR/Structural/Barrel.lua",
     "Shared/SubHanging.lua",
     "Shared/Accessory.lua",
     "Shared/Muzzle.lua",
+    "Shared/BufferTube.lua",
 }
 
 for _, file in ipairs(files) do

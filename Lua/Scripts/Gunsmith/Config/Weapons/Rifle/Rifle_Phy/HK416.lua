@@ -11,7 +11,7 @@ config.weapons.deep_hk416 = {
     roots = {
         receiver = {
             part = "deep_hk416_receiver_main",
-            socket = { x = 184, y = 158 }
+            socket = { x = 247, y = 130 }
         }
     },
 
@@ -43,7 +43,7 @@ config.weapons.deep_hk416 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 75, y = -50 }
+        offset = { x = 20, y = -7 }
     }
 }
 
@@ -56,7 +56,7 @@ parts.deep_hk416_receiver_main = {
     visual = {
         texture = texture,
         source = { x = 63, y = 28, w = 129, h = 72 },
-        attachPoint = { x = 58, y = 17 },
+        attachPoint = { x = 65, y = 36 },
         order = 30,
         scale = 1.0
     },
@@ -64,11 +64,9 @@ parts.deep_hk416_receiver_main = {
     -- HK416 机匣顶部自带导轨。这里挂一个 virtual part，用它继续提供前/后瞄具挂点。
     -- anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "hk416_barrel_std", anchor = { x = 66, y = -3 } },
-        { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "hk416_handguard_std", anchor = { x = 66, y = -3 } },
-        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "hk416_grip_std", anchor = { x = -18, y = 30 } },
-        { path = "stock", accepts = { "AR_stock" }, defaultPart = "hk416_stock_std", anchor = { x = -70, y = 1 } },
-        { path = "upperreceiver", accepts = { "AR_upperreceiver" }, defaultPart = "deep_hk416a5_upper_receiver", anchor = { x = 0, y = 0 } }
+        { path = "upper_receiver", accepts = { "AR_upper_receiver" }, defaultPart = "deep_hk416a5_upper_receiver", anchor = { x = 13, y = -24 } },
+        { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "deep_miad_pistol_grip", anchor = { x = -26, y = 12 } },
+        { path = "buffer_tube", accepts = { "AR_buffer_tube" }, defaultPart = "deep_hket_buffer_tube", anchor = { x = -60, y = -20 } }
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
         -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }

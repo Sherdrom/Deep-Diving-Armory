@@ -13,7 +13,7 @@ parts.deep_6p20_sb5_ak_stock = {
     stats = { Ergonomics = 2 },
     visual = { 
         texture = texture,
-        source = { x = 10, y = 10, w = 142, h = 60 },
+        source = { x = 6, y = 7, w = 142, h = 60 },
         attachPoint = { x = 142, y = 14 },
         order = 30,
         scale = 1

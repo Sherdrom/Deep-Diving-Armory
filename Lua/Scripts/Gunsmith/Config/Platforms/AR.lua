@@ -20,17 +20,19 @@ config.platforms.AR = {
     -- 不在这里的挂点都是可选项，例如 optic_mount、top_rail。
     requiredSlots = { 
         "barrel",
-        "handguard",
-        "pistol_grip",
-        "stock"
+        "upper_receiver",
+        "buffer_tube",
+        "gas_block",
     },
 
     -- UI 显示文本只写本地化 key，实际文本放在 text/chinese.xml 等语言文件。
     -- 子挂点 path 也建议登记在这里，方便路径显示为“枪械 > 护木 > 上导轨”。
     pathNameKeys = {
         receiver = "deep.gunsmith.path.receiver",
-        upperreceiver = "deep.gunsmith.path.upperreceiver",
+        upper_receiver = "deep.gunsmith.path.upper_receiver",
+        buffer_tube = "deep.gunsmith.path.buffer_tube",
         barrel = "deep.gunsmith.path.barrel",
+        gas_block = "deep.gunsmith.path.gas_block",
         handguard = "deep.gunsmith.path.handguard",
         pistol_grip = "deep.gunsmith.path.pistol_grip",
         stock = "deep.gunsmith.path.stock",
