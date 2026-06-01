@@ -60,6 +60,11 @@
       border: 1px solid var(--line);
     }
 
+    section.tools {
+      align-self: start;
+      max-height: 100%;
+    }
+
     .panel-title {
       position: sticky;
       top: 0;
@@ -284,20 +289,19 @@
   </header>
 
   <main>
-    <section>
+    <section class="tools">
       <div class="panel-title">项目与工具</div>
       <div class="group">
         <div class="row"><label>精灵图</label><input id="imageFile" type="file" accept="image/*" multiple></div>
         <div class="row"><label>查看图片</label><select id="imageSelect"></select></div>
         <div class="buttons">
           <button id="saveProject" class="primary">保存工程</button>
-          <button id="saveProjectAs">工程另存为</button>
-          <button id="loadProjectButton">打开工程 JSON</button>
-          <button id="importProjectImages">导入项目图片目录</button>
+          <button id="exportProjectPaths">导出(相对路径)</button>
+          <button id="exportProjectEmbedded">导出(内嵌图片)</button>
+          <button id="loadProjectButton">导入工程 JSON</button>
         </div>
         <input id="loadProject" type="file" accept="application/json" hidden>
-        <input id="imageDirectory" type="file" accept="image/*" multiple webkitdirectory hidden>
-        <p id="projectStatus" class="hint">工程 JSON 会优先保存项目内图片相对路径；普通图片会保存 DataURL。</p>
+        <p id="projectStatus" class="hint">选择项目内 GunSmith 图片会自动匹配相对路径；相对路径导出不会写入图片 DataURL。</p>
       </div>
 
       <div class="group">
@@ -338,14 +342,6 @@
         <div class="row"><label>root y</label><input id="rootY" type="number" value="160"></div>
       </div>
 
-      <div class="group">
-        <div class="buttons">
-          <button id="addPart" class="primary">新增部件</button>
-          <button id="duplicatePart">复制部件</button>
-          <button id="deletePart" class="danger">删除部件</button>
-          <button id="loadM4Example">填入 M4 示例</button>
-        </div>
-      </div>
     </section>
 
     <section>
@@ -362,9 +358,18 @@
     </section>
 
     <section class="right">
-      <div class="panel-title">部件与导出</div>
+      <div class="panel-title">部件</div>
       <div class="group">
         <div id="partList" class="list"></div>
+      </div>
+
+      <div class="group">
+        <div class="buttons">
+          <button id="addPart" class="primary">新增部件</button>
+          <button id="duplicatePart">复制部件</button>
+          <button id="deletePart" class="danger">删除部件</button>
+          <button id="loadM4Example">填入 M4 示例</button>
+        </div>
       </div>
 
       <div class="group">
@@ -417,6 +422,25 @@
   </main>
 
   <script>
+    const PROJECT_IMAGE_FILES = [
+      { path: "GunSmith/AK/DustCover/SharedDustCoverAK.png", name: "SharedDustCoverAK.png", size: 85253 },
+      { path: "GunSmith/AK/HandGuard/SharedHandGuardAK.png", name: "SharedHandGuardAK.png", size: 91994 },
+      { path: "GunSmith/AK/Main/AK74.png", name: "AK74.png", size: 94513 },
+      { path: "GunSmith/AR/Barrel/Barrel.png", name: "Barrel.png", size: 49053 },
+      { path: "GunSmith/AR/HandGuard/HK416.png", name: "HK416.png", size: 91768 },
+      { path: "GunSmith/AR/HandGuard/M4A1.png", name: "M4A1.png", size: 85120 },
+      { path: "GunSmith/AR/Main/HK416.png", name: "HK416.png", size: 82017 },
+      { path: "GunSmith/AR/Main/M4A1.png", name: "M4A1.png", size: 81350 },
+      { path: "GunSmith/AR/UpperReceiver/HK416.png", name: "HK416.png", size: 79557 },
+      { path: "GunSmith/AR/UpperReceiver/M4A1.png", name: "M4A1.png", size: 81455 },
+      { path: "GunSmith/SharedParts/BufferTube/SharedBufferTube.png", name: "SharedBufferTube.png", size: 88052 },
+      { path: "GunSmith/SharedParts/PistolGrip/SharedGripAK.png", name: "SharedGripAK.png", size: 85281 },
+      { path: "GunSmith/SharedParts/PistolGrip/SharedGripAR.png", name: "SharedGripAR.png", size: 90235 },
+      { path: "GunSmith/SharedParts/Rail/SharedRailParts.png", name: "SharedRailParts.png", size: 87809 },
+      { path: "GunSmith/SharedParts/Stock/SharedStockAK.png", name: "SharedStockAK.png", size: 100746 },
+      { path: "GunSmith/SharedParts/Stock/SharedStockAR.png", name: "SharedStockAR.png", size: 102670 }
+    ];
+
     const state = {
       images: [],
       activeImageIndex: 0,
@@ -428,6 +452,7 @@
       rootSocket: { x: 209, y: 160 },
       projectHandle: null,
       projectName: "",
+      saveImageMode: "paths",
       selected: 0,
       parts: [
         createPart("M4_receiver_std", "M4 标准机匣", "receiver", null, "receiver", 30)
@@ -437,7 +462,7 @@
 
     const el = {};
     for (const id of [
-      "imageFile", "imageDirectory", "imageSelect", "saveProject", "saveProjectAs", "loadProjectButton", "loadProject", "importProjectImages",
+      "imageFile", "imageSelect", "saveProject", "exportProjectPaths", "exportProjectEmbedded", "loadProjectButton", "loadProject",
       "projectStatus", "fitImage", "zoom", "showGrid", "backgroundColor",
       "canvasW", "canvasH", "rootX", "rootY", "addPart", "duplicatePart", "deletePart", "loadM4Example",
       "sheetCanvas", "previewCanvas", "sheetHud", "previewHud", "partList", "partId", "partName", "partType",
@@ -1145,8 +1170,9 @@
       return beforeTool.split("/").filter(Boolean).pop() || "";
     }
 
-    function projectRelativePathFromFile(file, useProjectRelativePath) {
-      if (!useProjectRelativePath) return "";
+    function projectRelativePathFromFile(file) {
+      const exactMatches = PROJECT_IMAGE_FILES.filter(entry => entry.name === file.name && entry.size === file.size);
+      if (exactMatches.length === 1) return exactMatches[0].path;
       const raw = normalizePath(file.webkitRelativePath || "");
       if (!raw) return "";
       const parts = raw.split("/").filter(Boolean);
@@ -1169,7 +1195,7 @@
       el.projectStatus.textContent = message;
     }
 
-    function loadImages(files, options = {}) {
+    function loadImages(files) {
       const list = Array.from(files || []).filter(file => file.type.startsWith("image/") || /\.(png|jpe?g|gif|webp|bmp)$/i.test(file.name));
       if (!list.length) return;
       const baseIndex = state.images.length;
@@ -1180,11 +1206,11 @@
         reader.onload = () => {
           const img = new Image();
           img.onload = () => {
-            const path = projectRelativePathFromFile(file, options.useProjectRelativePath);
+            const path = projectRelativePathFromFile(file);
             state.images[baseIndex + index] = {
               name: file.name,
               path,
-              dataUrl: path ? "" : reader.result,
+              dataUrl: reader.result,
               image: img
             };
             remaining -= 1;
@@ -1194,7 +1220,11 @@
               const part = selectedPart();
               if (part) part.imageIndex = state.activeImageIndex;
               refreshImageSelects();
-              setProjectStatus(state.images.some(entry => entry.path) ? "已导入项目图片目录；另存为会使用项目相对路径。" : "已导入图片；没有项目相对路径的图片会写入 DataURL。");
+              const imported = state.images.slice(baseIndex);
+              const matched = imported.filter(entry => entry.path).length;
+              setProjectStatus(matched > 0
+                ? `已导入 ${imported.length} 张图片，其中 ${matched} 张匹配项目相对路径。`
+                : "已导入图片；未匹配到项目相对路径。");
               fitImage();
             }
           };
@@ -1255,13 +1285,32 @@
       });
     }
 
-    function projectImageData() {
-      return state.images.map(entry => {
+    async function imageDataUrlForExport(entry) {
+      if (entry.dataUrl) return entry.dataUrl;
+      if (!entry.image) return "";
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = entry.image.naturalWidth || entry.image.width;
+        canvas.height = entry.image.naturalHeight || entry.image.height;
+        canvas.getContext("2d").drawImage(entry.image, 0, 0);
+        return canvas.toDataURL("image/png");
+      } catch {
+        return "";
+      }
+    }
+
+    async function projectImageData(imageMode) {
+      const images = [];
+      for (const entry of state.images) {
         const data = { name: entry.name || "" };
         if (entry.path) data.path = normalizePath(entry.path);
-        if (!entry.path && entry.dataUrl) data.dataUrl = entry.dataUrl;
-        return data;
-      });
+        if (imageMode === "embedded") {
+          const dataUrl = await imageDataUrlForExport(entry);
+          if (dataUrl) data.dataUrl = dataUrl;
+        }
+        images.push(data);
+      }
+      return images;
     }
 
     function migrateProjectImages(data) {
@@ -1270,11 +1319,12 @@
       return [];
     }
 
-    function projectData() {
+    async function projectData(imageMode) {
       applyFields();
       return {
         version: 2,
-        images: projectImageData(),
+        imageMode,
+        images: await projectImageData(imageMode),
         activeImageIndex: state.activeImageIndex,
         background: state.background,
         canvas: state.canvas,
@@ -1284,34 +1334,43 @@
       };
     }
 
-    function projectJson() {
-      return JSON.stringify(projectData(), null, 2);
+    async function projectJson(imageMode) {
+      return JSON.stringify(await projectData(imageMode), null, 2);
     }
 
-    async function writeProjectToHandle(handle) {
+    function exportStatusSuffix(imageMode) {
+      if (imageMode === "embedded") return "图片数据已写入 JSON。";
+      const missing = state.images.filter(entry => !entry.path).length;
+      return missing > 0
+        ? `${missing} 张图片没有项目相对路径，已按要求不写入图片数据。`
+        : "仅保存项目相对路径，未写入图片数据。";
+    }
+
+    async function writeProjectToHandle(handle, imageMode) {
       const writable = await handle.createWritable();
-      await writable.write(projectJson());
+      await writable.write(await projectJson(imageMode));
       await writable.close();
       state.projectHandle = handle;
       state.projectName = handle.name || state.projectName;
-      setProjectStatus(`已保存到 ${state.projectName || "当前工程 JSON"}。`);
+      state.saveImageMode = imageMode;
+      setProjectStatus(`已保存到 ${state.projectName || "当前工程 JSON"}。${exportStatusSuffix(imageMode)}`);
     }
 
-    async function saveProjectAs() {
+    async function exportProject(imageMode) {
       if (window.showSaveFilePicker) {
         const handle = await window.showSaveFilePicker({
           suggestedName: state.projectName || "gunsmith-anchor-project.json",
           types: [{ description: "JSON", accept: { "application/json": [".json"] } }]
         });
-        await writeProjectToHandle(handle);
+        await writeProjectToHandle(handle, imageMode);
         return;
       }
-      downloadProjectJson();
-      setProjectStatus("浏览器不支持直接写文件，已用下载方式另存为。");
+      await downloadProjectJson(imageMode);
+      setProjectStatus(`浏览器不支持直接写文件，已用下载方式导出。${exportStatusSuffix(imageMode)}`);
     }
 
-    function downloadProjectJson() {
-      const data = projectJson();
+    async function downloadProjectJson(imageMode) {
+      const data = await projectJson(imageMode);
       const blob = new Blob([data], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -1323,10 +1382,10 @@
 
     async function saveProject() {
       if (state.projectHandle) {
-        await writeProjectToHandle(state.projectHandle);
+        await writeProjectToHandle(state.projectHandle, state.saveImageMode || "paths");
         return;
       }
-      await saveProjectAs();
+      await exportProject(state.saveImageMode || "paths");
     }
 
     async function openProject() {
@@ -1358,6 +1417,7 @@
         state.rootSocket = data.rootSocket || state.rootSocket;
         state.parts = Array.isArray(data.parts) ? data.parts : state.parts;
         state.selected = Math.min(data.selected || 0, state.parts.length - 1);
+        state.saveImageMode = data.imageMode || (migrateProjectImages(data).some(entry => entry.dataUrl) ? "embedded" : "paths");
         loadImageEntries(migrateProjectImages(data), () => {
           state.activeImageIndex = Math.min(data.activeImageIndex || 0, Math.max(state.images.length - 1, 0));
           state.parts.forEach(normalizePart);
@@ -1473,8 +1533,6 @@
       selectPart(index);
     });
     el.imageFile.onchange = event => loadImages(event.target.files);
-    el.importProjectImages.onclick = () => el.imageDirectory.click();
-    el.imageDirectory.onchange = event => loadImages(event.target.files, { useProjectRelativePath: true });
     el.imageSelect.onchange = () => {
       if (!state.images.length) return;
       state.activeImageIndex = Number(el.imageSelect.value);
@@ -1488,7 +1546,8 @@
       fitImage();
     };
     el.saveProject.onclick = () => saveProject().catch(error => setProjectStatus(`保存失败：${error.message}`));
-    el.saveProjectAs.onclick = () => saveProjectAs().catch(error => setProjectStatus(`另存为失败：${error.message}`));
+    el.exportProjectPaths.onclick = () => exportProject("paths").catch(error => setProjectStatus(`导出失败：${error.message}`));
+    el.exportProjectEmbedded.onclick = () => exportProject("embedded").catch(error => setProjectStatus(`导出失败：${error.message}`));
     el.loadProjectButton.onclick = () => openProject().catch(error => setProjectStatus(`打开失败：${error.message}`));
     el.loadProject.onchange = event => loadProject(event.target.files[0]);
     el.fitImage.onclick = fitImage;
