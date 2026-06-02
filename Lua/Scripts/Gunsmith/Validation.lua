@@ -141,6 +141,19 @@ local function hiddenRootPathFor(rootSlots)
     return hiddenPath, nil
 end
 
+local function validRelativePath(path)
+    return type(path) == "string" and path ~= "" and
+        string.sub(path, 1, 1) ~= "/" and
+        string.sub(path, -1) ~= "/" and
+        not string.find(path, "//", 1, true)
+end
+
+local function forEachPathSegment(path, callback)
+    for segment in string.gmatch(path, "[^/]+") do
+        callback(segment)
+    end
+end
+
 local function itemPrefabExists(identifier)
     if not identifier or identifier == "" then return true end
     if not ItemPrefab or not ItemPrefab.GetItemPrefab then return true end
@@ -386,7 +399,7 @@ function Validation.Run(configOverride, label)
                     local hiddenPath, hiddenError = hiddenRootPathFor(rootSlots)
                     if hiddenPath == nil then
                         local reason = hiddenError == "multiple" and "multiple hidden rootSlots" or "no hidden rootSlot"
-                        table.insert(errors, "Platform '" .. platformId .. "' requiredSlots uses short paths but has " .. reason .. ".")
+                        table.insert(errors, "Platform '" .. platformId .. "' requiredSlots uses hidden-root-relative paths but has " .. reason .. ".")
                     end
                     if not isArray(platform.requiredSlots) then
                         table.insert(errors, "Platform '" .. platformId .. "' requiredSlots must be an array, not a keyed table.")
@@ -396,14 +409,20 @@ function Validation.Run(configOverride, label)
                             local requiredLabel = "Platform '" .. platformId .. "' requiredSlots #" .. tostring(index)
                             if type(requiredPath) ~= "string" or requiredPath == "" then
                                 table.insert(errors, requiredLabel .. " must be a non-empty string.")
-                            elseif string.find(requiredPath, "/", 1, true) then
-                                table.insert(errors, requiredLabel .. " uses removed full path '" .. requiredPath .. "'; use hidden-root-relative path.")
+                            elseif not validRelativePath(requiredPath) then
+                                table.insert(errors, requiredLabel .. " must be a relative path without empty segments.")
+                            elseif hiddenPath ~= nil and (requiredPath == hiddenPath or string.sub(requiredPath, 1, #hiddenPath + 1) == hiddenPath .. "/") then
+                                table.insert(errors, requiredLabel .. " uses removed full path '" .. requiredPath .. "'; omit hidden root '" .. hiddenPath .. "'.")
                             elseif seenRequiredSlots[requiredPath] then
                                 table.insert(errors, requiredLabel .. " duplicates required slot '" .. requiredPath .. "'.")
                             else
                                 seenRequiredSlots[requiredPath] = true
-                                if type(platform.pathNameKeys) == "table" and type(platform.pathNameKeys[requiredPath]) ~= "string" then
-                                    table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys missing required slot '" .. requiredPath .. "'.")
+                                if type(platform.pathNameKeys) == "table" then
+                                    forEachPathSegment(requiredPath, function(segment)
+                                        if type(platform.pathNameKeys[segment]) ~= "string" then
+                                            table.insert(errors, "Platform '" .. platformId .. "' pathNameKeys missing required slot segment '" .. segment .. "' from '" .. requiredPath .. "'.")
+                                        end
+                                    end)
                                 end
                             end
                         end

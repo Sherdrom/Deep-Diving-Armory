@@ -567,31 +567,68 @@ local function selectionSubtreePaths(selection, slotPath)
     return paths
 end
 
-local function returnSelectionSubtree(character, sourceItem, selection, slotPath, onAllReturned)
+local function quickSlotsInSubtree(sourceItem, selection, platform, slotPath)
+    local quickSlotsByPath = {}
+    if not QuickMod or not Core.QuickSlotsForSelection then return quickSlotsByPath end
+
+    local prefix = slotPath .. "/"
+    for _, quickSlot in ipairs(Core.QuickSlotsForSelection(sourceItem, selection, platform)) do
+        local path = quickSlot.path
+        if type(path) == "string" and (path == slotPath or string.sub(path, 1, #prefix) == prefix) then
+            quickSlotsByPath[path] = quickSlot.slot
+        end
+    end
+    return quickSlotsByPath
+end
+
+local function returnSelectionSubtree(character, sourceItem, selection, platform, slotPath, onAllReturned)
     if not Inventory then return 0 end
-    local parts = {}
-    for _, path in ipairs(selectionSubtreePaths(selection, slotPath)) do
-        local partId = selection[path]
-        local part = Core.GetPart(partId)
-        if part and Inventory.ItemIdentifierForPart(part) then
-            table.insert(parts, part)
+    local returns = {}
+    local quickReturnedPaths = {}
+    local quickSlotsByPath = quickSlotsInSubtree(sourceItem, selection, platform, slotPath)
+
+    for path, slotIndex in pairs(quickSlotsByPath) do
+        if slotIndex ~= nil and QuickMod.HasSlotItem(sourceItem, slotIndex) then
+            table.insert(returns, { quickSlotIndex = slotIndex })
+            quickReturnedPaths[path] = true
         end
     end
 
-    local pending = #parts
+    for _, path in ipairs(selectionSubtreePaths(selection, slotPath)) do
+        local partId = selection[path]
+        local part = Core.GetPart(partId)
+        if part and Inventory.ItemIdentifierForPart(part) and not quickReturnedPaths[path] then
+            table.insert(returns, { part = part })
+        end
+    end
+
+    local pending = #returns
     if pending == 0 then return 0 end
 
     local completed = 0
-    local function onReturned()
-        completed = completed + 1
-        if completed >= pending and onAllReturned then
+    local notified = false
+    local function notifyIfComplete()
+        if not notified and pending > 0 and completed >= pending and onAllReturned then
+            notified = true
             onAllReturned()
         end
     end
 
-    for _, part in ipairs(parts) do
-        if not Inventory.ReturnPartItem(character, part, onReturned, sourceItem) then
+    local function onReturned()
+        completed = completed + 1
+        notifyIfComplete()
+    end
+
+    for _, returnSpec in ipairs(returns) do
+        local queued = false
+        if returnSpec.quickSlotIndex ~= nil and QuickMod then
+            queued = QuickMod.ClearSlot(sourceItem, character, returnSpec.quickSlotIndex, onReturned) == true
+        elseif returnSpec.part then
+            queued = Inventory.ReturnPartItem(character, returnSpec.part, onReturned, sourceItem) == true
+        end
+        if not queued then
             pending = pending - 1
+            notifyIfComplete()
         end
     end
 
@@ -657,7 +694,7 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
 
     if partId == Gunsmith.EmptyPartId then
         if Core.IsRequiredSlot(platform, slotPath) then return end
-        returnedParts = returnSelectionSubtree(character, item, selection, slotPath, refreshWhenReturned)
+        returnedParts = returnSelectionSubtree(character, item, selection, platform, slotPath, refreshWhenReturned)
         selection[slotPath] = nil
     else
         local part = Gunsmith.Config.parts[partId]
@@ -667,7 +704,7 @@ function Runtime.SetPart(item, slotPath, partId, refreshMode)
             print("[Gunsmith] Missing part item for " .. tostring(partId))
             return
         end
-        returnedParts = returnSelectionSubtree(character, item, selection, slotPath, refreshWhenReturned)
+        returnedParts = returnSelectionSubtree(character, item, selection, platform, slotPath, refreshWhenReturned)
         selection[slotPath] = partId
     end
 
