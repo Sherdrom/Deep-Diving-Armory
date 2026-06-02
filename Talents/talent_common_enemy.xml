@@ -5,7 +5,7 @@
     <Description tag="talentdescription.deep_talent_common_enemy">
     </Description>
     <!-- 敌人基础调整 -->
-    <!-- 小惩罚机制：敌人在水中5s后，+50%伤害 -->
+    <!-- 小惩罚机制：敌人在水中5s后，+50%伤害 
     <AbilityGroupInterval interval="3">
       <Conditions>
         <AbilityConditionInWater/>
@@ -15,7 +15,7 @@
         <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
         <CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval>-->
     <!-- 抗性 -->
     <AbilityGroupInterval interval="1">
       <Abilities>
@@ -87,7 +87,7 @@
       </Abilities>
     </AbilityGroupInterval>
 
-    <!--敌人受到攻击时会反击，平时攻击距离为1300-->
+    <!--敌人受到攻击时会反击，平时攻击距离为1200-->
     <AbilityGroupEffect abilityeffecttype="OnAttackedResult">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -199,6 +199,57 @@
           <StatusEffects>
             <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true" stackable="false" comparison="and">
               <Affliction identifier="deep_chip_blaster" strength="5" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupInterval>
+
+
+    <!--被帽弹头-->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="chip_headshot_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+              <Affliction identifier="chip_headshot_effect" strength="100.0" />
+              <Affliction identifier="chip_headshot_effect_weak" strength="100.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!--碎甲弹头-->
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="chip_bodyshot_detect" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" setvalue="true" disabledeltatime="true">
+              <Affliction identifier="chip_bodyshot_effect_weak" strength="100.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
+      </Abilities>
+    </AbilityGroupEffect>
+
+    <!--紧急除颤-->
+    <AbilityGroupInterval interval="0.5" maxtriggercount="1" effectdelay="1">
+      <Conditions>
+        <AbilityConditionHasAffliction afflictionidentifier="chip_emergency_defibrillation_detect" />
+        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+              <Affliction identifier="chip_emergency_defibrillation" amount="1.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
