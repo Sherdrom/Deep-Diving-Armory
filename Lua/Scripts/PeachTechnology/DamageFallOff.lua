@@ -1,4 +1,6 @@
 -- 伤害衰减脚本 - 多套衰减配置版本
+local AH = AfflictionHelper
+
 local cfg = {
     enabled = true,
     showInConsole = false,
@@ -49,13 +51,9 @@ local function detectFalloff(attacker)
     if attacker == nil or attacker.CharacterHealth == nil then return nil, nil end
 
     for affName, profile in pairs(falloffProfiles) do
-        local affliction = attacker.CharacterHealth.GetAffliction(affName)
-        if affliction ~= nil then
-            local strength = affliction.Strength
-            if strength > 0.5 then
-                debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), strength))
-                return affName, profile
-            end
+        if AH.GetAffStrength(attacker, affName) > 0.5 then
+            debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), AH.GetAffStrength(attacker, affName)))
+            return affName, profile
         end
     end
 
@@ -75,9 +73,9 @@ local function getAllAffsDebug(attacker)
 
     local parts = {}
     for affName, _ in pairs(falloffProfiles) do
-        local aff = attacker.CharacterHealth.GetAffliction(affName)
-        if aff ~= nil then
-            parts[#parts + 1] = string.format("%s=%.2f", tostring(affName), aff.Strength or 0)
+        local strength = AH.GetAffStrength(attacker, affName)
+        if strength > 0 then
+            parts[#parts + 1] = string.format("%s=%.2f", tostring(affName), strength)
         else
             parts[#parts + 1] = tostring(affName) .. "=none"
         end

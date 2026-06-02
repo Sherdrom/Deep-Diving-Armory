@@ -71,6 +71,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/SuitSprite/MarkSuit.lua"
 --苯科技
 
 --桃子科技
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HelperFunctions.lua")--工具函数
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
