@@ -1168,7 +1168,7 @@
   </EventSet>
 
 
-  <EventSet identifier="deep_outpost_event" leveltype="outpost" locationtype="deep_mobile_city_typhoon" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="80" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true">
+  <EventSet identifier="deep_outpost_event" leveltype="outpost" locationtype="deep_mobile_city_typhoon" allowatstart="true" minleveldifficulty="0" maxleveldifficulty="100" additive="true" selectalways="true" chooserandom="false" ignorecooldown="true">
 
     <!-- ****************************************************************************************************************************************************** -->
     <!-- Mission EventSets -->
@@ -1330,7 +1330,8 @@
           <ScriptedEvent identifier="missionevent_collectminerals_set4" commonness="50" />
         </EventSet>
         <EventSet identifier="missionevents.theaphoticplateau.general.ruin" chooserandom="true" commonness="100" allowatstart="true">
-          <ScriptedEvent identifier="missionevent_scanruin" />
+          <ScriptedEvent identifier="missionevent_scanruin" commonness="50" />
+          <ScriptedEvent identifier="missionevent_lostinruins" commonness="50" />
         </EventSet>
       </EventSet>
       <EventSet identifier="missionevents.theaphoticplateau.faction" chooserandom="true" eventcount="1" allowatstart="true">
@@ -1379,8 +1380,9 @@
           <ScriptedEvent identifier="missionevent_collectminerals_set4" commonness="25" />
         </EventSet>
         <EventSet identifier="missionevents.greatsea.general.ruin" chooserandom="true" commonness="200" allowatstart="true">
-          <ScriptedEvent identifier="missionevent_scanruin" commonness="100" />
-          <ScriptedEvent identifier="missionevent_clearruin" commonness="100" />
+          <ScriptedEvent identifier="missionevent_scanruin" commonness="66" />
+          <ScriptedEvent identifier="missionevent_clearruin" commonness="66" />
+          <ScriptedEvent identifier="missionevent_lostinruins" commonness="66" />
         </EventSet>
       </EventSet>
       <EventSet identifier="missionevents.greatsea.faction" chooserandom="true" eventcount="1" allowatstart="true">
@@ -1420,8 +1422,8 @@
         </EventSet>
         <EventSet identifier="missionevents.wastes.general.nest" chooserandom="true" commonness="100" allowatstart="true">
           <ScriptedEvent identifier="missionevent_crawlernest_hard" commonness="20" />
-          <ScriptedEvent identifier="missionevent_mudraptornest" commmonness="40"/>
-          <ScriptedEvent identifier="missionevent_tigerthreshernest" commonness="40" />
+          <ScriptedEvent identifier="missionevent_mudraptornest_hard" commmonness="40"/>
+          <ScriptedEvent identifier="missionevent_tigerthreshernest_hard" commonness="40" />
         </EventSet>
         <EventSet identifier="missionevents.wastes.general.mining" chooserandom="true" commonness="100" allowatstart="true">
           <ScriptedEvent identifier="missionevent_collectminerals_set3" commonness="25" />
@@ -1429,7 +1431,8 @@
         </EventSet>
         <EventSet identifier="missionevents.wastes.general.ruin" chooserandom="true" commonness="200" allowatstart="true">
           <ScriptedEvent identifier="missionevent_scanruin" commonness="50" />
-          <ScriptedEvent identifier="missionevent_clearruin2" commonness="150" />
+          <ScriptedEvent identifier="missionevent_clearruin2" commonness="100" />
+          <ScriptedEvent identifier="missionevent_lostinruins" commonness="50" />
         </EventSet>
       </EventSet>
       <EventSet idenfitier="missionevents.wastes.faction" chooserandom="true" eventcount="1" allowatstart="true">
@@ -1446,6 +1449,7 @@
     <EventSet identifier="outpostevents.clowns.missionevents" minleveldifficulty="0" maxleveldifficulty="100" allowatstart="true" chooserandom="true" exhaustible="true">
       <ScriptedEvent identifier="missionevent_escort1clowns" commonness="50" faction="clowns" probability="0.8" />
       <ScriptedEvent identifier="missionevent_clownoutbreak" commonness="50" faction="clowns" probability="0.8" />
+      <ScriptedEvent identifier="missionevent_salvageclown" commonness="50" faction="clowns" probability="0.8" />
     </EventSet>
     <!-- generic husk cult missions -->
     <EventSet identifier="outpostevents.huskcult.missionevents" minleveldifficulty="0" maxleveldifficulty="100" allowatstart="true" chooserandom="true" exhaustible="true">
@@ -1471,6 +1475,7 @@
       <ScriptedEvent identifier="fanclub" commonness="100" />
       <ScriptedEvent identifier="shockjock" commonness="60" />
       <ScriptedEvent identifier="manandhisraptor1" commonness="50" />
+      <ScriptedEvent identifier="timetrials" commonness="90"/>
       <ScriptedEvent identifier="assassinationofjacovsubra2" commonness="100" />
       <ScriptedEvent identifier="assassinationofjacovsubra3" commonness="100" />
       <ScriptedEvent identifier="propaganda" commonness="100" faction="coalition" />
@@ -1495,6 +1500,7 @@
       <ScriptedEvent identifier="fanclub" commonness="50" />
       <ScriptedEvent identifier="shockjock" commonness="40" />
       <ScriptedEvent identifier="manandhisraptor1" commonness="60" />
+      <ScriptedEvent identifier="timetrials" commonness="80"/>
       <ScriptedEvent identifier="assassinationofjacovsubra2" commonness="100" />
       <ScriptedEvent identifier="assassinationofjacovsubra3" commonness="100" />
       <ScriptedEvent identifier="nothingtoseehere" commonness="50" faction="coalition" />
@@ -1570,10 +1576,21 @@
       <ScriptedEvent identifier="radiationescapee" commonness="50" />
     </EventSet>
 
+    <!--Always trigger when past difficulty 15, unless completed. Foreshadows explore alien ruins event set, completing part 1 of that set first will block this event.-->
+    <EventSet identifier="ruinmissionforeshadowing" minleveldifficulty="15">
+      <ScriptedEvent identifier="associate" />
+    </EventSet>
+
     <!--Always trigger when past difficulty 25, unless completed. Introduces alien ruins.-->
     <EventSet identifier="ruinintroduction" allowatstart="true" minleveldifficulty="25">
       <ScriptedEvent identifier="badvibrations1" />
     </EventSet>
+
+    <!--Always trigger when past difficulty 50, unless completed. Foreshadows Dr. af Grann. -->
+    <EventSet identifier="outpostevent.nowayout" minleveldifficulty="50">
+      <ScriptedEvent identifier="nowayout" />
+    </EventSet>
+
 
     <!-- ****************************************************************************************************************************************************** -->
     <!-- Faction EventSets -->
@@ -1636,5 +1653,6 @@
       <ScriptedEvent identifier="waytoascension4" commonness="100" />
       <ScriptedEvent identifier="waytoascension5" commonness="100" />
     </EventSet>
+
   </EventSet>
 </Randomevents>
