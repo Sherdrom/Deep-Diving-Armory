@@ -11,7 +11,7 @@ parts.deep_miad_pistol_grip = { type = "pistol_grip",
     stats = { Ergonomics = 4 },
     visual = { 
         texture = texture,
-        source = { x = 3, y = 73, w = 53, h = 63 },
+        source = { x = 5, y = 74, w = 53, h = 63 },
         attachPoint = { x = 52, y = 2 },
         order = 50,
         scale = 1.0

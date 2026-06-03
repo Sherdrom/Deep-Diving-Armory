@@ -12,7 +12,7 @@ parts.deep_ctr_fde_stock = { type = "stock",
     stats = { Ergonomics = 3 },
     visual = { 
         texture = texture,
-        source = { x = 4, y = 103, w = 104, h = 76 },
+        source = { x = 14, y = 110, w = 104, h = 76 },
         attachPoint = { x = 103, y = 11 },  -- 挂载点位相对source的位置
         order = 30,
         scale = 1.0
