@@ -563,6 +563,23 @@ function Validation.Run(configOverride, label)
             else
                 addSetValues(providedTypes, part.provides)
             end
+            if part.excludes ~= nil then
+                if not hasStringArray(part.excludes) then
+                    table.insert(errors, "Part '" .. partId .. "' excludes must be a non-empty string array when declared.")
+                else
+                    local seenExcludes = {}
+                    for _, excludedPartId in ipairs(part.excludes) do
+                        if excludedPartId == partId then
+                            table.insert(errors, "Part '" .. partId .. "' excludes itself.")
+                        elseif not parts[excludedPartId] then
+                            table.insert(errors, "Part '" .. partId .. "' excludes missing part '" .. tostring(excludedPartId) .. "'.")
+                        elseif seenExcludes[excludedPartId] then
+                            table.insert(errors, "Part '" .. partId .. "' excludes duplicate part '" .. tostring(excludedPartId) .. "'.")
+                        end
+                        seenExcludes[excludedPartId] = true
+                    end
+                end
+            end
 
             for _, field in ipairs(oldPartFields) do
                 if part[field] ~= nil then
@@ -828,6 +845,7 @@ function Validation.RunSelfTest()
                 type = "stock",
                 nameKey = "deep.gunsmith.test.part.bad_type",
                 provides = { "test_barrel" },
+                excludes = { 42 },
                 item = { virtual = true },
                 visual = {
                     texture = "bad_type",
@@ -839,6 +857,7 @@ function Validation.RunSelfTest()
                 type = "stock",
                 nameKey = "deep.gunsmith.test.part.stock",
                 provides = { "test_stock" },
+                excludes = { "missing_excluded_part" },
                 item = { virtual = true },
                 visual = {
                     texture = "test_stock",
@@ -850,6 +869,7 @@ function Validation.RunSelfTest()
                 type = "stock",
                 nameKey = "deep.gunsmith.test.part.cycle",
                 provides = { "test_stock" },
+                excludes = { "cycle_part" },
                 item = { virtual = true },
                 mounts = {
                     { path = "stock", accepts = { "test_stock" }, defaultPart = "cycle_part", anchor = { x = 0, y = 0 } }
@@ -859,6 +879,7 @@ function Validation.RunSelfTest()
                 type = "receiver",
                 name = "Old Field Part",
                 provides = { "test_receiver" },
+                excludes = "bad_excludes",
                 texture = "removed_field"
             },
             bad_visual_part = {

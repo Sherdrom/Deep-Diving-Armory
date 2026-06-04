@@ -74,12 +74,60 @@ function Core.LeafPath(path)
     return string.match(path, "([^/]+)$") or path
 end
 
+local function clearDescendants(selection, slotPath)
+    local prefix = slotPath .. "/"
+    for path, _ in pairs(selection) do
+        if string.sub(path, 1, #prefix) == prefix then
+            selection[path] = nil
+        end
+    end
+end
+
 local rootSlotDefsCache = setmetatable({}, { __mode = "k" })
 local rootSlotDefByPathCache = setmetatable({}, { __mode = "k" })
 local mountByParentPartCache = setmetatable({}, { __mode = "k" })
 local requiredSlotSetByPlatformCache = setmetatable({}, { __mode = "k" })
 local hiddenHomeRootPathCache = setmetatable({}, { __mode = "k" })
 local noHiddenHomeRootPath = {}
+
+function Core.PartExcludes(part)
+    if not part or type(part.excludes) ~= "table" then return {} end
+    return part.excludes
+end
+
+local function partExcludesPartId(part, excludedPartId)
+    if not excludedPartId then return false end
+    for _, partId in ipairs(Core.PartExcludes(part)) do
+        if partId == excludedPartId then return true end
+    end
+    return false
+end
+
+local function pruneExcludedSelections(selection)
+    if type(selection) ~= "table" then return false end
+
+    local removePaths = {}
+    for sourcePath, sourcePartId in pairs(selection) do
+        local sourcePart = Core.GetPart(sourcePartId)
+        for _, excludedPartId in ipairs(Core.PartExcludes(sourcePart)) do
+            for targetPath, targetPartId in pairs(selection) do
+                if targetPath ~= sourcePath and targetPartId == excludedPartId then
+                    removePaths[targetPath] = true
+                end
+            end
+        end
+    end
+
+    local changed = false
+    for path, _ in pairs(removePaths) do
+        if selection[path] ~= nil then
+            selection[path] = nil
+            clearDescendants(selection, path)
+            changed = true
+        end
+    end
+    return changed
+end
 
 function Core.RootSlotDef(platform, path)
     if not platform or not path then return nil end
@@ -192,6 +240,7 @@ function Core.BuildDefaultSelection(platform, weapon)
             Core.ApplyMountDefaultsForPath(selection, path, {}, 0)
         end
     end
+    while pruneExcludedSelections(selection) do end
     defaultSelectionCache[weapon] = selection
     return copySelection(selection)
 end
@@ -396,6 +445,31 @@ local function intersects(left, right)
     return false
 end
 
+local function pathWithin(path, rootPath)
+    if type(path) ~= "string" or type(rootPath) ~= "string" or rootPath == "" then return false end
+    return path == rootPath or string.sub(path, 1, #rootPath + 1) == rootPath .. "/"
+end
+
+local function partsMutuallyExclude(partId, part, otherPartId, otherPart)
+    return partExcludesPartId(part, otherPartId) or partExcludesPartId(otherPart, partId)
+end
+
+function Core.PartConflictsWithSelection(selection, path, partId)
+    if type(selection) ~= "table" then return false end
+    local part = Core.GetPart(partId)
+    if not part then return false end
+
+    for selectedPath, selectedPartId in pairs(selection) do
+        if not pathWithin(selectedPath, path) then
+            local selectedPart = Core.GetPart(selectedPartId)
+            if selectedPart and partsMutuallyExclude(partId, part, selectedPartId, selectedPart) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function Core.AcceptsForPath(selection, platform, path)
     if not platform or not path or path == "" then return nil end
     if Core.IsRootSlot(platform, path) then
@@ -491,6 +565,7 @@ function Core.IsPartCompatible(selection, platform, path, partId)
     local part = Core.GetPart(partId)
     if not part or not platform or not path or path == "" then return false end
     if part.type ~= Core.PartTypeForPath(selection, path) then return false end
+    if Core.PartConflictsWithSelection(selection, path, partId) then return false end
     if Core.IsRootSlot(platform, path) then return true end
 
     local accepts = Core.AcceptsForPath(selection, platform, path)
@@ -583,6 +658,9 @@ function Core.PruneInvalidSelections(selection, platform, weapon)
     local changed = true
     while changed do
         changed = false
+        if pruneExcludedSelections(selection) then
+            changed = true
+        end
         for path, partId in pairs(selection) do
             if not Core.IsValidPath(selection, platform, path) or not Core.IsPartCompatible(selection, platform, path, partId) then
                 local defaultPartId = defaults[path]
@@ -598,12 +676,7 @@ function Core.PruneInvalidSelections(selection, platform, weapon)
 end
 
 function Core.ClearDescendants(selection, slotPath)
-    local prefix = slotPath .. "/"
-    for path, _ in pairs(selection) do
-        if string.sub(path, 1, #prefix) == prefix then
-            selection[path] = nil
-        end
-    end
+    clearDescendants(selection, slotPath)
 end
 
 function Core.SortedSelectionPaths(selection)

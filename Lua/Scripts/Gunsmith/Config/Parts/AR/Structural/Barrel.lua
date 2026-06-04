@@ -14,6 +14,7 @@ parts.deep_370mm_barrel = {
     type = "barrel",
     nameKey = "deep.gunsmith.part.deep_370mm_barrel",
     provides = { "AR_barrel" },
+    -- excludes = { "deep_hk416_four_rail_handguard" },
     item = { identifier = "deep_370mm_barrel" },
     stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
     visual = { texture = texture,
