@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="chemicalreactionchamber" hideinmenus="true" tags="chemicalfabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
+<!--  <Item name="" identifier="chemicalreactionchamber" hideinmenus="true" tags="chemicalfabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine.png" sourcerect="34,13,219,254" depth="0.8" />
     <BrokenSprite texture="%ModDir%/machine/machine.png" sourcerect="281,13,220,253" depth="0.8" maxcondition="60" fadein="true" />
@@ -47,7 +47,7 @@
     </Repairable>
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
-  </Item>
+  </Item>-->
   <Item name="" identifier="deep_general_fabricator" tags="deep_general_fabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.4" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
     <Upgrade gameversion="0.10.4.0">
       <Repairable Msg="ItemMsgRepairWrench" />
@@ -55,15 +55,13 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
       <RequiredItem identifier="plastic" amount="2" />
       <RequiredItem identifier="uranium" amount="1" />
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" amount="2" />
-      <Item identifier="fpgacircuit" amount="1" />
-      <Item identifier="plastic" amount="2" />
     </Deconstruct>
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="372,13,335,277" depth="0.8" origin="0.5,0.5" />
@@ -139,8 +137,6 @@
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" amount="6" />
-      <Item identifier="fpgacircuit" amount="2" />
-      <Item identifier="plastic" amount="4" />
     </Deconstruct>
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="72,11,237,259" depth="0.8" />
@@ -177,14 +173,12 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
-      <RequiredItem identifier="plastic" amount="4" />
+      <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="steel" amount="4" />
-      <Item identifier="fpgacircuit" amount="1" />
-      <Item identifier="plastic" amount="4" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Sprite name="ammoreloadmachine" texture="%ModDir%/machine/machine.png" sourcerect="534,12,220,274" depth="0.74" origin="0.5,0.5" />
     <Body width="280" height="210" density="40" />
@@ -1765,12 +1759,12 @@
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="plastic" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
+      <RequiredItem identifier="plastic" amount="2" />
       <RequiredItem identifier="organicfiber" amount="1" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="steel" amount="4" />
+      <Item identifier="steel" amount="2" />
     </Deconstruct>
     <Sprite texture="%ModDir%/machine/machine_3.png" sourcerect="681,22,538,430" depth="0.84" origin="0.5,0.5" />
     <Body width="538" height="430" density="40" />
