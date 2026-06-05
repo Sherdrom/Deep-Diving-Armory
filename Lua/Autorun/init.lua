@@ -78,9 +78,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoCollisionHoldable.lua")--盾牌不推人
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止痛药，受伤手臂不会乱晃
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOff.lua")--伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffToLeviathan.lua")--对巨兽的伤害衰减
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepGun_InWaterDetect.lua")--水中阻力伤害衰减
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffAll.lua")--伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予天赋

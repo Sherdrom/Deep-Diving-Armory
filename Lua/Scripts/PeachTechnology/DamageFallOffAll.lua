@@ -1,12 +1,27 @@
--- 伤害衰减脚本 - 多套衰减配置版本
+-- 整合脚本：伤害衰减 + 深潜枪水中检测 + 对巨兽衰减
 local AH = AfflictionHelper
 
+-- ==================== 配置 ====================
+
+-- 距离衰减配置
 local cfg = {
     enabled = true,
     showInConsole = false,
     debugMode = false,
     damageFalloffEnabled = true,
 }
+
+-- 深潜枪-水中检测
+local DEEP_GUN_IN_WATER_MULTIPLIER = 0.4
+local DEEP_GUN_IN_WATER_STRENGTH_THRESHOLD = 0.1
+local DEEP_GUN_IN_WATER_AFFLICTION = "deepgun_inwater_detect"
+
+-- 深潜枪-对大型生物衰减
+local DEEP_GUN_LEVIATHAN_MULTIPLIER = 0.08
+local DEEP_GUN_LEVIATHAN_MASS_THRESHOLD = 3000
+local DEEP_GUN_LEVIATHAN_AFFLICTION = "deepgun_inwater_detect"
+
+-- ==================== 距离衰减 ====================
 
 local falloffProfiles = {
     ["deep_damage_fall_off_600_1200_detect"] = {
@@ -83,7 +98,8 @@ local function getAllAffsDebug(attacker)
     return table.concat(parts, " | ")
 end
 
-Hook.Add("character.damageLimb", "DistanceCalculator.OnDamageLimb",
+-- 距离衰减：记录伤害倍率
+Hook.Add("character.damageLimb", "DamageFallOffAll.OnDamageLimb",
 function(character, worldPosition, hitLimb, afflictions, stun, playSound, attackImpulse, attacker, damageMultiplier, allowStacking, penetration, shouldImplode)
     if not cfg.enabled then return nil end
     if attacker == nil then return nil end
@@ -153,6 +169,7 @@ function(character, worldPosition, hitLimb, afflictions, stun, playSound, attack
     end
 end)
 
+-- 距离衰减：应用伤害倍率
 Hook.Patch("Barotrauma.CharacterHealth", "ApplyDamage",
 function(instance, ptable)
     if not cfg.enabled or not cfg.damageFalloffEnabled then return end
@@ -186,8 +203,9 @@ function(instance, ptable)
     pendingFalloff[charId] = nil
 end, Hook.HookMethodType.Before)
 
+-- 距离衰减：定时清理过期数据
 local cleanupCounter = 0
-Hook.Add("think", "DistanceCalculator.Cleanup", function()
+Hook.Add("think", "DamageFallOffAll.Cleanup", function()
     cleanupCounter = cleanupCounter + 1
     if cleanupCounter < 60 then return end
     cleanupCounter = 0
@@ -206,7 +224,59 @@ Hook.Add("think", "DistanceCalculator.Cleanup", function()
     end
 end)
 
-Hook.Add("chatMessage", "DistanceCalculator.Commands", function(message, client)
+-- ==================== 深海枪：水中检测 ====================
+
+Hook.Add("character.applyDamage", "DamageFallOffAll.InWaterDetect",
+function(characterHealth, attackResult, hitLimb, allowStacking)
+    local targetCharacter = characterHealth.Character
+    if targetCharacter == nil then return end
+
+    local attacker = targetCharacter.LastAttacker
+    if attacker == nil then return end
+
+    if AH.GetAffStrength(attacker, DEEP_GUN_IN_WATER_AFFLICTION) <= DEEP_GUN_IN_WATER_STRENGTH_THRESHOLD then return end
+
+    if not (attacker.InWater or targetCharacter.InWater) then return end
+
+    local afflictions = attackResult.Afflictions
+    if afflictions == nil then return end
+
+    for _, a in ipairs(afflictions) do
+        if a ~= nil then
+            a.Strength = a.Strength * DEEP_GUN_IN_WATER_MULTIPLIER
+        end
+    end
+end)
+
+-- ==================== 深海枪：对大型生物衰减 ====================
+
+Hook.Add("character.applyDamage", "DamageFallOffAll.LeviathanModifier",
+function(characterHealth, attackResult, hitLimb, allowStacking)
+    local targetCharacter = characterHealth.Character
+    if targetCharacter == nil then return end
+
+    local attacker = targetCharacter.LastAttacker
+    if attacker == nil then return end
+
+    if not attacker.IsHuman then return end
+
+    if AH.GetAffStrength(attacker, DEEP_GUN_LEVIATHAN_AFFLICTION) <= 0.1 then return end
+
+    if targetCharacter.Mass < DEEP_GUN_LEVIATHAN_MASS_THRESHOLD then return end
+
+    local afflictions = attackResult.Afflictions
+    if afflictions == nil then return end
+
+    for _, a in ipairs(afflictions) do
+        if a ~= nil then
+            a.Strength = a.Strength * DEEP_GUN_LEVIATHAN_MULTIPLIER
+        end
+    end
+end)
+
+-- ==================== 聊天命令 ====================
+
+Hook.Add("chatMessage", "DamageFallOffAll.Commands", function(message, client)
     if not message:startsWith("/distance") then return end
 
     local args = {}
