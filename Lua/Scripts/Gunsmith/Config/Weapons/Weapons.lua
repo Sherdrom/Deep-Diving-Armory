@@ -1,5 +1,3 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
 local weaponsPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config/Weapons"
 
 -- 武器加载顺序只在这里维护；路径按资源分类目录走。

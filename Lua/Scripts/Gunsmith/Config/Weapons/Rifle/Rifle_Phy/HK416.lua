@@ -1,7 +1,5 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local parts = Deep_Lua.Gunsmith.Config.parts
-local weapons = Deep_Lua.Gunsmith.Config.weapons
+local parts = GunsmithFramework.Config.parts
+local weapons = GunsmithFramework.Config.weapons
 local texture = Deep_Lua.Path .. "/GunSmith/AR/Main/HK416.png"
 
 weapons.deep_hk416 = {

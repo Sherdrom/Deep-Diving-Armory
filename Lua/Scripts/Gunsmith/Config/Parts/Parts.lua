@@ -1,5 +1,3 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
 local partsPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config/Parts"
 
 -- 配件加载顺序只在这里维护。

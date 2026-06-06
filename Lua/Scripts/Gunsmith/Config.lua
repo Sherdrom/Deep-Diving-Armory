@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-Deep_Lua.Gunsmith.Config = Deep_Lua.Gunsmith.Config or {
+GunsmithFramework.Config = GunsmithFramework.Config or {
     -- 平台定义：一类枪共用的根槽、兼容类型、默认配件和 UI 名称。
     platforms = {},
 
@@ -16,11 +14,11 @@ Deep_Lua.Gunsmith.Config = Deep_Lua.Gunsmith.Config or {
     }
 }
 
-Deep_Lua.Gunsmith.Config.platforms = Deep_Lua.Gunsmith.Config.platforms or {}
-Deep_Lua.Gunsmith.Config.weapons = Deep_Lua.Gunsmith.Config.weapons or {}
-Deep_Lua.Gunsmith.Config.parts = Deep_Lua.Gunsmith.Config.parts or {}
-Deep_Lua.Gunsmith.Config.npcPresets = Deep_Lua.Gunsmith.Config.npcPresets or { profiles = {} }
-Deep_Lua.Gunsmith.Config.npcPresets.profiles = Deep_Lua.Gunsmith.Config.npcPresets.profiles or {}
+GunsmithFramework.Config.platforms = GunsmithFramework.Config.platforms or {}
+GunsmithFramework.Config.weapons = GunsmithFramework.Config.weapons or {}
+GunsmithFramework.Config.parts = GunsmithFramework.Config.parts or {}
+GunsmithFramework.Config.npcPresets = GunsmithFramework.Config.npcPresets or { profiles = {} }
+GunsmithFramework.Config.npcPresets.profiles = GunsmithFramework.Config.npcPresets.profiles or {}
 
 local configPath = Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config"
 

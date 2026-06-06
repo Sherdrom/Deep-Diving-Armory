@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local parts = Deep_Lua.Gunsmith.Config.parts
+local parts = GunsmithFramework.Config.parts
 
 -- 强烈建议这里的配件放到一个png里
 local texture = Deep_Lua.Path .. "/GunSmith/AR/UpperReceiver/HK416.png"

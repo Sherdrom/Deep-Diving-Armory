@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local parts = Deep_Lua.Gunsmith.Config.parts
+local parts = GunsmithFramework.Config.parts
 local accessoryTexture = Deep_Lua.Path .. "/weapon/sight/accessory.png"
 local laserTexture = Deep_Lua.Path .. "/weapon/sight/accessory_new.png"
 

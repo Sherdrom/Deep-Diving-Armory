@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local parts = Deep_Lua.Gunsmith.Config.parts
+local parts = GunsmithFramework.Config.parts
 local railTexture = Deep_Lua.Path .. "/weapon/part/part.png"
 
 -- 通用导轨附件。这里的配件通常不是根槽默认件，而是由护木等父配件的 mounts 暴露出来。

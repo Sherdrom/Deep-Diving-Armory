@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local platforms = Deep_Lua.Gunsmith.Config.platforms
+local platforms = GunsmithFramework.Config.platforms
 
 -- 平台 = 一类枪械共用的改装骨架。
 -- deep_AK74M都挂在 AK 平台上，因此它们共用 receiver-led 结构、兼容规则和槽位显示名。

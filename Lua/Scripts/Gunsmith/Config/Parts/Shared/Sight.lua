@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local parts = Deep_Lua.Gunsmith.Config.parts
+local parts = GunsmithFramework.Config.parts
 local sightTexture = Deep_Lua.Path .. "/weapon/sight/sight_2.png"
 
 -- 通用瞄具。能否安装由父挂点 accepts 和这里的 provides 共同决定。

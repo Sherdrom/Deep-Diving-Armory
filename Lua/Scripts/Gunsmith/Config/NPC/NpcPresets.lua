@@ -1,6 +1,4 @@
-Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
-
-local config = Deep_Lua.Gunsmith.Config
+local config = GunsmithFramework.Config
 config.npcPresets = config.npcPresets or { profiles = {} }
 config.npcPresets.profiles = config.npcPresets.profiles or {}
 
