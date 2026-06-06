@@ -19,10 +19,10 @@
     <!-- 抗性 -->
     <AbilityGroupInterval interval="1">
       <Abilities>
-        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.5"/>
-        <CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
-        <CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
-        <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="0"/>
+        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="10"/>
+        <CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="-1"/>
+        <CharacterAbilityModifyResistance resistanceid="poison" multiplier="-1"/>
+        <CharacterAbilityModifyResistance resistanceid="blunttrauma" multiplier="-1"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 敌人倒地后，受到8倍伤害，方便补刀（无战无不休时生效）-->
@@ -45,19 +45,19 @@
         <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
       </Abilities>
     </AbilityGroupEffect>
-    <!-- 敌人攻击玩家四肢时，降低枪伤 -->
+    <!-- 敌人攻击玩家四肢时，降低枪伤 
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
-              <Affliction identifier="deep_enemy_up_limbs_balance" strength="100.0"/>
-              <Affliction identifier="deep_enemy_down_limbs_balance" strength="100.0"/>
+              <Affliction identifier="deep_enemy_up_limbs_balance" strength="5.0"/>
+              <Affliction identifier="deep_enemy_down_limbs_balance" strength="5.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupEffect>
+    </AbilityGroupEffect>-->
     <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>

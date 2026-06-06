@@ -24,7 +24,7 @@ end
 
 Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
     if instance.AnimController.Crouching then
-        if AH.GetAffStrength(instance.Character, "deep_enemy_affliction_resistance") > 0 then
+        if AH.GetAffStrength(instance.Character, "deep_enemy_affliction_resistance") > 0.1 then
             instance.AnimController.Crouching = false
         end
     end
@@ -45,9 +45,9 @@ Hook.Patch("Barotrauma.AIObjectiveCombat", "Attack", {"System.Single"}, function
 
     local targetLimb = nil
 
-    if AH.GetAffStrength(instance.character, "deep_aim_head_detect") > 0 then
+    if AH.GetAffStrength(instance.character, "deep_aim_head_detect") > 0.1 then
         targetLimb = animController.GetLimb(LimbType_Head)
-    elseif AH.GetAffStrength(instance.character, "deep_aim_thigh_detect") > 0 then
+    elseif AH.GetAffStrength(instance.character, "deep_aim_thigh_detect") > 0.1 then
         targetLimb = animController.GetLimb(LimbType_RightThigh)
         if targetLimb == nil then
             targetLimb = animController.GetLimb(LimbType_LeftThigh)
@@ -55,7 +55,7 @@ Hook.Patch("Barotrauma.AIObjectiveCombat", "Attack", {"System.Single"}, function
         if targetLimb == nil then
             targetLimb = animController.GetLimb(LimbType_Legs)
         end
-    elseif AH.GetAffStrength(instance.character, "deep_aim_legs_detect") > 0 then
+    elseif AH.GetAffStrength(instance.character, "deep_aim_legs_detect") > 0.1 then
         targetLimb = animController.GetLimb(LimbType_RightLeg)
         if targetLimb == nil then
             targetLimb = animController.GetLimb(LimbType_LeftLeg)
