@@ -1,13 +1,13 @@
 Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local parts = Deep_Lua.Gunsmith.Config.parts
-local config = Deep_Lua.Gunsmith.Config
+local weapons = Deep_Lua.Gunsmith.Config.weapons
 
 local texture = Deep_Lua.Path .. "/weapon/gunsmith/gunsmith_test_rifle.png"
 
 -- 武器条目把 Barotrauma 物品 identifier 接入 GunSmith。
 -- key 必须等于 XML 里的 Item identifier，例如 weapon/rifle/.../m4.xml 中的 deep_m4。
-config.weapons.deep_m4 = { 
+weapons.deep_m4 = { 
     -- 绑定到 Config/Platforms/AR.lua 中定义的平台 key。
     platform = "AR",
 

@@ -1,10 +1,10 @@
 Deep_Lua.Gunsmith = Deep_Lua.Gunsmith or {}
 
 local parts = Deep_Lua.Gunsmith.Config.parts
-local config = Deep_Lua.Gunsmith.Config
+local weapons = Deep_Lua.Gunsmith.Config.weapons
 local texture = Deep_Lua.Path .. "/GunSmith/AR/Main/HK416.png"
 
-config.weapons.deep_hk416 = {
+weapons.deep_hk416 = {
 
     platform = "AR",
 

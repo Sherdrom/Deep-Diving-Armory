@@ -556,13 +556,13 @@ namespace DeepLaser
             if (gunsmithTransformDrawPositionProperty!.GetValue(transform) is not Vector2 drawPosition ||
                 gunsmithTransformDirectionProperty!.GetValue(transform) is not Vector2 direction)
             {
-                DebugConsole.ThrowError("DeepLaser received an invalid GunSmith quick attachment transform payload.");
+                DebugConsole.ThrowError("DeepLaser received an invalid GunsmithFramework quick attachment transform payload.");
                 return false;
             }
 
             if (!IsFinite(drawPosition) || !IsFinite(direction) || direction.LengthSquared() < 0.0001f)
             {
-                DebugConsole.ThrowError("DeepLaser received a non-finite GunSmith quick attachment transform.");
+                DebugConsole.ThrowError("DeepLaser received a non-finite GunsmithFramework quick attachment transform.");
                 return false;
             }
 
@@ -587,13 +587,13 @@ namespace DeepLaser
                 gunsmithTransformDrawRotationProperty!.GetValue(transform) is not float payloadDrawRotation ||
                 gunsmithTransformFacingDirectionProperty!.GetValue(transform) is not float payloadFacingDirection)
             {
-                DebugConsole.ThrowError("DeepLaser received an invalid GunSmith quick attachment draw transform payload.");
+                DebugConsole.ThrowError("DeepLaser received an invalid GunsmithFramework quick attachment draw transform payload.");
                 return false;
             }
 
             if (!IsFinite(payloadDrawPosition) || !float.IsFinite(payloadDrawRotation) || !float.IsFinite(payloadFacingDirection))
             {
-                DebugConsole.ThrowError("DeepLaser received a non-finite GunSmith quick attachment draw transform.");
+                DebugConsole.ThrowError("DeepLaser received a non-finite GunsmithFramework quick attachment draw transform.");
                 return false;
             }
 
@@ -648,7 +648,7 @@ namespace DeepLaser
                 return true;
             }
 
-            Type? gunsmithApiType = AccessTools.TypeByName("GunSmith.GunsmithApi");
+            Type? gunsmithApiType = AccessTools.TypeByName("GunsmithFramework.GunsmithApi");
             gunsmithTryGetAttachmentDepthMethod = AccessTools.Method(
                 gunsmithApiType,
                 "TryGetAttachmentDepth",
@@ -656,7 +656,7 @@ namespace DeepLaser
 
             if (gunsmithTryGetAttachmentDepthMethod == null)
             {
-                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunSmith attachment depth API.");
+                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunsmithFramework attachment depth API.");
                 return false;
             }
 
@@ -674,7 +674,7 @@ namespace DeepLaser
                 return true;
             }
 
-            Type? serviceType = AccessTools.TypeByName("GunSmith.GunsmithQuickAttachmentTransformService");
+            Type? serviceType = AccessTools.TypeByName("GunsmithFramework.GunsmithQuickAttachmentTransformService");
             if (serviceType == null)
             {
                 return false;
@@ -705,7 +705,7 @@ namespace DeepLaser
                             gunsmithTransformFacingDirectionProperty != null;
             if (!resolved)
             {
-                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunSmith quick attachment transform API.");
+                LogGunsmithTransformReflectionErrorOnce("DeepLaser failed to resolve GunsmithFramework quick attachment transform API.");
             }
 
             return resolved;

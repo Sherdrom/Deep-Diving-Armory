@@ -1,4 +1,4 @@
-Deep_Lua = {}
+Deep_Lua = Deep_Lua or {}
 Deep_Lua.Path = ...
 
 --爱丽丝科技
@@ -30,8 +30,14 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/FAST_BLA
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/GHOST.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/MASKA.lua")
 --枪械改装系统
-dofile(Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Config.lua")
-dofile(Deep_Lua.Path .. "/Lua/Scripts/Gunsmith/Main.lua")
+if GunsmithFramework and GunsmithFramework.RegisterPackage then
+    GunsmithFramework.RegisterPackage({
+        modDir = Deep_Lua.Path,
+        entry = "Lua/Scripts/Gunsmith/Config.lua"
+    })
+else
+    print("[Deep-Diving-Armory] GunsmithFramework is required for Gunsmith configuration. Load GunsmithFramework before Deep-Diving-Armory.")
+end
 --GL贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadGrenadeLauncher/M32.lua")
 --火箭筒贴图修改
@@ -93,7 +99,3 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--�
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改(暂时用不到)
 --桃子科技
-
-
-
-
