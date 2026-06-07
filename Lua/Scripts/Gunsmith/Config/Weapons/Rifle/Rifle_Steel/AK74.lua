@@ -14,18 +14,18 @@ weapons.deep_AK74 = {
     roots = {
         receiver = {
             part = "deep_ak_receiver_main",
-            socket = { x = 226, y = 116 }
+            socket = { x = 342, y = 124 }
         }
     },
 
     -- QuickMod slot numbers are weapon XML ItemContainer targetslot indices.
     -- 可选参数itemPosOffset，可以微调槽位实际itemPos，达到调整特效位置的目的，例如激光、手电等。
     quickSlotBindings = {
-        -- lower_rail = { slot = 1 },
-        -- right_rail = { slot = 2 },
-        -- left_rail = { slot = 3 },
+        --lower_rail = { slot = 1 },
+        --right_rail = { slot = 2 },
+        --left_rail = { slot = 3 },
         optic = { slot = 4 },
-        -- muzzle = { slot = 5 }
+        muzzle = { slot = 5 }
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
@@ -47,7 +47,7 @@ weapons.deep_AK74 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 40, y = -5 }
+        offset = { x = 40, y = -10 }
     }
 }
 
@@ -72,17 +72,19 @@ parts.deep_ak_receiver_main = {
     -- order 越小越早绘制，scale 是单个配件缩放。
     visual = {
         texture = texture,
-        source = { x = 92, y = 92, w = 344, h = 71 },
-        attachPoint = { x = 56, y = 37 },
-        order = 10,
+        source = { x = 92, y = 93, w = 344, h = 70 },
+        attachPoint = { x = 172, y = 35 },
+        order = 30,
         scale = 1
     },
 
     -- V0.9: receiver 是 AR 的结构核心。anchor 相对 receiver.visual.attachPoint。
     mounts = {
-        { path = "dust_cover", accepts = { "AK_dust_cover" }, defaultPart = "deep_6p1_01_ak_dustcover", anchor = { x = 34, y = -22 } },
-        { path = "handguard", accepts = { "AK_handguard" }, defaultPart = "deep_6p20_sb6_ak_handguard", anchor = { x = 109, y = -13 } },
-        { path = "pistol_grip", accepts = { "AK_pistol_grip" }, defaultPart = "deep_6p4_sb9_ak_pistol_grip", anchor = { x = -17, y = 13 } },
-        { path = "stock", accepts = { "AK_stock" }, defaultPart = "deep_6p20_sb5_ak_stock", anchor = { x = -53, y = 1 } }
+        { path = "dust_cover", accepts = { "AK_dust_cover" }, defaultPart = "deep_6p1_01_ak_dustcover", anchor = { x = -42, y = -25 } },
+        { path = "handguard", accepts = { "AK_handguard" }, defaultPart = "deep_6p20_sb6_ak_handguard", anchor = { x = -7, y = -22 } },
+        { path = "pistol_grip", accepts = { "AK_pistol_grip" }, defaultPart = "deep_6p4_sb9_ak_pistol_grip", anchor = { x = -134, y = 13 } },
+        { path = "dovetail_groove", accepts = { "AK_dovetail_groove_rail" } , anchor = { x = -108, y = 3 } },
+        { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.barrel.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 165, y = -6 }, quick = { key = "muzzle" } },
+        { path = "stock_mount", accepts = { "AK_stock","AR_buffer_tube" }, defaultPart = "deep_6p20_sb5_ak_stock", anchor = { x = -169, y = 2 } }
     }
 }

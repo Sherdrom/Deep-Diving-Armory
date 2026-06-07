@@ -9,7 +9,7 @@ local texture = Deep_Lua.Path .. "/GunSmith/SharedParts/BufferTube/SharedBufferT
 --   XML item id: deep_gunsmith + AR + 部位 + 变体
 -- 如果某个部件只属于特定武器外观，请放到 Config/Weapons/<分类>/<武器>.lua。
 parts.deep_hket_buffer_tube = {
-    type = "buffer_tube",
+    type = "stock_mount",
     nameKey = "deep.gunsmith.part.deep_hket_buffer_tube",
     provides = { "AR_buffer_tube" },
     item = { identifier = "deep_hket_buffer_tube" },

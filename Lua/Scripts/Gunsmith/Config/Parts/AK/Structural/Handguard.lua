@@ -11,8 +11,8 @@ parts.deep_6p20_sb6_ak_handguard = {
     stats = { Ergonomics = 4 },
     visual = {
         texture = texture,
-        source = { x = 5, y = 5, w = 92, h = 46 },
-        attachPoint = { x = 28, y = 19 },
+        source = { x = 4, y = 5, w = 90, h = 42 },
+        attachPoint = { x = 27, y = 8 },
         order = 30,
         scale = 1
     }

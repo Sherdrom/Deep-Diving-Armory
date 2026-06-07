@@ -11,8 +11,8 @@ parts.deep_6p1_01_ak_dustcover = {
     stats = { Ergonomics = 2 },
     visual = {
         texture = texture,
-        source = { x = 17, y = 3, w = 129, h = 21 },
-        attachPoint = { x = 90, y = 8 },
+        source = { x = 17, y = 3, w = 129, h = 19 },
+        attachPoint = { x = 128, y = 3 },
         order = 30,
         scale = 1
     }
@@ -27,7 +27,7 @@ parts.deep_pdc_ak_dustcover = {
     visual = {
         texture = texture,
         source = { x = 14, y = 31, w = 132, h = 23 },
-        attachPoint = { x = 92, y = 10 },
+        attachPoint = { x = 132, y = 6 },
         order = 30,
         scale = 1
     },

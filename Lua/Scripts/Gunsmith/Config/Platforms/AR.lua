@@ -33,6 +33,7 @@ platforms.AR = {
         gas_block = "deep.gunsmith.path.gas_block",
         handguard = "deep.gunsmith.path.handguard",
         pistol_grip = "deep.gunsmith.path.pistol_grip",
+        stock_mount = "deep.gunsmith.path.stock_mount",
         stock = "deep.gunsmith.path.stock",
         muzzle_device = "deep.gunsmith.path.muzzle_device",
         top_rail = "deep.gunsmith.path.top_rail",
