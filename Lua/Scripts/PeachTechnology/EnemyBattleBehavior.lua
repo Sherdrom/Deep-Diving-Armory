@@ -147,6 +147,13 @@ Hook.Patch(
     Hook.HookMethodType.After
 )
 
+-- ============================================================
+-- Deep Diver AI Attack Distance Limiter (NFF-Compatible)
+-- Patch target: AIObjectiveCombat.UseWeapon
+-- Both original Attack() and NFF's copied Attack() eventually call UseWeapon(),
+-- so patching here ensures compatibility regardless of NFF installation.
+-- ============================================================
+
 local JOB_CONFIGS = {
     ["deep_securityofficer_enemy"] = {
         AttackDistanceLimit = 1200,
@@ -166,12 +173,16 @@ local JOB_CONFIGS = {
     },
 }
 
+-- Precompute squared distances to avoid sqrt per-frame cost
 for _, config in pairs(JOB_CONFIGS) do
     if config.AttackDistanceLimit ~= nil then
         config.AttackDistanceLimitSqr = config.AttackDistanceLimit * config.AttackDistanceLimit
     end
 end
 
+-- ------------------------------------------------------------
+-- GetJobConfig: match character to config, check affliction block
+-- ------------------------------------------------------------
 local function GetJobConfig(character)
     if character == nil or not character.IsHuman then
         return nil
@@ -180,7 +191,8 @@ local function GetJobConfig(character)
         if character:HasJob(jobId) then
             local block = config.BlockedByAffliction
             if block ~= nil then
-                if AH.GetAffStrength(character, block.Identifier) > block.MinStrength then
+                local affliction = character.CharacterHealth:GetAffliction(block.Identifier)
+                if affliction ~= nil and affliction.Strength > block.MinStrength then
                     return nil
                 end
             end
@@ -190,12 +202,31 @@ local function GetJobConfig(character)
     return nil
 end
 
+-- ------------------------------------------------------------
+-- [PATCH 1] Attack Distance Limiter
+-- Target: AIObjectiveCombat.UseWeapon(float deltaTime)
+--
+-- Why UseWeapon instead of Attack:
+--   - Original AIObjectiveCombat.Attack() calls UseWeapon() to fire
+--   - No Friendly Fire SIG copies Attack() logic into a Harmony Prefix,
+--     which ALSO calls __instance.UseWeapon(deltaTime) internally
+--   - Patching UseWeapon intercepts BOTH code paths uniformly
+--   - Source: AIObjectiveCombat.cs line 1548, private void UseWeapon(float deltaTime)
+-- ------------------------------------------------------------
+
 Hook.Patch(
-    "AttackDistanceLimit_Attack",
+    "AttackDistanceLimit_UseWeapon",
     "Barotrauma.AIObjectiveCombat",
-    "Attack",
+    "UseWeapon",
     { "System.Single" },
     function(instance, ptable)
+        -- instance = AIObjectiveCombat instance
+        -- Accessible fields (verified against source):
+        --   instance.character       : Character (private field, LuaCs exposes via reflection)
+        --   instance.Enemy           : Character (public property)
+        --   instance.Weapon          : Item      (public field)
+        --   instance.WeaponComponent : ItemComponent (public property)
+
         local character = instance.character
         local config = GetJobConfig(character)
         if config == nil then
@@ -217,12 +248,15 @@ Hook.Patch(
             return
         end
 
+        -- Only apply distance limit to ranged weapons.
+        -- Melee weapons have engine-level collision constraints and do not need this check.
         local rc = weapon:GetComponentString("RangedWeapon")
             or weapon:GetComponentString("SwitchableRangedWeapon")
         if rc == nil then
             return
         end
 
+        -- Squared distance comparison (avoids math.sqrt overhead)
         local charPos = character.WorldPosition
         local enemyPos = enemy.WorldPosition
         local dx = charPos.X - enemyPos.X
@@ -234,6 +268,12 @@ Hook.Patch(
     end,
     Hook.HookMethodType.Before
 )
+
+-- ------------------------------------------------------------
+-- [PATCH 2] Disable Attack Reporting + Force Immediate Counterattack
+-- Target: HumanAIController.RespondToAttack(Character, AttackResult)
+-- Not affected by NFF (NFF does not patch RespondToAttack)
+-- ------------------------------------------------------------
 
 Hook.Patch(
     "AttackDistanceLimit_NoReport",
