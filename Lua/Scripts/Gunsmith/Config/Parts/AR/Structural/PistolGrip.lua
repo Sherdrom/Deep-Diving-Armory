@@ -198,6 +198,62 @@ parts.deep_hogue_overMolded_pistol_grip = { type = "pistol_grip",
     }
 }
 
+parts.deep_mcx_pistol_grip = { type = "pistol_grip",
+    nameKey = "deep.gunsmith.part.deep_mcx_pistol_grip",
+    provides = { "AR_pistol_grip" },
+    item = { identifier = "deep_mcx_pistol_grip" },
+    stats = { Ergonomics = 4 },
+    visual = { 
+        texture = texture,
+        source = { x = 392, y = 95, w = 51, h = 75 },
+        attachPoint = { x = 48, y = 15 },
+        order = 50,
+        scale = 1.0
+    }
+}
+
+parts.deep_hg15_pistol_grip = { type = "pistol_grip",
+    nameKey = "deep.gunsmith.part.deep_hg15_pistol_grip",
+    provides = { "AR_pistol_grip" },
+    item = { identifier = "deep_hg15_pistol_grip" },
+    stats = { Ergonomics = 4 },
+    visual = { 
+        texture = texture,
+        source = { x = 136, y = 82, w = 47, h = 72 },
+        attachPoint = { x = 45, y = 14 },
+        order = 50,
+        scale = 1.0
+    }
+}
+
+parts.deep_aeroknoxorion_pistol_grip = { type = "pistol_grip",
+    nameKey = "deep.gunsmith.part.deep_aeroknoxorion_pistol_grip",
+    provides = { "AR_pistol_grip" },
+    item = { identifier = "deep_aeroknoxorion_pistol_grip" },
+    stats = { Ergonomics = 4 },
+    visual = { 
+        texture = texture,
+        source = { x = 6, y = 235, w = 54, h = 61 },
+        attachPoint = { x = 52, y = 3 },
+        order = 50,
+        scale = 1.0
+    }
+}
+
+parts.deep_hogue_overMolded_green_pistol_grip = { type = "pistol_grip",
+    nameKey = "deep.gunsmith.part.deep_hogue_overMolded_green_pistol_grip",
+    provides = { "AR_pistol_grip" },
+    item = { identifier = "deep_hogue_overMolded_green_pistol_grip" },
+    stats = { Ergonomics = 4 },
+    visual = { 
+        texture = texture,
+        source = { x = 70, y = 78, w = 54, h = 59 },
+        attachPoint = { x = 53, y = 3 },
+        order = 50,
+        scale = 1.0
+    }
+}
+
 parts.deep_f1_firearms_type1_pistol_grip = { type = "pistol_grip",
     nameKey = "deep.gunsmith.part.deep_f1_firearms_type1_pistol_grip",
     provides = { "AR_pistol_grip" },
@@ -263,6 +319,20 @@ parts.deep_mod_chevron_pistol_grip = { type = "pistol_grip",
         texture = texture,
         source = { x = 380, y = 181, w = 54, h = 67 },
         attachPoint = { x = 52, y = 3 },
+        order = 50,
+        scale = 1.0
+    }
+}
+
+parts.deep_gral_s_pistol_grip = { type = "pistol_grip",
+    nameKey = "deep.gunsmith.part.deep_gral_s_pistol_grip",
+    provides = { "AR_pistol_grip" },
+    item = { identifier = "deep_gral_s_pistol_grip" },
+    stats = { Ergonomics = 4 },
+    visual = { 
+        texture = texture,
+        source = { x = 66, y = 235, w = 53, h = 77 },
+        attachPoint = { x = 51, y = 17 },
         order = 50,
         scale = 1.0
     }
