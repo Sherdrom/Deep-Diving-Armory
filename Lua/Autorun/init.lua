@@ -1,4 +1,4 @@
-Deep_Lua = {}
+Deep_Lua = Deep_Lua or {}
 Deep_Lua.Path = ...
 
 --爱丽丝科技
@@ -29,6 +29,15 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/FAST.lua
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/FAST_BLACK.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/GHOST.lua")
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/MASKA.lua")
+--枪械改装系统
+if GunsmithFramework and GunsmithFramework.RegisterPackage then
+    GunsmithFramework.RegisterPackage({
+        modDir = Deep_Lua.Path,
+        entry = "Lua/Scripts/Gunsmith/Config.lua"
+    })
+else
+    print("[Deep-Diving-Armory] GunsmithFramework is required for Gunsmith configuration. Load GunsmithFramework before Deep-Diving-Armory.")
+end
 --GL贴图修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadGrenadeLauncher/M32.lua")
 --火箭筒贴图修改
@@ -93,7 +102,3 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")--装备属性调整（配置文件）(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）(暂时用不到)
 --桃子科技
-
-
-
-
