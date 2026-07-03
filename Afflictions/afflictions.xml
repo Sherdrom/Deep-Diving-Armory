@@ -135,19 +135,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="heavy_machinegun" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-10">
-        <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="1" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="light_machinegun" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-10">
-        <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="1" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="red_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
         <StatValue stattype="RangedSpreadReduction" value="0.15" />
@@ -156,7 +143,6 @@
         <StatValue stattype="WeaponsSkillBonus" value="20" />
       </Effect>
     </Affliction>
-
 
     <Affliction identifier="thermalgoggles_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
@@ -368,11 +354,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_chip_no_friendly_fire_detect" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_enemy_no_friendlyfire" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-2">
         <StatValue stattype="TeamAttackMultiplier" value="1" />
@@ -402,14 +383,6 @@
       </Effect>
     </Affliction>
 
-
-    <Affliction identifier="heavy_sniper" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-        <AbilityFlag flagtype="MustWalk" />
-      </Effect>
-    </Affliction>
-
-
     <Affliction identifier="deep_pp19_buffalo" description="" isbuff="true" type="deep_smg_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="miracleworker" minresistance="2" maxresistance="2">
         <AbilityFlag flagtype="AlwaysStayConscious" />
@@ -429,11 +402,6 @@
     <Affliction identifier="shotgun_3" type="talentbuff" isbuff="true" hideiconafterdelay="true" limbspecific="false" maxstrength="2" treatmentthreshold="1000">
       <Effect minstrength="0" maxstrength="2" strengthchange="-2">
         <StatValue stattype="RangedAttackSpeed" value="0.2" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="steel_plate_heavy_run" description="" isbuff="true" type="deep_plate_debuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
       </Effect>
     </Affliction>
 
@@ -791,37 +759,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_protect_high_damage" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="10">
-      <Effect minstrength="0" maxstrength="10" strengthchange="0">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_highmorale_co_hard" type="talentbuff" isbuff="true" limbspecific="false" hideiconafterdelay="true" showiconthreshold="1" maxstrength="10" showbarinhealthmenu="false" treatmentthreshold="1000" iconcolors="227,247,249">
-      <Effect minstrength="0" maxstrength="10" strengthchange="-2">
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="AttackMultiplier" value="0.2" />
-      </Effect>
-      <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="4,1" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
-    </Affliction>
-
-    <Affliction identifier="deep_revengesquad_pirate" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="120" treatmentthreshold="1000" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-      <Effect minstrength="0" maxstrength="120" strengthchange="-1" resistancefor="damage,deep_gunwound" minresistance="0.3" maxresistance="0.3">
-      </Effect>
-      <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
-    </Affliction>
-
-    <Affliction identifier="deep_revengesquad_sp_hard" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="180" treatmentthreshold="1000" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-      <Effect minstrength="0" maxstrength="180" strengthchange="-1" resistancefor="damage,deep_gunwound" minresistance="0.3" maxresistance="0.3">
-      </Effect>
-      <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
-    </Affliction>
-
-    <Affliction identifier="deep_revengesquad_co_hard" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="240" duration="240" treatmentthreshold="1000" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
-      <Effect minstrength="0" maxstrength="240" strengthchange="-2" resistancefor="damage,deep_gunwound" minresistance="0.3" maxresistance="0.3">
-      </Effect>
-      <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
-    </Affliction>
-
     <Affliction identifier="deep_revengesquad_grizzlies_nightmare" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="240" duration="240" treatmentthreshold="1000" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
       <Effect minstrength="0" maxstrength="240" strengthchange="-2" resistancefor="damage,deep_gunwound" minresistance="0.4" maxresistance="0.4">
       </Effect>
@@ -881,18 +818,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_machinegun_pressing_light" description="" isbuff="true" type="machinegun_pressing" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_machinegun_pressing_heavy" description="" isbuff="true" type="machinegun_pressing" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" minvalue="0" maxvalue="-0.6" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_wuchuan_sata" description="" isbuff="true" type="wuchuan" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="120">
       <Effect minstrength="0" maxstrength="120" resistancefor="stun" minresistance="0.9" maxresistance="0.9" strengthchange="-2">
         <StatValue stattype="MovementSpeed" minvalue="0.2" maxvalue="0.7" />
@@ -907,28 +832,8 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_headshot_2" description="" isbuff="true" type="deep_headshot_multiplier" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-1" maxresistance="-1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_headshot_2_5" description="" isbuff="true" type="deep_headshot_multiplier" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-1.5" maxresistance="-1.5" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_headshot_3" description="" isbuff="true" type="deep_headshot_multiplier" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-2" maxresistance="-2" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_headshot_250" description="" isbuff="true" type="deep_headshot_multiplier" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-1.25" maxresistance="-1.25" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_headshot_50" description="" isbuff="true" type="deep_headshot_multiplier" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="head" minresistance="-0.5" maxresistance="-0.5" strengthchange="-2">
       </Effect>
     </Affliction>
 
@@ -947,16 +852,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_legshot_shotgun_100_elite" description="" isbuff="true" type="deep_headshot" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="-1" maxresistance="-1" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_legshot_shotgun_150" description="" isbuff="true" type="deep_headshot" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="-1.5" maxresistance="-1.5" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_shot_gauss" description="" isbuff="true" type="deep_headshot" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="-1" maxresistance="-1" strengthchange="-2">
       </Effect>
@@ -964,16 +859,6 @@
 
     <Affliction identifier="deep_shot_three_shotgun" description="" isbuff="true" type="deep_headshot" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" minresistance="-1" maxresistance="-1" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_steel_arm_grizzlies_suit" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="0.1" maxresistance="0.1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_grizzlies_suit_detect" description="" isbuff="true" type="deep_suit_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
       </Effect>
     </Affliction>
 
@@ -1022,15 +907,15 @@
       <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="0,6" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
     </Affliction>
 
-    <Affliction identifier="deep_enemy_up_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_enemy_up_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.25" maxresistance="0.25" strengthchange="-1">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_enemy_down_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_enemy_down_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Waist,LeftForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.7" maxresistance="0.7" strengthchange="-1">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
     <Affliction identifier="deep_enemy_four_limbs_balance_33" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.33" maxresistance="0.33" strengthchange="-0">
@@ -1043,45 +928,40 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_enenmy_Shrapnel_residue_60" description="" isbuff="true" type="enenmy_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue" resistancelimbs="Torso,LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="-0.6" maxresistance="-0.6" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_stun_grenade_reduce" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="10">
       <Effect minstrength="0" maxstrength="10" resistancefor="stun" minresistance="-2" maxresistance="-2" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_gunwound_reduce_15" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_15" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.15" maxresistance="-0.15" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_gunwound_reduce_25" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_25" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.25" maxresistance="-0.25" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_gunwound_reduce_35" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_35" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.35" maxresistance="-0.35" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_gunwound_reduce_40" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_40" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.4" maxresistance="-0.4" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_gunwound_reduce_45" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_45" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.45" maxresistance="-0.45" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="deep_gunwound_reduce_60" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_gunwound_reduce_60" description="" isbuff="true" type="stun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.6" maxresistance="-0.6" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
     <Affliction identifier="deepgun_inwater_detect" description="" isbuff="true" type="deepgun_inwater_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
@@ -1175,31 +1055,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_enemy_resistance_balance_pirate" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.2" maxresistance="0.2" strengthchange="-0">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_enemy_resistance_balance_sp" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.25" maxresistance="0.25" strengthchange="-0">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_enemy_resistance_balance_co" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.3" maxresistance="0.3" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_enemy_resistance_balance_ghost" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.35" maxresistance="0.35" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_enemy_resistance_balance_grizzlies" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="damage,deep_gunwound" minresistance="0.4" maxresistance="0.4" strengthchange="-0">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_enemy_resistance_heavy_pirate" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,deep_headshot_deadly" minresistance="0.3" maxresistance="0.3" strengthchange="-1">
       </Effect>
@@ -1240,15 +1095,6 @@
       </Effect>
     </Affliction>
 
-
-    <Affliction identifier="deep_talent_pirate_leader_alive" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.3" />
-        <StatValue stattype="WalkingSpeed" value="0.1" />
-        <StatValue stattype="AttackMultiplier" value="0.1" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_talent_grizzlies_political_commissar_alive" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-1">
         <StatValue stattype="RangedSpreadReduction" value="0.5" />
@@ -1273,10 +1119,10 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_flash_handed_shield_ammo_detect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="deep_flash_handed_shield_ammo_detect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-2">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
     <Affliction name="Temporary Reinforcement" identifier="deep_temporary_reinforcement" isbuff="true" description="Temporary Reinforcement." limbspecific="false" indicatorlimb="Torso" karmachangeonapplied="-1" treatmentthreshold="0" maxstrength="26" grainburst="3">
       <Description textidentifier="afflictiondescription.deep_temporary_reinforcement" minstrength="0" maxstrength="26" />
@@ -1294,10 +1140,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_enemy_resistance_plate_speed" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="deep_plate_debuff" minresistance="10" maxresistance="10" strengthchange="-0">
-      </Effect>
-    </Affliction>
     <!--中距离作战-->
     <Affliction identifier="deep_contract_no_6x_8x_sight_detect" description="" isbuff="true" type="deep_contract_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1" ResetBetweenRounds="true">
       <Effect minstrength="0" maxstrength="1" strengthchange="-0">
@@ -1604,11 +1446,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_thermalgoggles_sight_detect" description="" isbuff="true" type="deep_thermalgoggles_sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_sub_hanging_debuff" description="" isbuff="true" type="deep_sub_hanging_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
         <StatValue stattype="MovementSpeed" value="-0.2" />
@@ -1647,11 +1484,6 @@
         <StatusEffect target="Character" interval="0.9">
           <ReduceAffliction identifier="deep_VCE_none" strength="100" />
         </StatusEffect>
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_is_shooting" description="" isbuff="true" type="deep_is_shooting" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
       </Effect>
     </Affliction>
 
