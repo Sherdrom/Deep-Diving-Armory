@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_normal_supply_crate" subcategory="deep_supply_crate" category="Equipment" maxstacksize="8" Tags="smallitem,deep_supply_crate,disallowremovefabricationingredient,deep_dudog_supply_crate_94" scale="0.3" impactsoundtag="impact_metal_light" waterproof="true" fireproof="true" >
+  <Item name="" identifier="deep_normal_supply_crate" subcategory="deep_supply_crate" category="Equipment" maxstacksize="8" Tags="smallitem,deep_supply_crate,disallowremovefabricationingredient,deep_dudog_supply_crate_94" scale="0.3" impactsoundtag="impact_metal_light" waterproof="true" fireproof="true">
     <InventoryIcon texture="%ModDir%/jobgear/supplycrate/supplycrate.png" sourcerect="483,6,184,188" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/supplycrate/supplycrate.png" depth="0.65" sourcerect="28,37,190,132" origin="0.5,0.5" />
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <SpawnItem identifiers="deep_ssd" spawnposition="SameInventory" Count="1" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_normal_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />
@@ -31,55 +31,55 @@
       <RequiredItem identifier="deep_normal_supply_crate" amount="2" />
     </Fabricate>
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <SpawnItem identifiers="deep_ssd" spawnposition="SameInventory" Count="2" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_exquisite_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />
   </Item>
   <Item name="" identifier="deep_rare_supply_crate" subcategory="deep_supply_crate" category="Equipment" maxstacksize="8" Tags="smallitem,deep_supply_crate,disallowremovefabricationingredient,deep_dudog_supply_crate_94" scale="0.3" impactsoundtag="impact_metal_light" waterproof="true" fireproof="true">
-	<InventoryIcon texture="%ModDir%/jobgear/supplycrate/supplycrate.png" sourcerect="300,782,185,186" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/jobgear/supplycrate/supplycrate.png" sourcerect="300,782,185,186" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/supplycrate/supplycrate.png" depth="0.65" sourcerect="28,734,191,134" origin="0.5,0.5" />
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredItem identifier="deep_exquisite_supply_crate" amount="2" />
     </Fabricate>
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <SpawnItem identifiers="deep_ssd" spawnposition="SameInventory" Count="3" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_rare_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />
   </Item>
   <Item name="" identifier="deep_exotic_supply_crate" subcategory="deep_supply_crate" category="Equipment" maxstacksize="8" Tags="smallitem,deep_supply_crate,disallowremovefabricationingredient,deep_dudog_supply_crate_94" scale="0.3" impactsoundtag="impact_metal_light" waterproof="true" fireproof="true">
-	<InventoryIcon texture="%ModDir%/jobgear/supplycrate/supplycrate.png" sourcerect="299,377,185,184" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/jobgear/supplycrate/supplycrate.png" sourcerect="299,377,185,184" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/jobgear/supplycrate/supplycrate.png" depth="0.65" sourcerect="28,382,191,132" origin="0.5,0.5" />
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredItem identifier="deep_rare_supply_crate" amount="3" />
@@ -88,22 +88,22 @@
       <RequiredItem identifier="ak12_blackice" amount="1" />
     </Fabricate>
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <SpawnItem identifiers="deep_ssd" spawnposition="SameInventory" Count="6" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_exotic_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />
@@ -115,21 +115,21 @@
       <RequiredItem identifier="deep_exotic_supply_crate" amount="3" />
     </Fabricate>
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_legend_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />
@@ -141,21 +141,21 @@
       <RequiredItem identifier="deep_rare_supply_crate" amount="3" />
     </Fabricate>
     <Body width="190" height="130" density="10" />
-    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect" >
+    <Holdable slots="Any,RightHand+LeftHand" controlpose="false" holdpos="0,-80" handle1="-15,14" handle2="-15,14" aimpos="80,-60" msg="ItemMsgPickUpSelect">
 
-        <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false" >
+      <StatusEffect type="OnBroken" target="This" setvalue="true" stackable="false">
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" selectionmode="Random" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="0.9" />
         <sound file="%ModDir%/jobgear/supplycrate/open.ogg" type="OnUse" range="500.0" frequencymultiplier="1.1" />
-        </StatusEffect>
+      </StatusEffect>
 
-        <StatusEffect type="OnBroken" target="This" delay="1" >
-          <Remove />
-        </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" delay="1">
+        <Remove />
+      </StatusEffect>
 
-        <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false" >
+      <StatusEffect type="OnUse" target="This" condition="-1" EventUserTag="player" setvalue="true" stackable="false">
         <TriggerEvent identifier="deep_dudog_supply_crate_spawn" />
-        </StatusEffect>
+      </StatusEffect>
 
     </Holdable>
     <RangedWeapon />

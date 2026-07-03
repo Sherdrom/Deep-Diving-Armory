@@ -206,7 +206,7 @@
       <StatusEffect type="OnUse" target="This" condition="-10" disabledeltatime="true">
         <SpawnItem identifiers="762x39round_sks" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
@@ -1648,7 +1648,7 @@
       <StatusEffect type="OnUse" target="This" condition="-20" disabledeltatime="true">
         <SpawnItem identifiers="792round_98k" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
-      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true" >
+      <StatusEffect type="OnBroken" delay="2" target="Contained" disabledeltatime="true">
         <removeitem />
       </StatusEffect>
     </ItemContainer>
@@ -1747,7 +1747,7 @@
       <StatusEffect type="OnContained" target="Contained" interval="30" disabledeltatime="false" stackable="false">
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true" >
+      <StatusEffect type="OnBroken" target="Contained" disabledeltatime="true" stackable="true">
         <Remove />
       </StatusEffect>
     </ItemContainer>
@@ -2507,7 +2507,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_high_penetration" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ntw_20mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_high_penetration,deep_headshot_gunshotwound_4" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
     <Price baseprice="2000" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -2539,7 +2539,6 @@
     <Projectile characterusable="false" hitscan="true" maxtargetstohit="10" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="1" targetforce="50" itemdamage="200" severlimbsprobability="1" penetration="1">
-        <Affliction identifier="deep_headshot_3" strength="100" />
         <Affliction identifier="deep_shot_gauss" strength="100" />
         <Affliction identifier="deep_headshot_deadly_irresistible" strength="20" MultiplyByMaxVitality="true" />
         <Affliction identifier="bleeding" strength="150" />
@@ -2565,7 +2564,7 @@
       </StatusEffect>
     </Projectile>
   </Item>
-  <Item name="" identifier="ptrd_145mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ptrd_145mm" subcategory="sniper_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -2590,7 +2589,6 @@
     <Projectile characterusable="false" hitscan="true" maxtargetstohit="3" removeonhit="true">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
       <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.5">
-        <Affliction identifier="deep_headshot_3" strength="100" />
         <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
         <Affliction identifier="bleeding" strength="120" />
         <Affliction identifier="gunshotwound" strength="200" />

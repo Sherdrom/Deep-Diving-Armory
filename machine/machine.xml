@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="chemicalreactionchamber" hideinmenus="true" tags="chemicalfabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false" >
+<!--  <Item name="" identifier="chemicalreactionchamber" hideinmenus="true" tags="chemicalfabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine.png" sourcerect="34,13,219,254" depth="0.8" />
     <BrokenSprite texture="%ModDir%/machine/machine.png" sourcerect="281,13,220,253" depth="0.8" maxcondition="60" fadein="true" />
@@ -47,23 +47,21 @@
     </Repairable>
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
-  </Item>
-  <Item name="" identifier="deep_general_fabricator" tags="deep_general_fabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.4" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false" >
-  <Upgrade gameversion="0.10.4.0">
+  </Item>-->
+  <Item name="" identifier="deep_general_fabricator" tags="deep_general_fabricator,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.4" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
+    <Upgrade gameversion="0.10.4.0">
       <Repairable Msg="ItemMsgRepairWrench" />
     </Upgrade>
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
       <RequiredItem identifier="plastic" amount="2" />
       <RequiredItem identifier="uranium" amount="1" />
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" amount="2" />
-      <Item identifier="fpgacircuit" amount="1" />
-      <Item identifier="plastic" amount="2" />
     </Deconstruct>
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="372,13,335,277" depth="0.8" origin="0.5,0.5" />
@@ -110,24 +108,24 @@
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="6" canbeselected="true" hideitems="true" slotsperrow="3" uilabel="" allowuioverlap="true" />
     <CustomInterface canbeselected="true" drawhudwhenequipped="true" allowuioverlap="true">
-    <GuiFrame relativesize="0.09,0.07" anchor="CenterTop" pivot="CenterTop" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="超频模式(OC)" >
-	  <!-- 开启超频模式 -->
-	  <StatusEffect type="OnUse" fabricationspeed="5" interval="60" target="This" disabledeltatime="true" setValue="true" >
-	  <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" interval="1" />
-      </StatusEffect>
-	  
-	  <StatusEffect type="OnUse" condition="-1" interval="60" target="This" >
-      </StatusEffect>
-	  
-	  <!-- 关闭超频模式 -->
-	  <StatusEffect type="OnSecondaryUse" fabricationspeed="2" interval="60" target="This" disabledeltatime="true" setValue="true" >
-      </StatusEffect>
-	  </TickBox>
+      <GuiFrame relativesize="0.09,0.07" anchor="CenterTop" pivot="CenterTop" relativeoffset="-0.02,0.09" style="ItemUI" />
+      <TickBox text="超频模式(OC)">
+        <!-- 开启超频模式 -->
+        <StatusEffect type="OnUse" fabricationspeed="5" interval="60" target="This" disabledeltatime="true" setValue="true">
+          <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" interval="1" />
+        </StatusEffect>
+
+        <StatusEffect type="OnUse" condition="-1" interval="60" target="This">
+        </StatusEffect>
+
+        <!-- 关闭超频模式 -->
+        <StatusEffect type="OnSecondaryUse" fabricationspeed="2" interval="60" target="This" disabledeltatime="true" setValue="true">
+        </StatusEffect>
+      </TickBox>
     </CustomInterface>
   </Item>
 
-  <Item name="" identifier="ore_refining_machine" tags="ore_refining_machine,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false" >
+  <Item name="" identifier="ore_refining_machine" tags="ore_refining_machine,donttakeitems,dontsellitems" subcategory="deep_machine" category="Machine" linkable="true" allowedlinks="deconstructor,locker" description="" scale="0.5" damagedbyexplosions="true" explosiondamagemultiplier="0.2" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="100" />
       <RequiredSkill identifier="mechanical" level="100" />
@@ -139,8 +137,6 @@
     </Fabricate>
     <Deconstruct time="10">
       <Item identifier="steel" amount="6" />
-      <Item identifier="fpgacircuit" amount="2" />
-      <Item identifier="plastic" amount="4" />
     </Deconstruct>
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="72,11,237,259" depth="0.8" />
@@ -173,18 +169,16 @@
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
   </Item>
-  <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false" >
+  <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
-      <RequiredItem identifier="plastic" amount="4" />
+      <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="steel" amount="4" />
-      <Item identifier="fpgacircuit" amount="1" />
-      <Item identifier="plastic" amount="4" />
+      <Item identifier="steel" amount="1" />
     </Deconstruct>
     <Sprite name="ammoreloadmachine" texture="%ModDir%/machine/machine.png" sourcerect="534,12,220,274" depth="0.74" origin="0.5,0.5" />
     <Body width="280" height="210" density="40" />
@@ -209,25 +203,25 @@
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
         <!--铅制步枪，狙击弹匣-->
         <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.5625" disableDeltaTime="false">
             <Requireditem items="rifle_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
         <!--铅制冲锋枪弹匣-->
         <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-1.0417" disableDeltaTime="false">
             <Requireditem items="smg_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
         <!--铅制手枪弹匣-->
         <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-0.78125" disableDeltaTime="false">
             <Requireditem items="pistol_lead_reload" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
         <!--铅制弹鼓-->
         <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" disableDeltaTime="false">
             <Requireditem items="drums_lead" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
@@ -239,7 +233,7 @@
         </Containable>
         <!--铅制通用机枪-->
         <Containable items="ammobox1" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-12.5" disableDeltaTime="false">
             <Requireditem items="machinegun_heavy_lead" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
@@ -270,7 +264,7 @@
         </Containable>
         <!--钛制弹鼓-->
         <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-3.125" disableDeltaTime="false">
             <Requireditem items="drums_tit" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
@@ -288,7 +282,7 @@
         </Containable>
         <!--AA12钛制弹鼓-->
         <Containable items="ammobox_7.62" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" disableDeltaTime="false">
             <Requireditem items="aa12_tit_reload" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
@@ -459,7 +453,7 @@
         </Containable>
         <!--mg42-->
         <Containable items="ammobox_tun_ful" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-37.45" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-37.45" disableDeltaTime="false">
             <Requireditem items="machinegun_heavy_tun_ful_mg42" excludefullcondition="true" type="Contained" targetslot="4" />
           </StatusEffect>
         </Containable>
@@ -1555,22 +1549,22 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--生成弹匣内的子弹-->
+        <!--生成弹匣内的子弹-->
         <Containable tags="smallitem" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnInserted" target="Contained" targetslot="4" delay="0.05" AllowWhenBroken="true" >
-          <Conditional condition="lt 100" />
+          <StatusEffect type="OnInserted" target="Contained" targetslot="4" delay="0.05" AllowWhenBroken="true">
+            <Conditional condition="lt 100" />
             <Use />
           </StatusEffect>
         </Containable>
         <!--铅制弹-->
         <Containable items="rifle_lead_reload,smg_lead_reload,pistol_lead_reload,drums_lead,drums_tom_lead,machinegun_heavy_lead,machinegun_light_lead" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" disableDeltaTime="false">
             <Requireditem items="ammobox1" type="Contained" targetslot="0" />
           </StatusEffect>
         </Containable>
         <!--钛制弹-->
         <Containable items="rifle_tit_reload,smg_tit_reload,pistol_tit_reload,drums_tit,machinegun_heavy_tit,machinegun_light_tit,aa12_tit_reload,rifle_tit_reload_heavy" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" disableDeltaTime="false" >
+          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100" disableDeltaTime="false">
             <Requireditem items="ammobox_7.62" type="Contained" targetslot="0" />
           </StatusEffect>
         </Containable>
@@ -1606,10 +1600,10 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--生成弹匣内的子弹-->
+        <!--生成弹匣内的子弹-->
         <Containable tags="smallitem" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnInserted" target="Contained" targetslot="5" delay="0.05" AllowWhenBroken="true" >
-          <Conditional condition="lt 100" />
+          <StatusEffect type="OnInserted" target="Contained" targetslot="5" delay="0.05" AllowWhenBroken="true">
+            <Conditional condition="lt 100" />
             <Use />
           </StatusEffect>
         </Containable>
@@ -1657,10 +1651,10 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--生成弹匣内的子弹-->
+        <!--生成弹匣内的子弹-->
         <Containable tags="smallitem" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnInserted" target="Contained" targetslot="6" delay="0.05" AllowWhenBroken="true" >
-          <Conditional condition="lt 100" />
+          <StatusEffect type="OnInserted" target="Contained" targetslot="6" delay="0.05" AllowWhenBroken="true">
+            <Conditional condition="lt 100" />
             <Use />
           </StatusEffect>
         </Containable>
@@ -1708,10 +1702,10 @@
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--生成弹匣内的子弹-->
+        <!--生成弹匣内的子弹-->
         <Containable tags="smallitem" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnInserted" target="Contained" targetslot="7" delay="0.05" AllowWhenBroken="true" >
-          <Conditional condition="lt 100" />
+          <StatusEffect type="OnInserted" target="Contained" targetslot="7" delay="0.05" AllowWhenBroken="true">
+            <Conditional condition="lt 100" />
             <Use />
           </StatusEffect>
         </Containable>
@@ -1761,16 +1755,16 @@
     </ItemContainer>
   </Item>
 
-  <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false" >
+  <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
-      <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="plastic" amount="4" />
+      <RequiredItem identifier="steel" amount="2" />
+      <RequiredItem identifier="plastic" amount="2" />
       <RequiredItem identifier="organicfiber" amount="1" />
     </Fabricate>
     <Deconstruct time="10">
-      <Item identifier="steel" amount="4" />
+      <Item identifier="steel" amount="2" />
     </Deconstruct>
     <Sprite texture="%ModDir%/machine/machine_3.png" sourcerect="681,22,538,430" depth="0.84" origin="0.5,0.5" />
     <Body width="538" height="430" density="40" />
@@ -2091,7 +2085,7 @@
 
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--陶瓷修复，4主板，修复一板消耗25% -->
+        <!--陶瓷修复，4主板，修复一板消耗25% -->
         <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
           <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25" disableDeltaTime="false">
             <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="6" />
@@ -2234,12 +2228,12 @@
             <Requireditem items="deep_plate_composite_repair_100" excludefullcondition="true" type="Contained" targetslot="6" />
           </StatusEffect>
         </Containable>
-      
+
 
 
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-      <!--陶瓷修复，4主板，修复一板消耗25% -->
+        <!--陶瓷修复，4主板，修复一板消耗25% -->
         <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
           <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25" disableDeltaTime="false">
             <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="7" />

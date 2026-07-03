@@ -21,9 +21,6 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-      </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
@@ -196,8 +193,7 @@
         <!-- Makes the magazine invisible. -->
         <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Upon reloading, sets the condition to 0, triggering OnBroken status effect.
-        On top of that, triggers reload animations and blah blah blah.
-        Condition=0 is set with a delay to not cause any issues with OnRemoved status effects.
+        On top of that, triggers reload animations and blah blah blah. Condition=0 is set with a delay to not cause any issues with OnRemoved status effects.
 		    Puts the hand on the magazine. -->
         <StatusEffect type="OnInserted" target="This" holdpos="30,-20" holdangle="10" handle2="5,-30" disabledeltatime="true" delay="0.05" setvalue="true" />
         <!-- Puts the hand back. -->

@@ -114,10 +114,23 @@ Hook.Add("characterDeath", "KillNotification", function(character)
 	end
 
 	local killer = nil
+
 	local pk = pendingKills[victimID]
 	if pk ~= nil then
 		killer = pk.attacker
 	end
+
+	if killer == nil then
+		local cod = character.CauseOfDeath
+		if cod ~= nil then
+			killer = cod.Killer
+		end
+	end
+
+	if killer == nil then
+		killer = character.LastAttacker
+	end
+
 	if killer == nil or killer == character then
 		return
 	end

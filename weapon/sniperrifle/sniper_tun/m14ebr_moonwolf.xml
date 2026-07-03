@@ -26,9 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-      </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
@@ -53,7 +50,7 @@
         <Conditional deep_muzzle_none_detect="lte 0.0" />
       </StatusEffect>
       <!--6倍镜
-      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
@@ -75,45 +72,45 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon reload="0.18" weapondamagemodifier="1.3" reloadnoskill="1" reloadskillrequirement="100" holdtrigger="true" barrelpos="321,43" spread="2" unskilledspread="3" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.18" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
-    <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+      <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <!-- 普通枪声，消音器枪声 -->
       <!-- 短枪管音效与特效 -->
-    <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
-	     <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
-	     <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
-       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
-       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
-       <ParticleEmitter particle="deep_muzzleflash" Distance="65" angle="8" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="65" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
+        <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="5" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
+        <ParticleEmitter particle="deep_muzzleflash" Distance="65" angle="8" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="65" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+      </StatusEffect>
 
       <!-- 延长枪管音效与特效 -->
-    <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
-	     <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
-	     <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
-       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
-       <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
-       <ParticleEmitter particle="deep_muzzleflash" Distance="85" angle="7" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
-	     <ParticleEmitter particle="deep_plasmaspark" Distance="85" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
+        <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="5" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" selectionmode="Random" volume="0.3" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="0.3" />
+        <Sound file="%ModDir%/Sound/Weapons/M14/gunFire/m14_fire.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="0.3" />
+        <ParticleEmitter particle="deep_muzzleflash" Distance="85" angle="7" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
+        <ParticleEmitter particle="deep_plasmaspark" Distance="85" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
+      </StatusEffect>
 
-	  <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true" >
-	     <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
-	     <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
-       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
-	  </StatusEffect>
+      <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
+        <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="5" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
+      </StatusEffect>
       <!-- 普通枪声，消音器枪声 -->
       <StatusEffect type="OnUse" target="This">
         <ParticleEmitter particle="deep_casingfirearm_762_51" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
@@ -124,33 +121,33 @@
         <Use />
       </StatusEffect>
       <!--8倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="8x_sight_reduce" strength="4" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="8x_sight_reduce" strength="1.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 0.5" />
       <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>-->
       <!--6倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight_reduce" strength="4" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="6x_sight_reduce" strength="0.8" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 3" />
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
@@ -166,9 +163,9 @@
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="false" delay="2" setvalue="true" />
         <!-- 弹匣隐藏 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,0"  delay="0.01" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,0" delay="0.01" setvalue="true" disabledeltatime="true" />
         <!-- 弹匣显示 -->
-        <StatusEffect type="OnInserted" target="Contained"  spritecolor="255,255,255,255" delay="0.7" setvalue="true" disabledeltatime="true" />
+        <StatusEffect type="OnInserted" target="Contained" spritecolor="255,255,255,255" delay="0.7" setvalue="true" disabledeltatime="true" />
 
         <StatusEffect type="OnInserted" target="This" holdpos="50,-20" holdangle="10" handle2="-30,-30" delay="0.01" setvalue="true" />
         <!-- Puts the hand back. -->
@@ -189,8 +186,8 @@
         <StatusEffect type="OnInserted" target="This" holdpos="55,-18" aimpos="70,3" handle1="-155,-15" handle2="80,20" holdangle="-35" aimangle="0" delay="2" setvalue="true" />
         <!-- If the magazine is removed/swapped, sets the condition to 1. -->
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="2" stackable="false" />
-        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" >
-        <sound file="%ModDir%/Sound/Weapons/M14/gunOther/m14_re.ogg" type="OnUse" range="500.0" loop="false" volume="0.5" />
+        <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
+          <sound file="%ModDir%/Sound/Weapons/M14/gunOther/m14_re.ogg" type="OnUse" range="500.0" loop="false" volume="0.5" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />

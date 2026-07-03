@@ -1,57 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-  <Talents>
-	<!-- 敌人在水中 -->
-	<Talent identifier="deep_in_water">
+<Talents>
+  <!-- 已废弃天赋，可追溯到2024年的深潜
+  <Talent identifier="deep_in_water">
     <Icon texture="Content/UI/TalentsIcons2.png" sheetindex="4,4" sheetelementsize="128,128"/>
-	 <Description tag="talentdescription.deep_in_water">
+    <Description tag="talentdescription.deep_in_water">
     </Description>
-	<!-- 防逃课机制：敌人在水中无伤害 -->
-    <AbilityGroupInterval interval="0.1" >
+     防逃课机制：敌人在水中无伤害 
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
         <AbilityConditionInWater/>
       </Conditions>
       <Abilities>
-	    <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-10.0"/>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-10.0"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="radiationsickness" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 防逃课机制：敌人在水中时获得陶瓷插板效果 -->
-	<AbilityGroupInterval interval="0.1" >
-        <Conditions>
-		  <AbilityConditionInWater/>
-        </Conditions>
-        <Abilities>
-          <CharacterAbilityApplyStatusEffects>
-            <StatusEffects>
-              <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
-                <Affliction identifier="armor_ceramics" amount="100.0" />
-              </StatusEffect>
-            </StatusEffects>
-          </CharacterAbilityApplyStatusEffects>
-        </Abilities>
-      </AbilityGroupInterval>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
+    防逃课机制：敌人在水中时获得陶瓷插板效果 
+    <AbilityGroupInterval interval="0.1">
+      <Conditions>
+        <AbilityConditionInWater/>
+      </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+        <CharacterAbilityApplyStatusEffects>
+          <StatusEffects>
+            <StatusEffect type="OnAbility" target="Character" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
+              <Affliction identifier="armor_ceramics" amount="100.0" />
+            </StatusEffect>
+          </StatusEffects>
+        </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人倒地后，受到5倍伤害，方便补刀 -->
-	<AbilityGroupInterval interval="0.1" >
-	  <Conditions>
+     抗性 
+    <AbilityGroupInterval interval="0.1">
+      <Abilities>
+        <CharacterAbilityModifyResistance resistanceid="alieninfection" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="poison" multiplier="0"/>
+      </Abilities>
+    </AbilityGroupInterval>
+     敌人倒地后，受到5倍伤害，方便补刀 
+    <AbilityGroupInterval interval="0.1">
+      <Conditions>
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0"/>
       </Conditions>
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
-		<CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
+        <CharacterAbilityModifyResistance resistanceid="damage" multiplier="5"/>
+        <CharacterAbilityModifyResistance resistanceid="Shrapnel_residue" multiplier="5"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 敌人开枪无法压制玩家-->
-	<AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
+     敌人开枪无法压制玩家
+    <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
         <AbilityConditionCharacter targettypes="Enemy"/>
       </Conditions>
@@ -59,8 +59,8 @@
         <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 敌人扎堆时，伤害降低 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+     敌人扎堆时，伤害降低 
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="1"/>
       </Conditions>
@@ -68,7 +68,7 @@
         <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
       </Abilities>
     </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="2"/>
       </Conditions>
@@ -76,7 +76,7 @@
         <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.1" />
       </Abilities>
     </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionNearbyCharacterCount distance="300" targettypes="Ally" count="3"/>
       </Conditions>
@@ -84,361 +84,58 @@
         <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.2" />
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 敌人攻击玩家双臂时，降低25%枪伤 -->
-    <AbilityGroupEffect abilityeffecttype="OnAttack" >
-     <Abilities>
+     敌人攻击玩家双臂时，降低25%枪伤 
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+      <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true" >
+            <StatusEffect type="OnAbility" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
               <Affliction identifier="deep_enemy_four_limbs_balance" strength="100.0"/>
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-  </Talent>
-  
-    <!-- 单人游戏分离适中敌人 -->
-  <Talent identifier="deep_talent_single_separatist_moderate">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single_separatist_moderate">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.3"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1">
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.7"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-      <!-- 单人游戏分离困难敌人 -->
-  <Talent identifier="deep_talent_single_separatist_hard">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single_separatist_hard">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.6"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1">
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.6"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-      <!-- 单人游戏联盟困难敌人 -->
-  <Talent identifier="deep_talent_single_coalition_hard">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single_coalition_hard">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2.9"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.6"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-  <!-- 单人游戏敌人 -->
-  <Talent identifier="deep_talent_single">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.5"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.5"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-  <!-- 单人游戏分离敌人 -->
-  <Talent identifier="deep_talent_single_sp">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single_sp">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.4"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-    <!-- 单人游戏联盟敌人 -->
-  <Talent identifier="deep_talent_single_co">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_single_co">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="0.8"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.3"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.4"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>  
-  
-  
-  <Talent identifier="deep_separatist_leader_hard">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_separatist_leader_hard">
-    </Description>
-	<!-- 多人游戏数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="2"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="AttackMultiplier" value="0.2"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.3"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<!-- 首领 -->
-	<AbilityGroupEffect abilityeffecttype="OnDieToCharacter">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffectsToAllies requiresalive="false">
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character">
-              <Affliction identifier="deep_revengesquad_co_hard" amount="240"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAllies>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 暴力军阀 -->
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
-      </Abilities>
-    </AbilityGroupEffect>
-	<AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Conditions>
-        <AbilityConditionAttackData weapontype="handheldranged" />
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="2"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="0.2" />
-      </Abilities>
-    </AbilityGroupEffect>
-   <!-- 多人游戏血量动态调整 -->
-    <AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="2"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="3"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="4"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="5"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-	<AbilityGroupInterval interval="0.1" >
-      <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="2000" targettypes="Enemy" count="6"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MaximumHealthMultiplier" value="1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-    
-  <Talent identifier="deep_separatist_dreadnaught_talent">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_separatist_dreadnaught_talent">
-    </Description>
-	<!-- 数值调整 -->
-	<AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.6"/>
-      </Abilities>
-    </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.1" >
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.5"/>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-  
-  
-  <Talent identifier="deep_protect_high_damage_once">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_protect_high_damage_once">
-    </Description>
-    <AbilityGroupInterval interval="1">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" disabledeltatime="true">
-              <Affliction identifier="deep_protect_high_damage" amount="1.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupEffect abilityeffecttype="OnAttacked">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_protect_high_damage" minimumpercentage="1.0"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyAttackData addeddamagemultiplier="-0.7" />
-        <CharacterAbilityApplyStatusEffectsToAttacker>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" targetlimb="Torso" delay="0.1" disabledeltatime="true">
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffectsToAttacker>
-      </Abilities>
-    </AbilityGroupEffect>
-    <AbilityGroupEffect abilityeffecttype="OnAttackedResult">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="This">
-              <ReduceAffliction identifier="deep_protect_high_damage" strength="10.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupEffect>
-  </Talent>
+  </Talent>-->
 
   <Talent identifier="deep_talent_pigcatman_easy">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_talent_pigcatman_easy">
     </Description>
-	<AbilityGroupEffect abilityeffecttype="None">
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		<CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-		<CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="0.5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 突击手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 先辈不受合约影响 -->
-    <AbilityGroupInterval interval="0.9" >
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true">
               <Affliction identifier="deep_contract_resistance_reinforce" amount="5.0"/>
             </StatusEffect>
           </StatusEffects>
@@ -447,11 +144,11 @@
     </AbilityGroupInterval>
 
     <!-- 先辈不会引爆友军阔剑，但会踩敌人的 -->
-    <AbilityGroupInterval interval="0.9" >
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true">
               <Affliction identifier="deep_pigman_claymore_safe" amount="5.0"/>
             </StatusEffect>
           </StatusEffects>
@@ -465,39 +162,39 @@
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
     <Description tag="talentdescription.deep_talent_pigcat_contract_room">
     </Description>
-	<AbilityGroupEffect abilityeffecttype="None">
+    <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-		    <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-	    	<CharacterAbilityGiveStat stattype="MovementSpeed" value="-100"/>
-	     	<CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
+        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="-100"/>
+        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>
     </AbilityGroupEffect>
-	<!-- 抗性 -->
-	<AbilityGroupInterval interval="0.5" >
+    <!-- 抗性 -->
+    <AbilityGroupInterval interval="0.5">
       <Abilities>
-		<CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
-		<CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
-		<CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.2"/>
+        <CharacterAbilityModifyResistance resistanceid="fractures" multiplier="0"/>
+        <CharacterAbilityModifyResistance resistanceid="t_amputation" multiplier="0"/>
       </Abilities>
     </AbilityGroupInterval>
-	<!-- 突击手 -->
-	<AbilityGroupInterval interval="0.9" >
+    <!-- 突击手 -->
+    <AbilityGroupInterval interval="0.9">
       <Conditions>
-		<AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
+        <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1"/>
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
-		<CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
+        <CharacterAbilityModifyStat stattype="AttackMultiplier" value="0.2"/>
+        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.8"/>
       </Abilities>
     </AbilityGroupInterval>
     <!-- 先辈不受合约影响 -->
-    <AbilityGroupInterval interval="0.9" >
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true">
               <Affliction identifier="deep_contract_resistance_reinforce" amount="5.0"/>
             </StatusEffect>
           </StatusEffects>
@@ -506,11 +203,11 @@
     </AbilityGroupInterval>
 
     <!-- 先辈不会引爆友军阔剑，但会踩敌人的 -->
-    <AbilityGroupInterval interval="0.9" >
+    <AbilityGroupInterval interval="0.9">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true" >
+            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true" setvalue="true" disableDeltaTime="true">
               <Affliction identifier="deep_pigman_claymore_safe" amount="5.0"/>
             </StatusEffect>
           </StatusEffects>

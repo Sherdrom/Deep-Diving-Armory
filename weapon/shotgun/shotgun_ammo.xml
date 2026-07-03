@@ -8,36 +8,36 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="30" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="313,12,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
-	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
-  </Holdable>
+    </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="10" severlimbsprobability="0.5" penetration="0.1" >
-		    <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="10" severlimbsprobability="0.5" penetration="0.1">
+        <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="8" />
         <Affliction identifier="bleeding" strength="6" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -49,8 +49,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-    <Item name="" identifier="deep_12shell_tigershark" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_round_shotgun_attenuation" Scale="0.25" impactsoundtag="impact_metal_light">
+
+  <Item name="" identifier="deep_12shell_tigershark" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_round_shotgun_attenuation" Scale="0.25" impactsoundtag="impact_metal_light">
     <Price baseprice="55" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -58,37 +58,37 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="70" />
       <RequiredItem identifier="titanium" />
-	     <RequiredItem identifier="copper" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="458,124,115,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
-	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="3.5" itemdamage="10" severlimbsprobability="0.6" penetration="0.4" >
-		    <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.1" targetforce="3.5" itemdamage="10" severlimbsprobability="0.6" penetration="0.4">
+        <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="8" />
         <Affliction identifier="bleeding" strength="8" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -102,44 +102,44 @@
   </Item>
 
   <Item name="" identifier="deep_12shell_boneshark" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_round_shotgun_attenuation" Scale="0.25" impactsoundtag="impact_metal_light">
-  <Price baseprice="85" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="85" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="90" />
       <RequiredItem identifier="physicorium" />
-	    <RequiredItem identifier="copper" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="592,237,115,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
-	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="4" itemdamage="10" severlimbsprobability="0.8" penetration="0.6" >
-		    <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.1" targetforce="4" itemdamage="10" severlimbsprobability="0.8" penetration="0.6">
+        <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="8" />
         <Affliction identifier="bleeding" strength="10" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -153,44 +153,44 @@
   </Item>
 
   <Item name="" identifier="deep_12shell_arrow" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_round_shotgun_attenuation" Scale="0.25" impactsoundtag="impact_metal_light">
-  <Price baseprice="120" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="120" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" />
-	    <RequiredItem identifier="copper" />
-      <RequiredItem identifier="gun_powder_fulgurium"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="copper" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="167,121,115,106" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="18,189,82,100" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
-	<Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="4" itemdamage="10" severlimbsprobability="0.8" penetration="0.8" >
-		    <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.1" targetforce="4" itemdamage="10" severlimbsprobability="0.8" penetration="0.8">
+        <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="8" />
         <Affliction identifier="bleeding" strength="12" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -203,7 +203,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-    <Item name="" identifier="deep_slug" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_slug" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,,deep_headshot_gunshotwound_2" Scale="0.25" impactsoundtag="impact_metal_light">
     <Price baseprice="55" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -211,33 +211,32 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="titanium" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="459,12,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="724,216,84,86" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.5" >
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.5">
         <Affliction identifier="gunshotwound" strength="90" />
         <Affliction identifier="deep_headshot_deadly" strength="6" MultiplyByMaxVitality="true" />
-		    <Affliction identifier="deep_headshot_2" strength="100" />
         <Affliction identifier="bleeding" strength="70" />
         <Affliction identifier="stun" strength="0.25" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -250,41 +249,40 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_slug_phy" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
-  <Price baseprice="70" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Item name="" identifier="deep_slug_phy" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_headshot_gunshotwound_2" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Price baseprice="70" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="90" />
       <RequiredItem identifier="physicorium" />
-      <RequiredItem identifier="gun_powder"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="592,12,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="724,216,84,86" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="2">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.7" >
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.7">
         <Affliction identifier="gunshotwound" strength="90" />
         <Affliction identifier="deep_headshot_deadly" strength="7" MultiplyByMaxVitality="true" />
-		    <Affliction identifier="deep_headshot_2" strength="100" />
         <Affliction identifier="bleeding" strength="70" />
         <Affliction identifier="stun" strength="0.25" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -297,41 +295,40 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_slug_AP" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
-  <Price baseprice="140" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+  <Item name="" identifier="deep_slug_AP" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo,deep_headshot_gunshotwound_2" Scale="0.25" impactsoundtag="impact_metal_light">
+    <Price baseprice="140" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="8">
       <RequiredSkill identifier="weapons" level="90" />
       <RequiredItem identifier="physicorium" />
-      <RequiredItem identifier="gun_powder_fulgurium"  />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="167,234,115,106" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="19,289,84,100" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="1" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="1">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.8" >
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.8">
         <Affliction identifier="gunshotwound" strength="90" />
         <Affliction identifier="deep_headshot_deadly" strength="8" MultiplyByMaxVitality="true" />
-		    <Affliction identifier="deep_headshot_2" strength="100" />
         <Affliction identifier="bleeding" strength="70" />
         <Affliction identifier="stun" strength="0.25" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -343,8 +340,8 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-    <!--<Item name="" identifier="deep_birdshot" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
+
+  <!--<Item name="" identifier="deep_birdshot" subcategory="shotgun_ammo" category="Weapon" maxstacksize="32" maxstacksizecharacterinventory="12" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,handheldammo,deep_shotgun_ammo" Scale="0.25" impactsoundtag="impact_metal_light">
     <Price baseprice="20" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -352,10 +349,10 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="12" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="12">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder"  />
+      <RequiredItem identifier="gun_powder" />
 	  <RequiredItem identifier="plastic" />
     </Fabricate>
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="313,127,115,106" origin="0.5,0.5" />
@@ -364,7 +361,7 @@
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="77" removeonhit="true" spread="40">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="255,255,255,125" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="0" itemdamage="1" severlimbsprobability="0.01" penetration="0.1" >
+      <Attack structuredamage="0.1" targetforce="0" itemdamage="1" severlimbsprobability="0.01" penetration="0.1">
         <Affliction identifier="gunshotwound" strength="2" />
         <Affliction identifier="bleeding" strength="0.5" />
       </Attack>
@@ -388,7 +385,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>-->
 
-    <Item name="" identifier="deep_aa12_12shell" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_tit_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_aa12_12shell" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_tit_reload" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -396,12 +393,12 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="titanium" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4" />
-	  <RequiredItem identifier="copper" amount="4" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="copper" amount="4" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5">
     </Deconstruct>
@@ -410,38 +407,38 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_aa12" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
         <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-	<Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	  <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
-	</Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
+
   <Item name="" identifier="deep_aa12_slug" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_phy_reload" impactsoundtag="impact_metal_light">
-  <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4" />
-	  <RequiredItem identifier="copper" amount="4" />
-	  <RequiredItem identifier="plastic" />
+      <RequiredItem identifier="copper" amount="4" />
+      <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5">
     </Deconstruct>
@@ -450,41 +447,41 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_slug_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_slug_aa12" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
         <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-	</Holdable>
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-    <Item name="" identifier="deep_12shell_aa12" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+  <Item name="" identifier="deep_12shell_aa12" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
     <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="10" severlimbsprobability="0.5" penetration="0.4" >
-		    <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="10" severlimbsprobability="0.5" penetration="0.4">
+        <Affliction identifier="deep_legshot_shotgun_100" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="10" />
         <Affliction identifier="bleeding" strength="6" />
       </Attack>
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -501,15 +498,14 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-    <Item name="" identifier="deep_slug_aa12" hideinmenus="true" maxstacksize="1" subcategory="shotgun_ammo" category="Weapon" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo" Scale="0.5" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_slug_aa12" hideinmenus="true" maxstacksize="1" subcategory="shotgun_ammo" category="Weapon" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo,deep_headshot_gunshotwound_2" Scale="0.5" impactsoundtag="impact_metal_light">
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="6" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="1" removeonhit="true" spread="6">
       <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.5" />
-      <Attack structuredamage="0.1" targetforce="10" itemdamage="100" severlimbsprobability="0.8" penetration="0.7" >
-		<Affliction identifier="deep_headshot_2" strength="100" />
+      <Attack structuredamage="0.1" targetforce="10" itemdamage="100" severlimbsprobability="0.8" penetration="0.7">
         <Affliction identifier="gunshotwound" strength="80" />
         <Affliction identifier="bleeding" strength="100" />
         <Affliction identifier="stun" strength="1.2" />
@@ -517,11 +513,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -535,15 +531,15 @@
   </Item>
 
   <Item name="" identifier="deep_three_mag" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_three_mag,three_reload" impactsoundtag="impact_metal_light">
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_tungsten" amount="1" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
-	  <RequiredItem identifier="glassfibre" />
+      <RequiredItem identifier="glassfibre" />
     </Fabricate>
     <Fabricate suitablefabricators="deep_general_fabricator" displayname="recycleitem" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100"/>
-       <RequiredItem identifier="deep_tungsten" amount="1" />
+      <RequiredItem identifier="deep_tungsten" amount="1" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
       <RequiredItem tag="deep_three_mag" mincondition="0.0" maxcondition="0.5"/>
     </Fabricate>
@@ -554,21 +550,21 @@
     <Body width="40" height="50" density="10" />
     <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_three" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_three" />
-	  <!--30发弹容，每发-3.22耐久，耐久为0打完-->
+      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-50" disabledeltatime="true">
         <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" Count="2" />
       </StatusEffect>
       <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1" >
+      <StatusEffect type="OnInserted" target="This" interval="1">
         <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
-    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" >
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true" >
-	       <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
       </StatusEffect>
-	  </Holdable>
+    </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
@@ -577,9 +573,9 @@
     <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
     <Body width="40" height="14" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
-    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="20" >
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="20">
       <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,177,255,255" scalemultiplier="1,0.6" />
-      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.9" >
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.9">
         <Affliction identifier="deep_shot_three_shotgun" strength="1" MultiplyByMaxVitality="true" />
         <Affliction identifier="Shrapnel_residue" strength="20" MultiplyByMaxVitality="true" />
         <Affliction identifier="gunshotwound" strength="20" MultiplyByMaxVitality="true" />
@@ -589,11 +585,11 @@
       <StatusEffect type="OnImpact" target="UseTarget">
         <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="true" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
-	  <StatusEffect type="OnImpact" target="UseTarget">
+      <StatusEffect type="OnImpact" target="UseTarget">
         <Conditional ishuman="false" />
         <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
       </StatusEffect>
@@ -609,5 +605,5 @@
     </Projectile>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  
-  </Items>
+
+</Items>

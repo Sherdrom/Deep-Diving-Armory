@@ -1,0 +1,1074 @@
+-- ============================================================
+-- AdjustEquipmentStatvalue-Config.lua
+-- CONFIG 配置模块，通过全局变量 AdjustEquipmentConfig 暴露
+-- ============================================================
+--
+-- >> 完整配置说明 <<
+--
+-- [顶层参数]
+--   checkInterval (number)  think 轮询间隔（秒），默认 0.5。
+--                          仅子体（IsSub）需要轮询检测放入/取出；
+--                          主体（IsMain）完全由 item.equip/item.unequip 事件驱动，不受此值影响。
+--   debug         (bool)    是否启用 dbgPrint 调试输出，生产环境设为 false。
+--
+-- [items — 物品配置]
+--   键为物品的 Identifier (Prefab ID)，值为配置表，支持的字段：
+--
+--   IsMain (bool)  标记为"可直接穿戴于装备栏"的主体装备。
+--                  主体槽位范围：Head / InnerClothes / OuterClothes / Headset / Card / Bag。
+--                  装备时触发效果，脱下 / 丢弃 / 移除时自动撤销。
+--
+--   IsSub  (bool)  标记为"可放入主体装备库存"的子体配件。
+--                  子体被放入主体时触发效果，取出或主体脱离角色时自动撤销。
+--                  IsMain 和 IsSub 互斥，每个物品只能二选一。
+--
+--   stats  (table[]) 修改角色的 StatValue。每项是一条记录：
+--     { statType = "StatTypes枚举名", value = number }
+--     - statType: StatTypes 枚举中的成员名（大小写敏感），见附录A
+--     - value: 数值。技能类（SkillBonus）为整数加成，百分比类（*Multiplier/Speed）为小数
+--       （0.2 = 20%），Override 类为覆盖值
+--     例: { statType = "WalkingSpeed", value = -0.15 }
+--
+--   flags  (string[]) 修改角色的 AbilityFlag。每项是 AbilityFlags 枚举成员名（大小写敏感），
+--                     见附录B。装备时添加，脱下时移除。
+--     例: flags = { "ImmuneToPressure", "MustWalk" }
+--
+--   affliction (table) 装备时向角色 Head 肢体施加指定 Affliction，脱下时移除。
+--     单个: { id = "Affliction Prefab 标识名", strength = number }
+--     复数: { { id = "id1", strength = 10 }, { id = "id2", strength = 20 } }
+--     - id: AfflictionPrefab 的 Identifier 名称
+--     - strength: 强度值（默认 1）
+--     例: affliction = { id = "burn", strength = 50 }
+--     例(多个): affliction = {
+--                  { id = "deep_helmet_tac_detect", strength = 1 },
+--                  { id = "deep_gpnvg18", strength = 1 },
+--              }
+--
+--   以上 stats / flags / affliction 均为选填，不填则跳过，无副作用。
+--
+-- [附录A — 常用 StatTypes]
+--   技能加成:     ElectricalSkillBonus  HelmSkillBonus  MechanicalSkillBonus
+--                MedicalSkillBonus  WeaponsSkillBonus
+--   技能覆盖:     HelmSkillOverride  MedicalSkillOverride  WeaponsSkillOverride
+--                ElectricalSkillOverride  MechanicalSkillOverride
+--   移动:         MovementSpeed  WalkingSpeed  SwimmingSpeed  PropulsionSpeed
+--   生命:         MaximumHealthMultiplier
+--   伤害:         AttackMultiplier  TeamAttackMultiplier
+--   Buff/Debuff:  BuffDurationMultiplier  DebuffDurationMultiplier
+--   医疗:         MedicalItemEffectivenessMultiplier
+--   水流:         FlowResistance
+--   远程:         RangedAttackSpeed  RangedAttackMultiplier  RangedSpreadReduction
+--   炮塔:         TurretAttackSpeed  TurretPowerCostReduction  TurretChargeSpeed
+--   近战:         MeleeAttackSpeed  MeleeAttackMultiplier
+--   修理:         RepairSpeed  MechanicalRepairSpeed  ElectricalRepairSpeed
+--                DeconstructorSpeedMultiplier  RepairToolStructureRepairMultiplier
+--                RepairToolStructureDamageMultiplier  RepairToolDeattachTimeMultiplier
+--                MaxRepairConditionMultiplierMechanical  MaxRepairConditionMultiplierElectrical
+--   制造:         IncreaseFabricationQuality  GeneticMaterialRefineBonus
+--                GeneticMaterialTaintedProbabilityReductionOnCombine
+--   技能成长:     SkillGainSpeed  ExtraLevelGain
+--
+-- [附录B — 所有 AbilityFlags]
+--   MustWalk                — 无法奔跑
+--   ImmuneToPressure        — 免疫水压
+--   IgnoredByEnemyAI        — 不会被敌人AI锁定
+--   MoveNormallyWhileDragging — 拖拽尸体无移速惩罚
+--   CanTinker               — 可修补物品
+--   CanTinkerFabricatorsAndDeconstructors — 可修补制造台/分解台
+--   TinkeringPowersDevices  — 修补后的物品不耗电
+--   GainSkillPastMaximum    — 技能可超过100级
+--   RetainExperienceForNewCharacter — 新角色保留经验
+--   AllowSecondOrderedTarget — 技能影响前2个指令目标
+--   AlwaysStayConscious     — 血量低于0仍保持清醒
+--   CanNotDieToAfflictions  — 不会因 Affliction 死亡
+--
+-- ============================================================
+
+local CONFIG = {
+    checkInterval = 0.5,
+    debug = false,
+    items = {
+
+        --主体（插板防弹衣）
+        ["deep_6b13"] = {
+            IsMain = true,
+        },
+
+        ["deep_Guardian"] = {
+            IsMain = true,
+        },
+
+        ["deep_6b23"] = {
+            IsMain = true,
+        },
+
+        ["deep_6b43"] = {
+            IsMain = true,
+        },
+
+        ["deep_defender"] = {
+            IsMain = true,
+        },
+
+        ["deep_fort_t5"] = {
+            IsMain = true,
+        },
+
+        ["gen4_heavy"] = {
+            IsMain = true,
+        },
+
+        ["gen4_protection"] = {
+            IsMain = true,
+        },
+
+        ["gen4_high_mobility"] = {
+            IsMain = true,
+        },
+
+        ["deep_hpc"] = {
+            IsMain = true,
+        },
+
+        ["deep_thor_protection"] = {
+            IsMain = true,
+        },
+
+        ["thor"] = {
+            IsMain = true,
+        },
+
+        ["deep_zhuk_6a"] = {
+            IsMain = true,
+        },
+
+        --主体（插板胸挂）
+        ["deep_Obsidian"] = {
+            IsMain = true,
+        },
+
+        ["deep_osprey_protection"] = {
+            IsMain = true,
+        },
+
+        ["deep_osprey"] = {
+            IsMain = true,
+        },
+
+        ["deep_bagariy"] = {
+            IsMain = true,
+        },
+
+        ["deep_tactec"] = {
+            IsMain = true,
+        },
+
+        --主体（衣服）
+        ["deep_heyuanmu_suit"] = {
+            IsMain = true,
+        },
+
+        --主体（头盔）
+        ["6b47"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost"] = {
+            IsMain = true,
+        },
+
+        ["deep_altyn"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_maska"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_kiver_m"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_Fearless_Vanguard"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["deep_zsh_1_2_m"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_heavyhelmet_detect", strength = 1 },
+            },
+        },
+
+        ["6b47_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_black_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_night4"] = {
+            IsMain = true,
+            affliction = {
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        ["6b47_npc"] = {
+            IsMain = true,
+        },
+
+
+        ["6b47_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["6b47_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_black_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_thermalgoggles"] = {
+            IsMain = true,
+        },
+
+        ["deep_fast_helmet_ghost_origin_npc_healthscan"] = {
+            IsMain = true,
+        },
+
+
+
+
+
+        --子体（钢制主插板）
+        ["deep_plate_metal_3"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.15 },
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_metal_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -20 },
+            },
+        },
+
+        ["deep_plate_metal_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.25 },
+                { statType = "WeaponsSkillBonus", value = -25 },
+            },
+        },
+
+        ["deep_plate_metal_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.3 },
+                { statType = "WeaponsSkillBonus", value = -30 },
+            },
+        },
+
+        ["deep_plate_metal_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.35 },
+                { statType = "WeaponsSkillBonus", value = -35 },
+            },
+        },
+
+        ["deep_plate_metal_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.4 },
+                { statType = "WeaponsSkillBonus", value = -40 },
+            },
+        },
+
+        ["deep_plate_metal_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.45 },
+                { statType = "WeaponsSkillBonus", value = -45 },
+            },
+        },
+
+        ["deep_plate_metal_10"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.5 },
+                { statType = "WeaponsSkillBonus", value = -50 },
+            },
+        },
+
+        --子体（钢制手臂插板）
+        ["deep_plate_metal_arm_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_metal_arm_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_metal_arm_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -20 },
+            },
+        },
+
+        ["deep_plate_metal_arm_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -25 },
+            },
+        },
+
+        ["deep_plate_metal_arm_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -30 },
+            },
+        },
+
+        ["deep_plate_metal_arm_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -35 },
+            },
+        },
+
+        --子体（钢制腹股沟插板）
+        ["deep_plate_metal_groin_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_metal_groin_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_metal_groin_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -20 },
+            },
+        },
+
+        ["deep_plate_metal_groin_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -25 },
+            },
+        },
+
+        ["deep_plate_metal_groin_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -30 },
+            },
+        },
+
+        ["deep_plate_metal_groin_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -35 },
+            },
+        },
+
+        --子体（陶瓷主插板）
+        ["deep_plate_ceramic_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_10"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.1 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        --子体（陶瓷手臂插板）
+        ["deep_plate_ceramic_arm_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_arm_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_arm_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_arm_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_arm_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_arm_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        --子体（陶瓷腹股沟插板）
+        ["deep_plate_ceramic_groin_4"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_groin_5"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_groin_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_groin_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_groin_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_ceramic_groin_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        --子体（复合主插板）
+        ["deep_plate_composite_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_composite_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_composite_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_composite_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_composite_10"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_rf3"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        ["deep_plate_br6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -10 },
+            },
+        },
+
+        --子体（复合手臂插板）
+        ["deep_plate_composite_arm_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_arm_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_arm_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_arm_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        --子体（复合腹股沟插板）
+        ["deep_plate_composite_groin_6"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_groin_7"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_groin_8"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+        ["deep_plate_composite_groin_9"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillBonus", value = -15 },
+            },
+        },
+
+
+
+        
+        --子体（护甲升级）
+        ["chip_ergonomics"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "WeaponsSkillBonus", value = 20 },
+            },
+        },
+
+        ["chip_heavy_armor"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = -0.2 },
+                { statType = "WeaponsSkillBonus", value = -20 },
+            },
+            affliction = { id = "chip_heavy_armor", strength = 1 },
+        },
+
+        ["chip_strengthening_of_limbs"] = {
+            IsSub = true,
+            affliction = { id = "chip_strengthening_of_limbs", strength = 1 },
+        },
+
+        ["chip_emergency_defibrillation"] = {
+            IsSub = true,
+            affliction = { id = "chip_emergency_defibrillation_detect", strength = 1 },
+        },
+
+        --子体（头盔战术设备）
+        ["gpnvg_18"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_helmet_tac_detect", strength = 1 },
+              { id = "deep_gpnvg18", strength = 1 },
+            },
+        },
+
+        --子体（神经调整）
+        ["chip_cqb"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+            affliction = {
+              { id = "deep_chip_cqb_1", strength = 1 },
+            },
+        },
+
+        ["chip_frogman"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_chip_frogman_1", strength = 1 },
+            },
+        },
+
+        ["chip_marksman"] = {
+            IsSub = true,
+            stats = {
+                { statType = "AttackMultiplier", value = 0.5 },
+                { statType = "RangedSpreadReduction", value = 0.5 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_marksman_1", strength = 1 },
+            },
+        },
+
+        ["chip_commando"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "RangedSpreadReduction", value = -0.5 },
+            },
+            affliction = {
+              { id = "deep_chip_commando_1", strength = 1 },
+            },
+        },
+
+        ["chip_heavy_defender"] = {
+            IsSub = true,
+            stats = {
+                { statType = "AttackMultiplier", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.3 },
+            },
+            affliction = {
+              { id = "deep_chip_heavy_defender", strength = 1 },
+            },
+        },
+
+        ["chip_blaster"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ExplosionDamageMultiplier", value = 0.5 },
+                { statType = "ExplosionRadiusMultiplier", value = 0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_blaster", strength = 1 },
+            },
+        },
+
+        ["chip_machinegunner"] = {
+            IsSub = true,
+            affliction = {
+              { id = "deep_machinegunner_detect", strength = 1 },
+            },
+        },
+
+        ["chip_striker"] = {
+            IsSub = true,
+            stats = {
+                { statType = "RangedSpreadReduction", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
+                { statType = "WalkingSpeed", value = 0.2 },
+            },
+            affliction = {
+              { id = "deep_chip_striker", strength = 1 },
+            },
+        },
+
+        ["chip_doc"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillOverride", value = 60 },
+                { statType = "WeaponsSkillOverride", value = 60 },
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "DebuffDurationMultiplier", value = 0.5 },
+            },
+            flags = { "MoveNormallyWhileDragging"}
+        },
+
+        --子体（辅助升级）
+        ["chip_learn"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 1 },
+            },
+        },
+
+        ["chip_learn_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 2 },
+                { statType = "HelmSkillOverride", value = 60 },
+                { statType = "MedicalSkillOverride", value = 60 },
+                { statType = "WeaponsSkillOverride", value = 60 },
+                { statType = "ElectricalSkillOverride", value = 60 },
+                { statType = "MechanicalSkillOverride", value = 60 },
+            },
+        },
+
+        ["chip_learn_3"] = {
+            IsSub = true,
+            stats = {
+                { statType = "SkillGainSpeed", value = 3 },
+                { statType = "HelmSkillOverride", value = 80 },
+                { statType = "MedicalSkillOverride", value = 80 },
+                { statType = "WeaponsSkillOverride", value = 80 },
+                { statType = "ElectricalSkillOverride", value = 80 },
+                { statType = "MechanicalSkillOverride", value = 80 },
+            },
+            flags = { "GainSkillPastMaximum"}
+        },
+
+        ["chip_mechanical"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MechanicalSkillGainSpeed", value = 1 },
+                { statType = "MechanicalRepairSpeed", value = 0.3 },
+                { statType = "RepairToolStructureRepairMultiplier", value = 0.3 },
+                { statType = "RepairToolStructureDamageMultiplier", value = 0.3 },
+                { statType = "RepairToolDeattachTimeMultiplier", value = 0.3 },
+                { statType = "FlowResistance", value = 0.5 },
+            },
+        },
+
+        ["chip_mechanical_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MechanicalSkillGainSpeed", value = 2 },
+                { statType = "MechanicalSkillOverride", value = 55 },
+                { statType = "MechanicalRepairSpeed", value = 0.5 },
+                { statType = "RepairToolStructureRepairMultiplier", value = 0.5 },
+                { statType = "RepairToolStructureDamageMultiplier", value = 0.5 },
+                { statType = "RepairToolDeattachTimeMultiplier", value = 0.5 },
+                { statType = "DeconstructorSpeedMultiplier", value = 0.5 },
+                { statType = "FabricationSpeed", value = 0.5 },
+                { statType = "IncreaseFabricationQuality", value = 1 },
+                { statType = "FlowResistance", value = 0.8 },
+            },
+        },
+
+        ["chip_electrician"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ElectricalSkillGainSpeed", value = 1 },
+                { statType = "MaxRepairConditionMultiplierElectrical", value = 0.3 },
+                { statType = "RepairSpeed", value = 0.5 },
+                { statType = "FlowResistance", value = 0.5 },
+            },
+        },
+
+        ["chip_electrician_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "ElectricalSkillGainSpeed", value = 2 },
+                { statType = "ElectricalSkillOverride", value = 55 },
+                { statType = "MaxRepairConditionMultiplierElectrical", value = 0.5 },
+                { statType = "RepairSpeed", value = 0.7 },
+                { statType = "DeconstructorSpeedMultiplier", value = 0.5 },
+                { statType = "FabricationSpeed", value = 0.5 },
+                { statType = "IncreaseFabricationQuality", value = 1 },
+                { statType = "FlowResistance", value = 0.8 },
+            },
+        },
+
+        ["chip_security"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillGainSpeed", value = 1 },
+                { statType = "MovementSpeed", value = 0.1 },
+                { statType = "MaximumHealthMultiplier", value = 0.1 },
+                { statType = "MeleeAttackMultiplier", value = 0.2 },
+                { statType = "MeleeAttackSpeed", value = 0.2 },
+                { statType = "FlowResistance", value = 0.5 },
+                { statType = "RangedSpreadReduction", value = 0.2 },
+                { statType = "TurretAttackSpeed", value = 0.1 },
+            },
+        },
+
+        ["chip_security_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "WeaponsSkillGainSpeed", value = 2 },
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "MaximumHealthMultiplier", value = 0.2 },
+                { statType = "MeleeAttackMultiplier", value = 0.4 },
+                { statType = "MeleeAttackSpeed", value = 0.4 },
+                { statType = "FlowResistance", value = 0.8 },
+                { statType = "RangedSpreadReduction", value = 0.25 },
+                { statType = "TurretAttackSpeed", value = 0.15 },
+                { statType = "TeamAttackMultiplier", value = -0.5 },
+                { statType = "TurretPowerCostReduction", value = 0.2 },
+            },
+        },
+
+        ["chip_medic"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillGainSpeed", value = 1 },
+                { statType = "WalkingSpeed", value = 0.1 },
+                { statType = "PoisonMultiplier", value = 0.2 },
+                { statType = "CPRBoost", value = 0.5 },
+                { statType = "GeneticMaterialRefineBonus", value = 0.1 },
+                { statType = "GeneticMaterialTaintedProbabilityReductionOnCombine", value = 0.5 },
+            },
+        },
+
+        ["chip_medic_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MedicalSkillGainSpeed", value = 2 },
+                { statType = "WalkingSpeed", value = 0.2 },
+                { statType = "PoisonMultiplier", value = 0.3 },
+                { statType = "CPRBoost", value = 0.7 },
+                { statType = "GeneticMaterialRefineBonus", value = 0.2 },
+                { statType = "GeneticMaterialTaintedProbabilityReductionOnCombine", value = 0.7 },
+            },
+        },
+
+        ["chip_captain"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_captain_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_assistant"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["chip_assistant_2"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        ["deep_ten_star_general_assist_upgrading"] = {
+            IsSub = true,
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
+            },
+        },
+
+        -- 主体 Affliction 示例（装备此物品时施加指定 affliction）
+        -- ["example_main_with_affliction"] = {
+        --     IsMain = true,
+        --     affliction = { id = "some_affliction_id", strength = 10 },
+        -- },
+
+        -- 主体复数 Affliction 示例
+        -- ["example_main_with_multi_affliction"] = {
+        --     IsMain = true,
+        --     affliction = {
+        --         { id = "burn", strength = 30 },
+        --         { id = "bleeding", strength = 10 },
+        --     },
+        -- },
+
+        -- 子体 Affliction 示例
+        -- ["example_sub_with_affliction"] = {
+        --     IsSub = true,
+        --     affliction = { id = "some_affliction_id", strength = 5 },
+        -- },
+
+    },
+}
+
+-- ============================================================
+-- 模块级缓存
+-- ============================================================
+
+_G.AdjustEquipmentSubConfigCache = {}
+for itemId, cfg in pairs(CONFIG.items) do
+    if cfg.IsSub then
+        _G.AdjustEquipmentSubConfigCache[itemId] = cfg
+    end
+end
+
+_G.AdjustEquipmentWearableSlots = {
+    InvSlotType.Head,
+    InvSlotType.InnerClothes,
+    InvSlotType.OuterClothes,
+    InvSlotType.Headset,
+    InvSlotType.Card,
+    InvSlotType.Bag,
+}
+
+_G.AdjustEquipmentConfig = CONFIG

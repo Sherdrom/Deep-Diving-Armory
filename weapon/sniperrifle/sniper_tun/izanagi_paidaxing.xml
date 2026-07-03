@@ -26,9 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-      </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
@@ -41,7 +38,7 @@
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
       <!--6倍镜
-      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight" strength="10" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
@@ -50,7 +47,7 @@
         <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
     </Holdable>
-    <SwitchableRangedWeapon reload="0.15" weapondamagemodifier="1.0" holdtrigger="true" barrelpos="350,1" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.15" switchableSlots="0" switchableFiremodes="Semi,Burst" firemodeswitchkey="V" burstReload="0.05" shotsPerBurst="4" >
+    <SwitchableRangedWeapon reload="0.15" weapondamagemodifier="1.0" holdtrigger="true" barrelpos="350,1" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.15" switchableSlots="0" switchableFiremodes="Semi,Burst" firemodeswitchkey="V" burstReload="0.05" shotsPerBurst="4">
       <!-- VCE检测 -->
       <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_VCE_yes" strength="100" />
@@ -74,33 +71,33 @@
         <Use />
       </StatusEffect>
       <!--8倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="8x_sight_reduce" strength="4" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="8x_sight_reduce" strength="1.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 0.5" />
       <ReduceAffliction identifier="8x_sight_reduce" strength="2.2" />
       <RequiredItems items="8x_sight" type="Contained" />
       </StatusEffect>-->
       <!--6倍镜
-      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight_reduce" strength="4" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
       <ReduceAffliction identifier="6x_sight_reduce" strength="0.8" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSecondaryUse" target="This,Character" comparison="and" multiplyafflictionsbymaxvitality="true">
       <Conditional speed="gt 3" />
       <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />

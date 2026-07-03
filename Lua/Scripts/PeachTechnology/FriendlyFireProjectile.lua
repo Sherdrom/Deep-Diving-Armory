@@ -1,3 +1,5 @@
+local AH = AfflictionHelper
+
 local MOD_ID = "FriendlyFireProjectile"
 local DEBUG = false
 
@@ -18,7 +20,7 @@ Hook.Patch(
             return
         end
 
-        if user.CharacterHealth.GetAfflictionStrengthByIdentifier("friendly_fire") <= 0 then
+        if AH.GetAffStrength(user, "friendly_fire") <= 0 then
             return
         end
 

@@ -1,3 +1,7 @@
+local CONFIG = {
+	bypassResistance = false,  -- 是否绕过抗性：当抗性极高(divisor<=0.001)时，启用则直接无视抗性，关闭则正常受抗性影响
+}
+
 local DEBUG = false
 
 local function log(...)
@@ -109,7 +113,7 @@ function(instance, p)
 	end
 
 	local affliction = p["newAffliction"]
-	local affId = affliction.Prefab.Identifier
+	local affId = tostring(affliction.Prefab.Identifier)
 	log("AddLimbAffliction: " .. affId .. " strength=" .. tostring(affliction.Strength))
 
 	local mult = multipliers[affId]
@@ -136,11 +140,14 @@ function(instance, p)
 			.. " new:" .. tostring(affliction.Strength)
 			.. " resistance:" .. tostring(resistance))
 	else
-		bypassResistanceId = affId
+		if CONFIG.bypassResistance then
+			bypassResistanceId = affId
+		end
 		affliction.Strength = oldStrength * mult
 		log(">>> Multiplier applied (resistance bypass)! " .. affId .. " x" .. mult
 			.. " old:" .. tostring(oldStrength)
-			.. " new:" .. tostring(affliction.Strength))
+			.. " new:" .. tostring(affliction.Strength)
+			.. (CONFIG.bypassResistance and "" or " (bypass disabled)"))
 	end
 end, Hook.HookMethodType.Before)
 
@@ -152,7 +159,7 @@ Hook.Patch("Barotrauma.CharacterHealth", "GetResistance",
 function(instance, p)
 	if bypassResistanceId ~= nil then
 		local prefab = p["afflictionPrefab"]
-		local prefabId = prefab.Identifier
+		local prefabId = tostring(prefab.Identifier)
 		log("GetResistance called: prefab=" .. prefabId .. " bypassId=" .. bypassResistanceId)
 		if prefabId == bypassResistanceId then
 			bypassResistanceId = nil
