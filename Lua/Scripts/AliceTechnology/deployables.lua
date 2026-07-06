@@ -25,7 +25,8 @@ Hook.Add("Deep_APS", "Deep_APS",
         for target, value in pairs(ActiveProjectiles) do
             if not target.Removed and not target.IsContained then
                 if (target.WorldPosition - item.WorldPosition).Length() <= apsinfo.range then
-                    if target.body.Height * target.body.Width >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then
+                    local size = target.body.GetSize().X * target.body.GetSize().Y * 2500
+                    if size >= apsinfo.minsize and (target.body.LinearVelocity.Length() >= apsinfo.minVelocity and target.body.LinearVelocity.Length() <= apsinfo.maxVelocity) then
                         if Submarine.CheckVisibility(item.SimPosition,target.SimPosition,false,false,true,true,true) == nil then
                             if ActiveAPS[item] == nil then
                                 ActiveAPS[item] = {
