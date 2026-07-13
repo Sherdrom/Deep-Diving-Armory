@@ -22,7 +22,7 @@ parts.deep_hk416a5_upper_receiver = {
     },
     mounts = {
         { path = "optic_mount", nameKey = "deep.gunsmith.mount.upper_receiver.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 1, y = -20 }, quick = { key = "optic" } },
-        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "deep_370mm_barrel", anchor = { x = 47, y = 1 } },
+        { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "deep_556_45_370mm_barrel", anchor = { x = 47, y = 1 } },
         { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "deep_hk416_four_rail_handguard", anchor = { x = 47, y = 1 } },
     }
 }

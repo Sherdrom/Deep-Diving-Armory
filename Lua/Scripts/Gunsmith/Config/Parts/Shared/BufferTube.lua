@@ -24,3 +24,20 @@ parts.deep_hket_buffer_tube = {
         { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 } },
     }
 }
+
+parts.deep_advanced_buffer_tube = {
+    type = "stock_mount",
+    nameKey = "deep.gunsmith.part.deep_advanced_buffer_tube",
+    provides = { "AR_buffer_tube" },
+    item = { identifier = "deep_advanced_buffer_tube" },
+    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    visual = { texture = texture,
+        source = { x = 8, y = 82, w = 109, h = 24 },
+        attachPoint = { x = 106, y = 12 },
+        order = 30,
+        scale = 1.0
+    },
+    mounts = {
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 } },
+    }
+}
