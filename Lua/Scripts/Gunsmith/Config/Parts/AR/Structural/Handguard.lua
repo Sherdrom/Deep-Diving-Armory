@@ -21,6 +21,7 @@ parts.deep_hk416_four_rail_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 132, y = -19 }},
     }
 }
 
@@ -42,6 +43,7 @@ parts.deep_hk416_9mlok_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 141, y = -19 }},
     }
 }
 
@@ -63,6 +65,7 @@ parts.deep_hk416_13mlok_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 203, y = -19 }},
     }
 }
 
@@ -84,6 +87,7 @@ parts.deep_hk416_14mrs_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 216, y = -19 }},
     }
 }
 
@@ -105,6 +109,7 @@ parts.deep_hk416_15mlok_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 231, y = -19 }},
     }
 }
 
@@ -126,5 +131,6 @@ parts.deep_nl545_10_5mlok_fde_handguard = { type = "handguard",
         { path = "Left_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Left_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 } , visualOrder = 5, quick = { key = "left_rail" }},
         { path = "Right_rail_mount", partType = "accessory_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Right_rail_mount", accepts = { "accessory" }, anchor = { x = 72, y = 0 }, quick = { key = "right_rail" } },
         { path = "Lower_rail_mount", nameKey = "deep.gunsmith.mount.handguard_mount.Lower_rail_mount", accepts = { "small_grip", "medium_grip", "AR_sub_hanging_gl", "sub_hanging_shotgun"}, anchor = { x = 74, y = 18 }, quick = { key = "lower_rail", showWhenContained = { "deep_sub_hanging_m203", "deep_sub_hanging_master_key" } } },
+        { path = "front_sight_mount", nameKey = "deep.gunsmith.mount.front_sight_mount", accepts = { "AR_front_sight" },defaultPart = "deep_ar15_front_sight", anchor = { x = 159, y = -19 }},
     }
 }

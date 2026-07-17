@@ -20,6 +20,8 @@ local files = { "AR/Structural/Barrel.lua",
     "Shared/Accessory.lua",
     "Shared/Muzzle.lua",
     "Shared/BufferTube.lua",
+    "Shared/RearSight.lua",
+    "Shared/FrontSight.lua",
 }
 
 for _, file in ipairs(files) do
