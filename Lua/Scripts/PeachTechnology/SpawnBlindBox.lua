@@ -1,10 +1,10 @@
--- SpawnWeaponBlindBox.lua
+-- SpawnBlindBox.lua
 -- When a StatusEffect triggers a configured <LuaHook name="..." />, this script
 -- rolls a weighted "blind box" and spawns the selected item into the
 -- target character's inventory (or equips it if configured).
 -- Supports multiple hooks, each with an independent item pool.
 
-local MOD_NAME = "SpawnWeaponBlindBox"
+local MOD_NAME = "SpawnBlindBox"
 
 -- ==================== Configuration ====================
 -- debug          : true to print diagnostic logs, false for silent operation
@@ -34,7 +34,7 @@ local CONFIG = {
 
     hooks = {
         {
-            hookName = "spawnweapon",
+            hookName = "spawnexample",
             items = {
                 {
                     id = "smg",

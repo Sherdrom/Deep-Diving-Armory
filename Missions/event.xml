@@ -1108,16 +1108,281 @@
       <ConversationAction text="EventText.deep_meet_on_the_battleground_separatists" dialogtype="Small" eventsprite="separatists_reinforce"/>
     </ScriptedEvent>
 
-    <!-- 通过切换队伍，可取消敌人的消灭入侵者命令，从而避免冲家 -->
+
+    <ScriptedEvent identifier="deep_quick_move_typhoon" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_typhoon" tag="deep_contract_terminal_quick_move_typhoon" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_typhoon" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_typhoon_boarding">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_boarding"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_diving1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_diving1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_diving2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_diving2"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_diving3">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_diving3"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_diving4">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_diving4"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_west">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_west"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_east1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_east1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_typhoon_east2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_typhoon_east2"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_latte" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_latte" tag="deep_contract_terminal_quick_move_latte" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_latte" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_latte_diving1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_latte_diving1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_latte_reactor">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_latte_reactor"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_latte_dormitory">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_latte_dormitory"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_103_shipyard" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_103_shipyard" tag="deep_contract_terminal_quick_move_103_shipyard" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_103_shipyard" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_103_diving1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_103_diving1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_103_diving2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_103_diving2"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_frozen_armory" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_frozen_armory" tag="deep_contract_terminal_quick_move_frozen_armory" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_frozen_armory" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_frozen_armory_attack">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_frozen_armory_attack"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_frozen_armory_diving1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_frozen_armory_diving1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_mining" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_mining" tag="deep_contract_terminal_quick_move_mining" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_mining" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_mining_attack1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_mining_attack1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_mining_attack2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_minging_attack2"/>
+               <GoTo name="start" />
+            </Option>
+
+             <Option text="EventText.quick_move_mining_diving1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_minging_diving1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_mining_diving2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_minging_diving2"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_farport" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_farport" tag="deep_contract_terminal_quick_move_farport" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_farport" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move" eventsprite="pigcat_contract_room_smile" >
+        <Option text="EventText.quick_move_yes">
+          <ConversationAction targettag="triggerer_player" text="EventText.quick_move2" >
+
+            <Option text="EventText.quick_move_farport_attack1">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_farport_attack1"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_farport_attack2">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_farport_attack2"/>
+               <GoTo name="start" />
+            </Option>
+
+             <Option text="EventText.quick_move_farport_attack3">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_farport_attack3"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_farport_attack4">
+               <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_farport_attack4"/>
+               <GoTo name="start" />
+            </Option>
+
+            <Option text="EventText.quick_move_no" endconversation="true">
+               <GoTo name="start" />
+            </Option>
+
+          </ConversationAction>
+        </Option>
+        <Option text="EventText.quick_move_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_quick_move_contract_room" >
+      <Label name="start" />
+      <ClearTagAction tag="triggerer_player" />
+      <TagAction criteria="player" tag="player" />
+      <TagAction criteria="itemidentifier:deep_contract_terminal_quick_move_contract_room" tag="deep_contract_terminal_quick_move_contract_room" />
+      <TriggerAction target1tag="deep_contract_terminal_quick_move_contract_room" target2tag="player" applytotarget2="triggerer_player" radius="150" waitforinteraction="true" />
+      <ConversationAction targettag="triggerer_player" text="EventText.quick_move_contract_room" >
+        <Option text="EventText.quick_move_contract_room_yes">
+          <TeleportAction targettag="triggerer_player" Position="outpost" SpawnType="Cargo" SpawnPointTag="deep_quick_move_contract_room"/>
+          <GoTo name="start" />
+        </Option>
+        <Option text="EventText.quick_move_contract_room_no" endconversation="true">
+          <GoTo name="start" />
+        </Option>
+      </ConversationAction>
+    </ScriptedEvent>
+
+    <!-- 通过切换队伍，可取消敌人的消灭入侵者命令，从而避免冲家 
     <ScriptedEvent identifier="deep_Initial_enemy_team_switch">
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
       <CombatAction CombatMode="Retreat" NPCTag="deep_initial_enemy" EnemyTag="deep_initial_enemy" CoolDown="1" AbandonOnReset="false" />
       <WaitAction time="0.5" />
       <NPCChangeTeamAction NPCTag="deep_initial_enemy" TeamID="None" addtocrew="false" />
-    </ScriptedEvent>
+    </ScriptedEvent>-->
 
-    <!-- Lua代码取消敌人命令更可靠，可取消敌人的消灭入侵者命令，从而避免冲家 -->
+    <!-- Lua代码取消敌人命令更可靠，可取消敌人的消灭入侵者命令，从而避免冲家 
     <ScriptedEvent identifier="deep_cancel_order_fightintruders">
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
@@ -1128,7 +1393,7 @@
         </StatusEffect>
       </StatusEffectAction>
 
-    </ScriptedEvent>
+    </ScriptedEvent>-->
 
     <!--<ScriptedEvent identifier="deep_meet_on_the_battleground_separatists_state1" commonness="150">
       <TagAction criteria="player" tag="player" />
