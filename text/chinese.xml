@@ -4174,8 +4174,8 @@ super90可在半自动与泵动之间切换，方便不同射击方式的士兵�
 所有盾牌将不会推人，但是会阻挡子弹，提供更好的战术体验‖end‖
 深潜武装特有的数值平衡，原版枪械及其他模组的枪械，不在水中时，爆头将造成4倍伤害，+30%枪伤
 你可以使用其他模组枪械战斗
-‖color:gui.red‖当使用深潜武器攻击其他生物时，双方只要有其中一人在水中，都会触发水中阻力伤害衰减，只造成40%伤害（你可以安装"水中阻力优化"抵消）‖end‖
-‖color:gui.red‖深潜枪攻击巨兽时，只造成8%伤害，mass≥3000的生物会被判定成巨兽‖end‖
+‖color:gui.red‖当使用深潜武器攻击其他生物时，双方只要有其中一人在水中，都会触发水中阻力伤害衰减，只造成50%伤害（你可以安装"水中阻力优化"抵消）‖end‖
+‖color:gui.red‖深潜武器攻击巨兽时，只造成10%伤害，mass≥3000的生物会被判定成巨兽‖end‖
 致命爆头是深潜作战的重要机制，你可以使用低级枪械白嫖高级敌人
 致命爆头只对人类生效，对其他生物不生效</talentdescription.deep_talent_all>
 <talentname.deep_chip_talent>枪械升级</talentname.deep_chip_talent>
@@ -5899,6 +5899,63 @@ THOR全面防护型因此诞生，该防弹衣在联盟军中装备数量较少�
 "如果你和她分享劲爆摇滚乐的话，她会很开心的"
 ‖color:gui.blue‖（美化包：木卫二萌化计划）‖end‖
 ‖color:gui.red‖（此件衣服可以覆盖原版贴图，不会辣眼睛）‖end‖</entitydescription.deep_suomi_suit>
+
+<entityname.typhoon_map_icon>台风</entityname.typhoon_map_icon>
+<entityname.typhoon_map_information>台风（难度：测试中地图）</entityname.typhoon_map_information>
+<entitydescription.typhoon_map_information>‖color:gui.green‖台风级移动城市经常会遭到攻击，各方势力都会想尽办法截停并占领台风‖end‖
+"驻守台风的守军坚守到了最后一刻，目前台风内部已经搭建多处防御工事，宿舍区地形较为复杂，推荐进行跳帮作战或首先占领工程区，台风前部长廊较多，适合狙击作战
+灵活选择进攻点，打通已经标记的可破坏墙壁，对敌人发动措手不及的进攻，我相信一定能成功夺回台风！"
+‖color:gui.red‖地图大小：较大‖end‖
+‖color:gui.blue‖推荐武器：霰弹枪，步枪，狙击枪‖end‖
+‖color:gui.green‖额外援助：医疗床，可破坏墙壁‖end‖
+</entitydescription.typhoon_map_information>
+
+<entityname.deep_contract_terminal_quick_move_typhoon>突击行动终端（台风）</entityname.deep_contract_terminal_quick_move_typhoon>
+<entityname.deep_contract_terminal_quick_move_latte>突击行动终端（莱特城）</entityname.deep_contract_terminal_quick_move_latte>
+<entityname.deep_contract_terminal_quick_move_mining>突击行动终端（矿业中心）</entityname.deep_contract_terminal_quick_move_mining>
+<entityname.deep_contract_terminal_quick_move_frozen_armory>突击行动终端（冰封据点）</entityname.deep_contract_terminal_quick_move_frozen_armory>
+<entityname.deep_contract_terminal_quick_move_103_shipyard>突击行动终端（废弃船厂）</entityname.deep_contract_terminal_quick_move_103_shipyard>
+<entityname.deep_contract_terminal_quick_move_farport>突击行动终端（远港船厂）</entityname.deep_contract_terminal_quick_move_farport>
+<entityname.deep_contract_terminal_quick_move_contract_room>快速终端（合约室）</entityname.deep_contract_terminal_quick_move_contract_room>
+<eventtext.quick_move>"需要我载你一程吗？我可以带你快速前往进攻点"</eventtext.quick_move>
+<eventtext.quick_move_contract_room>是否快速前往合约室？</eventtext.quick_move_contract_room>
+<eventtext.quick_move_contract_room_yes>"是"</eventtext.quick_move_contract_room_yes>
+<eventtext.quick_move_contract_room_no>"不用，我锻炼身体"</eventtext.quick_move_contract_room_no>
+<eventtext.quick_move2>"这是目前筛选出来的高效进攻点，可以让敌人措手不及"</eventtext.quick_move2>
+<!-- 台风进攻点 -->
+<eventtext.quick_move_typhoon_boarding>跳帮船——宿舍区（东北方）</eventtext.quick_move_typhoon_boarding>
+<eventtext.quick_move_typhoon_diving1>外部渗透——豪华餐厅（北方）</eventtext.quick_move_typhoon_diving1>
+<eventtext.quick_move_typhoon_diving2>外部渗透——舰长室（北方）</eventtext.quick_move_typhoon_diving2>
+<eventtext.quick_move_typhoon_diving3>外部渗透——核弹发射井（东北方）（危险）</eventtext.quick_move_typhoon_diving3>
+<eventtext.quick_move_typhoon_diving4>外部渗透——船头（东北方）</eventtext.quick_move_typhoon_diving4>
+<eventtext.quick_move_typhoon_west>压载舱渗透——引擎（最西方）</eventtext.quick_move_typhoon_west>
+<eventtext.quick_move_typhoon_east1>压载舱渗透——中部（东方）</eventtext.quick_move_typhoon_east1>
+<eventtext.quick_move_typhoon_east2>压载舱渗透——船头（最东方）</eventtext.quick_move_typhoon_east2>
+<!-- 废弃船厂进攻点 -->
+<eventtext.quick_move_latte_diving1>外部渗透——宿舍区（西北方）</eventtext.quick_move_latte_diving1>
+<eventtext.quick_move_latte_reactor>外部渗透——反应堆（北方）</eventtext.quick_move_latte_reactor>
+<eventtext.quick_move_latte_dormitory>外部渗透——宿舍区（东北方）</eventtext.quick_move_latte_dormitory>
+<!-- 冰封据点进攻点 -->
+<eventtext.quick_move_103_diving1>外部渗透——西侧船厂（西方）</eventtext.quick_move_103_diving1>
+<eventtext.quick_move_103_diving2>外部渗透——东侧船厂（东方）</eventtext.quick_move_103_diving2>
+<!-- 矿业中心进攻点 -->
+<eventtext.quick_move_mining_attack1>外部渗透——西侧F3（西方）</eventtext.quick_move_mining_attack1>
+<eventtext.quick_move_mining_attack2>外部渗透——东侧F3（东方）</eventtext.quick_move_mining_attack2>
+<eventtext.quick_move_mining_diving1>外部渗透——西侧气闸（西方）</eventtext.quick_move_mining_diving1>
+<eventtext.quick_move_mining_diving2>外部渗透——东侧气闸（东方）</eventtext.quick_move_mining_diving2>
+<!-- 远港船厂进攻点 -->
+<eventtext.quick_move_farport_attack1>冰面进攻——地表（西北方）</eventtext.quick_move_farport_attack1>
+<eventtext.quick_move_farport_attack2>外部渗透——西侧F3（西北方）</eventtext.quick_move_farport_attack2>
+<eventtext.quick_move_farport_attack3>外部渗透——极点（北方）</eventtext.quick_move_farport_attack3>
+<eventtext.quick_move_farport_attack4>外部渗透——东北方地表（东北方）</eventtext.quick_move_farport_attack4>
+
+<eventtext.quick_move_yes>"有哪些快速进攻点？"</eventtext.quick_move_yes>
+<eventtext.quick_move_no>"谢了，果然我还是常规打法吧"</eventtext.quick_move_no>
+
+<entityname.deep_separatist_soldier_moderate_equipment>分离士兵装备</entityname.deep_separatist_soldier_moderate_equipment>
+
+
+
 <!-- 26.15新增翻译文件 -->
 <Auto>全自动</Auto>
 <Semi>半自动</Semi>
@@ -5940,6 +5997,8 @@ THOR全面防护型因此诞生，该防弹衣在联盟军中装备数量较少�
 <label.ContractRewardSafe>合约奖励箱</label.ContractRewardSafe>
 <label.ViewMap>查看地图→</label.ViewMap>
 <label.ConfirmContract>确认合约↓</label.ConfirmContract>
+<label.quickmove>突击终端</label.quickmove>
+<label.quickmove_contract_room>快速终端</label.quickmove_contract_room>
 
 
 </infotexts>

@@ -11,15 +11,16 @@ local cfg = {
     damageFalloffEnabled = true,
 }
 
--- 深潜枪-水中检测
-local DEEP_GUN_IN_WATER_MULTIPLIER = 0.4
-local DEEP_GUN_IN_WATER_STRENGTH_THRESHOLD = 0.1
-local DEEP_GUN_IN_WATER_AFFLICTION = "deepgun_inwater_detect"
-
--- 深潜枪-对大型生物衰减
-local DEEP_GUN_LEVIATHAN_MULTIPLIER = 0.08
+-- 深潜枪通用配置
+local DEEP_GUN_TAG = "deep_condition_100"
+local DEEP_GUN_IN_WATER_MULTIPLIER = 0.5
+local DEEP_GUN_LEVIATHAN_MULTIPLIER = 0.1
 local DEEP_GUN_LEVIATHAN_MASS_THRESHOLD = 3000
-local DEEP_GUN_LEVIATHAN_AFFLICTION = "deepgun_inwater_detect"
+
+local function hasDeepGunEquipped(character)
+    if character == nil or character.Inventory == nil then return false end
+    return character.HasEquippedItem(DEEP_GUN_TAG)
+end
 
 -- ==================== 距离衰减 ====================
 
@@ -234,7 +235,7 @@ function(characterHealth, attackResult, hitLimb, allowStacking)
     local attacker = targetCharacter.LastAttacker
     if attacker == nil then return end
 
-    if AH.GetAffStrength(attacker, DEEP_GUN_IN_WATER_AFFLICTION) <= DEEP_GUN_IN_WATER_STRENGTH_THRESHOLD then return end
+    if not hasDeepGunEquipped(attacker) then return end
 
     if not (attacker.InWater or targetCharacter.InWater) then return end
 
@@ -260,7 +261,7 @@ function(characterHealth, attackResult, hitLimb, allowStacking)
 
     if not attacker.IsHuman then return end
 
-    if AH.GetAffStrength(attacker, DEEP_GUN_LEVIATHAN_AFFLICTION) <= 0.1 then return end
+    if not hasDeepGunEquipped(attacker) then return end
 
     if targetCharacter.Mass < DEEP_GUN_LEVIATHAN_MASS_THRESHOLD then return end
 

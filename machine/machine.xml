@@ -67,8 +67,9 @@
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="372,13,335,277" depth="0.8" origin="0.5,0.5" />
     <BrokenSprite texture="%ModDir%/machine/machine_2.png" sourcerect="374,333,335,277" depth="0.8" maxcondition="60" fadein="true" origin="0.5,0.5" />
     <Body width="220" height="250" density="40" />
-    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
-      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
+    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="5.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+      <RequiredItem identifier="wrench" type="Equipped" />
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.5" setvalue="true" />
       <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
         <Conditional attached="false" />
       </StatusEffect>
@@ -79,20 +80,7 @@
       <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
       <StatusEffect type="InWater" target="This" condition="-0.5" />
     </Fabricator>
-    <ConnectionPanel selectkey="Action" canbeselected="true" hudpriority="10" msg="ItemMsgRewireScrewdriver">
-      <GuiFrame relativesize="0.2,0.32" minsize="400,350" maxsize="480,420" anchor="Center" style="ConnectionPanel" />
-      <RequiredSkill identifier="electrical" level="55" />
-      <StatusEffect type="OnFailure" target="Character" targetlimbs="LeftHand,RightHand" AllowWhenBroken="true">
-        <Sound file="Content/Sounds/Damage/Electrocution1.ogg" range="1000" />
-        <Explosion range="100.0" force="1.0" flames="false" shockwave="false" sparks="true" underwaterbubble="false" />
-        <Affliction identifier="stun" strength="4" />
-        <Affliction identifier="burn" strength="5" />
-      </StatusEffect>
-      <RequiredItem items="screwdriver" type="Equipped" />
-      <input name="power_in" displayname="connection.powerin" />
-      <output name="condition_out" displayname="connection.conditionout" />
-    </ConnectionPanel>
-    <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
+    <Repairable selectkey="Select" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
       <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI" />
       <RequiredSkill identifier="mechanical" level="55" />
       <RequiredItem items="wrench" type="Equipped" />
@@ -141,7 +129,8 @@
     <UpgradePreviewSprite scale="2.5" texture="Content/UI/WeaponUI.png" sourcerect="256,960,64,64" origin="0.5,0.45" />
     <Sprite texture="%ModDir%/machine/machine_2.png" sourcerect="72,11,237,259" depth="0.8" />
     <Body width="220" height="250" density="40" />
-    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="itemmsgdetach" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+    <Holdable selectkey="Select" pickkey="Use" slots="RightHand+LeftHand" msg="ItemMsgDetachWrench" PickingTime="3.0" aimpos="65,-10" handle1="0,0" attachable="true" aimable="false">
+      <RequiredItem identifier="wrench" type="Equipped" />
       <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.8" setvalue="true" />
       <StatusEffect type="Always" target="This" disabledeltatime="true" stackable="false" setvalue="true" condition="100" allowwhenbroken="true">
         <Conditional attached="false" />
@@ -153,7 +142,7 @@
       <poweronsound file="Content/Items/PowerOnLight1.ogg" range="600" loop="false" />
       <StatusEffect type="InWater" target="This" condition="-0.5" />
     </Fabricator>
-    <Repairable selectkey="Action" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
+    <Repairable selectkey="Select" header="mechanicalrepairsheader" deteriorationspeed="0.50" mindeteriorationdelay="60" maxdeteriorationdelay="120" RepairThreshold="80" fixDurationHighSkill="5" fixDurationLowSkill="25" msg="ItemMsgRepairWrench" hudpriority="10">
       <GuiFrame relativesize="0.2,0.16" minsize="400,180" maxsize="480,280" anchor="Center" relativeoffset="0.1,0.27" style="ItemUI" />
       <RequiredSkill identifier="mechanical" level="55" />
       <RequiredItem items="wrench" type="Equipped" />

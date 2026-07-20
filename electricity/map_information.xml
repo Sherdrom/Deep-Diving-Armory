@@ -11,7 +11,6 @@
       <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
     </ItemContainer>
   </Item>
-
   <!-- 冰封据点 -->
   <Item name="" identifier="frozen_armory_map_icon" category="Electrical" subcategory="deep_map" tags="weaponholder" canflipx="false" canflipy="false" scale="0.5">
     <sprite texture="%ModDir%/electricity/map_icon.png" sourcerect="887,28,501,335" depth="0.65" premultiplyalpha="false" origin="0.5,0.5" />
@@ -23,7 +22,6 @@
       <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
     </ItemContainer>
   </Item>
-
   <!-- 矿业中心 -->
   <Item name="" identifier="mining_map_icon" category="Electrical" subcategory="deep_map" tags="weaponholder" canflipx="false" canflipy="false" scale="0.5">
     <sprite texture="%ModDir%/electricity/map_icon.png" sourcerect="58,748,810,302" depth="0.65" premultiplyalpha="false" origin="0.5,0.5" />
@@ -35,7 +33,6 @@
       <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
     </ItemContainer>
   </Item>
-
   <!-- 废弃船厂 -->
   <Item name="" identifier="ship_map_icon" category="Electrical" subcategory="deep_map" tags="weaponholder" canflipx="false" canflipy="false" scale="0.5">
     <sprite texture="%ModDir%/electricity/map_icon.png" sourcerect="29,427,980,232" depth="0.65" premultiplyalpha="false" origin="0.5,0.5" />
@@ -47,7 +44,6 @@
       <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
     </ItemContainer>
   </Item>
-
   <!-- 远港船厂 -->
   <Item name="" identifier="farport_map_icon" category="Electrical" subcategory="deep_map" tags="weaponholder" canflipx="false" canflipy="false" scale="0.5">
     <sprite texture="%ModDir%/electricity/map_icon.png" sourcerect="18,1214,1016,446" depth="0.65" premultiplyalpha="false" origin="0.5,0.5" />
@@ -59,30 +55,39 @@
       <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
     </ItemContainer>
   </Item>
-
+  <!-- 台风 -->
+  <Item name="" identifier="typhoon_map_icon" category="Electrical" subcategory="deep_map" tags="weaponholder" canflipx="false" canflipy="false" scale="0.5">
+    <sprite texture="%ModDir%/electricity/map_icon.png" sourcerect="45,1784,1147,196" depth="0.65" premultiplyalpha="false" origin="0.5,0.5" />
+    <ItemContainer capacity="8" slotsperrow="7" canbeselected="true" hide="true" msg="ItemMsgInteractSelect">
+      <GuiFrame relativesize="0.5,0.6" anchor="Center" style="ItemUI" />
+      <Containable tags="deep_map_contract,deep_map_information">
+        <StatusEffect type="OnRemoved" target="Contained" InvulnerabletoDamage="false"></StatusEffect>
+      </Containable>
+      <StatusEffect type="NotInwater" target="Contained" InvulnerabletoDamage="true"></StatusEffect>
+    </ItemContainer>
+  </Item>
   <!-- 莱特城信息 -->
   <Item name="" identifier="latte_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
     <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
   </Item>
-
   <!-- 冰封据点信息 -->
   <Item name="" identifier="frozen_armory_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
     <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
   </Item>
-
   <!-- 矿业中心信息 -->
   <Item name="" identifier="mining_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
     <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
   </Item>
-
   <!-- 废弃船厂信息 -->
   <Item name="" identifier="ship_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
     <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
   </Item>
-
   <!-- 远港船厂信息 -->
   <Item name="" identifier="farport_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
     <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
   </Item>
-
+  <!-- 台风信息 -->
+  <Item name="" identifier="typhoon_map_information" NonPlayerTeamInteractable="true" category="Electrical" subcategory="deep_map_information" tags="smallitems,deep_map_information" canflipx="false" canflipy="false" scale="0.5">
+    <Sprite texture="contract.png" sourcerect="7,5,58,60" depth="0.8" origin="0.5,0.5" />
+  </Item>
 </Items>
