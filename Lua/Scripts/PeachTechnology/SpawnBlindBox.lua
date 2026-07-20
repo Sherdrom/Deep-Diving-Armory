@@ -23,6 +23,15 @@ local MOD_NAME = "SpawnBlindBox"
 --                            after it is spawned (e.g. magazine into smg)
 --     condition  (float)  - item condition (raw value, clamped to [0, MaxCondition])
 --     quality    (int)    - item quality level
+--     bundle     (table)  - prize bundle: a single roll that yields multiple items.
+--                            When set, "id" is ignored; each entry in bundle is a
+--                            full item config (supports all item options above
+--                            except nested bundle).
+--     tags       (table)  - item tags for tag-based selection. When set, "id" is
+--                            ignored; a random prefab matching ANY of these tags
+--                            is selected each roll. Supports all item options.
+--     excludeTags(table)  - exclude prefabs that have ANY of these tags.
+--                            Only used together with "tags".
 --   amount       : number  - blind box rolls per trigger (each roll picks 1 item)
 --   equip        : bool    - default equip behavior (overridable per item)
 --   forceEquip   : bool    - default force-equip behavior (overridable per item)
@@ -34,16 +43,100 @@ local CONFIG = {
 
     hooks = {
         {
-            hookName = "spawnexample",
+            hookName = "deep_separatist_soldier_moderate_equipment",--分离士兵装备
             items = {
                 {
-                    id = "smg",
-                    weight = 30,
-                    quality = 2,
-                    condition = 80,
-                    contains = {
-                        { id = "smgmagazine", amount = 1, condition = 50 },
-                    },
+                     weight = 50,
+                     bundle = {
+                               { id = "gssh01_headset", equip = true},
+                               { id = "deep_m1", equip = true, contains = { { id = "deep_plate_metal_6", amount = 1 } }},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "tanzan_m22", equip = true},
+                               { id = "deep_6b13", equip = true, contains = { { id = "deep_plate_metal_6", amount = 1 } }},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+
+        {
+            hookName = "deep_separatist_soldier_moderate_equipment_bag",--分离士兵装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_bb102", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+
+        {
+            hookName = "deep_separatist_soldier_moderate_equipment_weapon",--分离士兵武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK74M", contains = { { id = "deep_5.45x39_tit", amount = 1 } }},
+                               { id = "deep_5.45x39_tit", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK103", contains = { { id = "deep_7.62x39", amount = 1 } }},
+                               { id = "deep_7.62x39", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AKM", contains = { { id = "deep_7.62x39", amount = 1 } }},
+                               { id = "deep_7.62x39", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK201", contains = { { id = "deep_5.56x45_tit", amount = 1 } }},
+                               { id = "deep_5.56x45_tit", amount = 4},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_normal_supply_crate",--白箱子奖池
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK74M", contains = { { id = "deep_5.45x39_tit", amount = 1 } }},
+                               { id = "deep_5.45x39_tit", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK103", contains = { { id = "deep_7.62x39", amount = 1 } }},
+                               { id = "deep_7.62x39", amount = 4},
+                           },
                 },
             },
             amount = 1,
@@ -63,6 +156,22 @@ local CONFIG = {
         --     condition = 60,
         --     quality = 1,
         -- },
+
+        -- Example: tag-based item selection (random from all matching prefabs)
+        -- {
+        --     hookName = "spawnrandomweapon",
+        --     items = {
+        --         { tags = { "weapon" }, weight = 50 },
+        --         { tags = { "weapon", "secweapon" }, excludeTags = { "melee" }, weight = 30 },
+        --     },
+        --     amount = 1,
+        -- },
+
+        --bundle = {
+        --{ id = "smg", quality = 1, contains = { { id = "smgmagazine", amount = 3 } } },
+        --{ id = "combathelmet",  equip = true },
+        --{ id = "combatarmor",   equip = true, forceEquip = true },
+    --},
     },
 }
 
@@ -140,6 +249,90 @@ local function SelectWeightedItem(hookCfg)
 
     -- Should never reach here if totalWeight is correct, but guard anyway.
     return hookCfg.items[#hookCfg.items]
+end
+
+-- ==================== Tag-based Prefab Resolution ====================
+
+-- Find all ItemPrefabs matching the given tag criteria.
+-- includeTags: array of tag strings (OR logic - prefab matches if it has any).
+-- excludeTags: array of tag strings (prefab excluded if it has any).
+-- Returns a list of ItemPrefab objects.
+local function FindPrefabsByTags(includeTags, excludeTags)
+    local result = {}
+    for prefab in ItemPrefab.Prefabs do
+        local matched = false
+        for _, tag in ipairs(includeTags) do
+            if prefab.Tags.Contains(tag) then
+                matched = true
+                break
+            end
+        end
+        if not matched then
+            -- skip
+        else
+            local excluded = false
+            if excludeTags ~= nil then
+                for _, tag in ipairs(excludeTags) do
+                    if prefab.Tags.Contains(tag) then
+                        excluded = true
+                        break
+                    end
+                end
+            end
+            if not excluded then
+                result[#result + 1] = prefab
+            end
+        end
+    end
+    return result
+end
+
+-- Build tag-based prefab cache at load time.
+-- For each item config (including bundle and contains sub-entries) that uses
+-- "tags", resolve matching prefabs once and cache them in itemCfg.cachedPrefabs.
+local function BuildTagCache(itemCfg)
+    if itemCfg.tags ~= nil then
+        itemCfg.cachedPrefabs = FindPrefabsByTags(itemCfg.tags, itemCfg.excludeTags)
+        if #itemCfg.cachedPrefabs == 0 then
+            local tagStr = table.concat(itemCfg.tags, ", ")
+            LogError("No items found matching tags: " .. tagStr)
+        end
+    end
+    if itemCfg.bundle ~= nil then
+        for _, subItemCfg in ipairs(itemCfg.bundle) do
+            BuildTagCache(subItemCfg)
+        end
+    end
+    if itemCfg.contains ~= nil then
+        for _, subItemCfg in ipairs(itemCfg.contains) do
+            BuildTagCache(subItemCfg)
+        end
+    end
+end
+
+for _, hookCfg in ipairs(CONFIG.hooks) do
+    for _, itemCfg in ipairs(hookCfg.items) do
+        BuildTagCache(itemCfg)
+    end
+end
+
+-- Resolve prefab from item config at runtime.
+-- If "tags" is set, picks a random prefab from the cached matches.
+-- Otherwise, looks up by "id".
+-- Returns (prefab, name) or (nil, nil) if not found.
+local function ResolvePrefab(itemCfg)
+    if itemCfg.tags ~= nil then
+        local cached = itemCfg.cachedPrefabs
+        if cached == nil or #cached == 0 then
+            return nil, nil
+        end
+        local prefab = cached[math.random(1, #cached)]
+        return prefab, prefab.Identifier.Value
+    end
+
+    local prefab = ItemPrefab.GetItemPrefab(itemCfg.id)
+    if prefab == nil then return nil, nil end
+    return prefab, itemCfg.id
 end
 
 -- ==================== Item Spawning ====================
@@ -231,9 +424,14 @@ local function SpawnContainedItems(spawnedItem, containsConfig)
     end
 
     for _, subCfg in ipairs(containsConfig) do
-        local subPrefab = ItemPrefab.GetItemPrefab(subCfg.id)
+        local subPrefab, subName = ResolvePrefab(subCfg)
         if subPrefab == nil then
-            LogError("Contained item prefab not found: " .. tostring(subCfg.id))
+            if subCfg.tags ~= nil then
+                LogError("Contained item prefab not found for tags: "
+                    .. table.concat(subCfg.tags, ", "))
+            else
+                LogError("Contained item prefab not found: " .. tostring(subCfg.id))
+            end
         else
             local subAmount = subCfg.amount or 1
             for _ = 1, subAmount do
@@ -241,7 +439,7 @@ local function SpawnContainedItems(spawnedItem, containsConfig)
                     subCfg.condition, subCfg.quality,
                     function(innerItem)
                         if innerItem ~= nil then
-                            Log("Spawned contained: " .. tostring(subCfg.id)
+                            Log("Spawned contained: " .. tostring(subName)
                                 .. " into " .. tostring(spawnedItem.Prefab.Identifier.Value))
                         end
                     end,
@@ -253,10 +451,25 @@ end
 
 -- Spawn a single item config for a character.
 -- hookCfg provides default equip/forceEquip values.
+-- If itemCfg.bundle is set, iterates the bundle and spawns each sub-item
+-- (each sub-item is a full item config, sharing the hookCfg defaults).
 local function SpawnItemForCharacter(character, itemCfg, hookCfg)
-    local prefab = ItemPrefab.GetItemPrefab(itemCfg.id)
+    -- Bundle: a single prize that yields multiple items.
+    if itemCfg.bundle ~= nil then
+        for _, subItemCfg in ipairs(itemCfg.bundle) do
+            SpawnItemForCharacter(character, subItemCfg, hookCfg)
+        end
+        return
+    end
+
+    local prefab, itemName = ResolvePrefab(itemCfg)
     if prefab == nil then
-        LogError("Item prefab not found: " .. tostring(itemCfg.id))
+        if itemCfg.tags ~= nil then
+            LogError("Item prefab not found for tags: "
+                .. table.concat(itemCfg.tags, ", "))
+        else
+            LogError("Item prefab not found: " .. tostring(itemCfg.id))
+        end
         return
     end
 
@@ -281,13 +494,13 @@ local function SpawnItemForCharacter(character, itemCfg, hookCfg)
         local containerItem = inventory.FindItemByIdentifier(itemCfg.containIn, true)
         if containerItem == nil then
             LogError("Container not found: " .. tostring(itemCfg.containIn)
-                .. ", falling back to character inventory for: " .. tostring(itemCfg.id))
+                .. ", falling back to character inventory for: " .. tostring(itemName))
             for _ = 1, amount do
                 Entity.Spawner.AddItemToSpawnQueue(prefab, inventory,
                     condition, quality,
                     function(spawnedItem)
                         if spawnedItem ~= nil then
-                            Log("Spawned (fallback): " .. tostring(itemCfg.id))
+                            Log("Spawned (fallback): " .. tostring(itemName))
                         end
                     end,
                     true, false, InvSlotType.None)
@@ -305,7 +518,7 @@ local function SpawnItemForCharacter(character, itemCfg, hookCfg)
                 condition, quality,
                 function(spawnedItem)
                     if spawnedItem ~= nil then
-                        Log("Spawned: " .. tostring(itemCfg.id)
+                        Log("Spawned: " .. tostring(itemName)
                             .. " into " .. tostring(itemCfg.containIn))
                     end
                 end,
@@ -328,7 +541,7 @@ local function SpawnItemForCharacter(character, itemCfg, hookCfg)
 
                     if not TryEquipToSlot(character, inventory, spawnedItem, forceEquip) then
                         if not TryPlaceInAnySlot(character, inventory, spawnedItem) then
-                            LogError("Could not place item: " .. tostring(itemCfg.id))
+                            LogError("Could not place item: " .. tostring(itemName))
                         end
                     end
 
@@ -340,7 +553,7 @@ local function SpawnItemForCharacter(character, itemCfg, hookCfg)
                 condition, quality,
                 function(spawnedItem)
                     if spawnedItem ~= nil then
-                        Log("Spawned: " .. tostring(itemCfg.id) .. " (inventory)")
+                        Log("Spawned: " .. tostring(itemName) .. " (inventory)")
                         SpawnContainedItems(spawnedItem, itemCfg.contains)
                     end
                 end,
@@ -374,7 +587,13 @@ for _, hookCfg in ipairs(CONFIG.hooks) do
                     return
                 end
 
-                Log("[" .. hookCfg.hookName .. "] Blind box rolled: " .. tostring(selected.id)
+                local prizeDesc = selected.id
+                if selected.tags ~= nil then
+                    prizeDesc = "tags[" .. table.concat(selected.tags, ",") .. "]"
+                elseif prizeDesc == nil then
+                    prizeDesc = "bundle (" .. #(selected.bundle or {}) .. " items)"
+                end
+                Log("[" .. hookCfg.hookName .. "] Blind box rolled: " .. prizeDesc
                     .. " (weight " .. tostring(selected.weight) .. ")")
                 SpawnItemForCharacter(character, selected, hookCfg)
             end
