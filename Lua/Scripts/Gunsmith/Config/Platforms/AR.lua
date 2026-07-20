@@ -41,6 +41,8 @@ platforms.AR = {
         left_rail = "deep.gunsmith.path.left_rail",
         right_rail = "deep.gunsmith.path.right_rail",
         receiver_top_rail = "deep.gunsmith.path.receiver_top_rail",
+        rear_sight_mount = "deep.gunsmith.path.rear_sight_mount",
+        front_sight_mount = "deep.gunsmith.path.front_sight_mount",
         optic_mount = "deep.gunsmith.path.optic_mount"
     }
 }

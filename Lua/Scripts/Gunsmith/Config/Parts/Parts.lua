@@ -14,13 +14,14 @@ local files = { "AR/Structural/Barrel.lua",
     "AK/Structural/Stock.lua",
     "AK/Structural/DustCover.lua",
     "AK/Structural/DovetailGrooveRail.lua",
-    "Shared/Rails.lua",
     "Shared/Sight.lua",
     "Shared/Grip.lua",
     "Shared/SubHanging.lua",
     "Shared/Accessory.lua",
     "Shared/Muzzle.lua",
     "Shared/BufferTube.lua",
+    "Shared/RearSight.lua",
+    "Shared/FrontSight.lua",
 }
 
 for _, file in ipairs(files) do

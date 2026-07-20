@@ -64,7 +64,7 @@ parts.deep_hk416_receiver_main = {
     mounts = {
         { path = "upper_receiver", accepts = { "AR_upper_receiver" }, defaultPart = "deep_hk416a5_upper_receiver", anchor = { x = 13, y = -24 } },
         { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "deep_miad_pistol_grip", anchor = { x = -26, y = 12 } },
-        { path = "stock_mount", accepts = { "AR_buffer_tube","AR_buffer_tube_stock" }, defaultPart = "deep_hket_buffer_tube", anchor = { x = -60, y = -20 } }
+        { path = "stock_mount", accepts = { "AR_buffer_tube","AR_buffer_tube_stock" }, defaultPart = "deep_hket_buffer_tube", anchor = { x = -60, y = -20 } },
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
         -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }
