@@ -21,7 +21,7 @@ parts.deep_hket_buffer_tube = {
         scale = 1.0
     },
     mounts = {
-        { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 } },
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 }, quick = { key = "stock" } },
     }
 }
 
@@ -38,6 +38,6 @@ parts.deep_advanced_buffer_tube = {
         scale = 1.0
     },
     mounts = {
-        { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 } },
+        { path = "stock", accepts = { "AR_stock" }, defaultPart = "deep_ctr_fde_stock", anchor = { x = -16, y = -1 }, quick = { key = "stock" } },
     }
 }
