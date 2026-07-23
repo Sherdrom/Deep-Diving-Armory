@@ -3,7 +3,7 @@
   <Item name="" identifier="deep_medical_kit" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,deep_nonInteractable,exquisite_supply_create_40_medical,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.12" useinhealthinterface="true" RequireAimToUse="True">
     <PreferredContainer secondary="abandonedmedcab,piratemedcab,wreckmedcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="400" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="60" />
@@ -53,8 +53,8 @@
   </Item>
   <Item name="" identifier="deep_medical_kit_wound" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,deep_nonInteractable,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.12" useinhealthinterface="true" RequireAimToUse="True">
     <PreferredContainer secondary="abandonedmedcab,piratemedcab,wreckmedcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="700" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+    <Price baseprice="700" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="80" />
@@ -104,8 +104,8 @@
   </Item>
   <Item name="" identifier="deep_medical_kit_slow" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,deep_nonInteractable,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.12" useinhealthinterface="true" RequireAimToUse="True">
     <PreferredContainer secondary="abandonedmedcab,piratemedcab,wreckmedcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="1000" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+    <Price baseprice="1000" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="60" />
@@ -155,8 +155,8 @@
   </Item>
   <Item name="" identifier="deep_medical_kit_small" subcategory="deep_medical" category="Medical" maxstacksize="16" maxstacksizecharacterinventory="3" Tags="smallitem,medical,deep_nonInteractable,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.12" useinhealthinterface="true" RequireAimToUse="True">
     <PreferredContainer secondary="abandonedmedcab,piratemedcab,wreckmedcab" minamount="1" maxamount="1" spawnprobability="0.02" />
-    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+    <Price baseprice="200" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="4" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="40" />
@@ -202,9 +202,6 @@
     <SkillRequirementHint identifier="medical" level="30" />
   </Item>
   <Item name="" identifier="deep_medical_kit_grizzly" subcategory="deep_medical" category="Medical" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="mediumitem,mobilecontainer,largemobilecontainer,tool,deep_bag,medical,deep_nonInteractable,deep_cloth_invisible" description="" cargocontaineridentifier="mediccrate" scale="0.25" useinhealthinterface="true">
-    <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
-    </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="100" />
       <RequiredItem identifier="deusizine" amount="8" />
@@ -264,7 +261,7 @@
   </Item>
   <Item name="" identifier="deep_medical_surgical_box" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,deep_nonInteractable,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.15" useinhealthinterface="true" RequireAimToUse="True">
     <Price baseprice="300" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="30" />
@@ -302,7 +299,7 @@
     <SkillRequirementHint identifier="medical" level="30" />
   </Item>
   <Item name="" identifier="deep_medical_tourniquet" subcategory="deep_medical" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="8" Tags="smallitem,medical,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
-    <Price baseprice="50" sold="true" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="50" sold="false" buyingpricemultiplier="2.0" minamount="32" maxamount="32" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantmedical" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="4">
@@ -334,8 +331,8 @@
     <SkillRequirementHint identifier="medical" level="30" />
   </Item>
   <Item name="" identifier="deep_medical_Hemostatic_agent" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,exquisite_supply_create_40_medical,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
-    <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+    <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="80" amount="1" />
@@ -368,7 +365,7 @@
   </Item>
   <Item name="" identifier="deep_medical_ai2" subcategory="deep_medical" category="Medical" maxstacksize="8" maxstacksizecharacterinventory="1" Tags="smallitem,medical,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
     <Price baseprice="350" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="medical" level="5" amount="1" />
@@ -419,7 +416,7 @@
   </Item>
   <Item name="" identifier="deep_metamizole" subcategory="deep_painkiller" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
     <Price baseprice="150" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
-      <Price storeidentifier="merchantmedical" multiplier="1" />
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="4" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
       <RequiredSkill identifier="medical" level="30" />
@@ -444,6 +441,9 @@
     </MeleeWeapon>
   </Item>
   <Item name="" identifier="deep_ibuprofen" subcategory="deep_painkiller" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Price baseprice="500" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
+    </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
       <RequiredSkill identifier="medical" level="80" />
       <RequiredItem identifier="antidama2" amount="4" />
@@ -466,6 +466,9 @@
     </MeleeWeapon>
   </Item>
   <Item name="" identifier="deep_Vaseline" subcategory="deep_painkiller" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical,exquisite_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Price baseprice="400" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
+    </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
       <RequiredSkill identifier="medical" level="60" />
       <RequiredItem identifier="elastin" amount="2" />
@@ -489,6 +492,9 @@
     </MeleeWeapon>
   </Item>
   <Item name="" identifier="deep_goldenstar" subcategory="deep_painkiller" category="Medical" maxstacksize="32" maxstacksizecharacterinventory="1" Tags="smallitem,medical,rare_supply_create_40_medical" description="" cargocontaineridentifier="mediccrate" scale="0.2" useinhealthinterface="true" RequireAimToUse="True">
+    <Price baseprice="800" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantmedical" multiplier="1" minavailable="2" />
+    </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
       <RequiredSkill identifier="medical" level="100" />
       <RequiredItem identifier="deusizine" amount="2" />
@@ -506,7 +512,7 @@
       <StatusEffect type="OnSuccess" target="UseTarget" setvalue="true" delay="6" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deep_calm_buff" strength="350" />
       </StatusEffect>
-      <StatusEffect type="OnSuccess" target="Character" targetlimbs="RightHand,LeftHand" delay="6" multiplyafflictionsbymaxvitality="true" >
+      <StatusEffect type="OnSuccess" target="Character" targetlimbs="RightHand,LeftHand" delay="6" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="blunttrauma" strength="5" probability="0.1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
   <Item identifier="deep_m72a6" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.15" impactsoundtag="impact_metal_light" hideinmenus="false">
-  <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="steel" amount="4" />
-      <RequiredItem identifier="gun_powder" amount="2" />
+      <RequiredItem identifier="gun_powder" amount="1" />
       <RequiredItem identifier="c4block" amount="1" />
       <RequiredItem identifier="fpgacircuit" amount="1" />
     </Fabricate>
@@ -17,14 +17,18 @@
     <Body width="780" height="210" density="10" />
     <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
       <sprite texture="%ModDir%/weapon/explosive/launchers/m72/m72a6.png" canbehiddenbyotherwearables="false" sourcerect="12,219,778,214" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.15" origin="0.7,1.1" />
-      <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.9" setvalue="true" />
     </Wearable>
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,17" aimpos="38,18" handle1="-7,0" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.4" setvalue="true" />
       <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true" delay="0.5">
         <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
       </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="390,-16" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="0,256,256,256" />
@@ -78,6 +82,9 @@
         <Containable items="deep_backblast_exec" />
       </SubContainer>
     </ItemContainer>
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+    </Quality>
     <SkillRequirementHint identifier="weapons" level="80" />
     <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
   </Item>

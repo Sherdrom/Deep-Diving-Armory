@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="deep_assistant" tags="crate" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy" spritecolor="255,242,100,255">
+  <Item name="" identifier="deep_assistant" tags="crate" scale="0.5" linkable="true" pickdistance="150" showcontentsintooltip="true" impactsoundtag="impact_metal_heavy" spritecolor="255,242,100,255">
     <Deconstruct time="0.5"/>
     <Sprite texture="Content/Items/Containers/containers.png" depth="0.54" sourcerect="407,376,152,89" origin="0.5,0.5" />
     <Body width="150" height="75" density="25" />
     <Holdable slots="RightHand+LeftHand" holdpos="0,-80" handle1="-30,14" handle2="30,14" aimable="false" msg="ItemMsgPickUpSelect" />
     <ItemContainer capacity="30" maxstacksize="32" canbeselected="false" hideitems="true" keepopenwhenequipped="true" movableframe="true">
       <Containable items="smallitem,mediumitem,clowncrate,clownexosuit" />
-      <StatusEffect type="OnSpawn" target="this" chooserandom="true" eventcount="1" >
-		<SpawnItem identifier="deep_m4" spawnposition="ThisInventory" count="1" />
-		<SpawnItem identifier="deep_410" spawnposition="ThisInventory" count="1" probability="0.3" />
-		<SpawnItem identifier="deep_44Magnum" spawnposition="ThisInventory" count="1" probability="0.5" />
-		<SpawnItem identifier="deep_short_doublebarrel" spawnposition="ThisInventory" count="2" probability="0.3" />
-		<SpawnItem identifier="deep_5.56x45" spawnposition="ThisInventory" count="2"/>
-		<SpawnItem identifier="shotgunshell" spawnposition="ThisInventory" count="24" probability="0.5"/>
-		<SpawnItem identifier="deep_44mag" spawnposition="ThisInventory" count="2" probability="0.5"/>
-		<SpawnItem identifier="deep_slug" spawnposition="ThisInventory" count="12" probability="0.5"/>
-		<SpawnItem identifier="clowncrate" spawnposition="ThisInventory" count="1" probability="0.5"/>
+      <StatusEffect type="OnSpawn" target="this" chooserandom="true" eventcount="1">
+        <SpawnItem identifier="deep_m4" spawnposition="ThisInventory" count="1" />
+        <SpawnItem identifier="deep_410" spawnposition="ThisInventory" count="1" probability="0.3" />
+        <SpawnItem identifier="deep_44Magnum" spawnposition="ThisInventory" count="1" probability="0.5" />
+        <SpawnItem identifier="deep_short_doublebarrel" spawnposition="ThisInventory" count="2" probability="0.3" />
+        <SpawnItem identifier="deep_5.56x45" spawnposition="ThisInventory" count="2"/>
+        <SpawnItem identifier="shotgunshell" spawnposition="ThisInventory" count="24" probability="0.5"/>
+        <SpawnItem identifier="deep_44mag" spawnposition="ThisInventory" count="2" probability="0.5"/>
+        <SpawnItem identifier="deep_slug" spawnposition="ThisInventory" count="12" probability="0.5"/>
+        <SpawnItem identifier="clowncrate" spawnposition="ThisInventory" count="1" probability="0.5"/>
       </StatusEffect>
     </ItemContainer>
     <LightComponent range="120.0" lightcolor="255,224,0,80" alphablend="true" powerconsumption="0" IsOn="true" castshadows="false" allowingameediting="false" pulseamount="0.5" pulsefrequency="0.2">
       <Sprite texture="Content/Items/Containers/containers2.png" depth="0.53" sourcerect="157,1,152,89" origin="0.5,0.5" alpha="1.0" />
     </LightComponent>
   </Item>
-  
-   <Item name="" identifier="deep_riotshield" category="Equipment" tags="mediumitem" health="250" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" scale="1" allowasextracargo="true">
+
+  <Item name="" identifier="deep_riotshield" category="Equipment" tags="mediumitem" health="250" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" scale="1" allowasextracargo="true">
     <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="640,320,64,64" />
     <Sprite texture="Content/Items/Jobgear/Security/riotgear.png" sourcerect="31,54,27,147" origin="0.5,0.5" depth="0.55" />
     <Body height="120" radius="12" density="30" />

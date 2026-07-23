@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="turtle_soup" category="Medical,Material" maxstacksize="32" maxstacksizecharacterinventory="8" cargocontaineridentifier="chemicalcrate" description="" Tags="smallitem,chem,medical" useinhealthinterface="true" scale="0.2" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="turtle_soup" category="Medical,Material" maxstacksize="32" maxstacksizecharacterinventory="8" cargocontaineridentifier="chemicalcrate" description="" Tags="smallitem,chem,medical" useinhealthinterface="true" scale="0.2" impactsoundtag="impact_metal_light">
     <Price baseprice="10">
-	  <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="100" />
+      <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" minavailable="100" />
     </Price>
     <Fabricate suitablefabricators="vendingmachine" requiredtime="1" requiredmoney="114" fabricationlimitmin="5" fabricationlimitmax="10"/>
     <InventoryIcon texture="%ModDir%/food/food.png" sourcerect="25,14,176,110" origin="0.5,0.5" />
@@ -17,8 +17,8 @@
       <StatusEffect type="OnUse" target="This" Condition="-100.0" setvalue="true">
         <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
       </StatusEffect>
-      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
-        <Affliction identifier="haste" amount="600" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_haste" amount="300" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This">
         <Remove />

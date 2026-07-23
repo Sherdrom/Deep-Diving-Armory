@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-<Item name="" identifier="ammobox1" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="ammobox1" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
     <Price baseprice="2000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -9,27 +9,27 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="lead" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="lead" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="lead" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="632,9,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
     <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
+
+
   <Item name="" identifier="ammobox_7.62" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
     <Price baseprice="4000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
@@ -39,126 +39,126 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="titanium" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="titanium" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="titanium" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="632,177,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
     <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
+
+
   <Item name="" identifier="ammobox_12.7" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
-	<Price baseprice="8000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="8000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="physicorium" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="physicorium" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="632,344,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
     <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
-  
+
   <Item name="" identifier="ammobox_phy_ful" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
-	<Price baseprice="16000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="50" displaynonempty="false">
+    <Price baseprice="16000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="50" displaynonempty="false">
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="physicorium" amount="4" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="physicorium" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="physicorium" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="632,511,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
-	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+    <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="ammobox_tun_ful" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
-  <Price baseprice="20000" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+    <Price baseprice="20000" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="deep_tungsten_phy" amount="4" />
       <RequiredItem identifier="gun_powder_fulgurium" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="deep_tungsten_phy" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="deep_tungsten_phy" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="775,10,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
-	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+    <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
-  
+
   <Item name="" identifier="ammobox_du" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
-	<Price baseprice="5000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+    <Price baseprice="5000" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="80" />
       <RequiredItem identifier="depletedfuel" amount="4" />
       <RequiredItem identifier="gun_powder" amount="4"/>
-	  <RequiredItem identifier="fpgacircuit" amount="4"/>
+      <RequiredItem identifier="fpgacircuit" amount="4"/>
       <RequiredItem identifier="copper" amount="4" />
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="depletedfuel" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="depletedfuel" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="632,678,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
-	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+    <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
 
   <Item name="" identifier="ammobox_rip" subcategory="deep_ammobox" category="Material" maxstacksize="1" maxstacksizecharacterinventory="1" Tags="smallitem" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.4" impactsoundtag="impact_metal_light">
-	<Price baseprice="2200" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+    <Price baseprice="2200" sold="true" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
       <Price storeidentifier="merchantresearch" multiplier="1" />
@@ -166,24 +166,24 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
       <Price storeidentifier="deep_mobile_city_typhoon_shop" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25" >
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" outcondition="0.25">
       <RequiredSkill identifier="weapons" level="40" />
       <RequiredItem identifier="copper" amount="8" />
       <RequiredItem identifier="gun_powder" amount="4"/>
     </Fabricate>
-	<Deconstruct time="5">
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
-	<Item identifier="copper" mincondition="0.99" amount="16"/>
+    <Deconstruct time="5">
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
+      <Item identifier="copper" mincondition="0.49" amount="8"/>
     </Deconstruct>
     <Sprite texture="%ModDir%/weapon/ammo/ammobox.png" sourcerect="775,178,99,156" depth="0.55" origin="0.5,0.5" />
     <Body width="220" height="120" density="20" />
-	<Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
+    <Holdable canbecombined="true" removeoncombined="false" slots="RightHand,LeftHand" holdpos="0,-30" handle1="0,-30" aimable="false" msg="ItemMsgPickUpSelect">
       <StatValue stattype="MovementSpeed" value="-0.2" />
-	  <StatusEffect type="OnBroken" target="This">
+      <StatusEffect type="OnBroken" target="This">
         <Remove />
       </StatusEffect>
     </Holdable>
   </Item>
-  
-  
-  </Items>
+
+
+</Items>

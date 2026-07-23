@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_410" subcategory="pistol" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.32" impactsoundtag="impact_metal_light" health="100" >
+  <Item name="" identifier="deep_410" subcategory="pistol" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100" Scale="0.32" impactsoundtag="impact_metal_light" health="100">
     <Price baseprice="520" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -30,9 +30,6 @@
       <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
         <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
       </StatusEffect>
-      <StatusEffect type="Onactive" interval="3" target="Character" setvalue="true">
-        <GiveTalentInfo giverandom="false" talentidentifiers="deep_talent_all" />
-      </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
         <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
@@ -46,33 +43,33 @@
       </StatusEffect>
 
       <!-- 使用光源组件作为自变量-->
-    <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false" >
-    </LightComponent>
-<!-- 右键瞄准时，设置电压为1.0-->
-    <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false" >
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
-    </StatusEffect>
-<!-- 电压大于0.9时，开启热成像-->
-    <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false" >
-    <Conditional Voltage="gte 0.9" />
-    <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
-    </StatusEffect>
-<!-- 松开右键，电压小于0.8时，关闭热成像-->
-    <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false" >
-    <Conditional EntityType="eq character" TargetContainer="True" />
-    <Conditional Voltage="lte 0.8" />
-    </StatusEffect>
+      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">
+      </LightComponent>
+      <!-- 右键瞄准时，设置电压为1.0-->
+      <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false">
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
+      </StatusEffect>
+      <!-- 电压大于0.9时，开启热成像-->
+      <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false">
+        <Conditional Voltage="gte 0.9" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="2" />
+      </StatusEffect>
+      <!-- 松开右键，电压小于0.8时，关闭热成像-->
+      <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false">
+        <Conditional EntityType="eq character" TargetContainer="True" />
+        <Conditional Voltage="lte 0.8" />
+      </StatusEffect>
 
-    <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_none" strength="100" />
+      <!-- VCE检测 -->
+      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_none" strength="100" />
       </StatusEffect>
 
     </Holdable>
-    <SwitchableRangedWeapon weapondamagemodifier="1" barrelpos="55,28" spread="0.1" unskilledspread="3" combatPriority="100" reload="0.1" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="0.2" >
-    <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true" >
-      <Affliction identifier="deep_VCE_yes" strength="100" />
+    <SwitchableRangedWeapon weapondamagemodifier="1" barrelpos="55,28" spread="0.1" unskilledspread="3" combatPriority="100" reload="0.1" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="0.2">
+      <!-- VCE检测 -->
+      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
+        <Affliction identifier="deep_VCE_yes" strength="100" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" Condition="-400" />
       <StatusEffect type="NotInWater" target="This" Condition="5" />
@@ -104,16 +101,16 @@
       <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
       <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
-       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="flashlight,deep_flashlight_small" excludedidentifiers="spreadflashlight_L,focusingflashlight_L,spreadflashlight,focusingflashlight" hide="false" itempos="12,2" setactive="true" >
+      <SubContainer capacity="1" maxstacksize="1">
+        <Containable items="flashlight,deep_flashlight_small" excludedidentifiers="spreadflashlight_L,focusingflashlight_L,spreadflashlight,focusingflashlight" hide="false" itempos="12,2" setactive="true">
         </Containable>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="1,15" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
-        <Containable items="thermalgoggles_sight" hide="false" itempos="1,15" setactive="true" containedspritedepth="0.45" depth="0.55" >
-        <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200"  setValue="true" >
-        </StatusEffect>
+        <Containable items="thermalgoggles_sight" hide="false" itempos="1,15" setactive="true" containedspritedepth="0.45" depth="0.55">
+          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
+          </StatusEffect>
         </Containable>
 
       </SubContainer>

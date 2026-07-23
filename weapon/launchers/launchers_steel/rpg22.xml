@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item identifier="deep_rpg22" category="Weapon" subcategory="deep_launchers" cargocontaineridentifier="metalcrate" tags="mediumitem,weapon,gun,gunsmith,mountableweapon,noammocount" scale="0.18" impactsoundtag="impact_metal_light" hideinmenus="false">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="steel" amount="3" />
+      <RequiredItem identifier="gun_powder" amount="1" />
+      <RequiredItem identifier="flashpowder" amount="1" />
+      <RequiredItem identifier="c4block" amount="1" />
+      <RequiredItem identifier="fpgacircuit" amount="1" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="steel" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/launchers/launchers_45.png" sourcerect="217,5,179,201" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/launchers/launchers_steel/rpg22/rpg22.png" sourcerect="28,398,575,96" depth="0.55" origin="0.5,0.5" />
+    <BrokenSprite texture="%ModDir%/weapon/launchers/launchers_steel/rpg22/rpg22.png" sourcerect="28,39,646,217" depth="0.55" origin="0.5,0.5" maxcondition="99" />
+    <Body width="780" height="210" density="10" />
+    <Wearable slots="Bag" msg="ItemMsgEquipSelect" canbeselected="false" canbepicked="true" pickkey="Select">
+      <sprite texture="%ModDir%/weapon/explosive/launchers/rpg22/rpg22.png" canbehiddenbyotherwearables="false" sourcerect="28,398,575,96" depth="0.55" limb="Torso" depthlimb="LeftArm" rotation="90" scale="0.18" origin="0.6,1.7" />
+    </Wearable>
+    <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="38,17" aimpos="30,15" handle1="-7,0" handle2="80,-20" holdangle="-30" msg="ItemMsgPickUpSelect">
+      <!-- 禁用爆破物合约-->
+      <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_explosive_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
+      <StatusEffect type="OnActive" target="Character" SpeedMultiplier="0.7" setvalue="true" />
+      <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.4" setvalue="true" />
+      <StatusEffect type="OnUse" target="This" Condition="-100" setvalue="true" delay="0.5">
+        <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      </StatusEffect>
+      <StatValue stattype="MovementSpeed" value="-0.25" />
+    </Holdable>
+    <RangedWeapon reload="1" weapondamagemodifier="1.0" holdtrigger="false" barrelpos="323,-16" LaunchImpulse="0" spread="0" combatPriority="150" drawhudwhenequipped="true" crosshairscale="0.5">
+      <Crosshair texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="%ModDir%/weapon/sight/Launchers_Crosshairs.png" sourcerect="256,256,256,256" />
+      <!-- 筒口特效 -->
+      <ParticleEmitter particle="flamethrower" particleamount="5" velocitymin="1000" velocitymax="1000" colormultiplier="229,221,215,255" />
+      <ParticleEmitter particle="deep_plasmaspark" particlespersecond="15" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" selectionmode="Random" volume="1.5" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" volume="1.5" />
+      <Sound file="%ModDir%/weapon/launchers/Sound/rocket_fire_1.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" volume="1.5" />
+      <StatusEffect type="OnUse" target="This" disableDeltaTime="true">
+        <Explosion range="300.0" force="4" shockwave="true" smoke="true" flames="false" sparks="true" underwaterbubble="false" camerashake="150" />
+      </StatusEffect>
+      <RequiredItems items="rpg22_shell" type="Contained" target="This" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+      <RequiredSkill identifier="weapons" level="90" />
+      <!-- 武器操作技能 -->
+      <StatusEffect type="OnUse" target="Character" disabledeltatime="true" comparison="and" targetlimbs="Head,LeftHand,RightHand">
+        <Conditional skillrequirement="true" weapons="lt 90" />
+        <Affliction identifier="stun" strength="8" />
+        <Affliction identifier="burn" strength="40" />
+      </StatusEffect>
+    </RangedWeapon>
+    <RepairTool RepairMultiple="true" usablein="Both" range="400" barrelpos="65,0" repairmultiple="true" RepairMultipleWalls="false" repairthroughwalls="false" repairthroughholes="true" combatpriority="0" spread="30" BarrelRotation="180" TargetForce="25">
+      <ParticleEmitter particle="flamethrower" particleamount="3" velocitymin="1800" velocitymax="1800" highqualitycollisiondetection="true" />
+      <StatusEffect type="OnUse" target="UseTarget" disabledeltatime="true">
+        <!--an alternative is to use "limb" as target, which will lead to less damage-->
+        <Affliction identifier="burn" amount="8" />
+        <Affliction identifier="lacerations" amount="4" />
+        <Affliction identifier="bleeding" amount="4" />
+        <Affliction identifier="stun" amount="8" />
+      </StatusEffect>
+      <StatusEffect type="OnUse" target="Contained" targets="deep_backblast_exec" condition="-100" disabledeltatime="true" />
+      <RequiredItems items="deep_backblast_exec" type="Contained" target="This" />
+      <RequiredItems items="deep_safetypin" type="Contained" target="This" msg="" RequireEmpty="true" />
+    </RepairTool>
+    <!--BACKBLAST-->
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="true" removecontaineditemsondeconstruct="true" SpawnWithId="deep_safetypin">
+      <Containable items="deep_safetypin" depth="0.55">
+        <StatusEffect type="OnInserted" target="This" condition="1">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+        <StatusEffect type="OnRemoved" target="This" condition="-1">
+          <Conditional Condition="gt 0.0" />
+        </StatusEffect>
+      </Containable>
+    </ItemContainer>
+    <ItemContainer hideitems="true" capacity="1" maxstacksize="1" drawinventory="false" removecontaineditemsondeconstruct="true" SpawnWithId="deep_rpg22_shell,deep_backblast_exec" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
+      <Containable items="rpg22_shell" depth="0.55" />
+      <SubContainer capacity="1" maxstacksize="1" removecontaineditemsondeconstruct="true">
+        <Containable items="deep_backblast_exec" />
+      </SubContainer>
+    </ItemContainer>
+    <Quality>
+      <QualityStat stattype="FirepowerMultiplier" value="0.05" />
+    </Quality>
+    <SkillRequirementHint identifier="weapons" level="90" />
+    <aitarget sightrange="2500" soundrange="3000" fadeouttime="6" />
+  </Item>
+</Items>

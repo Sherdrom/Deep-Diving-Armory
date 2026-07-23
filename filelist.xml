@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<contentpackage name="Deep-Diving-Armory" modversion="0.5.165" corepackage="False" steamworkshopid="3159849099" gameversion="1.12.7.0">
+<contentpackage name="Deep-Diving-Armory" modversion="0.5.178" corepackage="False" steamworkshopid="3159849099" gameversion="1.13.4.0">
   <Item file="%ModDir%/materials/materials.xml" />
   <Item file="%ModDir%/materials/minerals.xml" />
   <Item file="%ModDir%/machine/machine.xml" />
@@ -152,7 +152,9 @@
   <Item file="%ModDir%/weapon/grenadelauncher/gl_tun/xm25.xml" />
   <Item file="%ModDir%/weapon/grenadelauncher/gl_phy/meteorite.xml" />
   <Item file="%ModDir%/weapon/grenadelauncher/gl_ammo.xml" />
+  <Item file="%ModDir%/weapon/launchers/launchers_steel/rpg22.xml" />
   <Item file="%ModDir%/weapon/launchers/launchers_steel/m72a6.xml" />
+  <Item file="%ModDir%/weapon/launchers/launchers_steel/rpg7.xml" />
   <Item file="%ModDir%/weapon/launchers/launchers_tun/saintpredator.xml" />
   <Item file="%ModDir%/weapon/launchers/launchers_misc.xml" />
   <Item file="%ModDir%/weapon/launchers/launchers_shell.xml" />
@@ -187,7 +189,7 @@
   <NPCSets file="%ModDir%/NPC/Pigcat/Pigcat.xml" />
   <Item file="%ModDir%/medical/medical.xml" />
   <Item file="%ModDir%/jobgear/gear.xml" />
-  <Item file="%ModDir%/jobgear/chestrig.xml" />
+  <Item file="%ModDir%/jobgear/chestRig.xml" />
   <Item file="%ModDir%/jobgear/plate.xml" />
   <Item file="%ModDir%/jobgear/plate_metal.xml" />
   <Item file="%ModDir%/jobgear/plate_standard.xml" />
@@ -215,12 +217,13 @@
   <Item file="%ModDir%/jobgear/single_handed_shield.xml" />
   <Item file="%ModDir%/jobgear/double_handed_shield.xml" />
   <Afflictions file="%ModDir%/Afflictions/afflictions.xml" />
-  <Afflictions file="%ModDir%/Afflictions/afflictions_pistol.xml" />
-  <Afflictions file="%ModDir%/Afflictions/afflictions_machinegun.xml" />
   <Afflictions file="%ModDir%/Afflictions/afflictions_plate.xml" />
+  <Afflictions file="%ModDir%/Afflictions/afflictions_machinegun.xml" />
   <Afflictions file="%ModDir%/Afflictions/AfflictionsAssistUpgrading.xml" />
-  <Text file="%ModDir%/text/chinese.xml" />
+  <Text file="%ModDir%/text/Chinese.xml" />
   <Text file="%ModDir%/text/English.xml" />
+  <Text file="%ModDir%/text/ConfigChinese.xml" />
+  <Text file="%ModDir%/text/ConfigEnglish.xml" />
   <Talents file="%ModDir%/Talents/PirateTalent/talents_pirate.xml" />
   <Talents file="%ModDir%/Talents/PirateTalent/talents_pirate_elite.xml" />
   <Talents file="%ModDir%/Talents/SeparatistsTalent/talents_separatists_moderate.xml" />
@@ -245,6 +248,7 @@
   <Item file="%ModDir%/Talents/GrizzliesTalent/talents_grizzlies_item.xml" />
   <Item file="%ModDir%/Talents/PigCatTalent/talents_pigcat_item.xml" />
   <Item file="%ModDir%/Talents/talent_item.xml" />
+  <Item file="%ModDir%/NPC/Equipment/Separatists/item.xml" />
   <RandomEvents file="%ModDir%/Missions/event.xml" />
   <RandomEvents file="%ModDir%/Missions/deep_contract_event.xml" />
   <RandomEvents file="%ModDir%/Missions/deep_supply_event.xml" />
@@ -259,11 +263,7 @@
   <Character file="%ModDir%/Characters/Deep_husk_exosuit/Deep_husk_exosuit.xml" />
   <OutpostModule file="%ModDir%/sub/deep_forzen_plate.sub" />
   <OutpostModule file="%ModDir%/sub/xianbei.sub" />
-  <LevelGenerationParameters file="%ModDir%/map/ColdCaverns.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/EuropanRidge.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/AphoticPlateau.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/TheGreatSea.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/HydrothermalWastes.xml" />
+  <LevelGenerationParameters file="%ModDir%/map/OutpostWallChange.xml" />
   <OutpostModule file="%ModDir%/sub/deep_frozen_armory_old.sub" />
   <OutpostModule file="%ModDir%/sub/xiaohua.sub" />
   <Item file="%ModDir%/testfiles/testDeployables.xml" />
@@ -274,11 +274,6 @@
   <Item file="%ModDir%/electricity/map_information.xml" />
   <Item file="%ModDir%/electricity/map_balance_contract.xml" />
   <Structure file="%ModDir%/electricity/art.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/ColdCaverns.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/EuropanRidge.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/AphoticPlateau.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/TheGreatSea.xml" />
-  <LevelGenerationParameters file="%ModDir%/map/HydrothermalWastes.xml" />
   <OutpostModule file="%ModDir%/sub/deep_contract_room.sub" />
   <Wreck file="%ModDir%/sub/deep_meet_on_the_battleground2.sub" />
   <BeaconStation file="%ModDir%/sub/deep_close_combat_1.sub" />
@@ -287,11 +282,13 @@
   <BeaconStation file="%ModDir%/sub/deep_close_combat_4.sub" />
   <Other file="%ModDir%/Sound/deep_player_death.ogg" />
   <Other file="%ModDir%/Sound/deep_player_kill.ogg" />
-  <OutpostModule file="%ModDir%/sub/deep_docking_2.sub" />
   <OutpostModule file="%ModDir%/sub/'Typhoon'.sub" />
+  <UIStyle file="%ModDir%/UI/style.xml" />
+  <OutpostModule file="%ModDir%/sub/deep_docking_2.sub" />
   <OutpostModule file="%ModDir%/sub/deep_raate_fight.sub" />
-  <OutpostModule file="%ModDir%/sub/deep_103_shipyard.sub" />
-  <OutpostModule file="%ModDir%/sub/deep_farport_shipyard-fl.sub" />
   <OutpostModule file="%ModDir%/sub/deep_frozen_armory.sub" />
   <OutpostModule file="%ModDir%/sub/deep_redsun_mining.sub" />
+  <OutpostModule file="%ModDir%/sub/deep_farport_shipyard-fl.sub" />
+  <OutpostModule file="%ModDir%/sub/deep_103_shipyard.sub" />
+  <OutpostModule file="%ModDir%/sub/deep_typhoon_fight.sub" />
 </contentpackage>

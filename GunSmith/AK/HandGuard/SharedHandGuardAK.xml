@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="6P20 Sb.6木制护木（AK）" identifier="deep_6p20_sb6_ak_handguard" subcategory="deep_ak_handguard" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_ak_handguard" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.25" impactsoundtag="impact_metal_light">
+    <Price baseprice="220" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false" />
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="20" />
+      <RequiredItem identifier="carbon" amount="2" />
+    </Fabricate>
+    <Deconstruct time="4">
+      <Item identifier="carbon" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/GunSmith/AK/HandGuard/SharedHandGuardAK.png" sourcerect="5,5,92,46" depth="0.55" origin="0.5,0.5" />
+    <Body width="92" height="46" density="10" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+  </Item>
+</Items>

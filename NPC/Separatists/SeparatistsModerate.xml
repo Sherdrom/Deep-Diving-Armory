@@ -1,275 +1,264 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <npcsets>
-  <npcset identifier="deep_separatists_moderate">
-  	<npc identifier="deep_separatist_soldier_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
-	<!--6穿武器，2甲，6金属板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-		<Item identifier="gssh01_headset" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_m1" equip="true" >
-		  <Item identifier="deep_plate_metal_6" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="deep_bb102" equip="true" />
-        <Item identifier="deep_AK74M">
-          <Item identifier="deep_5.45x39_tit" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_5.45x39_tit" amount="4" />
-	    <Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_soidier_moderate" />
-      </ItemSet>
+	<npcset identifier="deep_separatists_moderate">
+		<npc identifier="deep_separatist_soldier_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--6穿武器，2甲，6金属板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet commonness="100">
+				<!--装备1-->
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="6b47_npc" equip="true" />
+				<!--装备-->
 
-	  <!--6穿武器，2甲，6金属板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-		<Item identifier="gssh01_headset" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_m1" equip="true" >
-		  <Item identifier="deep_plate_metal_6" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="deep_bb102" equip="true" />
-        <Item identifier="deep_sr25">
-          <Item identifier="deep_sr25_mag" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		  <Item identifier="deep_sr25_mag" amount="4" />
-		  <Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_soidier_moderate" />
-      </ItemSet>
-    </npc>
-	
-	<npc identifier="deep_separatist_striker_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
-	<!--1穿武器，2甲，5金属板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="thor" equip="true" >
-		  <Item identifier="deep_plate_metal_5" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="tanzan_m22" equip="true" >
-		</Item>
-        <Item identifier="deep_m590">
-          <Item identifier="deep_12shell" amount="9" />
-        </Item>
-		<Item identifier="deep_mac10">
-          <Item identifier="deep_smg_mac" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		  <Item identifier="deep_12shell" amount="12" />
-		  <Item identifier="deep_smg_mac" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_striker_moderate" />
-      </ItemSet>
+				<!--武器-->
+				<Item identifier="deep_pmm">
+					<Item identifier="deep_9mmp" />
+				</Item>
+				<!--武器-->
 
-	  <!--1穿武器，2甲，5金属板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="thor" equip="true" >
-		  <Item identifier="deep_plate_metal_5" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="tanzan_m22" equip="true" >
-		</Item>
-        <Item identifier="deep_410">
-          <Item identifier="deep_12shell" amount="5" />
-        </Item>
-		<Item identifier="deep_mac10">
-          <Item identifier="deep_smg_mac" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		  <Item identifier="deep_12shell" amount="16" />
-		  <Item identifier="deep_smg_mac" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_striker_moderate" />
-      </ItemSet>
-    </npc>
-	
-	
-	<npc identifier="deep_separatist_heavy_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
-	<!--5穿武器，3甲，6金属板-->
-	  <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_6b13" equip="true" >
-		  <Item identifier="deep_plate_metal_6" />
-		</Item>
-        <Item identifier="deep_kiver_m" equip="true" />
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_mp5sd">
-          <Item identifier="deep_smg_9mm_tit" amount="1" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-          <Item identifier="deep_smg_9mm_tit" amount="4" />
-		  <Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_heavy_moderate" />
-      </ItemSet>
+				<!--弹药-->
+				<Item identifier="deep_9mmp" amount="2" />
+				<!--弹药-->
 
-	  <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_6b13" equip="true" >
-		  <Item identifier="deep_plate_metal_6" />
-		</Item>
-        <Item identifier="deep_kiver_m" equip="true" />
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_pdw">
-          <Item identifier="deep_smg_9mm_tit" amount="1" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-          <Item identifier="deep_smg_9mm_tit" amount="4" />
-		  <Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_heavy_moderate" />
-      </ItemSet>
- </npc>
- 
- <npc identifier="deep_separatist_sniper_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
- <!--7穿武器，0甲，6陶瓷板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_hpc" equip="true" >
-		  <Item identifier="deep_plate_ceramic_6" />
-		</Item>
-        <Item identifier="6b47_npc_healthscan" equip="true" >
-		</Item>
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_AWM">
-          <Item identifier="deep_AWM_mag" />
-		  <Item identifier="2x_sight" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_AWM_mag" amount="4" />
-		<Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_sniper_moderate" />
-      </ItemSet>
+				<!--医疗品-->
+				<Item identifier="antibleeding1" amount="2" />
+				<!--医疗品-->
 
-	  <!--6穿武器，0甲，6陶瓷板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="deep_hpc" equip="true" >
-		  <Item identifier="deep_plate_ceramic_6" />
-		</Item>
-        <Item identifier="6b47_npc_healthscan" equip="true" >
-		</Item>
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_sr25">
-          <Item identifier="deep_sr25_mag" />
-		  <Item identifier="2x_sight" />
-        </Item>
-		<Item identifier="deep_M1911">
-          <Item identifier="deep_45acpmag_tit" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_sr25_mag" amount="4" />
-		<Item identifier="deep_45acpmag_tit" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_sniper_moderate" />
-      </ItemSet>
-    </npc>
-	
-	 <npc identifier="deep_separatist_grenadier_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
-	 <!--5穿武器，2甲，6级陶瓷板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="thor" equip="true" >
-		  <Item identifier="deep_plate_ceramic_6" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_f1_weapon" equip="true" >
-        </Item>
-		<Item identifier="deep_mp5sd">
-          <Item identifier="deep_smg_9mm_tit" amount="1" />
-        </Item>
-		<Item identifier="deep_mac10">
-          <Item identifier="deep_smg_mac" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_smg_9mm_tit" amount="4" />
-		<Item identifier="deep_smg_mac" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_soidier_moderate" />
-      </ItemSet>
+				<!--近战武器-->
+				<Item identifier="deep_knife" equip="false" />
+				<!--近战武器-->
 
-	  <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-		<Item identifier="thor" equip="true" >
-		  <Item identifier="deep_plate_ceramic_6" />
-		</Item>
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="deep_alpha" equip="true" >
-		</Item>
-        <Item identifier="deep_f1_weapon" equip="true" >
-        </Item>
-		<Item identifier="deep_pdw">
-          <Item identifier="deep_smg_9mm_tit" amount="1" />
-        </Item>
-		<Item identifier="deep_mac10">
-          <Item identifier="deep_smg_mac" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_smg_9mm_tit" amount="4" />
-		<Item identifier="deep_smg_mac" amount="4" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_soidier_moderate" />
-      </ItemSet>
-    </npc>
-	
-	<npc identifier="deep_separatist_blaster_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10"  findweaponsrange="2000">
-	<!--5穿武器，2甲，6级陶瓷板-->
-      <ItemSet commonness="0.5">
-        <Item identifier="deep_tac_mask" equip="true" />
-		<Item identifier="gssh01_headset" equip="true" />
-        <Item identifier="green_combat_suit" equip="true" />
-        <Item identifier="6b47_npc" equip="true" />
-		<Item identifier="deep_m1" equip="true" >
-		<Item identifier="deep_plate_ceramic_6" />
-		</Item>
-        <Item identifier="deep_m79" equip="true" >
-		<Item identifier="deep_40mmgrenade_he" amount="1" />
-        </Item>
-		<Item identifier="deep_mac10">
-          <Item identifier="deep_smg_mac" />
-		</Item>
-		<Item identifier="antibleeding1" amount="2" />
-		<Item identifier="deep_smg_mac" amount="4" />
-		<Item identifier="deep_40mmgrenade_he" amount="1" />
-        <Item identifier="deep_knife" equip="false" />
-        <Item identifier="deep_talent_separatists_blaster_moderate" />
-      </ItemSet>
-    </npc>
-  	  </npcset>
+				<!--天赋-->
+				<Item identifier="deep_talent_separatists_soidier_moderate" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_separatist_soldier_moderate_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
+			</ItemSet>
+		</npc>
+
+		<npc identifier="deep_separatist_striker_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--1穿武器，2甲，5金属板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="thor" equip="true">
+					<Item identifier="deep_plate_metal_5" />
+				</Item>
+				<Item identifier="6b47_npc" equip="true" />
+				<Item identifier="tanzan_m22" equip="true">
+				</Item>
+				<Item identifier="deep_m590">
+					<Item identifier="deep_12shell" amount="9" />
+				</Item>
+				<Item identifier="deep_mac10">
+					<Item identifier="deep_smg_mac" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_12shell" amount="12" />
+				<Item identifier="deep_smg_mac" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_striker_moderate" />
+			</ItemSet>
+
+			<!--1穿武器，2甲，5金属板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="thor" equip="true">
+					<Item identifier="deep_plate_metal_5" />
+				</Item>
+				<Item identifier="6b47_npc" equip="true" />
+				<Item identifier="tanzan_m22" equip="true">
+				</Item>
+				<Item identifier="deep_410">
+					<Item identifier="deep_12shell" amount="5" />
+				</Item>
+				<Item identifier="deep_mac10">
+					<Item identifier="deep_smg_mac" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_12shell" amount="16" />
+				<Item identifier="deep_smg_mac" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_striker_moderate" />
+			</ItemSet>
+		</npc>
+
+
+		<npc identifier="deep_separatist_heavy_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--5穿武器，3甲，6金属板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="deep_6b13" equip="true">
+					<Item identifier="deep_plate_metal_6" />
+				</Item>
+				<Item identifier="deep_kiver_m" equip="true" />
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_mp5sd">
+					<Item identifier="deep_smg_9mm_tit" amount="1" />
+				</Item>
+				<Item identifier="deep_M1911">
+					<Item identifier="deep_45acpmag_tit" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_smg_9mm_tit" amount="4" />
+				<Item identifier="deep_45acpmag_tit" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_heavy_moderate" />
+			</ItemSet>
+
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="deep_6b13" equip="true">
+					<Item identifier="deep_plate_metal_6" />
+				</Item>
+				<Item identifier="deep_kiver_m" equip="true" />
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_pdw">
+					<Item identifier="deep_smg_9mm_tit" amount="1" />
+				</Item>
+				<Item identifier="deep_M1911">
+					<Item identifier="deep_45acpmag_tit" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_smg_9mm_tit" amount="4" />
+				<Item identifier="deep_45acpmag_tit" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_heavy_moderate" />
+			</ItemSet>
+		</npc>
+
+		<npc identifier="deep_separatist_sniper_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--7穿武器，0甲，6陶瓷板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="deep_hpc" equip="true">
+					<Item identifier="deep_plate_ceramic_6" />
+				</Item>
+				<Item identifier="6b47_npc_healthscan" equip="true">
+				</Item>
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_AWM">
+					<Item identifier="deep_AWM_mag" />
+					<Item identifier="2x_sight" />
+				</Item>
+				<Item identifier="deep_M1911">
+					<Item identifier="deep_45acpmag_tit" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_AWM_mag" amount="4" />
+				<Item identifier="deep_45acpmag_tit" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_sniper_moderate" />
+			</ItemSet>
+
+			<!--6穿武器，0甲，6陶瓷板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="deep_hpc" equip="true">
+					<Item identifier="deep_plate_ceramic_6" />
+				</Item>
+				<Item identifier="6b47_npc_healthscan" equip="true">
+				</Item>
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_sr25">
+					<Item identifier="deep_sr25_mag" />
+					<Item identifier="2x_sight" />
+				</Item>
+				<Item identifier="deep_M1911">
+					<Item identifier="deep_45acpmag_tit" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_sr25_mag" amount="4" />
+				<Item identifier="deep_45acpmag_tit" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_sniper_moderate" />
+			</ItemSet>
+		</npc>
+
+		<npc identifier="deep_separatist_grenadier_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_securityofficer_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--5穿武器，2甲，6级陶瓷板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="thor" equip="true">
+					<Item identifier="deep_plate_ceramic_6" />
+				</Item>
+				<Item identifier="6b47_npc" equip="true" />
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_f1_weapon" equip="true">
+				</Item>
+				<Item identifier="deep_mp5sd">
+					<Item identifier="deep_smg_9mm_tit" amount="1" />
+				</Item>
+				<Item identifier="deep_mac10">
+					<Item identifier="deep_smg_mac" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_smg_9mm_tit" amount="4" />
+				<Item identifier="deep_smg_mac" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_soidier_moderate" />
+			</ItemSet>
+
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="thor" equip="true">
+					<Item identifier="deep_plate_ceramic_6" />
+				</Item>
+				<Item identifier="6b47_npc" equip="true" />
+				<Item identifier="deep_alpha" equip="true">
+				</Item>
+				<Item identifier="deep_f1_weapon" equip="true">
+				</Item>
+				<Item identifier="deep_pdw">
+					<Item identifier="deep_smg_9mm_tit" amount="1" />
+				</Item>
+				<Item identifier="deep_mac10">
+					<Item identifier="deep_smg_mac" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_smg_9mm_tit" amount="4" />
+				<Item identifier="deep_smg_mac" amount="4" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_soidier_moderate" />
+			</ItemSet>
+		</npc>
+
+		<npc identifier="deep_separatist_blaster_moderate" commonness="0" tags="bandit" moduleflags="crewmodule,engineeringmodule" job="deep_medicaldoctor_enemy" behavior="Passive" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--5穿武器，2甲，6级陶瓷板-->
+			<ItemSet commonness="0.5">
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="gssh01_headset" equip="true" />
+				<Item identifier="green_combat_suit" equip="true" />
+				<Item identifier="6b47_npc" equip="true" />
+				<Item identifier="deep_m1" equip="true">
+					<Item identifier="deep_plate_ceramic_6" />
+				</Item>
+				<Item identifier="deep_m79" equip="true">
+					<Item identifier="deep_40mmgrenade_he" amount="1" />
+				</Item>
+				<Item identifier="deep_mac10">
+					<Item identifier="deep_smg_mac" />
+				</Item>
+				<Item identifier="antibleeding1" amount="2" />
+				<Item identifier="deep_smg_mac" amount="4" />
+				<Item identifier="deep_40mmgrenade_he" amount="1" />
+				<Item identifier="deep_knife" equip="false" />
+				<Item identifier="deep_talent_separatists_blaster_moderate" />
+			</ItemSet>
+		</npc>
+	</npcset>
 </npcsets>

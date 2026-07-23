@@ -4,25 +4,25 @@
     <Sprite texture="%ModDir%/scenecover/deep_cover.png" sourcerect="30,23,256,177" depth="0.55" origin="0.5,0.5" />
     <Body width="256" height="177" density="100" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" pickkey="Select" msg="ItemMsgEquipSelect">
-    <StatusEffect type="OnActive" target="This" disableDeltaTime="true" >
-    <SpawnItem identifiers="deep_dining_table_cover" spawnposition="Target" Count="1" />
-    <remove/>
+      <StatusEffect type="OnActive" target="This" disableDeltaTime="true">
+        <SpawnItem identifiers="deep_dining_table_cover" spawnposition="Target" Count="1" />
+        <remove/>
       </StatusEffect>
-        </Holdable>
+    </Holdable>
   </Item>
 
-  <Item name="" identifier="deep_dining_table_cover" health="400" subcategory="deep_scene_cover" hideinmenus="true" category="Equipment" Tags="deep_large_cover" cargocontaineridentifier="metalcrate" Scale="0.5" impactsoundtag="impact_metal_light" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="true" >
+  <Item name="" identifier="deep_dining_table_cover" health="400" subcategory="deep_scene_cover" hideinmenus="true" category="Equipment" Tags="deep_large_cover" cargocontaineridentifier="metalcrate" Scale="0.5" impactsoundtag="impact_metal_light" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="true">
     <Sprite texture="%ModDir%/scenecover/deep_cover.png" sourcerect="328,8,192,255" depth="0.55" origin="0.5,0.5" />
     <Body width="192" height="255" density="100" />
-    <RangedWeapon reload="1" combatPriority="1" >
+    <RangedWeapon reload="1" combatPriority="1">
 
-    <StatusEffect type="OnBroken" target="This" >
-      <particleemitter particle="shrapnel" drawontop="true" particleamount="30" velocitymin="100" velocitymax="500" anglemin="0" anglemax="360" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" />
-      <Sound file="%ModDir%/jobgear/sound/armor_de.ogg" range="2000" forcePlaySounds="true"/>
+      <StatusEffect type="OnBroken" target="This">
+        <particleemitter particle="shrapnel" drawontop="true" particleamount="30" velocitymin="100" velocitymax="500" anglemin="0" anglemax="360" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" />
+        <Sound file="%ModDir%/jobgear/sound/armor_de.ogg" range="2000" forcePlaySounds="true"/>
         <Remove />
       </StatusEffect>
 
-      <StatusEffect type="OnDamaged" target="This" disabledeltatime="true" >
+      <StatusEffect type="OnDamaged" target="This" disabledeltatime="true">
         <particleemitter particle="weldspark" drawontop="true" particleamount="10" velocitymin="100" velocitymax="500" anglemin="-45" anglemax="45" distancemin="0" distancemax="30" scalemin="0.35" scalemax="0.5" copyentityangle="true" />
         <Sound file="%ModDir%/jobgear/sound/ricochet.ogg" range="2000" forcePlaySounds="true"/>
       </StatusEffect>

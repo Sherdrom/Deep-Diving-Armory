@@ -55,7 +55,7 @@
     </Wearable>
     <ItemContainer capacity="1" maxstacksize="1" slotsperrow="3" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
-      <Containable items="mobilebattery" >
+      <Containable items="mobilebattery">
         <StatusEffect type="OnWearing" target="Contained" Condition="-0.01" comparison="And">
           <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
           <Conditional IsOn="true" />
@@ -63,11 +63,11 @@
       </Containable>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="deep_apscore" setactive="true" hide="false" itempos="0,0" scale="0.01">
-          <StatusEffect type="OnInserted" target="This" disabledeltatime="true" >
+          <StatusEffect type="OnInserted" target="This" disabledeltatime="true">
             <Conditional IsOn="true" />
             <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="1" />
           </StatusEffect>
-          <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" >
+          <StatusEffect type="OnRemoved" target="This" disabledeltatime="true">
             <Conditional IsOn="true" />
             <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1"/>
           </StatusEffect>
@@ -142,7 +142,7 @@
     </Wearable>
     <ItemContainer capacity="1" maxstacksize="1" slotsperrow="3" hideitems="true" containedstateindicatorslot="0" containedstateindicatorstyle="battery">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="128,448,64,64" origin="0.5,0.5" />
-      <Containable items="mobilebattery" >
+      <Containable items="mobilebattery">
         <StatusEffect type="OnWearing" target="Contained" Condition="-0.01" comparison="And">
           <Conditional TargetContainer="true" TargetGrandparent="true" IsDead="false" />
           <Conditional IsOn="true" />
@@ -150,11 +150,11 @@
       </Containable>
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="deep_apscore" setactive="true" hide="false" itempos="0,0" scale="0.01">
-          <StatusEffect type="OnInserted" target="This" disabledeltatime="true" >
+          <StatusEffect type="OnInserted" target="This" disabledeltatime="true">
             <Conditional IsOn="true" />
             <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="1" />
           </StatusEffect>
-          <StatusEffect type="OnRemoved" target="This" disabledeltatime="true" >
+          <StatusEffect type="OnRemoved" target="This" disabledeltatime="true">
             <Conditional IsOn="true" />
             <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1"/>
           </StatusEffect>
