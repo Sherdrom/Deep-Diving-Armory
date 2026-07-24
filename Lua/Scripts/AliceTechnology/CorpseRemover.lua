@@ -37,7 +37,7 @@ Hook.Add("character.death", "Deep_CR", function(c)
     c.EnableDespawn = true
     if c.Removed then return end
     Timer.Wait(function()
-        if c.IsDead then
+        if not c.Removed and c.IsDead then
             c.Despawn() 
         end
     end,30000)
