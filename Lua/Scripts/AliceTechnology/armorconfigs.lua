@@ -2128,6 +2128,84 @@ Deep_Lua.Armors = {
         SoundRange = 5000,
     },
 
+    deep_helmet_striker = {
+        isPlateCarrier = false,
+        name = "deep_helmet_striker",
+        type = "composite",
+        ricochetchance = 0.5,
+        level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_helmet_heavy_trooper = {
+        isPlateCarrier = false,
+        name = "deep_helmet_heavy_trooper",
+        type = "composite",
+        ricochetchance = 0.4,
+        level = 5,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_helmet_sledge_hammer = {
+        isPlateCarrier = false,
+        name = "deep_helmet_sledge_hammer",
+        type = "composite",
+        ricochetchance = 0.6,
+        level = 7,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
     deep_kiver_m = {
         isPlateCarrier = false,
         name = "deep_kiver_m",
