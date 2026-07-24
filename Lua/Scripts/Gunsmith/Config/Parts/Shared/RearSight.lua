@@ -43,6 +43,7 @@ parts.deep_ar15_handle_rear_sight = {
 }
 
 parts.deep_ar15_no_rear_sight = {
+    uiOrder = -100,
     type = "rear_sight_mount",
     nameKey = "deep.gunsmith.part.deep_ar15_no_rear_sight",
     provides = { "AR_rear_sight" },
