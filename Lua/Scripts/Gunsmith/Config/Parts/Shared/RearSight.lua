@@ -20,6 +20,9 @@ parts.deep_ar15_rear_sight = {
         order = 40,
         scale = 1.0
     },
+    mounts = {
+        { path = "optic_mount", nameKey = "deep.gunsmith.mount.upper_receiver.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 37, y = -2 }, quick = { key = "optic" } },
+    }
 }
 
 parts.deep_ar15_handle_rear_sight = {
@@ -36,6 +39,16 @@ parts.deep_ar15_handle_rear_sight = {
     },
     mounts = {
         { path = "optic_mount", nameKey = "deep.gunsmith.mount.ar15_handle_rear_sight.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 19, y = -22 }, quick = { key = "optic" }, visualOrder = 35 },
+    }
+}
+
+parts.deep_ar15_no_rear_sight = {
+    type = "rear_sight_mount",
+    nameKey = "deep.gunsmith.part.deep_ar15_no_rear_sight",
+    provides = { "AR_rear_sight" },
+    item = { virtual = true },
+    mounts = {
+        { path = "optic_mount", nameKey = "deep.gunsmith.mount.upper_receiver.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 37, y = -2 }, quick = { key = "optic" } },
     }
 }
 
