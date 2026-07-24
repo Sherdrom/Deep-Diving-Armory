@@ -2102,15 +2102,119 @@ Deep_Lua.Armors = {
     },
 
     --头盔
-    deep_kiver_m = {
+    deep_helmet_ranger = {
         isPlateCarrier = false,
-        name = "deep_kiver_m",
+        name = "deep_helmet_ranger",
         type = "composite",
         ricochetchance = 0.4,
         level = 4,
         aftereffectmultiplier  = 0.8,
         correctionaffliction = "deep_headshot_deadly",
         correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_helmet_striker = {
+        isPlateCarrier = false,
+        name = "deep_helmet_striker",
+        type = "composite",
+        ricochetchance = 0.5,
+        level = 6,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_helmet_heavy_trooper = {
+        isPlateCarrier = false,
+        name = "deep_helmet_heavy_trooper",
+        type = "composite",
+        ricochetchance = 0.4,
+        level = 5,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_helmet_sledge_hammer = {
+        isPlateCarrier = false,
+        name = "deep_helmet_sledge_hammer",
+        type = "composite",
+        ricochetchance = 0.6,
+        level = 7,
+        aftereffectmultiplier  = 0.8,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.1,
+        enablecorrection = true,
+        penresistance = 0.0,
+        maxhits = 0,
+        maxcondition = 0,
+        ignoredamage = true,
+        isHelmet = false,
+        protectionarea = {
+            [LimbType.Head] = true,
+        },
+        targetidentifier = {
+            ["gunshotwound"] = true
+        },
+
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 5000,
+    },
+
+    deep_kiver_m = {
+        isPlateCarrier = false,
+        name = "deep_kiver_m",
+        type = "composite",
+        ricochetchance = 0.5,
+        level = 4,
+        aftereffectmultiplier  = 0.6,
+        correctionaffliction = "deep_headshot_deadly",
+        correctionmultiplier = 0.05,
         enablecorrection = true,
         penresistance = 0.0,
         maxhits = 0,
@@ -2134,9 +2238,9 @@ Deep_Lua.Armors = {
         type = "composite",
         ricochetchance = 0.5,
         level = 5,
-        aftereffectmultiplier  = 0.8,
+        aftereffectmultiplier  = 0.6,
         correctionaffliction = "deep_headshot_deadly",
-        correctionmultiplier = 0.1,
+        correctionmultiplier = 0.05,
         enablecorrection = true,
         penresistance = 0.0,
         maxhits = 0,
@@ -2186,9 +2290,9 @@ Deep_Lua.Armors = {
         type = "composite",
         ricochetchance = 0.6,
         level = 6,
-        aftereffectmultiplier  = 0.8,
+        aftereffectmultiplier  = 0.5,
         correctionaffliction = "deep_headshot_deadly",
-        correctionmultiplier = 0.08,
+        correctionmultiplier = 0.05,
         enablecorrection = true,
         penresistance = 0.0,
         maxhits = 0,

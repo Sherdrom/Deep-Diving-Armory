@@ -295,6 +295,270 @@ Hook.Add("FAST_Health_Off", function(_, _, item)
         }
 end)
 
+Hook.Add("FAST_Ranger_Origin", function(_, _, item)
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(13,10,99,91)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.51,0.58)
+    -- 移除战术设备时应当清空所有的执行状态
+    for _ , executed in pairs(isExecuted) do
+        if type(executed) == "table" then
+            for i, _ in pairs(executed) do
+                executed[i] = false
+            end
+        end
+    end
+end)
+
+Hook.Add("FAST_Ranger_Thermal_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(13,127,137,91)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.37,0.58)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = true,
+            FAST_Thermal_Off = false
+        }
+end)
+
+Hook.Add("FAST_Ranger_Thermal_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(206,3,125,124)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.41,0.69)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = false,
+            FAST_Thermal_Off = true
+        }
+end)
+
+Hook.Add("FAST_Ranger_Night_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    SoundPlayer.PlaySound(WEAR_CONFIG.Sound.nightSound.turnOn, item.WorldPosition, WEAR_CONFIG.Sound.nightSound.gain, WEAR_CONFIG.Sound.nightSound.range, WEAR_CONFIG.Sound.nightSound.frequencyMultiplier)
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(18,231,134,89)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.35,0.71)
+    isExecuted[item.ID] = {
+            FAST_Night_On = true,
+            FAST_Night_Off = false
+        }
+end)
+
+Hook.Add("FAST_Ranger_Night_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(362,10,144,117)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.36,0.68)
+    isExecuted[item.ID] = {
+            FAST_Night_On = false,
+            FAST_Night_Off = true
+        }
+end)
+
+Hook.Add("FAST_Ranger_Health_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(13,357,114,91)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.42,0.58)
+    isExecuted[item.ID] = {
+            FAST_Health_On = true,
+            FAST_Health_Off = false
+        }
+end)
+
+Hook.Add("FAST_Ranger_Health_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(206,175,124,100)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.4,0.62)
+    isExecuted[item.ID] = {
+            FAST_Health_On = false,
+            FAST_Health_Off = true
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Origin", function(_, _, item)
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(10,11,98,104)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.52,0.55)
+    -- 移除战术设备时应当清空所有的执行状态
+    for _ , executed in pairs(isExecuted) do
+        if type(executed) == "table" then
+            for i, _ in pairs(executed) do
+                executed[i] = false
+            end
+        end
+    end
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Thermal_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(10,130,150,105)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.35,0.56)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = true,
+            FAST_Thermal_Off = false
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Thermal_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(199,37,131,130)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.4,0.64)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = false,
+            FAST_Thermal_Off = true
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Night_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    SoundPlayer.PlaySound(WEAR_CONFIG.Sound.nightSound.turnOn, item.WorldPosition, WEAR_CONFIG.Sound.nightSound.gain, WEAR_CONFIG.Sound.nightSound.range, WEAR_CONFIG.Sound.nightSound.frequencyMultiplier)
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(10,250,141,105)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.37,0.58)
+    isExecuted[item.ID] = {
+            FAST_Night_On = true,
+            FAST_Night_Off = false
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Night_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(354,44,151,123)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.34,0.62)
+    isExecuted[item.ID] = {
+            FAST_Night_On = false,
+            FAST_Night_Off = true
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Health_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(10,370,121,105)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.43,0.56)
+    isExecuted[item.ID] = {
+            FAST_Health_On = true,
+            FAST_Health_Off = false
+        }
+end)
+
+Hook.Add("FAST_Heavy_Trooper_Health_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(199,208,126,108)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.41,0.57)
+    isExecuted[item.ID] = {
+            FAST_Health_On = false,
+            FAST_Health_Off = true
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Origin", function(_, _, item)
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(3,4,106,107)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.62)
+    -- 移除战术设备时应当清空所有的执行状态
+    for _ , executed in pairs(isExecuted) do
+        if type(executed) == "table" then
+            for i, _ in pairs(executed) do
+                executed[i] = false
+            end
+        end
+    end
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Thermal_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(2,255,164,99)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.37,0.58)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = true,
+            FAST_Thermal_Off = false
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Thermal_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Thermal_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(192,112,133,133)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.45,0.69)
+    isExecuted[item.ID] = {
+            FAST_Thermal_On = false,
+            FAST_Thermal_Off = true
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Night_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    SoundPlayer.PlaySound(WEAR_CONFIG.Sound.nightSound.turnOn, item.WorldPosition, WEAR_CONFIG.Sound.nightSound.gain, WEAR_CONFIG.Sound.nightSound.range, WEAR_CONFIG.Sound.nightSound.frequencyMultiplier)
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(2,140,161,99)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.37,0.6)
+    isExecuted[item.ID] = {
+            FAST_Night_On = true,
+            FAST_Night_Off = false
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Night_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Night_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(343,104,135,141)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.43,0.71)
+    isExecuted[item.ID] = {
+            FAST_Night_On = false,
+            FAST_Night_Off = true
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Health_On", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_On then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(2,370,144,99)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.41,0.58)
+    isExecuted[item.ID] = {
+            FAST_Health_On = true,
+            FAST_Health_Off = false
+        }
+end)
+
+Hook.Add("FAST_Sledge_Hammer_Health_Off", function(_, _, item)
+    if isExecuted[item.ID] and isExecuted[item.ID].FAST_Health_Off then return end
+    local itemComponent = item.GetComponentString("Wearable")
+    if itemComponent.wearableSprites[1].Sprite == nil then return end
+    itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(192,276,128,131)
+    itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.46,0.69)
+    isExecuted[item.ID] = {
+            FAST_Health_On = false,
+            FAST_Health_Off = true
+        }
+end)
+
 Hook.Add("GHOST_Origin", function(_, _, item)
     local itemComponent = item.GetComponentString("Wearable")
     if itemComponent.wearableSprites[1].Sprite == nil then return end

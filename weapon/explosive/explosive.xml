@@ -407,7 +407,7 @@
       <StatusEffect type="OnContained" target="This" interval="6" Voltage="6" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于3时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="1000" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 3" />
       </StatusEffect>
       <!-- 电压小于3时，不投出手雷 -->
@@ -415,7 +415,7 @@
         <Conditional Voltage="lt 3" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" spread="1" MaxChargeTime="0.3" unskilledspread="10" combatPriority="1000" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="80,11" spread="1" MaxChargeTime="0.3" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
@@ -1225,7 +1225,7 @@
         <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.2" spread="1" unskilledspread="10" combatPriority="900" drawhudwhenequipped="true" crosshairscale="0.2">
+    <RangedWeapon barrelpos="80,11" reload="0.2" spread="1" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.2">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <RequiredItems items="deep_ied_ammo" type="Contained" msg="ItemMsgAmmoRequired" />
@@ -1305,7 +1305,7 @@
       <StatusEffect type="OnContained" target="This" interval="7" Voltage="7" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 3.5" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1313,7 +1313,7 @@
         <Conditional Voltage="lt 3.5" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1359,7 +1359,7 @@
       <StatusEffect type="OnContained" target="This" interval="8" Voltage="8" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 4" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1367,7 +1367,7 @@
         <Conditional Voltage="lt 4" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1413,7 +1413,7 @@
       <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 2" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1421,7 +1421,7 @@
         <Conditional Voltage="lt 2" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1467,7 +1467,7 @@
       <StatusEffect type="OnContained" target="This" interval="10" Voltage="10" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 5" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1475,7 +1475,7 @@
         <Conditional Voltage="lt 5" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1521,7 +1521,7 @@
       <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 2" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1529,7 +1529,7 @@
         <Conditional Voltage="lt 2" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1575,7 +1575,7 @@
       <StatusEffect type="OnContained" target="This" interval="6" Voltage="6" setvalue="true">
       </StatusEffect>
       <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="900" setvalue="true" disableDeltaTime="true" comparison="and">
+      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
         <Conditional Voltage="gte 2" />
       </StatusEffect>
       <!-- 电压小于4时，不投出手雷 -->
@@ -1583,7 +1583,7 @@
         <Conditional Voltage="lt 2" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1624,7 +1624,7 @@
         <dropitem />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.6" holdtrigger="true" spread="20" combatPriority="900" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.6" holdtrigger="true" spread="20" combatPriority="2000" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1642,7 +1642,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
     <SkillRequirementHint identifier="weapons" level="60" />
   </Item>
-  <Item name="" identifier="deep_f1_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_f1_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="25,7,85,74" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="73,144,46,82" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -1704,7 +1704,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_m67_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_m67_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="257,10,88,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="168,169,43,55" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -1766,7 +1766,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_cluster_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_cluster_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="585,6,98,122" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="319,146,58,99" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -1828,7 +1828,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_rgd5_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_rgd5_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="483,10,79,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="265,162,37,64" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -1890,7 +1890,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_m24_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_m24_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="699,16,83,112" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="406,141,22,103" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -1952,7 +1952,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_stun_grenade_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_stun_grenade_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="132,6,89,85" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="128,148,35,80" depth="0.55" origin="0.5,0.5" />
     <Body radius="23" height="20" density="30" />
@@ -2014,12 +2014,13 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_m18_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_m18_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="362,9,96,93" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="219,152,36,74" depth="0.55" origin="0.5,0.5" />
     <Body width="38" height="15" density="30" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="14.0" sticktocharacters="false">
+      <StatusEffect type="OnNotContained" target="This" NonInteractable="false" disabledeltatime="true"/>
       <StatusEffect type="OnImpact" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/jiechu.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
       </StatusEffect>
@@ -2046,11 +2047,12 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="2.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_ied_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="weapon,explosive,demolitionsexpert,handgrenade,deep_ied,ignorebyai" Scale="0.35" impactsoundtag="impact_light">
+  <Item name="" identifier="deep_ied_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="weapon,explosive,demolitionsexpert,handgrenade,deep_ied,ignorebyai" Scale="0.35" impactsoundtag="impact_light">
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="578,147,36,99" depth="0.55" origin="0.5,0.5" />
     <Body width="35" height="100" density="10" />
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" launchimpulse="8.0" DoesStick="true">
+      <StatusEffect type="OnNotContained" target="This" NonInteractable="false" disabledeltatime="true"/>
       <!-- 有爆破手芯片时，增加投掷距离-->
       <StatusEffect type="OnContained" targettype="This" setvalue="true" launchimpulse="12.0">
         <Conditional condition="e 50.0" />
@@ -2086,7 +2088,7 @@
     <LightComponent LightColor="255,0,0,255" range="150" powerconsumption="0" IsOn="true" blinkfrequency="1.0" offset="0,16"></LightComponent>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_rgo_ammo" NonInteractable="false" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
+  <Item name="" identifier="deep_rgo_ammo" NonInteractable="true" hideinmenus="true" subcategory="deep_grenade" category="Weapon" maxstacksize="1" maxstacksizecharacterinventory="1" interactthroughwalls="true" cargocontaineridentifier="deep_explosive_container" tags="grenade,ignorebyai" Scale="0.5" impactsoundtag="impact_grenade">
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body width="38" height="15" density="30" />

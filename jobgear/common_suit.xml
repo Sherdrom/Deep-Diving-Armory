@@ -150,7 +150,7 @@
     <Deconstruct time="10">
       <Item identifier="KEVLAR" />
     </Deconstruct>
-    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="797,210,116,182" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="891,239,90,138" origin="0.5,0.5" />
     <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
     <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
     <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
@@ -312,7 +312,6 @@
         <RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
         <dropitem />
       </StatusEffect>
-      
       <!-- 钢制插板debuff-->
       <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
         <RequiredItems items="deep_plate_metal_3" type="Contained" TargetSlot="0" />
@@ -843,7 +842,6 @@
     <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
     <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect">
       <sprite texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.39" origin="0.59,0.7" sourcerect="425,2,85,119" />
-      
       <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
         <RequiredItems items="chip_learn" type="Contained" targetslot="1" />
         <Affliction identifier="chip_learn_1" strength="100" />

@@ -68,6 +68,7 @@ end
 
 local function trackItem(item)
     if not isTargetItem(item) then return end
+    if item.Removed then return end
 
     trackedItems[item] = true
     updateMosinMagIcon(item)
@@ -83,16 +84,14 @@ Hook.Add("think", config.hookName .. "Think", function()
     lastRefreshTime = currentTime
 
     for item in pairs(trackedItems) do
-        if item == nil or item.removed or not isTargetItem(item) then
+        if item.Removed or item.OverrideInventorySprite == nil then
             trackedItems[item] = nil
             lastDisplayedAmmo[item] = nil
         else
-            if item.OverrideInventorySprite ~= nil then
-                local ammo = getDisplayedAmmo(item)
-                if lastDisplayedAmmo[item] ~= ammo then
-                    lastDisplayedAmmo[item] = ammo
-                    updateMosinMagIcon(item)
-                end
+            local ammo = getDisplayedAmmo(item)
+            if lastDisplayedAmmo[item] ~= ammo then
+                lastDisplayedAmmo[item] = ammo
+                updateMosinMagIcon(item)
             end
         end
     end
@@ -101,4 +100,21 @@ end)
 Hook.Add("item.removed", config.hookName .. "Removed", function(item)
     trackedItems[item] = nil
     lastDisplayedAmmo[item] = nil
+end)
+
+Hook.Add("roundEnd", config.hookName .. "RoundEnd", function()
+    trackedItems = {}
+    lastDisplayedAmmo = {}
+    lastRefreshTime = 0
+end)
+
+Hook.Add("roundStart", config.hookName .. "RoundStart", function()
+    trackedItems = {}
+    lastDisplayedAmmo = {}
+    for _, item in pairs(Item.ItemList) do
+        if isTargetItem(item) and not item.Removed then
+            trackedItems[item] = true
+            updateMosinMagIcon(item)
+        end
+    end
 end)
