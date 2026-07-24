@@ -1,486 +1,237 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <npcsets>
 	<npcset identifier="deep_ghost_elite">
-		<npc identifier="deep_ghost_soldier_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_medicaldoctor_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="60" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="walker_headset" equip="true">
+		<npc identifier="deep_ghost_Fearless_Vanguard_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--7穿武器，7复合板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet>
+				<!--装备1-->
+				<Item identifier="deep_tac_mask" equip="true" />
+				<Item identifier="ghost_suit" equip="true">
+					<!--弹药-->
+					<Item identifier="deep_57_mag_phy" amount="2" />
+					<!--弹药-->
+					<!--医疗品-->
+					<Item identifier="antibleeding1" amount="2" />
+					<!--医疗品-->
+					<!--战术设备-->
+					<Item identifier="deep_thermal_interference" />
+					<!--战术设备-->
+					<!--战利品-->
+					<Item identifier="deep_ssd" />
+					<!--战利品-->
 				</Item>
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_ghost_bag" equip="true">
-					<Item identifier="deep_5.56x45_phy" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_hk416">
-					<Item identifier="deep_5.56x45_phy" />
-					<Item identifier="2.5x_sight" />
-				</Item>
+				<!--装备-->
+
+				<!--武器-->
 				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
+					<Item identifier="deep_57_mag_phy" />
 				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_rgd5_weapon" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--武器-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="walker_headset" equip="true">
-				</Item>
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_ghost_bag" equip="true">
-					<Item identifier="deep_AWM_mag" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_AWM">
-					<Item identifier="deep_AWM_mag" amount="1" />
-					<Item identifier="2.5x_sight" />
-				</Item>
-				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
-				</Item>
+				<!--近战武器-->
 				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_rgd5_weapon" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
-		</npc>
+				<!--近战武器-->
 
-		<npc identifier="deep_ghost_soldier_2_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="60" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="walker_headset" equip="true">
-				</Item>
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_ghost_bag" equip="true">
-					<Item identifier="deep_5.56x45_phy" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_hk416">
-					<Item identifier="deep_5.56x45_phy" />
-					<Item identifier="2.5x_sight" />
-				</Item>
-				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_rgd5_weapon" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
-
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="walker_headset" equip="true">
-				</Item>
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_ghost_bag" equip="true">
-					<Item identifier="deep_AWM_mag" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_AWM">
-					<Item identifier="deep_AWM_mag" amount="1" />
-					<Item identifier="2.5x_sight" />
-				</Item>
-				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_rgd5_weapon" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
-		</npc>
-
-		<npc identifier="deep_ghost_striker_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_Ghost" equip="true">
-					<Item identifier="deep_12shell_tigershark" amount="16" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_m870">
-					<Item identifier="deep_12shell_tigershark" amount="7" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_striker_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
-
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_black_npc" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_Ghost" equip="true">
-					<Item identifier="deep_12shell_tigershark" amount="16" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_m4_super90">
-					<Item identifier="deep_12shell_tigershark" amount="7" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_striker_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
-		</npc>
-
-		<npc identifier="deep_ghost_Fearless_Vanguard_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="60" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_Fearless_Vanguard" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
-				</Item>
-				<Item identifier="deep_Obsidian" equip="true">
-					<Item identifier="deep_plate_composite_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-					<Item identifier="deep_plate_metal_arm_8" />
-					<Item identifier="deep_smg_mp7" amount="4" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_mp7">
-					<Item identifier="deep_smg_mp7" amount="1" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
+				<!--天赋-->
 				<Item identifier="deep_talent_ghost_Fearless_Vanguard_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_thermal_interference" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_ghost_Fearless_Vanguard_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
 			</ItemSet>
 		</npc>
 
 		<npc identifier="deep_ghost_sniper_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_medicaldoctor_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
+			<!--8穿武器，7陶瓷板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet>
+				<!--装备1-->
 				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost_origin_npc_night4" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
+				<Item identifier="deep_fast_helmet_ghost_origin_npc_night4" equip="true"></Item>
+				<Item identifier="ghost_suit" equip="true">
+					<!--弹药-->
+					<Item identifier="deep_57_mag_phy" amount="2" />
+					<!--弹药-->
+					<!--医疗品-->
+					<Item identifier="antibleeding1" amount="2" />
+					<!--医疗品-->
+					<!--战术设备-->
+					<Item identifier="deep_thermal_interference" />
+					<!--战术设备-->
+					<!--战利品-->
+					<Item identifier="deep_ssd" />
+					<!--战利品-->
 				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_AWM_mag" amount="4" />
-				<Item identifier="deep_5.7" amount="4" />
-				<!-- <Item identifier="deep_medical_kit_small" />-->
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_AWM">
-					<Item identifier="deep_AWM_mag" />
-					<Item identifier="2.5x_sight" />
-				</Item>
-				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_sniper_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_m18_weapon" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--装备-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost_origin_npc_night4" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_m82a1_mag" amount="2" />
-				<Item identifier="deep_5.7" amount="4" />
-				<!-- <Item identifier="deep_medical_kit_small" />-->
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_m82a1">
-					<Item identifier="deep_m82a1_mag" />
-					<Item identifier="2.5x_sight" />
-				</Item>
+				<!--武器-->
 				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
+					<Item identifier="deep_57_mag_phy" />
 				</Item>
+				<!--武器-->
+
+				<!--近战武器-->
 				<Item identifier="deep_knife" equip="false" />
+				<!--近战武器-->
+
+				<!--爆破物-->
+				<Item identifier="deep_m18_weapon" equip="false" />
+				<!--爆破物-->
+
+				<!--天赋-->
 				<Item identifier="deep_talent_ghost_sniper_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_m18_weapon" />
-				<Item identifier="deep_thermal_interference" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_ghost_sniper_elite_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
 			</ItemSet>
 		</npc>
 
-		<npc identifier="deep_ghost_grenadier_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="60" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
+		<npc identifier="deep_ghost_special_forces_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
+			<!--7穿武器，7陶瓷板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet>
+				<!--装备1-->
 				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost_origin_npc_thermalgoggles" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
+				<Item identifier="ghost_suit" equip="true">
+					<!--弹药-->
+					<Item identifier="deep_57_mag_phy" amount="2" />
+					<!--弹药-->
+					<!--医疗品-->
+					<Item identifier="antibleeding1" amount="2" />
+					<!--医疗品-->
+					<!--战术设备-->
+					<Item identifier="deep_thermal_interference" />
+					<!--战术设备-->
+					<!--战利品-->
+					<Item identifier="deep_ssd" />
+					<!--战利品-->
 				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
-					<Item identifier="deep_5.56x45_phy" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_hk416">
-					<Item identifier="deep_5.56x45_phy" />
-					<Item identifier="2.5x_sight" />
-				</Item>
-				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
-				</Item>
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_RGO" />
-				<Item identifier="deep_m67_weapon" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--装备-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost_origin_npc_thermalgoggles" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
-					<Item identifier="deep_5.56x45_phy" amount="4" />
-					<Item identifier="deep_5.7" amount="4" />
-					<!-- <Item identifier="deep_medical_kit_small" />-->
-				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-				</Item>
-				<Item identifier="deep_AK19">
-					<Item identifier="deep_5.56x45_phy" />
-					<Item identifier="2.5x_sight" />
-				</Item>
+				<!--武器-->
 				<Item identifier="deep_FN57">
-					<Item identifier="deep_5.7" />
+					<Item identifier="deep_57_mag_phy" />
 				</Item>
+				<!--武器-->
+
+				<!--近战武器-->
 				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_RGO" />
-				<Item identifier="deep_m67_weapon" />
-				<Item identifier="deep_talent_ghost_soidier_elite" />
-				<Item identifier="deep_ssd" />
-				<Item identifier="deep_thermal_interference" />
+				<!--近战武器-->
+
+				<!--爆破物-->
+				<Item identifier="deep_RGO" equip="false" />
+				<Item identifier="deep_m67_weapon" equip="false" />
+				<!--爆破物-->
+
+				<!--天赋-->
+				<Item identifier="deep_talent_ghost_special_forces_elite" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_ghost_special_forces_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
 			</ItemSet>
 		</npc>
 
 		<npc identifier="deep_ghost_leader_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
+			<!--7穿武器，7复合板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet>
+				<!--装备1-->
 				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
+				<Item identifier="deep_fast_helmet_ghost" equip="true"/>
+				<Item identifier="ghost_suit" equip="true">
+					<!--弹药-->
+					<Item identifier="deep_45acpmag_phy" amount="2" />
+					<!--弹药-->
+					<!--医疗品-->
+					<Item identifier="deep_medical_kit_small" amount="1" />
+					<!--医疗品-->
+					<!--战术设备-->
+					<Item identifier="deep_thermal_interference" />
+					<!--战术设备-->
+					<!--战利品-->
+					<Item identifier="deep_ssd" amount="1" />
+				    <Item identifier="deep_ghost_formula" amount="1" />
+					<!--战利品-->
 				</Item>
 				<Item identifier="deep_Obsidian" equip="true">
-					<Item identifier="deep_plate_composite_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-					<Item identifier="deep_plate_metal_arm_8" />
-					<Item identifier="deep_762x51_expansion_phy" amount="4" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<Item identifier="deep_medical_kit_small" />
+					<!--插板-->
+					<Item identifier="deep_plate_composite_7" amount="1" />
+					<Item identifier="deep_plate_composite_arm_7" amount="1" />
+					<!--插板-->
 				</Item>
-				<Item identifier="deep_SCAR-H">
-					<Item identifier="deep_762x51_expansion_phy" amount="1" />
-					<Item identifier="1_3x_sight" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_stun_grenade_weapon" />
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_leader_elite" />
-				<Item identifier="deep_ssd" amount="1" />
-				<Item identifier="deep_ghost_formula" amount="1" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--装备-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
+				<!--武器-->
+				<Item identifier="deep_M45meusoc">
+					<Item identifier="deep_45acpmag_phy" />
 				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
-				</Item>
-				<Item identifier="deep_Obsidian" equip="true">
-					<Item identifier="deep_plate_composite_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-					<Item identifier="deep_plate_metal_arm_8" />
-					<Item identifier="deep_12.7x55" amount="4" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<Item identifier="deep_medical_kit_small" />
-				</Item>
-				<Item identifier="deep_ASH">
-					<Item identifier="deep_12.7x55" amount="1" />
-					<Item identifier="1_3x_sight" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_stun_grenade_weapon" />
-				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_leader_elite" />
-				<Item identifier="deep_ssd" amount="1" />
-				<Item identifier="deep_ghost_formula" amount="1" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--武器-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_t30_black" equip="true">
-				</Item>
-				<Item identifier="deep_Obsidian" equip="true">
-					<Item identifier="deep_plate_composite_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-					<Item identifier="deep_plate_metal_arm_8" />
-					<Item identifier="deep_m249_mag" amount="2" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<Item identifier="deep_medical_kit_small" />
-				</Item>
-				<Item identifier="deep_m249">
-					<Item identifier="deep_m249_mag" amount="1" />
-					<Item identifier="1_3x_sight" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_stun_grenade_weapon" />
+				<!--近战武器-->
 				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_talent_ghost_leader_elite" />
-				<Item identifier="deep_ssd" amount="1" />
-				<Item identifier="deep_ghost_formula" amount="1" />
-				<Item identifier="deep_thermal_interference" />
-			</ItemSet>
+				<!--近战武器-->
 
-			<ItemSet commonness="0.5">
-				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost" equip="true">
-					<!-- <Item identifier="chip_cqb" />-->
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_Obsidian" equip="true">
-					<Item identifier="deep_plate_composite_8" />
-					<!-- <Item identifier="chip_ergonomics" />-->
-					<Item identifier="deep_plate_metal_arm_8" />
-					<Item identifier="deep_m82a1_mag" amount="2" />
-					<Item identifier="deep_smg_mac" amount="4" />
-					<Item identifier="deep_medical_kit_small" />
-				</Item>
-				<Item identifier="deep_m82a1" equip="true">
-					<Item identifier="deep_m82a1_mag" amount="1" />
-					<Item identifier="1_3x_sight" />
-				</Item>
-				<Item identifier="deep_mac10">
-					<Item identifier="deep_smg_mac" />
-				</Item>
-				<Item identifier="deep_stun_grenade_weapon" />
-				<Item identifier="deep_knife" equip="false" />
+				<!--爆破物-->
+				<Item identifier="deep_stun_grenade_weapon" equip="false" />
+				<!--爆破物-->
+
+				<!--天赋-->
 				<Item identifier="deep_talent_ghost_leader_elite" />
-				<Item identifier="deep_ssd" amount="1" />
-				<Item identifier="deep_ghost_formula" amount="1" />
-				<Item identifier="deep_thermal_interference" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_ghost_leader_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
 			</ItemSet>
 		</npc>
 
 		<npc identifier="deep_ghost_hunter_elite" commonness="0" tags="bandit,HideInThermalGoggles" moduleflags="crewmodule,seccrewmodule" job="deep_securityofficer_enemy" behavior="Patrol" healthmultiplier="1" healthmultiplierinmultiplayer="1" aimspeed="100" aimaccuracy="1" reportrange="500" hearing="0" skillmultiplier="10" findweaponsrange="2000">
-			<ItemSet commonness="0.5">
+			<!--8穿武器，7陶瓷板   由SpawnBlindBox脚本发放制定的随机装备,简化NPC配置-->
+			<ItemSet>
+				<!--装备1-->
 				<Item identifier="idcard" equip="true" />
-				<Item identifier="deep_fast_helmet_ghost_origin_npc_thermalgoggles" equip="true">
-				</Item>
-				<Item identifier="ghost_suit" equip="true" />
-				<Item identifier="deep_ghost_bag" equip="true">
-					<Item identifier="deep_5.56x45_phy" amount="4" />
+				<Item identifier="deep_fast_helmet_ghost_origin_npc_night4" equip="true"></Item>
+				<Item identifier="ghost_suit" equip="true">
+					<!--弹药-->
+					<Item identifier="deep_57_mag_phy" amount="2" />
+					<!--弹药-->
+					<!--医疗品-->
+					<Item identifier="deep_medical_kit_small" amount="1" />
+					<!--医疗品-->
+					<!--战术设备-->
 					<Item identifier="deep_thermal_interference" />
+					<!--战术设备-->
+					<!--战利品-->
+					<Item identifier="deep_ssd" />
+					<!--战利品-->
 				</Item>
-				<Item identifier="deep_Guardian" equip="true">
-					<Item identifier="deep_plate_ceramic_8" />
+				<!--装备-->
+
+				<!--武器-->
+				<Item identifier="deep_FN57">
+					<Item identifier="deep_57_mag_phy" />
 				</Item>
-				<Item identifier="deep_hk416">
-					<Item identifier="deep_5.56x45_phy" />
-					<Item identifier="2.5x_sight" />
-				</Item>
+				<!--武器-->
+
+				<!--近战武器-->
 				<Item identifier="deep_knife" equip="false" />
-				<Item identifier="deep_RGO" amount="1" />
+				<!--近战武器-->
+
+				<!--爆破物-->
+				<Item identifier="deep_RGO" equip="false" />
+				<!--爆破物-->
+
+				<!--天赋-->
 				<Item identifier="deep_talent_ghost_leader_elite" />
-				<Item identifier="deep_ssd" />
+				<!--天赋-->
+
+				<!--随机装备(SpawnBlindBox.lua)-->
+				<Item identifier="deep_ghost_hunter_elite_equipment" />
+				<!--随机装备(SpawnBlindBox.lua)-->
 			</ItemSet>
-
 		</npc>
-
+		
 	</npcset>
 </npcsets>
