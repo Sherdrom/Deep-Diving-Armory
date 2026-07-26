@@ -2,8 +2,9 @@
 <ModConfig>
     <!--Lua-->
     <Lua File="%ModDir%/Lua/Autorun/init.lua" IsAutorun="true"/>
-      <!--In-Memory
-    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>-->
+      <!--In-Memory-->
+    <Assembly File="%ModDir%/CSharp/WeaponSyncFix.cs" IsScript="true" UseInternalAccessName="true"/>
+    <Assembly File="%ModDir%/CSharp/DamageRollbackFix.cs" IsScript="true" UseInternalAccessName="true"/>
 
     <!--Assemblies-->
     <Assembly File="%ModDir%/bin/Client/Linux/DeepVisionPatch.dll" Target="Client" Platform="Linux"/>
