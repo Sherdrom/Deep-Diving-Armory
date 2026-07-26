@@ -9,19 +9,13 @@ if not CLIENT then
 	return
 end
 
-local EnableKillNotification = true
 local _, myPackage = trygetpackage("Deep-Diving-Armory")
 local success, var = ConfigService.TryGetConfig(SettingBase.Boolean, myPackage, "KillNotification")
+local EnableKillNotification = var
 
 if not success then
 	print("[Deep-Diving-Armory] Failed to get KillNotification configs.")
 end
-
-function onValueChanged(cfg)
-	EnableKillNotification = cfg.Value
-end
-
-var.OnValueChanged.add(onValueChanged)
 
 local killInfos = {}
 local lastThinkTime = Timer.Time
