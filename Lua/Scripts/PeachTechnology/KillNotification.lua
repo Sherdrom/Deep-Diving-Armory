@@ -11,9 +11,13 @@ end
 
 local _, myPackage = trygetpackage("Deep-Diving-Armory")
 local success, var = ConfigService.TryGetConfig(SettingBase.Boolean, myPackage, "KillNotification")
-local EnableKillNotification = var
+local EnableKillNotification = success and var.Value or false
 
-if not success then
+if success then
+	var.OnValueChanged.add(function(cfg)
+		EnableKillNotification = cfg.Value
+	end)
+else
 	print("[Deep-Diving-Armory] Failed to get KillNotification configs.")
 end
 
