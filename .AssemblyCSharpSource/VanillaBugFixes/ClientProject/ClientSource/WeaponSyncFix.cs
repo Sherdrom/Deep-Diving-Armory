@@ -41,6 +41,40 @@ namespace WeaponSyncFix
     }
 
     /// <summary>
+    /// 本地已预测的弹道在收到服务器回显时只同步状态，不重复生成射线。
+    /// </summary>
+    [HarmonyPatch]
+    internal static class ProjectileEchoPatch
+    {
+        private static readonly ConditionalWeakTable<Projectile, object> PredictedProjectiles = new();
+
+        [HarmonyPatch(typeof(Projectile), nameof(Projectile.Shoot))]
+        [HarmonyPostfix]
+        internal static void Track(Projectile __instance, Character user)
+        {
+            if (user?.IsLocalPlayer != true) { return; }
+
+            if (NetworkEventContext.IsProcessing)
+            {
+                PredictedProjectiles.Remove(__instance);
+            }
+            else
+            {
+                PredictedProjectiles.GetOrCreateValue(__instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(Projectile), "LaunchProjSpecific")]
+        [HarmonyPrefix]
+        internal static bool SuppressEchoedTracer(Projectile __instance)
+        {
+            return !NetworkEventContext.IsProcessing
+                || __instance.User?.IsLocalPlayer != true
+                || !PredictedProjectiles.TryGetValue(__instance, out _);
+        }
+    }
+
+    /// <summary>
     /// Projectile.Launch Prefix（tracer方向修正）
     ///
     /// 根因：服务器 RangedWeapon.Use 第288行 rotation = Item.body.Rotation - Pi（Dir<0时），
