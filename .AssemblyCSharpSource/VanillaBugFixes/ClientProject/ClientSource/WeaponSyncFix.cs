@@ -3,63 +3,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Barotrauma;
 using Barotrauma.Items.Components;
-using Barotrauma.LuaCs;
 using Barotrauma.Networking;
 using Microsoft.Xna.Framework;
 using HarmonyLib;
 
-[assembly: IgnoreAccessChecksTo("Barotrauma")]
-[assembly: IgnoreAccessChecksTo("BarotraumaCore")]
-[assembly: IgnoreAccessChecksTo("DedicatedServer")]
-
-// 兼容性定义：部分 LuaCs 编译环境缺少此特性，显式声明以支持访问 internal 成员
-namespace System.Runtime.CompilerServices
-{
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-    internal sealed class IgnoreAccessChecksToAttribute : Attribute
-    {
-        public IgnoreAccessChecksToAttribute(string assemblyName) { }
-    }
-}
-
 namespace WeaponSyncFix
 {
-    /// <summary>
-    /// 插件入口：加载时 PatchAll，卸载时 UnpatchAll。
-    /// </summary>
-    public class WeaponSyncPlugin : IAssemblyPlugin
-    {
-        private const string HarmonyId = "weaponsync.fix";
-        private Harmony _harmony;
-
-        public void Initialize()
-        {
-            _harmony = new Harmony(HarmonyId);
-            _harmony.PatchAll();
-            // ClientEventRead 为客户端专属方法，服务器不存在，需手动检查后补丁
-            var clientEventRead = AccessTools.Method(typeof(Item), "ClientEventRead");
-            if (clientEventRead != null)
-            {
-                _harmony.Patch(
-                    clientEventRead,
-                    prefix: new HarmonyMethod(typeof(ItemClientEventReadPatch), nameof(ItemClientEventReadPatch.Prefix)),
-                    postfix: new HarmonyMethod(typeof(ItemClientEventReadPatch), nameof(ItemClientEventReadPatch.Postfix)));
-            }
-            LuaCsLogger.Log("[WeaponSyncFix] Loaded v3.1 | dedup=0.2s | projectileSync=on | tracerDirFix=on");
-        }
-
-        public void OnLoadCompleted() { }
-
-        public void PreInitPatching() { }
-
-        public void Dispose()
-        {
-            _harmony?.UnpatchAll(HarmonyId);
-            LuaCsLogger.Log("[WeaponSyncFix] Unloaded");
-            _harmony = null;
-        }
-    }
-
     /// <summary>
     /// 每把武器最近一次本地开火时间戳，用于网络事件去重。
     /// ConditionalWeakTable 保证武器被回收时条目自动清理。
@@ -92,33 +41,7 @@ namespace WeaponSyncFix
     }
 
     /// <summary>
-    /// 补丁 1：Projectile.Shoot Prefix（核心修复）
-    ///
-    /// 根因：RangedWeapon.Use() 和 SwitchableRangedWeapon.Use() 均以 createNetworkEvent=false
-    /// 调用 projectile.Shoot()，导致服务器从不发送子弹发射事件给客户端。
-    /// 客户端因此从不执行 DoHitscan -> LaunchProjSpecific，tracer 完全缺失。
-    ///
-    /// 修复：服务器侧强制 createNetworkEvent=true，使客户端收到发射事件后
-    /// 走 Shoot -> Launch -> Use -> DoHitscan -> LaunchProjSpecific 完整链路生成 tracer。
-    ///
-    /// 安全性：Shoot 内部仅当 GameMain.NetworkMember.IsServer 为 true 时创建事件，
-    /// 客户端侧不会触发递归。StatusEffect.cs 原本即传 true，无行为变化。
-    /// </summary>
-    [HarmonyPatch(typeof(Projectile), nameof(Projectile.Shoot))]
-    internal static class ProjectileShootPatch
-    {
-        [HarmonyPrefix]
-        internal static void Prefix(ref bool createNetworkEvent)
-        {
-            if (GameMain.NetworkMember is { IsServer: true })
-            {
-                createNetworkEvent = true;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 补丁 2：Projectile.Launch Prefix（tracer方向修正）
+    /// Projectile.Launch Prefix（tracer方向修正）
     ///
     /// 根因：服务器 RangedWeapon.Use 第288行 rotation = Item.body.Rotation - Pi（Dir<0时），
     /// 传给客户端的 rotation 已包含 Dir 调整。客户端 Launch 设置 item.body.Rotation = rotation，
@@ -147,30 +70,21 @@ namespace WeaponSyncFix
     }
 
     /// <summary>
-    /// 补丁 3：RangedWeapon.Use() Postfix
-    /// - 记录本地开火时间戳（用于去重）
-    /// - 服务器侧广播 ApplyStatusEffectEventData(OnUse) 到所有客户端
-    ///   补充武器组件自身的 OnUse 状态效果（原版 Item.Use 不创建此事件）
+    /// RangedWeapon.Use() Postfix：记录本地开火时间戳（用于去重）。
     /// </summary>
     [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.Use))]
     internal static class RangedWeaponUsePatch
     {
         [HarmonyPostfix]
-        internal static void Postfix(RangedWeapon __instance, bool __result, Character character)
+        internal static void Postfix(RangedWeapon __instance, bool __result)
         {
             if (!__result) { return; }
             FireTimeTracker.RecordFire(__instance);
-            if (GameMain.NetworkMember is { IsServer: true } && character != null)
-            {
-                GameMain.NetworkMember.CreateEntityEvent(
-                    __instance.Item,
-                    new Item.ApplyStatusEffectEventData(ActionType.OnUse, __instance, character));
-            }
         }
     }
 
     /// <summary>
-    /// 补丁 3：Item.ClientEventRead Prefix/Postfix
+    /// Item.ClientEventRead Prefix/Postfix
     /// 设置网络事件处理标志，供 ApplyStatusEffects 补丁区分调用来源。
     /// 无 [HarmonyPatch] 特性：客户端专属方法需手动补丁，避免服务器 PatchAll 异常。
     /// </summary>
@@ -190,7 +104,7 @@ namespace WeaponSyncFix
     }
 
     /// <summary>
-    /// 补丁 4：ItemComponent.ApplyStatusEffects Prefix + Postfix
+    /// ItemComponent.ApplyStatusEffects Prefix + Postfix
     /// - Prefix：网络事件触发时，若本地近期已开火则跳过（去重，防双重特效）
     /// - Postfix：远程开火时补放枪声、枪口闪光粒子、后坐力
     ///
@@ -215,7 +129,6 @@ namespace WeaponSyncFix
         internal static bool Prefix(ItemComponent __instance, ActionType type)
         {
             if (!NetworkEventContext.IsProcessing) { return true; }
-            if (GameMain.NetworkMember is { IsServer: true }) { return true; }
             if (__instance is not RangedWeapon rw) { return true; }
             if (type != ActionType.OnUse) { return true; }
             // 本地近期已开火：网络事件为重复，跳过以避免双重特效
@@ -226,7 +139,6 @@ namespace WeaponSyncFix
         internal static void Postfix(ItemComponent __instance, ActionType type, Character character)
         {
             if (!NetworkEventContext.IsProcessing) { return; }
-            if (GameMain.NetworkMember is { IsServer: true }) { return; }
             if (__instance is not RangedWeapon rw) { return; }
             if (type != ActionType.OnUse) { return; }
             if (FireTimeTracker.TimeSinceLastFire(rw) < DedupWindow) { return; }

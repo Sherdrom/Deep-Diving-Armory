@@ -1,46 +1,11 @@
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Barotrauma;
 using Barotrauma.Items.Components;
 using HarmonyLib;
 
-[assembly: IgnoreAccessChecksTo("Barotrauma")]
-[assembly: IgnoreAccessChecksTo("BarotraumaCore")]
-[assembly: IgnoreAccessChecksTo("DedicatedServer")]
-
 namespace DamageRollbackFix
 {
-    /// <summary>
-    /// 插件入口：加载时 PatchAll，卸载时 UnpatchAll。
-    /// 修复多人模式下弹道伤害回弹问题：客户端预测伤害被服务器权威状态覆盖，
-    /// 导致敌人血条回满并复活反击。修复后客户端不再预测弹道伤害，由服务器权威同步。
-    /// 同时客户端本地预测命中视觉特效（火花/粒子），消除服务器同步延迟。
-    /// </summary>
-    public class DamageRollbackPlugin : IAssemblyPlugin
-    {
-        private const string HarmonyId = "damagerollback.fix";
-        private Harmony _harmony;
-
-        public void Initialize()
-        {
-            _harmony = new Harmony(HarmonyId);
-            _harmony.PatchAll();
-            LuaCsLogger.Log("[DamageRollbackFix] Loaded v1.1 | damagePrediction=off | impactPrediction=on");
-        }
-
-        public void OnLoadCompleted() { }
-
-        public void PreInitPatching() { }
-
-        public void Dispose()
-        {
-            _harmony?.UnpatchAll(HarmonyId);
-            LuaCsLogger.Log("[DamageRollbackFix] Unloaded");
-            _harmony = null;
-        }
-    }
-
     /// <summary>
     /// 线程静态标志：当前是否处于 Projectile.HandleProjectileCollision 调用链中。
     /// 用于让 Attack.DoDamage/DoDamageToLimb 识别调用来源，仅跳过弹道预测伤害。
