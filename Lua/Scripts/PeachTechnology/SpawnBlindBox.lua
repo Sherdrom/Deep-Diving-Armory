@@ -122,20 +122,421 @@ local CONFIG = {
             forceEquip = false,
         },
         {
-            hookName = "deep_normal_supply_crate",--白箱子奖池
+            hookName = "deep_ghost_Fearless_Vanguard_equipment",--无畏先锋装备
             items = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK74M", contains = { { id = "deep_5.45x39_tit", amount = 1 } }},
-                               { id = "deep_5.45x39_tit", amount = 4},
+                               { id = "headset", equip = true},
+                               { id = "deep_Fearless_Vanguard", equip = true},
+                               { id = "deep_Obsidian", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 },{ id = "deep_plate_composite_arm_7", amount = 1 }}},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK103", contains = { { id = "deep_7.62x39", amount = 1 } }},
-                               { id = "deep_7.62x39", amount = 4},
+                               { id = "deep_thunder", equip = true},
+                               { id = "deep_Fearless_Vanguard", equip = true},
+                               { id = "deep_Guardian", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 } }},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_Fearless_Vanguard_equipment_bag",--无畏先锋装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_ghost_bag", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_t30_black", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_Fearless_Vanguard_equipment_weapon",--无畏先锋武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_mp7", contains = { { id = "deep_smg_mp7", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_smg_mp7", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_p90", contains = { { id = "deep_smg_p90_phy", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_smg_p90_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_mp5sd", contains = { { id = "deep_smg_9mm_fu", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_smg_9mm_fu", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_pdw", contains = { { id = "deep_smg_9mm_fu", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_smg_9mm_fu", amount = 4},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_sniper_equipment",--狙击手装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_hpc", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 }}},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_Guardian", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 } }},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "thor", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 } }},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_sniper_equipment_bag",--狙击手装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_ghost_bag", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_sniper_equipment_weapon",--狙击手武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AWM", contains = { { id = "deep_AWM_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_AWM_mag", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_r93", contains = { { id = "deep_r93_mag_tit", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_r93_mag_tit", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_m700", contains = { { id = "deep_m700_mag_tit", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_m700_mag_tit", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_sr25", contains = { { id = "deep_sr25_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_sr25_mag_phy", amount = 4},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_special_forces_equipment",--特战队员装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_fast_helmet_ghost_origin_npc_thermalgoggles", equip = true},
+                               { id = "deep_Guardian", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 }}},
+                           },
+                },
+                {
+                     weight = 25,
+                     bundle = {
+                               { id = "deep_fast_helmet_black_npc_thermalgoggles", equip = true},
+                               { id = "deep_Ghost", equip = true},
+                               { id = "deep_Guardian", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 }}},
+                           },
+                },
+                {
+                     weight = 25,
+                     bundle = {
+                               { id = "deep_fast_helmet_black_npc_thermalgoggles", equip = true},
+                               { id = "deep_m43", equip = true},
+                               { id = "thor", equip = true, contains = { { id = "deep_plate_ceramic_7", amount = 1 }}},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_special_forces_equipment_bag",--特战队员装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_ghost_bag", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_t30_black", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_special_forces_equipment_weapon",--特战队员武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_hk416", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_5.56x45_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_R4C", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_5.56x45_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_qbz_97", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_5.56x45_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AK19", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_5.56x45_phy", amount = 4},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_leader_equipment_bag",--首领装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_ghost_bag", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_t30_black", forceEquip = true},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_leader_equipment_weapon",--首领武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_SCAR-H", contains = { { id = "deep_762x51_expansion_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_expansion_phy", amount = 3},
+                           },
+                },
+                {
+                     weight = 25,
+                     bundle = {
+                               { id = "deep_m4_super90", contains = { { id = "deep_12shell_boneshark", amount = 7 }}},
+                               { id = "deep_12shell_boneshark", amount = 12},
+                           },
+                },
+                {
+                     weight = 25,
+                     bundle = {
+                               { id = "deep_m4_super90", contains = { { id = "deep_slug_phy", amount = 7 }}},
+                               { id = "deep_slug_phy", amount = 12},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_m249", contains = { { id = "deep_m249_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_m249_mag", amount = 2},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_sniper_elite_equipment_weapon",--狙击手精英武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_m82a1", forceEquip=true,contains = { { id = "deep_m82a1_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_m82a1_mag", amount = 2},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_AWM", contains = { { id = "deep_AWM_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_AWM_mag_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_r93", contains = { { id = "deep_r93_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_r93_mag_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_m700", contains = { { id = "deep_m700_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_m700_mag_phy", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_sr25", contains = { { id = "deep_sr25_mag_M61", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_sr25_mag_M61", amount = 4},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_hunter_elite_equipment",--追猎装备
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_hpc", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 }}},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_Guardian", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 } }},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "thor", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 } }},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_Obsidian", equip = true, contains = { { id = "deep_plate_composite_7", amount = 1 },{ id = "deep_plate_composite_arm_7", amount = 1 } }},
+                           },
+                },
+            },
+            amount = 1,
+            equip = false,
+            forceEquip = false,
+        },
+        {
+            hookName = "deep_ghost_hunter_elite_equipment_weapon",--追猎武器
+            items = {
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_mp7", forceEquip=true,contains = { { id = "deep_smg_mp7_fu", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_smg_mp7_fu", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_hk416", forceEquip=true,contains = { { id = "deep_556x45_M995", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_556x45_M995", amount = 4},
+                           },
+                },
+                {
+                     weight = 50,
+                     bundle = {
+                               { id = "deep_R4C", forceEquip=true,contains = { { id = "deep_556x45_M995", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_556x45_M995", amount = 4},
                            },
                 },
             },

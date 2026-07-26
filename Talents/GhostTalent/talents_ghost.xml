@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Talents>
-  <Talent identifier="deep_talent_ghost_soldier">
+  <Talent identifier="deep_talent_ghost_special_forces">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_ghost_soldier">
+    <Description tag="talentdescription.deep_talent_ghost_special_forces">
     </Description>
     <!-- 士兵天赋 -->
     <!-- 数值调整 -->
@@ -11,9 +11,9 @@
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
         <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
       </Abilities>
     </AbilityGroupEffect>
     <!-- 攻击时降低玩家35%伤害抗性 
@@ -41,56 +41,10 @@
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="RangedAttackSpeed" value="0.25"/>
-        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.35"/>
+        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.3"/>
       </Abilities>
     </AbilityGroupInterval>
   </Talent>
-
-
-  <Talent identifier="deep_talent_ghost_striker">
-    <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
-    <Description tag="talentdescription.deep_talent_ghost_striker">
-    </Description>
-    <!-- 强攻手天赋 -->
-    <!-- 数值调整 -->
-    <AbilityGroupEffect abilityeffecttype="None">
-      <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
-        <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
-        <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-      </Abilities>
-    </AbilityGroupEffect>
-    <!-- 攻击时降低玩家35%伤害抗性 
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" setvalue="true" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_gunwound_reduce_35" strength="1.0"/>
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupEffect>-->
-    <!-- 抗性 -->
-    <AbilityGroupInterval interval="5">
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="stun" multiplier="0.1"/>
-      </Abilities>
-    </AbilityGroupInterval>
-    <!-- 强攻手 -->
-    <AbilityGroupInterval interval="0.9">
-      <Conditions>
-        <AbilityConditionNearbyCharacterCount distance="800" targettypes="Enemy" count="1"/>
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="1.2"/>
-      </Abilities>
-    </AbilityGroupInterval>
-  </Talent>
-
 
   <Talent identifier="deep_talent_ghost_Fearless_Vanguard">
     <Icon texture="%ModDir%/Talents/shotgun.png" sheetindex="0,3" sheetelementsize="128,128"/>
@@ -100,11 +54,11 @@
     <!-- 数值调整 -->
     <AbilityGroupEffect abilityeffecttype="None">
       <Abilities>
-        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
+        <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.7"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
         <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
-        <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.8"/>
+        <CharacterAbilityModifyStat stattype="MovementSpeed" value="0.5"/>
       </Abilities>
     </AbilityGroupEffect>
     <!-- 攻击时降低玩家35%伤害抗性 
@@ -213,7 +167,7 @@
         <CharacterAbilityGiveStat stattype="MaximumHealthMultiplier" value="1.5"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackMultiplier" value="10"/>
         <CharacterAbilityGiveStat stattype="MeleeAttackSpeed" value="1"/>
-        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.4"/>
+        <CharacterAbilityGiveStat stattype="MovementSpeed" value="0.5"/>
         <CharacterAbilityModifyStat stattype="RangedAttackMultiplier" value="0.4"/>
         <CharacterAbilityModifyStat stattype="TeamAttackMultiplier" value="-1"/>
       </Abilities>

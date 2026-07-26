@@ -2,10 +2,15 @@
 <ModConfig>
     <!--Lua-->
     <Lua File="%ModDir%/Lua/Autorun/init.lua" IsAutorun="true"/>
-      <!--In-Memory
-    <Assembly File="%ModDir%/CSharp/Client/DeepHitMarker.cs" IsScript="true" Target="Client" UseInternalAccessName="true"/>-->
 
     <!--Assemblies-->
+    <Assembly File="%ModDir%/bin/Client/Linux/VanillaBugFixes.dll" Target="Client" Platform="Linux"/>
+    <Assembly File="%ModDir%/bin/Client/OSX/VanillaBugFixes.dll" Target="Client" Platform="OSX"/>
+    <Assembly File="%ModDir%/bin/Client/Windows/VanillaBugFixes.dll" Target="Client" Platform="Windows"/>
+    <Assembly File="%ModDir%/bin/Server/Linux/VanillaBugFixes.dll" Target="Server" Platform="Linux"/>
+    <Assembly File="%ModDir%/bin/Server/OSX/VanillaBugFixes.dll" Target="Server" Platform="OSX"/>
+    <Assembly File="%ModDir%/bin/Server/Windows/VanillaBugFixes.dll" Target="Server" Platform="Windows"/>
+
     <Assembly File="%ModDir%/bin/Client/Linux/DeepVisionPatch.dll" Target="Client" Platform="Linux"/>
     <Assembly File="%ModDir%/bin/Client/OSX/DeepVisionPatch.dll" Target="Client" Platform="OSX"/>
     <Assembly File="%ModDir%/bin/Client/Windows/DeepVisionPatch.dll" Target="Client" Platform="Windows"/>
