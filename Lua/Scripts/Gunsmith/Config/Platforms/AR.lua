@@ -19,7 +19,6 @@ platforms.AR = {
     requiredSlots = { 
         "upper_receiver/barrel",
         "upper_receiver",
-        "upper_receiver/rear_sight_mount",
         "stock_mount",
         "upper_receiver/barrel/gas_block",
     },
