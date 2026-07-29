@@ -77,10 +77,17 @@ namespace DeepVisionPatch
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);
             Item leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand);
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
-            if (rightHand == null && leftHand == null && headItem == null) { return true; }
-            if (!((rightHand != null && (rightHand.HasTag("weapon")||rightHand.HasTag("ObstructVision")))|| (leftHand != null && (leftHand.HasTag("weapon")||leftHand.HasTag("ObstructVision"))) || headItem != null && headItem.HasTag("ObstructVision"))) { return true; }
-            if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name)) { return true; }
-            if (character == null || (!character.IsKeyDown(InputType.Aim)&& !((rightHand != null && rightHand.HasTag("ObstructVision"))|| (leftHand != null && leftHand.HasTag("ObstructVision")) || headItem != null && headItem.HasTag("ObstructVision")))|| !character.CanAim) { return true;}
+            bool hasObstructVisionItem = rightHand?.HasTag("ObstructVision") == true
+                || leftHand?.HasTag("ObstructVision") == true
+                || headItem?.HasTag("ObstructVision") == true;
+            if (!hasObstructVisionItem) { return true; }
+
+            bool hasDeepVisionItem = rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
+                || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
+                || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
+            if (!hasDeepVisionItem) { return true; }
+
+            if (!character.IsKeyDown(InputType.Aim) || !character.CanAim) { return true; }
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
