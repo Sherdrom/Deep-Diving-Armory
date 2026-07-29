@@ -7,7 +7,7 @@ parts.deep_hk416_four_rail_handguard = { type = "handguard",
     nameKey = "deep.gunsmith.part.deep_hk416_four_rail_handguard",
     provides = { "AR_handguard" },
     item = { identifier = "deep_hk416_four_rail_handguard" },
-    stats = { Ergonomics = 4 },
+    stats = { Ergonomics = 20 },
     visual = { 
         texture = texture,
         source = { x = 7, y = 8, w = 152, h = 43 },

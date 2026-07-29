@@ -13,7 +13,7 @@ parts.deep_hk416a5_upper_receiver = {
     nameKey = "deep.gunsmith.part.deep_hk416a5_upper_receiver",
     provides = { "AR_upper_receiver" },
     item = { identifier = "deep_hk416a5_upper_receiver" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 0 },
     visual = { texture = texture,
         source = { x = 8, y = 5, w = 161, h = 43 },
         attachPoint = { x = 80, y = 22 },

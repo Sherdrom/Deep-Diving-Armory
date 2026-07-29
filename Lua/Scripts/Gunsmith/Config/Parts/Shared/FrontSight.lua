@@ -13,7 +13,7 @@ parts.deep_ar15_front_sight = {
     nameKey = "deep.gunsmith.part.deep_ar15_front_sight",
     provides = { "AR_front_sight" },
     item = { identifier = "deep_ar15_front_sight" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 0},
     visual = { texture = texture,
         source = { x = 10, y = 6, w = 27, h = 22 },
         attachPoint = { x = 14, y = 21 },

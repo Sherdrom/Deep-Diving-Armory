@@ -6,7 +6,7 @@ parts.deep_miad_pistol_grip = { type = "pistol_grip",
     nameKey = "deep.gunsmith.part.deep_miad_pistol_grip",
     provides = { "AR_pistol_grip" },
     item = { identifier = "deep_miad_pistol_grip" },
-    stats = { Ergonomics = 4 },
+    stats = { Ergonomics = 15 },
     visual = { 
         texture = texture,
         source = { x = 5, y = 74, w = 53, h = 63 },

@@ -52,7 +52,7 @@ parts.deep_556_45_370mm_barrel = {
     provides = { "AR_barrel" },
     -- excludes = { "deep_hk416_four_rail_handguard" },
     item = { identifier = "deep_556_45_370mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 30 },
     visual = { texture = texture,
         source = { x = 5, y = 76, w = 222, h = 23 },
         attachPoint = { x = 1, y = 14 },

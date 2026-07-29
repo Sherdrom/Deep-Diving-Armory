@@ -13,7 +13,7 @@ parts.deep_hket_buffer_tube = {
     nameKey = "deep.gunsmith.part.deep_hket_buffer_tube",
     provides = { "AR_buffer_tube" },
     item = { identifier = "deep_hket_buffer_tube" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 10},
     visual = { texture = texture,
         source = { x = 12, y = 5, w = 102, h = 22 },
         attachPoint = { x = 100, y = 11 },

@@ -140,6 +140,36 @@ Hook.Patch("Barotrauma.Character", "ApplyAttack",
     end,
     Hook.HookMethodType.After)
 
+-- 弹道命中检测：直接在碰撞级别捕获命中，不依赖 ApplyAttack 是否被调用。
+-- 兼容 DamageRollbackFix（多人模式下 ApplyAttack 被 Prefix 跳过，但 HandleProjectileCollision 仍执行）。
+Hook.Patch("Barotrauma.Items.Components.Projectile", "HandleProjectileCollision",
+    { "FarseerPhysics.Dynamics.Fixture", "Microsoft.Xna.Framework.Vector2", "Microsoft.Xna.Framework.Vector2" },
+    function(instance, ptable)
+        local user = instance.User
+        if user == nil or user ~= Character.Controlled then return end
+
+        local target = ptable["target"]
+        if target == nil then return end
+        local body = target.Body
+        if body == nil or body.UserData == nil then return end
+
+        if not LuaUserData.IsTargetType(body.UserData, "Barotrauma.Limb") then return end
+        local limb = body.UserData
+
+        local character = limb.character
+        if character == nil or character.Removed then return end
+        if limb.IsSevered then return end
+        if not instance.FriendlyFire and character.IsFriendly(user) then return end
+        if IsOutOfScreen(character.WorldPosition) then return end
+
+        HitHintTimer = HIT_HINT_DURATION
+        IsHeadshot = (limb.type == LimbType.Head)
+        if character.IsDead then
+            KillHintTimer = KILL_HINT_DURATION
+        end
+    end,
+    Hook.HookMethodType.After)
+
 Hook.Add("think", "DeepHitMarkerUpdate", function()
     local now = Timer.Time
     local dt = now - lastThinkTime

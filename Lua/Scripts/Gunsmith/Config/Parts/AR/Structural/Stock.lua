@@ -7,7 +7,7 @@ parts.deep_ctr_fde_stock = { type = "stock",
     nameKey = "deep.gunsmith.part.deep_ctr_fde_stock",
     provides = { "AR_stock" },
     item = { identifier = "deep_ctr_fde_stock" },
-    stats = { Ergonomics = 3 },
+    stats = { Ergonomics = 25 },
     visual = { 
         texture = texture,
         source = { x = 14, y = 110, w = 104, h = 76 },
