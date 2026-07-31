@@ -87,6 +87,10 @@
 local CONFIG = {
     checkInterval = 0.5,
     debug = false,
+    -- Only items whose XML OnWearing path has been removed belong here.
+    migratedItems = {
+        ["deep_hpc"] = true,
+    },
     items = {
 
         --主体（插板防弹衣）
@@ -762,14 +766,14 @@ local CONFIG = {
                 { statType = "AttackMultiplier", value = 0.1 },
             },
             affliction = {
-              { id = "deep_chip_cqb_1", strength = 1 },
+              { id = "chip_cqb_1", strength = 1 },
             },
         },
 
         ["chip_frogman"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_chip_frogman_1", strength = 1 },
+              { id = "chip_frogman_1", strength = 1 },
             },
         },
 
@@ -792,7 +796,7 @@ local CONFIG = {
                 { statType = "RangedSpreadReduction", value = -0.5 },
             },
             affliction = {
-              { id = "deep_chip_commando_1", strength = 1 },
+              { id = "deep_commando_1", strength = 1 },
             },
         },
 

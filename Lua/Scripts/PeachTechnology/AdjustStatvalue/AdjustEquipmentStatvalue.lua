@@ -1,30 +1,13 @@
--- ============================================================
--- AdjustEquipmentStatvalue.lua
--- 当玩家穿上(Wearable)指定装备时，直接修改玩家的 StatValue 和 AbilityFlag
--- 取消装备时自动撤销
--- 支持 IsMain（主体装备）和 IsSub（主体装备内的子配件）
--- 主体装备：使用 item.equip/item.unequip 事件驱动（零轮询）
--- 子配件：使用轻量 think 仅扫描已跟踪角色的主物品库存
--- affliction 配置项：equip 时施加指定 Affliction，unequip 时移除
---   affliction = { id = "affliction_identifier", strength = 1.0 }
--- 配置位于 AdjustEquipmentStatvalue-Config.lua
-
-
-
--- 主要目的，将甲鱼的StatusEffect——Affliction——StatValue的流程，简化为Lua脚本直接修改 StatValue，减少不必要的性能损失
--- 有些功能必须要用Affliction，比如护甲升级的效果，设置护甲升级芯片的Affliction的strengthchange=0，在玩家穿戴装备时施加一次Affliction，解除装备时取消Affliction，做到最小的性能损失
--- 移除xml代码中的所有StatusEffect，StatusEffect在未激活的情况下仍有性能损失
-
-
-
--- ============================================================
+-- XML OnWearing -> event-driven equipment effects.
+-- Main items use Item.Equip/Unequip patches; contained modules are checked at a low rate.
 
 local CONFIG = _G.AdjustEquipmentConfig
 if not CONFIG then
-    error("[AdjustEquipmentStatvalue] AdjustEquipmentConfig not found. Did you forget to load AdjustEquipmentStatvalue-Config.lua?")
+    error("[AdjustEquipmentStatvalue] load AdjustEquipmentStatvalue-Config.lua first")
 end
 
-local subConfigCache = _G.AdjustEquipmentSubConfigCache or {}
+local MIGRATED_ITEMS = CONFIG.migratedItems or {}
+local SUB_CONFIG = _G.AdjustEquipmentSubConfigCache or {}
 local WEARABLE_SLOTS = _G.AdjustEquipmentWearableSlots or {
     InvSlotType.Head,
     InvSlotType.InnerClothes,
@@ -34,462 +17,378 @@ local WEARABLE_SLOTS = _G.AdjustEquipmentWearableSlots or {
     InvSlotType.Bag,
 }
 
--- ============================================================
--- 日志
--- ============================================================
+local function log(...)
+    if CONFIG.debug then print("[AdjustEquipmentStatvalue]", ...) end
+end
 
-local dbgPrint
-if not CONFIG.debug then
-    dbgPrint = function() end
-elseif CONFIG.debug == "errors" then
-    dbgPrint = function(...)
-        local msg = table.concat({...}, " ")
-        if msg:match("ERROR") or msg:match("equip") or msg:match("unequip") or msg:match("FAIL") then
-            print("[AdjustEquipmentStatvalue]", ...)
+local function warn(...)
+    print("[AdjustEquipmentStatvalue] ERROR:", ...)
+end
+
+local function afflictionList(value)
+    if not value then return {} end
+    if value.id then return { value } end
+    return value
+end
+
+local function validateConfig()
+    for itemId, cfg in pairs(CONFIG.items) do
+        if ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
+            warn("item prefab not found", itemId)
+        end
+        for _, stat in ipairs(cfg.stats or {}) do
+            if not StatTypes[stat.statType] then
+                warn("invalid StatType", itemId, tostring(stat.statType))
+            elseif type(stat.value) ~= "number" then
+                warn("invalid stat value", itemId, tostring(stat.statType))
+            end
+        end
+        for _, flagName in ipairs(cfg.flags or {}) do
+            if not AbilityFlags[flagName] then
+                warn("invalid AbilityFlag", itemId, tostring(flagName))
+            end
+        end
+        for _, affliction in ipairs(afflictionList(cfg.affliction)) do
+            if not affliction.id or not AfflictionPrefab.Prefabs[affliction.id] then
+                warn("invalid Affliction", itemId, tostring(affliction.id))
+            end
         end
     end
-else
-    dbgPrint = function(...)
-        print("[AdjustEquipmentStatvalue]", ...)
+    for itemId in pairs(MIGRATED_ITEMS) do
+        local cfg = CONFIG.items[itemId]
+        if not cfg or not cfg.IsMain then
+            warn("migrated item is not a configured main item", itemId)
+        end
     end
 end
 
--- ============================================================
--- 辅助函数
--- ============================================================
-
-local function getActiveSubItems(mainItem)
-    local result = {}
-    if not mainItem or not next(subConfigCache) then return result end
-
-    local ownInv = mainItem.OwnInventory
-    if ownInv then
-        for item in ownInv.AllItemsMod do
-            if item and item.Prefab then
-                local cfg = subConfigCache[tostring(item.Prefab.Identifier)]
-                if cfg then
-                    result[tostring(item.Prefab.Identifier)] = cfg
-                end
-            end
-        end
-    end
-
-    if not next(result) then
-        for item in mainItem.ContainedItems do
-            if item and item.Prefab then
-                local cfg = subConfigCache[tostring(item.Prefab.Identifier)]
-                if cfg then
-                    result[tostring(item.Prefab.Identifier)] = cfg
-                end
-            end
-        end
-    end
-
-    return result
+local function getMainConfig(item)
+    if not item or item.Removed or not item.Prefab then return nil end
+    local itemId = tostring(item.Prefab.Identifier)
+    if not MIGRATED_ITEMS[itemId] then return nil end
+    local cfg = CONFIG.items[itemId]
+    if not cfg or not cfg.IsMain then return nil end
+    return cfg, itemId
 end
 
 local function applyStats(character, stats)
     local applied = {}
-    if not stats then return applied end
-    for _, stat in ipairs(stats) do
-        local statTypeValue = StatTypes[stat.statType]
-        if statTypeValue then
-            character:ChangeStat(statTypeValue, stat.value)
-            applied[stat.statType] = stat.value
-        else
-            dbgPrint("WARN: invalid statType:", stat.statType)
+    for _, stat in ipairs(stats or {}) do
+        local statType = StatTypes[stat.statType]
+        if statType and type(stat.value) == "number" then
+            character:ChangeStat(statType, stat.value)
+            applied[#applied + 1] = { statType = statType, value = stat.value }
         end
     end
     return applied
 end
 
-local function removeStats(character, statsRecord)
-    if not statsRecord then return end
-    for statType, value in pairs(statsRecord) do
-        local statTypeValue = StatTypes[statType]
-        if statTypeValue then
-            character:ChangeStat(statTypeValue, -value)
-        end
+local function removeStats(character, applied)
+    for _, stat in ipairs(applied or {}) do
+        character:ChangeStat(stat.statType, -stat.value)
     end
 end
 
-local function applyFlags(character, flags)
+local function acquireFlags(state, flags)
     local applied = {}
-    if not flags then return applied end
-    for _, flagName in ipairs(flags) do
-        local flagValue = AbilityFlags[flagName]
-        if flagValue then
-            character:AddAbilityFlag(flagValue)
-            applied[flagName] = true
-        else
-            dbgPrint("WARN: invalid flagName:", flagName)
+    for _, flagName in ipairs(flags or {}) do
+        local flag = AbilityFlags[flagName]
+        if flag then
+            local ref = state.flagRefs[flagName]
+            if not ref then
+                ref = { count = 0, owned = not state.character:HasAbilityFlag(flag), value = flag }
+                state.flagRefs[flagName] = ref
+                if ref.owned then state.character:AddAbilityFlag(flag) end
+            end
+            ref.count = ref.count + 1
+            applied[#applied + 1] = flagName
         end
     end
     return applied
 end
 
-local function removeFlags(character, flagsRecord)
-    if not flagsRecord then return end
-    for flagName, _ in pairs(flagsRecord) do
-        local flagValue = AbilityFlags[flagName]
-        if flagValue then
-            character:RemoveAbilityFlag(flagValue)
-        end
-    end
-end
-
-local function applyAfflictionItem(character, afflictionCfg)
-    if not afflictionCfg then return nil end
-
-    if afflictionCfg.id then
-        local prefab = AfflictionPrefab.Prefabs[afflictionCfg.id]
-        if not prefab then
-            dbgPrint("ERROR: affliction prefab not found:", afflictionCfg.id)
-            return nil
-        end
-        local strength = afflictionCfg.strength or 1
-        local instance = prefab:Instantiate(strength)
-
-        local headLimb = nil
-        if character.AnimController then
-            headLimb = character.AnimController:GetLimb(LimbType.Head)
-        end
-
-        character.CharacterHealth:ApplyAffliction(headLimb, instance)
-        dbgPrint("affliction applied:", afflictionCfg.id, "strength=" .. strength)
-        return { id = afflictionCfg.id, strength = strength }
-    end
-
-    local headLimb = nil
-    if character.AnimController then
-        headLimb = character.AnimController:GetLimb(LimbType.Head)
-    end
-
-    local results = {}
-    for _, cfg in ipairs(afflictionCfg) do
-        if cfg.id then
-            local prefab = AfflictionPrefab.Prefabs[cfg.id]
-            if not prefab then
-                dbgPrint("ERROR: affliction prefab not found:", cfg.id)
-            else
-                local strength = cfg.strength or 1
-                local instance = prefab:Instantiate(strength)
-
-                character.CharacterHealth:ApplyAffliction(headLimb, instance)
-                dbgPrint("affliction applied:", cfg.id, "strength=" .. strength)
-                results[#results + 1] = { id = cfg.id, strength = strength }
+local function releaseFlags(state, applied)
+    for _, flagName in ipairs(applied or {}) do
+        local ref = state.flagRefs[flagName]
+        if ref then
+            ref.count = ref.count - 1
+            if ref.count <= 0 then
+                if ref.owned then state.character:RemoveAbilityFlag(ref.value) end
+                state.flagRefs[flagName] = nil
             end
         end
     end
-    if #results == 0 then return nil end
-    return results
 end
 
-local function removeAfflictionItem(character, afflictionInfo)
-    if not afflictionInfo then return end
-    if afflictionInfo.id then
-        character.CharacterHealth:ReduceAfflictionOnAllLimbs(afflictionInfo.id, afflictionInfo.strength or 999)
-        dbgPrint("affliction removed:", afflictionInfo.id)
-    else
-        for _, info in ipairs(afflictionInfo) do
-            character.CharacterHealth:ReduceAfflictionOnAllLimbs(info.id, info.strength or 999)
-            dbgPrint("affliction removed:", info.id)
+local function acquireAfflictions(state, configured)
+    local applied = {}
+    local character = state.character
+    local health = character.CharacterHealth
+    if not health then return applied end
+
+    local head = character.AnimController and character.AnimController:GetLimb(LimbType.Head) or nil
+    for _, cfg in ipairs(afflictionList(configured)) do
+        local prefab = cfg.id and AfflictionPrefab.Prefabs[cfg.id]
+        if prefab then
+            local ref = state.afflictionRefs[cfg.id]
+            if not ref then
+                local before = health:GetAfflictionStrengthByIdentifier(cfg.id)
+                health:ApplyAffliction(head, prefab:Instantiate(cfg.strength or 1))
+                local after = health:GetAfflictionStrengthByIdentifier(cfg.id)
+                ref = { count = 0, amount = math.max(0, after - before) }
+                state.afflictionRefs[cfg.id] = ref
+            end
+            ref.count = ref.count + 1
+            applied[#applied + 1] = cfg.id
+        end
+    end
+    return applied
+end
+
+local function releaseAfflictions(state, applied)
+    local health = state.character.CharacterHealth
+    if not health then return end
+    for _, id in ipairs(applied or {}) do
+        local ref = state.afflictionRefs[id]
+        if ref then
+            ref.count = ref.count - 1
+            if ref.count <= 0 then
+                if ref.amount > 0 then health:ReduceAfflictionOnAllLimbs(id, ref.amount) end
+                state.afflictionRefs[id] = nil
+            end
         end
     end
 end
 
-local function removeAllEffects(character, state)
-    removeStats(character, state.mainStats)
-    removeFlags(character, state.mainFlags)
-    removeAfflictionItem(character, state.mainAffliction)
-    for _, subStatRecord in pairs(state.subStats or {}) do
-        removeStats(character, subStatRecord)
+local function applyEffects(state, cfg)
+    return {
+        stats = applyStats(state.character, cfg.stats),
+        flags = acquireFlags(state, cfg.flags),
+        afflictions = acquireAfflictions(state, cfg.affliction),
+    }
+end
+
+local function removeEffects(state, effects)
+    if not effects then return end
+    removeStats(state.character, effects.stats)
+    releaseFlags(state, effects.flags)
+    releaseAfflictions(state, effects.afflictions)
+end
+
+local function activeSubItems(mainItem)
+    local result = {}
+    local inventory = mainItem.OwnInventory
+    if inventory and inventory.AllItemsMod then
+        for item in inventory.AllItemsMod do
+            if item and not item.Removed and item.Prefab then
+                local itemId = tostring(item.Prefab.Identifier)
+                local cfg = SUB_CONFIG[itemId]
+                if cfg then result[item] = { cfg = cfg, itemId = itemId } end
+            end
+        end
+    elseif mainItem.ContainedItems then
+        for item in mainItem.ContainedItems do
+            if item and not item.Removed and item.Prefab then
+                local itemId = tostring(item.Prefab.Identifier)
+                local cfg = SUB_CONFIG[itemId]
+                if cfg then result[item] = { cfg = cfg, itemId = itemId } end
+            end
+        end
     end
-    for _, subFlagRecord in pairs(state.subFlags or {}) do
-        removeFlags(character, subFlagRecord)
+    return result
+end
+
+local function syncSubItems(state, source)
+    local current = activeSubItems(source.item)
+    for item, data in pairs(current) do
+        if not source.subs[item] then
+            source.subs[item] = { itemId = data.itemId, effects = applyEffects(state, data.cfg) }
+            log("equip sub", data.itemId, "in", source.itemId)
+        end
     end
-    for _, subAffliction in pairs(state.subAfflictions or {}) do
-        removeAfflictionItem(character, subAffliction)
+    for item, sub in pairs(source.subs) do
+        if not current[item] then
+            removeEffects(state, sub.effects)
+            source.subs[item] = nil
+            log("unequip sub", sub.itemId, "from", source.itemId)
+        end
     end
 end
 
-local function isItemStillEquipped(character, item)
+local charStates = {}
+
+local function ensureState(character)
+    local state = charStates[character]
+    if not state then
+        state = {
+            character = character,
+            mains = {},
+            flagRefs = {},
+            afflictionRefs = {},
+        }
+        charStates[character] = state
+    end
+    return state
+end
+
+local function isStillEquipped(character, item)
     if not character or not character.Inventory then return false end
-    for _, slotType in ipairs(WEARABLE_SLOTS) do
-        if character.Inventory:GetItemInLimbSlot(slotType) == item then
-            return true
-        end
+    for _, slot in ipairs(WEARABLE_SLOTS) do
+        if character.Inventory:GetItemInLimbSlot(slot) == item then return true end
     end
     return false
 end
 
-local function logMainEquip(character, itemId, mainCfg, mainStatApplied, mainFlagApplied, currentSubItems)
-    local parts = {}
-    if next(mainStatApplied) then
-        local s = {}
-        for _, stat in ipairs(mainCfg.stats or {}) do
-            s[#s + 1] = stat.statType .. "=" .. stat.value
-        end
-        parts[#parts + 1] = "stats:[" .. table.concat(s, ", ") .. "]"
-    end
-    if next(mainFlagApplied) then
-        parts[#parts + 1] = "flags:[" .. table.concat(mainCfg.flags or {}, ", ") .. "]"
-    end
-    local subInfo = ""
-    if next(currentSubItems) then
-        local subNames = {}
-        for subId, _ in pairs(currentSubItems) do
-            subNames[#subNames + 1] = subId
-        end
-        subInfo = " subs:[" .. table.concat(subNames, ", ") .. "]"
-    end
-    if #parts > 0 or #subInfo > 0 then
-        dbgPrint("equip [MAIN]", character.Name or "?", "->", itemId, table.concat(parts, " ") .. subInfo)
-    end
-end
+local function addMain(character, item)
+    if not character or character.Removed or character.IsDead then return end
+    local cfg, itemId = getMainConfig(item)
+    if not cfg then return end
 
-local function logSubEquip(charName, subId, mainItemId, subCfg, subStatApplied, subFlagApplied)
-    local parts = {}
-    if next(subStatApplied or {}) then
-        local s = {}
-        for _, stat in ipairs(subCfg.stats or {}) do
-            s[#s + 1] = stat.statType .. "=" .. stat.value
-        end
-        parts[#parts + 1] = "stats:[" .. table.concat(s, ", ") .. "]"
-    end
-    if next(subFlagApplied or {}) then
-        parts[#parts + 1] = "flags:[" .. table.concat(subCfg.flags or {}, ", ") .. "]"
-    end
-    if #parts > 0 then
-        dbgPrint("equip [SUB]", charName or "?", "->", subId, "(in", mainItemId, ")", table.concat(parts, " "))
-    end
-end
+    local state = ensureState(character)
+    if state.mains[item] then return end
 
--- ============================================================
--- charState
--- ============================================================
-
-local charState = {}
-
--- ============================================================
--- 核心装备处理
--- ============================================================
-
-local function equipMainItem(character, item)
-    if not item or not item.Prefab then return end
-    local itemId = tostring(item.Prefab.Identifier)
-    local cfg = CONFIG.items[itemId]
-    if not cfg or not cfg.IsMain then return end
-
-    local lastState = charState[character.ID]
-    if lastState and lastState.mainItem == item then
-        return
-    end
-
-    if lastState then
-        removeAllEffects(character, lastState)
-        dbgPrint("unequip [ALL] (replaced)", character.Name or "?")
-    end
-
-    local mainStatApplied = applyStats(character, cfg.stats)
-    local mainFlagApplied = applyFlags(character, cfg.flags)
-    local mainAffliction = applyAfflictionItem(character, cfg.affliction)
-
-    local state = {
+    local source = {
+        item = item,
         itemId = itemId,
-        mainItem = item,
-        character = character,
-        mainStats = mainStatApplied,
-        mainFlags = mainFlagApplied,
-        mainAffliction = mainAffliction,
-        subStats = {},
-        subFlags = {},
-        subAfflictions = {},
-        lastSubItems = {},
+        effects = applyEffects(state, cfg),
+        subs = {},
     }
-    charState[character.ID] = state
-
-    local currentSubItems = getActiveSubItems(item)
-    for subId, subCfg in pairs(currentSubItems) do
-        state.subStats[subId] = applyStats(character, subCfg.stats)
-        state.subFlags[subId] = applyFlags(character, subCfg.flags)
-        state.subAfflictions[subId] = applyAfflictionItem(character, subCfg.affliction)
-        state.lastSubItems[subId] = true
-        logSubEquip(character.Name, subId, itemId, subCfg, state.subStats[subId], state.subFlags[subId])
-    end
-
-    logMainEquip(character, itemId, cfg, mainStatApplied, mainFlagApplied, currentSubItems)
+    state.mains[item] = source
+    syncSubItems(state, source)
+    log("equip main", character.Name or "?", itemId)
 end
 
--- ============================================================
--- item.equip 事件：主体装备装上时触发
--- ============================================================
+local function removeMain(state, item)
+    local source = state.mains[item]
+    if not source then return end
+    for _, sub in pairs(source.subs) do removeEffects(state, sub.effects) end
+    removeEffects(state, source.effects)
+    state.mains[item] = nil
+    log("unequip main", state.character.Name or "?", source.itemId)
+end
 
-Hook.Add("item.equip", "AdjustEquipmentStatvalue.Equip", function(item, character)
-    if not character or not character.ID or character.Removed or character.IsDead then return end
-    equipMainItem(character, item)
-end)
+local function clearState(state)
+    for item in pairs(state.mains) do removeMain(state, item) end
+end
 
--- ============================================================
--- item.unequip 事件：主体装备卸下时触发
--- ============================================================
+local function removeEmptyState(state)
+    if not state.dead and not next(state.mains) then charStates[state.character] = nil end
+end
 
-Hook.Add("item.unequip", "AdjustEquipmentStatvalue.Unequip", function(item, character)
-    if not item or not item.Prefab then return end
-    if not character or not character.ID then return end
-
-    local itemId = tostring(item.Prefab.Identifier)
-    local cfg = CONFIG.items[itemId]
-    if not cfg or not cfg.IsMain then return end
-
-    local state = charState[character.ID]
-    if not state or state.itemId ~= itemId or state.mainItem ~= item then return end
-
-    removeAllEffects(character, state)
-    charState[character.ID] = nil
-    dbgPrint("unequip [ALL]", character.Name or "?")
-end)
-
--- ============================================================
--- 角色死亡时：撤销 stats/flags，保留 state 以检测 revive
--- affliction 不手动清除（会被 revive 的 RemoveAllAfflictions 清空）
--- ============================================================
-
-Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character)
-    if not character or not character.ID then return end
-    local state = charState[character.ID]
-    if not state then return end
-    dbgPrint("death cleanup:", character.Name)
-    removeStats(character, state.mainStats)
-    removeFlags(character, state.mainFlags)
-    for _, subStatRecord in pairs(state.subStats or {}) do
-        removeStats(character, subStatRecord)
+local function scanCharacter(character)
+    if not character or character.Removed or character.IsDead or not character.Inventory then return end
+    for _, slot in ipairs(WEARABLE_SLOTS) do
+        addMain(character, character.Inventory:GetItemInLimbSlot(slot))
     end
-    for _, subFlagRecord in pairs(state.subFlags or {}) do
-        removeFlags(character, subFlagRecord)
+end
+
+local function scanAllCharacters()
+    for _, character in pairs(Character.CharacterList) do scanCharacter(character) end
+end
+
+local function clearAllStates()
+    for _, state in pairs(charStates) do
+        if state.character and not state.character.Removed then clearState(state) end
     end
-    state.dead = true
-end)
+    charStates = {}
+end
 
--- ============================================================
--- 初始扫描：处理脚本加载时已装备的物品
--- ============================================================
+Hook.Patch(
+    "AdjustEquipmentStatvalue.Equip",
+    "Barotrauma.Item",
+    "Equip",
+    { "Barotrauma.Character" },
+    function(item, ptable) addMain(ptable["character"], item) end,
+    Hook.HookMethodType.After
+)
 
-local function scanExistingCharacters()
-    for _, char in pairs(Character.CharacterList) do
-        if char.ID and not char.Removed and not char.IsDead then
-            local inv = char.Inventory
-            if inv then
-                for _, slotType in ipairs(WEARABLE_SLOTS) do
-                    local item = inv:GetItemInLimbSlot(slotType)
-                    if item and item.Prefab then
-                        local id = tostring(item.Prefab.Identifier)
-                        local cfg = CONFIG.items[id]
-                        if cfg and cfg.IsMain then
-                            equipMainItem(char, item)
-                        end
-                    end
+Hook.Patch(
+    "AdjustEquipmentStatvalue.Unequip",
+    "Barotrauma.Item",
+    "Unequip",
+    { "Barotrauma.Character" },
+    function(item, ptable)
+        local character = ptable["character"]
+        local state = character and charStates[character]
+        if state and not isStillEquipped(character, item) then
+            removeMain(state, item)
+            removeEmptyState(state)
+        end
+    end,
+    Hook.HookMethodType.After
+)
+
+Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
+    for _, state in pairs(charStates) do
+        if state.mains[item] then
+            removeMain(state, item)
+            removeEmptyState(state)
+        else
+            for _, source in pairs(state.mains) do
+                local sub = source.subs[item]
+                if sub then
+                    removeEffects(state, sub.effects)
+                    source.subs[item] = nil
                 end
             end
         end
     end
-end
+end)
+
+Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character)
+    local state = charStates[character]
+    if not state then return end
+    clearState(state)
+    state.dead = true
+    state.reviveTimer = 0
+end)
 
 Hook.Add("loaded", "AdjustEquipmentStatvalue.Loaded", function()
-    scanExistingCharacters()
+    validateConfig()
+    scanAllCharacters()
 end)
 
 Hook.Add("roundStart", "AdjustEquipmentStatvalue.RoundStart", function()
-    scanExistingCharacters()
+    clearAllStates()
+    scanAllCharacters()
 end)
 
--- ============================================================
--- 轻量 think：仅扫描已跟踪角色的子配件变化
--- 不再遍历 Character.CharacterList，只遍历 charState（通常 0~少数人）
--- ============================================================
+Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
 
 local frameCounter = 0
-local framesPerCheck = math.max(1, math.floor(CONFIG.checkInterval * 60))
+local framesPerCheck = math.max(1, math.floor((CONFIG.checkInterval or 0.5) * 60))
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     frameCounter = frameCounter + 1
     if frameCounter < framesPerCheck then return end
     frameCounter = 0
 
-    for charId, state in pairs(charState) do
-        local character = state.character
-
-        -- revive 检测：角色死亡后复活，延迟 0.5s 重新施加效果
-        if state.dead then
-            if not character or character.Removed then
-                charState[charId] = nil
-            elseif not character.IsDead then
-                state.reviveTimer = (state.reviveTimer or 0) + CONFIG.checkInterval
+    for character, state in pairs(charStates) do
+        if not character or character.Removed then
+            charStates[character] = nil
+        elseif state.dead then
+            if not character.IsDead then
+                state.reviveTimer = (state.reviveTimer or 0) + (CONFIG.checkInterval or 0.5)
                 if state.reviveTimer >= 0.5 then
-                    local mainCfg = CONFIG.items[state.itemId]
-                    if mainCfg then
-                        state.mainStats = applyStats(character, mainCfg.stats)
-                        state.mainFlags = applyFlags(character, mainCfg.flags)
-                        state.mainAffliction = applyAfflictionItem(character, mainCfg.affliction)
-                    end
-
-                    local mainItem = state.mainItem
-                    if mainItem and not mainItem.Removed and isItemStillEquipped(character, mainItem) then
-                        local currentSubItems = getActiveSubItems(mainItem)
-                        for subId, subCfg in pairs(currentSubItems) do
-                            state.subStats[subId] = applyStats(character, subCfg.stats)
-                            state.subFlags[subId] = applyFlags(character, subCfg.flags)
-                            state.subAfflictions[subId] = applyAfflictionItem(character, subCfg.affliction)
-                            state.lastSubItems[subId] = true
-                        end
-                    end
-
                     state.dead = nil
                     state.reviveTimer = nil
-                    dbgPrint("revive re-apply:", character.Name)
+                    scanCharacter(character)
+                    removeEmptyState(state)
                 end
             end
-        elseif not character or character.Removed or character.IsDead then
-            if character then
-                removeAllEffects(character, state)
-            end
-            charState[charId] = nil
+        elseif character.IsDead then
+            clearState(state)
+            state.dead = true
+            state.reviveTimer = 0
         else
-            local mainItem = state.mainItem
-            if not mainItem or mainItem.Removed or not isItemStillEquipped(character, mainItem) then
-                removeAllEffects(character, state)
-                charState[charId] = nil
-            else
-                local currentSubItems = getActiveSubItems(mainItem)
-                local lastSubItems = state.lastSubItems or {}
-
-                for subId, subCfg in pairs(currentSubItems) do
-                    if not state.lastSubItems[subId] then
-                        state.subStats[subId] = applyStats(character, subCfg.stats)
-                        state.subFlags[subId] = applyFlags(character, subCfg.flags)
-                        state.subAfflictions[subId] = applyAfflictionItem(character, subCfg.affliction)
-                        state.lastSubItems[subId] = true
-                        logSubEquip(character.Name, subId, state.itemId, subCfg, state.subStats[subId], state.subFlags[subId])
-                    end
-                end
-
-                for subId, _ in pairs(lastSubItems) do
-                    if not currentSubItems[subId] then
-                        removeStats(character, state.subStats[subId])
-                        removeFlags(character, state.subFlags[subId])
-                        removeAfflictionItem(character, state.subAfflictions[subId])
-                        state.subStats[subId] = nil
-                        state.subFlags[subId] = nil
-                        state.subAfflictions[subId] = nil
-                        dbgPrint("unequip [SUB]", character.Name or "?", "<-", subId)
-                    end
-                end
-
-                state.lastSubItems = {}
-                for subId, _ in pairs(currentSubItems) do
-                    state.lastSubItems[subId] = true
+            for item, source in pairs(state.mains) do
+                if item.Removed or not isStillEquipped(character, item) then
+                    removeMain(state, item)
+                else
+                    syncSubItems(state, source)
                 end
             end
+            removeEmptyState(state)
         end
     end
 end)
