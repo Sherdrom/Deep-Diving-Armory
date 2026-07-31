@@ -24,10 +24,10 @@ if success then
     -- 配置发生改变
     cfg.OnValueChanged.add(function(value)
         EnableKillNotification = value.Value
-        print("[KillNotification] Enabled = ".. tostring(EnableKillNotification))
+        print("[Deep-Diving-Armory] KillNotification Enabled = ".. tostring(EnableKillNotification))
     end)
 else
-    print("[KillNotification] Cannot load config.")
+    print("[Deep-Diving-Armory] KillNotification Cannot load config.")
 end
 
 -- 数据
