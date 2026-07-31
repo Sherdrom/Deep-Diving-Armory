@@ -1,407 +1,560 @@
-local NotificationDuration = 4.0
-local BaseFontScale = 1.1
-local Spacing = 35
-local RightPadding = 20
-local TopOffset = -5
-local TextPadding = 3
+if not CLIENT then return end
 
-if not CLIENT then
-	return
-end
+-- 配置
+--------------------------------------------------
+local NotificationDuration = 4.0 -- 提示持续时间（秒）
+local BaseFontScale = 1.1 -- 字体缩放
+local NotificationSpacing = 35 -- 每条消息之间的距离
+local TopOffset = -5 -- 距离顶部偏移
+local BackgroundPadding = 3 -- 背景边框留白
 
+-- Mod配置
+--------------------------------------------------
+local EnableKillNotification = true
 local _, myPackage = trygetpackage("Deep-Diving-Armory")
-local success, var = ConfigService.TryGetConfig(SettingBase.Boolean, myPackage, "KillNotification")
-local EnableKillNotification = success and var.Value or false
+local success, cfg = ConfigService.TryGetConfig(
+        SettingBase.Boolean,
+        myPackage,
+        "KillNotification"
+    )
 
+-- 初始化配置
 if success then
-	var.OnValueChanged.add(function(cfg)
-		EnableKillNotification = cfg.Value
-	end)
+    EnableKillNotification = cfg.Value
+    -- 配置发生改变
+    cfg.OnValueChanged.add(function(value)
+        EnableKillNotification = value.Value
+        print("[KillNotification] Enabled = ".. tostring(EnableKillNotification))
+    end)
 else
-	print("[Deep-Diving-Armory] Failed to get KillNotification configs.")
+    print("[KillNotification] Cannot load config.")
 end
 
-local killInfos = {}
-local lastThinkTime = Timer.Time
-local alertedVictims = {}
-local pendingKills = {}
+-- 数据
+--------------------------------------------------
+-- 正在显示的提示
+local KillInfos = {}
 
-local function GetVictimID(character)
-	local id = character.ID
-	if id ~= nil then
-		return tostring(id)
-	end
-	return tostring(character)
+-- 最近一次攻击者
+-- key = CharacterID
+-- value = Character
+local LastAttackers = {}
+
+-- 已经提示过死亡
+local AlertedVictims = {}
+
+-- 上一次Think时间
+local LastThinkTime = Timer.Time
+
+-- 工具函数
+--------------------------------------------------
+-- 获取角色唯一ID, 不同版本Character.ID可能不存在
+--------------------------------------------------
+local function GetCharacterID(character)
+    if character == nil then return nil end
+
+    if character.ID ~= nil then
+        return tostring(character.ID)
+    end
+
+    return tostring(character)
 end
 
+-- 获取角色名称
+-- 优先级： DisplayName Name Identifier PrefabName SpeciesName
+--------------------------------------------------
 local function GetCharacterName(character)
-	if character == nil then
-		return "Unknown"
-	end
 
-	if character.Name ~= nil and character.Name ~= "" then
-		return character.Name
-	end
+    if character == nil then return "???" end
 
-	if character.TeamID == CharacterTeamType.Team1 then
-		local name = character.Prefab.Name:ToString()
-		if name ~= nil and name ~= "" then
-			return name
-		end
-	end
+    if character.DisplayName and character.DisplayName ~= "" then
+        return character.DisplayName
+    end
 
-	local identifier = character.Prefab.Identifier:ToString()
-	if identifier ~= nil and identifier ~= "" then
-		local key = "character." .. identifier
-		local localized = TextManager.Get(key)
-		if localized ~= nil then
-			local value = localized.Value
-			if value ~= nil and value ~= "" and value ~= key then
-				return value
-			end
-		end
-	end
+    if character.Name and character.Name ~= "" then
+        return character.Name
+    end
 
-	local prefabName = character.Prefab.Name:ToString()
-	if prefabName ~= nil and prefabName ~= "" then
-		return prefabName
-	end
+    if character.Prefab then
+        local identifier =
+            character.Prefab.Identifier:ToString()
 
-	local speciesName = character.SpeciesName:ToString()
-	if speciesName ~= nil and speciesName ~= "" then
-		return speciesName
-	end
+        if identifier ~= "" then
+            local key = "character." .. identifier
 
-	local typeName = character:GetType().Name
-	if typeName ~= nil and typeName ~= "" then
-		return typeName
-	end
+            local text = TextManager.Get(key)
 
-	return "Unknown"
+            if text and text.Value and text.Value ~= "" and text.Value ~= key then
+                return text.Value
+            end
+        end
+    end
+
+    if character.Prefab then
+        local prefab = character.Prefab.Name:ToString()
+
+        if prefab ~= "" then
+            return prefab
+        end
+    end
+
+    if character.SpeciesName then
+        local species = character.SpeciesName:ToString()
+
+        if species ~= "" then 
+            return species 
+        end
+    end
+
+    return "???"
 end
 
-Hook.Add("character.damageLimb", "KillNotificationDamage", function(character, _, _, _, _, _, _, attacker, _)
-	if not EnableKillNotification then return end
-	if attacker == nil or character == nil then
-		return
-	end
-	if attacker == character then
-		return
-	end
+-- Font缓存
+--------------------------------------------------
+local GUIStyle =
+    LuaUserData.CreateStatic("Barotrauma.GUIStyle")
 
-	local victimID = GetVictimID(character)
-	pendingKills[victimID] = {
-		attacker = attacker,
-		time = Timer.Time,
-	}
-end)
-
-Hook.Add("characterDeath", "KillNotification", function(character)
-	if not EnableKillNotification then return end
-	if character == nil then
-		return
-	end
-
-	if not character.IsDead then
-		return
-	end
-
-	local victimID = GetVictimID(character)
-	if alertedVictims[victimID] then
-		return
-	end
-
-	local killer = nil
-
-	local pk = pendingKills[victimID]
-	if pk ~= nil then
-		killer = pk.attacker
-	end
-
-	if killer == nil then
-		local cod = character.CauseOfDeath
-		if cod ~= nil then
-			killer = cod.Killer
-		end
-	end
-
-	if killer == nil then
-		killer = character.LastAttacker
-	end
-
-	if killer == nil or killer == character then
-		return
-	end
-
-	if not killer.IsPlayer then
-		return
-	end
-
-	alertedVictims[victimID] = true
-
-	local victimName = GetCharacterName(character)
-	local killerName = GetCharacterName(killer)
-	local isVictimHuman = character.IsHuman
-	local isSameTeam = (killer.TeamID == character.TeamID)
-
-	local entry = {
-		AttackerName = killerName,
-		VictimName = victimName,
-		RemainingTime = NotificationDuration,
-		IsRed = isVictimHuman and isSameTeam,
-	}
-
-	killInfos[#killInfos + 1] = entry
-
-	if isVictimHuman and isSameTeam then
-		SoundPlayer.PlaySound("deep_player_death", 0.5)
-	elseif isVictimHuman and Character.Controlled == killer then
-		SoundPlayer.PlaySound("deep_player_kill", 0.8)
-	end
-end)
-
-local lastPendingCleanup = 0
-
-Hook.Add("think", "KillNotificationThink", function()
-	if not EnableKillNotification then return end
-	local now = Timer.Time
-	local dt = now - lastThinkTime
-	lastThinkTime = now
-
-	if dt > 0.1 then
-		dt = 0.1
-	end
-
-	local i = 1
-	while i <= #killInfos do
-		killInfos[i].RemainingTime = killInfos[i].RemainingTime - dt
-		if killInfos[i].RemainingTime <= 0 then
-			killInfos[i] = killInfos[#killInfos]
-			killInfos[#killInfos] = nil
-		else
-			i = i + 1
-		end
-	end
-
-	if now - lastPendingCleanup >= 1.0 then
-		lastPendingCleanup = now
-		for victimID, data in pairs(pendingKills) do
-			if now - data.time > 10.0 then
-				pendingKills[victimID] = nil
-			end
-		end
-	end
-end)
-
-local StaticGUIStyle = LuaUserData.CreateStatic("Barotrauma.GUIStyle")
-local GameMain = LuaUserData.CreateStatic("Barotrauma.GameMain")
-local GUITextBlockType = LuaUserData.CreateStatic("Barotrauma.GUITextBlock")
-
-local CachedScalableFont = nil
+-- GUIStyle.Font（Lua对象）
 local CachedFont = nil
 
-do
-	if StaticGUIStyle then
-		if StaticGUIStyle.LargeFont then
-			CachedFont = StaticGUIStyle.LargeFont
-			if CachedFont.Value then
-				CachedScalableFont = CachedFont.Value
-			end
-		end
+-- 真正绘制字体
+local CachedScalableFont = nil
 
-		if not CachedScalableFont and StaticGUIStyle.Font then
-			CachedFont = StaticGUIStyle.Font
-			if CachedFont.Value then
-				CachedScalableFont = CachedFont.Value
-			end
-		end
+-- 获取字体
+--------------------------------------------------
+local function CacheFont()
 
-		if not CachedScalableFont and StaticGUIStyle.Fonts then
-			for key, value in pairs(StaticGUIStyle.Fonts) do
-				local keyStr = tostring(key)
-				if keyStr == "LargeFont" or keyStr == "SubHeadingFont" or keyStr == "DigitalFont" then
-					if value then
-						CachedFont = value
-						if value.Value then
-							CachedScalableFont = value.Value
-							break
-						end
-					end
-				end
-			end
-		end
+    if GUIStyle == nil then return end
 
-		if not CachedScalableFont then
-			CachedFont = StaticGUIStyle.Font
-			if CachedFont and CachedFont.Value then
-				CachedScalableFont = CachedFont.Value
-			end
-		end
+    -- LargeFont优先
+    ------------------------------------------------
+    CachedFont =
+        GUIStyle.LargeFont
+        or GUIStyle.Font
+        or GUIStyle.SmallFont
 
-		if not CachedScalableFont then
-			CachedFont = StaticGUIStyle.SmallFont
-			if CachedFont and CachedFont.Value then
-				CachedScalableFont = CachedFont.Value
-			end
-		end
-	end
+    if CachedFont then
+        CachedScalableFont =
+            CachedFont.Value
+    end
 end
 
-Hook.Patch(
-	"Barotrauma.GUI",
-	"Draw",
-	{ "Barotrauma.Camera", "Microsoft.Xna.Framework.Graphics.SpriteBatch" },
-	function(_, ptable)
-		if not EnableKillNotification then return end
-		if #killInfos == 0 then
-			return
-		end
+CacheFont()
 
-		local spriteBatch = ptable["spriteBatch"]
-		if spriteBatch == nil then
-			return
-		end
+-- 文本尺寸缓存
+-- 避免每帧MeasureString
+--------------------------------------------------
+local TextSizeCache = {}
 
-		local scalableFont = CachedScalableFont
-		local font = CachedFont
+-- 获取文本大小
+--------------------------------------------------
+local function MeasureText(text)
 
-		local uiWidth = GUI.UIWidth
-		if uiWidth == nil or uiWidth <= 0 then
-			uiWidth = 1920
-		end
+    -- 已缓存
+    local size =
+        TextSizeCache[text]
 
-		local screenWidth = uiWidth
-		if GameMain then
-			screenWidth = GameMain.GraphicsWidth
-		end
-		if screenWidth == nil or screenWidth <= 0 then
-			screenWidth = uiWidth
-		end
-		if screenWidth == nil or screenWidth <= 0 then
-			screenWidth = 1920
-		end
+    if size then
+        return size.X, size.Y
+    end
 
-		local screenHeight = nil
-		if GameMain then
-			screenHeight = GameMain.GraphicsHeight
-		end
-		if screenHeight == nil or screenHeight <= 0 then
-			screenHeight = math.floor(screenWidth * (1080 / 1920))
-		end
-		if screenHeight == nil or screenHeight <= 0 then
-			screenHeight = 1080
-		end
+    -- 默认值
+    ------------------------------------------------
+    local width = #text * 10
+    local height = 20
 
-		local guiScale = GUI.Scale
-		if guiScale == nil or guiScale <= 0 then
-			guiScale = 1.0
-		end
+    -- 测量
+    ------------------------------------------------
+    if CachedScalableFont then
+        local measured =
+            CachedScalableFont:MeasureString(text)
+        if measured then
+            width = measured.X
+            height = measured.Y
+        end
+    end
 
-		local scaledTextPadding = math.floor(TextPadding / guiScale)
-		local yOffset = math.floor(TopOffset / guiScale)
+    -- 写入缓存
+    ------------------------------------------------
+    TextSizeCache[text] = {
+        X = width, Y = height
+    }
 
-		local extraUIWidth = 0
-		local uiW = GUI.UIWidth
-		local gw = GameMain and GameMain.GraphicsWidth
-		if uiW and gw and uiW < gw then
-			extraUIWidth = gw - uiW
-		end
+    return width, height
+end
 
-		local actualScreenWidth = screenWidth - extraUIWidth
-		local RIGHT_MARGIN = 5 * GUI.xScale
+-- 创建一条新的击杀提示
+--------------------------------------------------
+local function AddKillInfo(attacker, victim, colorselect)
+    local text =
+        attacker .. "  [Kill]  " .. victim
 
-		for _, ki in ipairs(killInfos) do
-			local alpha = math.min(math.max(ki.RemainingTime / NotificationDuration, 0), 1)
-			local byteAlpha = math.floor(alpha * 255)
+    KillInfos[#KillInfos + 1] = {
+        Text = text,
+        RemainingTime = NotificationDuration,
+        colorselect = colorselect
+    }
 
-			local textColor
-			local barColor
-			if ki.IsRed then
-				textColor = Color(255, 60, 60, byteAlpha)
-				barColor = Color(255, 60, 60, byteAlpha)
-			else
-				textColor = Color(255, 255, 255, byteAlpha)
-				barColor = Color(255, 255, 255, byteAlpha)
-			end
+    if colorselect == 1 then
+        SoundPlayer.PlaySound("deep_player_death", 0.5)
+    elseif colorselect == 2 then
+        SoundPlayer.PlaySound("deep_player_kill", 1.0)
+    end
+end
 
-			local text = ki.AttackerName .. " Kill " .. ki.VictimName
-			local renderScale = math.max(0.5, math.min(2.0, BaseFontScale / guiScale))
+---第一部分结束
+-- Part 2
+-- Damage Hook
+-- Death Hook
+-- Think
+--------------------------------------------------
+-- Damage Hook
+-- 记录最近一次攻击者
+-- 因为很多情况下角色受到伤害以后很久才死亡，pendingKills反而容易失效。
+-- LastAttackers只保存最近一次攻击者即可。
+--------------------------------------------------
 
-			local measuredWidth = #text * 10
-			local measuredHeight = 18
-			if scalableFont then
-				local ts = scalableFont:MeasureString(text)
-				if ts then
-					measuredWidth = ts.X
-					measuredHeight = ts.Y
-				end
-			elseif font then
-				local ts = font:MeasureString(text)
-				if ts then
-					measuredWidth = ts.X
-					measuredHeight = ts.Y
-				end
-			end
+Hook.Add(
+    "character.damageLimb",
+    "KillNotificationDamage",
+    function(character, _, _, _, _, _, _, attacker)
+        if not EnableKillNotification then return end
 
-			local scaledTextWidth = measuredWidth * renderScale * GUI.xScale
-			local scaledTextHeight = measuredHeight * renderScale
+        -- 参数检查
+        if character == nil or attacker == nil or character.IsDead then return end
 
-			local positionX = actualScreenWidth - scaledTextWidth - RIGHT_MARGIN
-			if positionX < RIGHT_MARGIN then
-				positionX = RIGHT_MARGIN
-				scaledTextWidth = actualScreenWidth - RIGHT_MARGIN * 2
-			end
+        -- -- 自己打自己
+        -- if attacker == character then return end
 
-			local position = Vector2(positionX + extraUIWidth, yOffset)
+        -- 保存最近攻击者
+        local id = GetCharacterID(character)
 
-			local bgPadding = scaledTextPadding
-			local bgX = position.X - bgPadding
-			local bgY = position.Y - bgPadding
-			local bgW = scaledTextWidth + bgPadding * 2
-			local bgH = scaledTextHeight + bgPadding * 2
-
-			GUI.DrawFilledRectangle(spriteBatch,
-				Vector2(bgX, bgY),
-				Vector2(bgW, bgH),
-				Color(0, 0, 0, math.floor(200 * (byteAlpha / 255))))
-			GUI.DrawFilledRectangle(spriteBatch,
-				Vector2(bgX, bgY),
-				Vector2(4, bgH),
-				barColor)
-
-			local textPos = Vector2(position.X + 4, position.Y)
-
-			if scalableFont then
-				scalableFont.DrawString(spriteBatch, text, textPos, textColor)
-			elseif font then
-				GUI.DrawString(spriteBatch, textPos, text, textColor, nil, 0, font)
-			else
-				local rectT = RectTransform(Vector2(position.X, position.Y), Vector2(measuredWidth, measuredHeight))
-				local richText = RichString(text)
-
-				local textBlock = GUITextBlockType(rectT, richText,
-					textColor,
-					nil,
-					Alignment.Left,
-					false,
-					"",
-					nil)
-
-				if textBlock then
-					textBlock.TextScale = renderScale
-					textBlock:DrawManually(spriteBatch)
-				else
-					GUI.DrawString(spriteBatch,
-						textPos,
-						text, textColor, nil, 0)
-				end
-			end
-
-			yOffset = yOffset + scaledTextHeight + math.floor(Spacing / guiScale)
-			if yOffset > screenHeight - 50 then
-				break
-			end
-		end
-	end,
-	Hook.HookMethodType.After
+        if id then
+            LastAttackers[id] = attacker
+        end
+    end
 )
+
+local colorselect = 0
+
+-- Death Hook
+--------------------------------------------------
+Hook.Add( "characterDeath", "KillNotification", function(character)
+        if not EnableKillNotification then return end
+
+        if character == nil then return end
+
+        if not character.IsDead then return end
+
+        -- 获取角色ID
+        ------------------------------------------------
+        local id = GetCharacterID(character)
+
+        if id == nil then return end
+
+        -- 防止重复提示
+        ------------------------------------------------
+        if AlertedVictims[id] then return end
+
+        local killer = nil
+        -- 寻找击杀者
+        ------------------------------------------------
+        -- CauseOfDeath.Killer
+        local cod = character.CauseOfDeath
+        if cod then killer = cod.Killer end
+        
+        -- LastAttacker
+        ------------------------------------------------
+        if killer == nil then
+            killer = character.LastAttacker 
+        end
+
+        -- Damage缓存
+        ------------------------------------------------
+        if killer == nil then
+            killer = LastAttackers[id]
+        end
+
+        -- 找不到击杀者
+        ------------------------------------------------
+        -- if killer == nil then return end
+
+        -- 自杀
+        ------------------------------------------------
+        -- if killer == character then return end
+
+        -- -- 只提示玩家击杀
+        -- ------------------------------------------------
+        -- if not killer.IsPlayer then return end
+
+        -- 已提示
+        ------------------------------------------------
+        AlertedVictims[id] = true
+
+        -- 获取名称
+        ------------------------------------------------
+        local attackerName = GetCharacterName(killer)
+
+        local victimName = GetCharacterName(character)
+
+        -- 是否红色（友军，宠物）
+        ------------------------------------------------
+        colorselect = 0 -- normal
+        if character.IsOnPlayerTeam or character.IsPet then
+            colorselect = 1 -- team dead
+        elseif killer == Character.Controlled then
+            colorselect = 2 -- character kill
+        elseif killer.IsOnPlayerTeam then
+            colorselect = 3 -- team kill
+        end
+
+        -- 添加提示
+        ------------------------------------------------
+        AddKillInfo( attackerName, victimName, colorselect)
+end)
+
+-- Think
+--------------------------------------------------
+local CleanupTimer = 0
+
+Hook.Add(
+    "think",
+    "KillNotificationThink",
+    function()
+
+        if not EnableKillNotification then
+            return
+        end
+
+        -- Delta Time
+        ------------------------------------------------
+        local now = Timer.Time
+
+        local dt =
+            now - LastThinkTime
+
+        LastThinkTime = now
+
+        -- 防止卡顿导致时间过大
+        ------------------------------------------------
+        if dt > 0.1 then
+            dt = 0.1
+        end
+
+        -- 更新提示剩余时间
+        ------------------------------------------------
+        for i = #KillInfos, 1, -1 do
+            local info = KillInfos[i]
+
+            info.RemainingTime =
+                info.RemainingTime - dt
+
+            if info.RemainingTime <= 0 then
+
+                table.remove(KillInfos, i)
+
+            end
+        end
+
+        -- 每秒清理一次缓存
+        ------------------------------------------------
+        CleanupTimer = CleanupTimer + dt
+
+        if CleanupTimer < 1 then
+            return
+        end
+
+        CleanupTimer = 0
+
+        -- 清理死亡记录
+        ------------------------------------------------
+        for id in pairs(AlertedVictims) do
+            local found = false
+
+            for _, character in pairs(Character.CharacterList) do
+                if GetCharacterID(character) == id then
+
+                    -- 角色复活
+                    ------------------------------------------------
+                    if not character.IsDead then
+                        found = true
+                    end
+
+                    break
+
+                end
+            end
+
+            if not found then
+                AlertedVictims[id] = nil
+                LastAttackers[id] = nil
+            end
+        end
+    end
+)
+
+local textColor = {
+    [0] = Color(255,255,255,225), -- normal
+    [1] = Color(225,25,25,225), -- team dead
+    [2] = Color(25,225,144,225), -- character kill
+    [3] = Color(25,225,25,225) -- team kill
+}
+
+-- 第二部分结束
+-- Part 3
+-- GUI Draw
+--------------------------------------------------
+local GameMain =
+    LuaUserData.CreateStatic("Barotrauma.GameMain")
+
+-- 绘制Hook
+--------------------------------------------------
+Hook.Patch(
+    "Barotrauma.GUI",
+    "Draw",
+    {
+        "Barotrauma.Camera",
+        "Microsoft.Xna.Framework.Graphics.SpriteBatch"
+    },
+
+    function(_,ptable)
+
+        -- 没开启
+        ------------------------------------------------
+        if not EnableKillNotification then return end
+
+        -- 没有消息
+        ------------------------------------------------
+        if #KillInfos == 0 then return end
+
+        local spriteBatch = ptable["spriteBatch"]
+
+        if spriteBatch == nil then return end
+
+        -- GUI缩放
+        ------------------------------------------------
+        local scale = GUI.Scale
+
+        if not scale or scale <= 0 then
+            scale = 1
+        end
+
+        -- 屏幕尺寸
+        ------------------------------------------------
+        local screenWidth = GameMain.GraphicsWidth
+        local screenHeight = GameMain.GraphicsHeight
+
+        if not screenWidth or screenWidth <= 0 then
+            screenWidth = 1920
+        end
+        if not screenHeight or screenHeight <= 0 then
+            screenHeight = 1080
+        end
+
+        -- UI区域
+        ------------------------------------------------
+        local uiWidth = GUI.UIWidth
+
+        if not uiWidth then
+            uiWidth = screenWidth
+        end
+
+        local extraWidth =
+            math.max(0, screenWidth - uiWidth)
+
+        -- 常量
+        ------------------------------------------------
+        local rightMargin =
+            5 * GUI.xScale
+
+        local renderScale =
+            math.max(
+                0.5,
+                math.min(
+                    2,
+                    BaseFontScale / scale
+                )
+            )
+
+        local padding =
+            math.floor(
+                BackgroundPadding / scale
+            )
+
+        local y =
+            math.floor(
+                TopOffset / scale
+            )
+
+        -- 开始绘制
+        ------------------------------------------------
+        for _,info in ipairs(KillInfos) do
+            -- Alpha
+            --------------------------------------------
+            local alpha =
+                math.floor(
+                    math.max(0,
+                        math.min(255,
+                        info.RemainingTime/NotificationDuration*255
+                        )
+                    )
+                )
+
+            -- 获取文字大小
+            --------------------------------------------
+            local width,height = MeasureText(info.Text)
+
+            width = width * renderScale * GUI.xScale
+            height = height * renderScale
+
+            -- 右上角位置
+            --------------------------------------------
+            local x = screenWidth - extraWidth - width - rightMargin
+
+            -- 黑色背景
+            --------------------------------------------
+            GUI.DrawFilledRectangle(
+                spriteBatch,
+                Vector2(x-padding,y-padding),
+                Vector2(width+padding*2,height+padding*2),
+                Color(0,0,0,alpha*0.8)
+            )
+
+            -- 左侧颜色条
+            --------------------------------------------
+            GUI.DrawFilledRectangle(spriteBatch,
+                Vector2(x-padding,y-padding),
+                Vector2(4,height+padding*2),
+                textColor[info.colorselect]
+            )
+
+            -- 绘制文字
+            --------------------------------------------
+            if CachedScalableFont then
+                CachedScalableFont.DrawString(
+                    spriteBatch,
+                    info.Text,
+                    Vector2(x+4,y),
+                    textColor[info.colorselect]
+                )
+            else
+                GUI.DrawString(
+                    spriteBatch,
+                    Vector2(x+4,y),
+                    info.Text,
+                    textColor[info.colorselect]
+                )
+            end
+
+            -- 下一条消息
+            --------------------------------------------
+            y = y + height + NotificationSpacing
+
+            -- 超出屏幕停止绘制
+            --------------------------------------------
+            if y > screenHeight -50 then break end
+        end
+    end,Hook.HookMethodType.After
+)
+
+-- 第三部分结束
