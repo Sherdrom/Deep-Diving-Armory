@@ -6,7 +6,6 @@
 -- >> 完整配置说明 <<
 --
 -- [顶层参数]
---   afflictionRefreshInterval (number) 受管 Affliction 的刷新间隔（秒），默认 0.5。
 --   fallbackInterval          (number) think 兜底巡检间隔（秒），默认 5。
 --   debug         (bool)    是否启用 dbgPrint 调试输出，生产环境设为 false。
 --
@@ -84,7 +83,6 @@
 -- ============================================================
 
 local CONFIG = {
-    afflictionRefreshInterval = 0.5,
     fallbackInterval = 5.0,
     debug = false,
     -- Only items whose XML OnWearing path has been removed belong here.
@@ -767,56 +765,56 @@ local CONFIG = {
         ["chip_cqb"] = {
             IsSub = true,
             affliction = {
-              { id = "chip_cqb_1", strength = 2 },
+              { id = "deep_chip_cqb_equipped", strength = 2 },
             },
         },
 
         ["chip_frogman"] = {
             IsSub = true,
             affliction = {
-              { id = "chip_frogman_1", strength = 2 },
+              { id = "deep_chip_frogman_equipped", strength = 2 },
             },
         },
 
         ["chip_marksman"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_chip_marksman_1", strength = 2 },
+              { id = "deep_chip_marksman_equipped", strength = 2 },
             },
         },
 
         ["chip_commando"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_commando_1", strength = 2 },
+              { id = "deep_chip_commando_equipped", strength = 2 },
             },
         },
 
         ["chip_heavy_defender"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_chip_heavy_defender", strength = 2 },
+              { id = "deep_chip_heavy_defender_equipped", strength = 2 },
             },
         },
 
         ["chip_blaster"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_chip_blaster", strength = 2 },
+              { id = "deep_chip_blaster_equipped", strength = 2 },
             },
         },
 
         ["chip_machinegunner"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_machinegunner_detect", strength = 2 },
+              { id = "deep_chip_machinegunner_equipped", strength = 2 },
             },
         },
 
         ["chip_striker"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_chip_striker", strength = 2 },
+              { id = "deep_chip_striker_equipped", strength = 2 },
             },
         },
 

@@ -1,11 +1,8 @@
-local events, patches, waits = {}, {}, {}
+local events, patches = {}, {}
 local now = 0
 
 Timer = {
     GetTime = function() return now end,
-    Wait = function(callback, delay)
-        waits[#waits + 1] = { callback = callback, due = now + delay / 1000 }
-    end,
 }
 
 InvSlotType = {
@@ -36,7 +33,6 @@ AfflictionPrefab = { Prefabs = { marker = markerPrefab } }
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
-    afflictionRefreshInterval = 0.5,
     fallbackInterval = 2.0,
     migratedItems = { armor = true, helmet = true },
     items = {
@@ -135,15 +131,6 @@ events.loaded()
 
 local function tick()
     now = now + 0.5
-    local pending = waits
-    waits = {}
-    for _, timer in ipairs(pending) do
-        if timer.due <= now then
-            timer.callback()
-        else
-            waits[#waits + 1] = timer
-        end
-    end
     events.think()
 end
 
@@ -165,14 +152,15 @@ equip(helmet, { character = character })
 assert(character.stats.MovementSpeed == 12, "simultaneous main items or duplicate stats failed")
 assert(character.addFlagCalls == 1 and character.flags.SharedFlag, "flag reference counting failed")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "affliction reference counting failed")
-assert(#waits == 1, "duplicate affliction refresh timers were scheduled")
 
 health.afflictions.marker.Strength = 0.25
 tick()
-assert(health.afflictions.marker.Strength == 1, "decaying affliction was not refreshed")
+assert(health.afflictions.marker.Strength == 0.25, "affliction refreshed before fallback interval")
+for _ = 1, 3 do tick() end
+assert(health.afflictions.marker.Strength == 1, "fallback did not repair lowered affliction")
 health.afflictions.marker = nil
-tick()
-assert(health.afflictions.marker.Strength == 1, "removed affliction was not restored")
+for _ = 1, 4 do tick() end
+assert(health.afflictions.marker.Strength == 1, "fallback did not restore removed affliction")
 
 armor.contents = { module1, module2 }
 tick()

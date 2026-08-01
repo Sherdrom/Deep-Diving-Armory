@@ -31,8 +31,6 @@ local function afflictionList(value)
     return value
 end
 
-local scheduleAfflictionRefresh
-
 local function validateConfig()
     for itemId, cfg in pairs(CONFIG.items) do
         if ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
@@ -145,7 +143,6 @@ local function acquireAfflictions(state, configured)
                     target = after,
                 }
                 state.afflictionRefs[cfg.id] = ref
-                scheduleAfflictionRefresh()
             end
             ref.count = ref.count + 1
             applied[#applied + 1] = cfg.id
@@ -244,23 +241,6 @@ local function syncSubItems(state, source)
 end
 
 local charStates = {}
-local afflictionRefreshScheduled = false
-
-scheduleAfflictionRefresh = function()
-    if afflictionRefreshScheduled then return end
-    afflictionRefreshScheduled = true
-    Timer.Wait(function()
-        afflictionRefreshScheduled = false
-        local hasActiveAfflictions = false
-        for _, state in pairs(charStates) do
-            if state.character and not state.character.Removed and next(state.afflictionRefs) then
-                hasActiveAfflictions = true
-                refreshAfflictions(state)
-            end
-        end
-        if hasActiveAfflictions then scheduleAfflictionRefresh() end
-    end, (CONFIG.afflictionRefreshInterval or 0.5) * 1000)
-end
 
 local function syncChangedContainer(container)
     local mainItem = container and container.Item
@@ -467,7 +447,6 @@ Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
             end
             if next(state.afflictionRefs) then
                 refreshAfflictions(state)
-                scheduleAfflictionRefresh()
             end
             removeEmptyState(state)
         end
