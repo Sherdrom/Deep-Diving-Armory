@@ -12,6 +12,8 @@ InvSlotType = {
     Headset = "Headset",
     Card = "Card",
     Bag = "Bag",
+    LeftHand = "LeftHand",
+    RightHand = "RightHand",
 }
 LimbType = { Head = "Head" }
 StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
@@ -44,6 +46,7 @@ ItemPrefab = { GetItemPrefab = function() return true end }
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
     wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag },
+    weaponSlots = { InvSlotType.LeftHand, InvSlotType.RightHand },
     mainItems = {
         armor = {
             stats = {
@@ -77,6 +80,23 @@ _G.AdjustEquipmentConfig = {
         defender = {
             blocksStatGroups = { "plateDebuff" },
         },
+    },
+    weaponAccessories = {
+        optic = {
+            effects = {
+                { statsKey = "optic", stats = { { statType = "MovementSpeed", value = 4 } } },
+                { talentMarkers = { "weapon_marker" } },
+            },
+        },
+        blockedoptic = {
+            blockedByEnemyResistance = true,
+            stats = { { statType = "MovementSpeed", value = 9 } },
+        },
+        grip_a = { resistances = { { id = "stun", multiplier = 0.7, source = "grip_a" } } },
+        grip_b = { resistances = { { id = "stun", multiplier = 0.8, source = "grip_b" } } },
+    },
+    heldWeapons = {
+        integrated = { talentMarkers = { "weapon_marker" } },
     },
 }
 
@@ -127,7 +147,7 @@ local character = {
     resistances = {},
     addResistanceCalls = 0,
     removeResistanceCalls = 0,
-    Info = { savedStats = { talent_marker = 1 }, changeCalls = 0 },
+    Info = { savedStats = { talent_marker = 1, weapon_marker = 1 }, changeCalls = 0 },
     CharacterHealth = health,
     Inventory = {},
     AnimController = {},
@@ -157,6 +177,7 @@ Character = { CharacterList = { character } }
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
+assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was not reset on load")
 local markerChangeBaseline = character.Info.changeCalls
 
 local function tick()
@@ -177,7 +198,7 @@ local module1, module2 = makeItem("module"), makeItem("module")
 armor.rootOwner, helmet.rootOwner = character, character
 
 local equip = patches["Barotrauma.Item.Equip"]
-local unequip = patches["Barotrauma.Items.Components.Wearable.Unequip"]
+local unequip = patches["Barotrauma.Item.Unequip"]
 local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemContained"]
 local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
 local revive = patches["Barotrauma.Character.Revive"]
@@ -220,7 +241,7 @@ assert(character.stats.MovementSpeed == 13, "subitem removal was not symmetric")
 assert(character.resistances["burn|dda_adjust_equipment"] == 0.5 and character.removeResistanceCalls == 0,
     "shared resistance removed too early")
 
-unequip({ Item = helmet }, { character = character })
+unequip(helmet, { character = character })
 slots[InvSlotType.Head] = nil
 assert(character.stats.MovementSpeed == 6 and character.flags.SharedFlag, "one main removed effects owned by another")
 assert(character.Info.savedStats.talent_marker == 1 and character.Info.changeCalls == markerChangeBaseline + 1,
@@ -228,7 +249,7 @@ assert(character.Info.savedStats.talent_marker == 1 and character.Info.changeCal
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "shared affliction removed too early")
 
 slots[InvSlotType.OuterClothes] = nil
-unequip({ Item = armor }, { character = character })
+unequip(armor, { character = character })
 assert(character.stats.MovementSpeed == 0, "final main cleanup leaked stats")
 assert(not character.flags.SharedFlag and character.removeFlagCalls == 1, "final flag cleanup failed")
 assert(character.Info.savedStats.talent_marker == 0 and character.Info.changeCalls == markerChangeBaseline + 2,
@@ -261,7 +282,7 @@ assert(character.stats.MovementSpeed == 0 and health:GetAfflictionStrengthByIden
 character.flags.SharedFlag = true
 equip(armor, { character = character })
 slots[InvSlotType.OuterClothes] = nil
-unequip({ Item = armor }, { character = character })
+unequip(armor, { character = character })
 assert(character.flags.SharedFlag, "pre-existing external flag was removed")
 
 local plate, defender = makeItem("plate"), makeItem("defender")
@@ -276,19 +297,106 @@ armor.contents = { plate }
 itemRemoved(armorContainer, { containedItem = defender })
 assert(character.stats.MovementSpeed == 1, "stat group blocker removal did not restore stats")
 slots[InvSlotType.OuterClothes] = nil
-unequip({ Item = armor }, { character = character })
+unequip(armor, { character = character })
 assert(character.stats.MovementSpeed == 0, "stat group cleanup leaked stats")
 
 local bagweapon = makeItem("bagweapon")
+local bagoptic = makeItem("optic")
 bagweapon.rootOwner = character
+bagweapon.contents = { bagoptic }
+slots[InvSlotType.LeftHand] = bagweapon
+equip(bagweapon, { character = character })
+assert(character.stats.MovementSpeed == 4, "held bag weapon did not apply only its accessory effect")
+slots[InvSlotType.LeftHand] = nil
+unequip(bagweapon, { character = character })
+assert(character.stats.MovementSpeed == 0, "held bag weapon leaked accessory effects")
 equip(bagweapon, { character = character })
 assert(character.stats.MovementSpeed == 0, "bag effect applied while the item was not in the bag slot")
 slots[InvSlotType.Bag] = bagweapon
 equip(bagweapon, { character = character })
 assert(character.stats.MovementSpeed == -0.2, "bag effect was not applied in the bag slot")
 slots[InvSlotType.Bag] = nil
-unequip({ Item = bagweapon }, { character = character })
+unequip(bagweapon, { character = character })
 assert(character.stats.MovementSpeed == 0, "bag effect cleanup leaked stats")
+
+local rifle1, rifle2 = makeItem("rifle1"), makeItem("rifle2")
+local optic1, optic2 = makeItem("optic"), makeItem("optic")
+rifle1.rootOwner, rifle2.rootOwner = character, character
+rifle1.contents, rifle2.contents = { optic1 }, { optic2 }
+slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = rifle1, rifle2
+equip(rifle1, { character = character })
+equip(rifle1, { character = character })
+equip(rifle2, { character = character })
+assert(character.stats.MovementSpeed == 4, "shared accessory stats stacked while dual-wielding")
+assert(character.Info.savedStats.weapon_marker == 1, "weapon marker reference counting failed")
+
+slots[InvSlotType.LeftHand] = nil
+unequip(rifle1, { character = character })
+assert(character.stats.MovementSpeed == 4 and character.Info.savedStats.weapon_marker == 1,
+    "first weapon removal released shared accessory effects")
+
+rifle2.contents = {}
+itemRemoved({ Item = rifle2 }, { containedItem = optic2 })
+assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.weapon_marker == 0,
+    "weapon accessory removal was not immediate")
+
+rifle2.contents = { optic2 }
+itemContained({ Item = rifle2 }, { containedItem = optic2 })
+assert(character.stats.MovementSpeed == 4 and character.Info.savedStats.weapon_marker == 1,
+    "weapon accessory insertion was not immediate")
+
+slots[InvSlotType.RightHand] = nil
+unequip(rifle2, { character = character })
+assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.weapon_marker == 0,
+    "stowed weapon leaked accessory effects")
+
+local gripWeapon1, gripWeapon2 = makeItem("gripWeapon1"), makeItem("gripWeapon2")
+gripWeapon1.rootOwner, gripWeapon2.rootOwner = character, character
+gripWeapon1.contents, gripWeapon2.contents = { makeItem("grip_a") }, { makeItem("grip_b") }
+slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = gripWeapon1, gripWeapon2
+equip(gripWeapon1, { character = character })
+equip(gripWeapon2, { character = character })
+assert(character.resistances["stun|dda_adjust_equipment"] == 0.5,
+    "different grip resistances were not combined")
+slots[InvSlotType.LeftHand] = nil
+unequip(gripWeapon1, { character = character })
+assert(character.resistances["stun|dda_adjust_equipment"] == 0.8,
+    "remaining grip resistance was not restored")
+slots[InvSlotType.RightHand] = nil
+unequip(gripWeapon2, { character = character })
+assert(not character.resistances["stun|dda_adjust_equipment"], "grip resistance cleanup failed")
+
+local blockedWeapon, blockedOptic = makeItem("blockedWeapon"), makeItem("blockedoptic")
+blockedWeapon.rootOwner = character
+blockedWeapon.contents = { blockedOptic }
+health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
+slots[InvSlotType.LeftHand] = blockedWeapon
+equip(blockedWeapon, { character = character })
+assert(character.stats.MovementSpeed == 0, "enemy accessory resistance was bypassed")
+health.afflictions.deep_enemy_affliction_resistance = nil
+for _ = 1, 4 do tick() end
+assert(character.stats.MovementSpeed == 9, "fallback did not restore an unblocked accessory effect")
+health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
+for _ = 1, 4 do tick() end
+assert(character.stats.MovementSpeed == 0, "fallback did not suppress a newly blocked accessory effect")
+slots[InvSlotType.LeftHand] = nil
+unequip(blockedWeapon, { character = character })
+health.afflictions.deep_enemy_affliction_resistance = nil
+
+local integrated = makeItem("integrated")
+integrated.rootOwner = character
+slots[InvSlotType.LeftHand] = integrated
+equip(integrated, { character = character })
+assert(character.Info.savedStats.weapon_marker == 1, "held weapon marker was not applied")
+character.IsDead = true
+events["character.death"](character)
+assert(character.Info.savedStats.weapon_marker == 0, "death leaked held weapon marker")
+character.IsDead = false
+revive(character, { removeAfflictions = true, createNetworkEvent = false })
+assert(character.Info.savedStats.weapon_marker == 1, "revive did not restore held weapon marker")
+slots[InvSlotType.LeftHand] = nil
+unequip(integrated, { character = character })
+assert(character.Info.savedStats.weapon_marker == 0, "held weapon marker cleanup failed")
 
 Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
@@ -299,13 +407,19 @@ local function countEntries(values)
     for _ in pairs(values) do count = count + 1 end
     return count
 end
-assert(countEntries(production.mainItems) == 68 and countEntries(production.subItems) == 81,
+assert(countEntries(production.mainItems) == 68
+    and countEntries(production.subItems) == 81
+    and countEntries(production.weaponAccessories) == 36
+    and countEntries(production.heldWeapons) == 5,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
     and production.mainItems.deep_meteorite.stats[1].value == -0.2
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
-    and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2",
+    and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
+    and production.weaponAccessories["8x_sight"].stats[1].value == 0.9
+    and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
+    and production.heldWeapons.deep_g36c_roger.effects[2].talentMarkers[1] == "chip_headshot_detect",
     "split production config changed category data")
 
 print("AdjustEquipmentStatvalue state check OK")

@@ -9,12 +9,15 @@
 --   ArmorUpgrades.lua      护甲升级
 --   NeuralAdjustments.lua  神经调整
 --   AssistUpgrades.lua     辅助升级
+--   Weapon*.lua            手持武器配件
+--   HeldWeapons.lua        自带配件效果的武器标记
 --
 -- >> 完整配置说明 <<
 --
 -- [顶层参数]
 --   fallbackInterval (number)        think 兜底巡检间隔（秒），默认 5。
 --   wearableSlots   (InvSlotType[]) 主体装备所在的角色装备槽。
+--   weaponSlots     (InvSlotType[]) 武器配件生效的手持槽。
 --   debug           (bool)          是否启用调试输出，生产环境设为 false。
 --
 -- [mainItems — 主体装备]
@@ -25,7 +28,11 @@
 --   登记可放入主体装备库存的插板与芯片；无需加入 mainItems。
 --   配件插入主体时触发效果，取出或主体脱离角色时自动撤销。
 --
--- 两张表均以物品 Identifier (Prefab ID) 为键，支持以下效果字段：
+-- [weaponAccessories / heldWeapons — 武器配件与内置效果]
+--   武器配件仅在母武器位于 weaponSlots 时生效；普通物品栏与背包中的武器不生效。
+--   heldWeapons 用于仍由武器 XML 提供数值、但需要 Lua 人才标记的内置配件效果。
+--
+-- 各配置表均以物品 Identifier (Prefab ID) 为键，支持以下效果字段：
 --
 --   stats  (table[]) 修改角色的 StatValue。每项是一条记录：
 --     { statType = "StatTypes枚举名", value = number }
@@ -33,6 +40,7 @@
 --     - value: 数值。技能类（SkillBonus）为整数加成，百分比类（*Multiplier/Speed）为小数
 --       （0.2 = 20%），Override 类为覆盖值
 --     例: { statType = "WalkingSpeed", value = -0.15 }
+--   statsKey (string) 同名原 Affliction 的共享键；双持相同效果时只应用一次，最后一个来源移除时撤销。
 --
 --   statGroup (string) 将本物品的 stats 归入一个可屏蔽组。
 --   blocksStatGroups (string[]) 装备期间不应用指定组的 stats；插入/取出时事件驱动刷新。
@@ -46,7 +54,7 @@
 --     例: talentMarkers = { "chip_frogman_1" }
 --
 --   resistances (table[]) 通过角色原生 AbilityResistance 添加全身抗性，不创建 Affliction。
---     { id = "Affliction Identifier 或 Type", multiplier = number }
+--     { id = "Affliction Identifier 或 Type", multiplier = number, source = "可选共享键" }
 --     - multiplier: 伤害倍率；0.5 = 50% 抗性，1 = 无抗性。不能用于限定肢体的抗性。
 --     例: resistances = { { id = "burn", multiplier = 0.5 } }
 --
@@ -62,6 +70,8 @@
 --              }
 --
 --   以上 stats / flags / talentMarkers / resistances / affliction 均为选填，不填则跳过，无副作用。
+--   effects (table[]) 可将同一物品拆成多个独立效果组；使用后不再读取该物品的顶层效果字段。
+--   blockedByEnemyResistance (bool) 保留 deep_enemy_affliction_resistance 对原 Affliction Buff 的抑制。
 --
 -- [附录A — 常用 StatTypes]
 --   技能加成:     ElectricalSkillBonus  HelmSkillBonus  MechanicalSkillBonus
@@ -122,6 +132,13 @@ merge(subItems, loadCategory("ArmorUpgrades.lua"))
 merge(subItems, loadCategory("NeuralAdjustments.lua"))
 merge(subItems, loadCategory("AssistUpgrades.lua"))
 
+local weaponAccessories = {}
+merge(weaponAccessories, loadCategory("WeaponGrips.lua"))
+merge(weaponAccessories, loadCategory("WeaponSights.lua"))
+merge(weaponAccessories, loadCategory("WeaponMuzzles.lua"))
+merge(weaponAccessories, loadCategory("WeaponChips.lua"))
+merge(weaponAccessories, loadCategory("WeaponUnderbarrels.lua"))
+
 local CONFIG = {
     fallbackInterval = 5.0,
     debug = false,
@@ -133,8 +150,14 @@ local CONFIG = {
         InvSlotType.Card,
         InvSlotType.Bag,
     },
+    weaponSlots = {
+        InvSlotType.LeftHand,
+        InvSlotType.RightHand,
+    },
     mainItems = loadCategory("MainItems.lua"),
     subItems = subItems,
+    weaponAccessories = weaponAccessories,
+    heldWeapons = loadCategory("HeldWeapons.lua"),
 }
 
 _G.AdjustEquipmentConfig = CONFIG

@@ -1,7 +1,6 @@
-local AH = AfflictionHelper
-
 local MOD_ID = "FriendlyFireProjectile"
 local DEBUG = false
+local FRIENDLY_FIRE_MARKER = Identifier("friendly_fire")
 
 local function Log(message)
     if DEBUG then
@@ -20,7 +19,7 @@ Hook.Patch(
             return
         end
 
-        if AH.GetAffStrength(user, "friendly_fire") <= 0 then
+        if not user.Info or user.Info:GetSavedStatValue(StatTypes.None, FRIENDLY_FIRE_MARKER) <= 0 then
             return
         end
 

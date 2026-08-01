@@ -16,6 +16,7 @@ local DEEP_GUN_TAG = "deep_condition_100"
 local DEEP_GUN_IN_WATER_MULTIPLIER = 0.5
 local DEEP_GUN_LEVIATHAN_MULTIPLIER = 0.1
 local DEEP_GUN_LEVIATHAN_MASS_THRESHOLD = 3000
+local IN_WATER_CHIP_MARKER = Identifier("deepgun_inwater_detect_chip")
 
 local function hasDeepGunEquipped(character)
     if character == nil or character.Inventory == nil then return false end
@@ -236,6 +237,8 @@ function(characterHealth, attackResult, hitLimb, allowStacking)
     if attacker == nil then return end
 
     if not hasDeepGunEquipped(attacker) then return end
+
+    if attacker.Info and attacker.Info:GetSavedStatValue(StatTypes.None, IN_WATER_CHIP_MARKER) > 0 then return end
 
     if not (attacker.InWater or targetCharacter.InWater) then return end
 

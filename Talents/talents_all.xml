@@ -51,7 +51,7 @@
     </AbilityGroupInterval>
     <AbilityGroupInterval Interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect_chip" />
+        <AbilityConditionHasPermanentStat statidentifier="deepgun_inwater_detect_chip" min="1" />
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
@@ -529,7 +529,7 @@
     <!-- 消音器蹲下射击-->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_muffler" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_muffler" min="1" />
         <AbilityConditionCrouched />
       </Conditions>
       <Abilities>
@@ -565,7 +565,7 @@
     <!--被帽弹头-->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_headshot_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_headshot_detect" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
