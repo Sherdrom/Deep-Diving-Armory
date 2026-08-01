@@ -1,5 +1,5 @@
 -- XML OnWearing -> event-driven equipment effects.
--- Main items, contained modules and revives use events; think is fallback-only.
+-- Main items, contained modules and revives use events; think only visits failed or dynamic fallback states.
 
 if not _G.AdjustEquipmentConfig then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
@@ -50,6 +50,31 @@ local function afflictionList(value)
     if not value then return {} end
     if value.id then return { value } end
     return value
+end
+
+local fallbackStates = {}
+
+local function configNeedsFallback(cfg)
+    for _, effect in ipairs(cfg.effects or { cfg }) do
+        if effect.blockedByEnemyResistance then return true end
+    end
+    return false
+end
+
+local function updateFallbackState(state)
+    local needsAfflictionRepair = false
+    for _, ref in pairs(state.afflictionRefs or {}) do
+        if ref.needsRepair or ref.refreshDuration then
+            needsAfflictionRepair = true
+            break
+        end
+    end
+
+    if state.dead or next(state.conditionalConfigs or {}) or needsAfflictionRepair then
+        fallbackStates[state] = true
+    else
+        fallbackStates[state] = nil
+    end
 end
 
 local function validateEffectConfig(itemId, cfg)
@@ -357,18 +382,21 @@ local function acquireAfflictions(state, configured)
             local ref = state.afflictionRefs[cfg.id]
             if not ref then
                 local before = health:GetAfflictionStrengthByIdentifier(cfg.id)
-                health:ApplyAffliction(head, prefab:Instantiate(cfg.strength or 1))
+                local requestedAmount = cfg.strength or 1
+                local target = before + requestedAmount
+                health:ApplyAffliction(head, prefab:Instantiate(requestedAmount))
                 local instance = health:GetAffliction(cfg.id, true)
-                if instance then instance.Strength = before + (cfg.strength or 1) end
+                if instance then instance.Strength = target end
                 local after = health:GetAfflictionStrengthByIdentifier(cfg.id)
                 local refreshDuration = prefab.Duration > 0 and fallbackInterval * 2 or nil
                 if instance and refreshDuration then instance.Duration = refreshDuration end
                 ref = {
                     count = 0,
                     amount = math.max(0, after - before),
-                    target = after,
+                    target = instance and after or target,
                     prefabDuration = prefab.Duration,
                     refreshDuration = refreshDuration,
+                    needsRepair = not instance,
                 }
                 state.afflictionRefs[cfg.id] = ref
             end
@@ -403,19 +431,29 @@ local function refreshAfflictions(state)
     if not health then return end
     local head = state.character.AnimController and state.character.AnimController:GetLimb(LimbType.Head) or nil
     for id, ref in pairs(state.afflictionRefs) do
-        local instance = health:GetAffliction(id, true)
-        if not instance then
-            local prefab = AfflictionPrefab.Prefabs[id]
-            if prefab then
-                health:ApplyAffliction(head, prefab:Instantiate(ref.target))
-                instance = health:GetAffliction(id, true)
+        if ref.needsRepair or ref.refreshDuration then
+            local before = health:GetAfflictionStrengthByIdentifier(id)
+            local instance = health:GetAffliction(id, true)
+            if not instance then
+                local prefab = AfflictionPrefab.Prefabs[id]
+                if prefab then
+                    health:ApplyAffliction(head, prefab:Instantiate(ref.target))
+                    instance = health:GetAffliction(id, true)
+                end
+            end
+            if instance then
+                if instance.Strength < ref.target then instance.Strength = ref.target end
+                if ref.needsRepair then
+                    local after = health:GetAfflictionStrengthByIdentifier(id)
+                    ref.amount = ref.amount + math.max(0, after - before)
+                    ref.target = after
+                    ref.needsRepair = false
+                end
+                if ref.refreshDuration then instance.Duration = ref.refreshDuration end
             end
         end
-        if instance then
-            if instance.Strength < ref.target then instance.Strength = ref.target end
-            if ref.refreshDuration then instance.Duration = ref.refreshDuration end
-        end
     end
+    updateFallbackState(state)
 end
 
 local function applyEffects(state, cfg)
@@ -446,6 +484,8 @@ local function applyConfig(state, cfg)
             applied[index] = applyEffects(state, effect)
         end
     end
+    if configNeedsFallback(cfg) then state.conditionalConfigs[applied] = cfg end
+    updateFallbackState(state)
     return applied
 end
 
@@ -460,6 +500,7 @@ local function syncConfigEffects(state, cfg, applied)
             applied[index] = applyEffects(state, effect)
         end
     end
+    updateFallbackState(state)
 end
 
 removeEffects = function(state, effects)
@@ -472,22 +513,17 @@ removeEffects = function(state, effects)
 end
 
 local function removeConfigEffects(state, effects)
+    state.conditionalConfigs[effects] = nil
     for _, effect in pairs(effects or {}) do removeEffects(state, effect) end
+    updateFallbackState(state)
 end
 
 local function activeSubItems(mainItem, configs)
     local result = {}
     local inventory = mainItem.OwnInventory
-    if inventory and inventory.AllItemsMod then
-        for item in inventory.AllItemsMod do
-            if item and not item.Removed and item.Prefab then
-                local itemId = tostring(item.Prefab.Identifier)
-                local cfg = configs[itemId]
-                if cfg then result[item] = { cfg = cfg, itemId = itemId } end
-            end
-        end
-    elseif mainItem.ContainedItems then
-        for item in mainItem.ContainedItems do
+    local items = inventory and inventory.AllItemsMod or mainItem.ContainedItems
+    if items then
+        for item in items do
             if item and not item.Removed and item.Prefab then
                 local itemId = tostring(item.Prefab.Identifier)
                 local cfg = configs[itemId]
@@ -498,12 +534,24 @@ local function activeSubItems(mainItem, configs)
     return result
 end
 
+local trackedItems = {}
+
+local function trackItem(item, state, kind, source)
+    trackedItems[item] = { state = state, kind = kind, source = source }
+end
+
+local function untrackItem(item, state, source)
+    local tracked = trackedItems[item]
+    if tracked and tracked.state == state and tracked.source == source then trackedItems[item] = nil end
+end
+
 local function syncSubItems(state, source, current)
     if source.cfg then syncConfigEffects(state, source.cfg, source.effects) end
     current = current or activeSubItems(source.item, source.subConfig)
     for item, data in pairs(current) do
         if not source.subs[item] then
             source.subs[item] = { itemId = data.itemId, cfg = data.cfg, effects = applyConfig(state, data.cfg) }
+            trackItem(item, state, "sub", source)
             log("equip sub", data.itemId, "in", source.itemId)
         else
             syncConfigEffects(state, data.cfg, source.subs[item].effects)
@@ -513,6 +561,7 @@ local function syncSubItems(state, source, current)
         if not current[item] then
             removeConfigEffects(state, sub.effects)
             source.subs[item] = nil
+            untrackItem(item, state, source)
             log("unequip sub", sub.itemId, "from", source.itemId)
         end
     end
@@ -533,6 +582,7 @@ local function ensureState(character)
             talentMarkerRefs = {},
             resistanceRefs = {},
             afflictionRefs = {},
+            conditionalConfigs = {},
         }
         charStates[character] = state
     end
@@ -572,6 +622,7 @@ local function addMain(character, item)
         subConfig = SUB_CONFIG,
     }
     state.mains[item] = source
+    trackItem(item, state, "main", source)
     syncSubItems(state, source)
     log("equip main", character.Name or "?", itemId)
 end
@@ -579,9 +630,13 @@ end
 local function removeMain(state, item)
     local source = state.mains[item]
     if not source then return end
-    for _, sub in pairs(source.subs) do removeConfigEffects(state, sub.effects) end
+    for subItem, sub in pairs(source.subs) do
+        removeConfigEffects(state, sub.effects)
+        untrackItem(subItem, state, source)
+    end
     removeConfigEffects(state, source.effects)
     state.mains[item] = nil
+    untrackItem(item, state, source)
     refreshStats(state)
     log("unequip main", state.character.Name or "?", source.itemId)
 end
@@ -591,12 +646,14 @@ local function addWeapon(character, item)
     if not item or item.Removed or not item.Prefab then return end
 
     local itemId = tostring(item.Prefab.Identifier)
+    local state = charStates[character]
+    if state and state.weapons[item] then return end
+
     local cfg = HELD_WEAPON_CONFIG[itemId]
     local current = activeSubItems(item, WEAPON_ACCESSORY_CONFIG)
     if not cfg and not next(current) then return end
 
-    local state = ensureState(character)
-    if state.weapons[item] then return end
+    state = ensureState(character)
 
     local source = {
         item = item,
@@ -607,6 +664,7 @@ local function addWeapon(character, item)
         subConfig = WEAPON_ACCESSORY_CONFIG,
     }
     state.weapons[item] = source
+    trackItem(item, state, "weapon", source)
     syncSubItems(state, source, current)
     log("equip weapon", character.Name or "?", itemId)
 end
@@ -614,9 +672,13 @@ end
 local function removeWeapon(state, item)
     local source = state.weapons[item]
     if not source then return end
-    for _, sub in pairs(source.subs) do removeConfigEffects(state, sub.effects) end
+    for subItem, sub in pairs(source.subs) do
+        removeConfigEffects(state, sub.effects)
+        untrackItem(subItem, state, source)
+    end
     removeConfigEffects(state, source.effects)
     state.weapons[item] = nil
+    untrackItem(item, state, source)
     refreshStats(state)
     log("unequip weapon", state.character.Name or "?", source.itemId)
 end
@@ -643,8 +705,22 @@ local function clearState(state)
     for item in pairs(state.weapons) do removeWeapon(state, item) end
 end
 
+local function discardStateIndex(state)
+    for item, source in pairs(state.mains) do
+        untrackItem(item, state, source)
+        for subItem in pairs(source.subs) do untrackItem(subItem, state, source) end
+    end
+    for item, source in pairs(state.weapons) do
+        untrackItem(item, state, source)
+        for subItem in pairs(source.subs) do untrackItem(subItem, state, source) end
+    end
+end
+
 local function removeEmptyState(state)
-    if not state.dead and not next(state.mains) and not next(state.weapons) then charStates[state.character] = nil end
+    if not state.dead and not next(state.mains) and not next(state.weapons) then
+        fallbackStates[state] = nil
+        charStates[state.character] = nil
+    end
 end
 
 local function resetTalentMarkers(character)
@@ -679,7 +755,10 @@ local function restoreRevivedCharacter(character)
     if state then state.dead = nil end
     scanCharacter(character)
     state = charStates[character]
-    if state then removeEmptyState(state) end
+    if state then
+        updateFallbackState(state)
+        removeEmptyState(state)
+    end
 end
 
 local function clearAllStates()
@@ -687,6 +766,8 @@ local function clearAllStates()
         if state.character and not state.character.Removed then clearState(state) end
     end
     charStates = {}
+    trackedItems = {}
+    fallbackStates = {}
 end
 
 Hook.Patch(
@@ -747,26 +828,24 @@ Hook.Patch(
 )
 
 Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
-    for _, state in pairs(charStates) do
-        if state.mains[item] then
-            removeMain(state, item)
-            removeEmptyState(state)
-        elseif state.weapons[item] then
-            removeWeapon(state, item)
-            removeEmptyState(state)
-        else
-            local changed = false
-            for _, sources in ipairs({ state.mains, state.weapons }) do
-                for _, source in pairs(sources) do
-                    local sub = source.subs[item]
-                    if sub then
-                        removeConfigEffects(state, sub.effects)
-                        source.subs[item] = nil
-                        changed = true
-                    end
-                end
-            end
-            if changed then refreshStats(state) end
+    local tracked = trackedItems[item]
+    if not tracked then return end
+
+    local state = tracked.state
+    if tracked.kind == "main" then
+        removeMain(state, item)
+        removeEmptyState(state)
+    elseif tracked.kind == "weapon" then
+        removeWeapon(state, item)
+        removeEmptyState(state)
+    else
+        local source = tracked.source
+        local sub = source and source.subs[item]
+        if sub then
+            removeConfigEffects(state, sub.effects)
+            source.subs[item] = nil
+            untrackItem(item, state, source)
+            refreshStats(state)
         end
     end
 end)
@@ -776,6 +855,7 @@ Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character
     if not state then return end
     clearState(state)
     state.dead = true
+    updateFallbackState(state)
 end)
 
 Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", resetTalentMarkers)
@@ -799,40 +879,21 @@ Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     if now - lastFallbackTime < fallbackInterval then return end
     lastFallbackTime = now
 
-    for character, state in pairs(charStates) do
+    for state in pairs(fallbackStates) do
+        local character = state.character
         if not character or character.Removed then
+            discardStateIndex(state)
             charStates[character] = nil
+            fallbackStates[state] = nil
         elseif state.dead then
             if not character.IsDead then restoreRevivedCharacter(character) end
         elseif character.IsDead then
             clearState(state)
             state.dead = true
+            updateFallbackState(state)
         else
-            for item in pairs(state.mains) do
-                if item.Removed or not isStillEquipped(character, item) then
-                    removeMain(state, item)
-                else
-                    syncSubItems(state, state.mains[item])
-                end
-            end
-            for item in pairs(state.weapons) do
-                if item.Removed or not isStillHeld(character, item) then
-                    removeWeapon(state, item)
-                else
-                    local source = state.weapons[item]
-                    syncSubItems(state, source)
-                    if not HELD_WEAPON_CONFIG[source.itemId] and not next(source.subs) then
-                        removeWeapon(state, item)
-                    end
-                end
-            end
-            for _, slot in ipairs(WEAPON_SLOTS) do
-                addWeapon(character, character.Inventory:GetItemInLimbSlot(slot))
-            end
-            if next(state.afflictionRefs) then
-                refreshAfflictions(state)
-            end
-            removeEmptyState(state)
+            for applied, cfg in pairs(state.conditionalConfigs) do syncConfigEffects(state, cfg, applied) end
+            refreshAfflictions(state)
         end
     end
 end)

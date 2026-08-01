@@ -15,7 +15,7 @@
 -- >> 完整配置说明 <<
 --
 -- [顶层参数]
---   fallbackInterval (number)        think 兜底巡检间隔（秒），默认 5。
+--   fallbackInterval (number)        失败效果、动态条件、限时 Affliction 与复活兜底间隔（秒），默认 5；不会扫描全部装备。
 --   wearableSlots   (InvSlotType[]) 主体装备所在的角色装备槽。
 --   weaponSlots     (InvSlotType[]) 武器配件生效的手持槽。
 --   debug           (bool)          是否启用调试输出，生产环境设为 false。

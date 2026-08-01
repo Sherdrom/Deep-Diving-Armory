@@ -35,7 +35,11 @@ local markerPrefab = { id = "marker", Duration = 1 }
 function markerPrefab:Instantiate(strength)
     return { id = self.id, Strength = strength, Duration = self.Duration }
 end
-AfflictionPrefab = { Prefabs = { marker = markerPrefab } }
+local permanentMarkerPrefab = { id = "permanent_marker", Duration = 0 }
+function permanentMarkerPrefab:Instantiate(strength)
+    return { id = self.id, Strength = strength, Duration = self.Duration }
+end
+AfflictionPrefab = { Prefabs = { marker = markerPrefab, permanent_marker = permanentMarkerPrefab } }
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
@@ -92,15 +96,17 @@ _G.AdjustEquipmentConfig = {
     },
     heldWeapons = {
         integrated = { talentMarkers = { "weapon_marker" } },
+        failedweapon = { affliction = { id = "permanent_marker", strength = 1 } },
     },
 }
 
 local function makeItem(identifier)
-    local item = { Prefab = { Identifier = identifier }, Removed = false, contents = {} }
+    local item = { Prefab = { Identifier = identifier }, Removed = false, contents = {}, inventoryScans = 0 }
     function item:GetRootInventoryOwner() return self.rootOwner end
     item.OwnInventory = setmetatable({}, {
         __index = function(_, key)
             if key ~= "AllItemsMod" then return nil end
+            item.inventoryScans = item.inventoryScans + 1
             local index = 0
             return function()
                 index = index + 1
@@ -119,6 +125,10 @@ function health:GetAfflictionStrengthByIdentifier(id)
 end
 function health:GetAffliction(id) return self.afflictions[id] end
 function health:ApplyAffliction(_, affliction)
+    if self.failNextAffliction == affliction.id then
+        self.failNextAffliction = nil
+        return
+    end
     local existing = self.afflictions[affliction.id]
     if existing then
         existing.Strength = existing.Strength + affliction.Strength
@@ -338,8 +348,14 @@ slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = rifle1, rifle2
 equip(rifle1, { character = character })
 equip(rifle1, { character = character })
 equip(rifle2, { character = character })
+assert(rifle1.inventoryScans == 1, "duplicate weapon equip rescanned its inventory")
 assert(character.stats.MovementSpeed == 4, "shared accessory stats stacked while dual-wielding")
 assert(character.Info.savedStats.weapon_marker == 1, "weapon marker reference counting failed")
+
+local rifle1Scans, rifle2Scans = rifle1.inventoryScans, rifle2.inventoryScans
+for _ = 1, 4 do tick() end
+assert(rifle1.inventoryScans == rifle1Scans and rifle2.inventoryScans == rifle2Scans,
+    "fallback scanned successfully applied weapon effects")
 
 slots[InvSlotType.LeftHand] = nil
 unequip(rifle1, { character = character })
@@ -355,6 +371,12 @@ rifle2.contents = { optic2 }
 itemContained({ Item = rifle2 }, { containedItem = optic2 })
 assert(character.stats.MovementSpeed == 4 and character.Info.savedStats.weapon_marker == 1,
     "weapon accessory insertion was not immediate")
+
+rifle2.contents = {}
+events["item.removed"](optic2)
+events["item.removed"](optic2)
+assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.weapon_marker == 0,
+    "indexed item removal was not immediate or idempotent")
 
 slots[InvSlotType.RightHand] = nil
 unequip(rifle2, { character = character })
@@ -384,15 +406,36 @@ health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
 slots[InvSlotType.LeftHand] = blockedWeapon
 equip(blockedWeapon, { character = character })
 assert(character.stats.MovementSpeed == 0, "enemy accessory resistance was bypassed")
+local blockedWeaponScans = blockedWeapon.inventoryScans
 health.afflictions.deep_enemy_affliction_resistance = nil
 for _ = 1, 4 do tick() end
 assert(character.stats.MovementSpeed == 9, "fallback did not restore an unblocked accessory effect")
 health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
 for _ = 1, 4 do tick() end
 assert(character.stats.MovementSpeed == 0, "fallback did not suppress a newly blocked accessory effect")
+assert(blockedWeapon.inventoryScans == blockedWeaponScans,
+    "conditional fallback scanned the weapon inventory")
 slots[InvSlotType.LeftHand] = nil
 unequip(blockedWeapon, { character = character })
 health.afflictions.deep_enemy_affliction_resistance = nil
+
+local failedWeapon = makeItem("failedweapon")
+failedWeapon.rootOwner = character
+health.failNextAffliction = "permanent_marker"
+slots[InvSlotType.LeftHand] = failedWeapon
+equip(failedWeapon, { character = character })
+assert(health:GetAfflictionStrengthByIdentifier("permanent_marker") == 0,
+    "failed affliction unexpectedly applied")
+local failedWeaponScans = failedWeapon.inventoryScans
+for _ = 1, 4 do tick() end
+assert(health:GetAfflictionStrengthByIdentifier("permanent_marker") == 1,
+    "failed effect was not repaired by fallback")
+assert(failedWeapon.inventoryScans == failedWeaponScans,
+    "failed effect repair scanned the weapon inventory")
+slots[InvSlotType.LeftHand] = nil
+unequip(failedWeapon, { character = character })
+assert(health:GetAfflictionStrengthByIdentifier("permanent_marker") == 0,
+    "repaired affliction leaked after unequip")
 
 local integrated = makeItem("integrated")
 integrated.rootOwner = character
