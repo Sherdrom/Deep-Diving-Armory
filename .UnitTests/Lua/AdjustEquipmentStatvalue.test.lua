@@ -22,6 +22,7 @@ function Hook.Add(name, _, callback) events[name] = callback end
 function Hook.Patch(_, className, methodName, _, callback, patchType)
     assert(className == "Barotrauma.Item"
         or className == "Barotrauma.Character"
+        or className == "Barotrauma.Items.Components.Wearable"
         or className == "Barotrauma.Items.Components.ItemContainer")
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
@@ -136,7 +137,7 @@ local module1, module2 = makeItem("module"), makeItem("module")
 armor.rootOwner, helmet.rootOwner = character, character
 
 local equip = patches["Barotrauma.Item.Equip"]
-local unequip = patches["Barotrauma.Item.Unequip"]
+local unequip = patches["Barotrauma.Items.Components.Wearable.Unequip"]
 local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemContained"]
 local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
 local revive = patches["Barotrauma.Character.Revive"]
@@ -171,13 +172,13 @@ assert(character.stats.MovementSpeed == 14, "think still scanned removed contain
 itemRemoved(armorContainer, { containedItem = module1 })
 assert(character.stats.MovementSpeed == 13, "subitem removal was not symmetric")
 
+unequip({ Item = helmet }, { character = character })
 slots[InvSlotType.Head] = nil
-unequip(helmet, { character = character })
 assert(character.stats.MovementSpeed == 6 and character.flags.SharedFlag, "one main removed effects owned by another")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "shared affliction removed too early")
 
 slots[InvSlotType.OuterClothes] = nil
-unequip(armor, { character = character })
+unequip({ Item = armor }, { character = character })
 assert(character.stats.MovementSpeed == 0, "final main cleanup leaked stats")
 assert(not character.flags.SharedFlag and character.removeFlagCalls == 1, "final flag cleanup failed")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 0, "final affliction cleanup failed")
@@ -206,7 +207,7 @@ assert(character.stats.MovementSpeed == 0 and health:GetAfflictionStrengthByIden
 character.flags.SharedFlag = true
 equip(armor, { character = character })
 slots[InvSlotType.OuterClothes] = nil
-unequip(armor, { character = character })
+unequip({ Item = armor }, { character = character })
 assert(character.flags.SharedFlag, "pre-existing external flag was removed")
 
 print("AdjustEquipmentStatvalue state check OK")

@@ -347,14 +347,14 @@ Hook.Patch(
 
 Hook.Patch(
     "AdjustEquipmentStatvalue.Unequip",
-    "Barotrauma.Item",
+    "Barotrauma.Items.Components.Wearable",
     "Unequip",
     { "Barotrauma.Character" },
-    function(item, ptable)
+    function(wearable, ptable)
         local character = ptable["character"]
         local state = character and charStates[character]
-        if state and not isStillEquipped(character, item) then
-            removeMain(state, item)
+        if state then
+            removeMain(state, wearable.Item)
             removeEmptyState(state)
         end
     end,
