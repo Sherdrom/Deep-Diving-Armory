@@ -166,18 +166,4 @@ return {
         },
     },
 
-    ["deep_ten_star_general_assist_upgrading"] = {
-        stats = {
-            { statType = "SkillGainSpeed", value = 10 },
-            { statType = "ReputationGainMultiplier", value = 1 },
-            { statType = "MissionMoneyGainMultiplier", value = 1 },
-            { statType = "ExperienceGainMultiplier", value = 1 },
-            { statType = "ExtraMissionCount", value = 10 },
-            { statType = "ExtraSpecialSalesCount", value = 10 },
-            { statType = "StoreSellMultiplier", value = 10 },
-            { statType = "StoreBuyMultiplier", value = 1 },
-            { statType = "ShipyardBuyMultiplier", value = 1 },
-        },
-    },
-
 }

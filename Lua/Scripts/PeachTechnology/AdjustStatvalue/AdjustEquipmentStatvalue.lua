@@ -12,6 +12,7 @@ local WEAPON_ACCESSORY_CONFIG = CONFIG.weaponAccessories or {}
 local HELD_WEAPON_CONFIG = CONFIG.heldWeapons or {}
 local fallbackInterval = CONFIG.fallbackInterval or 5.0
 local RESISTANCE_SOURCE = Identifier("dda_adjust_equipment")
+local TalentResistanceIdentifier = LuaUserData.CreateStatic("Barotrauma.TalentResistanceIdentifier", true)
 local ENEMY_ACCESSORY_RESISTANCE = "deep_enemy_affliction_resistance"
 local resistanceKeys = {}
 local talentMarkerIds = {}
@@ -248,7 +249,7 @@ end
 local function resistanceKey(id)
     local key = resistanceKeys[id]
     if not key then
-        key = CS.Barotrauma.TalentResistanceIdentifier(Identifier(id), RESISTANCE_SOURCE)
+        key = TalentResistanceIdentifier(Identifier(id), RESISTANCE_SOURCE)
         resistanceKeys[id] = key
     end
     return key
@@ -623,7 +624,7 @@ end
 local function syncChangedContainer(container)
     local host = container and container.Item
     local character = host and host:GetRootInventoryOwner()
-    if not character or not character.CharacterHealth then return end
+    if not character or not LuaUserData.IsTargetType(character, "Barotrauma.Character") or not character.CharacterHealth then return end
 
     local state = charStates[character]
     local source = state and (state.mains[host] or state.weapons[host])

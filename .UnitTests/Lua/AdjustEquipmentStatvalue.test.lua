@@ -19,11 +19,6 @@ LimbType = { Head = "Head" }
 StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
 AbilityFlags = { SharedFlag = "SharedFlag" }
 Identifier = function(value) return value end
-CS = { Barotrauma = {
-    TalentResistanceIdentifier = function(resistanceId, sourceId)
-        return resistanceId .. "|" .. sourceId
-    end,
-} }
 
 Hook = { HookMethodType = { After = "After" } }
 function Hook.Add(name, _, callback) events[name] = callback end
@@ -171,6 +166,15 @@ function character:RemoveAbilityFlag(flag)
     self.removeFlagCalls = self.removeFlagCalls + 1
     self.flags[flag] = nil
 end
+LuaUserData = {
+    CreateStatic = function(typeName, addCallConstructor)
+        assert(typeName == "Barotrauma.TalentResistanceIdentifier" and addCallConstructor)
+        return function(resistanceId, sourceId) return resistanceId .. "|" .. sourceId end
+    end,
+    IsTargetType = function(value, typeName)
+        return typeName == "Barotrauma.Character" and value == character
+    end,
+}
 
 Character = { CharacterList = { character } }
 
@@ -203,6 +207,13 @@ local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemC
 local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
 local revive = patches["Barotrauma.Character.Revive"]
 local armorContainer = { Item = armor }
+
+local nestedHost = makeItem("nested_host")
+nestedHost.rootOwner = setmetatable({}, {
+    __index = function(_, field) error("cannot access field " .. field .. " of userdata<Barotrauma.Item>") end,
+})
+assert(pcall(itemContained, { Item = nestedHost }, { containedItem = module1 }),
+    "item-owned nested container was treated as a character")
 
 slots[InvSlotType.OuterClothes] = armor
 slots[InvSlotType.Head] = helmet
@@ -408,7 +419,7 @@ local function countEntries(values)
     return count
 end
 assert(countEntries(production.mainItems) == 68
-    and countEntries(production.subItems) == 81
+    and countEntries(production.subItems) == 80
     and countEntries(production.weaponAccessories) == 36
     and countEntries(production.heldWeapons) == 5,
     "split production config lost or duplicated items")
