@@ -89,7 +89,24 @@ local CONFIG = {
     debug = false,
     -- Only items whose XML OnWearing path has been removed belong here.
     migratedItems = {
+        ["deep_6b13"] = true,
+        ["deep_Guardian"] = true,
+        ["deep_6b23"] = true,
+        ["deep_6b43"] = true,
+        ["deep_defender"] = true,
+        ["deep_fort_t5"] = true,
+        ["gen4_heavy"] = true,
+        ["gen4_protection"] = true,
+        ["gen4_high_mobility"] = true,
         ["deep_hpc"] = true,
+        ["deep_thor_protection"] = true,
+        ["thor"] = true,
+        ["deep_zhuk_6a"] = true,
+        ["deep_Obsidian"] = true,
+        ["deep_osprey_protection"] = true,
+        ["deep_osprey"] = true,
+        ["deep_bagariy"] = true,
+        ["deep_tactec"] = true,
     },
     items = {
 
