@@ -34,10 +34,9 @@ ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
-    migratedItems = { armor = true, helmet = true },
-    items = {
+    wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes },
+    mainItems = {
         armor = {
-            IsMain = true,
             stats = {
                 { statType = "MovementSpeed", value = 2 },
                 { statType = "MovementSpeed", value = 3 },
@@ -46,20 +45,18 @@ _G.AdjustEquipmentConfig = {
             affliction = { id = "marker", strength = 1 },
         },
         helmet = {
-            IsMain = true,
             stats = { { statType = "MovementSpeed", value = 7 } },
             flags = { "SharedFlag" },
             affliction = { id = "marker", strength = 1 },
         },
+    },
+    subItems = {
         module = {
-            IsSub = true,
             stats = { { statType = "MovementSpeed", value = 1 } },
             flags = { "SharedFlag" },
         },
     },
 }
-_G.AdjustEquipmentSubConfigCache = { module = _G.AdjustEquipmentConfig.items.module }
-_G.AdjustEquipmentWearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes }
 
 local function makeItem(identifier)
     local item = { Prefab = { Identifier = identifier }, Removed = false, contents = {} }

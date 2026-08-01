@@ -1,14 +1,14 @@
 -- XML OnWearing -> event-driven equipment effects.
 -- Main items, contained modules and revives use events; think is fallback-only.
 
-local CONFIG = _G.AdjustEquipmentConfig
-if not CONFIG then
-    error("[AdjustEquipmentStatvalue] load AdjustEquipmentStatvalue-Config.lua first")
+if not _G.AdjustEquipmentConfig then
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
 end
+local CONFIG = _G.AdjustEquipmentConfig
 
-local MIGRATED_ITEMS = CONFIG.migratedItems or {}
-local SUB_CONFIG = _G.AdjustEquipmentSubConfigCache or {}
-local WEARABLE_SLOTS = _G.AdjustEquipmentWearableSlots or {
+local MAIN_CONFIG = CONFIG.mainItems or {}
+local SUB_CONFIG = CONFIG.subItems or {}
+local WEARABLE_SLOTS = CONFIG.wearableSlots or {
     InvSlotType.Head,
     InvSlotType.InnerClothes,
     InvSlotType.OuterClothes,
@@ -31,8 +31,8 @@ local function afflictionList(value)
     return value
 end
 
-local function validateConfig()
-    for itemId, cfg in pairs(CONFIG.items) do
+local function validateItemConfigs(configs)
+    for itemId, cfg in pairs(configs) do
         if ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
             warn("item prefab not found", itemId)
         end
@@ -54,20 +54,21 @@ local function validateConfig()
             end
         end
     end
-    for itemId in pairs(MIGRATED_ITEMS) do
-        local cfg = CONFIG.items[itemId]
-        if not cfg or not cfg.IsMain then
-            warn("migrated item is not a configured main item", itemId)
-        end
+end
+
+local function validateConfig()
+    validateItemConfigs(MAIN_CONFIG)
+    validateItemConfigs(SUB_CONFIG)
+    for itemId in pairs(MAIN_CONFIG) do
+        if SUB_CONFIG[itemId] then warn("item configured as both main and sub", itemId) end
     end
 end
 
 local function getMainConfig(item)
     if not item or item.Removed or not item.Prefab then return nil end
     local itemId = tostring(item.Prefab.Identifier)
-    if not MIGRATED_ITEMS[itemId] then return nil end
-    local cfg = CONFIG.items[itemId]
-    if not cfg or not cfg.IsMain then return nil end
+    local cfg = MAIN_CONFIG[itemId]
+    if not cfg then return nil end
     return cfg, itemId
 end
 
