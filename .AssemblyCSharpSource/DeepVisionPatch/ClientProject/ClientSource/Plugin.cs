@@ -77,17 +77,18 @@ namespace DeepVisionPatch
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);
             Item leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand);
             Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
+            bool hasWeaponInHand = rightHand?.HasTag("weapon") == true || leftHand?.HasTag("weapon") == true;
             bool hasObstructVisionItem = rightHand?.HasTag("ObstructVision") == true
                 || leftHand?.HasTag("ObstructVision") == true
                 || headItem?.HasTag("ObstructVision") == true;
-            if (!hasObstructVisionItem) { return true; }
+            if (!hasWeaponInHand && !hasObstructVisionItem) { return true; }
 
             bool hasDeepVisionItem = rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
                 || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
                 || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
             if (!hasDeepVisionItem) { return true; }
 
-            if (!character.IsKeyDown(InputType.Aim) || !character.CanAim) { return true; }
+            if (!hasObstructVisionItem && (!character.IsKeyDown(InputType.Aim) || !character.CanAim)) { return true; }
             // Custom logic for reduced vision cone
             if ((!__instance.LosEnabled || __instance.LosMode == LosMode.None) && __instance.ObstructVisionAmount <= 0.0f) { return false; }
             if (__instance.ObstructVisionAmount > 0.0f) { return true; }
