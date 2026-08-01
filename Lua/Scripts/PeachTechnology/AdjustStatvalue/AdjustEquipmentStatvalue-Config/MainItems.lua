@@ -104,6 +104,23 @@ return {
     ["deep_heyuanmu_suit"] = {
     },
 
+    -- 主体：背负武器（原 XML OnWearing 移速效果）
+    ["deep_aa12"] = {
+        stats = { { statType = "MovementSpeed", value = -0.2 } },
+    },
+
+    ["deep_pigcat_three_shotgun"] = {
+        stats = { { statType = "MovementSpeed", value = -0.2 } },
+    },
+
+    ["deep_Gauss_Benzoyl_Peroxide"] = {
+        stats = { { statType = "MovementSpeed", value = -0.2 } },
+    },
+
+    ["deep_meteorite"] = {
+        stats = { { statType = "MovementSpeed", value = -0.2 } },
+    },
+
     -- 主体：头盔
     ["6b47"] = {
     },

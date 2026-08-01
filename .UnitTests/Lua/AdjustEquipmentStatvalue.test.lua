@@ -43,7 +43,7 @@ ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
-    wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes },
+    wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag },
     mainItems = {
         armor = {
             stats = {
@@ -59,6 +59,9 @@ _G.AdjustEquipmentConfig = {
             flags = { "SharedFlag" },
             talentMarkers = { "talent_marker" },
             affliction = { id = "marker", strength = 1 },
+        },
+        bagweapon = {
+            stats = { { statType = "MovementSpeed", value = -0.2 } },
         },
     },
     subItems = {
@@ -276,6 +279,17 @@ slots[InvSlotType.OuterClothes] = nil
 unequip({ Item = armor }, { character = character })
 assert(character.stats.MovementSpeed == 0, "stat group cleanup leaked stats")
 
+local bagweapon = makeItem("bagweapon")
+bagweapon.rootOwner = character
+equip(bagweapon, { character = character })
+assert(character.stats.MovementSpeed == 0, "bag effect applied while the item was not in the bag slot")
+slots[InvSlotType.Bag] = bagweapon
+equip(bagweapon, { character = character })
+assert(character.stats.MovementSpeed == -0.2, "bag effect was not applied in the bag slot")
+slots[InvSlotType.Bag] = nil
+unequip({ Item = bagweapon }, { character = character })
+assert(character.stats.MovementSpeed == 0, "bag effect cleanup leaked stats")
+
 Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
@@ -285,9 +299,10 @@ local function countEntries(values)
     for _ in pairs(values) do count = count + 1 end
     return count
 end
-assert(countEntries(production.mainItems) == 64 and countEntries(production.subItems) == 81,
+assert(countEntries(production.mainItems) == 68 and countEntries(production.subItems) == 81,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
+    and production.mainItems.deep_meteorite.stats[1].value == -0.2
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2",

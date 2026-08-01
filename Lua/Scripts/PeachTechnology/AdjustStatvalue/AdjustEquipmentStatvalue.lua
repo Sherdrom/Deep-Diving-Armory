@@ -425,7 +425,7 @@ end
 local function addMain(character, item)
     if not character or character.Removed or character.IsDead then return end
     local cfg, itemId = getMainConfig(item)
-    if not cfg then return end
+    if not cfg or not isStillEquipped(character, item) then return end
 
     local state = ensureState(character)
     if state.mains[item] then return end
