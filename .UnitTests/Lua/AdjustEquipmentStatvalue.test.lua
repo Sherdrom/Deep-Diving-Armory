@@ -418,10 +418,18 @@ local function countEntries(values)
     for _ in pairs(values) do count = count + 1 end
     return count
 end
+local function hasTalentMarker(cfg, marker)
+    for _, effect in ipairs(cfg.effects or { cfg }) do
+        for _, value in ipairs(effect.talentMarkers or {}) do
+            if value == marker then return true end
+        end
+    end
+    return false
+end
 assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 80
-    and countEntries(production.weaponAccessories) == 36
-    and countEntries(production.heldWeapons) == 5,
+    and countEntries(production.weaponAccessories) == 70
+    and countEntries(production.heldWeapons) == 129,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
     and production.mainItems.deep_meteorite.stats[1].value == -0.2
@@ -429,8 +437,13 @@ assert(production.mainItems.deep_hpc
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
     and production.weaponAccessories["8x_sight"].stats[1].value == 0.9
+    and production.weaponAccessories.deep_762_expansion.stats[1].value == -15
+    and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
-    and production.heldWeapons.deep_g36c_roger.effects[2].talentMarkers[1] == "chip_headshot_detect",
+    and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
+    and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
+    and production.heldWeapons.deep_pp19.effects[3].affliction.id == "deep_pp19_buffalo"
+    and production.heldWeapons.deep_pp19.effects[3].blockedByEnemyResistance,
     "split production config changed category data")
 
 print("AdjustEquipmentStatvalue state check OK")

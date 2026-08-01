@@ -9,8 +9,8 @@
 --   ArmorUpgrades.lua      护甲升级
 --   NeuralAdjustments.lua  神经调整
 --   AssistUpgrades.lua     辅助升级
---   Weapon*.lua            手持武器配件
---   HeldWeapons.lua        自带配件效果的武器标记
+--   Weapon*.lua            手持武器配件与弹匣
+--   HeldWeapons.lua        武器本体自带效果
 --
 -- >> 完整配置说明 <<
 --
@@ -28,9 +28,9 @@
 --   登记可放入主体装备库存的插板与芯片；无需加入 mainItems。
 --   配件插入主体时触发效果，取出或主体脱离角色时自动撤销。
 --
--- [weaponAccessories / heldWeapons — 武器配件与内置效果]
---   武器配件仅在母武器位于 weaponSlots 时生效；普通物品栏与背包中的武器不生效。
---   heldWeapons 用于仍由武器 XML 提供数值、但需要 Lua 人才标记的内置配件效果。
+-- [weaponAccessories / heldWeapons — 武器配件、弹匣与武器本体效果]
+--   配件和弹匣仅在母武器位于 weaponSlots 时生效；普通物品栏与背包中的武器不生效。
+--   heldWeapons 管理武器本体自带的数值、标记及不能原生化的事件 Affliction。
 --
 -- 各配置表均以物品 Identifier (Prefab ID) 为键，支持以下效果字段：
 --
@@ -138,6 +138,7 @@ merge(weaponAccessories, loadCategory("WeaponSights.lua"))
 merge(weaponAccessories, loadCategory("WeaponMuzzles.lua"))
 merge(weaponAccessories, loadCategory("WeaponChips.lua"))
 merge(weaponAccessories, loadCategory("WeaponUnderbarrels.lua"))
+merge(weaponAccessories, loadCategory("WeaponMagazines.lua"))
 
 local CONFIG = {
     fallbackInterval = 5.0,

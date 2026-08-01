@@ -46,9 +46,6 @@
       <StatusEffect type="OnSecondaryUse" target="This" setvalue="true" stackable="false">
         <sound file="%ModDir%/weapon/pistol/deadeyes.ogg" range="100.0" loop="false" volume="1" />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />

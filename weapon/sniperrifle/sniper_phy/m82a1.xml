@@ -33,13 +33,7 @@
         <Conditional deep_contract_no_sniper_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <Affliction identifier="deep_sniper_aim_heavy" strength="100" />
-      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true"></StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -73,9 +67,6 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
       <StatValue stattype="MovementSpeed" value="-0.4" />
     </Holdable>

@@ -26,9 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.2">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -72,9 +69,6 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon reload="0.18" weapondamagemodifier="1.3" reloadnoskill="1" reloadskillrequirement="100" holdtrigger="true" barrelpos="321,43" spread="2" unskilledspread="3" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.18" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">

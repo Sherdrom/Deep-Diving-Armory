@@ -1,5 +1,4 @@
 -- 整合脚本：伤害衰减 + 深潜枪水中检测 + 对巨兽衰减
-local AH = AfflictionHelper
 
 -- ==================== 配置 ====================
 
@@ -27,11 +26,13 @@ end
 
 local falloffProfiles = {
     ["deep_damage_fall_off_600_1200_detect"] = {
+        marker = Identifier("deep_damage_fall_off_600_1200_detect"),
         falloffStartDistance = 600,
         falloffEndDistance = 1200,
         minDamageMultiplier = 0.05
     },
     ["deep_damage_fall_off_1500_2300_detect"] = {
+        marker = Identifier("deep_damage_fall_off_1500_2300_detect"),
         falloffStartDistance = 1500,
         falloffEndDistance = 2300,
         minDamageMultiplier = 0.05
@@ -65,11 +66,11 @@ local function calcFalloffMultiplier(distance, profile)
 end
 
 local function detectFalloff(attacker)
-    if attacker == nil or attacker.CharacterHealth == nil then return nil, nil end
+    if attacker == nil or attacker.Info == nil then return nil, nil end
 
     for affName, profile in pairs(falloffProfiles) do
-        if AH.GetAffStrength(attacker, affName) > 0.5 then
-            debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), AH.GetAffStrength(attacker, affName)))
+        if attacker.Info:GetSavedStatValue(StatTypes.None, profile.marker) > 0 then
+            debugPrint("Match:", affName)
             return affName, profile
         end
     end
@@ -86,13 +87,12 @@ local function detectFalloff(attacker)
 end
 
 local function getAllAffsDebug(attacker)
-    if attacker == nil or attacker.CharacterHealth == nil then return "" end
+    if attacker == nil or attacker.Info == nil then return "" end
 
     local parts = {}
-    for affName, _ in pairs(falloffProfiles) do
-        local strength = AH.GetAffStrength(attacker, affName)
-        if strength > 0 then
-            parts[#parts + 1] = string.format("%s=%.2f", tostring(affName), strength)
+    for affName, profile in pairs(falloffProfiles) do
+        if attacker.Info:GetSavedStatValue(StatTypes.None, profile.marker) > 0 then
+            parts[#parts + 1] = tostring(affName) .. "=active"
         else
             parts[#parts + 1] = tostring(affName) .. "=none"
         end
