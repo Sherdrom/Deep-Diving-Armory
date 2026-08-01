@@ -8,6 +8,17 @@ local CONFIG = _G.AdjustEquipmentConfig
 
 local MAIN_CONFIG = CONFIG.mainItems or {}
 local SUB_CONFIG = CONFIG.subItems or {}
+local fallbackInterval = CONFIG.fallbackInterval or 5.0
+local RESISTANCE_SOURCE = Identifier("dda_adjust_equipment")
+local resistanceKeys = {}
+local talentMarkerIds = {}
+for _, configs in ipairs({ MAIN_CONFIG, SUB_CONFIG }) do
+    for _, cfg in pairs(configs) do
+        for _, id in ipairs(cfg.talentMarkers or {}) do
+            if type(id) == "string" and id ~= "" then talentMarkerIds[id] = Identifier(id) end
+        end
+    end
+end
 local WEARABLE_SLOTS = CONFIG.wearableSlots or {
     InvSlotType.Head,
     InvSlotType.InnerClothes,
@@ -43,9 +54,29 @@ local function validateItemConfigs(configs)
                 warn("invalid stat value", itemId, tostring(stat.statType))
             end
         end
+        if cfg.statGroup ~= nil and (type(cfg.statGroup) ~= "string" or cfg.statGroup == "") then
+            warn("invalid stat group", itemId, tostring(cfg.statGroup))
+        end
+        for _, group in ipairs(cfg.blocksStatGroups or {}) do
+            if type(group) ~= "string" or group == "" then
+                warn("invalid blocked stat group", itemId, tostring(group))
+            end
+        end
         for _, flagName in ipairs(cfg.flags or {}) do
             if not AbilityFlags[flagName] then
                 warn("invalid AbilityFlag", itemId, tostring(flagName))
+            end
+        end
+        for _, marker in ipairs(cfg.talentMarkers or {}) do
+            if type(marker) ~= "string" or marker == "" then
+                warn("invalid talent marker", itemId, tostring(marker))
+            end
+        end
+        for _, resistance in ipairs(cfg.resistances or {}) do
+            if type(resistance.id) ~= "string" or resistance.id == "" then
+                warn("invalid resistance identifier", itemId, tostring(resistance.id))
+            elseif type(resistance.multiplier) ~= "number" or resistance.multiplier < 0 then
+                warn("invalid resistance multiplier", itemId, tostring(resistance.id))
             end
         end
         for _, affliction in ipairs(afflictionList(cfg.affliction)) do
@@ -90,6 +121,31 @@ local function removeStats(character, applied)
     end
 end
 
+local function eachActiveEffects(state, callback)
+    for _, source in pairs(state.mains) do
+        callback(source.effects)
+        for _, sub in pairs(source.subs) do callback(sub.effects) end
+    end
+end
+
+local function refreshStats(state)
+    local blocked = {}
+    eachActiveEffects(state, function(effects)
+        for _, group in ipairs(effects.cfg.blocksStatGroups or {}) do blocked[group] = true end
+    end)
+    eachActiveEffects(state, function(effects)
+        local shouldApply = not blocked[effects.cfg.statGroup]
+        if shouldApply and not effects.statsApplied then
+            effects.stats = applyStats(state.character, effects.cfg.stats)
+            effects.statsApplied = true
+        elseif not shouldApply and effects.statsApplied then
+            removeStats(state.character, effects.stats)
+            effects.stats = {}
+            effects.statsApplied = false
+        end
+    end)
+end
+
 local function acquireFlags(state, flags)
     local applied = {}
     for _, flagName in ipairs(flags or {}) do
@@ -121,6 +177,81 @@ local function releaseFlags(state, applied)
     end
 end
 
+local function acquireTalentMarkers(state, configured)
+    local applied = {}
+    local info = state.character.Info
+    if not info then return applied end
+    for _, id in ipairs(configured or {}) do
+        if type(id) == "string" and id ~= "" then
+            local ref = state.talentMarkerRefs[id]
+            if not ref then
+                local identifier = talentMarkerIds[id] or Identifier(id)
+                ref = { count = 0, identifier = identifier }
+                state.talentMarkerRefs[id] = ref
+                info:ChangeSavedStatValue(StatTypes.None, 1, identifier, true, 1, true)
+            end
+            ref.count = ref.count + 1
+            applied[#applied + 1] = id
+        end
+    end
+    return applied
+end
+
+local function releaseTalentMarkers(state, applied)
+    local info = state.character.Info
+    for _, id in ipairs(applied or {}) do
+        local ref = state.talentMarkerRefs[id]
+        if ref then
+            ref.count = ref.count - 1
+            if ref.count <= 0 then
+                if info then info:ChangeSavedStatValue(StatTypes.None, 0, ref.identifier, true, 1, true) end
+                state.talentMarkerRefs[id] = nil
+            end
+        end
+    end
+end
+
+local function resistanceKey(id)
+    local key = resistanceKeys[id]
+    if not key then
+        key = CS.Barotrauma.TalentResistanceIdentifier(Identifier(id), RESISTANCE_SOURCE)
+        resistanceKeys[id] = key
+    end
+    return key
+end
+
+local function acquireResistances(state, configured)
+    local applied = {}
+    for _, cfg in ipairs(configured or {}) do
+        if type(cfg.id) == "string" and type(cfg.multiplier) == "number" and cfg.multiplier >= 0 then
+            local ref = state.resistanceRefs[cfg.id]
+            if not ref then
+                ref = { count = 0, key = resistanceKey(cfg.id), multiplier = cfg.multiplier }
+                state.resistanceRefs[cfg.id] = ref
+                state.character:ChangeAbilityResistance(ref.key, ref.multiplier)
+            elseif ref.multiplier ~= cfg.multiplier then
+                warn("conflicting resistance multiplier", cfg.id, tostring(cfg.multiplier))
+            end
+            ref.count = ref.count + 1
+            applied[#applied + 1] = cfg.id
+        end
+    end
+    return applied
+end
+
+local function releaseResistances(state, applied)
+    for _, id in ipairs(applied or {}) do
+        local ref = state.resistanceRefs[id]
+        if ref then
+            ref.count = ref.count - 1
+            if ref.count <= 0 then
+                state.character:RemoveAbilityResistance(ref.key)
+                state.resistanceRefs[id] = nil
+            end
+        end
+    end
+end
+
 local function acquireAfflictions(state, configured)
     local applied = {}
     local character = state.character
@@ -138,10 +269,14 @@ local function acquireAfflictions(state, configured)
                 local instance = health:GetAffliction(cfg.id, true)
                 if instance then instance.Strength = before + (cfg.strength or 1) end
                 local after = health:GetAfflictionStrengthByIdentifier(cfg.id)
+                local refreshDuration = prefab.Duration > 0 and fallbackInterval * 2 or nil
+                if instance and refreshDuration then instance.Duration = refreshDuration end
                 ref = {
                     count = 0,
                     amount = math.max(0, after - before),
                     target = after,
+                    prefabDuration = prefab.Duration,
+                    refreshDuration = refreshDuration,
                 }
                 state.afflictionRefs[cfg.id] = ref
             end
@@ -160,6 +295,10 @@ local function releaseAfflictions(state, applied)
         if ref then
             ref.count = ref.count - 1
             if ref.count <= 0 then
+                if ref.refreshDuration then
+                    local instance = health:GetAffliction(id, true)
+                    if instance then instance.Duration = ref.prefabDuration end
+                end
                 if ref.amount > 0 then health:ReduceAfflictionOnAllLimbs(id, ref.amount) end
                 state.afflictionRefs[id] = nil
             end
@@ -180,24 +319,31 @@ local function refreshAfflictions(state)
                 instance = health:GetAffliction(id, true)
             end
         end
-        if instance and instance.Strength < ref.target then
-            instance.Strength = ref.target
+        if instance then
+            if instance.Strength < ref.target then instance.Strength = ref.target end
+            if ref.refreshDuration then instance.Duration = ref.refreshDuration end
         end
     end
 end
 
 local function applyEffects(state, cfg)
     return {
+        cfg = cfg,
         stats = applyStats(state.character, cfg.stats),
+        statsApplied = true,
         flags = acquireFlags(state, cfg.flags),
+        talentMarkers = acquireTalentMarkers(state, cfg.talentMarkers),
+        resistances = acquireResistances(state, cfg.resistances),
         afflictions = acquireAfflictions(state, cfg.affliction),
     }
 end
 
 local function removeEffects(state, effects)
     if not effects then return end
-    removeStats(state.character, effects.stats)
+    if effects.statsApplied then removeStats(state.character, effects.stats) end
     releaseFlags(state, effects.flags)
+    releaseTalentMarkers(state, effects.talentMarkers)
+    releaseResistances(state, effects.resistances)
     releaseAfflictions(state, effects.afflictions)
 end
 
@@ -239,6 +385,7 @@ local function syncSubItems(state, source)
             log("unequip sub", sub.itemId, "from", source.itemId)
         end
     end
+    refreshStats(state)
 end
 
 local charStates = {}
@@ -258,6 +405,8 @@ local function ensureState(character)
             character = character,
             mains = {},
             flagRefs = {},
+            talentMarkerRefs = {},
+            resistanceRefs = {},
             afflictionRefs = {},
         }
         charStates[character] = state
@@ -298,6 +447,7 @@ local function removeMain(state, item)
     for _, sub in pairs(source.subs) do removeEffects(state, sub.effects) end
     removeEffects(state, source.effects)
     state.mains[item] = nil
+    refreshStats(state)
     log("unequip main", state.character.Name or "?", source.itemId)
 end
 
@@ -309,8 +459,20 @@ local function removeEmptyState(state)
     if not state.dead and not next(state.mains) then charStates[state.character] = nil end
 end
 
+local function resetTalentMarkers(character)
+    local info = character and character.Info
+    if not info then return end
+    for _, identifier in pairs(talentMarkerIds) do
+        if info:GetSavedStatValue(StatTypes.None, identifier) ~= 0 then
+            info:ChangeSavedStatValue(StatTypes.None, 0, identifier, true, 1, true)
+        end
+    end
+end
+
 local function scanCharacter(character)
-    if not character or character.Removed or character.IsDead or not character.Inventory then return end
+    if not character or character.Removed or character.IsDead then return end
+    resetTalentMarkers(character)
+    if not character.Inventory then return end
     for _, slot in ipairs(WEARABLE_SLOTS) do
         addMain(character, character.Inventory:GetItemInLimbSlot(slot))
     end
@@ -394,13 +556,16 @@ Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
             removeMain(state, item)
             removeEmptyState(state)
         else
+            local changed = false
             for _, source in pairs(state.mains) do
                 local sub = source.subs[item]
                 if sub then
                     removeEffects(state, sub.effects)
                     source.subs[item] = nil
+                    changed = true
                 end
             end
+            if changed then refreshStats(state) end
         end
     end
 end)
@@ -411,6 +576,8 @@ Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character
     clearState(state)
     state.dead = true
 end)
+
+Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", resetTalentMarkers)
 
 Hook.Add("loaded", "AdjustEquipmentStatvalue.Loaded", function()
     validateConfig()
@@ -424,7 +591,6 @@ end)
 
 Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
 
-local fallbackInterval = CONFIG.fallbackInterval or 5.0
 local lastFallbackTime = Timer.GetTime()
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()

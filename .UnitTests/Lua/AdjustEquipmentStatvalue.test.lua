@@ -14,8 +14,14 @@ InvSlotType = {
     Bag = "Bag",
 }
 LimbType = { Head = "Head" }
-StatTypes = { MovementSpeed = "MovementSpeed" }
+StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
 AbilityFlags = { SharedFlag = "SharedFlag" }
+Identifier = function(value) return value end
+CS = { Barotrauma = {
+    TalentResistanceIdentifier = function(resistanceId, sourceId)
+        return resistanceId .. "|" .. sourceId
+    end,
+} }
 
 Hook = { HookMethodType = { After = "After" } }
 function Hook.Add(name, _, callback) events[name] = callback end
@@ -28,8 +34,10 @@ function Hook.Patch(_, className, methodName, _, callback, patchType)
     patches[className .. "." .. methodName] = callback
 end
 
-local markerPrefab = { id = "marker" }
-function markerPrefab:Instantiate(strength) return { id = self.id, Strength = strength } end
+local markerPrefab = { id = "marker", Duration = 1 }
+function markerPrefab:Instantiate(strength)
+    return { id = self.id, Strength = strength, Duration = self.Duration }
+end
 AfflictionPrefab = { Prefabs = { marker = markerPrefab } }
 ItemPrefab = { GetItemPrefab = function() return true end }
 
@@ -43,11 +51,13 @@ _G.AdjustEquipmentConfig = {
                 { statType = "MovementSpeed", value = 3 },
             },
             flags = { "SharedFlag" },
+            talentMarkers = { "talent_marker" },
             affliction = { id = "marker", strength = 1 },
         },
         helmet = {
             stats = { { statType = "MovementSpeed", value = 7 } },
             flags = { "SharedFlag" },
+            talentMarkers = { "talent_marker" },
             affliction = { id = "marker", strength = 1 },
         },
     },
@@ -55,6 +65,14 @@ _G.AdjustEquipmentConfig = {
         module = {
             stats = { { statType = "MovementSpeed", value = 1 } },
             flags = { "SharedFlag" },
+            resistances = { { id = "burn", multiplier = 0.5 } },
+        },
+        plate = {
+            stats = { { statType = "MovementSpeed", value = -4 } },
+            statGroup = "plateDebuff",
+        },
+        defender = {
+            blocksStatGroups = { "plateDebuff" },
         },
     },
 }
@@ -103,12 +121,21 @@ local character = {
     flags = {},
     addFlagCalls = 0,
     removeFlagCalls = 0,
+    resistances = {},
+    addResistanceCalls = 0,
+    removeResistanceCalls = 0,
+    Info = { savedStats = { talent_marker = 1 }, changeCalls = 0 },
     CharacterHealth = health,
     Inventory = {},
     AnimController = {},
 }
 function character.Inventory:GetItemInLimbSlot(slot) return slots[slot] end
 function character.AnimController:GetLimb() return {} end
+function character.Info:GetSavedStatValue(_, id) return self.savedStats[id] or 0 end
+function character.Info:ChangeSavedStatValue(_, value, id)
+    self.changeCalls = self.changeCalls + 1
+    self.savedStats[id] = value
+end
 function character:ChangeStat(statType, value)
     self.stats[statType] = (self.stats[statType] or 0) + value
 end
@@ -126,10 +153,20 @@ Character = { CharacterList = { character } }
 
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
+assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
+local markerChangeBaseline = character.Info.changeCalls
 
 local function tick()
     now = now + 0.5
     events.think()
+end
+function character:ChangeAbilityResistance(key, multiplier)
+    self.addResistanceCalls = self.addResistanceCalls + 1
+    self.resistances[key] = multiplier
+end
+function character:RemoveAbilityResistance(key)
+    self.removeResistanceCalls = self.removeResistanceCalls + 1
+    self.resistances[key] = nil
 end
 
 local armor, helmet = makeItem("armor"), makeItem("helmet")
@@ -149,13 +186,17 @@ equip(armor, { character = character })
 equip(helmet, { character = character })
 assert(character.stats.MovementSpeed == 12, "simultaneous main items or duplicate stats failed")
 assert(character.addFlagCalls == 1 and character.flags.SharedFlag, "flag reference counting failed")
+assert(character.Info.savedStats.talent_marker == 1 and character.Info.changeCalls == markerChangeBaseline + 1,
+    "talent marker reference counting failed")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "affliction reference counting failed")
 
 health.afflictions.marker.Strength = 0.25
+health.afflictions.marker.Duration = 0.25
 tick()
 assert(health.afflictions.marker.Strength == 0.25, "affliction refreshed before fallback interval")
 for _ = 1, 3 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not repair lowered affliction")
+assert(health.afflictions.marker.Duration == 4, "fallback did not maintain timed affliction")
 health.afflictions.marker = nil
 for _ = 1, 4 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not restore removed affliction")
@@ -165,22 +206,32 @@ tick()
 assert(character.stats.MovementSpeed == 12, "think still scanned contained items")
 itemContained(armorContainer, { containedItem = module1 })
 assert(character.stats.MovementSpeed == 14, "same-identifier subitems collapsed")
+assert(character.resistances["burn|dda_adjust_equipment"] == 0.5 and character.addResistanceCalls == 1,
+    "resistance reference counting failed")
 
 armor.contents = { module2 }
 tick()
 assert(character.stats.MovementSpeed == 14, "think still scanned removed contained items")
 itemRemoved(armorContainer, { containedItem = module1 })
 assert(character.stats.MovementSpeed == 13, "subitem removal was not symmetric")
+assert(character.resistances["burn|dda_adjust_equipment"] == 0.5 and character.removeResistanceCalls == 0,
+    "shared resistance removed too early")
 
 unequip({ Item = helmet }, { character = character })
 slots[InvSlotType.Head] = nil
 assert(character.stats.MovementSpeed == 6 and character.flags.SharedFlag, "one main removed effects owned by another")
+assert(character.Info.savedStats.talent_marker == 1 and character.Info.changeCalls == markerChangeBaseline + 1,
+    "shared talent marker removed too early")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "shared affliction removed too early")
 
 slots[InvSlotType.OuterClothes] = nil
 unequip({ Item = armor }, { character = character })
 assert(character.stats.MovementSpeed == 0, "final main cleanup leaked stats")
 assert(not character.flags.SharedFlag and character.removeFlagCalls == 1, "final flag cleanup failed")
+assert(character.Info.savedStats.talent_marker == 0 and character.Info.changeCalls == markerChangeBaseline + 2,
+    "final talent marker cleanup failed")
+assert(not character.resistances["burn|dda_adjust_equipment"] and character.removeResistanceCalls == 1,
+    "final resistance cleanup failed")
 assert(health:GetAfflictionStrengthByIdentifier("marker") == 0, "final affliction cleanup failed")
 
 slots[InvSlotType.OuterClothes] = armor
@@ -209,5 +260,20 @@ equip(armor, { character = character })
 slots[InvSlotType.OuterClothes] = nil
 unequip({ Item = armor }, { character = character })
 assert(character.flags.SharedFlag, "pre-existing external flag was removed")
+
+local plate, defender = makeItem("plate"), makeItem("defender")
+slots[InvSlotType.OuterClothes] = armor
+armor.contents = { plate }
+equip(armor, { character = character })
+assert(character.stats.MovementSpeed == 1, "stat group baseline failed")
+armor.contents = { plate, defender }
+itemContained(armorContainer, { containedItem = defender })
+assert(character.stats.MovementSpeed == 5, "stat group blocker did not remove active stats")
+armor.contents = { plate }
+itemRemoved(armorContainer, { containedItem = defender })
+assert(character.stats.MovementSpeed == 1, "stat group blocker removal did not restore stats")
+slots[InvSlotType.OuterClothes] = nil
+unequip({ Item = armor }, { character = character })
+assert(character.stats.MovementSpeed == 0, "stat group cleanup leaked stats")
 
 print("AdjustEquipmentStatvalue state check OK")

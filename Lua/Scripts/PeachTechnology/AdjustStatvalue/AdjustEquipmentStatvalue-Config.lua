@@ -27,9 +27,21 @@
 --       （0.2 = 20%），Override 类为覆盖值
 --     例: { statType = "WalkingSpeed", value = -0.15 }
 --
+--   statGroup (string) 将本物品的 stats 归入一个可屏蔽组。
+--   blocksStatGroups (string[]) 装备期间不应用指定组的 stats；插入/取出时事件驱动刷新。
+--
 --   flags  (string[]) 修改角色的 AbilityFlag。每项是 AbilityFlags 枚举成员名（大小写敏感），
 --                     见附录B。装备时添加，脱下时移除。
 --     例: flags = { "ImmuneToPressure", "MustWalk" }
+--
+--   talentMarkers (string[]) 供原生人才条件 AbilityConditionHasPermanentStat 读取的事件标记。
+--                            只在插入 / 取出时更新，不创建 Affliction，不由 think 刷新。
+--     例: talentMarkers = { "chip_frogman_1" }
+--
+--   resistances (table[]) 通过角色原生 AbilityResistance 添加全身抗性，不创建 Affliction。
+--     { id = "Affliction Identifier 或 Type", multiplier = number }
+--     - multiplier: 伤害倍率；0.5 = 50% 抗性，1 = 无抗性。不能用于限定肢体的抗性。
+--     例: resistances = { { id = "burn", multiplier = 0.5 } }
 --
 --   affliction (table) 装备时向角色 Head 肢体施加指定 Affliction，脱下时移除。
 --     单个: { id = "Affliction Prefab 标识名", strength = number }
@@ -42,7 +54,7 @@
 --                  { id = "deep_gpnvg18", strength = 1 },
 --              }
 --
---   以上 stats / flags / affliction 均为选填，不填则跳过，无副作用。
+--   以上 stats / flags / talentMarkers / resistances / affliction 均为选填，不填则跳过，无副作用。
 --
 -- [附录A — 常用 StatTypes]
 --   技能加成:     ElectricalSkillBonus  HelmSkillBonus  MechanicalSkillBonus
@@ -149,6 +161,50 @@ local CONFIG = {
         },
 
         ["deep_tactec"] = {
+        },
+
+        ["deep_m1"] = {
+        },
+
+        -- 主体：辅助芯片胸挂
+        ["tanzan_m22"] = {
+        },
+
+        ["deep_alpha"] = {
+        },
+
+        ["deep_separatists"] = {
+        },
+
+        ["deep_commando"] = {
+        },
+
+        ["deep_coalition"] = {
+        },
+
+        ["deep_mk3"] = {
+        },
+
+        ["deep_m43"] = {
+        },
+
+        ["deep_ghost"] = {
+        },
+
+        ["deep_thunder"] = {
+        },
+
+        -- 主体：辅助芯片耳机
+        ["gssh01_headset"] = {
+        },
+
+        ["m32_headset"] = {
+        },
+
+        ["walker_headset"] = {
+        },
+
+        ["deep_yangtuo_hat"] = {
         },
 
         -- 主体：衣服
@@ -631,56 +687,79 @@ local CONFIG = {
         },
 
         ["chip_emergency_defibrillation"] = {
-            affliction = { id = "chip_emergency_defibrillation_detect", strength = 1 },
+            talentMarkers = { "chip_emergency_defibrillation_detect" },
         },
 
         -- 子体：神经调整
         ["chip_cqb"] = {
-            affliction = {
-              { id = "chip_cqb_1", strength = 2 },
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "AttackMultiplier", value = 0.1 },
             },
+            resistances = { { id = "stun", multiplier = 0.75 } },
         },
 
         ["chip_frogman"] = {
-            affliction = {
-              { id = "chip_frogman_1", strength = 2 },
-            },
+            talentMarkers = { "chip_frogman_1" },
         },
 
         ["chip_marksman"] = {
-            affliction = {
-              { id = "deep_chip_marksman_1", strength = 2 },
+            stats = {
+                { statType = "AttackMultiplier", value = 0.5 },
+                { statType = "RangedSpreadReduction", value = 0.5 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
             },
+            talentMarkers = { "deep_chip_marksman_1" },
         },
 
         ["chip_commando"] = {
-            affliction = {
-              { id = "deep_commando_1", strength = 2 },
+            stats = {
+                { statType = "MovementSpeed", value = 0.2 },
+                { statType = "RangedSpreadReduction", value = -0.5 },
             },
+            resistances = {
+                { id = "stun", multiplier = 0.75 },
+                { id = "damage", multiplier = 0.75 },
+            },
+            talentMarkers = { "deep_commando_1" },
         },
 
         ["chip_heavy_defender"] = {
-            affliction = {
-              { id = "deep_chip_heavy_defender", strength = 2 },
+            stats = {
+                { statType = "AttackMultiplier", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.3 },
             },
+            blocksStatGroups = { "deep_plate_debuff" },
+            talentMarkers = { "deep_chip_heavy_defender" },
         },
 
         ["chip_blaster"] = {
+            stats = {
+                { statType = "ExplosionDamageMultiplier", value = 0.5 },
+                { statType = "ExplosionRadiusMultiplier", value = 0.2 },
+            },
             affliction = {
-              { id = "deep_chip_blaster", strength = 2 },
+                { id = "deep_chip_blaster", strength = 2 },
             },
         },
 
         ["chip_machinegunner"] = {
             affliction = {
-              { id = "deep_machinegunner_detect", strength = 2 },
+                { id = "deep_machinegunner_detect", strength = 2 },
             },
         },
 
         ["chip_striker"] = {
-            affliction = {
-              { id = "deep_chip_striker", strength = 2 },
+            stats = {
+                { statType = "RangedSpreadReduction", value = -0.3 },
+                { statType = "RangedAttackSpeed", value = -0.2 },
+                { statType = "WalkingSpeed", value = 0.2 },
             },
+            resistances = {
+                { id = "damage", multiplier = 0.75 },
+                { id = "stun", multiplier = 0.75 },
+            },
+            talentMarkers = { "deep_chip_striker" },
         },
 
         ["chip_doc"] = {
@@ -756,6 +835,10 @@ local CONFIG = {
                 { statType = "RepairSpeed", value = 0.5 },
                 { statType = "FlowResistance", value = 0.5 },
             },
+            resistances = {
+                { id = "burn", multiplier = 0.5 },
+                { id = "electricshock", multiplier = 0.5 },
+            },
         },
 
         ["chip_electrician_2"] = {
@@ -769,6 +852,10 @@ local CONFIG = {
                 { statType = "IncreaseFabricationQuality", value = 1 },
                 { statType = "FlowResistance", value = 0.8 },
             },
+            resistances = {
+                { id = "burn", multiplier = 0.5 },
+                { id = "electricshock", multiplier = 0.5 },
+            },
         },
 
         ["chip_security"] = {
@@ -778,6 +865,8 @@ local CONFIG = {
                 { statType = "MaximumHealthMultiplier", value = 0.1 },
                 { statType = "MeleeAttackMultiplier", value = 0.2 },
                 { statType = "MeleeAttackSpeed", value = 0.2 },
+                { statType = "BuffDurationMultiplier", value = 0.2 },
+                { statType = "DebuffDurationMultiplier", value = 0.2 },
                 { statType = "FlowResistance", value = 0.5 },
                 { statType = "RangedSpreadReduction", value = 0.2 },
                 { statType = "TurretAttackSpeed", value = 0.1 },
@@ -791,6 +880,8 @@ local CONFIG = {
                 { statType = "MaximumHealthMultiplier", value = 0.2 },
                 { statType = "MeleeAttackMultiplier", value = 0.4 },
                 { statType = "MeleeAttackSpeed", value = 0.4 },
+                { statType = "BuffDurationMultiplier", value = 0.4 },
+                { statType = "DebuffDurationMultiplier", value = 0.4 },
                 { statType = "FlowResistance", value = 0.8 },
                 { statType = "RangedSpreadReduction", value = 0.25 },
                 { statType = "TurretAttackSpeed", value = 0.15 },
@@ -821,42 +912,53 @@ local CONFIG = {
             },
         },
 
-        ["chip_captain"] = {
-            stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
-            },
-        },
+        -- 船长芯片保留 XML：多人唯一性依赖 Affliction 衰减与抗性。
 
-        ["chip_captain_2"] = {
-            stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
-            },
-        },
-
+        -- 助手芯片
         ["chip_assistant"] = {
             stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
+                { statType = "SkillGainSpeed", value = 0.5 },
+                { statType = "MovementSpeed", value = 0.1 },
+            },
+            resistances = { { id = "oxygenlow", multiplier = 0 } },
+            affliction = {
+                { id = "clownpower", strength = 10 },
+                { id = "psychosis", strength = 10 },
             },
         },
 
         ["chip_assistant_2"] = {
             stats = {
+                { statType = "SkillGainSpeed", value = 1 },
                 { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
+            },
+            resistances = { { id = "oxygenlow", multiplier = 0 } },
+            affliction = {
+                { id = "chip_assistant_2", strength = 2 },
+                { id = "clownpower", strength = 10 },
             },
         },
 
         ["deep_ten_star_general_assist_upgrading"] = {
             stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
+                { statType = "SkillGainSpeed", value = 10 },
+                { statType = "ReputationGainMultiplier", value = 1 },
+                { statType = "MissionMoneyGainMultiplier", value = 1 },
+                { statType = "ExperienceGainMultiplier", value = 1 },
+                { statType = "ExtraMissionCount", value = 10 },
+                { statType = "ExtraSpecialSalesCount", value = 10 },
+                { statType = "StoreSellMultiplier", value = 10 },
+                { statType = "StoreBuyMultiplier", value = 1 },
+                { statType = "ShipyardBuyMultiplier", value = 1 },
             },
         },
 
     },
 }
+
+-- 插板惩罚已迁移为原生 StatValue；重装防御者通过同组屏蔽保持原有免疫语义。
+for itemId, cfg in pairs(CONFIG.subItems) do
+    if itemId:sub(1, 11) == "deep_plate_" then cfg.statGroup = "deep_plate_debuff" end
+end
 
 _G.AdjustEquipmentConfig = CONFIG

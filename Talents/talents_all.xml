@@ -108,7 +108,7 @@
     <!-- 神射手-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_marksman_1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_marksman_1" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -120,7 +120,7 @@
     <!-- 突击手-->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_commando_1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_commando_1" min="1" />
         <AbilityConditionNearbyCharacterCount distance="700" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -132,7 +132,7 @@
     <!-- 蛙人训练-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_frogman_1" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_frogman_1" min="1" />
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
@@ -146,7 +146,7 @@
     <!-- 重装防御者-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_heavy_defender" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_heavy_defender" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="500" requiresalive="true" allowself="true">
@@ -304,7 +304,7 @@
     <!-- 强攻手-->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_striker" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -319,7 +319,7 @@
     </AbilityGroupInterval>
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_striker" min="1" />
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
@@ -617,7 +617,7 @@
     <!--紧急除颤-->
     <AbilityGroupInterval interval="0.5" maxtriggercount="1" effectdelay="1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_emergency_defibrillation_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_emergency_defibrillation_detect" min="1" />
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0" />
       </Conditions>
       <Abilities>

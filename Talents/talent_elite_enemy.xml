@@ -374,7 +374,7 @@
     <!--紧急除颤-->
     <AbilityGroupInterval interval="0.5" maxtriggercount="1" effectdelay="1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_emergency_defibrillation_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_emergency_defibrillation_detect" min="1" />
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0" />
       </Conditions>
       <Abilities>
