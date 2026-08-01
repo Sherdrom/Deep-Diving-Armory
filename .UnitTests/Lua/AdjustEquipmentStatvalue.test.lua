@@ -276,4 +276,21 @@ slots[InvSlotType.OuterClothes] = nil
 unequip({ Item = armor }, { character = character })
 assert(character.stats.MovementSpeed == 0, "stat group cleanup leaked stats")
 
+Deep_Lua = { Path = "." }
+_G.AdjustEquipmentConfig = nil
+dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
+local production = _G.AdjustEquipmentConfig
+local function countEntries(values)
+    local count = 0
+    for _ in pairs(values) do count = count + 1 end
+    return count
+end
+assert(countEntries(production.mainItems) == 64 and countEntries(production.subItems) == 81,
+    "split production config lost or duplicated items")
+assert(production.mainItems.deep_hpc
+    and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
+    and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
+    and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2",
+    "split production config changed category data")
+
 print("AdjustEquipmentStatvalue state check OK")
