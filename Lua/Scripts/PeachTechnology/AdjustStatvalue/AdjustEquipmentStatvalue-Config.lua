@@ -6,9 +6,8 @@
 -- >> 完整配置说明 <<
 --
 -- [顶层参数]
---   checkInterval (number)  think 轮询间隔（秒），默认 0.5。
---                          仅子体（IsSub）需要轮询检测放入/取出；
---                          主体（IsMain）完全由 item.equip/item.unequip 事件驱动，不受此值影响。
+--   afflictionRefreshInterval (number) 受管 Affliction 的刷新间隔（秒），默认 0.5。
+--   fallbackInterval          (number) think 兜底巡检间隔（秒），默认 5。
 --   debug         (bool)    是否启用 dbgPrint 调试输出，生产环境设为 false。
 --
 -- [items — 物品配置]
@@ -85,7 +84,8 @@
 -- ============================================================
 
 local CONFIG = {
-    checkInterval = 0.5,
+    afflictionRefreshInterval = 0.5,
+    fallbackInterval = 5.0,
     debug = false,
     -- Only items whose XML OnWearing path has been removed belong here.
     migratedItems = {
@@ -107,6 +107,27 @@ local CONFIG = {
         ["deep_osprey"] = true,
         ["deep_bagariy"] = true,
         ["deep_tactec"] = true,
+        ["deep_heyuanmu_suit"] = true,
+        ["6b47"] = true,
+        ["deep_fast_helmet"] = true,
+        ["deep_fast_helmet_black"] = true,
+        ["deep_altyn"] = true,
+        ["deep_maska"] = true,
+        ["deep_kiver_m"] = true,
+        ["deep_Fearless_Vanguard"] = true,
+        ["deep_zsh_1_2_m"] = true,
+        ["6b47_npc"] = true,
+        ["6b47_npc_night4"] = true,
+        ["6b47_npc_thermalgoggles"] = true,
+        ["6b47_npc_healthscan"] = true,
+        ["deep_fast_helmet_npc"] = true,
+        ["deep_fast_helmet_npc_night4"] = true,
+        ["deep_fast_helmet_npc_thermalgoggles"] = true,
+        ["deep_fast_helmet_npc_healthscan"] = true,
+        ["deep_fast_helmet_black_npc"] = true,
+        ["deep_fast_helmet_black_npc_night4"] = true,
+        ["deep_fast_helmet_black_npc_thermalgoggles"] = true,
+        ["deep_fast_helmet_black_npc_healthscan"] = true,
     },
     items = {
 
@@ -212,58 +233,34 @@ local CONFIG = {
 
         ["deep_altyn"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_heavyhelmet_detect", strength = 1 },
-            },
         },
 
         ["deep_maska"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_heavyhelmet_detect", strength = 1 },
-            },
         },
 
         ["deep_kiver_m"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_heavyhelmet_detect", strength = 1 },
-            },
         },
 
         ["deep_Fearless_Vanguard"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_heavyhelmet_detect", strength = 1 },
-            },
         },
 
         ["deep_zsh_1_2_m"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_heavyhelmet_detect", strength = 1 },
-            },
         },
 
         ["6b47_npc_night4"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_gpnvg18", strength = 1 },
-            },
         },
 
         ["deep_fast_helmet_npc_night4"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_gpnvg18", strength = 1 },
-            },
         },
 
         ["deep_fast_helmet_black_npc_night4"] = {
             IsMain = true,
-            affliction = {
-              { id = "deep_gpnvg18", strength = 1 },
-            },
         },
 
         ["deep_fast_helmet_ghost_origin_npc_night4"] = {
@@ -766,95 +763,60 @@ local CONFIG = {
             affliction = { id = "chip_emergency_defibrillation_detect", strength = 1 },
         },
 
-        --子体（头盔战术设备）
-        ["gpnvg_18"] = {
-            IsSub = true,
-            affliction = {
-              { id = "deep_helmet_tac_detect", strength = 1 },
-              { id = "deep_gpnvg18", strength = 1 },
-            },
-        },
-
         --子体（神经调整）
         ["chip_cqb"] = {
             IsSub = true,
-            stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "AttackMultiplier", value = 0.1 },
-            },
             affliction = {
-              { id = "chip_cqb_1", strength = 1 },
+              { id = "chip_cqb_1", strength = 2 },
             },
         },
 
         ["chip_frogman"] = {
             IsSub = true,
             affliction = {
-              { id = "chip_frogman_1", strength = 1 },
+              { id = "chip_frogman_1", strength = 2 },
             },
         },
 
         ["chip_marksman"] = {
             IsSub = true,
-            stats = {
-                { statType = "AttackMultiplier", value = 0.5 },
-                { statType = "RangedSpreadReduction", value = 0.5 },
-                { statType = "RangedAttackSpeed", value = -0.2 },
-            },
             affliction = {
-              { id = "deep_chip_marksman_1", strength = 1 },
+              { id = "deep_chip_marksman_1", strength = 2 },
             },
         },
 
         ["chip_commando"] = {
             IsSub = true,
-            stats = {
-                { statType = "MovementSpeed", value = 0.2 },
-                { statType = "RangedSpreadReduction", value = -0.5 },
-            },
             affliction = {
-              { id = "deep_commando_1", strength = 1 },
+              { id = "deep_commando_1", strength = 2 },
             },
         },
 
         ["chip_heavy_defender"] = {
             IsSub = true,
-            stats = {
-                { statType = "AttackMultiplier", value = -0.3 },
-                { statType = "RangedAttackSpeed", value = -0.3 },
-            },
             affliction = {
-              { id = "deep_chip_heavy_defender", strength = 1 },
+              { id = "deep_chip_heavy_defender", strength = 2 },
             },
         },
 
         ["chip_blaster"] = {
             IsSub = true,
-            stats = {
-                { statType = "ExplosionDamageMultiplier", value = 0.5 },
-                { statType = "ExplosionRadiusMultiplier", value = 0.2 },
-            },
             affliction = {
-              { id = "deep_chip_blaster", strength = 1 },
+              { id = "deep_chip_blaster", strength = 2 },
             },
         },
 
         ["chip_machinegunner"] = {
             IsSub = true,
             affliction = {
-              { id = "deep_machinegunner_detect", strength = 1 },
+              { id = "deep_machinegunner_detect", strength = 2 },
             },
         },
 
         ["chip_striker"] = {
             IsSub = true,
-            stats = {
-                { statType = "RangedSpreadReduction", value = -0.3 },
-                { statType = "RangedAttackSpeed", value = -0.2 },
-                { statType = "WalkingSpeed", value = 0.2 },
-            },
             affliction = {
-              { id = "deep_chip_striker", strength = 1 },
+              { id = "deep_chip_striker", strength = 2 },
             },
         },
 

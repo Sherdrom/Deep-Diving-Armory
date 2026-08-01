@@ -1,5 +1,5 @@
 -- XML OnWearing -> event-driven equipment effects.
--- Main items use Item.Equip/Unequip patches; contained modules are checked at a low rate.
+-- Main items, contained modules and revives use events; think is fallback-only.
 
 local CONFIG = _G.AdjustEquipmentConfig
 if not CONFIG then
@@ -30,6 +30,8 @@ local function afflictionList(value)
     if value.id then return { value } end
     return value
 end
+
+local scheduleAfflictionRefresh
 
 local function validateConfig()
     for itemId, cfg in pairs(CONFIG.items) do
@@ -134,9 +136,16 @@ local function acquireAfflictions(state, configured)
             if not ref then
                 local before = health:GetAfflictionStrengthByIdentifier(cfg.id)
                 health:ApplyAffliction(head, prefab:Instantiate(cfg.strength or 1))
+                local instance = health:GetAffliction(cfg.id, true)
+                if instance then instance.Strength = before + (cfg.strength or 1) end
                 local after = health:GetAfflictionStrengthByIdentifier(cfg.id)
-                ref = { count = 0, amount = math.max(0, after - before) }
+                ref = {
+                    count = 0,
+                    amount = math.max(0, after - before),
+                    target = after,
+                }
                 state.afflictionRefs[cfg.id] = ref
+                scheduleAfflictionRefresh()
             end
             ref.count = ref.count + 1
             applied[#applied + 1] = cfg.id
@@ -156,6 +165,25 @@ local function releaseAfflictions(state, applied)
                 if ref.amount > 0 then health:ReduceAfflictionOnAllLimbs(id, ref.amount) end
                 state.afflictionRefs[id] = nil
             end
+        end
+    end
+end
+
+local function refreshAfflictions(state)
+    local health = state.character.CharacterHealth
+    if not health then return end
+    local head = state.character.AnimController and state.character.AnimController:GetLimb(LimbType.Head) or nil
+    for id, ref in pairs(state.afflictionRefs) do
+        local instance = health:GetAffliction(id, true)
+        if not instance then
+            local prefab = AfflictionPrefab.Prefabs[id]
+            if prefab then
+                health:ApplyAffliction(head, prefab:Instantiate(ref.target))
+                instance = health:GetAffliction(id, true)
+            end
+        end
+        if instance and instance.Strength < ref.target then
+            instance.Strength = ref.target
         end
     end
 end
@@ -216,6 +244,31 @@ local function syncSubItems(state, source)
 end
 
 local charStates = {}
+local afflictionRefreshScheduled = false
+
+scheduleAfflictionRefresh = function()
+    if afflictionRefreshScheduled then return end
+    afflictionRefreshScheduled = true
+    Timer.Wait(function()
+        afflictionRefreshScheduled = false
+        local hasActiveAfflictions = false
+        for _, state in pairs(charStates) do
+            if state.character and not state.character.Removed and next(state.afflictionRefs) then
+                hasActiveAfflictions = true
+                refreshAfflictions(state)
+            end
+        end
+        if hasActiveAfflictions then scheduleAfflictionRefresh() end
+    end, (CONFIG.afflictionRefreshInterval or 0.5) * 1000)
+end
+
+local function syncChangedContainer(container)
+    local mainItem = container and container.Item
+    local character = mainItem and mainItem:GetRootInventoryOwner()
+    local state = character and charStates[character]
+    local source = state and state.mains[mainItem]
+    if source then syncSubItems(state, source) end
+end
 
 local function ensureState(character)
     local state = charStates[character]
@@ -286,6 +339,15 @@ local function scanAllCharacters()
     for _, character in pairs(Character.CharacterList) do scanCharacter(character) end
 end
 
+local function restoreRevivedCharacter(character)
+    if not character or character.Removed or character.IsDead then return end
+    local state = charStates[character]
+    if state then state.dead = nil end
+    scanCharacter(character)
+    state = charStates[character]
+    if state then removeEmptyState(state) end
+end
+
 local function clearAllStates()
     for _, state in pairs(charStates) do
         if state.character and not state.character.Removed then clearState(state) end
@@ -318,6 +380,33 @@ Hook.Patch(
     Hook.HookMethodType.After
 )
 
+Hook.Patch(
+    "AdjustEquipmentStatvalue.ItemContained",
+    "Barotrauma.Items.Components.ItemContainer",
+    "OnItemContained",
+    { "Barotrauma.Item", "System.Boolean" },
+    syncChangedContainer,
+    Hook.HookMethodType.After
+)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.ItemRemovedFromContainer",
+    "Barotrauma.Items.Components.ItemContainer",
+    "OnItemRemoved",
+    { "Barotrauma.Item" },
+    syncChangedContainer,
+    Hook.HookMethodType.After
+)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.Revive",
+    "Barotrauma.Character",
+    "Revive",
+    { "System.Boolean", "System.Boolean" },
+    restoreRevivedCharacter,
+    Hook.HookMethodType.After
+)
+
 Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
     for _, state in pairs(charStates) do
         if state.mains[item] then
@@ -340,7 +429,6 @@ Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character
     if not state then return end
     clearState(state)
     state.dead = true
-    state.reviveTimer = 0
 end)
 
 Hook.Add("loaded", "AdjustEquipmentStatvalue.Loaded", function()
@@ -355,38 +443,31 @@ end)
 
 Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
 
-local frameCounter = 0
-local framesPerCheck = math.max(1, math.floor((CONFIG.checkInterval or 0.5) * 60))
+local fallbackInterval = CONFIG.fallbackInterval or 5.0
+local lastFallbackTime = Timer.GetTime()
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
-    frameCounter = frameCounter + 1
-    if frameCounter < framesPerCheck then return end
-    frameCounter = 0
+    local now = Timer.GetTime()
+    if now - lastFallbackTime < fallbackInterval then return end
+    lastFallbackTime = now
 
     for character, state in pairs(charStates) do
         if not character or character.Removed then
             charStates[character] = nil
         elseif state.dead then
-            if not character.IsDead then
-                state.reviveTimer = (state.reviveTimer or 0) + (CONFIG.checkInterval or 0.5)
-                if state.reviveTimer >= 0.5 then
-                    state.dead = nil
-                    state.reviveTimer = nil
-                    scanCharacter(character)
-                    removeEmptyState(state)
-                end
-            end
+            if not character.IsDead then restoreRevivedCharacter(character) end
         elseif character.IsDead then
             clearState(state)
             state.dead = true
-            state.reviveTimer = 0
         else
-            for item, source in pairs(state.mains) do
+            for item in pairs(state.mains) do
                 if item.Removed or not isStillEquipped(character, item) then
                     removeMain(state, item)
-                else
-                    syncSubItems(state, source)
                 end
+            end
+            if next(state.afflictionRefs) then
+                refreshAfflictions(state)
+                scheduleAfflictionRefresh()
             end
             removeEmptyState(state)
         end

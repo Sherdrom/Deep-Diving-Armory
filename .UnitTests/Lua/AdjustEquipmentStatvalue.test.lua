@@ -1,4 +1,12 @@
-local events, patches = {}, {}
+local events, patches, waits = {}, {}, {}
+local now = 0
+
+Timer = {
+    GetTime = function() return now end,
+    Wait = function(callback, delay)
+        waits[#waits + 1] = { callback = callback, due = now + delay / 1000 }
+    end,
+}
 
 InvSlotType = {
     Head = "Head",
@@ -15,9 +23,11 @@ AbilityFlags = { SharedFlag = "SharedFlag" }
 Hook = { HookMethodType = { After = "After" } }
 function Hook.Add(name, _, callback) events[name] = callback end
 function Hook.Patch(_, className, methodName, _, callback, patchType)
-    assert(className == "Barotrauma.Item")
+    assert(className == "Barotrauma.Item"
+        or className == "Barotrauma.Character"
+        or className == "Barotrauma.Items.Components.ItemContainer")
     assert(patchType == Hook.HookMethodType.After)
-    patches[methodName] = callback
+    patches[className .. "." .. methodName] = callback
 end
 
 local markerPrefab = { id = "marker" }
@@ -26,7 +36,8 @@ AfflictionPrefab = { Prefabs = { marker = markerPrefab } }
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
-    checkInterval = 1 / 60,
+    afflictionRefreshInterval = 0.5,
+    fallbackInterval = 2.0,
     migratedItems = { armor = true, helmet = true },
     items = {
         armor = {
@@ -56,6 +67,7 @@ _G.AdjustEquipmentWearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes }
 
 local function makeItem(identifier)
     local item = { Prefab = { Identifier = identifier }, Removed = false, contents = {} }
+    function item:GetRootInventoryOwner() return self.rootOwner end
     item.OwnInventory = setmetatable({}, {
         __index = function(_, key)
             if key ~= "AllItemsMod" then return nil end
@@ -70,13 +82,23 @@ local function makeItem(identifier)
 end
 
 local slots = {}
-local health = { strengths = {} }
-function health:GetAfflictionStrengthByIdentifier(id) return self.strengths[id] or 0 end
+local health = { afflictions = {} }
+function health:GetAfflictionStrengthByIdentifier(id)
+    local affliction = self.afflictions[id]
+    return affliction and affliction.Strength or 0
+end
+function health:GetAffliction(id) return self.afflictions[id] end
 function health:ApplyAffliction(_, affliction)
-    self.strengths[affliction.id] = (self.strengths[affliction.id] or 0) + affliction.Strength
+    local existing = self.afflictions[affliction.id]
+    if existing then
+        existing.Strength = existing.Strength + affliction.Strength
+    else
+        self.afflictions[affliction.id] = affliction
+    end
 end
 function health:ReduceAfflictionOnAllLimbs(id, amount)
-    self.strengths[id] = math.max(0, (self.strengths[id] or 0) - amount)
+    local affliction = self.afflictions[id]
+    if affliction then affliction.Strength = math.max(0, affliction.Strength - amount) end
 end
 
 local character = {
@@ -111,53 +133,95 @@ Character = { CharacterList = { character } }
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
 
+local function tick()
+    now = now + 0.5
+    local pending = waits
+    waits = {}
+    for _, timer in ipairs(pending) do
+        if timer.due <= now then
+            timer.callback()
+        else
+            waits[#waits + 1] = timer
+        end
+    end
+    events.think()
+end
+
 local armor, helmet = makeItem("armor"), makeItem("helmet")
 local module1, module2 = makeItem("module"), makeItem("module")
+armor.rootOwner, helmet.rootOwner = character, character
+
+local equip = patches["Barotrauma.Item.Equip"]
+local unequip = patches["Barotrauma.Item.Unequip"]
+local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemContained"]
+local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
+local revive = patches["Barotrauma.Character.Revive"]
+local armorContainer = { Item = armor }
 
 slots[InvSlotType.OuterClothes] = armor
 slots[InvSlotType.Head] = helmet
-patches.Equip(armor, { character = character })
-patches.Equip(helmet, { character = character })
+equip(armor, { character = character })
+equip(helmet, { character = character })
 assert(character.stats.MovementSpeed == 12, "simultaneous main items or duplicate stats failed")
 assert(character.addFlagCalls == 1 and character.flags.SharedFlag, "flag reference counting failed")
-assert(health.strengths.marker == 1, "affliction reference counting failed")
+assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "affliction reference counting failed")
+assert(#waits == 1, "duplicate affliction refresh timers were scheduled")
+
+health.afflictions.marker.Strength = 0.25
+tick()
+assert(health.afflictions.marker.Strength == 1, "decaying affliction was not refreshed")
+health.afflictions.marker = nil
+tick()
+assert(health.afflictions.marker.Strength == 1, "removed affliction was not restored")
 
 armor.contents = { module1, module2 }
-events.think()
+tick()
+assert(character.stats.MovementSpeed == 12, "think still scanned contained items")
+itemContained(armorContainer, { containedItem = module1 })
 assert(character.stats.MovementSpeed == 14, "same-identifier subitems collapsed")
 
 armor.contents = { module2 }
-events.think()
+tick()
+assert(character.stats.MovementSpeed == 14, "think still scanned removed contained items")
+itemRemoved(armorContainer, { containedItem = module1 })
 assert(character.stats.MovementSpeed == 13, "subitem removal was not symmetric")
 
 slots[InvSlotType.Head] = nil
-patches.Unequip(helmet, { character = character })
+unequip(helmet, { character = character })
 assert(character.stats.MovementSpeed == 6 and character.flags.SharedFlag, "one main removed effects owned by another")
-assert(health.strengths.marker == 1, "shared affliction removed too early")
+assert(health:GetAfflictionStrengthByIdentifier("marker") == 1, "shared affliction removed too early")
 
 slots[InvSlotType.OuterClothes] = nil
-patches.Unequip(armor, { character = character })
+unequip(armor, { character = character })
 assert(character.stats.MovementSpeed == 0, "final main cleanup leaked stats")
 assert(not character.flags.SharedFlag and character.removeFlagCalls == 1, "final flag cleanup failed")
-assert(health.strengths.marker == 0, "final affliction cleanup failed")
+assert(health:GetAfflictionStrengthByIdentifier("marker") == 0, "final affliction cleanup failed")
 
 slots[InvSlotType.OuterClothes] = armor
-patches.Equip(armor, { character = character })
+equip(armor, { character = character })
 character.IsDead = true
 events["character.death"](character)
-assert(character.stats.MovementSpeed == 0 and health.strengths.marker == 0, "death cleanup failed")
+assert(character.stats.MovementSpeed == 0 and health:GetAfflictionStrengthByIdentifier("marker") == 0, "death cleanup failed")
 
 character.IsDead = false
-for _ = 1, 31 do events.think() end
-assert(character.stats.MovementSpeed == 6 and health.strengths.marker == 1, "revive rescan failed")
+tick()
+assert(character.stats.MovementSpeed == 0, "think handled revive before the fallback interval")
+revive(character, { removeAfflictions = true, createNetworkEvent = false })
+assert(character.stats.MovementSpeed == 6 and health:GetAfflictionStrengthByIdentifier("marker") == 1, "revive event rescan failed")
+
+character.IsDead = true
+events["character.death"](character)
+character.IsDead = false
+for _ = 1, 4 do tick() end
+assert(character.stats.MovementSpeed == 6 and health:GetAfflictionStrengthByIdentifier("marker") == 1, "revive fallback failed")
 
 events.roundEnd()
-assert(character.stats.MovementSpeed == 0 and health.strengths.marker == 0, "round cleanup failed")
+assert(character.stats.MovementSpeed == 0 and health:GetAfflictionStrengthByIdentifier("marker") == 0, "round cleanup failed")
 
 character.flags.SharedFlag = true
-patches.Equip(armor, { character = character })
+equip(armor, { character = character })
 slots[InvSlotType.OuterClothes] = nil
-patches.Unequip(armor, { character = character })
+unequip(armor, { character = character })
 assert(character.flags.SharedFlag, "pre-existing external flag was removed")
 
 print("AdjustEquipmentStatvalue state check OK")
