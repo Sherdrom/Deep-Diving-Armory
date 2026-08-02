@@ -13,30 +13,22 @@ local function findTalent()
     end
 end
 
-local function giveTalent(character)
-    if not talentPrefab or not character or character.Removed then return end
-    if character.TeamID == CharacterTeamType.Team1 then character:GiveTalent(talentPrefab) end
+local function giveTalent(item, character)
+    if not character or character.Removed or character.TeamID ~= CharacterTeamType.Team1
+        or not item or not item.Prefab or not item.Prefab.ContentPackage
+        or item.Prefab.ContentPackage.Name ~= "Deep-Diving-Armory"
+        or not item.HasTag("weapon")
+        or character:HasTalent(TALENT_ID) then return end
+
+    talentPrefab = talentPrefab or findTalent()
+    if talentPrefab then character:GiveTalent(talentPrefab) end
 end
-
-local function giveToExistingCharacters()
-    talentPrefab = findTalent()
-    if not talentPrefab then
-        print("[GiveTalents] ERROR: talent not found " .. TALENT_ID)
-        return
-    end
-
-    for _, character in pairs(Character.CharacterList) do giveTalent(character) end
-end
-
-Hook.Add("loaded", "GiveTalents.Loaded", giveToExistingCharacters)
-Hook.Add("roundStart", "GiveTalents.RoundStart", giveToExistingCharacters)
-Hook.Add("character.created", "GiveTalents.CharacterCreated", giveTalent)
 
 Hook.Patch(
-    "GiveTalents.TeamChanged",
-    "Barotrauma.Character",
-    "set_TeamID",
-    { "Barotrauma.CharacterTeamType" },
-    function(character) giveTalent(character) end,
+    "GiveTalents.Equip",
+    "Barotrauma.Item",
+    "Equip",
+    { "Barotrauma.Character" },
+    function(item, ptable) giveTalent(item, ptable["character"]) end,
     Hook.HookMethodType.After
 )

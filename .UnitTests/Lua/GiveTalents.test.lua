@@ -5,8 +5,8 @@ CharacterTeamType = { None = 0, Team1 = 1, Team2 = 2 }
 Hook = { HookMethodType = { After = "After" } }
 function Hook.Add(name, _, callback) events[name] = callback end
 function Hook.Patch(_, className, methodName, parameterTypes, callback, patchType)
-    assert(className == "Barotrauma.Character" and methodName == "set_TeamID")
-    assert(parameterTypes[1] == "Barotrauma.CharacterTeamType")
+    assert(className == "Barotrauma.Item" and methodName == "Equip")
+    assert(parameterTypes[1] == "Barotrauma.Character")
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
 end
@@ -16,10 +16,10 @@ TalentPrefab = { TalentPrefabs = { deep_talent_all = talent } }
 
 local function makeCharacter(team)
     local character = { TeamID = team, talents = {}, giveCalls = 0 }
+    function character:HasTalent(identifier) return self.talents[identifier] == true end
     function character:GiveTalent(prefab)
         self.giveCalls = self.giveCalls + 1
-        if self.talents[prefab] then return false end
-        self.talents[prefab] = true
+        self.talents.deep_talent_all = true
         return true
     end
     return character
@@ -27,28 +27,27 @@ end
 
 local crew = makeCharacter(CharacterTeamType.Team1)
 local enemy = makeCharacter(CharacterTeamType.Team2)
-Character = { CharacterList = { crew, enemy } }
+
+local function makeItem(packageName, isWeapon)
+    return {
+        Prefab = { ContentPackage = { Name = packageName } },
+        HasTag = function(tag) return isWeapon and tag == "weapon" end,
+    }
+end
 
 dofile("Lua/Scripts/PeachTechnology/GiveTalents.lua")
-assert(events.think == nil, "GiveTalents still registered a polling hook")
+assert(next(events) == nil, "GiveTalents still registered scan or polling hooks")
 
-events.loaded()
-assert(crew.talents[talent] and enemy.giveCalls == 0, "loaded scan granted the wrong characters")
+local equip = patches["Barotrauma.Item.Equip"]
+equip(makeItem("Vanilla", true), { character = crew })
+equip(makeItem("Deep Diving Armory", false), { character = crew })
+equip(makeItem("Deep Diving Armory", true), { character = enemy })
+assert(crew.giveCalls == 0 and enemy.giveCalls == 0, "non-DDA weapon or enemy received the talent")
 
-local spawnedCrew = makeCharacter(CharacterTeamType.Team1)
-events["character.created"](spawnedCrew)
-assert(spawnedCrew.talents[talent], "created Team1 character did not receive the talent")
-
-local pendingCrew = makeCharacter(CharacterTeamType.None)
-events["character.created"](pendingCrew)
-assert(pendingCrew.giveCalls == 0, "unassigned character received the talent")
-pendingCrew.TeamID = CharacterTeamType.Team1
-patches["Barotrauma.Character.set_TeamID"](pendingCrew)
-assert(pendingCrew.talents[talent], "Team1 assignment did not grant the talent")
-
-local roundCrew = makeCharacter(CharacterTeamType.Team1)
-Character.CharacterList = { roundCrew }
-events.roundStart()
-assert(roundCrew.talents[talent], "round-start recovery did not grant the talent")
+local ddaWeapon = makeItem("Deep Diving Armory", true)
+equip(ddaWeapon, { character = crew })
+equip(ddaWeapon, { character = crew })
+assert(crew.talents.deep_talent_all and crew.giveCalls == 1,
+    "DDA weapon equip did not grant exactly one talent")
 
 print("GiveTalents event check OK")
