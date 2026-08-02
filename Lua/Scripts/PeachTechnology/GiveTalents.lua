@@ -1,4 +1,4 @@
-if not SERVER then return end
+if not SERVER and Game.IsMultiplayer then return end
 
 local TALENT_ID = "deep_talent_all"
 local talentPrefab
