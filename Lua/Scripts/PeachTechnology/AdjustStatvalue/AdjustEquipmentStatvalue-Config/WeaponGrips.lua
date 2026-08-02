@@ -1,3 +1,11 @@
+local function isInside(character)
+    return character and character.CurrentHull ~= nil
+end
+
+local function hostIsReloading(_, host)
+    return host and host.Condition < 1
+end
+
 return {
     ["vertical_grip"] = {
         blockedByEnemyResistance = true,
@@ -29,6 +37,27 @@ return {
             { statType = "ExperienceGainMultiplier", value = 0.3 },
         },
         resistances = { { id = "stun", multiplier = 0.9, source = "vertical_grips_hollow_out" } },
+    },
+
+    ["cqr_grips"] = {
+        blockedByEnemyResistance = true,
+        pollInterval = 0.9,
+        when = isInside,
+        statsKey = "cqr_grips",
+        stats = {
+            { statType = "WalkingSpeed", value = 0.1 },
+            { statType = "WeaponsSkillBonus", value = 10 },
+        },
+        resistances = { { id = "stun", multiplier = 0.2, source = "cqr_grips" } },
+    },
+
+    ["oblique_grips"] = {
+        blockedByEnemyResistance = true,
+        pollInterval = 0.9,
+        when = hostIsReloading,
+        statsKey = "oblique_grips",
+        stats = { { statType = "WalkingSpeed", value = 0.2 } },
+        resistances = { { id = "stun", multiplier = 0.5, source = "oblique_grips" } },
     },
 
     ["corner_grip"] = {

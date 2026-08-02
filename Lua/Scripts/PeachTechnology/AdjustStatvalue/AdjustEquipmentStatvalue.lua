@@ -1,5 +1,5 @@
 -- XML OnWearing -> event-driven equipment effects.
--- Main items, contained modules and revives use events; think only visits failed or dynamic fallback states.
+-- Main items, contained modules and revives use events; think only polls registered dynamic or fallback states.
 
 if not _G.AdjustEquipmentConfig then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
@@ -11,6 +11,7 @@ local SUB_CONFIG = CONFIG.subItems or {}
 local WEAPON_ACCESSORY_CONFIG = CONFIG.weaponAccessories or {}
 local HELD_WEAPON_CONFIG = CONFIG.heldWeapons or {}
 local fallbackInterval = CONFIG.fallbackInterval or 5.0
+local dynamicInterval = CONFIG.dynamicInterval or 0.5
 local RESISTANCE_SOURCE = Identifier("dda_adjust_equipment")
 local TalentResistanceIdentifier = LuaUserData.CreateStatic("Barotrauma.TalentResistanceIdentifier", true)
 local ENEMY_ACCESSORY_RESISTANCE = "deep_enemy_affliction_resistance"
@@ -67,10 +68,18 @@ local function afflictionList(value)
 end
 
 local fallbackStates = {}
+local dynamicStates = {}
 
 local function configNeedsFallback(cfg)
     for _, effect in ipairs(cfg.effects or { cfg }) do
         if effect.blockedByEnemyResistance then return true end
+    end
+    return false
+end
+
+local function configNeedsDynamic(cfg)
+    for _, effect in ipairs(cfg.effects or { cfg }) do
+        if effect.when then return true end
     end
     return false
 end
@@ -136,6 +145,9 @@ local function validateEffectConfig(itemId, cfg)
     end
     if cfg.blockedByEnemyResistance ~= nil and type(cfg.blockedByEnemyResistance) ~= "boolean" then
         warn("invalid blockedByEnemyResistance", itemId, tostring(cfg.blockedByEnemyResistance))
+    end
+    if cfg.when ~= nil and type(cfg.when) ~= "function" then
+        warn("invalid dynamic condition", itemId)
     end
 end
 
@@ -491,26 +503,42 @@ local function isBlockedByEnemyResistance(state, cfg)
         and health:GetAfflictionStrengthByIdentifier(ENEMY_ACCESSORY_RESISTANCE) > 0
 end
 
-local function applyConfig(state, cfg)
+local function isEffectActive(state, cfg, host, accessory)
+    return not isBlockedByEnemyResistance(state, cfg)
+        and (not cfg.when or cfg.when(state.character, host, accessory))
+end
+
+local function applyConfig(state, cfg, host, accessory)
     local applied = {}
     for index, effect in ipairs(cfg.effects or { cfg }) do
-        if not isBlockedByEnemyResistance(state, effect) then
+        if isEffectActive(state, effect, host, accessory) then
             applied[index] = applyEffects(state, effect)
         end
     end
-    if configNeedsFallback(cfg) then state.conditionalConfigs[applied] = cfg end
+    if configNeedsDynamic(cfg) then
+        state.dynamicConfigs[applied] = {
+            cfg = cfg,
+            host = host,
+            accessory = accessory,
+            interval = cfg.pollInterval or dynamicInterval,
+            lastCheck = Timer.GetTime(),
+        }
+        dynamicStates[state] = true
+    elseif configNeedsFallback(cfg) then
+        state.conditionalConfigs[applied] = cfg
+    end
     updateFallbackState(state)
     return applied
 end
 
 local removeEffects
-local function syncConfigEffects(state, cfg, applied)
+local function syncConfigEffects(state, cfg, applied, host, accessory)
     for index, effect in ipairs(cfg.effects or { cfg }) do
-        local blocked = isBlockedByEnemyResistance(state, effect)
-        if blocked and applied[index] then
+        local active = isEffectActive(state, effect, host, accessory)
+        if not active and applied[index] then
             removeEffects(state, applied[index])
             applied[index] = nil
-        elseif not blocked and not applied[index] then
+        elseif active and not applied[index] then
             applied[index] = applyEffects(state, effect)
         end
     end
@@ -528,6 +556,8 @@ end
 
 local function removeConfigEffects(state, effects)
     state.conditionalConfigs[effects] = nil
+    state.dynamicConfigs[effects] = nil
+    if not next(state.dynamicConfigs) then dynamicStates[state] = nil end
     for _, effect in pairs(effects or {}) do removeEffects(state, effect) end
     updateFallbackState(state)
 end
@@ -560,15 +590,19 @@ local function untrackItem(item, state, source)
 end
 
 local function syncSubItems(state, source, current)
-    if source.cfg then syncConfigEffects(state, source.cfg, source.effects) end
+    if source.cfg then syncConfigEffects(state, source.cfg, source.effects, source.item) end
     current = current or activeSubItems(source.item, source.subConfig)
     for item, data in pairs(current) do
         if not source.subs[item] then
-            source.subs[item] = { itemId = data.itemId, cfg = data.cfg, effects = applyConfig(state, data.cfg) }
+            source.subs[item] = {
+                itemId = data.itemId,
+                cfg = data.cfg,
+                effects = applyConfig(state, data.cfg, source.item, item),
+            }
             trackItem(item, state, "sub", source)
             log("equip sub", data.itemId, "in", source.itemId)
         else
-            syncConfigEffects(state, data.cfg, source.subs[item].effects)
+            syncConfigEffects(state, data.cfg, source.subs[item].effects, source.item, item)
         end
     end
     for item, sub in pairs(source.subs) do
@@ -597,6 +631,7 @@ local function ensureState(character)
             resistanceRefs = {},
             afflictionRefs = {},
             conditionalConfigs = {},
+            dynamicConfigs = {},
         }
         charStates[character] = state
     end
@@ -631,7 +666,7 @@ local function addMain(character, item)
         item = item,
         itemId = itemId,
         cfg = cfg,
-        effects = applyConfig(state, cfg),
+        effects = applyConfig(state, cfg, item),
         subs = {},
         subConfig = SUB_CONFIG,
     }
@@ -672,7 +707,7 @@ local function addWeapon(character, item)
         item = item,
         itemId = itemId,
         cfg = cfg,
-        effects = cfg and applyConfig(state, cfg) or {},
+        effects = cfg and applyConfig(state, cfg, item) or {},
         subs = {},
         subConfig = WEAPON_ACCESSORY_CONFIG,
     }
@@ -698,15 +733,17 @@ end
 
 local function syncChangedContainer(container)
     local host = container and container.Item
-    local character = host and host:GetRootInventoryOwner()
+    local tracked = host and trackedItems[host]
+    local state = tracked and tracked.state
+    local character = state and state.character or (host and host:GetRootInventoryOwner())
     if not character or not LuaUserData.IsTargetType(character, "Barotrauma.Character") or not character.CharacterHealth then return end
 
-    local state = charStates[character]
-    local source = state and (state.mains[host] or state.weapons[host])
+    state = state or charStates[character]
+    local source = tracked and tracked.source or (state and (state.mains[host] or state.weapons[host]))
     if source then
         syncSubItems(state, source)
-        if state.weapons[host] and not HELD_WEAPON_CONFIG[source.itemId] and not next(source.subs) then
-            removeWeapon(state, host)
+        if state.weapons[source.item] and not HELD_WEAPON_CONFIG[source.itemId] and not next(source.subs) then
+            removeWeapon(state, source.item)
         end
     else
         addWeapon(character, host)
@@ -732,6 +769,7 @@ end
 local function removeEmptyState(state)
     if not state.dead and not next(state.mains) and not next(state.weapons) then
         fallbackStates[state] = nil
+        dynamicStates[state] = nil
         charStates[state.character] = nil
     end
 end
@@ -781,6 +819,7 @@ local function clearAllStates()
     charStates = {}
     trackedItems = {}
     fallbackStates = {}
+    dynamicStates = {}
 end
 
 Hook.Patch(
@@ -887,10 +926,39 @@ end)
 Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
 
 local lastFallbackTime = Timer.GetTime()
+local lastDynamicTime = lastFallbackTime
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     local now = Timer.GetTime()
-    if now - lastFallbackTime < fallbackInterval then return end
+    local checkDynamic = now - lastDynamicTime >= dynamicInterval
+    local checkFallback = now - lastFallbackTime >= fallbackInterval
+    if not checkDynamic and not checkFallback then return end
+
+    if checkDynamic then
+        lastDynamicTime = now
+        for state in pairs(dynamicStates) do
+            local character = state.character
+            if not character or character.Removed then
+                discardStateIndex(state)
+                if character then charStates[character] = nil end
+                fallbackStates[state] = nil
+                dynamicStates[state] = nil
+            elseif character.IsDead then
+                clearState(state)
+                state.dead = true
+                updateFallbackState(state)
+            else
+                for applied, dynamic in pairs(state.dynamicConfigs) do
+                    if now - dynamic.lastCheck >= dynamic.interval then
+                        dynamic.lastCheck = now
+                        syncConfigEffects(state, dynamic.cfg, applied, dynamic.host, dynamic.accessory)
+                    end
+                end
+            end
+        end
+    end
+
+    if not checkFallback then return end
     lastFallbackTime = now
 
     for state in pairs(fallbackStates) do

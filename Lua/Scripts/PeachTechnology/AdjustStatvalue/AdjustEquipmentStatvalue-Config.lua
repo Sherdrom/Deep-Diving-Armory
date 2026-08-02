@@ -15,7 +15,8 @@
 -- >> 完整配置说明 <<
 --
 -- [顶层参数]
---   fallbackInterval (number)        失败效果、动态条件、限时 Affliction 与复活兜底间隔（秒），默认 5；不会扫描全部装备。
+--   fallbackInterval (number)        失败效果、限时 Affliction 与复活兜底间隔（秒），默认 5；不会扫描全部装备。
+--   dynamicInterval  (number)        when 动态条件的检查间隔（秒），默认 0.5；只访问当前动态效果来源。
 --   wearableSlots   (InvSlotType[]) 主体装备所在的角色装备槽。
 --   weaponSlots     (InvSlotType[]) 武器配件生效的手持槽。
 --   debug           (bool)          是否启用调试输出，生产环境设为 false。
@@ -72,6 +73,8 @@
 --   以上 stats / flags / talentMarkers / resistances / affliction 均为选填，不填则跳过，无副作用。
 --   effects (table[]) 可将同一物品拆成多个独立效果组；使用后不再读取该物品的顶层效果字段。
 --   blockedByEnemyResistance (bool) 保留 deep_enemy_affliction_resistance 对原 Affliction Buff 的抑制。
+--   when (function) 每 dynamicInterval 秒判断一次；仅在返回 true 时应用本效果组。
+--   pollInterval (number) 可选；覆盖该物品 when 条件的检查间隔。
 --
 -- [附录A — 常用 StatTypes]
 --   技能加成:     ElectricalSkillBonus  HelmSkillBonus  MechanicalSkillBonus
@@ -142,6 +145,7 @@ merge(weaponAccessories, loadCategory("WeaponMagazines.lua"))
 
 local CONFIG = {
     fallbackInterval = 5.0,
+    dynamicInterval = 0.5,
     debug = false,
     wearableSlots = {
         InvSlotType.Head,

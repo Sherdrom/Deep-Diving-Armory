@@ -86,10 +86,6 @@
     <Sprite texture="%ModDir%/weapon/sight/grip.png" sourcerect="37,176,200,122" depth="0.549" origin="0.5,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character" OnlyInside="true" setValue="true" multiplyafflictionsbymaxvitality="true" comparison="and">
-        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-        <Affliction identifier="cqr_grips" strength="5" />
-      </StatusEffect>
     </Holdable>
   </Item>
   <Item name="" identifier="oblique_grips" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
@@ -112,11 +108,6 @@
     <Sprite texture="%ModDir%/weapon/sight/grip.png" sourcerect="309,11,66,115" depth="0.549" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Parent,Character" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="oblique_grips" strength="5" />
-        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-        <Conditional Condition="lt 1" />
-      </StatusEffect>
     </Holdable>
   </Item>
   <Item name="" identifier="corner_grip" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
@@ -631,11 +622,6 @@
     <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="19,170,85,41" depth="0.54" origin="0.5,0.5" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-        <Conditional speed="gte 1" />
-        <Affliction identifier="flash_hider" strength="100" />
-      </StatusEffect>
       <!-- 有短枪口件时，略微增加枪口距离-->
     </Holdable>
   </Item>
@@ -660,11 +646,6 @@
     <Sprite texture="%ModDir%/weapon/sight/accessory_new.png" sourcerect="25,263,89,37" depth="0.54" origin="0.4,0.45" />
     <Body width="30" height="50" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="Character,Parent" comparison="and" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_compensator" strength="100" />
-        <Conditional deep_enemy_affliction_resistance="lte 1.0" />
-        <Conditional speed="lt 1" />
-      </StatusEffect>
       <!-- 有短枪口件时，略微增加枪口距离-->
     </Holdable>
   </Item>

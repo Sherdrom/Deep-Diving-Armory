@@ -1,8 +1,14 @@
 $repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 $weaponRoot = Join-Path $repoRoot 'weapon'
+$sightRoot = Join-Path $weaponRoot 'sight'
 
 foreach ($file in Get-ChildItem -LiteralPath $weaponRoot -Recurse -File -Filter '*.xml') {
     [xml]$xml = Get-Content -LiteralPath $file.FullName -Raw
+
+    if ($file.FullName.StartsWith($sightRoot, [StringComparison]::OrdinalIgnoreCase) -and
+        $xml.SelectSingleNode("//StatusEffect[contains(@type,'OnActive')][Affliction]")) {
+        throw "Continuous accessory Affliction remains in $($file.FullName)"
+    }
 
     if ($xml.SelectSingleNode("//*[@identifier='deep_VCE_none' or @identifier='deep_VCE_yes']")) {
         throw "VCE self-check remains in $($file.FullName)"

@@ -380,7 +380,7 @@
     <AbilityGroupInterval interval="0.25">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.95" />
@@ -390,7 +390,7 @@
     <AbilityGroupInterval interval="0.1">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
         <AbilityConditionNearbyCharacterCount distance="900" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
       </Conditions>
       <Abilities>
@@ -449,83 +449,6 @@
     </AbilityGroupEffect>
 
 
-    <!-- 莫桑比克射击法-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_pistol_mozambique_hand" min="1" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_pistol_mozambique_aff" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-    <!-- 反器材惩罚天赋-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_sniper_aim_heavy" min="1" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.8" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_1" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_sniper_aim_heavy" min="1" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_2" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_sniper_aim_heavy" min="1" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.2" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_3" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-    <!-- 机枪蹲下射击-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_machinegun_crouch" min="1" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.7" />
-      </Abilities>
-    </AbilityGroupInterval>
-
     <!-- 消音器蹲下射击-->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
@@ -537,30 +460,6 @@
         <CharacterAbilityModifyAffliction afflictionidentifiers="gunshotwound" addedmultiplier="0.1" />
       </Abilities>
     </AbilityGroupEffect>
-
-    <!-- 乌川天赋-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_wuchuan_detection" min="1" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.2" />
-        <CharacterAbilityModifyStat stattype="MeleeAttackSpeed" value="3" />
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasPermanentStat statidentifier="deep_wuchuan_detection" min="1" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyFlag flagtype="IgnoredByEnemyAI" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-
 
     <!--被帽弹头-->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
@@ -597,20 +496,6 @@
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
     </AbilityGroupEffect>
-
-
-
-    <!--匕首处决-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="m18_smoke" />
-        <AbilityConditionHasPermanentStat statidentifier="deep_knife_detect_1" min="1" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MeleeAttackMultiplier" value="20" />
-        <CharacterAbilityModifyStat stattype="MeleeAttackSpeed" value="-0.5" />
-      </Abilities>
-    </AbilityGroupInterval>
 
 
 

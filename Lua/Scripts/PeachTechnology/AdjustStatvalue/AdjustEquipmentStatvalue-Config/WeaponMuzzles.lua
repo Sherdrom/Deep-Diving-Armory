@@ -12,6 +12,37 @@ local longMarkers = {
     },
 }
 
+local function hostMoving(_, host)
+    return host and host.Speed >= 1
+end
+
+local function hostStationary(_, host)
+    return host and host.Speed < 1
+end
+
+local flashHider = {
+    blockedByEnemyResistance = true,
+    when = hostMoving,
+    statsKey = "flash_hider",
+    stats = {
+        { statType = "RangedSpreadReduction", value = 0.1 },
+        { statType = "RangedAttackMultiplier", value = 0.2 },
+        { statType = "WeaponsSkillBonus", value = 10 },
+    },
+}
+
+local compensator = {
+    blockedByEnemyResistance = true,
+    when = hostStationary,
+    statsKey = "deep_compensator",
+    stats = {
+        { statType = "MaximumHealthMultiplier", value = 0.25 },
+        { statType = "RangedSpreadReduction", value = 0.1 },
+        { statType = "RangedAttackMultiplier", value = 0.1 },
+        { statType = "WeaponsSkillBonus", value = 10 },
+    },
+}
+
 return {
     ["extended_barrel"] = {
         effects = {
@@ -28,8 +59,8 @@ return {
             longMarkers,
         },
     },
-    ["deep_flash_hider"] = { effects = { shortMarkers } },
-    ["deep_compensator"] = { effects = { shortMarkers } },
+    ["deep_flash_hider"] = { pollInterval = 0.9, effects = { flashHider, shortMarkers } },
+    ["deep_compensator"] = { pollInterval = 0.9, effects = { compensator, shortMarkers } },
     ["deep_muzzle_brake"] = {
         effects = {
             {

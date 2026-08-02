@@ -44,7 +44,7 @@ equip(makeItem("Deep Diving Armory", false), { character = crew })
 equip(makeItem("Deep Diving Armory", true), { character = enemy })
 assert(crew.giveCalls == 0 and enemy.giveCalls == 0, "non-DDA weapon or enemy received the talent")
 
-local ddaWeapon = makeItem("Deep Diving Armory", true)
+local ddaWeapon = makeItem("Deep-Diving-Armory", true)
 equip(ddaWeapon, { character = crew })
 equip(ddaWeapon, { character = crew })
 assert(crew.talents.deep_talent_all and crew.giveCalls == 1,

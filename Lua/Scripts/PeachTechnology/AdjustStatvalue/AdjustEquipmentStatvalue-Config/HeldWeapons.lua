@@ -1,4 +1,6 @@
 local items = {}
+local COMMON_TALENT = Identifier("deep_talent_all")
+local ELITE_ENEMY_TALENT = Identifier("deep_talent_elite_enemy")
 
 local function addEffect(itemIds, effect)
     for _, itemId in ipairs(itemIds) do
@@ -9,6 +11,58 @@ local function addEffect(itemIds, effect)
         end
         cfg.effects[#cfg.effects + 1] = effect
     end
+end
+
+local function hasTalent(character, identifier)
+    return character and character:HasTalent(identifier)
+end
+
+local function isCrouched(character)
+    local controller = character and character.AnimController
+    return controller
+        and LuaUserData.IsTargetType(controller, "Barotrauma.HumanoidAnimController")
+        and controller.Crouching
+end
+
+local function vitalityAtMost(character, percentage)
+    local maxVitality = character and character.MaxVitality
+    return maxVitality and maxVitality > 0
+        and character.Vitality / maxVitality <= percentage
+end
+
+local function hasCommonTalent(character)
+    return hasTalent(character, COMMON_TALENT)
+end
+
+local function commonCrouched(character)
+    return hasCommonTalent(character) and isCrouched(character)
+end
+
+local function commonBelow50(character)
+    return hasCommonTalent(character) and vitalityAtMost(character, 0.5)
+end
+
+local function commonBelow80(character)
+    return hasCommonTalent(character) and vitalityAtMost(character, 0.8)
+end
+
+local function commonBelow20(character)
+    return hasCommonTalent(character) and vitalityAtMost(character, 0.2)
+end
+
+local function wuchuanCrouched(character)
+    return (hasCommonTalent(character) or hasTalent(character, ELITE_ENEMY_TALENT))
+        and isCrouched(character)
+end
+
+local function wuchuanHidden(character)
+    return wuchuanCrouched(character) and vitalityAtMost(character, 0.5)
+end
+
+local function commonInSmoke(character)
+    local health = character and character.CharacterHealth
+    return hasCommonTalent(character) and health
+        and health:GetAfflictionStrengthByIdentifier("m18_smoke") > 0
 end
 
 local smg = {
@@ -70,7 +124,9 @@ addEffect({
     "deep_rpk16",
 }, {
     blockedByEnemyResistance = true,
-    talentMarkers = { "deep_machinegun_crouch" },
+    when = commonCrouched,
+    statsKey = "deep_machinegun_crouch",
+    stats = { { statType = "RangedSpreadReduction", value = 0.7 } },
 })
 
 addEffect({
@@ -106,16 +162,48 @@ addEffect({
     "deep_USP",
 }, {
     blockedByEnemyResistance = true,
-    talentMarkers = { "deep_pistol_mozambique_hand" },
+    when = commonBelow50,
+    statsKey = "deep_pistol_mozambique_aff",
+    stats = {
+        { statType = "AttackMultiplier", value = 0.5 },
+        { statType = "RangedAttackSpeed", value = 0.1 },
+    },
 })
 
-addEffect({
+local heavySnipers = {
     "deep_m82a1",
     "deep_ntw20",
     "deep_ptrd",
-}, {
+}
+
+addEffect(heavySnipers, {
     blockedByEnemyResistance = true,
-    talentMarkers = { "deep_sniper_aim_heavy" },
+    when = commonBelow80,
+    statsKey = "deep_sniper_aim_heavy_damage_reduce_1",
+    stats = {
+        { statType = "AttackMultiplier", value = -0.1 },
+        { statType = "RangedSpreadReduction", value = -0.3 },
+    },
+})
+
+addEffect(heavySnipers, {
+    blockedByEnemyResistance = true,
+    when = commonBelow50,
+    statsKey = "deep_sniper_aim_heavy_damage_reduce_2",
+    stats = {
+        { statType = "AttackMultiplier", value = -0.1 },
+        { statType = "RangedSpreadReduction", value = -0.3 },
+    },
+})
+
+addEffect(heavySnipers, {
+    blockedByEnemyResistance = true,
+    when = commonBelow20,
+    statsKey = "deep_sniper_aim_heavy_damage_reduce_3",
+    stats = {
+        { statType = "AttackMultiplier", value = -0.1 },
+        { statType = "RangedSpreadReduction", value = -0.3 },
+    },
 })
 
 addEffect({ "deep_qbz_191", "deep_qbz_192" }, {
@@ -161,11 +249,24 @@ addEffect({ "deep_pp19" }, {
 
 addEffect({ "deep_knife" }, {
     blockedByEnemyResistance = true,
-    talentMarkers = { "deep_knife_detect_1" },
+    when = commonInSmoke,
+    statsKey = "deep_knife_detect_1",
+    stats = {
+        { statType = "MeleeAttackMultiplier", value = 20 },
+        { statType = "MeleeAttackSpeed", value = -0.5 },
+    },
 })
 
 addEffect({ "deep_wuchuan" }, {
-    talentMarkers = { "deep_wuchuan_detection" },
+    when = wuchuanCrouched,
+    statsKey = "deep_wuchuan_crouch",
+    stats = { { statType = "MeleeAttackSpeed", value = 3 } },
+    resistances = { { id = "damage", multiplier = 0.2, source = "deep_wuchuan_crouch" } },
+})
+
+addEffect({ "deep_wuchuan" }, {
+    when = wuchuanHidden,
+    flags = { "IgnoredByEnemyAI" },
 })
 
 addEffect({ "deep_g36c_roger" }, {

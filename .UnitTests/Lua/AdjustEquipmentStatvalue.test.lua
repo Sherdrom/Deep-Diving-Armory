@@ -29,7 +29,7 @@ InvSlotType = {
 }
 LimbType = { Head = "Head" }
 StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
-AbilityFlags = { SharedFlag = "SharedFlag" }
+AbilityFlags = { SharedFlag = "SharedFlag", DynamicFlag = "DynamicFlag" }
 Identifier = function(value) return value end
 
 Hook = { HookMethodType = { After = "After" } }
@@ -56,6 +56,7 @@ ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
+    dynamicInterval = 0.5,
     wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag },
     weaponSlots = { InvSlotType.LeftHand, InvSlotType.RightHand },
     mainItems = {
@@ -105,10 +106,32 @@ _G.AdjustEquipmentConfig = {
         },
         grip_a = { resistances = { { id = "stun", multiplier = 0.7, source = "grip_a" } } },
         grip_b = { resistances = { { id = "stun", multiplier = 0.8, source = "grip_b" } } },
+        nested_dynamic = {
+            pollInterval = 0.9,
+            when = function(character, host, accessory)
+                character.accessoryChecks = character.accessoryChecks + 1
+                return host.Condition < 1
+                    and accessory.OwnInventory:FindItemByTag("dynamic_ammo", false) ~= nil
+            end,
+            statsKey = "nested_dynamic",
+            stats = { { statType = "MovementSpeed", value = 8 } },
+            talentMarkers = { "nested_marker" },
+        },
     },
     heldWeapons = {
         integrated = { talentMarkers = { "weapon_marker" } },
         failedweapon = { affliction = { id = "permanent_marker", strength = 1 } },
+        dynamicweapon = {
+            blockedByEnemyResistance = true,
+            when = function(character)
+                character.dynamicChecks = character.dynamicChecks + 1
+                return character.dynamicActive
+            end,
+            statsKey = "dynamicweapon",
+            stats = { { statType = "MovementSpeed", value = 6 } },
+            flags = { "DynamicFlag" },
+            resistances = { { id = "damage", multiplier = 0.2, source = "dynamicweapon" } },
+        },
     },
 }
 
@@ -120,11 +143,21 @@ local function makeItem(identifier)
         inventoryScans = 0,
         tags = {},
         components = {},
+        Condition = 100,
+        Speed = 0,
+        findByTagCalls = 0,
     }
     function item.HasTag(tag) return item.tags[tag] == true end
     function item.GetComponentString(component) return item.components[component] end
     function item:GetRootInventoryOwner() return self.rootOwner end
-    item.OwnInventory = setmetatable({}, {
+    local inventory = {}
+    function inventory:FindItemByTag(tag)
+        item.findByTagCalls = item.findByTagCalls + 1
+        for _, contained in ipairs(item.contents) do
+            if contained.HasTag(tag) then return contained end
+        end
+    end
+    item.OwnInventory = setmetatable(inventory, {
         __index = function(_, key)
             if key ~= "AllItemsMod" then return nil end
             item.inventoryScans = item.inventoryScans + 1
@@ -173,7 +206,10 @@ local character = {
     resistances = {},
     addResistanceCalls = 0,
     removeResistanceCalls = 0,
-    Info = { savedStats = { talent_marker = 1, weapon_marker = 1 }, changeCalls = 0 },
+    dynamicActive = false,
+    dynamicChecks = 0,
+    accessoryChecks = 0,
+    Info = { savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 }, changeCalls = 0 },
     CharacterHealth = health,
     Inventory = {},
     AnimController = {},
@@ -203,7 +239,8 @@ LuaUserData = {
         return function(resistanceId, sourceId) return resistanceId .. "|" .. sourceId end
     end,
     IsTargetType = function(value, typeName)
-        return typeName == "Barotrauma.Character" and value == character
+        return (typeName == "Barotrauma.Character" and value == character)
+            or (typeName == "Barotrauma.HumanoidAnimController" and value == character.AnimController)
     end,
 }
 
@@ -213,6 +250,7 @@ dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua
 events.loaded()
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
 assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was not reset on load")
+assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
 local markerChangeBaseline = character.Info.changeCalls
 
 local function tick()
@@ -227,6 +265,8 @@ function character:RemoveAbilityResistance(key)
     self.removeResistanceCalls = self.removeResistanceCalls + 1
     self.resistances[key] = nil
 end
+character.talents = {}
+function character:HasTalent(identifier) return self.talents[identifier] == true end
 
 local armor, helmet = makeItem("armor"), makeItem("helmet")
 local module1, module2 = makeItem("module"), makeItem("module")
@@ -501,6 +541,67 @@ slots[InvSlotType.LeftHand] = nil
 unequip(integrated, { character = character })
 assert(character.Info.savedStats.weapon_marker == 0, "held weapon marker cleanup failed")
 
+local dynamic1, dynamic2 = makeItem("dynamicweapon"), makeItem("dynamicweapon")
+dynamic1.rootOwner, dynamic2.rootOwner = character, character
+slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = dynamic1, dynamic2
+equip(dynamic1, { character = character })
+equip(dynamic2, { character = character })
+assert(character.stats.MovementSpeed == 0 and not character.flags.DynamicFlag,
+    "inactive dynamic held effect applied on equip")
+local dynamic1Scans, dynamic2Scans = dynamic1.inventoryScans, dynamic2.inventoryScans
+character.dynamicActive = true
+tick()
+assert(character.stats.MovementSpeed == 6 and character.flags.DynamicFlag,
+    "dynamic held effect did not activate")
+assert(math.abs(character.resistances["damage|dda_adjust_equipment"] - 0.2) < 0.000001,
+    "dynamic held resistance did not activate")
+assert(dynamic1.inventoryScans == dynamic1Scans and dynamic2.inventoryScans == dynamic2Scans,
+    "dynamic held check scanned weapon inventories")
+character.dynamicActive = false
+tick()
+assert(character.stats.MovementSpeed == 0 and not character.flags.DynamicFlag,
+    "dynamic held effect did not deactivate")
+assert(not character.resistances["damage|dda_adjust_equipment"],
+    "dynamic held resistance did not deactivate")
+slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = nil, nil
+unequip(dynamic1, { character = character })
+unequip(dynamic2, { character = character })
+local dynamicChecks = character.dynamicChecks
+character.dynamicActive = true
+tick()
+assert(character.dynamicChecks == dynamicChecks, "removed dynamic sources remained in think")
+
+local nestedWeapon, nestedAccessory, nestedAmmo = makeItem("nested_weapon"), makeItem("nested_dynamic"), makeItem("ammo")
+nestedWeapon.rootOwner = character
+nestedAccessory.rootOwner = setmetatable({}, {
+    __index = function(_, field) error("cannot access field " .. field .. " of userdata<Barotrauma.Item>") end,
+})
+nestedAmmo.tags.dynamic_ammo = true
+nestedWeapon.contents = { nestedAccessory }
+nestedAccessory.contents = { nestedAmmo }
+slots[InvSlotType.LeftHand] = nestedWeapon
+equip(nestedWeapon, { character = character })
+assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 0,
+    "nested dynamic accessory ignored its host condition")
+nestedWeapon.Condition = 0
+itemContained({ Item = nestedAccessory }, { containedItem = nestedAmmo })
+assert(character.stats.MovementSpeed == 8 and character.Info.savedStats.nested_marker == 1,
+    "nested ammo insertion did not immediately refresh the top-level weapon")
+local nestedWeaponScans = nestedWeapon.inventoryScans
+local accessoryChecks = character.accessoryChecks
+tick()
+assert(character.accessoryChecks == accessoryChecks, "dynamic accessory ignored its poll interval")
+tick()
+assert(character.accessoryChecks == accessoryChecks + 1, "dynamic accessory was not polled when due")
+assert(nestedWeapon.inventoryScans == nestedWeaponScans,
+    "dynamic accessory polling scanned the top-level weapon inventory")
+nestedAccessory.contents = {}
+itemRemoved({ Item = nestedAccessory }, { containedItem = nestedAmmo })
+assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 0,
+    "nested ammo removal did not immediately clear the accessory effect")
+slots[InvSlotType.LeftHand] = nil
+unequip(nestedWeapon, { character = character })
+
 Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
@@ -520,10 +621,11 @@ local function hasTalentMarker(cfg, marker)
 end
 assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 80
-    and countEntries(production.weaponAccessories) == 70
+    and countEntries(production.weaponAccessories) == 72
     and countEntries(production.heldWeapons) == 43,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
+    and production.dynamicInterval == 0.5
     and production.mainItems.deep_meteorite.stats[1].value == -0.2
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
@@ -532,10 +634,69 @@ assert(production.mainItems.deep_hpc
     and production.weaponAccessories.deep_762_expansion.stats[1].value == -15
     and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
+    and production.weaponAccessories.cqr_grips.when
+    and production.weaponAccessories.oblique_grips.when
+    and #production.weaponAccessories.deep_flash_hider.effects == 2
+    and #production.weaponAccessories.deep_compensator.effects == 2
+    and #production.weaponAccessories.deep_sub_hanging_master_key.effects == 2
+    and hasTalentMarker(production.weaponAccessories.deep_sub_hanging_master_key,
+        "deep_shotgun_damgage_balance_12shell")
     and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
     and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
+    and production.heldWeapons.deep_m249.effects[1].when
+    and production.heldWeapons.deep_m249.effects[1].stats[1].value == 0.7
+    and production.heldWeapons.deep_CZ75.effects[1].statsKey == "deep_pistol_mozambique_aff"
+    and #production.heldWeapons.deep_m82a1.effects == 3
+    and production.heldWeapons.deep_knife.effects[1].when
+    and #production.heldWeapons.deep_wuchuan.effects == 2
     and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
     and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance,
     "split production config changed category data")
+
+character.MaxVitality, character.Vitality = 100, 60
+character.AnimController.Crouching = false
+assert(not production.heldWeapons.deep_m249.effects[1].when(character),
+    "held condition ignored the common talent")
+character.talents.deep_talent_all = true
+character.AnimController.Crouching = true
+assert(production.heldWeapons.deep_m249.effects[1].when(character),
+    "machine-gun crouch condition changed")
+assert(not production.heldWeapons.deep_CZ75.effects[1].when(character),
+    "pistol low-vitality condition activated too early")
+character.Vitality = 50
+assert(production.heldWeapons.deep_CZ75.effects[1].when(character),
+    "pistol low-vitality boundary changed")
+local sniperEffects = production.heldWeapons.deep_m82a1.effects
+assert(sniperEffects[1].when(character) and sniperEffects[2].when(character)
+    and not sniperEffects[3].when(character), "heavy-sniper vitality tiers changed")
+assert(not production.heldWeapons.deep_knife.effects[1].when(character),
+    "knife smoke condition activated without smoke")
+health.afflictions.m18_smoke = { Strength = 1 }
+assert(production.heldWeapons.deep_knife.effects[1].when(character),
+    "knife smoke condition did not activate")
+character.talents.deep_talent_all = nil
+character.talents.deep_talent_elite_enemy = true
+assert(production.heldWeapons.deep_wuchuan.effects[1].when(character),
+    "elite Wuchuan talent condition changed")
+
+local host, masterKey, shotgunAmmo = makeItem("host"), makeItem("deep_sub_hanging_master_key"), makeItem("shotgun_ammo")
+character.CurrentHull = nil
+assert(not production.weaponAccessories.cqr_grips.when(character), "CQR activated outside")
+character.CurrentHull = {}
+assert(production.weaponAccessories.cqr_grips.when(character), "CQR did not activate inside")
+host.Condition = 1
+assert(not production.weaponAccessories.oblique_grips.when(character, host),
+    "oblique grip condition boundary changed")
+host.Condition = 0.99
+assert(production.weaponAccessories.oblique_grips.when(character, host),
+    "oblique grip did not activate while reloading")
+host.Speed = 1
+assert(production.weaponAccessories.deep_flash_hider.effects[1].when(character, host)
+    and not production.weaponAccessories.deep_compensator.effects[1].when(character, host),
+    "muzzle speed boundary changed")
+shotgunAmmo.tags.deep_round_shotgun_attenuation = true
+masterKey.contents = { shotgunAmmo }
+assert(production.weaponAccessories.deep_sub_hanging_master_key.effects[2].when(character, host, masterKey),
+    "Master Key shotgun-ammo condition changed")
 
 print("AdjustEquipmentStatvalue state check OK")
