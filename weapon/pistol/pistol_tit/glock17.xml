@@ -23,7 +23,6 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_tit/pistol_tit.png" sourcerect="6,188,117,77" depth="0.55" origin="0.5,0.5" />
     <Body width="140" height="90" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-20,-7" handle2="-20,-7" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -82,9 +81,6 @@
     </Holdable>
     <SwitchableRangedWeapon barrelpos="59,32" spread="2" unskilledspread="4" weapondamagemodifier="1" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.1" holdtrigger="true" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="0.2">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <!-- 普通枪声，消音器枪声 -->

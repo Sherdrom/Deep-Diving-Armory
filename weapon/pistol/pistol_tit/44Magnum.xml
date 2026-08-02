@@ -23,7 +23,6 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_tit/pistol_tit.png" sourcerect="5,6,142,77" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-35,-7" handle2="0,5" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />

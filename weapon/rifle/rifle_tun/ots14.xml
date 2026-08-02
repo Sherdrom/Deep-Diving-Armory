@@ -16,7 +16,6 @@
     <Sprite texture="%ModDir%/weapon/rifle/rifle_tun/rifle_tun.png" sourcerect="60,1606,369,133" depth="0.55" origin="0.5,0.5" />
     <Body width="370" height="130" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-5" aimpos="50,2" handle1="10,-25" handle2="80,10" holdangle="-35" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -78,9 +77,6 @@
     </Holdable>
     <SwitchableRangedWeapon reload="0.075" weapondamagemodifier="1" holdtrigger="true" barrelpos="185,12" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <!-- SwitchableRangedWeapon 相关-->
       <!--使用主弹药时,只使用0号位弹匣 -->
       <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and">

@@ -26,7 +26,6 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.3" setvalue="true"></StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.2" setvalue="true" />
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
@@ -61,9 +60,6 @@
     </Wearable>
     <SwitchableRangedWeapon reload="0.12" weapondamagemodifier="1.0" holdtrigger="true" barrelpos="335,38" spread="15" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76251_1.ogg" type="OnUse" range="800" selectionmode="Random" />

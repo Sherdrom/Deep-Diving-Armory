@@ -1,5 +1,17 @@
 local events, patches = {}, {}
 local now = 0
+local warningMessages = {}
+local warningBox
+
+CLIENT = true
+GUI = {
+    MessageBox = function(header, message)
+        assert(header == "Deep-Diving Armory")
+        warningMessages[#warningMessages + 1] = message
+        warningBox = { Closed = false }
+        return warningBox
+    end,
+}
 
 Timer = {
     GetTime = function() return now end,
@@ -101,7 +113,16 @@ _G.AdjustEquipmentConfig = {
 }
 
 local function makeItem(identifier)
-    local item = { Prefab = { Identifier = identifier }, Removed = false, contents = {}, inventoryScans = 0 }
+    local item = {
+        Prefab = { Identifier = identifier },
+        Removed = false,
+        contents = {},
+        inventoryScans = 0,
+        tags = {},
+        components = {},
+    }
+    function item.HasTag(tag) return item.tags[tag] == true end
+    function item.GetComponentString(component) return item.components[component] end
     function item:GetRootInventoryOwner() return self.rootOwner end
     item.OwnInventory = setmetatable({}, {
         __index = function(_, key)
@@ -186,7 +207,7 @@ LuaUserData = {
     end,
 }
 
-Character = { CharacterList = { character } }
+Character = { CharacterList = { character }, Controlled = character }
 
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
@@ -217,6 +238,34 @@ local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemC
 local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
 local revive = patches["Barotrauma.Character.Revive"]
 local armorContainer = { Item = armor }
+
+local vanillaGun = makeItem("vanilla_gun")
+vanillaGun.tags.gun = true
+vanillaGun.components.RangedWeapon = {}
+vanillaGun.rootOwner = character
+slots[InvSlotType.LeftHand] = vanillaGun
+equip(vanillaGun, { character = character })
+assert(#warningMessages == 0, "vanilla DDA weapon triggered the VCE warning")
+
+local vceGun = makeItem("vce_gun")
+vceGun.tags.gun = true
+vceGun.components.SwitchableRangedWeapon = {}
+vceGun.rootOwner = character
+slots[InvSlotType.LeftHand] = vceGun
+equip(vceGun, { character = character })
+assert(#warningMessages == 0, "installed VCE triggered the VCE warning")
+
+local missingVceGun = makeItem("missing_vce_gun")
+missingVceGun.tags.gun = true
+missingVceGun.rootOwner = character
+slots[InvSlotType.LeftHand] = missingVceGun
+equip(missingVceGun, { character = character })
+equip(missingVceGun, { character = character })
+assert(#warningMessages == 1, "simultaneous equip opened duplicate VCE warnings")
+warningBox.Closed = true
+equip(missingVceGun, { character = character })
+assert(#warningMessages == 2, "VCE warning did not reopen after the previous box closed")
+slots[InvSlotType.LeftHand] = nil
 
 local nestedHost = makeItem("nested_host")
 nestedHost.rootOwner = setmetatable({}, {
@@ -472,7 +521,7 @@ end
 assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 80
     and countEntries(production.weaponAccessories) == 70
-    and countEntries(production.heldWeapons) == 129,
+    and countEntries(production.heldWeapons) == 43,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
     and production.mainItems.deep_meteorite.stats[1].value == -0.2
@@ -485,8 +534,8 @@ assert(production.mainItems.deep_hpc
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
     and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
     and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
-    and production.heldWeapons.deep_pp19.effects[3].affliction.id == "deep_pp19_buffalo"
-    and production.heldWeapons.deep_pp19.effects[3].blockedByEnemyResistance,
+    and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
+    and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance,
     "split production config changed category data")
 
 print("AdjustEquipmentStatvalue state check OK")

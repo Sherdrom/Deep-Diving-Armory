@@ -81,9 +81,6 @@
     </Holdable>
     <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1" holdtrigger="true" barrelpos="295,15" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <!-- SwitchableRangedWeapon 相关-->
       <!--使用主弹药时,只使用0号位弹匣 -->
       <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and">

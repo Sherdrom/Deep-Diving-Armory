@@ -16,7 +16,6 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_tun/pistol_tun.png" sourcerect="6,7,146,87" depth="0.55" origin="0.5,0.5" />
     <Body width="80" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-35,-7" handle2="-35,-7" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -62,9 +61,6 @@
     </Holdable>
     <SwitchableRangedWeapon barrelpos="73,29" spread="10" unskilledspread="20" combatPriority="100" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.15" holdtrigger="true" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <StatusEffect type="NotInWater" target="This" Condition="10" />
       <StatusEffect type="InWater" target="This" Condition="20" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />

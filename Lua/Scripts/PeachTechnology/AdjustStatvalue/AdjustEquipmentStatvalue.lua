@@ -46,6 +46,20 @@ local function warn(...)
     print("[AdjustEquipmentStatvalue] ERROR:", ...)
 end
 
+local vceWarningBox
+local function warnMissingVce(character, item)
+    if not CLIENT or character ~= Character.Controlled then return end
+    if vceWarningBox and not vceWarningBox.Closed then return end
+    if not item.HasTag("gun")
+        or item.GetComponentString("RangedWeapon")
+        or item.GetComponentString("SwitchableRangedWeapon") then return end
+
+    vceWarningBox = GUI.MessageBox(
+        "Deep-Diving-Armory",
+        "未检测到 VCE（Vanilla Components Expanded），请安装并启用，否则 DDA 枪械无法正常使用。\nVCE was not detected; install and enable it to use DDA firearms."
+    )
+end
+
 local function afflictionList(value)
     if not value then return {} end
     if value.id then return { value } end
@@ -644,7 +658,6 @@ end
 local function addWeapon(character, item)
     if not character or character.Removed or character.IsDead or not isStillHeld(character, item) then return end
     if not item or item.Removed or not item.Prefab then return end
-
     local itemId = tostring(item.Prefab.Identifier)
     local state = charStates[character]
     if state and state.weapons[item] then return end
@@ -777,6 +790,7 @@ Hook.Patch(
     { "Barotrauma.Character" },
     function(item, ptable)
         local character = ptable["character"]
+        if isStillHeld(character, item) then warnMissingVce(character, item) end
         addMain(character, item)
         addWeapon(character, item)
     end,

@@ -22,7 +22,6 @@
     <Sprite texture="%ModDir%/weapon/sniperrifle/sniper_phy/sniper_phy.png" sourcerect="16,442,918,137" depth="0.55" origin="0.5,0.5" />
     <Body width="400" height="100" density="10" />
     <Holdable slots="RightHand+LeftHand" controlpose="true" holdpos="80,-10" aimpos="100,3" handle1="-240,-15" handle2="100,20" holdangle="-35" pickkey="Select" msg="ItemMsgEquipSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.22" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
@@ -76,9 +75,6 @@
     </Wearable>
     <SwitchableRangedWeapon reload="1" weapondamagemodifier="1" holdtrigger="true" barrelpos="459,34" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="10" velocitymin="0" velocitymax="0" />
