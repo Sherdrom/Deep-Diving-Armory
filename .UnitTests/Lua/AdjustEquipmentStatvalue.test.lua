@@ -6,7 +6,7 @@ local warningBox
 CLIENT = true
 GUI = {
     MessageBox = function(header, message)
-        assert(header == "Deep-Diving Armory")
+        assert(header == "Deep-Diving-Armory")
         warningMessages[#warningMessages + 1] = message
         warningBox = { Closed = false }
         return warningBox
