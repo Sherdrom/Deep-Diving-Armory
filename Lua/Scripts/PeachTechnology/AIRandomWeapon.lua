@@ -1,19 +1,13 @@
 -- AIRandomWeapon: AI在战斗中每隔固定时间随机切换使用另一把武器
 --
 -- 实现原理:
---   两个组件协同工作:
---
---   [1] think hook (节流, 仅服务端/单机):
---       扫描所有处于战斗状态(AIObjectiveCombat)的 human bot,
---       从物品栏收集所有 CombatPriority > 0 的武器, 若有 >= MinWeaponCount
---       把可用武器且距上次切换超过 SwitchInterval 秒, 则随机选择一把
---       不同于当前的武器, 通过 instance.Weapon = newItem 赋值,
---       并将该武器记录到 chosenWeapons 表中.
---
---   [2] Hook.Patch (After) on AIObjectiveCombat.TryArm:
+--   Hook.Patch (After) on AIObjectiveCombat.TryArm:
 --       TryArm 是引擎每秒调用的武器装备方法, 内部通过 GetWeapon 选择
---       最高优先级武器并赋值 instance.Weapon, 会覆盖 think hook 设置的随机武器.
---       After hook 在 TryArm 执行后拦截:
+--       最高优先级武器. 补丁在这个已有的按角色入口中执行随机切换,
+--       不再进行全局角色扫描.
+--       TryArm 会先按引擎逻辑赋值 instance.Weapon, After hook 再恢复随机选择.
+--       After hook 在 TryArm 执行后:
+--       - 若达到 SwitchInterval, 从物品栏收集武器并执行随机切换
 --       - 若 TryArm 返回 false (武器选择失败), 清除 chosenWeapons 记录,
 --         让引擎下次自行选择可用武器
 --       - 若 TryArm 返回 true 且 chosenWeapons 中有有效记录,
@@ -24,9 +18,8 @@
 --   后续 WeaponComponent getter 通过 GetWeaponComponent(Weapon) 正确解析.
 --
 -- 限制说明 (多人同步):
---   AIObjectiveCombat 仅服务端执行, think 回调用运行时守卫
---   if not SERVER and Game.IsMultiplayer then return end 拦截客户端.
---   TryArm 补丁仅在服务端 AI 逻辑中触发, 无需额外守卫.
+--   AIObjectiveCombat 仅服务端执行, TryArm 补丁仅在服务端 AI 逻辑中触发,
+--   无需额外 CharacterList 扫描或客户端守卫.
 --   单机或服务端正常运行.
 
 local MOD_NAME = "AIRandomWeapon"
@@ -110,37 +103,49 @@ local function CleanupTimers(currentTime)
 end
 
 -- ============================================================
--- Component 1: think hook - 定时切换随机武器
+-- TryArm hook 内的随机切换逻辑
 -- ============================================================
-local function ProcessCharacter(character, currentTime)
+local function ProcessCharacter(character, currentObjective, currentTime)
     if not character.IsHuman or not character.IsBot then return end
     if character.IsDead or character.Removed then return end
 
-    local aiController = character.AIController
-    if aiController == nil then return end
-
-    local objectiveManager = aiController.ObjectiveManager
-    if objectiveManager == nil then return end
-
-    local currentObjective = objectiveManager.CurrentObjective
     if currentObjective == nil then return end
 
-    if not LuaUserData.IsTargetType(currentObjective, "Barotrauma.AIObjectiveCombat") then return end
+    local previousChoice = chosenWeapons[character]
+    if previousChoice ~= nil then
+        local inventory = character.Inventory
+        if previousChoice.Removed or inventory == nil or not inventory.Contains(previousChoice) then
+            chosenWeapons[character] = nil
+            previousChoice = nil
+        end
+    end
 
     -- 检查切换冷却
     local lastTime = switchTimers[character]
-    if lastTime ~= nil and currentTime - lastTime < Config.SwitchInterval then return end
+    if lastTime ~= nil and currentTime - lastTime < Config.SwitchInterval then
+        if previousChoice ~= nil then currentObjective.Weapon = previousChoice end
+        return
+    end
 
     -- 收集可用武器
     local weapons = CollectWeapons(character)
-    if #weapons < Config.MinWeaponCount then return end
+    if #weapons < Config.MinWeaponCount then
+        if previousChoice ~= nil then currentObjective.Weapon = previousChoice end
+        return
+    end
+
+    -- TryArm 已经先按引擎逻辑设置 Weapon; 若已有随机选择, 它才是实际当前武器.
+    local currentWeapon = previousChoice or currentObjective.Weapon
 
     -- 检查是否存在优先武器 (CombatPriority > PriorityWeaponThreshold)
     -- 若存在, 则锁定该武器, 不进行随机切换
     for _, entry in ipairs(weapons) do
         if entry.priority > Config.PriorityWeaponThreshold then
             -- 若当前武器已是优先武器, 无需操作
-            if currentObjective.Weapon == entry.item then return end
+            if currentWeapon == entry.item then
+                currentObjective.Weapon = entry.item
+                return
+            end
             -- 切换到优先武器并清除随机选择记录
             currentObjective.Weapon = entry.item
             chosenWeapons[character] = nil
@@ -148,9 +153,6 @@ local function ProcessCharacter(character, currentTime)
             return
         end
     end
-
-    -- 获取当前使用的武器
-    local currentWeapon = currentObjective.Weapon
 
     -- 从可用武器中排除当前武器, 构建候选列表
     local candidates = {}
@@ -160,39 +162,29 @@ local function ProcessCharacter(character, currentTime)
         end
     end
 
-    if #candidates == 0 then return end
+    if #candidates == 0 then
+        if previousChoice ~= nil then currentObjective.Weapon = previousChoice end
+        return
+    end
 
     -- 随机选择一把武器
-    local chosen = candidates[math.random(1, #candidates)]
+    local selected = candidates[math.random(1, #candidates)]
 
     -- 赋值新武器 (Weapon setter 自动清空 _weaponComponent 缓存)
-    currentObjective.Weapon = chosen.item
+    currentObjective.Weapon = selected.item
 
     -- 记录切换时间和选择的武器
     switchTimers[character] = currentTime
-    chosenWeapons[character] = chosen.item
+    chosenWeapons[character] = selected.item
 
-    LogDebug(character.Name .. " switched to " .. tostring(chosen.item.Name) .. " (priority: " .. chosen.priority .. ")")
+    LogDebug(character.Name .. " switched to " .. tostring(selected.item.Name) .. " (priority: " .. selected.priority .. ")")
 end
 
-Hook.Add("think", MOD_NAME .. ".SwitchWeapons", function()
-    if not SERVER and Game.IsMultiplayer then return end
-
-    local currentTime = Timer.GetTime()
-
-    for _, character in pairs(Character.CharacterList) do
-        ProcessCharacter(character, currentTime)
-    end
-
-    CleanupTimers(currentTime)
-end)
-
 -- ============================================================
--- Component 2: Hook.Patch (After) on TryArm - 阻止引擎覆盖随机武器
+-- Hook.Patch (After) on TryArm - 定时切换并阻止引擎覆盖随机武器
 -- ============================================================
 -- AIObjectiveCombat.TryArm() 无参数, 签名简单, 可被 Hook.Patch.
--- TryArm 每秒调用 GetWeapon 选择最高优先级武器并赋值 instance.Weapon,
--- 会覆盖 think hook 设置的随机武器.
+-- TryArm 每秒调用 GetWeapon 选择最高优先级武器并先赋值 instance.Weapon.
 -- After hook 在 TryArm 执行后:
 --   - 若 TryArm 返回 false (武器选择失败/武器为空), 清除 chosenWeapons 记录
 --   - 若 TryArm 返回 true 且 chosenWeapons 中有有效记录, 将 Weapon 恢复为随机武器
@@ -204,28 +196,24 @@ Hook.Patch(
     "TryArm",
     {},
     function(instance, ptable)
+        local currentTime = Timer.GetTime()
+        CleanupTimers(currentTime)
+
         local character = instance.character
         if character == nil then return end
-
-        local chosen = chosenWeapons[character]
-        if chosen == nil then return end
 
         -- TryArm 返回 false: 武器选择失败, 可能是随机武器弹药耗尽等
         -- 清除记录, 让引擎下次自行选择可用武器
         if ptable.ReturnValue == false then
+            local hadChoice = chosenWeapons[character] ~= nil
             chosenWeapons[character] = nil
-            LogDebug("TryArm returned false, cleared choice for " .. character.Name)
+            if hadChoice then
+                LogDebug("TryArm returned false, cleared choice for " .. character.Name)
+            end
             return
         end
 
-        -- 验证选择的武器是否仍在物品栏中
-        if chosen.Removed or not character.Inventory.Contains(chosen) then
-            chosenWeapons[character] = nil
-            return
-        end
-
-        -- 将 Weapon 恢复为我们选择的随机武器
-        instance.Weapon = chosen
+        ProcessCharacter(character, instance, currentTime)
     end,
     Hook.HookMethodType.After
 )
