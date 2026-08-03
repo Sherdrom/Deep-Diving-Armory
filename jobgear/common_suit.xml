@@ -1239,4 +1239,50 @@
       <Containable items="smallitem" />
     </ItemContainer>
   </Item>
+  <Item name="" identifier="deep_mark_suit_knight" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="656,633,75,140" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.24" origin="0.614,0.586" sourcerect="822,42,126,115" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.4,0.6" sourcerect="351,19,150,287" scale="0.24" size="1,1" compress="true" hideotherwearables="false" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightHand" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.337,0.52" sourcerect="567,322,52,78" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftHand" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="700,321,48,82" origin="0.55,0.52" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftForearm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="709,197,40,118" origin="0.48,0.51" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightForearm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.369,0.515" sourcerect="574,184,58,129" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftArm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="703,8,51,147" origin="0.5,0.57" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightArm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.365,0.57" sourcerect="566,7,62,149" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Waist" hidelimb="false" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="356,385,117,124" origin="0.5,0.539" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightThigh" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="6,8,98,229" origin="0.5,0.541" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftThigh" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="169,9,95,215" origin="0.5,0.54" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightLeg" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="20,264,64,209" origin="0.39,0.62" scale="0.27" compress="true" inheritlimbdepth="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftLeg" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="181,263,67,208" origin="0.39,0.62" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="548,443,103,71" origin="0.396,0.5" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="681,443,103,70" origin="0.396,0.5" scale="0.25" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
 </Items>
