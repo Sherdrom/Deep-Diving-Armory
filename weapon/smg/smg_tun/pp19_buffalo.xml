@@ -56,11 +56,6 @@
         <Conditional EntityType="eq character" TargetContainer="True" />
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
-      <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
-      </StatusEffect>
       <!-- VCE检测 -->
     </Holdable>
     <SwitchableRangedWeapon reload="0.086" weapondamagemodifier="1.2" holdtrigger="true" barrelpos="188,26" spread="3" unskilledspread="6" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">

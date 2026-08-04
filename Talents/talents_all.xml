@@ -320,7 +320,7 @@
     <AbilityGroupInterval interval="0.5">
       <Conditions>
         <AbilityConditionHasPermanentStat statidentifier="deep_chip_striker" min="1" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -379,7 +379,7 @@
     <!-- 拿着霰弹枪时-95%伤害 
     <AbilityGroupInterval interval="0.25">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
         <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
       </Conditions>
       <Abilities>
@@ -389,7 +389,7 @@
     <!-- 拿着霰弹枪附近有敌人时伤害正常 
     <AbilityGroupInterval interval="0.1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
         <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
         <AbilityConditionNearbyCharacterCount distance="900" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
       </Conditions>

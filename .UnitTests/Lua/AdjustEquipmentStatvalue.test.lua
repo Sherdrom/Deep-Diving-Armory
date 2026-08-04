@@ -132,6 +132,30 @@ _G.AdjustEquipmentConfig = {
             flags = { "DynamicFlag" },
             resistances = { { id = "damage", multiplier = 0.2, source = "dynamicweapon" } },
         },
+        dynamicpair = {
+            effects = {
+                {
+                    pollInterval = 0.5,
+                    when = function(character)
+                        character.pairSemiChecks = character.pairSemiChecks + 1
+                        return character.pairSemiActive
+                    end,
+                    statsKey = "pair_semi",
+                    statGroup = "deep_Semi",
+                    stats = { { statType = "MovementSpeed", value = 3 } },
+                },
+                {
+                    pollInterval = 1.0,
+                    when = function(character)
+                        character.pairBurstChecks = character.pairBurstChecks + 1
+                        return character.pairBurstActive
+                    end,
+                    statsKey = "pair_burst",
+                    blocksStatGroups = { "deep_Semi" },
+                    stats = { { statType = "MovementSpeed", value = 5 } },
+                },
+            },
+        },
     },
 }
 
@@ -168,6 +192,7 @@ local function makeItem(identifier)
             end
         end,
     })
+    function inventory:GetItemAt(index) return item.contents[index + 1] end
     return item
 end
 
@@ -208,6 +233,10 @@ local character = {
     removeResistanceCalls = 0,
     dynamicActive = false,
     dynamicChecks = 0,
+    pairSemiActive = false,
+    pairBurstActive = false,
+    pairSemiChecks = 0,
+    pairBurstChecks = 0,
     accessoryChecks = 0,
     Info = { savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 }, changeCalls = 0 },
     CharacterHealth = health,
@@ -571,6 +600,25 @@ character.dynamicActive = true
 tick()
 assert(character.dynamicChecks == dynamicChecks, "removed dynamic sources remained in think")
 
+local pairWeapon = makeItem("dynamicpair")
+pairWeapon.rootOwner = character
+slots[InvSlotType.LeftHand] = pairWeapon
+equip(pairWeapon, { character = character })
+local pairSemiChecks, pairBurstChecks = character.pairSemiChecks, character.pairBurstChecks
+character.pairSemiActive = true
+tick()
+assert(character.pairSemiChecks == pairSemiChecks + 1
+    and character.pairBurstChecks == pairBurstChecks,
+    "dynamic effects did not use independent poll intervals")
+assert(character.stats.MovementSpeed == 3, "dynamic Semi effect did not activate")
+character.pairBurstActive = true
+tick()
+assert(character.pairBurstChecks == pairBurstChecks + 1
+    and character.stats.MovementSpeed == 5,
+    "dynamic Burst did not immediately block the applied Semi group")
+slots[InvSlotType.LeftHand] = nil
+unequip(pairWeapon, { character = character })
+
 local nestedWeapon, nestedAccessory, nestedAmmo = makeItem("nested_weapon"), makeItem("nested_dynamic"), makeItem("ammo")
 nestedWeapon.rootOwner = character
 nestedAccessory.rootOwner = setmetatable({}, {
@@ -622,7 +670,7 @@ end
 assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 80
     and countEntries(production.weaponAccessories) == 72
-    and countEntries(production.heldWeapons) == 43,
+        and countEntries(production.heldWeapons) == 117,
     "split production config lost or duplicated items")
 assert(production.mainItems.deep_hpc
     and production.dynamicInterval == 0.5
@@ -650,8 +698,29 @@ assert(production.mainItems.deep_hpc
     and production.heldWeapons.deep_knife.effects[1].when
     and #production.heldWeapons.deep_wuchuan.effects == 2
     and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
-    and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance,
+    and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance
+    and production.heldWeapons.deep_AK12.effects[1].statsKey == "deep_Semi"
+    and production.heldWeapons.deep_m4.effects[1].statGroup == "deep_Semi"
+    and production.heldWeapons.deep_m4.effects[2].when
+    and production.heldWeapons.deep_m4.effects[2].blocksStatGroups[1] == "deep_Semi"
+    and production.heldWeapons.deep_AK12.effects[2].talentMarkers[1] == "deep_shotgun_damgage_balance"
+    and production.heldWeapons.deep_doublebarrel.effects[1].talentMarkers[1] == "deep_shotgun_damgage_balance"
+    and production.heldWeapons.deep_m4.effects[3].statsKey == "deep_upgrade_rifle"
+    and production.heldWeapons.deep_m4.effects[3].pollInterval == 0.25
+    and production.heldWeapons.deep_AK12.effects[2].pollInterval == 0.5
+    and production.heldWeapons.deep_flash_handed_shield == nil,
     "split production config changed category data")
+
+local switchableHost = makeItem("deep_AK12")
+switchableHost.components.SwitchableRangedWeapon = {
+    currentFireModeSelected = 1,
+    currentProjectileSelected = 1,
+}
+local switchableEffects = production.heldWeapons.deep_AK12.effects
+assert(switchableEffects[1].when(character, switchableHost), "semi-auto mode condition changed")
+assert(not switchableEffects[2].when(character, switchableHost), "master-key condition ignored")
+switchableHost.contents = { makeItem("other_mount"), makeItem("deep_sub_hanging_master_key") }
+assert(switchableEffects[2].when(character, switchableHost), "master-key condition did not detect slot 1")
 
 character.MaxVitality, character.Vitality = 100, 60
 character.AnimController.Crouching = false

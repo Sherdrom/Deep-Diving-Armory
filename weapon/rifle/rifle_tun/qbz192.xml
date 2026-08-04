@@ -60,17 +60,6 @@
         <Conditional EntityType="eq character" TargetContainer="True" />
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
-      <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
-      </StatusEffect>
-      <!-- 切换成下挂霰弹时，获得距离衰减 -->
-      <StatusEffect type="OnActive" interval="0.5" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentProjectileSelected="eq 1" />
-        <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
-        <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
-      </StatusEffect>
       <StatusEffect type="OnActive" interval="0.9" target="This" stackable="false" reload="0.08" comparison="and" setvalue="true">
         <Conditional currentProjectileSelected="eq 0" />
       </StatusEffect>

@@ -12,6 +12,7 @@ local WEAPON_ACCESSORY_CONFIG = CONFIG.weaponAccessories or {}
 local HELD_WEAPON_CONFIG = CONFIG.heldWeapons or {}
 local fallbackInterval = CONFIG.fallbackInterval or 5.0
 local dynamicInterval = CONFIG.dynamicInterval or 0.5
+local DYNAMIC_SWEEP_INTERVAL = 0.25
 local RESISTANCE_SOURCE = Identifier("dda_adjust_equipment")
 local TalentResistanceIdentifier = LuaUserData.CreateStatic("Barotrauma.TalentResistanceIdentifier", true)
 local ENEMY_ACCESSORY_RESISTANCE = "deep_enemy_affliction_resistance"
@@ -516,12 +517,21 @@ local function applyConfig(state, cfg, host, accessory)
         end
     end
     if configNeedsDynamic(cfg) then
+        local dynamicEffects = {}
+        local now = Timer.GetTime()
+        for index, effect in ipairs(cfg.effects or { cfg }) do
+            if effect.when then
+                dynamicEffects[index] = {
+                    interval = effect.pollInterval or cfg.pollInterval or dynamicInterval,
+                    lastCheck = now,
+                }
+            end
+        end
         state.dynamicConfigs[applied] = {
             cfg = cfg,
             host = host,
             accessory = accessory,
-            interval = cfg.pollInterval or dynamicInterval,
-            lastCheck = Timer.GetTime(),
+            effects = dynamicEffects,
         }
         dynamicStates[state] = true
     elseif configNeedsFallback(cfg) then
@@ -532,17 +542,21 @@ local function applyConfig(state, cfg, host, accessory)
 end
 
 local removeEffects
+local syncConfigEffect
 local function syncConfigEffects(state, cfg, applied, host, accessory)
+    local changed = false
     for index, effect in ipairs(cfg.effects or { cfg }) do
-        local active = isEffectActive(state, effect, host, accessory)
-        if not active and applied[index] then
-            removeEffects(state, applied[index])
-            applied[index] = nil
-        elseif active and not applied[index] then
-            applied[index] = applyEffects(state, effect)
+        changed = syncConfigEffect(state, cfg, applied, index, host, accessory) or changed
+    end
+    local dynamic = state.dynamicConfigs[applied]
+    if dynamic then
+        local now = Timer.GetTime()
+        for index in pairs(dynamic.effects) do
+            dynamic.effects[index].lastCheck = now
         end
     end
     updateFallbackState(state)
+    return changed
 end
 
 removeEffects = function(state, effects)
@@ -552,6 +566,20 @@ removeEffects = function(state, effects)
     releaseTalentMarkers(state, effects.talentMarkers)
     releaseResistances(state, effects.resistances)
     releaseAfflictions(state, effects.afflictions)
+end
+
+syncConfigEffect = function(state, cfg, applied, index, host, accessory)
+    local effect = (cfg.effects or { cfg })[index]
+    local active = isEffectActive(state, effect, host, accessory)
+    if not active and applied[index] then
+        removeEffects(state, applied[index])
+        applied[index] = nil
+        return true
+    elseif active and not applied[index] then
+        applied[index] = applyEffects(state, effect)
+        return true
+    end
+    return false
 end
 
 local function removeConfigEffects(state, effects)
@@ -930,7 +958,7 @@ local lastDynamicTime = lastFallbackTime
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     local now = Timer.GetTime()
-    local checkDynamic = now - lastDynamicTime >= dynamicInterval
+    local checkDynamic = now - lastDynamicTime >= DYNAMIC_SWEEP_INTERVAL
     local checkFallback = now - lastFallbackTime >= fallbackInterval
     if not checkDynamic and not checkFallback then return end
 
@@ -949,9 +977,18 @@ Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
                 updateFallbackState(state)
             else
                 for applied, dynamic in pairs(state.dynamicConfigs) do
-                    if now - dynamic.lastCheck >= dynamic.interval then
-                        dynamic.lastCheck = now
-                        syncConfigEffects(state, dynamic.cfg, applied, dynamic.host, dynamic.accessory)
+                    local changed = false
+                    for index, effect in pairs(dynamic.effects) do
+                        if now - effect.lastCheck >= effect.interval then
+                            effect.lastCheck = now
+                            changed = syncConfigEffect(
+                                state, dynamic.cfg, applied, index, dynamic.host, dynamic.accessory
+                            ) or changed
+                        end
+                    end
+                    if changed then
+                        refreshStats(state)
+                        updateFallbackState(state)
                     end
                 end
             end
