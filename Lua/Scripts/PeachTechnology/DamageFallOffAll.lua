@@ -67,8 +67,11 @@ local function detectFalloff(attacker)
     if attacker == nil or attacker.CharacterHealth == nil then return nil, nil end
 
     for affName, profile in pairs(falloffProfiles) do
-        if AH.GetAffStrength(attacker, affName) > 0.5 then
-            debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), AH.GetAffStrength(attacker, affName)))
+        local strength = AH.GetAffStrength(attacker, affName)
+        if strength > 0.5 then
+            if cfg.debugMode then
+                debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), strength))
+            end
             return affName, profile
         end
     end
@@ -103,24 +106,22 @@ end
 Hook.Add("character.damageLimb", "DamageFallOffAll.OnDamageLimb",
 function(character, worldPosition, hitLimb, afflictions, stun, playSound, attackImpulse, attacker, damageMultiplier, allowStacking, penetration, shouldImplode)
     if not cfg.enabled then return nil end
-    if attacker == nil then return nil end
+    if not cfg.damageFalloffEnabled and not cfg.showInConsole and not cfg.debugMode then return nil end
+    if attacker == nil or attacker.Removed then return nil end
+    if character == nil or character.Removed then return nil end
+
+    local matchedName, matchedProfile = detectFalloff(attacker)
+    local hasBurn = (matchedProfile ~= nil)
+    if not hasBurn and not cfg.showInConsole then return nil end
 
     local attackerPos = attacker.WorldPosition
     if attackerPos == nil then return nil end
 
-    local targetPos
-    if character ~= nil then
-        targetPos = character.WorldPosition
-    elseif hitLimb ~= nil and LuaUserData.HasMember(hitLimb, "character") then
-        targetPos = hitLimb.character.WorldPosition
-    end
-
+    local targetPos = character.WorldPosition
     if targetPos == nil then return nil end
 
     local distanceCm = calcDistance(attackerPos, targetPos)
     local isRanged = distanceCm > RANGED_THRESHOLD
-    local matchedName, matchedProfile = detectFalloff(attacker)
-    local hasBurn = (matchedProfile ~= nil)
 
     if cfg.showInConsole then
         local attackerName = tostring(attacker.Name or "?")
@@ -166,7 +167,9 @@ function(character, worldPosition, hitLimb, afflictions, stun, playSound, attack
             multiplier = falloffMultiplier,
             time = os.time()
         }
-        debugPrint(string.format("Stored falloff: %s, multiplier=%.2f", charId, falloffMultiplier))
+        if cfg.debugMode then
+            debugPrint(string.format("Stored falloff: %s, multiplier=%.2f", charId, falloffMultiplier))
+        end
     end
 end)
 
@@ -175,18 +178,18 @@ Hook.Patch("Barotrauma.CharacterHealth", "ApplyDamage",
 function(instance, ptable)
     if not cfg.enabled or not cfg.damageFalloffEnabled then return end
 
-    local attackResult = ptable["attackResult"]
-    if attackResult == nil then return end
-
-    local afflictions = attackResult.Afflictions
-    if afflictions == nil then return end
-
     local character = instance.Character
     if character == nil then return end
 
     local charId = tostring(character.ID or "")
     local data = pendingFalloff[charId]
     if data == nil then return end
+
+    local attackResult = ptable["attackResult"]
+    if attackResult == nil then return end
+
+    local afflictions = attackResult.Afflictions
+    if afflictions == nil then return end
 
     if os.time() - data.time > 5 then
         pendingFalloff[charId] = nil
@@ -200,7 +203,9 @@ function(instance, ptable)
         end
     end
 
-    debugPrint(string.format("Applied falloff: %s, multiplier=%.2f", charId, multiplier))
+    if cfg.debugMode then
+        debugPrint(string.format("Applied falloff: %s, multiplier=%.2f", charId, multiplier))
+    end
     pendingFalloff[charId] = nil
 end, Hook.HookMethodType.Before)
 
@@ -225,52 +230,37 @@ Hook.Add("think", "DamageFallOffAll.Cleanup", function()
     end
 end)
 
--- ==================== 深海枪：水中检测 ====================
+-- ==================== 深海枪：水中/巨兽衰减 ====================
 
-Hook.Add("character.applyDamage", "DamageFallOffAll.InWaterDetect",
+Hook.Add("character.applyDamage", "DamageFallOffAll.DeepGunModifiers",
 function(characterHealth, attackResult, hitLimb, allowStacking)
     local targetCharacter = characterHealth.Character
-    if targetCharacter == nil then return end
+    if targetCharacter == nil or targetCharacter.Removed then return end
 
     local attacker = targetCharacter.LastAttacker
-    if attacker == nil then return end
+    if attacker == nil or attacker.Removed then return end
 
     if not hasDeepGunEquipped(attacker) then return end
 
-    if not (attacker.InWater or targetCharacter.InWater) then return end
+    local inWater = attacker.InWater or targetCharacter.InWater
+    local isLeviathan = attacker.IsHuman and targetCharacter.Mass >= DEEP_GUN_LEVIATHAN_MASS_THRESHOLD
+    if not inWater and not isLeviathan then return end
 
     local afflictions = attackResult.Afflictions
     if afflictions == nil then return end
 
-    for _, a in ipairs(afflictions) do
-        if a ~= nil then
-            a.Strength = a.Strength * DEEP_GUN_IN_WATER_MULTIPLIER
+    if inWater then
+        for _, a in ipairs(afflictions) do
+            if a ~= nil then
+                a.Strength = a.Strength * DEEP_GUN_IN_WATER_MULTIPLIER
+            end
         end
     end
-end)
-
--- ==================== 深海枪：对大型生物衰减 ====================
-
-Hook.Add("character.applyDamage", "DamageFallOffAll.LeviathanModifier",
-function(characterHealth, attackResult, hitLimb, allowStacking)
-    local targetCharacter = characterHealth.Character
-    if targetCharacter == nil then return end
-
-    local attacker = targetCharacter.LastAttacker
-    if attacker == nil then return end
-
-    if not attacker.IsHuman then return end
-
-    if not hasDeepGunEquipped(attacker) then return end
-
-    if targetCharacter.Mass < DEEP_GUN_LEVIATHAN_MASS_THRESHOLD then return end
-
-    local afflictions = attackResult.Afflictions
-    if afflictions == nil then return end
-
-    for _, a in ipairs(afflictions) do
-        if a ~= nil then
-            a.Strength = a.Strength * DEEP_GUN_LEVIATHAN_MULTIPLIER
+    if isLeviathan then
+        for _, a in ipairs(afflictions) do
+            if a ~= nil then
+                a.Strength = a.Strength * DEEP_GUN_LEVIATHAN_MULTIPLIER
+            end
         end
     end
 end)
