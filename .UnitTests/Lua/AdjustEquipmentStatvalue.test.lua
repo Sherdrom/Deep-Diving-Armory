@@ -4,6 +4,7 @@ local warningMessages = {}
 local warningBox
 
 CLIENT = true
+SERVER = true
 GUI = {
     MessageBox = function(header, message)
         assert(header == "Deep-Diving-Armory")
@@ -38,7 +39,8 @@ function Hook.Patch(_, className, methodName, _, callback, patchType)
     assert(className == "Barotrauma.Item"
         or className == "Barotrauma.Character"
         or className == "Barotrauma.Items.Components.Wearable"
-        or className == "Barotrauma.Items.Components.ItemContainer")
+        or className == "Barotrauma.Items.Components.ItemContainer"
+        or className == "Barotrauma.Inventory")
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
 end
@@ -244,6 +246,7 @@ local character = {
     AnimController = {},
 }
 function character.Inventory:GetItemInLimbSlot(slot) return slots[slot] end
+character.Inventory.Owner = character
 function character.AnimController:GetLimb() return {} end
 function character.Info:GetSavedStatValue(_, id) return self.savedStats[id] or 0 end
 function character.Info:ChangeSavedStatValue(_, value, id)
@@ -306,7 +309,11 @@ local unequip = patches["Barotrauma.Item.Unequip"]
 local itemContained = patches["Barotrauma.Items.Components.ItemContainer.OnItemContained"]
 local itemRemoved = patches["Barotrauma.Items.Components.ItemContainer.OnItemRemoved"]
 local revive = patches["Barotrauma.Character.Revive"]
+local characterRemove = patches["Barotrauma.Character.Remove"]
+local serverInventoryRead = patches["Barotrauma.Inventory.ServerEventRead"]
+local clientApplyReceivedState = patches["Barotrauma.Inventory.ApplyReceivedState"]
 local armorContainer = { Item = armor }
+assert(characterRemove and serverInventoryRead and clientApplyReceivedState, "authority hooks were not registered")
 
 local vanillaGun = makeItem("vanilla_gun")
 vanillaGun.tags.gun = true
@@ -438,6 +445,28 @@ assert(character.stats.MovementSpeed == 1, "stat group blocker removal did not r
 slots[InvSlotType.OuterClothes] = nil
 unequip(armor, { character = character })
 assert(character.stats.MovementSpeed == 0, "stat group cleanup leaked stats")
+
+slots[InvSlotType.OuterClothes] = armor
+armor.contents = { plate }
+serverInventoryRead(character.Inventory, {})
+assert(character.stats.MovementSpeed == 1, "server inventory reconcile did not apply the plate")
+local armorScans = armor.inventoryScans
+slots[InvSlotType.OuterClothes] = nil
+tick()
+assert(character.stats.MovementSpeed == 1, "tick unexpectedly reconciled an unequipped armor")
+assert(armor.inventoryScans == armorScans, "tick scanned the armor inventory")
+serverInventoryRead(character.Inventory, {})
+assert(character.stats.MovementSpeed == 0, "server inventory reconcile did not remove the plate")
+assert(armor.inventoryScans == armorScans, "inventory reconcile scanned the armor inventory")
+
+slots[InvSlotType.OuterClothes] = armor
+clientApplyReceivedState(character.Inventory, {})
+assert(character.stats.MovementSpeed == 1, "client inventory reconcile did not apply the plate")
+armorScans = armor.inventoryScans
+slots[InvSlotType.OuterClothes] = nil
+clientApplyReceivedState(character.Inventory, {})
+assert(character.stats.MovementSpeed == 0, "client inventory reconcile did not remove the plate")
+assert(armor.inventoryScans == armorScans, "client removal scanned the armor inventory")
 
 local bagweapon = makeItem("bagweapon")
 local bagoptic = makeItem("optic")

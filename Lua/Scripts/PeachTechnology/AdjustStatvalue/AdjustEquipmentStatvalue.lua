@@ -812,16 +812,52 @@ local function resetTalentMarkers(character)
     end
 end
 
-local function scanCharacter(character)
-    if not character or character.Removed or character.IsDead then return end
-    resetTalentMarkers(character)
-    if not character.Inventory then return end
+local function addEquippedItems(character)
+    if not character or character.Removed or character.IsDead or not character.Inventory then return end
     for _, slot in ipairs(WEARABLE_SLOTS) do
         addMain(character, character.Inventory:GetItemInLimbSlot(slot))
     end
     for _, slot in ipairs(WEAPON_SLOTS) do
         addWeapon(character, character.Inventory:GetItemInLimbSlot(slot))
     end
+end
+
+local function discardCharacterState(character)
+    local state = charStates[character]
+    if not state then return end
+    discardStateIndex(state)
+    charStates[character] = nil
+    fallbackStates[state] = nil
+    dynamicStates[state] = nil
+end
+
+local function reconcileCharacterInventory(inventory)
+    local character = inventory and inventory.Owner
+    if not LuaUserData.IsTargetType(character, "Barotrauma.Character")
+        or character.Removed
+        or character.IsDead
+        or not character.Inventory
+        or character.Inventory ~= inventory then return end
+
+    local state = charStates[character]
+    if state then
+        for item in pairs(state.mains) do
+            if item.Removed or not isStillEquipped(character, item) then removeMain(state, item) end
+        end
+        for item in pairs(state.weapons) do
+            if item.Removed or not isStillHeld(character, item) then removeWeapon(state, item) end
+        end
+    end
+
+    addEquippedItems(character)
+    state = charStates[character]
+    if state then removeEmptyState(state) end
+end
+
+local function scanCharacter(character)
+    if not character or character.Removed or character.IsDead then return end
+    resetTalentMarkers(character)
+    addEquippedItems(character)
 end
 
 local function scanAllCharacters()
@@ -905,6 +941,37 @@ Hook.Patch(
     "Revive",
     { "System.Boolean", "System.Boolean" },
     restoreRevivedCharacter,
+    Hook.HookMethodType.After
+)
+
+if SERVER then
+    Hook.Patch(
+        "AdjustEquipmentStatvalue.InventoryServerEventRead",
+        "Barotrauma.Inventory",
+        "ServerEventRead",
+        { "Barotrauma.Networking.IReadMessage", "Barotrauma.Networking.Client" },
+        reconcileCharacterInventory,
+        Hook.HookMethodType.After
+    )
+end
+
+if CLIENT then
+    Hook.Patch(
+        "AdjustEquipmentStatvalue.InventoryApplyReceivedState",
+        "Barotrauma.Inventory",
+        "ApplyReceivedState",
+        {},
+        reconcileCharacterInventory,
+        Hook.HookMethodType.After
+    )
+end
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.CharacterRemove",
+    "Barotrauma.Character",
+    "Remove",
+    {},
+    discardCharacterState,
     Hook.HookMethodType.After
 )
 
