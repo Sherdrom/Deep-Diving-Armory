@@ -949,7 +949,6 @@ if SERVER then
         "AdjustEquipmentStatvalue.InventoryServerEventRead",
         "Barotrauma.Inventory",
         "ServerEventRead",
-        { "Barotrauma.Networking.IReadMessage", "Barotrauma.Networking.Client" },
         reconcileCharacterInventory,
         Hook.HookMethodType.After
     )

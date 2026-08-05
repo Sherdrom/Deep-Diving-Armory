@@ -35,12 +35,20 @@ Identifier = function(value) return value end
 
 Hook = { HookMethodType = { After = "After" } }
 function Hook.Add(name, _, callback) events[name] = callback end
-function Hook.Patch(_, className, methodName, _, callback, patchType)
+function Hook.Patch(_, className, methodName, parameterTypes, callback, patchType)
+    if type(parameterTypes) == "function" then
+        patchType = callback
+        callback = parameterTypes
+        parameterTypes = nil
+    end
     assert(className == "Barotrauma.Item"
         or className == "Barotrauma.Character"
         or className == "Barotrauma.Items.Components.Wearable"
         or className == "Barotrauma.Items.Components.ItemContainer"
         or className == "Barotrauma.Inventory")
+    if className == "Barotrauma.Inventory" and methodName == "ServerEventRead" then
+        assert(parameterTypes == nil, "server inventory hook must use parameter-inference overload")
+    end
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
 end
