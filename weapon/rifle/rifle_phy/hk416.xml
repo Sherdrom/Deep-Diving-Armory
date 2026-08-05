@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_hk416" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,tool,simpletool,mechanicalrepairtool,wrenchitem,electricalrepairtool,screwdriver,wrench,deep_condition_100,deep_gunsmith" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="120">
+  <Item name="" identifier="deep_hk416" subcategory="rifle" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallautoweapon,smallitem,weapon,gun,gunsmith,mountableweapon,deep_condition_100,deep_gunsmith" Scale="0.25" impactsoundtag="impact_metal_light" RequireAimToUse="True" health="120">
     <Price baseprice="900" sold="false" buyingpricemultiplier="3.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -9,7 +9,7 @@
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
-      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredSkill identifier="weapons" level="50" />
       <RequiredItem identifier="physicorium_barrel" />
       <RequiredItem identifier="physicorium_part" />
       <RequiredItem identifier="engineeringplastic" />
@@ -231,7 +231,7 @@
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
       <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,556mag,deep_sub_hanging" type="Contained" msg="ItemMsgAmmoRequired" />
-      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredSkill identifier="weapons" level="50" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
@@ -299,12 +299,8 @@
       </SubContainer>
     </ItemContainer>
     <aitarget sightrange="2000" soundrange="4000" fadeouttime="5" />
-    <Quality>
-      <QualityStat stattype="FirepowerMultiplier" value="0.15" />
-      <QualityStat stattype="RepairSpeed" value="0.3" />
-    </Quality>
     <GunsmithData />
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
-    <SkillRequirementHint identifier="weapons" level="80" />
+    <SkillRequirementHint identifier="weapons" level="50" />
   </Item>
 </Items>
