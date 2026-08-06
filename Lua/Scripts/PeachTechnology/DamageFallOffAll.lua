@@ -240,9 +240,12 @@ function(characterHealth, attackResult, hitLimb, allowStacking)
 
     if not hasDeepGunEquipped(attacker) then return end
 
-    if attacker.Info and attacker.Info:GetSavedStatValue(StatTypes.None, IN_WATER_CHIP_MARKER) > 0 then return end
-
-    if not (attacker.InWater or targetCharacter.InWater) then return end
+    local inWater = attacker.InWater or targetCharacter.InWater
+    if inWater and attacker.Info and attacker.Info:GetSavedStatValue(StatTypes.None, IN_WATER_CHIP_MARKER) > 0 then
+        inWater = false
+    end
+    local isLeviathan = attacker.IsHuman and targetCharacter.Mass >= DEEP_GUN_LEVIATHAN_MASS_THRESHOLD
+    if not inWater and not isLeviathan then return end
 
     local afflictions = attackResult.Afflictions
     if afflictions == nil then return end

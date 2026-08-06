@@ -1,6 +1,18 @@
 local registeredHooks = {}
 local registeredPatches = {}
-local afflictionQueries = {}
+local statQueries = {}
+
+Identifier = function(value) return value end
+StatTypes = { None = "None" }
+
+local function infoWithSavedStats(values)
+    return {
+        GetSavedStatValue = function(_, _, identifier)
+            statQueries[identifier] = (statQueries[identifier] or 0) + 1
+            return values[identifier] or 0
+        end,
+    }
+end
 
 Hook = {
     HookMethodType = { Before = "Before" },
@@ -12,14 +24,6 @@ Hook = {
         registeredPatches[method] = callback
     end,
 }
-
-AfflictionHelper = {
-    GetAffStrength = function(character, identifier)
-        afflictionQueries[identifier] = (afflictionQueries[identifier] or 0) + 1
-        return (character._afflictionStrengths or {})[identifier] or 0
-    end,
-}
-LuaUserData = { HasMember = function() return false end }
 
 dofile("Lua/Scripts/PeachTechnology/DamageFallOffAll.lua")
 
@@ -57,23 +61,22 @@ assert(targetReads.count == 0)
 
 local attackerReadsNoProfile = { count = 0 }
 local targetReadsNoProfile = { count = 0 }
-local noProfileAttacker = noWorldPosition({ Removed = false, CharacterHealth = {} }, attackerReadsNoProfile)
+local noProfileAttacker = noWorldPosition({ Removed = false, Info = infoWithSavedStats({}) }, attackerReadsNoProfile)
 local noProfileTarget = noWorldPosition({ Removed = false, ID = 1 }, targetReadsNoProfile)
 assert(pcall(callDamageLimb, noProfileTarget, noProfileAttacker))
 assert(attackerReadsNoProfile.count == 0 and targetReadsNoProfile.count == 0)
 
 local falloffAttacker = {
     Removed = false,
-    CharacterHealth = {},
+    Info = infoWithSavedStats({ deep_damage_fall_off_600_1200_detect = 100 }),
     WorldPosition = { X = 0, Y = 0 },
-    _afflictionStrengths = { deep_damage_fall_off_600_1200_detect = 100 },
 }
 local falloffTarget = { Removed = false, ID = 2, WorldPosition = { X = 900, Y = 0 } }
 local falloffAffliction = { Strength = 100 }
-afflictionQueries = {}
+statQueries = {}
 assert(pcall(callDamageLimb, falloffTarget, falloffAttacker))
-assert(afflictionQueries.deep_damage_fall_off_600_1200_detect == 1)
-assert((afflictionQueries.deep_damage_fall_off_1500_2300_detect or 0) <= 1)
+assert(statQueries.deep_damage_fall_off_600_1200_detect == 1)
+assert((statQueries.deep_damage_fall_off_1500_2300_detect or 0) <= 1)
 applyDamage({ Character = falloffTarget }, { attackResult = { Afflictions = { falloffAffliction } } })
 assert(math.abs(falloffAffliction.Strength - 52.5) < 0.000001)
 
@@ -81,6 +84,7 @@ local deepGunAttacker = {
     Removed = false,
     Inventory = {},
     HasEquippedItem = function() return true end,
+    Info = infoWithSavedStats({}),
     InWater = true,
     IsHuman = true,
 }
@@ -94,6 +98,12 @@ local combinedAffliction = { Strength = 100 }
 deepGunModifiers({ Character = leviathan }, { Afflictions = { combinedAffliction } }, nil, false)
 assert(math.abs(combinedAffliction.Strength - 5) < 0.000001)
 
+deepGunAttacker.Info = infoWithSavedStats({ deepgun_inwater_detect_chip = 1 })
+local chipAffliction = { Strength = 100 }
+deepGunModifiers({ Character = leviathan }, { Afflictions = { chipAffliction } }, nil, false)
+assert(math.abs(chipAffliction.Strength - 10) < 0.000001)
+deepGunAttacker.Info = infoWithSavedStats({})
+
 leviathan.Mass = 2999
 local waterAffliction = { Strength = 100 }
 deepGunModifiers({ Character = leviathan }, { Afflictions = { waterAffliction } }, nil, false)
@@ -102,8 +112,10 @@ assert(math.abs(waterAffliction.Strength - 50) < 0.000001)
 deepGunAttacker.InWater = false
 leviathan.Mass = 5000
 local leviathanAffliction = { Strength = 100 }
+statQueries = {}
 deepGunModifiers({ Character = leviathan }, { Afflictions = { leviathanAffliction } }, nil, false)
 assert(math.abs(leviathanAffliction.Strength - 10) < 0.000001)
+assert(statQueries.deepgun_inwater_detect_chip == nil)
 
 local dryAttacker = {
     Removed = false,
