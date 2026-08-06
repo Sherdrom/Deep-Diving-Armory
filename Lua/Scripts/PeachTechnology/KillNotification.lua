@@ -304,7 +304,7 @@ Hook.Add( "characterDeath", "KillNotification", function(character)
             colorselect = 1 -- team dead
         elseif killer == Character.Controlled then
             colorselect = 2 -- character kill
-        elseif killer.IsOnPlayerTeam then
+        elseif killer and killer.IsOnPlayerTeam then
             colorselect = 3 -- team kill
         end
 
