@@ -1,5 +1,4 @@
 -- 整合脚本：伤害衰减 + 深潜枪水中检测 + 对巨兽衰减
-local AH = AfflictionHelper
 
 -- ==================== 配置 ====================
 
@@ -16,6 +15,7 @@ local DEEP_GUN_TAG = "deep_condition_100"
 local DEEP_GUN_IN_WATER_MULTIPLIER = 0.5
 local DEEP_GUN_LEVIATHAN_MULTIPLIER = 0.1
 local DEEP_GUN_LEVIATHAN_MASS_THRESHOLD = 3000
+local IN_WATER_CHIP_MARKER = Identifier("deepgun_inwater_detect_chip")
 
 local function hasDeepGunEquipped(character)
     if character == nil or character.Inventory == nil then return false end
@@ -26,11 +26,13 @@ end
 
 local falloffProfiles = {
     ["deep_damage_fall_off_600_1200_detect"] = {
+        marker = Identifier("deep_damage_fall_off_600_1200_detect"),
         falloffStartDistance = 600,
         falloffEndDistance = 1200,
         minDamageMultiplier = 0.05
     },
     ["deep_damage_fall_off_1500_2300_detect"] = {
+        marker = Identifier("deep_damage_fall_off_1500_2300_detect"),
         falloffStartDistance = 1500,
         falloffEndDistance = 2300,
         minDamageMultiplier = 0.05
@@ -64,14 +66,11 @@ local function calcFalloffMultiplier(distance, profile)
 end
 
 local function detectFalloff(attacker)
-    if attacker == nil or attacker.CharacterHealth == nil then return nil, nil end
+    if attacker == nil or attacker.Info == nil then return nil, nil end
 
     for affName, profile in pairs(falloffProfiles) do
-        local strength = AH.GetAffStrength(attacker, affName)
-        if strength > 0.5 then
-            if cfg.debugMode then
-                debugPrint(string.format("Match: %s (strength=%.3f)", tostring(affName), strength))
-            end
+        if attacker.Info:GetSavedStatValue(StatTypes.None, profile.marker) > 0 then
+            debugPrint("Match:", affName)
             return affName, profile
         end
     end
@@ -88,13 +87,12 @@ local function detectFalloff(attacker)
 end
 
 local function getAllAffsDebug(attacker)
-    if attacker == nil or attacker.CharacterHealth == nil then return "" end
+    if attacker == nil or attacker.Info == nil then return "" end
 
     local parts = {}
-    for affName, _ in pairs(falloffProfiles) do
-        local strength = AH.GetAffStrength(attacker, affName)
-        if strength > 0 then
-            parts[#parts + 1] = string.format("%s=%.2f", tostring(affName), strength)
+    for affName, profile in pairs(falloffProfiles) do
+        if attacker.Info:GetSavedStatValue(StatTypes.None, profile.marker) > 0 then
+            parts[#parts + 1] = tostring(affName) .. "=active"
         else
             parts[#parts + 1] = tostring(affName) .. "=none"
         end
@@ -242,9 +240,9 @@ function(characterHealth, attackResult, hitLimb, allowStacking)
 
     if not hasDeepGunEquipped(attacker) then return end
 
-    local inWater = attacker.InWater or targetCharacter.InWater
-    local isLeviathan = attacker.IsHuman and targetCharacter.Mass >= DEEP_GUN_LEVIATHAN_MASS_THRESHOLD
-    if not inWater and not isLeviathan then return end
+    if attacker.Info and attacker.Info:GetSavedStatValue(StatTypes.None, IN_WATER_CHIP_MARKER) > 0 then return end
+
+    if not (attacker.InWater or targetCharacter.InWater) then return end
 
     local afflictions = attackResult.Afflictions
     if afflictions == nil then return end

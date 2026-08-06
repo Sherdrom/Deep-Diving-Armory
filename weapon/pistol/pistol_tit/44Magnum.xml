@@ -23,18 +23,12 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_tit/pistol_tit.png" sourcerect="5,6,142,77" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-35,-7" handle2="0,5" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
 
-      <!-- 装备升级的钢制，钛制枪械加成 -->
-      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Conditional HasTag="deep_upgrade_tool_steel_tit_confirm" />
-        <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_pistol" strength="10" />
-      </StatusEffect>
 
       <StatusEffect type="OnSecondaryUse" interval="0.9" target="Character" SpeedMultiplier="1.8" setvalue="true">
         <Affliction identifier="deadeyes" strength="100" />
@@ -45,9 +39,6 @@
       <StatusEffect type="OnSecondaryUse" target="This" Condition="-1000" Interval="0.5"></StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This" setvalue="true" stackable="false">
         <sound file="%ModDir%/weapon/pistol/deadeyes.ogg" range="100.0" loop="false" volume="1" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">

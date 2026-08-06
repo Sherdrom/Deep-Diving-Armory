@@ -15,11 +15,7 @@
     <Sprite texture="%ModDir%/weapon/rifle/rifle_steel/rifle_steel.png" sourcerect="627,144,487,114" depth="0.55" origin="0.5,0.5" />
     <Body width="310" height="70" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="60,5" handle1="-75,-15" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.22" setvalue="true"></StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -65,18 +61,7 @@
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
 
-      <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
-      </StatusEffect>
 
-      <!-- 切换成下挂霰弹时，获得距离衰减 -->
-      <StatusEffect type="OnActive" interval="0.5" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentProjectileSelected="eq 1" />
-        <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
-        <RequiredItems items="deep_sub_hanging_master_key" type="Contained" targetslot="1" />
-      </StatusEffect>
 
       <StatusEffect type="OnActive" interval="0.9" target="This" stackable="false" reload="0.12" comparison="and" setvalue="true">
         <Conditional currentProjectileSelected="eq 0" />
@@ -87,16 +72,10 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon reload="0.12" weapondamagemodifier="1" holdtrigger="true" barrelpos="244,18" spread="1" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <!-- SwitchableRangedWeapon 相关-->
 
       <!--使用主弹药时,只使用0号位弹匣 -->
