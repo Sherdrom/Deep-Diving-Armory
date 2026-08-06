@@ -193,7 +193,7 @@ local function makeItem(identifier)
     end
     item.OwnInventory = setmetatable(inventory, {
         __index = function(_, key)
-            if key ~= "AllItemsMod" then return nil end
+            if key ~= "AllItems" then return nil end
             item.inventoryScans = item.inventoryScans + 1
             local index = 0
             return function()

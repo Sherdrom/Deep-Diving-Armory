@@ -593,7 +593,7 @@ end
 local function activeSubItems(mainItem, configs)
     local result = {}
     local inventory = mainItem.OwnInventory
-    local items = inventory and inventory.AllItemsMod or mainItem.ContainedItems
+    local items = inventory and inventory.AllItems or mainItem.ContainedItems
     if items then
         for item in items do
             if item and not item.Removed and item.Prefab then
