@@ -521,19 +521,65 @@
     <!-- 进赴故土抗性 -->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_captain_2" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain_2" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" requiresalive="true" allowself="true">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="chip_captain_2_talent" strength="100.0" />
+              <Affliction identifier="chip_captain_2_talent" strength="5.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 进赴故土只能1人生效 -->
+    <!--航船与经济管理学效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="3" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="0.1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!--进赴故土效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain_2" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="2" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="6" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="0.15" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!--十星将军效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="deep_ten_star_general_assist_upgrading" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="10" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="10" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ShipyardBuyMultiplier" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 进赴故土只能1人生效 
     <AbilityGroupInterval interval="0.5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="chip_captain_talent_detect" />
@@ -548,7 +594,7 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 进赴故土只能1人生效 -->
+     进赴故土只能1人生效 
     <AbilityGroupInterval interval="0.5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="chip_captain_talent_detect" />
@@ -563,7 +609,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval> -->
 
 
 

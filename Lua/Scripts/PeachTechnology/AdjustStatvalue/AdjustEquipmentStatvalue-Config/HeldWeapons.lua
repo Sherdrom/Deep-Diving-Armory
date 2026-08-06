@@ -73,7 +73,7 @@ end
 
 local function currentFireMode(mode)
     return function(_, host)
-        return tonumber(switchableValue(host, "currentFireModeSelected")) == mode
+        return tonumber(switchableValue(host, "currentProjectileSelected")) == mode
     end
 end
 

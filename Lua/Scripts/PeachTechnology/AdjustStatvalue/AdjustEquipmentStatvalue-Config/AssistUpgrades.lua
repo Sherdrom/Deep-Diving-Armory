@@ -80,8 +80,8 @@ return {
             { statType = "FlowResistance", value = 0.8 },
         },
         resistances = {
-            { id = "burn", multiplier = 0.5 },
-            { id = "electricshock", multiplier = 0.5 },
+            { id = "burn", multiplier = 0.7 },
+            { id = "electricshock", multiplier = 0.7 },
         },
     },
 
@@ -120,7 +120,7 @@ return {
     ["chip_medic"] = {
         stats = {
             { statType = "MedicalSkillGainSpeed", value = 1 },
-            { statType = "WalkingSpeed", value = 0.1 },
+            { statType = "MovementSpeed", value = 0.1 },
             { statType = "PoisonMultiplier", value = 0.2 },
             { statType = "CPRBoost", value = 0.5 },
             { statType = "GeneticMaterialRefineBonus", value = 0.1 },
@@ -131,7 +131,7 @@ return {
     ["chip_medic_2"] = {
         stats = {
             { statType = "MedicalSkillGainSpeed", value = 2 },
-            { statType = "WalkingSpeed", value = 0.2 },
+            { statType = "MovementSpeed", value = 0.2 },
             { statType = "PoisonMultiplier", value = 0.3 },
             { statType = "CPRBoost", value = 0.7 },
             { statType = "GeneticMaterialRefineBonus", value = 0.2 },
@@ -139,7 +139,29 @@ return {
         },
     },
 
-    -- 船长芯片保留 XML：多人唯一性依赖 Affliction 衰减与抗性。
+    -- 船长芯片
+
+    ["chip_captain"] = {
+        stats = {
+            { statType = "HelmSkillGainSpeed", value = 1 },
+        },
+        talentMarkers = { "chip_captain" },
+    },
+
+    ["chip_captain_2"] = {
+        stats = {
+            { statType = "HelmSkillGainSpeed", value = 2 },
+        },
+        talentMarkers = { "chip_captain_2" },
+    },
+
+    -- 十星将军(dlc)
+    ["deep_ten_star_general_assist_upgrading"] = {
+        stats = {
+            { statType = "SkillGainSpeed", value = 10 },
+        },
+        talentMarkers = { "deep_ten_star_general_assist_upgrading" },
+    },
 
     -- 助手芯片
     ["chip_assistant"] = {

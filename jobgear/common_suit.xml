@@ -783,24 +783,10 @@
     <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
     <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect">
       <sprite texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.39" origin="0.59,0.7" sourcerect="425,2,85,119" />
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_captain_1" strength="100" />
-        <Affliction identifier="chip_captain_talent_detect" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_captain_2" strength="100" />
-        <Affliction identifier="chip_captain_talent_detect" strength="100" />
-      </StatusEffect>
     </Wearable>
     <ItemContainer capacity="1" maxstacksize="1" autoinject="true">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
       <Containable items="chem,syringe" />
-      <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip_headset" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
-      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_zhenli_suit_copy" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
