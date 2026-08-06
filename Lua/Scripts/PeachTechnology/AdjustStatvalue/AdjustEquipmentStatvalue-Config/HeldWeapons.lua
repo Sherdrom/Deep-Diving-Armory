@@ -67,13 +67,15 @@ end
 
 local function switchableValue(item, field)
     local component = item and item.GetComponentString
-        and item.GetComponentString("SwitchableRangedWeapon")
-    return component and component[field]
+        and item.GetComponentString("RangedWeapon")
+    local property = component and component.SerializableProperties
+        and component.SerializableProperties[Identifier(field)]
+    return property and property:GetValue(component)
 end
 
 local function currentFireMode(mode)
     return function(_, host)
-        return tonumber(switchableValue(host, "currentProjectileSelected")) == mode
+        return tonumber(switchableValue(host, "currentFireModeSelected")) == mode
     end
 end
 

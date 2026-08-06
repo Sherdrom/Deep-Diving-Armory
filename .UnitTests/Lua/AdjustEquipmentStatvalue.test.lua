@@ -46,8 +46,8 @@ function Hook.Patch(_, className, methodName, parameterTypes, callback, patchTyp
         or className == "Barotrauma.Items.Components.Wearable"
         or className == "Barotrauma.Items.Components.ItemContainer"
         or className == "Barotrauma.Inventory")
-    if className == "Barotrauma.Inventory" and methodName == "ServerEventRead" then
-        assert(parameterTypes == nil, "server inventory hook must use parameter-inference overload")
+    if className == "Barotrauma.Inventory" and (methodName == "ServerEventRead" or methodName == "PutItem") then
+        assert(parameterTypes == nil, "inventory hook must use parameter-inference overload")
     end
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
@@ -320,8 +320,10 @@ local revive = patches["Barotrauma.Character.Revive"]
 local characterRemove = patches["Barotrauma.Character.Remove"]
 local serverInventoryRead = patches["Barotrauma.Inventory.ServerEventRead"]
 local clientApplyReceivedState = patches["Barotrauma.Inventory.ApplyReceivedState"]
+local putItem = patches["Barotrauma.Inventory.PutItem"]
 local armorContainer = { Item = armor }
-assert(characterRemove and serverInventoryRead and clientApplyReceivedState, "authority hooks were not registered")
+assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem,
+    "authority hooks were not registered")
 
 local vanillaGun = makeItem("vanilla_gun")
 vanillaGun.tags.gun = true
@@ -333,7 +335,7 @@ assert(#warningMessages == 0, "vanilla DDA weapon triggered the VCE warning")
 
 local vceGun = makeItem("vce_gun")
 vceGun.tags.gun = true
-vceGun.components.SwitchableRangedWeapon = {}
+vceGun.components.RangedWeapon = {}
 vceGun.rootOwner = character
 slots[InvSlotType.LeftHand] = vceGun
 equip(vceGun, { character = character })
@@ -597,6 +599,13 @@ integrated.rootOwner = character
 slots[InvSlotType.LeftHand] = integrated
 equip(integrated, { character = character })
 assert(character.Info.savedStats.weapon_marker == 1, "held weapon marker was not applied")
+putItem(character.Inventory, { item = integrated })
+assert(character.Info.savedStats.weapon_marker == 1, "PutItem removed a weapon that was still held")
+slots[InvSlotType.LeftHand] = nil
+putItem({ Owner = makeItem("container") }, { item = integrated })
+assert(character.Info.savedStats.weapon_marker == 0, "PutItem did not immediately remove a stowed weapon")
+slots[InvSlotType.LeftHand] = integrated
+equip(integrated, { character = character })
 character.IsDead = true
 events["character.death"](character)
 assert(character.Info.savedStats.weapon_marker == 0, "death leaked held weapon marker")
@@ -749,12 +758,24 @@ assert(production.mainItems.deep_hpc
     "split production config changed category data")
 
 local switchableHost = makeItem("deep_AK12")
-switchableHost.components.SwitchableRangedWeapon = {
+local switchableValues = {
     currentFireModeSelected = 1,
-    currentProjectileSelected = 1,
+    currentProjectileSelected = 0,
 }
+local switchableProperties = {}
+for field in pairs(switchableValues) do
+    switchableProperties[field] = {
+        GetValue = function() return switchableValues[field] end,
+    }
+end
+switchableHost.components.RangedWeapon = { SerializableProperties = switchableProperties }
 local switchableEffects = production.heldWeapons.deep_AK12.effects
 assert(switchableEffects[1].when(character, switchableHost), "semi-auto mode condition changed")
+switchableValues.currentFireModeSelected = 0
+switchableValues.currentProjectileSelected = 1
+assert(not switchableEffects[1].when(character, switchableHost), "semi-auto mode read projectile index")
+switchableValues.currentFireModeSelected = 1
+assert(switchableEffects[1].when(character, switchableHost), "semi-auto mode did not restore")
 assert(not switchableEffects[2].when(character, switchableHost), "master-key condition ignored")
 switchableHost.contents = { makeItem("other_mount"), makeItem("deep_sub_hanging_master_key") }
 assert(switchableEffects[2].when(character, switchableHost), "master-key condition did not detect slot 1")

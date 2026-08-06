@@ -854,6 +854,22 @@ local function reconcileCharacterInventory(inventory)
     if state then removeEmptyState(state) end
 end
 
+local function clearMovedEquipment(_, ptable)
+    local item = ptable and ptable["item"]
+    local tracked = item and trackedItems[item]
+    if not tracked or (tracked.kind ~= "main" and tracked.kind ~= "weapon") then return end
+
+    local state = tracked.state
+    if tracked.kind == "main" then
+        if isStillEquipped(state.character, item) then return end
+        removeMain(state, item)
+    else
+        if isStillHeld(state.character, item) then return end
+        removeWeapon(state, item)
+    end
+    removeEmptyState(state)
+end
+
 local function scanCharacter(character)
     if not character or character.Removed or character.IsDead then return end
     resetTalentMarkers(character)
@@ -914,6 +930,14 @@ Hook.Patch(
             removeEmptyState(state)
         end
     end,
+    Hook.HookMethodType.After
+)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.InventoryPutItem",
+    "Barotrauma.Inventory",
+    "PutItem",
+    clearMovedEquipment,
     Hook.HookMethodType.After
 )
 
