@@ -714,7 +714,7 @@ local function hasTalentMarker(cfg, marker)
     return false
 end
 assert(countEntries(production.mainItems) == 68
-    and countEntries(production.subItems) == 80
+    and countEntries(production.subItems) == 83
     and countEntries(production.weaponAccessories) == 72
         and countEntries(production.heldWeapons) == 117,
     "split production config lost or duplicated items")
