@@ -32,9 +32,32 @@ jobs:
             lua5.4 "$test"
           done
 
-      - name: Run PowerShell tests
-        shell: pwsh
-        run: ./.UnitTests/PowerShell/WeaponXmlOptimization.test.ps1
+      - name: Validate XML syntax
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import subprocess
+          import xml.etree.ElementTree as ET
+
+          files = subprocess.check_output(
+              ["git", "ls-files", "-z", "*.xml"]
+          ).split(b"\0")
+
+          count = 0
+          for raw_path in files:
+              if not raw_path:
+                  continue
+              path = Path(os.fsdecode(raw_path))
+              try:
+                  ET.parse(path)
+              except (ET.ParseError, OSError) as error:
+                  raise SystemExit(f"{path}: {error}") from error
+              count += 1
+
+          print(f"Validated {count} XML files.")
+          PY
 
       - name: Run C# unit tests when present
         shell: bash
