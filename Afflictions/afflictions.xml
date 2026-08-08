@@ -20,11 +20,6 @@
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="2,143,128,128" color="195,60,60,255" origin="0,0" />
     </Affliction>
 
-    <Affliction identifier="deep_stable_shooting" type="deep_stable_shooting" isbuff="true" limbspecific="false" indicatorlimb="Head" maxstrength="2" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
     <InternalDamage name="deep_bullet_injury" identifier="deep_bullet_injury" type="deep_gunwound" causeofdeathdescription="deep_bullet_injury" selfcauseofdeathdescription="You have died of deep_bullet_injury" limbspecific="true" maxstrength="40" karmachangeonapplied="-1" damageoverlayalpha="2" WeaponsSkillGain="1">
       <Description textidentifier="afflictiondescription.deep_bullet_injury" minstrength="0" maxstrength="40" />
       <Effect minstrength="0" maxstrength="40" resistancefor="deep_bullet_injury" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,Waist,LeftThigh,RightThigh" minresistance="1" maxresistance="1" strengthchange="-0.2" multiplybymaxvitality="true" minvitalitydecrease="0" maxvitalitydecrease="0.40" dialogflag="damage">
@@ -100,175 +95,8 @@
       <icon texture="%ModDir%/weapon/sight/icon.png" sourcerect="286,0,128,128" color="195,60,60,255" origin="0,0" />
     </Affliction>-->
 
-    <Affliction identifier="holographic_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.3" />
-        <StatValue stattype="WalkingSpeed" value="0.2" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.15" />
-        <StatValue stattype="WeaponsSkillBonus" value="15" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="2x_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.4" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.1" />
-        <StatValue stattype="WalkingSpeed" value="0.15" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="2.5x_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.6" />
-        <StatValue stattype="WeaponsSkillBonus" value="20" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.05" />
-        <StatValue stattype="WalkingSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="3x_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.8" />
-        <StatValue stattype="WeaponsSkillBonus" value="30" />
-        <StatValue stattype="WalkingSpeed" value="-0.25" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="red_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.15" />
-        <StatValue stattype="WalkingSpeed" value="0.3" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="20" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="thermalgoggles_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.3" />
-        <StatValue stattype="WeaponsSkillBonus" value="-15" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="thermalgoggles_sight_6x" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.8" />
-        <StatValue stattype="WeaponsSkillBonus" value="25" />
-        <StatValue stattype="WalkingSpeed" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="vertical_grip" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.3" maxresistance="0.3">
-        <StatValue stattype="FlowResistance" value="1" />
-        <StatValue stattype="WeaponsSkillBonus" value="5" />
-        <StatValue stattype="WalkingSpeed" value="-0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="vertical_grip_short" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.2" maxresistance="0.2">
-        <StatValue stattype="FlowResistance" value="0.5" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="vertical_grips_hollow_out" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.1" maxresistance="0.1">
-        <StatValue stattype="WeaponsSkillGainSpeed" value="1" />
-        <StatValue stattype="WeaponsSkillBonus" value="15" />
-        <StatValue stattype="ExperienceGainMultiplier" value="0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="cqr_grips" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.2" maxresistance="0.2">
-        <StatValue stattype="WalkingSpeed" value="0.1" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="oblique_grips" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.5" maxresistance="0.5">
-        <StatValue stattype="WalkingSpeed" value="0.2" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="corner_grip" description="" isbuff="true" type="deep_grip_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WalkingSpeed" value="0.15" />
-        <StatValue stattype="WeaponsSkillBonus" value="25" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="extended_barrel" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.3" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.2" />
-        <StatValue stattype="RangedAttackSpeed" value="-0.15" />
-        <StatValue stattype="WeaponsSkillBonus" value="-15" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="flash_hider" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.1" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_compensator" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MaximumHealthMultiplier" value="0.25" />
-        <StatValue stattype="RangedSpreadReduction" value="0.1" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.1" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_muzzle_brake" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.3" />
-        <StatValue stattype="WeaponsSkillBonus" value="20" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_muffler" description="" isbuff="true" type="deep_muzzle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SoundRangeMultiplier" value="-0.8" />
-        <StatValue stattype="RangedSpreadReduction" value="0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="-15" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="improved_barrel" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.2" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="chip_oc_gun" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="-0.8" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_headshot_detect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="chip_bodyshot_detect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="100" showinhealthscannerthreshold="100" maxstrength="20">
-      <Effect minstrength="0" maxstrength="20" strengthchange="-8">
-      </Effect>
     </Affliction>
 
     <Affliction identifier="chip_headshot_effect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
@@ -306,24 +134,6 @@
     </Affliction>
 
 
-    <Affliction identifier="smg" description="" isbuff="true" type="deep_smg_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.3" maxresistance="0.3">
-        <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
-        <StatValue stattype="MovementSpeed" value="0.15" />
-        <StatValue stattype="FlowResistance" value="1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="8x_sight" description="" isbuff="true" type="deep_sniperrifle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.9" />
-        <StatValue stattype="WeaponsSkillBonus" value="30" />
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="-0.2" />
-        <StatValue stattype="WalkingSpeed" value="-0.3" />
-      </Effect>
-    </Affliction>
-
     <!--<Affliction identifier="6x_sight" description="" isbuff="true" type="deep_sniperrifle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
         <StatValue stattype="RangedSpreadReduction" value="-1.6" />
@@ -342,18 +152,6 @@
       </Effect>
     </Affliction>-->
 
-    <Affliction identifier="1_3x_sight" description="" isbuff="true" type="deep_sight_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.7" />
-        <StatValue stattype="WeaponsSkillBonus" value="25" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="friendly_fire" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_enemy_no_friendlyfire" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-2">
         <StatValue stattype="TeamAttackMultiplier" value="1" />
@@ -361,42 +159,14 @@
     </Affliction>
 
 
-    <Affliction identifier="chip_first_aid" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <AbilityFlag flagtype="MoveNormallyWhileDragging	" />
-        <StatValue stattype="MovementSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="chip_rapid_receiver" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedAttackSpeed" value="0.15" />
-        <StatValue stattype="RangedSpreadReduction" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-
-    <Affliction identifier="chip_unstable_gunpowder" description="" isbuff="true" type="deep_rifleupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.2" />
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="deep_pp19_buffalo" description="" isbuff="true" type="deep_smg_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="miracleworker" minresistance="2" maxresistance="2">
+      <Effect minstrength="0" maxstrength="2" resistancefor="miracleworker" minresistance="2" maxresistance="2">
         <AbilityFlag flagtype="AlwaysStayConscious" />
       </Effect>
     </Affliction>
 
 
-
-    <Affliction identifier="expansion_mag" description="" isbuff="true" type="deep_expansion_mag_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WeaponsSkillBonus" value="-15" />
-        <StatValue stattype="WalkingSpeed" value="-0.15" />
-      </Effect>
-    </Affliction>
 
 
     <Affliction identifier="shotgun_3" type="talentbuff" isbuff="true" hideiconafterdelay="true" limbspecific="false" maxstrength="2" treatmentthreshold="1000">
@@ -418,145 +188,16 @@
     </Affliction>
 
 
-    <Affliction identifier="chip_cqb_1" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun" minresistance="0.25" maxresistance="0.25">
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="AttackMultiplier" value="0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_frogman_1" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_ergonomics_1" description="" isbuff="true" type="deep_armorupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="20" />
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="chip_heavy_armor" description="" isbuff="true" type="deep_armorupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.2" maxresistance="0.2" strengthchange="0">
-      </Effect>
+      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound,Shrapnel_residue" resistancelimbs="Torso,Waist" minresistance="0.2" maxresistance="0.2" />
     </Affliction>
 
     <Affliction identifier="chip_strengthening_of_limbs" description="" isbuff="true" type="deep_armorupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="bleeding" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.9" maxresistance="0.9" strengthchange="0">
-      </Effect>
+      <Effect minstrength="0" maxstrength="1" resistancefor="bleeding" resistancelimbs="RightHand,LeftHand,LeftForearm,RightForearm,LeftArm,RightArm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.9" maxresistance="0.9" />
     </Affliction>
 
-    <Affliction identifier="chip_learn_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SkillGainSpeed" value="1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_learn_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SkillGainSpeed" value="2" />
-        <StatValue stattype="HelmSkillOverride" value="60" />
-        <StatValue stattype="MedicalSkillOverride" value="60" />
-        <StatValue stattype="WeaponsSkillOverride" value="60" />
-        <StatValue stattype="ElectricalSkillOverride" value="60" />
-        <StatValue stattype="MechanicalSkillOverride" value="60" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_learn_3" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SkillGainSpeed" value="3" />
-        <StatValue stattype="HelmSkillOverride" value="80" />
-        <StatValue stattype="MedicalSkillOverride" value="80" />
-        <StatValue stattype="WeaponsSkillOverride" value="80" />
-        <StatValue stattype="ElectricalSkillOverride" value="80" />
-        <StatValue stattype="MechanicalSkillOverride" value="80" />
-        <AbilityFlag flagtype="GainSkillPastMaximum" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_mechanical_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MechanicalSkillGainSpeed" value="1" />
-        <StatValue stattype="MechanicalRepairSpeed" value="0.3" />
-        <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.3" />
-        <StatValue stattype="RepairToolStructureDamageMultiplier" value="0.3" />
-        <StatValue stattype="RepairToolDeattachTimeMultiplier" value="0.3" />
-        <StatValue stattype="FlowResistance" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_mechanical_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MechanicalSkillGainSpeed" value="2" />
-        <StatValue stattype="MechanicalSkillOverride" value="55" />
-        <StatValue stattype="MechanicalRepairSpeed" value="0.5" />
-        <StatValue stattype="RepairToolStructureRepairMultiplier" value="0.5" />
-        <StatValue stattype="RepairToolStructureDamageMultiplier" value="0.5" />
-        <StatValue stattype="RepairToolDeattachTimeMultiplier" value="0.5" />
-        <StatValue stattype="DeconstructorSpeedMultiplier" value="0.5" />
-        <StatValue stattype="FabricationSpeed" value="0.5" />
-        <StatValue stattype="IncreaseFabricationQuality" value="1" />
-        <StatValue stattype="FlowResistance" value="0.8" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_electrician_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="burn,electricshock" minresistance="0.5" maxresistance="0.5">
-        <StatValue stattype="ElectricalSkillGainSpeed" value="1" />
-        <StatValue stattype="MaxRepairConditionMultiplierElectrical" value="0.3" />
-        <StatValue stattype="RepairSpeed" value="0.5" />
-        <StatValue stattype="FlowResistance" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_electrician_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="burn,electricshock" minresistance="0.5" maxresistance="0.5">
-        <StatValue stattype="ElectricalSkillGainSpeed" value="2" />
-        <StatValue stattype="ElectricalSkillOverride" value="55" />
-        <StatValue stattype="MaxRepairConditionMultiplierElectrical" value="0.5" />
-        <StatValue stattype="RepairSpeed" value="0.7" />
-        <StatValue stattype="DeconstructorSpeedMultiplier" value="0.5" />
-        <StatValue stattype="FabricationSpeed" value="0.5" />
-        <StatValue stattype="IncreaseFabricationQuality" value="1" />
-        <StatValue stattype="FlowResistance" value="0.8" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_security_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WeaponsSkillGainSpeed" value="1" />
-        <StatValue stattype="MovementSpeed" value="0.1" />
-        <StatValue stattype="MaximumHealthMultiplier" value="0.1" />
-        <StatValue stattype="MeleeAttackMultiplier" value="0.2" />
-        <StatValue stattype="MeleeAttackSpeed" value="0.2" />
-        <StatValue stattype="BuffDurationMultiplier" value="0.2" />
-        <StatValue stattype="DebuffDurationMultiplier" value="0.2" />
-        <StatValue stattype="FlowResistance" value="0.5" />
-        <StatValue stattype="RangedSpreadReduction" value="0.2" />
-        <StatValue stattype="TurretAttackSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_security_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WeaponsSkillGainSpeed" value="2" />
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="MaximumHealthMultiplier" value="0.2" />
-        <StatValue stattype="MeleeAttackMultiplier" value="0.4" />
-        <StatValue stattype="MeleeAttackSpeed" value="0.4" />
-        <StatValue stattype="BuffDurationMultiplier" value="0.4" />
-        <StatValue stattype="DebuffDurationMultiplier" value="0.4" />
-        <StatValue stattype="FlowResistance" value="0.8" />
-        <StatValue stattype="RangedSpreadReduction" value="0.25" />
-        <StatValue stattype="TurretAttackSpeed" value="0.15" />
-        <StatValue stattype="TeamAttackMultiplier" value="-0.5" />
-        <StatValue stattype="TurretPowerCostReduction" value="0.2" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_captain_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
+    <!--<Affliction identifier="chip_captain_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
         <StatValue stattype="HelmSkillGainSpeed" value="1" />
         <StatValue stattype="ReputationGainMultiplier" value="0.1" />
@@ -567,9 +208,9 @@
         <StatValue stattype="StoreSellMultiplier" value="0.1" />
         <StatValue stattype="StoreBuyMultiplier" value="0.1" />
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="chip_captain_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
+    <!--<Affliction identifier="chip_captain_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
         <StatValue stattype="HelmSkillGainSpeed" value="2" />
         <StatValue stattype="ReputationGainMultiplier" value="0.15" />
@@ -580,25 +221,25 @@
         <StatValue stattype="StoreSellMultiplier" value="0.15" />
         <StatValue stattype="StoreBuyMultiplier" value="0.15" />
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="chip_captain_only_one" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="chip_captain_only_one" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-1">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="chip_captain_talent_detect" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
+    <!--<Affliction identifier="chip_captain_talent_detect" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
-    <Affliction identifier="chip_captain_talent_decrease" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <!--<Affliction identifier="chip_captain_talent_decrease" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="chip_captain" maxresistance="10" minresistance="10" strengthchange="-1">
       </Effect>
-    </Affliction>
+    </Affliction>-->
 
     <Affliction identifier="chip_captain_2_talent" description="" isbuff="true" type="chip_headset" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="stun,damage" minresistance="0.1" maxresistance="0.1" strengthchange="-2">
+      <Effect minstrength="0" maxstrength="1" resistancefor="stun,damage" minresistance="0.1" maxresistance="0.1" strengthchange="-1">
         <StatValue stattype="ExperienceGainMultiplier" value="0.2" />
         <StatValue stattype="MovementSpeed" value="0.1" />
       </Effect>
@@ -609,92 +250,17 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="chip_medic_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MedicalSkillGainSpeed" value="1" />
-        <StatValue stattype="WalkingSpeed" value="0.1" />
-        <StatValue stattype="PoisonMultiplier" value="0.2" />
-        <StatValue stattype="CPRBoost" value="0.5" />
-        <StatValue stattype="GeneticMaterialRefineBonus" value="0.1" />
-        <StatValue stattype="GeneticMaterialTaintedProbabilityReductionOnCombine" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_medic_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MedicalSkillGainSpeed" value="2" />
-        <StatValue stattype="WalkingSpeed" value="0.2" />
-        <StatValue stattype="PoisonMultiplier" value="0.3" />
-        <StatValue stattype="CPRBoost" value="0.7" />
-        <StatValue stattype="GeneticMaterialRefineBonus" value="0.2" />
-        <StatValue stattype="GeneticMaterialTaintedProbabilityReductionOnCombine" value="0.7" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_assistant_1" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" resistancefor="oxygenlow" minresistance="1" maxresistance="1" strengthchange="-1">
-        <StatValue stattype="SkillGainSpeed" value="0.5" />
-        <StatValue stattype="MovementSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="chip_assistant_2" description="" isbuff="true" type="deep_headset_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" tag="provocative" resistancefor="oxygenlow" minresistance="1" maxresistance="1" strengthchange="-1">
-        <StatValue stattype="SkillGainSpeed" value="1" />
-        <StatValue stattype="MovementSpeed" value="0.2" />
-      </Effect>
+      <Effect minstrength="0" maxstrength="2" tag="provocative" />
     </Affliction>
 
-    <Affliction identifier="deep_laser_1" description="" isbuff="true" type="deep_laser_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="0.1" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-        <StatValue stattype="TeamAttackMultiplier" value="-0.5" />
-      </Effect>
-    </Affliction>
 
-    <Affliction identifier="deep_chip_marksman_1" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="AttackMultiplier" value="0.5" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-        <StatValue stattype="RangedAttackSpeed" value="-0.2" />
-      </Effect>
-    </Affliction>
 
-    <Affliction identifier="deep_commando_1" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="stun,damage" minresistance="0.25" maxresistance="0.25">
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="RangedSpreadReduction" value="-0.5" />
-      </Effect>
-    </Affliction>
 
-    <Affliction identifier="deep_chip_heavy_defender" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" resistancefor="deep_plate_debuff" minresistance="10" maxresistance="10" strengthchange="-1">
-        <StatValue stattype="AttackMultiplier" value="-0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_chip_blaster" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="ExplosionDamageMultiplier" value="0.5" />
-        <StatValue stattype="ExplosionRadiusMultiplier" value="0.2" />
-      </Effect>
-    </Affliction>
+    <Affliction identifier="deep_chip_blaster" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2" />
 
     <Affliction identifier="deep_machinegunner_detect" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="deep_headshot_deadly" resistancelimbs="Head" minresistance="-0.2" maxresistance="-0.2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_machinegunner_light_detect" description="" isbuff="true" type="deep_machinegun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_machinegunner_heavy_detect" description="" isbuff="true" type="deep_machinegun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
+      <Effect minstrength="0" maxstrength="2" resistancefor="deep_headshot_deadly" resistancelimbs="Head" minresistance="-0.2" maxresistance="-0.2" />
     </Affliction>
 
     <Affliction identifier="deep_machinegunner_heavy_attack_speed_1" description="" isbuff="true" type="chip_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
@@ -727,13 +293,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_chip_striker" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" resistancefor="damage,stun" minresistance="0.25" maxresistance="0.25" strengthchange="-1">
-        <StatValue stattype="RangedSpreadReduction" value="-0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="-0.2" />
-        <StatValue stattype="WalkingSpeed" value="0.2" />
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="deep_chip_striker_nearby" description="" isbuff="true" type="chip_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
       <Effect minstrength="0" maxstrength="2" strengthchange="-1">
@@ -749,73 +308,10 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="chip_doc_1" description="" isbuff="true" type="deep_helmetupgrade_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MedicalSkillOverride" value="60" />
-        <StatValue stattype="WeaponsSkillOverride" value="60" />
-        <StatValue stattype="MovementSpeed" value="0.2" />
-        <StatValue stattype="DebuffDurationMultiplier" value="0.5" />
-        <AbilityFlag flagtype="MoveNormallyWhileDragging" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_revengesquad_grizzlies_nightmare" type="talentbuff" isbuff="true" limbspecific="false" maxstrength="240" duration="240" treatmentthreshold="1000" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
       <Effect minstrength="0" maxstrength="240" strengthchange="-2" resistancefor="damage,deep_gunwound" minresistance="0.4" maxresistance="0.4">
       </Effect>
       <Icon texture="Content/UI/TalentsIcons4.png" sheetindex="0,0" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
-    </Affliction>
-
-    <Affliction identifier="deep_shotgun_damgage_balance" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_shotgun_damgage_balance_12shell" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_pistol_mozambique_aff" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-        <StatValue stattype="AttackMultiplier" value="0.5" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_pistol_mozambique_hand" description="" isbuff="true" type="deep_pistol_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_sniper_aim_heavy" description="" isbuff="true" type="deep_sniperrifle_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_1" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-        <StatValue stattype="AttackMultiplier" value="-0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_2" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-        <StatValue stattype="AttackMultiplier" value="-0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_3" description="" isbuff="true" type="talentbuff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
-        <StatValue stattype="AttackMultiplier" value="-0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="-0.3" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_machinegun_crouch" description="" isbuff="true" type="deep_machinegun_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
     </Affliction>
 
     <Affliction identifier="deep_wuchuan_sata" description="" isbuff="true" type="wuchuan" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="120">
@@ -824,11 +320,6 @@
         <StatValue stattype="FlowResistance" value="1" />
         <StatValue stattype="MeleeAttackMultiplier" minvalue="0.2" maxvalue="2" />
         <StatValue stattype="MeleeAttackSpeed" minvalue="0.2" maxvalue="1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_wuchuan_detection" description="" isbuff="true" type="wuchuan" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-2">
       </Effect>
     </Affliction>
 
@@ -867,15 +358,6 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_knife_detect_1" description="" isbuff="true" type="deep_melee_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="chip_emergency_defibrillation_detect" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="0">
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="chip_emergency_defibrillation" type="talentbuff" isbuff="true" limbspecific="false" indicatorlimb="Head" maxstrength="1" treatmentthreshold="1000" duration="1" iconcolors="33,75,78;126,211,224;126,211,224;227,247,249">
       <Effect minstrength="0" resistancefor="fractures" minresistance="10" maxresistance="10" maxstrength="1">
@@ -907,15 +389,15 @@
       <Icon texture="Content/UI/TalentsIcons3.png" sheetindex="0,6" sheetelementsize="128,128" color="10,193,114,255" origin="0,0" />
     </Affliction>
 
-    <!--<Affliction identifier="deep_enemy_up_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.25" maxresistance="0.25" strengthchange="-1">
+    <Affliction identifier="deep_enemy_up_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm" minresistance="0.5" maxresistance="0.5" strengthchange="-1">
       </Effect>
-    </Affliction>-->
+    </Affliction>
 
-    <!--<Affliction identifier="deep_enemy_down_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
+    <Affliction identifier="deep_enemy_down_limbs_balance" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="Waist,LeftForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.7" maxresistance="0.7" strengthchange="-1">
       </Effect>
-    </Affliction>-->
+    </Affliction>
 
     <Affliction identifier="deep_enemy_four_limbs_balance_33" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="gunshotwound" resistancelimbs="LeftArm,RightArm,RightHand,LeftHand,LeftForearm,RightForearm,RightThigh,LeftThigh,RightLeg,LeftLeg,RightFoot,LeftFoot" minresistance="0.33" maxresistance="0.33" strengthchange="-0">
@@ -962,48 +444,6 @@
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="-0.6" maxresistance="-0.6" strengthchange="-2" multiplybymaxvitality="true">
       </Effect>
     </Affliction>-->
-
-    <Affliction identifier="deepgun_inwater_detect" description="" isbuff="true" type="deepgun_inwater_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deepgun_inwater_detect_chip" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1" resistancefor="deepgun_inwater_detect" minresistance="1" maxresistance="1">
-        <StatusEffect target="Character" interval="0.25" multiplyafflictionsbymaxvitality="true">
-          <ReduceAffliction type="deepgun_inwater_detect" amount="10" />
-        </StatusEffect>
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_glock_long_mag" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WalkingSpeed" value="-0.1" />
-        <StatValue stattype="WeaponsSkillBonus" value="-20" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_glock_drum_mag" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WalkingSpeed" value="-0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="-40" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_18c_buttstock" description="" isbuff="true" type="sight" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="WalkingSpeed" value="-0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="10" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_fn57_mute" description="" isbuff="true" type="deep_pistol_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="SoundRangeMultiplier" value="-0.5" />
-        <StatValue stattype="SightRangeMultiplier" value="-0.5" />
-      </Effect>
-    </Affliction>
 
     <Affliction identifier="deep_enemy_resistance_damage_balance_1" description="" isbuff="true" type="deep_armor" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" resistancefor="damage" minresistance="0.2" maxresistance="0.2" strengthchange="-1">
@@ -1380,20 +820,14 @@
 
     <!--短枪口检测-->
     <Affliction identifier="deep_muzzle_short_detect" description="" isbuff="true" type="deep_muzzle_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
     </Affliction>
 
     <!--长枪口检测-->
     <Affliction identifier="deep_muzzle_long_detect" description="" isbuff="true" type="deep_muzzle_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
     </Affliction>
 
     <!--无枪口检测-->
     <Affliction identifier="deep_muzzle_none_detect" description="" isbuff="true" type="deep_muzzle_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
     </Affliction>
 
     <!--战术设备检测-->
@@ -1446,105 +880,17 @@
       </Effect>
     </Affliction>
 
-    <Affliction identifier="deep_sub_hanging_debuff" description="" isbuff="true" type="deep_sub_hanging_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-        <StatValue stattype="MovementSpeed" value="-0.2" />
-        <StatValue stattype="WeaponsSkillBonus" value="-20" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_Semi" description="" isbuff="true" type="deep_SwitchableRangedWeapon_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-0.8">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedSpreadReduction" value="0.7" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_Burst" description="" isbuff="true" type="deep_SwitchableRangedWeapon_buff" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-0.8" resistancefor="deep_Semi" minresistance="10" maxresistance="10">
-        <StatValue stattype="RangedAttackMultiplier" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_VCE_none" description="" isbuff="true" type="deep_VCE" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-      <AfflictionOverlay texture="%ModDir%/jobgear/armor/VCE.png" />
-    </Affliction>
-
     <Affliction identifier="deep_hunting_icon" description="" isbuff="true" type="deep_hunting_icon" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="3">
       <Effect minstrength="0" maxstrength="3" strengthchange="-1">
       </Effect>
       <AfflictionOverlay texture="%ModDir%/jobgear/armor/hunting_icon.png" />
     </Affliction>
 
-    <Affliction identifier="deep_VCE_yes" description="" isbuff="true" type="deep_VCE" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" resistancefor="deep_VCE_none" maxresistance="1.0" minresistance="1.0" strengthchange="-1">
-        <StatusEffect target="Character" interval="0.9">
-          <ReduceAffliction identifier="deep_VCE_none" strength="100" />
-        </StatusEffect>
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_rifle" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_smg" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_pistol" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_sniper" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_shotgun" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_machinegun" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-        <StatValue stattype="RangedAttackSpeed" value="0.1" />
-        <StatValue stattype="RangedSpreadReduction" value="0.5" />
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_gl" description="" isbuff="true" type="deep_upgrade_tool_steel_tit_confirm" limbspecific="false" indicatorlimb="Head" maxstrength="1" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
-      <Effect minstrength="0" maxstrength="1" strengthchange="-1">
-        <StatValue stattype="RangedAttackMultiplier" value="0.3" />
-      </Effect>
-    </Affliction>
-
     <Affliction identifier="deep_pigca_team_equipment_invisible" description="" isbuff="true" type="deep_pigca_team_buff" limbspecific="false" indicatorlimb="Head" maxstrength="5" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20">
       <Effect minstrength="2.9" maxstrength="3.9" strengthchange="-0">
-        <StatusEffect target="NearbyItems" targettags="deep_cloth_invisible" range="75" spritecolor="255,255,255,0" setValue="true " disabledeltatime="true">
+        <StatusEffect target="NearbyItems" targettags="deep_cloth_invisible" range="125" spritecolor="255,255,255,0" setValue="true " disabledeltatime="true">
         </StatusEffect>
-        <StatusEffect target="NearbyItems" targettags="deep_cloth_invisible_koishi" range="75" spritecolor="255,255,255,50" setValue="true " disabledeltatime="true">
+        <StatusEffect target="NearbyItems" targettags="deep_cloth_invisible_koishi" range="125" spritecolor="255,255,255,50" setValue="true " disabledeltatime="true">
         </StatusEffect>
       </Effect>
       <Effect minstrength="4.1" maxstrength="5" strengthchange="-0">
@@ -1558,16 +904,6 @@
 
     <Affliction identifier="deep_cancel_order_detect" description="" isbuff="true" type="deep_cancel_order_detect" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="5">
       <Effect minstrength="0" maxstrength="5" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_damage_fall_off_600_1200_detect" description="" isbuff="true" type="deep_damage_fall" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
-      </Effect>
-    </Affliction>
-
-    <Affliction identifier="deep_damage_fall_off_1500_2300_detect" description="" isbuff="true" type="deep_damage_fall" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="2">
-      <Effect minstrength="0" maxstrength="2" strengthchange="-1">
       </Effect>
     </Affliction>
 

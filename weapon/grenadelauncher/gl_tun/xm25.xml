@@ -30,16 +30,10 @@
       <StatusEffect type="OnUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon reload="1.5" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="200,15" spread="12" unskilledspread="20" combatPriority="200" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="1.5">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This">
         <Explosion range="150.0" force="1.5" shockwave="true" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
       </StatusEffect>

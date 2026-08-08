@@ -32,13 +32,13 @@
                 if (character != null)
                 {
                     character.Params.HideInThermalGoggles = hide;
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Synced HideInThermalGoggles for '{character.Name}' to {hide}");
+                    // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Synced HideInThermalGoggles for '{character.Name}' to {hide}");
                 }
                 else
                 {
                     // 角色未创建，暂存
                     pendingHideSync[characterId] = hide;
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Character with ID {characterId} not found, pending HideInThermalGoggles sync.");
+                    // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Character with ID {characterId} not found, pending HideInThermalGoggles sync.");
                 }
             });
 #endif
@@ -67,14 +67,14 @@
 
             if (character.Params.HideInThermalGoggles)
             {
-                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] Character '{character.Name}' is already set to HideInThermalGoggles.");
+                // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] Character '{character.Name}' is already set to HideInThermalGoggles.");
                 return;
             }
 
             if (character.HumanPrefab != null && character.HumanPrefab.Tags.Contains("HideInThermalGoggles"))
             {
 #if SERVER
-                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] SERVER: Hiding '{character.Name}'.");
+                // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] SERVER: Hiding '{character.Name}'.");
                 character.Params.HideInThermalGoggles = true;
                 // 同步到所有客户端
                 var message = LuaCsSetup.Instance.Networking.Start("SyncHideInThermalGoggles");
@@ -84,7 +84,7 @@
 #elif CLIENT
                 if (GameMain.IsSingleplayer)
                 {
-                    LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (SP): Hiding '{character.Name}'.");
+                    // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT (SP): Hiding '{character.Name}'.");
                     character.Params.HideInThermalGoggles = true;
                 }
 #endif
@@ -106,7 +106,7 @@
             {
                 character.Params.HideInThermalGoggles = hide;
                 pendingHideSync.Remove(character.ID);
-                LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Applied pending HideInThermalGoggles for '{character.Name}'");
+                // LuaCsSetup.PrintCsMessage($"[Deep Diving Armory] CLIENT: Applied pending HideInThermalGoggles for '{character.Name}'");
             }
         }
 #endif

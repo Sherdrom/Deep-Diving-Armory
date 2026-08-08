@@ -51,7 +51,7 @@
     </AbilityGroupInterval>
     <AbilityGroupInterval Interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deepgun_inwater_detect_chip" />
+        <AbilityConditionHasPermanentStat statidentifier="deepgun_inwater_detect_chip" min="1" />
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
@@ -108,7 +108,7 @@
     <!-- 神射手-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_marksman_1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_marksman_1" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -120,7 +120,7 @@
     <!-- 突击手-->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_commando_1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_commando_1" min="1" />
         <AbilityConditionNearbyCharacterCount distance="700" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -132,7 +132,7 @@
     <!-- 蛙人训练-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_frogman_1" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_frogman_1" min="1" />
         <AbilityConditionInWater />
       </Conditions>
       <Abilities>
@@ -146,7 +146,7 @@
     <!-- 重装防御者-->
     <AbilityGroupInterval interval="0.9">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_heavy_defender" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_heavy_defender" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="500" requiresalive="true" allowself="true">
@@ -163,7 +163,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_light_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -173,7 +173,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_light_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2" />
       </Conditions>
       <Abilities>
@@ -183,7 +183,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_light_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3" />
       </Conditions>
       <Abilities>
@@ -193,7 +193,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_light_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4" />
       </Conditions>
       <Abilities>
@@ -203,7 +203,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_light_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_light_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5" />
       </Conditions>
       <Abilities>
@@ -214,7 +214,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_heavy_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -230,7 +230,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_heavy_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="2" />
       </Conditions>
       <Abilities>
@@ -246,7 +246,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_heavy_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="3" />
       </Conditions>
       <Abilities>
@@ -262,7 +262,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_heavy_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="4" />
       </Conditions>
       <Abilities>
@@ -278,7 +278,7 @@
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_detect" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegunner_heavy_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_machinegunner_heavy_detect" min="1" />
         <AbilityConditionNearbyCharacterCount distance="1000" targettypes="Enemy" count="5" />
       </Conditions>
       <Abilities>
@@ -304,7 +304,7 @@
     <!-- 强攻手-->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_striker" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -319,8 +319,8 @@
     </AbilityGroupInterval>
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_chip_striker" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_chip_striker" min="1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
         <AbilityConditionNearbyCharacterCount distance="500" targettypes="Enemy" count="1" />
       </Conditions>
       <Abilities>
@@ -379,8 +379,8 @@
     <!-- 拿着霰弹枪时-95%伤害 
     <AbilityGroupInterval interval="0.25">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityModifyStat stattype="AttackMultiplier" value="-0.95" />
@@ -389,8 +389,8 @@
     <!-- 拿着霰弹枪附近有敌人时伤害正常 
     <AbilityGroupInterval interval="0.1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_shotgun_damgage_balance_12shell" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance" min="1" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_shotgun_damgage_balance_12shell" min="1" />
         <AbilityConditionNearbyCharacterCount distance="900" targettypes="Enemy" count="1" requiresalive="true" allowself="false" />
       </Conditions>
       <Abilities>
@@ -449,87 +449,10 @@
     </AbilityGroupEffect>
 
 
-    <!-- 莫桑比克射击法-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_pistol_mozambique_hand" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_pistol_mozambique_aff" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-    <!-- 反器材惩罚天赋-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_sniper_aim_heavy" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.8" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_1" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_sniper_aim_heavy" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_2" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_sniper_aim_heavy" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.2" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityApplyStatusEffects>
-          <StatusEffects>
-            <StatusEffect type="OnAbility" target="Character" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
-              <Affliction identifier="deep_sniper_aim_heavy_damage_reduce_3" amount="100" />
-            </StatusEffect>
-          </StatusEffects>
-        </CharacterAbilityApplyStatusEffects>
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-    <!-- 机枪蹲下射击-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_machinegun_crouch" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="RangedSpreadReduction" value="0.7" />
-      </Abilities>
-    </AbilityGroupInterval>
-
     <!-- 消音器蹲下射击-->
     <AbilityGroupEffect abilityeffecttype="OnAddDamageAffliction">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_muffler" />
+        <AbilityConditionHasPermanentStat statidentifier="deep_muffler" min="1" />
         <AbilityConditionCrouched />
       </Conditions>
       <Abilities>
@@ -538,34 +461,10 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 乌川天赋-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_wuchuan_detection" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.2" />
-        <CharacterAbilityModifyStat stattype="MeleeAttackSpeed" value="3" />
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_wuchuan_detection" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyFlag flagtype="IgnoredByEnemyAI" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-
     <!--被帽弹头-->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_headshot_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_headshot_detect" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -600,24 +499,10 @@
 
 
 
-    <!--匕首处决-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="m18_smoke" />
-        <AbilityConditionHasAffliction afflictionidentifier="deep_knife_detect_1" />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyStat stattype="MeleeAttackMultiplier" value="20" />
-        <CharacterAbilityModifyStat stattype="MeleeAttackSpeed" value="-0.5" />
-      </Abilities>
-    </AbilityGroupInterval>
-
-
-
     <!--紧急除颤-->
     <AbilityGroupInterval interval="0.5" maxtriggercount="1" effectdelay="1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_emergency_defibrillation_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_emergency_defibrillation_detect" min="1" />
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0" />
       </Conditions>
       <Abilities>
@@ -636,19 +521,65 @@
     <!-- 进赴故土抗性 -->
     <AbilityGroupInterval interval="0.5">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_captain_2" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain_2" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffectsToAllies maxdistance="600" requiresalive="true" allowself="true">
           <StatusEffects>
             <StatusEffect type="OnAbility" target="Character" disabledeltatime="true">
-              <Affliction identifier="chip_captain_2_talent" strength="100.0" />
+              <Affliction identifier="chip_captain_2_talent" strength="5.0" />
             </StatusEffect>
           </StatusEffects>
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 进赴故土只能1人生效 -->
+    <!--航船与经济管理学效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="3" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="0.1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="0.1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!--进赴故土效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="chip_captain_2" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="2" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="6" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="0.15" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="0.15" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!--十星将军效果-->
+    <AbilityGroupInterval interval="0.5" >
+      <Conditions>
+        <AbilityConditionHasPermanentStat statidentifier="deep_ten_star_general_assist_upgrading" min="1" />
+      </Conditions>
+      <Abilities>
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ReputationGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="MissionMoneyGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExperienceGainMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraMissionCount" value="10" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ExtraSpecialSalesCount" value="10" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreSellMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="StoreBuyMultiplier" value="1" setvalue="true" />
+        <CharacterAbilityGivePermanentStat statidentifier="all" stattype="ShipyardBuyMultiplier" value="1" setvalue="true" />
+      </Abilities>
+    </AbilityGroupInterval>
+    <!-- 进赴故土只能1人生效 
     <AbilityGroupInterval interval="0.5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="chip_captain_talent_detect" />
@@ -663,7 +594,7 @@
         </CharacterAbilityApplyStatusEffectsToAllies>
       </Abilities>
     </AbilityGroupInterval>
-    <!-- 进赴故土只能1人生效 -->
+     进赴故土只能1人生效 
     <AbilityGroupInterval interval="0.5">
       <Conditions>
         <AbilityConditionHasAffliction afflictionidentifier="chip_captain_talent_detect" />
@@ -678,7 +609,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupInterval>
+    </AbilityGroupInterval> -->
 
 
 

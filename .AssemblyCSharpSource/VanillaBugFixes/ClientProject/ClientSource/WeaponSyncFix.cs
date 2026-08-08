@@ -104,11 +104,19 @@ namespace WeaponSyncFix
     }
 
     /// <summary>
-    /// RangedWeapon.Use() Postfix：记录本地开火时间戳（用于去重）。
+    /// RangedWeapon.Use()：只预测本地玩家；远端角色和观战视角使用服务器权威事件。
     /// </summary>
     [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.Use))]
     internal static class RangedWeaponUsePatch
     {
+        [HarmonyPrefix]
+        internal static bool Prefix(Character character)
+        {
+            return NetworkEventContext.IsProcessing
+                || GameMain.NetworkMember is not { IsClient: true }
+                || character?.IsLocalPlayer == true;
+        }
+
         [HarmonyPostfix]
         internal static void Postfix(RangedWeapon __instance, bool __result)
         {

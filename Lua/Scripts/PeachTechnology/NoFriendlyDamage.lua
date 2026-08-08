@@ -5,7 +5,7 @@ local MARKER_EXPIRY_TIME = 2.0
 local CLEANUP_INTERVAL = 5.0
 
 local NO_FRIENDLY_FIRE_AFFLICTIONS = {
-    { id = "friendly_fire",         multiplier = 0.0 },
+    { id = "friendly_fire", marker = Identifier("friendly_fire"), multiplier = 0.0 },
     { id = "deep_noff_reduce95",    multiplier = 0.05 },
     { id = "deep_noff_reduce75",    multiplier = 0.25 },
     { id = "deep_noff_reduce50",    multiplier = 0.50 },
@@ -31,7 +31,10 @@ local function FindActiveFFConfig(attacker)
 
     for i = 1, #NO_FRIENDLY_FIRE_AFFLICTIONS do
         local entry = NO_FRIENDLY_FIRE_AFFLICTIONS[i]
-        local strength = AH.GetAffStrength(attacker, entry.id)
+        local strength = entry.marker
+            and attacker.Info
+            and attacker.Info:GetSavedStatValue(StatTypes.None, entry.marker)
+            or AH.GetAffStrength(attacker, entry.id)
         if strength > 0.5 and strength > bestStrength then
             bestMultiplier = entry.multiplier
             bestAfflictionId = entry.id

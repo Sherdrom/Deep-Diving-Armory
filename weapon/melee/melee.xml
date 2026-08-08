@@ -24,9 +24,6 @@
       </StatusEffect>
       <StatusEffect type="NotInWater" target="This" Condition="5" disabledeltatime="true" />
       <StatusEffect type="InWater" target="This" Condition="5" disabledeltatime="true" />
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <Affliction identifier="deep_wuchuan_detection" strength="100" />
-      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This" Condition="-6.5" disabledeltatime="true">
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" setvalue="true" SpeedMultiplier="0.5">
@@ -95,9 +92,6 @@
     <Sprite texture="%ModDir%/weapon/melee/melee.png" sourcerect="18,154,96,27" depth="0.55" origin="0.5,0.5" />
     <Body width="100" height="27" density="25" />
     <MeleeWeapon slots="Any,RightHand,LeftHand" aimpos="50,0" handle1="10,0" holdangle="90" reload="1" range="75" combatPriority="25" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="Onactive" interval="0.5" target="Character" setvalue="true">
-        <Affliction identifier="deep_knife_detect_1" strength="100" />
-      </StatusEffect>
       <Attack targetimpulse="5" severlimbsprobability="0.2" itemdamage="5" structuredamage="0" structuresoundtype="StructureSlash" penetration="0.5">
         <Affliction identifier="lacerations" strength="20" />
         <Affliction identifier="bleeding" strength="20" />

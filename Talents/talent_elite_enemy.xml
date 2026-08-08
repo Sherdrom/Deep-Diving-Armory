@@ -63,7 +63,7 @@
         <CharacterAbilityModifyAffliction afflictionidentifiers="stun,incrementalstun,progressivestun" addedmultiplier="-1" />
       </Abilities>
     </AbilityGroupEffect>
-    <!-- 敌人攻击玩家四肢时，降低枪伤 
+    <!-- 敌人攻击玩家四肢时，降低枪伤 -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -75,7 +75,7 @@
           </StatusEffects>
         </CharacterAbilityApplyStatusEffects>
       </Abilities>
-    </AbilityGroupEffect>-->
+    </AbilityGroupEffect>
     <!-- 敌人攻击非人类敌人时，可以造成伤害 -->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
@@ -319,7 +319,7 @@
     <!--被帽弹头-->
     <AbilityGroupEffect abilityeffecttype="OnAttack">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_headshot_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_headshot_detect" min="1" />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
@@ -349,32 +349,10 @@
       </Abilities>
     </AbilityGroupEffect>
 
-    <!-- 乌川天赋（喵喵）-->
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_wuchuan_detection" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyResistance resistanceid="damage" multiplier="0.2" />
-        <CharacterAbilityModifyStat stattype="MeleeAttackSpeed" value="3" />
-      </Abilities>
-    </AbilityGroupInterval>
-    <AbilityGroupInterval interval="0.5">
-      <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="deep_wuchuan_detection" />
-        <AbilityConditionAboveVitality invert="true" vitalitypercentage="0.5" />
-        <AbilityConditionCrouched />
-      </Conditions>
-      <Abilities>
-        <CharacterAbilityModifyFlag flagtype="IgnoredByEnemyAI" />
-      </Abilities>
-    </AbilityGroupInterval>
-
     <!--紧急除颤-->
     <AbilityGroupInterval interval="0.5" maxtriggercount="1" effectdelay="1">
       <Conditions>
-        <AbilityConditionHasAffliction afflictionidentifier="chip_emergency_defibrillation_detect" />
+        <AbilityConditionHasPermanentStat statidentifier="chip_emergency_defibrillation_detect" min="1" />
         <AbilityConditionAboveVitality invert="true" vitalitypercentage="0" />
       </Conditions>
       <Abilities>

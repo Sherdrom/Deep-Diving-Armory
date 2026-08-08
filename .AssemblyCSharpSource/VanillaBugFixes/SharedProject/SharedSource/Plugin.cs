@@ -13,7 +13,7 @@ namespace VanillaBugFixes
             harmony.PatchAll();
             PatchPlatformSpecific(harmony);
 
-            LuaCsLogger.Log("[VanillaBugFixes] Loaded.");
+            LuaCsSetup.PrintCsMessage("[Deep-Diving-Armory] VanillaBugFixes Loaded.");
         }
 
         partial void PatchPlatformSpecific(Harmony harmony);
@@ -26,7 +26,7 @@ namespace VanillaBugFixes
         {
             harmony?.UnpatchSelf();
             harmony = null;
-            LuaCsLogger.Log("[VanillaBugFixes] Unloaded.");
+            LuaCsSetup.PrintCsMessage("[Deep-Diving-Armory] VanillaBugFixes Unloaded.");
         }
     }
 }

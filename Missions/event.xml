@@ -1382,7 +1382,7 @@
       <NPCChangeTeamAction NPCTag="deep_initial_enemy" TeamID="None" addtocrew="false" />
     </ScriptedEvent>-->
 
-    <!-- Lua代码取消敌人命令更可靠，可取消敌人的消灭入侵者命令，从而避免冲家 
+    <!-- Lua代码取消敌人命令更可靠，可取消敌人的消灭入侵者命令，从而避免冲家 -->
     <ScriptedEvent identifier="deep_cancel_order_fightintruders">
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
       <TagAction criteria="jobidentifier:deep_medicaldoctor_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
@@ -1393,7 +1393,7 @@
         </StatusEffect>
       </StatusEffectAction>
 
-    </ScriptedEvent>-->
+    </ScriptedEvent>
 
     <!--<ScriptedEvent identifier="deep_meet_on_the_battleground_separatists_state1" commonness="150">
       <TagAction criteria="player" tag="player" />
