@@ -29,6 +29,7 @@ InvSlotType = {
     RightHand = "RightHand",
 }
 LimbType = { Head = "Head" }
+CharacterTeamType = { None = 0, Team1 = 1, Team2 = 2 }
 StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
 AbilityFlags = { SharedFlag = "SharedFlag", DynamicFlag = "DynamicFlag" }
 Identifier = function(value) return value end
@@ -232,6 +233,7 @@ end
 
 local character = {
     Name = "test",
+    TeamID = CharacterTeamType.None,
     Removed = false,
     IsDead = false,
     stats = {},
@@ -286,12 +288,28 @@ LuaUserData = {
 
 Character = { CharacterList = { character }, Controlled = character }
 
+local noneArmor, noneModule = makeItem("armor"), makeItem("module")
+noneArmor.rootOwner = character
+noneArmor.contents = { noneModule }
+slots[InvSlotType.OuterClothes] = noneArmor
+
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
 assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was not reset on load")
 assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
 local markerChangeBaseline = character.Info.changeCalls
+
+local function assertNoEquipmentEffects(context)
+    assert((character.stats.MovementSpeed or 0) == 0, context .. " applied stats")
+    assert(not character.flags.SharedFlag, context .. " applied flags")
+    assert(character.Info.savedStats.talent_marker == 0, context .. " applied talent markers")
+    assert(not character.resistances["burn|dda_adjust_equipment"], context .. " applied resistance")
+    assert(health:GetAfflictionStrengthByIdentifier("marker") == 0, context .. " applied affliction")
+end
+
+assertNoEquipmentEffects("Team.None initial scan")
+assert(noneArmor.inventoryScans == 0, "Team.None initial scan read equipment contents")
 
 local function tick()
     now = now + 0.5
@@ -321,9 +339,34 @@ local characterRemove = patches["Barotrauma.Character.Remove"]
 local serverInventoryRead = patches["Barotrauma.Inventory.ServerEventRead"]
 local clientApplyReceivedState = patches["Barotrauma.Inventory.ApplyReceivedState"]
 local putItem = patches["Barotrauma.Inventory.PutItem"]
+local teamChanged = patches["Barotrauma.Character.set_TeamID"]
 local armorContainer = { Item = armor }
-assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem,
+assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem and teamChanged,
     "authority hooks were not registered")
+
+equip(noneArmor, { character = character })
+assertNoEquipmentEffects("Team.None equip")
+assert(noneArmor.inventoryScans == 0, "Team.None equip read equipment contents")
+
+character.TeamID = CharacterTeamType.Team1
+teamChanged(character, { value = character.TeamID })
+assert(character.stats.MovementSpeed == 6
+    and character.flags.SharedFlag
+    and character.Info.savedStats.talent_marker == 1
+    and character.resistances["burn|dda_adjust_equipment"] == 0.5
+    and health:GetAfflictionStrengthByIdentifier("marker") == 1,
+    "non-None team did not receive equipment effects")
+
+character.TeamID = CharacterTeamType.None
+teamChanged(character, { value = character.TeamID })
+assertNoEquipmentEffects("Team.None transition")
+
+slots[InvSlotType.OuterClothes] = nil
+character.TeamID = CharacterTeamType.Team1
+teamChanged(character, { value = character.TeamID })
+character.addFlagCalls, character.removeFlagCalls = 0, 0
+character.addResistanceCalls, character.removeResistanceCalls = 0, 0
+markerChangeBaseline = character.Info.changeCalls
 
 local vanillaGun = makeItem("vanilla_gun")
 vanillaGun.tags.gun = true

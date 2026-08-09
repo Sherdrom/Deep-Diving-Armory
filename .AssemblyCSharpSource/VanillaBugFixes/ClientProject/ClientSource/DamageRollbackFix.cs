@@ -82,7 +82,7 @@ namespace DamageRollbackFix
     /// <summary>
     /// 补丁 2：ItemComponent.ApplyStatusEffects Prefix
     /// 客户端网络事件回调时，若弹道 OnImpact 特效已由本地预测生成，则跳过以避免双重特效。
-    /// 仅影响 Projectile + OnImpact，不影响 RangedWeapon/OnUse（由 WeaponSyncFix 处理）。
+    /// 仅影响 Projectile + OnImpact，不影响 RangedWeapon/OnUse。
     /// </summary>
     [HarmonyPatch(typeof(ItemComponent), nameof(ItemComponent.ApplyStatusEffects))]
     internal static class ApplyStatusEffectsDedupPatch

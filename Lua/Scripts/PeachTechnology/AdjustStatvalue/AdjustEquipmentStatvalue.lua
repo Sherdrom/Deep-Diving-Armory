@@ -48,6 +48,10 @@ local function warn(...)
     print("[AdjustEquipmentStatvalue] ERROR:", ...)
 end
 
+local function canAdjustCharacter(character)
+    return character and character.TeamID ~= CharacterTeamType.None
+end
+
 local vceWarningBox
 local function warnMissingVce(character, item)
     if not CLIENT or character ~= Character.Controlled then return end
@@ -505,7 +509,8 @@ local function isBlockedByEnemyResistance(state, cfg)
 end
 
 local function isEffectActive(state, cfg, host, accessory)
-    return not isBlockedByEnemyResistance(state, cfg)
+    return canAdjustCharacter(state.character)
+        and not isBlockedByEnemyResistance(state, cfg)
         and (not cfg.when or cfg.when(state.character, host, accessory))
 end
 
@@ -683,7 +688,7 @@ local function isStillHeld(character, item)
 end
 
 local function addMain(character, item)
-    if not character or character.Removed or character.IsDead then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead then return end
     local cfg, itemId = getMainConfig(item)
     if not cfg or not isStillEquipped(character, item) then return end
 
@@ -719,7 +724,7 @@ local function removeMain(state, item)
 end
 
 local function addWeapon(character, item)
-    if not character or character.Removed or character.IsDead or not isStillHeld(character, item) then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead or not isStillHeld(character, item) then return end
     if not item or item.Removed or not item.Prefab then return end
     local itemId = tostring(item.Prefab.Identifier)
     local state = charStates[character]
@@ -813,12 +818,26 @@ local function resetTalentMarkers(character)
 end
 
 local function addEquippedItems(character)
-    if not character or character.Removed or character.IsDead or not character.Inventory then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead or not character.Inventory then return end
     for _, slot in ipairs(WEARABLE_SLOTS) do
         addMain(character, character.Inventory:GetItemInLimbSlot(slot))
     end
     for _, slot in ipairs(WEAPON_SLOTS) do
         addWeapon(character, character.Inventory:GetItemInLimbSlot(slot))
+    end
+end
+
+local function syncCharacterTeam(character)
+    if not character or character.Removed or character.IsDead then return end
+    if canAdjustCharacter(character) then
+        addEquippedItems(character)
+        return
+    end
+
+    local state = charStates[character]
+    if state then
+        clearState(state)
+        removeEmptyState(state)
     end
 end
 
@@ -873,7 +892,7 @@ end
 local function scanCharacter(character)
     if not character or character.Removed or character.IsDead then return end
     resetTalentMarkers(character)
-    addEquippedItems(character)
+    syncCharacterTeam(character)
 end
 
 local function scanAllCharacters()
@@ -965,6 +984,15 @@ Hook.Patch(
     "Revive",
     { "System.Boolean", "System.Boolean" },
     restoreRevivedCharacter,
+    Hook.HookMethodType.After
+)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.TeamChanged",
+    "Barotrauma.Character",
+    "set_TeamID",
+    { "Barotrauma.CharacterTeamType" },
+    syncCharacterTeam,
     Hook.HookMethodType.After
 )
 
