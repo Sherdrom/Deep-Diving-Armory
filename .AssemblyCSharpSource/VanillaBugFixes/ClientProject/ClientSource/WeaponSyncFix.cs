@@ -106,9 +106,24 @@ namespace WeaponSyncFix
     /// <summary>
     /// RangedWeapon.Use()：只预测本地玩家；远端角色和观战视角使用服务器权威事件。
     /// </summary>
-    [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.Use))]
+    [HarmonyPatch]
     internal static class RangedWeaponUsePatch
     {
+        [HarmonyTargetMethods]
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            foreach (var type in AccessTools.AllTypes())
+            {
+                if (!typeof(RangedWeapon).IsAssignableFrom(type)) { continue; }
+
+                var method = AccessTools.DeclaredMethod(type, nameof(RangedWeapon.Use),
+                    new[] { typeof(float), typeof(Character) });
+                if (method == null || method.IsAbstract) { continue; }
+
+                yield return method;
+            }
+        }
+
         [HarmonyPrefix]
         internal static bool Prefix(Character character)
         {

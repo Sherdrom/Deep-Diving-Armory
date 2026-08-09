@@ -17,9 +17,24 @@ namespace WeaponSyncFix
         }
     }
 
-    [HarmonyPatch(typeof(RangedWeapon), nameof(RangedWeapon.Use))]
+    [HarmonyPatch]
     internal static class RangedWeaponUsePatch
     {
+        [HarmonyTargetMethods]
+        private static IEnumerable<MethodBase> TargetMethods()
+        {
+            foreach (var type in AccessTools.AllTypes())
+            {
+                if (!typeof(RangedWeapon).IsAssignableFrom(type)) { continue; }
+
+                var method = AccessTools.DeclaredMethod(type, nameof(RangedWeapon.Use),
+                    new[] { typeof(float), typeof(Character) });
+                if (method == null || method.IsAbstract) { continue; }
+
+                yield return method;
+            }
+        }
+
         [HarmonyPostfix]
         internal static void Postfix(RangedWeapon __instance, bool __result, Character character)
         {
