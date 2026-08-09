@@ -17,10 +17,14 @@ namespace VanillaBugFixes
         }
 
         partial void PatchPlatformSpecific(Harmony harmony);
+        partial void PreInitPatchingProjSpecific();
 
         public void OnLoadCompleted() { }
 
-        public void PreInitPatching() { }
+        public void PreInitPatching()
+        {
+            PreInitPatchingProjSpecific();
+        }
 
         public void Dispose()
         {
