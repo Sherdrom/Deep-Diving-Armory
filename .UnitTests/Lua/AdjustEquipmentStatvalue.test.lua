@@ -65,7 +65,17 @@ InvSlotType = {
 }
 LimbType = { Head = "Head" }
 CharacterTeamType = { None = 0, Team1 = 1, Team2 = 2 }
-StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
+StatTypes = {
+    None = "None",
+    MovementSpeed = "MovementSpeed",
+    RangedAttackSpeed = "RangedAttackSpeed",
+    RangedSpreadReduction = "RangedSpreadReduction",
+    ElectricalSkillBonus = "ElectricalSkillBonus",
+    HelmSkillBonus = "HelmSkillBonus",
+    MechanicalSkillBonus = "MechanicalSkillBonus",
+    MedicalSkillBonus = "MedicalSkillBonus",
+    WeaponsSkillBonus = "WeaponsSkillBonus",
+}
 AbilityFlags = { SharedFlag = "SharedFlag", DynamicFlag = "DynamicFlag" }
 Identifier = function(value) return value end
 
@@ -189,6 +199,12 @@ _G.AdjustEquipmentConfig = {
         },
     },
     heldWeapons = {
+        none_weapon = {
+            stats = {
+                { statType = "RangedAttackSpeed", value = 0.3 },
+                { statType = "RangedSpreadReduction", value = 0.25 },
+            },
+        },
         integrated = { talentMarkers = { "weapon_marker" } },
         failedweapon = { affliction = { id = "permanent_marker", strength = 1 } },
         dynamicweapon = {
@@ -317,6 +333,7 @@ local character = {
     Removed = false,
     IsDead = false,
     stats = {},
+    nativeWearableStats = {},
     flags = {},
     addFlagCalls = 0,
     removeFlagCalls = 0,
@@ -330,7 +347,11 @@ local character = {
     pairSemiChecks = 0,
     pairBurstChecks = 0,
     accessoryChecks = 0,
-    Info = { savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 }, changeCalls = 0 },
+    Info = {
+        TeamID = CharacterTeamType.None,
+        savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 },
+        changeCalls = 0,
+    },
     CharacterHealth = health,
     Inventory = {},
     AnimController = {},
@@ -346,6 +367,29 @@ function character.Info:ChangeSavedStatValue(_, value, id)
 end
 function character:ChangeStat(statType, value)
     self.stats[statType] = (self.stats[statType] or 0) + value
+end
+function character:OnWearablesChanged()
+    self.nativeWearableStats = {}
+    for _, slot in ipairs({ InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag }) do
+        local item = slots[slot]
+        local wearable = item and item.GetComponentString("Wearable")
+        for statType, value in pairs(wearable and wearable.WearableStatValues or {}) do
+            self.nativeWearableStats[statType] = (self.nativeWearableStats[statType] or 0) + value
+        end
+    end
+end
+function character:GetEffectiveStat(statType)
+    local value = (self.stats[statType] or 0) + (self.nativeWearableStats[statType] or 0)
+    local seen = {}
+    for _, slot in ipairs({ InvSlotType.LeftHand, InvSlotType.RightHand }) do
+        local item = slots[slot]
+        if item and not seen[item] then
+            seen[item] = true
+            local holdable = item.GetComponentString("Holdable")
+            value = value + ((holdable and holdable.HoldableStatValues[statType]) or 0)
+        end
+    end
+    return value
 end
 function character:HasAbilityFlag(flag) return self.flags[flag] == true end
 function character:AddAbilityFlag(flag)
@@ -381,8 +425,18 @@ assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was no
 assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
 local markerChangeBaseline = character.Info.changeCalls
 
+local function approximately(actual, expected)
+    return math.abs((actual or 0) - expected) < 0.000001
+end
+
 local function assertNoEquipmentEffects(context)
-    assert((character.stats.MovementSpeed or 0) == 0, context .. " applied stats")
+    assert(approximately(character.stats.MovementSpeed, 0), context .. " applied stats")
+    assert(approximately(character.stats.RangedAttackSpeed, 0),
+        context .. " applied weapon operation stats")
+    assert(approximately(character.stats.RangedSpreadReduction, 0),
+        context .. " applied weapon spread stats")
+    assert(approximately(character.stats.WeaponsSkillBonus, 0),
+        context .. " applied weapon skill stats")
     assert(not character.flags.SharedFlag, context .. " applied flags")
     assert(character.Info.savedStats.talent_marker == 0, context .. " applied talent markers")
     assert(not character.resistances["burn|dda_adjust_equipment"], context .. " applied resistance")
@@ -425,30 +479,133 @@ local characterRemove = patches["Barotrauma.Character.Remove"]
 local serverInventoryRead = patches["Barotrauma.Inventory.ServerEventRead"]
 local clientApplyReceivedState = patches["Barotrauma.Inventory.ApplyReceivedState"]
 local putItem = patches["Barotrauma.Inventory.PutItem"]
+local removeItem = patches["Barotrauma.Inventory.RemoveItem"]
 local teamChanged = patches["Barotrauma.Character.set_TeamID"]
 local armorContainer = { Item = armor }
-assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem and teamChanged,
+assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem and removeItem and teamChanged,
     "authority hooks were not registered")
+
+local function setTeam(team)
+    character.TeamID = team
+    character.Info.TeamID = team
+end
 
 equip(noneArmor, { character = character })
 assertNoEquipmentEffects("Team.None equip")
 assert(noneArmor.inventoryScans == 0, "Team.None equip read equipment contents")
 
-character.TeamID = CharacterTeamType.Team1
+local noneBag, noneWeapon = makeItem("bagweapon"), makeItem("none_weapon")
+noneBag.rootOwner, noneWeapon.rootOwner = character, character
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = noneBag, noneWeapon
+equip(noneBag, { character = character })
+equip(noneWeapon, { character = character })
+assertNoEquipmentEffects("Team.None bag and held weapon equip")
+
+setTeam(CharacterTeamType.Team1)
 teamChanged(character, { value = character.TeamID })
-assert(character.stats.MovementSpeed == 6
+assert(approximately(character.stats.MovementSpeed, 5.8)
+    and approximately(character.stats.RangedAttackSpeed, 0.3)
+    and approximately(character.stats.RangedSpreadReduction, 0.25)
     and character.flags.SharedFlag
     and character.Info.savedStats.talent_marker == 1
     and character.resistances["burn|dda_adjust_equipment"] == 0.5
     and health:GetAfflictionStrengthByIdentifier("marker") == 1,
-    "non-None team did not receive equipment effects")
+    "non-None team did not receive armor, bag and weapon effects")
 
-character.TeamID = CharacterTeamType.None
+setTeam(CharacterTeamType.None)
 teamChanged(character, { value = character.TeamID })
 assertNoEquipmentEffects("Team.None transition")
 
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = nil, nil
+unequip(noneBag, { character = character })
+unequip(noneWeapon, { character = character })
+
+local nativeBag, nativeHeld = makeItem("native_bag"), makeItem("native_held")
+nativeBag.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+nativeBag.components.Wearable = {
+    WearableStatValues = { [StatTypes.MovementSpeed] = -0.3 },
+    SkillModifiers = { weapons = -20 },
+}
+nativeHeld.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+nativeHeld.components.Holdable = {
+    HoldableStatValues = {
+        [StatTypes.MovementSpeed] = -0.2,
+        [StatTypes.RangedSpreadReduction] = 0.4,
+    },
+}
+nativeBag.rootOwner, nativeHeld.rootOwner = character, character
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = nativeBag, nativeHeld
+character:OnWearablesChanged()
+equip(nativeBag, { character = character })
+equip(nativeHeld, { character = character })
+assert(approximately(character.stats.MovementSpeed, 0.5)
+    and approximately(character.stats.WeaponsSkillBonus, 20)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "Team.None did not compensate native wearable and holdable values")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
+    and approximately(character:GetEffectiveStat(StatTypes.RangedSpreadReduction), 0),
+    "Team.None native equipment was not numerically neutral")
+
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+assert(approximately(character.stats.MovementSpeed, 6)
+    and approximately(character.stats.WeaponsSkillBonus, 0)
+    and approximately(character.stats.RangedSpreadReduction, 0),
+    "non-None transition retained native equipment compensation")
+setTeam(CharacterTeamType.None)
+teamChanged(character, { value = character.TeamID })
+assert(approximately(character.stats.MovementSpeed, 0.5)
+    and approximately(character.stats.WeaponsSkillBonus, 20)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "Team.None transition did not restore native equipment compensation")
+
+slots[InvSlotType.Bag] = nil
+putItem({ Owner = makeItem("container") }, { item = nativeBag })
+assert(approximately(character.stats.MovementSpeed, 0.2)
+    and approximately(character.stats.WeaponsSkillBonus, 0)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "moving a native bag directly to a container left its compensation behind")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "moving a Team.None native bag left its wearable stat cached")
+unequip(nativeBag, { character = character })
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "Team.None native bag Unequip changed effective movement")
+slots[InvSlotType.LeftHand] = nil
+putItem({ Owner = makeItem("container") }, { item = nativeHeld })
+unequip(nativeHeld, { character = character })
+assertNoEquipmentEffects("Team.None native equipment removal")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
+    and approximately(character:GetEffectiveStat(StatTypes.RangedSpreadReduction), 0),
+    "Team.None native equipment removal changed effective stats")
+
+slots[InvSlotType.Bag] = nativeBag
+character:OnWearablesChanged()
+equip(nativeBag, { character = character })
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "Team.None native bag drop baseline was not neutral")
+unequip(nativeBag, { character = character })
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "early Item.Unequip changed Team.None native bag movement")
+slots[InvSlotType.Bag] = nil
+removeItem(character.Inventory, { item = nativeBag })
+assertNoEquipmentEffects("Team.None native equipment RemoveItem")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "dropping Team.None native equipment left a negative stat")
+
 slots[InvSlotType.OuterClothes] = nil
-character.TeamID = CharacterTeamType.Team1
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+
+slots[InvSlotType.Bag] = noneBag
+equip(noneBag, { character = character })
+assert(character.stats.MovementSpeed == -0.2, "Team1 bag baseline failed")
+events["character.created"](character)
+character.Info.TeamID = CharacterTeamType.None
+advanceTime(0.01)
+assertNoEquipmentEffects("Info.TeamID-only None transition")
+slots[InvSlotType.Bag] = nil
+unequip(noneBag, { character = character })
+setTeam(CharacterTeamType.Team1)
 teamChanged(character, { value = character.TeamID })
 character.addFlagCalls, character.removeFlagCalls = 0, 0
 character.addResistanceCalls, character.removeResistanceCalls = 0, 0
@@ -499,13 +656,13 @@ assert(character.stats.MovementSpeed == legacyStatBaseline
     and #networkMessages == legacyNetworkBaseline + 2,
     "zero-strength or unknown legacy Affliction activated")
 
-character.TeamID = CharacterTeamType.None
+setTeam(CharacterTeamType.None)
 health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
 assert(character.stats.MovementSpeed == legacyStatBaseline
     and #timerQueue == legacyTimerBaseline
     and #networkMessages == legacyNetworkBaseline + 2,
     "Team.None legacy Affliction activated")
-character.TeamID = CharacterTeamType.Team1
+setTeam(CharacterTeamType.Team1)
 
 health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
 assert(#timerQueue == legacyTimerBaseline + 1

@@ -55,8 +55,125 @@ local function warn(...)
     print("[AdjustEquipmentStatvalue] ERROR:", ...)
 end
 
+local function isNoneTeam(character)
+    return character
+        and (character.TeamID == CharacterTeamType.None
+            or (character.Info and character.Info.TeamID == CharacterTeamType.None))
+end
+
 local function canAdjustCharacter(character)
-    return character and character.TeamID ~= CharacterTeamType.None
+    return character and not isNoneTeam(character)
+end
+
+local DDA_PACKAGE_NAME = "Deep-Diving-Armory"
+local SKILL_STAT_TYPES = {
+    electrical = StatTypes.ElectricalSkillBonus,
+    helm = StatTypes.HelmSkillBonus,
+    mechanical = StatTypes.MechanicalSkillBonus,
+    medical = StatTypes.MedicalSkillBonus,
+    weapons = StatTypes.WeaponsSkillBonus,
+}
+local nativeEquipmentCompensations = {}
+local nativeEquipmentItems = {}
+local nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
+
+local function eachDictionaryEntry(dictionary, callback)
+    if not dictionary then return end
+    if type(dictionary) == "table" then
+        for key, value in pairs(dictionary) do callback(key, value) end
+        return
+    end
+    for entry in dictionary do callback(entry.Key, entry.Value) end
+end
+
+local function addNativeValues(target, dictionary)
+    eachDictionaryEntry(dictionary, function(statType, value)
+        value = tonumber(value) or 0
+        if value ~= 0 then target[statType] = (target[statType] or 0) + value end
+    end)
+end
+
+local function addNativeSkillValues(target, dictionary)
+    eachDictionaryEntry(dictionary, function(skillIdentifier, value)
+        local statType = SKILL_STAT_TYPES[tostring(skillIdentifier)]
+        value = tonumber(value) or 0
+        if statType and value ~= 0 then target[statType] = (target[statType] or 0) + value end
+    end)
+end
+
+local function isDdaItem(item)
+    local package = item and item.Prefab and item.Prefab.ContentPackage
+    return package and package.Name == DDA_PACKAGE_NAME
+end
+
+local function collectNativeEquipmentValues(character)
+    local values, seen = {}, {}
+    local inventory = character and character.Inventory
+    if not inventory then return values, seen end
+
+    for _, slot in ipairs(WEARABLE_SLOTS) do
+        local item = inventory:GetItemInLimbSlot(slot)
+        if item and not item.Removed and not seen[item] and isDdaItem(item) then
+            seen[item] = true
+            local wearable = item.GetComponentString("Wearable")
+            if wearable then
+                addNativeValues(values, wearable.WearableStatValues)
+                addNativeSkillValues(values, wearable.SkillModifiers)
+            end
+        end
+    end
+    for _, slot in ipairs(WEAPON_SLOTS) do
+        local item = inventory:GetItemInLimbSlot(slot)
+        if item and not item.Removed and not seen[item] and isDdaItem(item) then
+            seen[item] = true
+            local holdable = item.GetComponentString("Holdable")
+            if holdable then addNativeValues(values, holdable.HoldableStatValues) end
+        end
+    end
+    return values, seen
+end
+
+local function setNativeEquipmentItems(character, items)
+    for item in pairs(nativeEquipmentItems[character] or {}) do
+        if not items[item] and nativeEquipmentOwners[item] == character then nativeEquipmentOwners[item] = nil end
+    end
+    for item in pairs(items) do nativeEquipmentOwners[item] = character end
+    nativeEquipmentItems[character] = next(items) and items or nil
+end
+
+local function setNativeEquipmentCompensation(character, compensation)
+    local previous = nativeEquipmentCompensations[character] or {}
+    local handled = {}
+    for statType, previousValue in pairs(previous) do
+        handled[statType] = true
+        local nextValue = compensation[statType] or 0
+        if nextValue ~= previousValue then character:ChangeStat(statType, nextValue - previousValue) end
+    end
+    for statType, nextValue in pairs(compensation) do
+        if not handled[statType] then character:ChangeStat(statType, nextValue) end
+    end
+    nativeEquipmentCompensations[character] = next(compensation) and compensation or nil
+end
+
+local function syncNativeEquipmentCompensation(character)
+    if not character or character.Removed then return end
+    local compensation, items = {}, {}
+    if isNoneTeam(character) and not character.IsDead then
+        if character.Inventory then character:OnWearablesChanged() end
+        local values
+        values, items = collectNativeEquipmentValues(character)
+        for statType, value in pairs(values) do
+            compensation[statType] = -value
+        end
+    end
+    setNativeEquipmentCompensation(character, compensation)
+    setNativeEquipmentItems(character, items)
+end
+
+local function clearNativeEquipmentCompensation(character)
+    if not character then return end
+    if not character.Removed then setNativeEquipmentCompensation(character, {}) end
+    setNativeEquipmentItems(character, {})
 end
 
 local vceWarningBox
@@ -245,7 +362,7 @@ local function refreshStats(state)
         local target = effects.statRef or effects
         if not seen[target] then
             seen[target] = true
-            local shouldApply = not blocked[target.cfg.statGroup]
+            local shouldApply = canAdjustCharacter(state.character) and not blocked[target.cfg.statGroup]
             if shouldApply and not target.statsApplied then
                 target.stats = applyStats(state.character, target.cfg.stats)
                 target.statsApplied = true
@@ -1028,6 +1145,7 @@ end
 
 local function syncCharacterTeam(character)
     if not character or character.Removed or character.IsDead then return end
+    syncNativeEquipmentCompensation(character)
     if canAdjustCharacter(character) then
         addEquippedItems(character)
         return
@@ -1041,6 +1159,8 @@ local function syncCharacterTeam(character)
 end
 
 local function discardCharacterState(character)
+    nativeEquipmentCompensations[character] = nil
+    setNativeEquipmentItems(character, {})
     local state = charStates[character]
     if not state then return end
     clearLegacyEffects(state)
@@ -1071,22 +1191,35 @@ local function reconcileCharacterInventory(inventory)
     addEquippedItems(character)
     state = charStates[character]
     if state then removeEmptyState(state) end
+    syncNativeEquipmentCompensation(character)
 end
 
-local function clearMovedEquipment(_, ptable)
+local function clearMovedEquipment(inventory, ptable)
+    local item = ptable and ptable["item"]
+    local nativeOwner = item and nativeEquipmentOwners[item]
+    local tracked = item and trackedItems[item]
+    if tracked and (tracked.kind == "main" or tracked.kind == "weapon") then
+        local state = tracked.state
+        if tracked.kind == "main" then
+            if not isStillEquipped(state.character, item) then removeMain(state, item) end
+        elseif not isStillHeld(state.character, item) then
+            removeWeapon(state, item)
+        end
+        removeEmptyState(state)
+    end
+    if nativeOwner then syncNativeEquipmentCompensation(nativeOwner) end
+    local owner = inventory and inventory.Owner
+    if owner and LuaUserData.IsTargetType(owner, "Barotrauma.Character") and owner ~= nativeOwner then
+        syncNativeEquipmentCompensation(owner)
+    end
+end
+
+local function clearRemovedEquipment(_, ptable)
     local item = ptable and ptable["item"]
     local tracked = item and trackedItems[item]
-    if not tracked or (tracked.kind ~= "main" and tracked.kind ~= "weapon") then return end
-
-    local state = tracked.state
-    if tracked.kind == "main" then
-        if isStillEquipped(state.character, item) then return end
-        removeMain(state, item)
-    else
-        if isStillHeld(state.character, item) then return end
-        removeWeapon(state, item)
-    end
-    removeEmptyState(state)
+    if not nativeEquipmentOwners[item]
+        and not (tracked and (tracked.kind == "main" or tracked.kind == "weapon")) then return end
+    clearMovedEquipment(nil, ptable)
 end
 
 local function scanCharacter(character)
@@ -1115,10 +1248,16 @@ local function clearAllStates()
     for _, state in pairs(charStates) do
         if state.character and not state.character.Removed then clearState(state) end
     end
+    for character in pairs(nativeEquipmentCompensations) do
+        clearNativeEquipmentCompensation(character)
+    end
     charStates = {}
     trackedItems = {}
     fallbackStates = {}
     dynamicStates = {}
+    nativeEquipmentCompensations = {}
+    nativeEquipmentItems = {}
+    nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
 end
 
 Hook.Patch(
@@ -1131,6 +1270,7 @@ Hook.Patch(
         if isStillHeld(character, item) then warnMissingVce(character, item) end
         addMain(character, item)
         addWeapon(character, item)
+        syncNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -1148,6 +1288,7 @@ Hook.Patch(
             removeWeapon(state, item)
             removeEmptyState(state)
         end
+        syncNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -1184,6 +1325,15 @@ Hook.Patch(
     "Revive",
     { "System.Boolean", "System.Boolean" },
     restoreRevivedCharacter,
+    Hook.HookMethodType.After
+)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.InventoryRemoveItem",
+    "Barotrauma.Inventory",
+    "RemoveItem",
+    { "Barotrauma.Item" },
+    clearRemovedEquipment,
     Hook.HookMethodType.After
 )
 
@@ -1241,29 +1391,32 @@ Hook.Patch(
 )
 
 Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
+    local nativeOwner = nativeEquipmentOwners[item]
     local tracked = trackedItems[item]
-    if not tracked then return end
-
-    local state = tracked.state
-    if tracked.kind == "main" then
-        removeMain(state, item)
-        removeEmptyState(state)
-    elseif tracked.kind == "weapon" then
-        removeWeapon(state, item)
-        removeEmptyState(state)
-    else
-        local source = tracked.source
-        local sub = source and source.subs[item]
-        if sub then
-            removeConfigEffects(state, sub.effects)
-            source.subs[item] = nil
-            untrackItem(item, state, source)
-            refreshStats(state)
+    if tracked then
+        local state = tracked.state
+        if tracked.kind == "main" then
+            removeMain(state, item)
+            removeEmptyState(state)
+        elseif tracked.kind == "weapon" then
+            removeWeapon(state, item)
+            removeEmptyState(state)
+        else
+            local source = tracked.source
+            local sub = source and source.subs[item]
+            if sub then
+                removeConfigEffects(state, sub.effects)
+                source.subs[item] = nil
+                untrackItem(item, state, source)
+                refreshStats(state)
+            end
         end
     end
+    if nativeOwner then syncNativeEquipmentCompensation(nativeOwner) end
 end)
 
 Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character)
+    clearNativeEquipmentCompensation(character)
     local state = charStates[character]
     if not state then return end
     clearState(state)
@@ -1273,6 +1426,9 @@ end)
 
 Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", function(character)
     resetTalentMarkers(character)
+    Timer.Wait(function()
+        if character and not character.Removed and not character.IsDead then scanCharacter(character) end
+    end, 1)
     requestLegacySnapshot()
 end)
 
