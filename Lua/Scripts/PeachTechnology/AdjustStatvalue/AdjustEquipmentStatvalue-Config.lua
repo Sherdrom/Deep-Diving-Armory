@@ -11,6 +11,7 @@
 --   AssistUpgrades.lua     辅助升级
 --   Weapon*.lua            手持武器配件与弹匣
 --   HeldWeapons.lua        武器本体自带效果
+--   LegacyAfflictions.lua  第三方旧 Affliction identifier 兼容效果
 --
 -- >> 完整配置说明 <<
 --
@@ -20,6 +21,7 @@
 --   wearableSlots   (InvSlotType[]) 主体装备所在的角色装备槽。
 --   weaponSlots     (InvSlotType[]) 武器配件生效的手持槽。
 --   debug           (bool)          是否启用调试输出，生产环境设为 false。
+--   legacyAfflictions (table)       旧 marker identifier -> 当前效果；timeout 控制停止刷新后的撤销时间。
 --
 -- [mainItems — 主体装备]
 --   只登记已将本配置所管效果从 XML 迁移到 Lua、可直接穿戴于装备栏的主体装备。
@@ -163,6 +165,7 @@ local CONFIG = {
     subItems = subItems,
     weaponAccessories = weaponAccessories,
     heldWeapons = loadCategory("HeldWeapons.lua"),
+    legacyAfflictions = loadCategory("LegacyAfflictions.lua"),
 }
 
 _G.AdjustEquipmentConfig = CONFIG

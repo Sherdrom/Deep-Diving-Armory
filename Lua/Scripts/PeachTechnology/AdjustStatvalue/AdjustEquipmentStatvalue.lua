@@ -10,6 +10,7 @@ local MAIN_CONFIG = CONFIG.mainItems or {}
 local SUB_CONFIG = CONFIG.subItems or {}
 local WEAPON_ACCESSORY_CONFIG = CONFIG.weaponAccessories or {}
 local HELD_WEAPON_CONFIG = CONFIG.heldWeapons or {}
+local LEGACY_AFFLICTION_CONFIG = CONFIG.legacyAfflictions or {}
 local fallbackInterval = CONFIG.fallbackInterval or 5.0
 local dynamicInterval = CONFIG.dynamicInterval or 0.5
 local DYNAMIC_SWEEP_INTERVAL = 0.25
@@ -18,7 +19,13 @@ local TalentResistanceIdentifier = LuaUserData.CreateStatic("Barotrauma.TalentRe
 local ENEMY_ACCESSORY_RESISTANCE = "deep_enemy_affliction_resistance"
 local resistanceKeys = {}
 local talentMarkerIds = {}
-for _, configs in ipairs({ MAIN_CONFIG, SUB_CONFIG, WEAPON_ACCESSORY_CONFIG, HELD_WEAPON_CONFIG }) do
+for _, configs in ipairs({
+    MAIN_CONFIG,
+    SUB_CONFIG,
+    WEAPON_ACCESSORY_CONFIG,
+    HELD_WEAPON_CONFIG,
+    LEGACY_AFFLICTION_CONFIG,
+}) do
     for _, cfg in pairs(configs) do
         for _, effect in ipairs(cfg.effects or { cfg }) do
             for _, id in ipairs(effect.talentMarkers or {}) do
@@ -170,6 +177,17 @@ local function validateConfig()
     validateItemConfigs(SUB_CONFIG)
     validateItemConfigs(WEAPON_ACCESSORY_CONFIG)
     validateItemConfigs(HELD_WEAPON_CONFIG)
+    for afflictionId, cfg in pairs(LEGACY_AFFLICTION_CONFIG) do
+        if type(cfg.timeout) ~= "number" or cfg.timeout <= 0 then
+            warn("invalid legacy Affliction timeout", afflictionId, tostring(cfg.timeout))
+        end
+        if not AfflictionPrefab.Prefabs[afflictionId] then
+            warn("legacy Affliction prefab not found", afflictionId)
+        end
+        for _, effect in ipairs(cfg.effects or { cfg }) do
+            validateEffectConfig("legacy:" .. afflictionId, effect)
+        end
+    end
     for itemId in pairs(MAIN_CONFIG) do
         if SUB_CONFIG[itemId] then warn("item configured as both main and sub", itemId) end
     end
@@ -211,6 +229,9 @@ local function eachActiveEffects(state, callback)
             eachAppliedEffect(source.effects, callback)
             for _, sub in pairs(source.subs) do eachAppliedEffect(sub.effects, callback) end
         end
+    end
+    for _, source in pairs(state.legacyAfflictions or {}) do
+        eachAppliedEffect(source.effects, callback)
     end
 end
 
@@ -650,6 +671,7 @@ local function syncSubItems(state, source, current)
 end
 
 local charStates = {}
+local clearLegacyEffects
 
 local function ensureState(character)
     local state = charStates[character]
@@ -665,6 +687,7 @@ local function ensureState(character)
             afflictionRefs = {},
             conditionalConfigs = {},
             dynamicConfigs = {},
+            legacyAfflictions = {},
         }
         charStates[character] = state
     end
@@ -786,6 +809,7 @@ end
 local function clearState(state)
     for item in pairs(state.mains) do removeMain(state, item) end
     for item in pairs(state.weapons) do removeWeapon(state, item) end
+    clearLegacyEffects(state)
 end
 
 local function discardStateIndex(state)
@@ -800,10 +824,185 @@ local function discardStateIndex(state)
 end
 
 local function removeEmptyState(state)
-    if not state.dead and not next(state.mains) and not next(state.weapons) then
+    if not state.dead
+        and not next(state.mains)
+        and not next(state.weapons)
+        and not next(state.legacyAfflictions) then
         fallbackStates[state] = nil
         dynamicStates[state] = nil
         charStates[state.character] = nil
+    end
+end
+
+local LEGACY_NET_ID = "DDA.AdjustEquipment.LegacyAffliction"
+local LEGACY_NET_REQUEST = 0
+local LEGACY_NET_CHANGE = 1
+local LEGACY_NET_SNAPSHOT = 2
+
+local function sendLegacyChange(character, afflictionId, active)
+    if not SERVER or not Networking or not Game or not Game.IsMultiplayer then return end
+    local message = Networking.Start(LEGACY_NET_ID)
+    message.WriteByte(LEGACY_NET_CHANGE)
+    message.WriteUInt16(character.ID)
+    message.WriteString(afflictionId)
+    message.WriteBoolean(active)
+    Networking.Send(message)
+end
+
+local function deactivateLegacyAffliction(state, afflictionId, notify)
+    local entry = state.legacyAfflictions[afflictionId]
+    if not entry then return end
+    state.legacyAfflictions[afflictionId] = nil
+    removeConfigEffects(state, entry.effects)
+    refreshStats(state)
+    if notify ~= false then sendLegacyChange(state.character, afflictionId, false) end
+end
+
+clearLegacyEffects = function(state, notify)
+    for afflictionId in pairs(state.legacyAfflictions) do
+        deactivateLegacyAffliction(state, afflictionId, notify)
+    end
+end
+
+local function activateLegacyAffliction(character, afflictionId, notify)
+    local cfg = LEGACY_AFFLICTION_CONFIG[afflictionId]
+    if not cfg or not canAdjustCharacter(character) or character.Removed or character.IsDead then return nil end
+
+    local state = ensureState(character)
+    local entry = state.legacyAfflictions[afflictionId]
+    if entry then return entry end
+
+    entry = { effects = applyConfig(state, cfg) }
+    state.legacyAfflictions[afflictionId] = entry
+    refreshStats(state)
+    if notify ~= false then sendLegacyChange(character, afflictionId, true) end
+    return entry
+end
+
+local function scheduleLegacyExpiry(state, afflictionId, entry, delay)
+    Timer.Wait(function()
+        local character = state.character
+        if charStates[character] ~= state
+            or state.legacyAfflictions[afflictionId] ~= entry
+            or character.Removed
+            or character.IsDead then return end
+
+        local remaining = entry.deadline - Timer.GetTime()
+        if remaining > 0 then
+            scheduleLegacyExpiry(state, afflictionId, entry, remaining)
+            return
+        end
+
+        deactivateLegacyAffliction(state, afflictionId)
+        removeEmptyState(state)
+    end, math.max(1, math.ceil(delay * 1000)))
+end
+
+local function armLegacyAffliction(character, afflictionId)
+    local cfg = LEGACY_AFFLICTION_CONFIG[afflictionId]
+    if not cfg then return end
+
+    local state = charStates[character]
+    local entry = state and state.legacyAfflictions[afflictionId]
+    if not entry then
+        entry = activateLegacyAffliction(character, afflictionId)
+        if not entry then return end
+        state = charStates[character]
+        entry.deadline = Timer.GetTime() + cfg.timeout
+        scheduleLegacyExpiry(state, afflictionId, entry, cfg.timeout)
+        return
+    end
+    entry.deadline = Timer.GetTime() + cfg.timeout
+end
+
+local function sendLegacySnapshot(connection)
+    local count = 0
+    for _, state in pairs(charStates) do
+        if canAdjustCharacter(state.character) and not state.character.Removed and not state.character.IsDead then
+            for _ in pairs(state.legacyAfflictions) do count = count + 1 end
+        end
+    end
+
+    local message = Networking.Start(LEGACY_NET_ID)
+    message.WriteByte(LEGACY_NET_SNAPSHOT)
+    message.WriteUInt16(count)
+    for _, state in pairs(charStates) do
+        if canAdjustCharacter(state.character) and not state.character.Removed and not state.character.IsDead then
+            for afflictionId in pairs(state.legacyAfflictions) do
+                message.WriteUInt16(state.character.ID)
+                message.WriteString(afflictionId)
+            end
+        end
+    end
+    Networking.Send(message, connection)
+end
+
+local snapshotRequestPending = false
+local function requestLegacySnapshot()
+    if not CLIENT or SERVER or not Networking or not Game or not Game.IsMultiplayer
+        or snapshotRequestPending then return end
+    snapshotRequestPending = true
+    Timer.Wait(function()
+        snapshotRequestPending = false
+        if not Game or not Game.IsMultiplayer then return end
+        local message = Networking.Start(LEGACY_NET_ID)
+        message.WriteByte(LEGACY_NET_REQUEST)
+        Networking.Send(message)
+    end, 500)
+end
+
+local function applyLegacyNetworkState(characterId, afflictionId, active)
+    local character = Entity.FindEntityByID(characterId)
+    if not character
+        or not LuaUserData.IsTargetType(character, "Barotrauma.Character")
+        or character.Removed then return end
+
+    if active then
+        activateLegacyAffliction(character, afflictionId, false)
+        return
+    end
+
+    local state = charStates[character]
+    if state then
+        deactivateLegacyAffliction(state, afflictionId, false)
+        removeEmptyState(state)
+    end
+end
+
+local legacySnapshotRequestTimes = setmetatable({}, { __mode = "k" })
+if Networking then
+    if SERVER then
+        Networking.Receive(LEGACY_NET_ID, function(message, client)
+            if not message or (message.LengthBits and message.LengthBits - message.BitPosition < 8) then return end
+            if message.ReadByte() ~= LEGACY_NET_REQUEST or not client or not client.Connection then return end
+            local now = Timer.GetTime()
+            local clientKey = client.Connection
+            if now - (legacySnapshotRequestTimes[clientKey] or -math.huge) < 1 then return end
+            legacySnapshotRequestTimes[clientKey] = now
+            sendLegacySnapshot(client.Connection)
+        end)
+    elseif CLIENT then
+        Networking.Receive(LEGACY_NET_ID, function(message)
+            if not message or (message.LengthBits and message.LengthBits - message.BitPosition < 8) then return end
+            local operation = message.ReadByte()
+            if operation == LEGACY_NET_CHANGE then
+                applyLegacyNetworkState(
+                    message.ReadUInt16(),
+                    message.ReadString(),
+                    message.ReadBoolean()
+                )
+            elseif operation == LEGACY_NET_SNAPSHOT then
+                local states = {}
+                for _, state in pairs(charStates) do states[#states + 1] = state end
+                for _, state in ipairs(states) do
+                    clearLegacyEffects(state, false)
+                    removeEmptyState(state)
+                end
+                for _ = 1, message.ReadUInt16() do
+                    applyLegacyNetworkState(message.ReadUInt16(), message.ReadString(), true)
+                end
+            end
+        end)
     end
 end
 
@@ -844,6 +1043,7 @@ end
 local function discardCharacterState(character)
     local state = charStates[character]
     if not state then return end
+    clearLegacyEffects(state)
     discardStateIndex(state)
     charStates[character] = nil
     fallbackStates[state] = nil
@@ -987,6 +1187,20 @@ Hook.Patch(
     Hook.HookMethodType.After
 )
 
+Hook.Add("character.applyAffliction", "AdjustEquipmentStatvalue.LegacyAffliction", function(
+    characterHealth,
+    _,
+    newAffliction
+)
+    if not characterHealth or not newAffliction or (tonumber(newAffliction.Strength) or 0) <= 0 then return end
+    if CLIENT and not SERVER and Game and Game.IsMultiplayer then return end
+
+    local prefab = newAffliction.Prefab
+    local afflictionId = tostring(prefab and prefab.Identifier or newAffliction.Identifier)
+    if not LEGACY_AFFLICTION_CONFIG[afflictionId] then return end
+    armLegacyAffliction(characterHealth.Character, afflictionId)
+end)
+
 Hook.Patch(
     "AdjustEquipmentStatvalue.TeamChanged",
     "Barotrauma.Character",
@@ -1057,16 +1271,21 @@ Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character
     updateFallbackState(state)
 end)
 
-Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", resetTalentMarkers)
+Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", function(character)
+    resetTalentMarkers(character)
+    requestLegacySnapshot()
+end)
 
 Hook.Add("loaded", "AdjustEquipmentStatvalue.Loaded", function()
     validateConfig()
     scanAllCharacters()
+    requestLegacySnapshot()
 end)
 
 Hook.Add("roundStart", "AdjustEquipmentStatvalue.RoundStart", function()
     clearAllStates()
     scanAllCharacters()
+    requestLegacySnapshot()
 end)
 
 Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
