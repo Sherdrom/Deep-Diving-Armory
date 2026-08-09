@@ -7,22 +7,25 @@ namespace VanillaBugFixes
         {
             harmony ??= new Harmony(HarmonyId);
 
-            var performanceEnhancementType = AccessTools.TypeByName("PerformanceEnhancement.PerformanceEnhancementPlugin");
-            var characterUpdatePrefix = performanceEnhancementType == null
+            var performanceEnhancementType = AccessTools.TypeByName("PerformanceEnhancement.PerformanceEnhancementRuntime");
+            var shouldUpdateCharacter = performanceEnhancementType == null
                 ? null
-                : AccessTools.Method(performanceEnhancementType, "CharacterUpdatePrefix");
-            if (characterUpdatePrefix != null)
+                : AccessTools.Method(
+                    performanceEnhancementType,
+                    "ShouldUpdateCharacter",
+                    new[] { typeof(Character), typeof(Camera) });
+            if (shouldUpdateCharacter != null)
             {
                 harmony.Patch(
-                    characterUpdatePrefix,
+                    shouldUpdateCharacter,
                     postfix: new HarmonyMethod(
-                        typeof(PerformanceEnhancementCharacterUpdatePrefixPatch),
-                        nameof(PerformanceEnhancementCharacterUpdatePrefixPatch.Postfix)));
+                        typeof(PerformanceEnhancementShouldUpdateCharacterPatch),
+                        nameof(PerformanceEnhancementShouldUpdateCharacterPatch.Postfix)));
             }
         }
     }
 
-    internal static class PerformanceEnhancementCharacterUpdatePrefixPatch
+    internal static class PerformanceEnhancementShouldUpdateCharacterPatch
     {
         // Spectators have no Controlled character, so Performance Enhancement rejects every remote update.
         internal static void Postfix(ref bool __result)
