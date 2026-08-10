@@ -76,6 +76,7 @@ local SKILL_STAT_TYPES = {
 local nativeEquipmentCompensations = {}
 local nativeEquipmentItems = {}
 local nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
+local pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
 
 local function eachDictionaryEntry(dictionary, callback)
     if not dictionary then return end
@@ -156,7 +157,9 @@ local function setNativeEquipmentCompensation(character, compensation)
 end
 
 local function syncNativeEquipmentCompensation(character)
-    if not character or character.Removed then return end
+    if not character then return end
+    pendingNativeEquipmentSync[character] = nil
+    if character.Removed then return end
     local compensation, items = {}, {}
     if isNoneTeam(character) and not character.IsDead then
         if character.Inventory then character:OnWearablesChanged() end
@@ -168,6 +171,10 @@ local function syncNativeEquipmentCompensation(character)
     end
     setNativeEquipmentCompensation(character, compensation)
     setNativeEquipmentItems(character, items)
+end
+
+local function queueNativeEquipmentCompensation(character)
+    if character and not character.Removed then pendingNativeEquipmentSync[character] = true end
 end
 
 local function clearNativeEquipmentCompensation(character)
@@ -1207,10 +1214,10 @@ local function clearMovedEquipment(inventory, ptable)
         end
         removeEmptyState(state)
     end
-    if nativeOwner then syncNativeEquipmentCompensation(nativeOwner) end
+    if nativeOwner then queueNativeEquipmentCompensation(nativeOwner) end
     local owner = inventory and inventory.Owner
     if owner and LuaUserData.IsTargetType(owner, "Barotrauma.Character") and owner ~= nativeOwner then
-        syncNativeEquipmentCompensation(owner)
+        queueNativeEquipmentCompensation(owner)
     end
 end
 
@@ -1258,6 +1265,7 @@ local function clearAllStates()
     nativeEquipmentCompensations = {}
     nativeEquipmentItems = {}
     nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
+    pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
 end
 
 Hook.Patch(
@@ -1270,7 +1278,7 @@ Hook.Patch(
         if isStillHeld(character, item) then warnMissingVce(character, item) end
         addMain(character, item)
         addWeapon(character, item)
-        syncNativeEquipmentCompensation(character)
+        queueNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -1288,7 +1296,7 @@ Hook.Patch(
             removeWeapon(state, item)
             removeEmptyState(state)
         end
-        syncNativeEquipmentCompensation(character)
+        queueNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -1412,7 +1420,7 @@ Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
             end
         end
     end
-    if nativeOwner then syncNativeEquipmentCompensation(nativeOwner) end
+    if nativeOwner then queueNativeEquipmentCompensation(nativeOwner) end
 end)
 
 Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character)
@@ -1451,6 +1459,11 @@ local lastDynamicTime = lastFallbackTime
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     local now = Timer.GetTime()
+    if next(pendingNativeEquipmentSync) then
+        local pending = pendingNativeEquipmentSync
+        pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
+        for character in pairs(pending) do syncNativeEquipmentCompensation(character) end
+    end
     local checkDynamic = now - lastDynamicTime >= DYNAMIC_SWEEP_INTERVAL
     local checkFallback = now - lastFallbackTime >= fallbackInterval
     if not checkDynamic and not checkFallback then return end

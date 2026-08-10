@@ -451,6 +451,9 @@ local function tick()
     events.think()
     runDueTimers()
 end
+local function flushEquipmentSync()
+    events.think()
+end
 local function advanceTime(seconds)
     now = now + seconds
     runDueTimers()
@@ -538,6 +541,7 @@ slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = nativeBag, nativeHeld
 character:OnWearablesChanged()
 equip(nativeBag, { character = character })
 equip(nativeHeld, { character = character })
+flushEquipmentSync()
 assert(approximately(character.stats.MovementSpeed, 0.5)
     and approximately(character.stats.WeaponsSkillBonus, 20)
     and approximately(character.stats.RangedSpreadReduction, -0.4),
@@ -561,6 +565,7 @@ assert(approximately(character.stats.MovementSpeed, 0.5)
 
 slots[InvSlotType.Bag] = nil
 putItem({ Owner = makeItem("container") }, { item = nativeBag })
+flushEquipmentSync()
 assert(approximately(character.stats.MovementSpeed, 0.2)
     and approximately(character.stats.WeaponsSkillBonus, 0)
     and approximately(character.stats.RangedSpreadReduction, -0.4),
@@ -568,11 +573,13 @@ assert(approximately(character.stats.MovementSpeed, 0.2)
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
     "moving a Team.None native bag left its wearable stat cached")
 unequip(nativeBag, { character = character })
+flushEquipmentSync()
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
     "Team.None native bag Unequip changed effective movement")
 slots[InvSlotType.LeftHand] = nil
 putItem({ Owner = makeItem("container") }, { item = nativeHeld })
 unequip(nativeHeld, { character = character })
+flushEquipmentSync()
 assertNoEquipmentEffects("Team.None native equipment removal")
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
     and approximately(character:GetEffectiveStat(StatTypes.RangedSpreadReduction), 0),
@@ -581,13 +588,16 @@ assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
 slots[InvSlotType.Bag] = nativeBag
 character:OnWearablesChanged()
 equip(nativeBag, { character = character })
+flushEquipmentSync()
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
     "Team.None native bag drop baseline was not neutral")
 unequip(nativeBag, { character = character })
+flushEquipmentSync()
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
     "early Item.Unequip changed Team.None native bag movement")
 slots[InvSlotType.Bag] = nil
 removeItem(character.Inventory, { item = nativeBag })
+flushEquipmentSync()
 assertNoEquipmentEffects("Team.None native equipment RemoveItem")
 assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
     "dropping Team.None native equipment left a negative stat")
