@@ -1286,19 +1286,6 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="7" Voltage="7" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 3.5" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 3.5" />
-      </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
@@ -1339,19 +1326,6 @@
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
-      </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="8" Voltage="8" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 4" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 4" />
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
@@ -1394,19 +1368,6 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
-      </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
@@ -1447,19 +1408,6 @@
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
-      </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="10" Voltage="10" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 5" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 5" />
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
@@ -1502,19 +1450,6 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
-      </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
@@ -1555,19 +1490,6 @@
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
-      </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="6" Voltage="6" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
