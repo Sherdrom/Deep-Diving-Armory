@@ -10,6 +10,7 @@ local MAIN_CONFIG = CONFIG.mainItems or {}
 local SUB_CONFIG = CONFIG.subItems or {}
 local WEAPON_ACCESSORY_CONFIG = CONFIG.weaponAccessories or {}
 local HELD_WEAPON_CONFIG = CONFIG.heldWeapons or {}
+local LEGACY_AFFLICTION_CONFIG = CONFIG.legacyAfflictions or {}
 local fallbackInterval = CONFIG.fallbackInterval or 5.0
 local dynamicInterval = CONFIG.dynamicInterval or 0.5
 local DYNAMIC_SWEEP_INTERVAL = 0.25
@@ -18,7 +19,13 @@ local TalentResistanceIdentifier = LuaUserData.CreateStatic("Barotrauma.TalentRe
 local ENEMY_ACCESSORY_RESISTANCE = "deep_enemy_affliction_resistance"
 local resistanceKeys = {}
 local talentMarkerIds = {}
-for _, configs in ipairs({ MAIN_CONFIG, SUB_CONFIG, WEAPON_ACCESSORY_CONFIG, HELD_WEAPON_CONFIG }) do
+for _, configs in ipairs({
+    MAIN_CONFIG,
+    SUB_CONFIG,
+    WEAPON_ACCESSORY_CONFIG,
+    HELD_WEAPON_CONFIG,
+    LEGACY_AFFLICTION_CONFIG,
+}) do
     for _, cfg in pairs(configs) do
         for _, effect in ipairs(cfg.effects or { cfg }) do
             for _, id in ipairs(effect.talentMarkers or {}) do
@@ -46,6 +53,134 @@ end
 
 local function warn(...)
     print("[AdjustEquipmentStatvalue] ERROR:", ...)
+end
+
+local function isNoneTeam(character)
+    return character
+        and (character.TeamID == CharacterTeamType.None
+            or (character.Info and character.Info.TeamID == CharacterTeamType.None))
+end
+
+local function canAdjustCharacter(character)
+    return character and not isNoneTeam(character)
+end
+
+local DDA_PACKAGE_NAME = "Deep-Diving-Armory"
+local SKILL_STAT_TYPES = {
+    electrical = StatTypes.ElectricalSkillBonus,
+    helm = StatTypes.HelmSkillBonus,
+    mechanical = StatTypes.MechanicalSkillBonus,
+    medical = StatTypes.MedicalSkillBonus,
+    weapons = StatTypes.WeaponsSkillBonus,
+}
+local nativeEquipmentCompensations = {}
+local nativeEquipmentItems = {}
+local nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
+local pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
+
+local function eachDictionaryEntry(dictionary, callback)
+    if not dictionary then return end
+    if type(dictionary) == "table" then
+        for key, value in pairs(dictionary) do callback(key, value) end
+        return
+    end
+    for entry in dictionary do callback(entry.Key, entry.Value) end
+end
+
+local function addNativeValues(target, dictionary)
+    eachDictionaryEntry(dictionary, function(statType, value)
+        value = tonumber(value) or 0
+        if value ~= 0 then target[statType] = (target[statType] or 0) + value end
+    end)
+end
+
+local function addNativeSkillValues(target, dictionary)
+    eachDictionaryEntry(dictionary, function(skillIdentifier, value)
+        local statType = SKILL_STAT_TYPES[tostring(skillIdentifier)]
+        value = tonumber(value) or 0
+        if statType and value ~= 0 then target[statType] = (target[statType] or 0) + value end
+    end)
+end
+
+local function isDdaItem(item)
+    local package = item and item.Prefab and item.Prefab.ContentPackage
+    return package and package.Name == DDA_PACKAGE_NAME
+end
+
+local function collectNativeEquipmentValues(character)
+    local values, seen = {}, {}
+    local inventory = character and character.Inventory
+    if not inventory then return values, seen end
+
+    for _, slot in ipairs(WEARABLE_SLOTS) do
+        local item = inventory:GetItemInLimbSlot(slot)
+        if item and not item.Removed and not seen[item] and isDdaItem(item) then
+            seen[item] = true
+            local wearable = item.GetComponentString("Wearable")
+            if wearable then
+                addNativeValues(values, wearable.WearableStatValues)
+                addNativeSkillValues(values, wearable.SkillModifiers)
+            end
+        end
+    end
+    for _, slot in ipairs(WEAPON_SLOTS) do
+        local item = inventory:GetItemInLimbSlot(slot)
+        if item and not item.Removed and not seen[item] and isDdaItem(item) then
+            seen[item] = true
+            local holdable = item.GetComponentString("Holdable")
+            if holdable then addNativeValues(values, holdable.HoldableStatValues) end
+        end
+    end
+    return values, seen
+end
+
+local function setNativeEquipmentItems(character, items)
+    for item in pairs(nativeEquipmentItems[character] or {}) do
+        if not items[item] and nativeEquipmentOwners[item] == character then nativeEquipmentOwners[item] = nil end
+    end
+    for item in pairs(items) do nativeEquipmentOwners[item] = character end
+    nativeEquipmentItems[character] = next(items) and items or nil
+end
+
+local function setNativeEquipmentCompensation(character, compensation)
+    local previous = nativeEquipmentCompensations[character] or {}
+    local handled = {}
+    for statType, previousValue in pairs(previous) do
+        handled[statType] = true
+        local nextValue = compensation[statType] or 0
+        if nextValue ~= previousValue then character:ChangeStat(statType, nextValue - previousValue) end
+    end
+    for statType, nextValue in pairs(compensation) do
+        if not handled[statType] then character:ChangeStat(statType, nextValue) end
+    end
+    nativeEquipmentCompensations[character] = next(compensation) and compensation or nil
+end
+
+local function syncNativeEquipmentCompensation(character)
+    if not character then return end
+    pendingNativeEquipmentSync[character] = nil
+    if character.Removed then return end
+    local compensation, items = {}, {}
+    if isNoneTeam(character) and not character.IsDead then
+        if character.Inventory then character:OnWearablesChanged() end
+        local values
+        values, items = collectNativeEquipmentValues(character)
+        for statType, value in pairs(values) do
+            compensation[statType] = -value
+        end
+    end
+    setNativeEquipmentCompensation(character, compensation)
+    setNativeEquipmentItems(character, items)
+end
+
+local function queueNativeEquipmentCompensation(character)
+    if character and not character.Removed then pendingNativeEquipmentSync[character] = true end
+end
+
+local function clearNativeEquipmentCompensation(character)
+    if not character then return end
+    if not character.Removed then setNativeEquipmentCompensation(character, {}) end
+    setNativeEquipmentItems(character, {})
 end
 
 local vceWarningBox
@@ -166,6 +301,17 @@ local function validateConfig()
     validateItemConfigs(SUB_CONFIG)
     validateItemConfigs(WEAPON_ACCESSORY_CONFIG)
     validateItemConfigs(HELD_WEAPON_CONFIG)
+    for afflictionId, cfg in pairs(LEGACY_AFFLICTION_CONFIG) do
+        if type(cfg.timeout) ~= "number" or cfg.timeout <= 0 then
+            warn("invalid legacy Affliction timeout", afflictionId, tostring(cfg.timeout))
+        end
+        if not AfflictionPrefab.Prefabs[afflictionId] then
+            warn("legacy Affliction prefab not found", afflictionId)
+        end
+        for _, effect in ipairs(cfg.effects or { cfg }) do
+            validateEffectConfig("legacy:" .. afflictionId, effect)
+        end
+    end
     for itemId in pairs(MAIN_CONFIG) do
         if SUB_CONFIG[itemId] then warn("item configured as both main and sub", itemId) end
     end
@@ -208,6 +354,9 @@ local function eachActiveEffects(state, callback)
             for _, sub in pairs(source.subs) do eachAppliedEffect(sub.effects, callback) end
         end
     end
+    for _, source in pairs(state.legacyAfflictions or {}) do
+        eachAppliedEffect(source.effects, callback)
+    end
 end
 
 local function refreshStats(state)
@@ -220,7 +369,7 @@ local function refreshStats(state)
         local target = effects.statRef or effects
         if not seen[target] then
             seen[target] = true
-            local shouldApply = not blocked[target.cfg.statGroup]
+            local shouldApply = canAdjustCharacter(state.character) and not blocked[target.cfg.statGroup]
             if shouldApply and not target.statsApplied then
                 target.stats = applyStats(state.character, target.cfg.stats)
                 target.statsApplied = true
@@ -505,7 +654,8 @@ local function isBlockedByEnemyResistance(state, cfg)
 end
 
 local function isEffectActive(state, cfg, host, accessory)
-    return not isBlockedByEnemyResistance(state, cfg)
+    return canAdjustCharacter(state.character)
+        and not isBlockedByEnemyResistance(state, cfg)
         and (not cfg.when or cfg.when(state.character, host, accessory))
 end
 
@@ -645,6 +795,7 @@ local function syncSubItems(state, source, current)
 end
 
 local charStates = {}
+local clearLegacyEffects
 
 local function ensureState(character)
     local state = charStates[character]
@@ -660,6 +811,7 @@ local function ensureState(character)
             afflictionRefs = {},
             conditionalConfigs = {},
             dynamicConfigs = {},
+            legacyAfflictions = {},
         }
         charStates[character] = state
     end
@@ -683,7 +835,7 @@ local function isStillHeld(character, item)
 end
 
 local function addMain(character, item)
-    if not character or character.Removed or character.IsDead then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead then return end
     local cfg, itemId = getMainConfig(item)
     if not cfg or not isStillEquipped(character, item) then return end
 
@@ -719,7 +871,7 @@ local function removeMain(state, item)
 end
 
 local function addWeapon(character, item)
-    if not character or character.Removed or character.IsDead or not isStillHeld(character, item) then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead or not isStillHeld(character, item) then return end
     if not item or item.Removed or not item.Prefab then return end
     local itemId = tostring(item.Prefab.Identifier)
     local state = charStates[character]
@@ -781,6 +933,7 @@ end
 local function clearState(state)
     for item in pairs(state.mains) do removeMain(state, item) end
     for item in pairs(state.weapons) do removeWeapon(state, item) end
+    clearLegacyEffects(state)
 end
 
 local function discardStateIndex(state)
@@ -795,10 +948,185 @@ local function discardStateIndex(state)
 end
 
 local function removeEmptyState(state)
-    if not state.dead and not next(state.mains) and not next(state.weapons) then
+    if not state.dead
+        and not next(state.mains)
+        and not next(state.weapons)
+        and not next(state.legacyAfflictions) then
         fallbackStates[state] = nil
         dynamicStates[state] = nil
         charStates[state.character] = nil
+    end
+end
+
+local LEGACY_NET_ID = "DDA.AdjustEquipment.LegacyAffliction"
+local LEGACY_NET_REQUEST = 0
+local LEGACY_NET_CHANGE = 1
+local LEGACY_NET_SNAPSHOT = 2
+
+local function sendLegacyChange(character, afflictionId, active)
+    if not SERVER or not Networking or not Game or not Game.IsMultiplayer then return end
+    local message = Networking.Start(LEGACY_NET_ID)
+    message.WriteByte(LEGACY_NET_CHANGE)
+    message.WriteUInt16(character.ID)
+    message.WriteString(afflictionId)
+    message.WriteBoolean(active)
+    Networking.Send(message)
+end
+
+local function deactivateLegacyAffliction(state, afflictionId, notify)
+    local entry = state.legacyAfflictions[afflictionId]
+    if not entry then return end
+    state.legacyAfflictions[afflictionId] = nil
+    removeConfigEffects(state, entry.effects)
+    refreshStats(state)
+    if notify ~= false then sendLegacyChange(state.character, afflictionId, false) end
+end
+
+clearLegacyEffects = function(state, notify)
+    for afflictionId in pairs(state.legacyAfflictions) do
+        deactivateLegacyAffliction(state, afflictionId, notify)
+    end
+end
+
+local function activateLegacyAffliction(character, afflictionId, notify)
+    local cfg = LEGACY_AFFLICTION_CONFIG[afflictionId]
+    if not cfg or not canAdjustCharacter(character) or character.Removed or character.IsDead then return nil end
+
+    local state = ensureState(character)
+    local entry = state.legacyAfflictions[afflictionId]
+    if entry then return entry end
+
+    entry = { effects = applyConfig(state, cfg) }
+    state.legacyAfflictions[afflictionId] = entry
+    refreshStats(state)
+    if notify ~= false then sendLegacyChange(character, afflictionId, true) end
+    return entry
+end
+
+local function scheduleLegacyExpiry(state, afflictionId, entry, delay)
+    Timer.Wait(function()
+        local character = state.character
+        if charStates[character] ~= state
+            or state.legacyAfflictions[afflictionId] ~= entry
+            or character.Removed
+            or character.IsDead then return end
+
+        local remaining = entry.deadline - Timer.GetTime()
+        if remaining > 0 then
+            scheduleLegacyExpiry(state, afflictionId, entry, remaining)
+            return
+        end
+
+        deactivateLegacyAffliction(state, afflictionId)
+        removeEmptyState(state)
+    end, math.max(1, math.ceil(delay * 1000)))
+end
+
+local function armLegacyAffliction(character, afflictionId)
+    local cfg = LEGACY_AFFLICTION_CONFIG[afflictionId]
+    if not cfg then return end
+
+    local state = charStates[character]
+    local entry = state and state.legacyAfflictions[afflictionId]
+    if not entry then
+        entry = activateLegacyAffliction(character, afflictionId)
+        if not entry then return end
+        state = charStates[character]
+        entry.deadline = Timer.GetTime() + cfg.timeout
+        scheduleLegacyExpiry(state, afflictionId, entry, cfg.timeout)
+        return
+    end
+    entry.deadline = Timer.GetTime() + cfg.timeout
+end
+
+local function sendLegacySnapshot(connection)
+    local count = 0
+    for _, state in pairs(charStates) do
+        if canAdjustCharacter(state.character) and not state.character.Removed and not state.character.IsDead then
+            for _ in pairs(state.legacyAfflictions) do count = count + 1 end
+        end
+    end
+
+    local message = Networking.Start(LEGACY_NET_ID)
+    message.WriteByte(LEGACY_NET_SNAPSHOT)
+    message.WriteUInt16(count)
+    for _, state in pairs(charStates) do
+        if canAdjustCharacter(state.character) and not state.character.Removed and not state.character.IsDead then
+            for afflictionId in pairs(state.legacyAfflictions) do
+                message.WriteUInt16(state.character.ID)
+                message.WriteString(afflictionId)
+            end
+        end
+    end
+    Networking.Send(message, connection)
+end
+
+local snapshotRequestPending = false
+local function requestLegacySnapshot()
+    if not CLIENT or SERVER or not Networking or not Game or not Game.IsMultiplayer
+        or snapshotRequestPending then return end
+    snapshotRequestPending = true
+    Timer.Wait(function()
+        snapshotRequestPending = false
+        if not Game or not Game.IsMultiplayer then return end
+        local message = Networking.Start(LEGACY_NET_ID)
+        message.WriteByte(LEGACY_NET_REQUEST)
+        Networking.Send(message)
+    end, 500)
+end
+
+local function applyLegacyNetworkState(characterId, afflictionId, active)
+    local character = Entity.FindEntityByID(characterId)
+    if not character
+        or not LuaUserData.IsTargetType(character, "Barotrauma.Character")
+        or character.Removed then return end
+
+    if active then
+        activateLegacyAffliction(character, afflictionId, false)
+        return
+    end
+
+    local state = charStates[character]
+    if state then
+        deactivateLegacyAffliction(state, afflictionId, false)
+        removeEmptyState(state)
+    end
+end
+
+local legacySnapshotRequestTimes = setmetatable({}, { __mode = "k" })
+if Networking then
+    if SERVER then
+        Networking.Receive(LEGACY_NET_ID, function(message, client)
+            if not message or (message.LengthBits and message.LengthBits - message.BitPosition < 8) then return end
+            if message.ReadByte() ~= LEGACY_NET_REQUEST or not client or not client.Connection then return end
+            local now = Timer.GetTime()
+            local clientKey = client.Connection
+            if now - (legacySnapshotRequestTimes[clientKey] or -math.huge) < 1 then return end
+            legacySnapshotRequestTimes[clientKey] = now
+            sendLegacySnapshot(client.Connection)
+        end)
+    elseif CLIENT then
+        Networking.Receive(LEGACY_NET_ID, function(message)
+            if not message or (message.LengthBits and message.LengthBits - message.BitPosition < 8) then return end
+            local operation = message.ReadByte()
+            if operation == LEGACY_NET_CHANGE then
+                applyLegacyNetworkState(
+                    message.ReadUInt16(),
+                    message.ReadString(),
+                    message.ReadBoolean()
+                )
+            elseif operation == LEGACY_NET_SNAPSHOT then
+                local states = {}
+                for _, state in pairs(charStates) do states[#states + 1] = state end
+                for _, state in ipairs(states) do
+                    clearLegacyEffects(state, false)
+                    removeEmptyState(state)
+                end
+                for _ = 1, message.ReadUInt16() do
+                    applyLegacyNetworkState(message.ReadUInt16(), message.ReadString(), true)
+                end
+            end
+        end)
     end
 end
 
@@ -813,7 +1141,7 @@ local function resetTalentMarkers(character)
 end
 
 local function addEquippedItems(character)
-    if not character or character.Removed or character.IsDead or not character.Inventory then return end
+    if not canAdjustCharacter(character) or character.Removed or character.IsDead or not character.Inventory then return end
     for _, slot in ipairs(WEARABLE_SLOTS) do
         addMain(character, character.Inventory:GetItemInLimbSlot(slot))
     end
@@ -822,9 +1150,27 @@ local function addEquippedItems(character)
     end
 end
 
+local function syncCharacterTeam(character)
+    if not character or character.Removed or character.IsDead then return end
+    syncNativeEquipmentCompensation(character)
+    if canAdjustCharacter(character) then
+        addEquippedItems(character)
+        return
+    end
+
+    local state = charStates[character]
+    if state then
+        clearState(state)
+        removeEmptyState(state)
+    end
+end
+
 local function discardCharacterState(character)
+    nativeEquipmentCompensations[character] = nil
+    setNativeEquipmentItems(character, {})
     local state = charStates[character]
     if not state then return end
+    clearLegacyEffects(state)
     discardStateIndex(state)
     charStates[character] = nil
     fallbackStates[state] = nil
@@ -852,28 +1198,41 @@ local function reconcileCharacterInventory(inventory)
     addEquippedItems(character)
     state = charStates[character]
     if state then removeEmptyState(state) end
+    syncNativeEquipmentCompensation(character)
 end
 
-local function clearMovedEquipment(_, ptable)
+local function clearMovedEquipment(inventory, ptable)
+    local item = ptable and ptable["item"]
+    local nativeOwner = item and nativeEquipmentOwners[item]
+    local tracked = item and trackedItems[item]
+    if tracked and (tracked.kind == "main" or tracked.kind == "weapon") then
+        local state = tracked.state
+        if tracked.kind == "main" then
+            if not isStillEquipped(state.character, item) then removeMain(state, item) end
+        elseif not isStillHeld(state.character, item) then
+            removeWeapon(state, item)
+        end
+        removeEmptyState(state)
+    end
+    if nativeOwner then queueNativeEquipmentCompensation(nativeOwner) end
+    local owner = inventory and inventory.Owner
+    if owner and LuaUserData.IsTargetType(owner, "Barotrauma.Character") and owner ~= nativeOwner then
+        queueNativeEquipmentCompensation(owner)
+    end
+end
+
+local function clearRemovedEquipment(_, ptable)
     local item = ptable and ptable["item"]
     local tracked = item and trackedItems[item]
-    if not tracked or (tracked.kind ~= "main" and tracked.kind ~= "weapon") then return end
-
-    local state = tracked.state
-    if tracked.kind == "main" then
-        if isStillEquipped(state.character, item) then return end
-        removeMain(state, item)
-    else
-        if isStillHeld(state.character, item) then return end
-        removeWeapon(state, item)
-    end
-    removeEmptyState(state)
+    if not nativeEquipmentOwners[item]
+        and not (tracked and (tracked.kind == "main" or tracked.kind == "weapon")) then return end
+    clearMovedEquipment(nil, ptable)
 end
 
 local function scanCharacter(character)
     if not character or character.Removed or character.IsDead then return end
     resetTalentMarkers(character)
-    addEquippedItems(character)
+    syncCharacterTeam(character)
 end
 
 local function scanAllCharacters()
@@ -896,10 +1255,17 @@ local function clearAllStates()
     for _, state in pairs(charStates) do
         if state.character and not state.character.Removed then clearState(state) end
     end
+    for character in pairs(nativeEquipmentCompensations) do
+        clearNativeEquipmentCompensation(character)
+    end
     charStates = {}
     trackedItems = {}
     fallbackStates = {}
     dynamicStates = {}
+    nativeEquipmentCompensations = {}
+    nativeEquipmentItems = {}
+    nativeEquipmentOwners = setmetatable({}, { __mode = "k" })
+    pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
 end
 
 Hook.Patch(
@@ -912,6 +1278,7 @@ Hook.Patch(
         if isStillHeld(character, item) then warnMissingVce(character, item) end
         addMain(character, item)
         addWeapon(character, item)
+        queueNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -929,6 +1296,7 @@ Hook.Patch(
             removeWeapon(state, item)
             removeEmptyState(state)
         end
+        queueNativeEquipmentCompensation(character)
     end,
     Hook.HookMethodType.After
 )
@@ -968,6 +1336,38 @@ Hook.Patch(
     Hook.HookMethodType.After
 )
 
+Hook.Patch(
+    "AdjustEquipmentStatvalue.InventoryRemoveItem",
+    "Barotrauma.Inventory",
+    "RemoveItem",
+    { "Barotrauma.Item" },
+    clearRemovedEquipment,
+    Hook.HookMethodType.After
+)
+
+Hook.Add("character.applyAffliction", "AdjustEquipmentStatvalue.LegacyAffliction", function(
+    characterHealth,
+    _,
+    newAffliction
+)
+    if not characterHealth or not newAffliction or (tonumber(newAffliction.Strength) or 0) <= 0 then return end
+    if CLIENT and not SERVER and Game and Game.IsMultiplayer then return end
+
+    local prefab = newAffliction.Prefab
+    local afflictionId = tostring(prefab and prefab.Identifier or newAffliction.Identifier)
+    if not LEGACY_AFFLICTION_CONFIG[afflictionId] then return end
+    armLegacyAffliction(characterHealth.Character, afflictionId)
+end)
+
+Hook.Patch(
+    "AdjustEquipmentStatvalue.TeamChanged",
+    "Barotrauma.Character",
+    "set_TeamID",
+    { "Barotrauma.CharacterTeamType" },
+    syncCharacterTeam,
+    Hook.HookMethodType.After
+)
+
 if SERVER then
     Hook.Patch(
         "AdjustEquipmentStatvalue.InventoryServerEventRead",
@@ -999,29 +1399,32 @@ Hook.Patch(
 )
 
 Hook.Add("item.removed", "AdjustEquipmentStatvalue.ItemRemoved", function(item)
+    local nativeOwner = nativeEquipmentOwners[item]
     local tracked = trackedItems[item]
-    if not tracked then return end
-
-    local state = tracked.state
-    if tracked.kind == "main" then
-        removeMain(state, item)
-        removeEmptyState(state)
-    elseif tracked.kind == "weapon" then
-        removeWeapon(state, item)
-        removeEmptyState(state)
-    else
-        local source = tracked.source
-        local sub = source and source.subs[item]
-        if sub then
-            removeConfigEffects(state, sub.effects)
-            source.subs[item] = nil
-            untrackItem(item, state, source)
-            refreshStats(state)
+    if tracked then
+        local state = tracked.state
+        if tracked.kind == "main" then
+            removeMain(state, item)
+            removeEmptyState(state)
+        elseif tracked.kind == "weapon" then
+            removeWeapon(state, item)
+            removeEmptyState(state)
+        else
+            local source = tracked.source
+            local sub = source and source.subs[item]
+            if sub then
+                removeConfigEffects(state, sub.effects)
+                source.subs[item] = nil
+                untrackItem(item, state, source)
+                refreshStats(state)
+            end
         end
     end
+    if nativeOwner then queueNativeEquipmentCompensation(nativeOwner) end
 end)
 
 Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character)
+    clearNativeEquipmentCompensation(character)
     local state = charStates[character]
     if not state then return end
     clearState(state)
@@ -1029,16 +1432,24 @@ Hook.Add("character.death", "AdjustEquipmentStatvalue.Death", function(character
     updateFallbackState(state)
 end)
 
-Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", resetTalentMarkers)
+Hook.Add("character.created", "AdjustEquipmentStatvalue.CharacterCreated", function(character)
+    resetTalentMarkers(character)
+    Timer.Wait(function()
+        if character and not character.Removed and not character.IsDead then scanCharacter(character) end
+    end, 1)
+    requestLegacySnapshot()
+end)
 
 Hook.Add("loaded", "AdjustEquipmentStatvalue.Loaded", function()
     validateConfig()
     scanAllCharacters()
+    requestLegacySnapshot()
 end)
 
 Hook.Add("roundStart", "AdjustEquipmentStatvalue.RoundStart", function()
     clearAllStates()
     scanAllCharacters()
+    requestLegacySnapshot()
 end)
 
 Hook.Add("roundEnd", "AdjustEquipmentStatvalue.RoundEnd", clearAllStates)
@@ -1048,6 +1459,11 @@ local lastDynamicTime = lastFallbackTime
 
 Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
     local now = Timer.GetTime()
+    if next(pendingNativeEquipmentSync) then
+        local pending = pendingNativeEquipmentSync
+        pendingNativeEquipmentSync = setmetatable({}, { __mode = "k" })
+        for character in pairs(pending) do syncNativeEquipmentCompensation(character) end
+    end
     local checkDynamic = now - lastDynamicTime >= DYNAMIC_SWEEP_INTERVAL
     local checkFallback = now - lastFallbackTime >= fallbackInterval
     if not checkDynamic and not checkFallback then return end

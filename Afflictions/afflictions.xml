@@ -71,12 +71,12 @@
     </Affliction>
 
     <Affliction identifier="deep_lie_down" description="" isbuff="true" type="deep_lie_down_resistance" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue,explosiondamage" minresistance="0.9" maxresistance="0.9" strengthchange="-2">
+      <Effect minstrength="0" maxstrength="1" resistancefor="Shrapnel_residue,explosiondamage" minresistance="0.9" maxresistance="0.9" strengthchange="-1">
       </Effect>
     </Affliction>
 
     <Affliction identifier="deep_lie_down_stun" description="" isbuff="true" type="deep_lie_down_resistance" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
-      <Effect minstrength="0" maxstrength="1" resistancefor="stun,blind,blind_hard" minresistance="2.9" maxresistance="2.9" strengthchange="-2">
+      <Effect minstrength="0" maxstrength="1" resistancefor="stun,blind,blind_hard" minresistance="2.9" maxresistance="2.9" strengthchange="-1">
       </Effect>
     </Affliction>
 
@@ -921,6 +921,78 @@
 
     <Affliction identifier="deep_enemy_attacked_result" description="" isbuff="true" type="deep_enemy_attacked_result" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="40" showinhealthscannerthreshold="20" maxstrength="1">
       <Effect minstrength="0" maxstrength="1" strengthchange="-1">
+      </Effect>
+    </Affliction>
+
+
+    <!-- Legacy weapon markers. They intentionally carry no gameplay StatValue;
+         Lua consumes the marker and applies CONFIG.legacyAfflictions. -->
+    <Affliction identifier="deep_Semi" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_Burst" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_shotgun_damgage_balance" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_rifle" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_smg" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_pistol" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_sniper" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_shotgun" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_machinegun" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_gl" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_machinegun_crouch" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_machinegunner_light_detect" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_sniper_aim_heavy" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_compensator" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_muffler" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="extended_barrel" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="2x_sight" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="8x_sight" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deepgun_inwater_detect" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <Affliction identifier="deep_VCE_none" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" />
+    </Affliction>
+    <!-- Detection-only interlock retained so VCE presence suppresses the legacy missing marker. -->
+    <Affliction identifier="deep_VCE_yes" description="" isbuff="true" type="deep_legacy_marker" limbspecific="false" indicatorlimb="Head" showiconthreshold="1000" showicontoothersthreshold="1000" showinhealthscannerthreshold="1000" maxstrength="1">
+      <Effect minstrength="0" maxstrength="1" strengthchange="-1" resistancefor="deep_VCE_none" minresistance="1" maxresistance="1">
+        <StatusEffect target="Character" interval="0.9">
+          <ReduceAffliction identifier="deep_VCE_none" strength="100" />
+        </StatusEffect>
       </Effect>
     </Affliction>
 

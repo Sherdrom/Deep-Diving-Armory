@@ -397,25 +397,12 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,15">
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
       <StatusEffect type="OnActive" interval="0.9" targettype="Contained,Character" condition="50" comparison="and" setvalue="true">
         <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="6" Voltage="6" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于3时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 3" />
-      </StatusEffect>
-      <!-- 电压小于3时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 3" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" spread="1" MaxChargeTime="0.3" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="80,11" spread="1" reload="0.1" MaxChargeTime="0.7" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
@@ -1299,21 +1286,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="7" Voltage="7" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 3.5" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 3.5" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1353,21 +1327,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="8" Voltage="8" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 4" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 4" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1407,21 +1368,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1461,21 +1409,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="10" Voltage="10" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 5" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 5" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1515,21 +1450,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="4" Voltage="4" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1569,21 +1491,8 @@
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
       </StatusEffect>
-      <!-- 使用光源组件作为自变量-->
-      <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="1" IsOn="false" allowingameediting="false"></LightComponent>
-      <!-- 位于物品栏时，周期性给电压 -->
-      <StatusEffect type="OnContained" target="This" interval="6" Voltage="6" setvalue="true">
-      </StatusEffect>
-      <!-- 电压大于等于4时，优先投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="800" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="gte 2" />
-      </StatusEffect>
-      <!-- 电压小于4时，不投出手雷 -->
-      <StatusEffect type="OnContained" target="This" combatPriority="10" setvalue="true" disableDeltaTime="true" comparison="and">
-        <Conditional Voltage="lt 2" />
-      </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.4" spread="20" combatPriority="800" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.5" spread="20" combatPriority="800" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />
@@ -1624,7 +1533,7 @@
         <dropitem />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.6" holdtrigger="true" spread="20" combatPriority="2000" drawhudwhenequipped="true">
+    <RangedWeapon barrelpos="80,11" reload="0.1" MaxChargeTime="0.7" holdtrigger="true" spread="20" combatPriority="2000" drawhudwhenequipped="true">
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <ParticleEmitter particle="grenadelever" emitinterval="10" particleamount="1" anglemin="120" anglemax="210" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
       <Sound file="%ModDir%/weapon/explosive/sound/lahuan.ogg" type="OnUse" range="1000" forcePlaySounds="true" />

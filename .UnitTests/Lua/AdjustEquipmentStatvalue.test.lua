@@ -1,5 +1,6 @@
 local events, patches = {}, {}
 local now = 0
+local timerQueue = {}
 local warningMessages = {}
 local warningBox
 
@@ -16,7 +17,41 @@ GUI = {
 
 Timer = {
     GetTime = function() return now end,
+    Wait = function(callback, delay)
+        assert(type(callback) == "function")
+        timerQueue[#timerQueue + 1] = {
+            callback = callback,
+            deadline = now + (delay or 0) / 1000,
+        }
+    end,
 }
+
+local function runDueTimers()
+    local due = {}
+    for index = #timerQueue, 1, -1 do
+        if timerQueue[index].deadline <= now then
+            due[#due + 1] = table.remove(timerQueue, index)
+        end
+    end
+    for index = #due, 1, -1 do due[index].callback() end
+end
+
+local networkMessages, networkReceivers = {}, {}
+Networking = {
+    Start = function(identifier)
+        local message = { identifier = identifier, values = {} }
+        function message.WriteByte(value) message.values[#message.values + 1] = value end
+        function message.WriteUInt16(value) message.values[#message.values + 1] = value end
+        function message.WriteString(value) message.values[#message.values + 1] = value end
+        function message.WriteBoolean(value) message.values[#message.values + 1] = value end
+        return message
+    end,
+    Send = function(message, connection)
+        networkMessages[#networkMessages + 1] = { message = message, connection = connection }
+    end,
+    Receive = function(identifier, callback) networkReceivers[identifier] = callback end,
+}
+Game = { IsMultiplayer = true }
 
 InvSlotType = {
     Head = "Head",
@@ -29,7 +64,18 @@ InvSlotType = {
     RightHand = "RightHand",
 }
 LimbType = { Head = "Head" }
-StatTypes = { None = "None", MovementSpeed = "MovementSpeed" }
+CharacterTeamType = { None = 0, Team1 = 1, Team2 = 2 }
+StatTypes = {
+    None = "None",
+    MovementSpeed = "MovementSpeed",
+    RangedAttackSpeed = "RangedAttackSpeed",
+    RangedSpreadReduction = "RangedSpreadReduction",
+    ElectricalSkillBonus = "ElectricalSkillBonus",
+    HelmSkillBonus = "HelmSkillBonus",
+    MechanicalSkillBonus = "MechanicalSkillBonus",
+    MedicalSkillBonus = "MedicalSkillBonus",
+    WeaponsSkillBonus = "WeaponsSkillBonus",
+}
 AbilityFlags = { SharedFlag = "SharedFlag", DynamicFlag = "DynamicFlag" }
 Identifier = function(value) return value end
 
@@ -61,7 +107,31 @@ local permanentMarkerPrefab = { id = "permanent_marker", Duration = 0 }
 function permanentMarkerPrefab:Instantiate(strength)
     return { id = self.id, Strength = strength, Duration = self.Duration }
 end
-AfflictionPrefab = { Prefabs = { marker = markerPrefab, permanent_marker = permanentMarkerPrefab } }
+local function makeLegacyPrefab(identifier)
+    local prefab = { id = identifier, Identifier = identifier, Duration = 0 }
+    function prefab:Instantiate(strength)
+        return {
+            id = self.id,
+            Identifier = self.Identifier,
+            Prefab = self,
+            Strength = strength,
+            Duration = self.Duration,
+        }
+    end
+    return prefab
+end
+local legacyMarkerPrefab = makeLegacyPrefab("legacy_marker")
+local legacySemiPrefab = makeLegacyPrefab("deep_Semi")
+local legacyBurstPrefab = makeLegacyPrefab("deep_Burst")
+AfflictionPrefab = {
+    Prefabs = {
+        marker = markerPrefab,
+        permanent_marker = permanentMarkerPrefab,
+        legacy_marker = legacyMarkerPrefab,
+        deep_Semi = legacySemiPrefab,
+        deep_Burst = legacyBurstPrefab,
+    },
+}
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
@@ -129,6 +199,12 @@ _G.AdjustEquipmentConfig = {
         },
     },
     heldWeapons = {
+        none_weapon = {
+            stats = {
+                { statType = "RangedAttackSpeed", value = 0.3 },
+                { statType = "RangedSpreadReduction", value = 0.25 },
+            },
+        },
         integrated = { talentMarkers = { "weapon_marker" } },
         failedweapon = { affliction = { id = "permanent_marker", strength = 1 } },
         dynamicweapon = {
@@ -165,6 +241,24 @@ _G.AdjustEquipmentConfig = {
                     stats = { { statType = "MovementSpeed", value = 5 } },
                 },
             },
+        },
+    },
+    legacyAfflictions = {
+        legacy_marker = {
+            timeout = 2.0,
+            stats = { { statType = "MovementSpeed", value = 13 } },
+        },
+        deep_Semi = {
+            timeout = 2.0,
+            statsKey = "legacy_semi",
+            statGroup = "deep_Semi",
+            stats = { { statType = "MovementSpeed", value = 3 } },
+        },
+        deep_Burst = {
+            timeout = 1.0,
+            statsKey = "legacy_burst",
+            blocksStatGroups = { "deep_Semi" },
+            stats = { { statType = "MovementSpeed", value = 5 } },
         },
     },
 }
@@ -224,6 +318,8 @@ function health:ApplyAffliction(_, affliction)
     else
         self.afflictions[affliction.id] = affliction
     end
+    local callback = events["character.applyAffliction"]
+    if callback then callback(self, nil, affliction) end
 end
 function health:ReduceAfflictionOnAllLimbs(id, amount)
     local affliction = self.afflictions[id]
@@ -231,10 +327,13 @@ function health:ReduceAfflictionOnAllLimbs(id, amount)
 end
 
 local character = {
+    ID = 1,
     Name = "test",
+    TeamID = CharacterTeamType.None,
     Removed = false,
     IsDead = false,
     stats = {},
+    nativeWearableStats = {},
     flags = {},
     addFlagCalls = 0,
     removeFlagCalls = 0,
@@ -248,11 +347,16 @@ local character = {
     pairSemiChecks = 0,
     pairBurstChecks = 0,
     accessoryChecks = 0,
-    Info = { savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 }, changeCalls = 0 },
+    Info = {
+        TeamID = CharacterTeamType.None,
+        savedStats = { talent_marker = 1, weapon_marker = 1, nested_marker = 1 },
+        changeCalls = 0,
+    },
     CharacterHealth = health,
     Inventory = {},
     AnimController = {},
 }
+health.Character = character
 function character.Inventory:GetItemInLimbSlot(slot) return slots[slot] end
 character.Inventory.Owner = character
 function character.AnimController:GetLimb() return {} end
@@ -263,6 +367,29 @@ function character.Info:ChangeSavedStatValue(_, value, id)
 end
 function character:ChangeStat(statType, value)
     self.stats[statType] = (self.stats[statType] or 0) + value
+end
+function character:OnWearablesChanged()
+    self.nativeWearableStats = {}
+    for _, slot in ipairs({ InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag }) do
+        local item = slots[slot]
+        local wearable = item and item.GetComponentString("Wearable")
+        for statType, value in pairs(wearable and wearable.WearableStatValues or {}) do
+            self.nativeWearableStats[statType] = (self.nativeWearableStats[statType] or 0) + value
+        end
+    end
+end
+function character:GetEffectiveStat(statType)
+    local value = (self.stats[statType] or 0) + (self.nativeWearableStats[statType] or 0)
+    local seen = {}
+    for _, slot in ipairs({ InvSlotType.LeftHand, InvSlotType.RightHand }) do
+        local item = slots[slot]
+        if item and not seen[item] then
+            seen[item] = true
+            local holdable = item.GetComponentString("Holdable")
+            value = value + ((holdable and holdable.HoldableStatValues[statType]) or 0)
+        end
+    end
+    return value
 end
 function character:HasAbilityFlag(flag) return self.flags[flag] == true end
 function character:AddAbilityFlag(flag)
@@ -286,6 +413,11 @@ LuaUserData = {
 
 Character = { CharacterList = { character }, Controlled = character }
 
+local noneArmor, noneModule = makeItem("armor"), makeItem("module")
+noneArmor.rootOwner = character
+noneArmor.contents = { noneModule }
+slots[InvSlotType.OuterClothes] = noneArmor
+
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 events.loaded()
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
@@ -293,9 +425,38 @@ assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was no
 assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
 local markerChangeBaseline = character.Info.changeCalls
 
+local function approximately(actual, expected)
+    return math.abs((actual or 0) - expected) < 0.000001
+end
+
+local function assertNoEquipmentEffects(context)
+    assert(approximately(character.stats.MovementSpeed, 0), context .. " applied stats")
+    assert(approximately(character.stats.RangedAttackSpeed, 0),
+        context .. " applied weapon operation stats")
+    assert(approximately(character.stats.RangedSpreadReduction, 0),
+        context .. " applied weapon spread stats")
+    assert(approximately(character.stats.WeaponsSkillBonus, 0),
+        context .. " applied weapon skill stats")
+    assert(not character.flags.SharedFlag, context .. " applied flags")
+    assert(character.Info.savedStats.talent_marker == 0, context .. " applied talent markers")
+    assert(not character.resistances["burn|dda_adjust_equipment"], context .. " applied resistance")
+    assert(health:GetAfflictionStrengthByIdentifier("marker") == 0, context .. " applied affliction")
+end
+
+assertNoEquipmentEffects("Team.None initial scan")
+assert(noneArmor.inventoryScans == 0, "Team.None initial scan read equipment contents")
+
 local function tick()
     now = now + 0.5
     events.think()
+    runDueTimers()
+end
+local function flushEquipmentSync()
+    events.think()
+end
+local function advanceTime(seconds)
+    now = now + seconds
+    runDueTimers()
 end
 function character:ChangeAbilityResistance(key, multiplier)
     self.addResistanceCalls = self.addResistanceCalls + 1
@@ -321,9 +482,275 @@ local characterRemove = patches["Barotrauma.Character.Remove"]
 local serverInventoryRead = patches["Barotrauma.Inventory.ServerEventRead"]
 local clientApplyReceivedState = patches["Barotrauma.Inventory.ApplyReceivedState"]
 local putItem = patches["Barotrauma.Inventory.PutItem"]
+local removeItem = patches["Barotrauma.Inventory.RemoveItem"]
+local teamChanged = patches["Barotrauma.Character.set_TeamID"]
 local armorContainer = { Item = armor }
-assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem,
+assert(characterRemove and serverInventoryRead and clientApplyReceivedState and putItem and removeItem and teamChanged,
     "authority hooks were not registered")
+
+local function setTeam(team)
+    character.TeamID = team
+    character.Info.TeamID = team
+end
+
+equip(noneArmor, { character = character })
+assertNoEquipmentEffects("Team.None equip")
+assert(noneArmor.inventoryScans == 0, "Team.None equip read equipment contents")
+
+local noneBag, noneWeapon = makeItem("bagweapon"), makeItem("none_weapon")
+noneBag.rootOwner, noneWeapon.rootOwner = character, character
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = noneBag, noneWeapon
+equip(noneBag, { character = character })
+equip(noneWeapon, { character = character })
+assertNoEquipmentEffects("Team.None bag and held weapon equip")
+
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+assert(approximately(character.stats.MovementSpeed, 5.8)
+    and approximately(character.stats.RangedAttackSpeed, 0.3)
+    and approximately(character.stats.RangedSpreadReduction, 0.25)
+    and character.flags.SharedFlag
+    and character.Info.savedStats.talent_marker == 1
+    and character.resistances["burn|dda_adjust_equipment"] == 0.5
+    and health:GetAfflictionStrengthByIdentifier("marker") == 1,
+    "non-None team did not receive armor, bag and weapon effects")
+
+setTeam(CharacterTeamType.None)
+teamChanged(character, { value = character.TeamID })
+assertNoEquipmentEffects("Team.None transition")
+
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = nil, nil
+unequip(noneBag, { character = character })
+unequip(noneWeapon, { character = character })
+
+local nativeBag, nativeHeld = makeItem("native_bag"), makeItem("native_held")
+nativeBag.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+nativeBag.components.Wearable = {
+    WearableStatValues = { [StatTypes.MovementSpeed] = -0.3 },
+    SkillModifiers = { weapons = -20 },
+}
+nativeHeld.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+nativeHeld.components.Holdable = {
+    HoldableStatValues = {
+        [StatTypes.MovementSpeed] = -0.2,
+        [StatTypes.RangedSpreadReduction] = 0.4,
+    },
+}
+nativeBag.rootOwner, nativeHeld.rootOwner = character, character
+slots[InvSlotType.Bag], slots[InvSlotType.LeftHand] = nativeBag, nativeHeld
+character:OnWearablesChanged()
+equip(nativeBag, { character = character })
+equip(nativeHeld, { character = character })
+flushEquipmentSync()
+assert(approximately(character.stats.MovementSpeed, 0.5)
+    and approximately(character.stats.WeaponsSkillBonus, 20)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "Team.None did not compensate native wearable and holdable values")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
+    and approximately(character:GetEffectiveStat(StatTypes.RangedSpreadReduction), 0),
+    "Team.None native equipment was not numerically neutral")
+
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+assert(approximately(character.stats.MovementSpeed, 6)
+    and approximately(character.stats.WeaponsSkillBonus, 0)
+    and approximately(character.stats.RangedSpreadReduction, 0),
+    "non-None transition retained native equipment compensation")
+setTeam(CharacterTeamType.None)
+teamChanged(character, { value = character.TeamID })
+assert(approximately(character.stats.MovementSpeed, 0.5)
+    and approximately(character.stats.WeaponsSkillBonus, 20)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "Team.None transition did not restore native equipment compensation")
+
+slots[InvSlotType.Bag] = nil
+putItem({ Owner = makeItem("container") }, { item = nativeBag })
+flushEquipmentSync()
+assert(approximately(character.stats.MovementSpeed, 0.2)
+    and approximately(character.stats.WeaponsSkillBonus, 0)
+    and approximately(character.stats.RangedSpreadReduction, -0.4),
+    "moving a native bag directly to a container left its compensation behind")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "moving a Team.None native bag left its wearable stat cached")
+unequip(nativeBag, { character = character })
+flushEquipmentSync()
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "Team.None native bag Unequip changed effective movement")
+slots[InvSlotType.LeftHand] = nil
+putItem({ Owner = makeItem("container") }, { item = nativeHeld })
+unequip(nativeHeld, { character = character })
+flushEquipmentSync()
+assertNoEquipmentEffects("Team.None native equipment removal")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0)
+    and approximately(character:GetEffectiveStat(StatTypes.RangedSpreadReduction), 0),
+    "Team.None native equipment removal changed effective stats")
+
+slots[InvSlotType.Bag] = nativeBag
+character:OnWearablesChanged()
+equip(nativeBag, { character = character })
+flushEquipmentSync()
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "Team.None native bag drop baseline was not neutral")
+unequip(nativeBag, { character = character })
+flushEquipmentSync()
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "early Item.Unequip changed Team.None native bag movement")
+slots[InvSlotType.Bag] = nil
+removeItem(character.Inventory, { item = nativeBag })
+flushEquipmentSync()
+assertNoEquipmentEffects("Team.None native equipment RemoveItem")
+assert(approximately(character:GetEffectiveStat(StatTypes.MovementSpeed), 0),
+    "dropping Team.None native equipment left a negative stat")
+
+slots[InvSlotType.OuterClothes] = nil
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+
+slots[InvSlotType.Bag] = noneBag
+equip(noneBag, { character = character })
+assert(character.stats.MovementSpeed == -0.2, "Team1 bag baseline failed")
+events["character.created"](character)
+character.Info.TeamID = CharacterTeamType.None
+advanceTime(0.01)
+assertNoEquipmentEffects("Info.TeamID-only None transition")
+slots[InvSlotType.Bag] = nil
+unequip(noneBag, { character = character })
+setTeam(CharacterTeamType.Team1)
+teamChanged(character, { value = character.TeamID })
+character.addFlagCalls, character.removeFlagCalls = 0, 0
+character.addResistanceCalls, character.removeResistanceCalls = 0, 0
+markerChangeBaseline = character.Info.changeCalls
+
+local legacyNetworkId = "DDA.AdjustEquipment.LegacyAffliction"
+local legacyApply = events["character.applyAffliction"]
+assert(legacyApply and networkReceivers[legacyNetworkId], "legacy bridge hooks were not registered")
+local legacyNetworkBaseline = #networkMessages
+local legacyTimerBaseline = #timerQueue
+local legacyStatBaseline = character.stats.MovementSpeed or 0
+local legacyPrefab = AfflictionPrefab.Prefabs.legacy_marker
+
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 13,
+    "legacy Affliction did not apply its configured effect")
+assert(#timerQueue == legacyTimerBaseline + 1, "legacy Affliction did not arm one expiry timer")
+assert(#networkMessages == legacyNetworkBaseline + 1
+    and networkMessages[#networkMessages].message.values[1] == 1
+    and networkMessages[#networkMessages].message.values[2] == character.ID
+    and networkMessages[#networkMessages].message.values[3] == "legacy_marker"
+    and networkMessages[#networkMessages].message.values[4] == true,
+    "legacy activation did not send one active transition")
+
+advanceTime(1.0)
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 13,
+    "legacy duplicate Affliction reapplied or stacked its effect")
+assert(#timerQueue == legacyTimerBaseline + 1
+    and #networkMessages == legacyNetworkBaseline + 1,
+    "legacy duplicate Affliction armed or notified twice")
+advanceTime(1.1)
+assert(character.stats.MovementSpeed == legacyStatBaseline + 13
+    and #timerQueue == legacyTimerBaseline + 1,
+    "legacy duplicate Affliction did not extend its deadline")
+advanceTime(1.0)
+assert(character.stats.MovementSpeed == legacyStatBaseline
+    and #timerQueue == legacyTimerBaseline
+    and #networkMessages == legacyNetworkBaseline + 2
+    and networkMessages[#networkMessages].message.values[1] == 1
+    and networkMessages[#networkMessages].message.values[4] == false,
+    "legacy Affliction did not expire and send one inactive transition")
+
+health:ApplyAffliction(nil, { id = "unknown_legacy", Identifier = "unknown_legacy", Strength = 1 })
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(0))
+assert(character.stats.MovementSpeed == legacyStatBaseline
+    and #timerQueue == legacyTimerBaseline
+    and #networkMessages == legacyNetworkBaseline + 2,
+    "zero-strength or unknown legacy Affliction activated")
+
+setTeam(CharacterTeamType.None)
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline
+    and #timerQueue == legacyTimerBaseline
+    and #networkMessages == legacyNetworkBaseline + 2,
+    "Team.None legacy Affliction activated")
+setTeam(CharacterTeamType.Team1)
+
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+assert(#timerQueue == legacyTimerBaseline + 1
+    and #networkMessages == legacyNetworkBaseline + 3,
+    "legacy Affliction did not reactivate after expiry")
+character.IsDead = true
+events["character.death"](character)
+assert(character.stats.MovementSpeed == legacyStatBaseline
+    and #networkMessages == legacyNetworkBaseline + 4,
+    "death did not clear the legacy effect")
+advanceTime(2.1)
+assert(#timerQueue == legacyTimerBaseline
+    and character.stats.MovementSpeed == legacyStatBaseline
+    and #networkMessages == legacyNetworkBaseline + 4,
+    "old legacy expiry timer was not a no-op after death")
+
+character.IsDead = false
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+assert(#timerQueue == legacyTimerBaseline + 1
+    and #networkMessages == legacyNetworkBaseline + 5,
+    "legacy Affliction did not reactivate after death")
+character.Removed = true
+characterRemove(character, {})
+assert(character.stats.MovementSpeed == legacyStatBaseline
+    and #networkMessages == legacyNetworkBaseline + 6,
+    "Remove did not clear the legacy effect")
+advanceTime(2.1)
+assert(#timerQueue == legacyTimerBaseline
+    and character.stats.MovementSpeed == legacyStatBaseline
+    and #networkMessages == legacyNetworkBaseline + 6,
+    "old legacy expiry timer was not a no-op after Remove")
+character.Removed = false
+
+health:ApplyAffliction(nil, legacyPrefab:Instantiate(1))
+local networkBeforeSnapshot = #networkMessages
+local snapshotConnection = {}
+local serverLegacyReceive = networkReceivers[legacyNetworkId]
+serverLegacyReceive({ ReadByte = function() return 0 end }, { Connection = snapshotConnection })
+assert(#networkMessages == networkBeforeSnapshot + 1
+    and networkMessages[#networkMessages].connection == snapshotConnection
+    and networkMessages[#networkMessages].message.values[1] == 2
+    and networkMessages[#networkMessages].message.values[2] == 1
+    and networkMessages[#networkMessages].message.values[3] == character.ID
+    and networkMessages[#networkMessages].message.values[4] == "legacy_marker",
+    "server legacy request did not return a snapshot")
+serverLegacyReceive({ ReadByte = function() return 0 end }, { Connection = snapshotConnection })
+assert(#networkMessages == networkBeforeSnapshot + 1,
+    "server legacy snapshot request was not rate-limited")
+serverLegacyReceive({ ReadByte = function() return 1 end }, { Connection = snapshotConnection })
+assert(#networkMessages == networkBeforeSnapshot + 1,
+    "server legacy receiver accepted a non-request operation")
+serverLegacyReceive({ LengthBits = 0, BitPosition = 0 }, { Connection = snapshotConnection })
+assert(#networkMessages == networkBeforeSnapshot + 1,
+    "server legacy receiver accepted an empty request")
+character.IsDead = true
+events["character.death"](character)
+advanceTime(2.1)
+character.IsDead = false
+character.Removed = false
+revive(character, { removeAfflictions = true, createNetworkEvent = false })
+
+local semiPrefab = AfflictionPrefab.Prefabs.deep_Semi
+local burstPrefab = AfflictionPrefab.Prefabs.deep_Burst
+health:ApplyAffliction(nil, semiPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 3,
+    "legacy Semi did not apply its stat-group effect")
+advanceTime(0.5)
+health:ApplyAffliction(nil, burstPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 5,
+    "legacy Burst did not block the active legacy Semi group")
+health:ApplyAffliction(nil, semiPrefab:Instantiate(1))
+advanceTime(1.1)
+assert(character.stats.MovementSpeed == legacyStatBaseline + 3,
+    "legacy Semi did not restore when legacy Burst expired")
+advanceTime(0.9)
+assert(character.stats.MovementSpeed == legacyStatBaseline,
+    "legacy Semi remained active after its refreshed deadline")
+now = 0
 
 local vanillaGun = makeItem("vanilla_gun")
 vanillaGun.tags.gun = true
@@ -713,11 +1140,54 @@ local function hasTalentMarker(cfg, marker)
     end
     return false
 end
+local function sameStats(left, right)
+    if #(left.stats or {}) ~= #(right.stats or {}) then return false end
+    for index, stat in ipairs(left.stats or {}) do
+        local expected = right.stats[index]
+        if not expected or stat.statType ~= expected.statType or stat.value ~= expected.value then return false end
+    end
+    return true
+end
 assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 83
     and countEntries(production.weaponAccessories) == 72
-        and countEntries(production.heldWeapons) == 117,
+        and countEntries(production.heldWeapons) == 117
+        and countEntries(production.legacyAfflictions) == 18,
     "split production config lost or duplicated items")
+assert(production.legacyAfflictions.deep_Semi
+    and production.legacyAfflictions.deep_Burst
+    and production.legacyAfflictions.deep_upgrade_tool_steel_tit_confirm_rifle
+    and production.legacyAfflictions.deep_machinegun_crouch
+    and production.legacyAfflictions.deep_sniper_aim_heavy
+    and production.legacyAfflictions.deep_muffler
+    and production.legacyAfflictions["8x_sight"]
+    and production.legacyAfflictions.deepgun_inwater_detect == nil
+    and production.legacyAfflictions.deep_VCE_none == nil
+    and production.legacyAfflictions.deep_VCE_yes == nil,
+    "legacy Affliction mappings or excluded markers changed")
+local legacy = production.legacyAfflictions
+assert(legacy.deep_Semi.timeout == 1.25
+    and legacy.deep_Semi.stats[1].value == 0.3
+    and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
+    and legacy.deep_upgrade_tool_steel_tit_confirm_shotgun.stats[2].value == 0.1
+    and legacy.deep_machinegun_crouch.when
+    and #legacy.deep_sniper_aim_heavy.effects == 3
+    and hasTalentMarker(legacy.deep_shotgun_damgage_balance, "deep_shotgun_damgage_balance")
+    and hasTalentMarker(legacy.deep_machinegunner_light_detect, "deep_machinegunner_light_detect")
+    and hasTalentMarker(legacy.deep_muffler, "deep_muffler"),
+    "legacy Affliction effect profiles changed")
+assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
+    and sameStats(legacy.deep_Burst, production.heldWeapons.deep_m4.effects[2])
+    and sameStats(legacy.deep_upgrade_tool_steel_tit_confirm_rifle,
+        production.heldWeapons.deep_m4.effects[3])
+    and sameStats(legacy.deep_machinegun_crouch, production.heldWeapons.deep_m249.effects[1])
+    and sameStats(legacy.deep_sniper_aim_heavy.effects[1], production.heldWeapons.deep_m82a1.effects[1])
+    and sameStats(legacy.deep_compensator, production.weaponAccessories.deep_compensator.effects[1])
+    and sameStats(legacy.deep_muffler, production.weaponAccessories.deep_muffler.effects[1])
+    and sameStats(legacy.extended_barrel, production.weaponAccessories.extended_barrel.effects[1])
+    and sameStats(legacy["2x_sight"], production.weaponAccessories["2x_sight"])
+    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"]),
+    "legacy Affliction stats drifted from current equipment profiles")
 assert(production.mainItems.deep_hpc
     and production.dynamicInterval == 0.5
     and production.mainItems.deep_meteorite.stats[1].value == -0.2

@@ -1,3 +1,5 @@
+if not SERVER and Game.IsMultiplayer then return end
+
 local AH = AfflictionHelper
 
 local LimbType_Head = 11

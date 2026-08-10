@@ -1,35 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Barotrauma;
 using Barotrauma.Items.Components;
 using HarmonyLib;
+using Microsoft.Xna.Framework;
+using WeaponSyncFix;
 
 namespace DamageRollbackFix
 {
-    /// <summary>
-    /// 线程静态标志：当前是否处于 Projectile.HandleProjectileCollision 调用链中。
-    /// 用于让 Attack.DoDamage/DoDamageToLimb 识别调用来源，仅跳过弹道预测伤害。
-    /// </summary>
     internal static class ProjectileCollisionContext
     {
         [ThreadStatic]
         internal static bool IsActive;
     }
 
-    /// <summary>
-    /// 本地命中预测标志：区分本地调用 ApplyStatusEffects 和网络事件回调。
-    /// 仅在 Postfix 中本地预测命中特效时为 true，防止去重补丁误跳过本地调用。
-    /// </summary>
     internal static class ImpactPredictionContext
     {
         [ThreadStatic]
         internal static bool IsLocalPrediction;
+
+        [ThreadStatic]
+        internal static bool IsQueuedNetworkReplay;
     }
 
-    /// <summary>
-    /// 每个弹道最近一次本地命中预测时间戳，用于网络事件去重。
-    /// ConditionalWeakTable 保证弹道被回收时条目自动清理。
-    /// </summary>
     internal static class ImpactTimeTracker
     {
         private static readonly ConditionalWeakTable<Projectile, StrongBox<double>> LastImpactTimes = new();
@@ -47,12 +41,6 @@ namespace DamageRollbackFix
         }
     }
 
-    /// <summary>
-    /// 补丁 1：Projectile.HandleProjectileCollision Prefix/Postfix
-    /// - Prefix：设置弹道碰撞上下文标志（供伤害跳过补丁使用）
-    /// - Postfix：客户端本地预测命中特效（OnImpact），消除服务器同步延迟；
-    ///   记录时间戳供网络事件去重。
-    /// </summary>
     [HarmonyPatch(typeof(Projectile), "HandleProjectileCollision")]
     internal static class HandleProjectileCollisionPatch
     {
@@ -63,52 +51,145 @@ namespace DamageRollbackFix
         }
 
         [HarmonyPostfix]
-        internal static void Postfix(Projectile __instance)
+        internal static void Postfix(Projectile __instance, bool __result)
         {
             ProjectileCollisionContext.IsActive = false;
+            if (!__result || NetworkEventContext.IsProjectileLaunchReplay) { return; }
+            if (GameMain.NetworkMember is not { IsClient: true }) { return; }
 
-            // 客户端本地预测命中视觉特效（极低延迟反馈）
-            // 伤害仍由服务器权威同步，此处仅预测 OnImpact 粒子/贴花等视觉特效
-            if (GameMain.NetworkMember is { IsClient: true })
+            ImpactTimeTracker.RecordImpact(__instance);
+            bool previousPrediction = ImpactPredictionContext.IsLocalPrediction;
+            ImpactPredictionContext.IsLocalPrediction = true;
+            try
             {
-                ImpactTimeTracker.RecordImpact(__instance);
-                ImpactPredictionContext.IsLocalPrediction = true;
                 __instance.ApplyStatusEffects(ActionType.OnImpact, 1.0f, user: __instance.User);
-                ImpactPredictionContext.IsLocalPrediction = false;
+            }
+            finally
+            {
+                ImpactPredictionContext.IsLocalPrediction = previousPrediction;
             }
         }
     }
 
-    /// <summary>
-    /// 补丁 2：ItemComponent.ApplyStatusEffects Prefix
-    /// 客户端网络事件回调时，若弹道 OnImpact 特效已由本地预测生成，则跳过以避免双重特效。
-    /// 仅影响 Projectile + OnImpact，不影响 RangedWeapon/OnUse（由 WeaponSyncFix 处理）。
-    /// </summary>
     [HarmonyPatch(typeof(ItemComponent), nameof(ItemComponent.ApplyStatusEffects))]
     internal static class ApplyStatusEffectsDedupPatch
     {
-        private const double DedupWindow = 1.0;
+        internal const double DedupWindow = 1.0;
 
         [HarmonyPrefix]
-        internal static bool Prefix(ItemComponent __instance, ActionType type)
+        internal static bool Prefix(
+            ItemComponent __instance,
+            ActionType type,
+            float deltaTime,
+            Character character,
+            Limb targetLimb,
+            Entity useTarget,
+            Character user,
+            Vector2? worldPosition,
+            float attackMultiplier)
         {
-            // 本地预测调用，放行
-            if (ImpactPredictionContext.IsLocalPrediction) { return true; }
-            // 单机/服务器无网络事件去重需求
+            if (ImpactPredictionContext.IsLocalPrediction || ImpactPredictionContext.IsQueuedNetworkReplay)
+            {
+                return true;
+            }
             if (GameMain.NetworkMember is not { IsClient: true }) { return true; }
-            // 仅对弹道 OnImpact 去重
-            if (__instance is not Projectile proj) { return true; }
-            if (type != ActionType.OnImpact) { return true; }
-            // 近期已本地预测：网络事件为重复，跳过
-            return ImpactTimeTracker.TimeSinceLastImpact(proj) >= DedupWindow;
+            if (__instance is not Projectile proj || type != ActionType.OnImpact) { return true; }
+            if (!NetworkEventContext.IsItemEvent) { return true; }
+
+            if (ImpactTimeTracker.TimeSinceLastImpact(proj) < DedupWindow)
+            {
+                return false;
+            }
+
+            if (!proj.Hitscan) { return true; }
+
+            PendingImpactQueue.Enqueue(proj, () => proj.ApplyStatusEffects(
+                type,
+                deltaTime,
+                character,
+                targetLimb,
+                useTarget,
+                user,
+                worldPosition,
+                attackMultiplier));
+            return false;
         }
     }
 
-    /// <summary>
-    /// 补丁 3：Attack.DoDamage Prefix
-    /// 客户端在弹道碰撞上下文中跳过伤害应用，避免预测伤害被服务器权威状态覆盖。
-    /// 单机模式（NetworkMember == null）和服务器侧不跳过，保持原版行为。
-    /// </summary>
+    internal static class PendingImpactQueue
+    {
+        // ponytail: one projectile key plus a short timeout; add shot IDs only if event order proves insufficient.
+        private const double Timeout = 0.1;
+        private static readonly Queue<(Projectile Projectile, Action Apply, double EnqueuedAt)> Queue = new();
+
+        internal static void Enqueue(Projectile projectile, Action apply)
+        {
+            Queue.Enqueue((projectile, apply, Timing.TotalTime));
+        }
+
+        internal static void Resolve(Projectile projectile)
+        {
+            int count = Queue.Count;
+            while (count-- > 0)
+            {
+                var pending = Queue.Dequeue();
+                if (pending.Projectile != projectile)
+                {
+                    Queue.Enqueue(pending);
+                    continue;
+                }
+
+                ApplyIfNeeded(pending);
+            }
+        }
+
+        internal static void FlushExpired()
+        {
+            int count = Queue.Count;
+            double now = Timing.TotalTime;
+            while (count-- > 0)
+            {
+                var pending = Queue.Dequeue();
+                if (now - pending.EnqueuedAt < Timeout)
+                {
+                    Queue.Enqueue(pending);
+                    continue;
+                }
+
+                ApplyIfNeeded(pending);
+            }
+        }
+
+        private static void ApplyIfNeeded((Projectile Projectile, Action Apply, double EnqueuedAt) pending)
+        {
+            if (ImpactTimeTracker.TimeSinceLastImpact(pending.Projectile) < ApplyStatusEffectsDedupPatch.DedupWindow)
+            {
+                return;
+            }
+
+            bool previousReplay = ImpactPredictionContext.IsQueuedNetworkReplay;
+            ImpactPredictionContext.IsQueuedNetworkReplay = true;
+            try
+            {
+                pending.Apply();
+            }
+            finally
+            {
+                ImpactPredictionContext.IsQueuedNetworkReplay = previousReplay;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Character), nameof(Character.UpdateAll))]
+    internal static class CharacterUpdateAllPatch
+    {
+        [HarmonyPostfix]
+        internal static void Postfix()
+        {
+            PendingImpactQueue.FlushExpired();
+        }
+    }
+
     [HarmonyPatch(typeof(Attack), nameof(Attack.DoDamage))]
     internal static class AttackDoDamagePatch
     {
@@ -124,10 +205,6 @@ namespace DamageRollbackFix
         }
     }
 
-    /// <summary>
-    /// 补丁 4：Attack.DoDamageToLimb Prefix
-    /// 同补丁 3，针对肢体伤害（弹道直接命中 Character 的 Limb）。
-    /// </summary>
     [HarmonyPatch(typeof(Attack), nameof(Attack.DoDamageToLimb))]
     internal static class AttackDoDamageToLimbPatch
     {

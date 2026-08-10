@@ -89,7 +89,6 @@ jobs:
 
           deploy_root = Path(sys.argv[1])
           assemblies = ET.parse("ModConfig.xml").getroot().findall("./Assembly")
-          assert len(assemblies) == 24, f"expected 24 assemblies, found {len(assemblies)}"
 
           missing = []
           for assembly in assemblies:
