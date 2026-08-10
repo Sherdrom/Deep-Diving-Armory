@@ -6,7 +6,7 @@ namespace EntitySpawnerBudget;
 public static class BudgetGate
 {
     public const string EnvironmentVariable = "DDA_ENTITYSPAWNER_BUDGET_MS";
-    public const double DefaultBudgetMilliseconds = 2.0;
+    public const double DefaultBudgetMilliseconds = 0.25;
     public const double MinimumBudgetMilliseconds = 0.25;
     public const double MaximumBudgetMilliseconds = 10.0;
 
