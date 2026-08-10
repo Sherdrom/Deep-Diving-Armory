@@ -87,14 +87,14 @@
     </AbilityGroupEffect>-->
 
     <!-- 卧倒（获得90%破片残留抗性） -->
-    <AbilityGroupInterval interval="0.25">
+    <AbilityGroupInterval interval="0.1">
       <Conditions>
         <AbilityConditionRagdolled />
       </Conditions>
       <Abilities>
         <CharacterAbilityApplyStatusEffects>
           <StatusEffects>
-            <StatusEffect type="OnAbility" target="This" multiplyafflictionsbymaxvitality="true">
+            <StatusEffect type="OnAbility" target="This" disabledeltatime="true" multiplyafflictionsbymaxvitality="true">
               <Affliction identifier="deep_lie_down" amount="10.0" />
               <Affliction identifier="deep_lie_down_stun" amount="10.0" />
             </StatusEffect>
