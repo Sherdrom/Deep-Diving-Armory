@@ -6,7 +6,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/HelpFunctions.lua")--Help 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/armorconfigs.lua")--Armor configs
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/deployables.lua")--Deployables
-dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/APSList.lua")--APS List
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/Airburst.lua")--Airburst stuff, work both side
 

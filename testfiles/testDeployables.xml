@@ -29,12 +29,18 @@
       <sprite texture="%ModDir%/testfiles/APS/APS.png" sourcerect="203,994,111,329" canbehiddenbyotherwearables="false" rotation="0" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.4" origin="0.9,0.4" />
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>
+    <ActiveProtectionSystem range="300" maxspeed="30" minspeed="5" probility="0.95" removeonintercept="true" createexplosiononintercept="true">
+      <StatusEffect target="This" type="OnUse">
+        <LuaHook name="DEEP_APS_USE" />
+      </StatusEffect>
+      <Explosion range="10.0" force="5" severlimbsprobability="0.3" debris="true" decal="" interactthroughwalls="false" decalsize="0.5" penetration="1">
+        <Affliction identifier="lacerations" strength="15" />
+        <Affliction identifier="bleeding" strength="20" />
+      </Explosion>
+    </ActiveProtectionSystem>
     <LightComponent lightcolor="0,255,0,100" range="300.0" IsOn="true" castshadows="true" alphablend="true" allowingameediting="false">
       <LightTexture texture="Content/Lights/visioncircle.png" origin="0.5,0.5" />
       <StatusEffect target="This" type="OnBroken" IsOn="false" setvalue="true" />
-      <StatusEffect target="This" type="OnActive">
-        <LuaHook name="Deep_APS" />
-      </StatusEffect>
       <StatusEffect target="This" type="OnContained" IsOn="false" setvalue="true">
         <Conditional condition="gt 0" />
       </StatusEffect>
@@ -46,7 +52,7 @@
         <Conditional pulseAmount="neq 1" />
         <Sound file="%ModDir%/testfiles/APS/APS_Pluse.ogg" range="800" volume="0.5" loop="true" />
       </StatusEffect>
-      <StatusEffect target="This" type="Always">
+      <StatusEffect target="This" type="OnNotContained">
         <Conditional pulseAmount="eq 1" />
         <Sound file="%ModDir%/testfiles/APS/APS_Reload.ogg" range="800" volume="1" loop="true" />
       </StatusEffect>
