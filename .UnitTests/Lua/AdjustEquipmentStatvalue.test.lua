@@ -123,6 +123,7 @@ end
 local legacyMarkerPrefab = makeLegacyPrefab("legacy_marker")
 local legacySemiPrefab = makeLegacyPrefab("deep_Semi")
 local legacyBurstPrefab = makeLegacyPrefab("deep_Burst")
+local migratedLegacyPrefab = makeLegacyPrefab("chip_cqb_1")
 AfflictionPrefab = {
     Prefabs = {
         marker = markerPrefab,
@@ -130,6 +131,7 @@ AfflictionPrefab = {
         legacy_marker = legacyMarkerPrefab,
         deep_Semi = legacySemiPrefab,
         deep_Burst = legacyBurstPrefab,
+        chip_cqb_1 = migratedLegacyPrefab,
     },
 }
 ItemPrefab = { GetItemPrefab = function() return true end }
@@ -259,6 +261,10 @@ _G.AdjustEquipmentConfig = {
             statsKey = "legacy_burst",
             blocksStatGroups = { "deep_Semi" },
             stats = { { statType = "MovementSpeed", value = 5 } },
+        },
+        chip_cqb_1 = {
+            timeout = 1.0,
+            stats = { { statType = "MovementSpeed", value = 7 } },
         },
     },
 }
@@ -768,6 +774,13 @@ assert(character.stats.MovementSpeed == legacyStatBaseline + 3,
 advanceTime(0.9)
 assert(character.stats.MovementSpeed == legacyStatBaseline,
     "legacy Semi remained active after its refreshed deadline")
+
+health:ApplyAffliction(nil, migratedLegacyPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 7,
+    "newly restored legacy identifier did not use the compatibility bridge")
+advanceTime(1.1)
+assert(character.stats.MovementSpeed == legacyStatBaseline,
+    "newly restored legacy identifier did not expire")
 now = 0
 
 local vanillaGun = makeItem("vanilla_gun")
@@ -1184,7 +1197,7 @@ assert(countEntries(production.mainItems) == 68
     and countEntries(production.subItems) == 83
     and countEntries(production.weaponAccessories) == 72
         and countEntries(production.heldWeapons) == 117
-        and countEntries(production.legacyAfflictions) == 18,
+        and countEntries(production.legacyAfflictions) == 122,
     "split production config lost or duplicated items")
 assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_Burst
@@ -1193,9 +1206,27 @@ assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_sniper_aim_heavy
     and production.legacyAfflictions.deep_muffler
     and production.legacyAfflictions["8x_sight"]
+    and production.legacyAfflictions.chip_cqb_1
+    and production.legacyAfflictions.deep_chip_cqb_equipped
+    and production.legacyAfflictions.deep_plate_metal_3_debuff
+    and production.legacyAfflictions.chip_captain_1
+    and production.legacyAfflictions.chip_captain_only_one
+    and production.legacyAfflictions.holographic_sight
     and production.legacyAfflictions.deepgun_inwater_detect == nil
     and production.legacyAfflictions.deep_VCE_none == nil
-    and production.legacyAfflictions.deep_VCE_yes == nil,
+    and production.legacyAfflictions.deep_VCE_yes == nil
+    and production.legacyAfflictions.clownpower == nil
+    and production.legacyAfflictions.psychosis == nil
+    and production.legacyAfflictions.chip_assistant_2 == nil
+    and production.legacyAfflictions.chip_bodyshot_detect == nil
+    and production.legacyAfflictions.chip_heavy_armor == nil
+    and production.legacyAfflictions.chip_strengthening_of_limbs == nil
+    and production.legacyAfflictions.deep_chip_blaster == nil
+    and production.legacyAfflictions.deep_machinegunner_detect == nil
+    and production.legacyAfflictions.deep_muzzle_long_detect == nil
+    and production.legacyAfflictions.deep_muzzle_none_detect == nil
+    and production.legacyAfflictions.deep_muzzle_short_detect == nil
+    and production.legacyAfflictions.deep_pp19_buffalo == nil,
     "legacy Affliction mappings or excluded markers changed")
 local legacy = production.legacyAfflictions
 assert(legacy.deep_Semi.timeout == 1.25
@@ -1203,12 +1234,22 @@ assert(legacy.deep_Semi.timeout == 1.25
     and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
     and legacy.deep_upgrade_tool_steel_tit_confirm_shotgun.stats[2].value == 0.1
     and legacy.deep_machinegun_crouch.when
+    and legacy.deep_pistol_mozambique_hand.when
+    and legacy.deep_knife_detect_1.when
+    and legacy.deep_wuchuan_detection.effects[1].when
     and #legacy.deep_sniper_aim_heavy.effects == 3
+    and legacy.cqr_grips.when == nil
+    and legacy.oblique_grips.when == nil
+    and legacy.flash_hider.when == nil
+    and legacy.deep_compensator.when == nil
+    and legacy.chip_captain_only_one.stats == nil
     and hasTalentMarker(legacy.deep_shotgun_damgage_balance, "deep_shotgun_damgage_balance")
+    and hasTalentMarker(legacy.deepgun_inwater_detect_chip, "deepgun_inwater_detect_chip")
     and hasTalentMarker(legacy.deep_machinegunner_light_detect, "deep_machinegunner_light_detect")
     and hasTalentMarker(legacy.deep_muffler, "deep_muffler"),
     "legacy Affliction effect profiles changed")
 assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
+    and legacy.deep_Semi.stats == production.heldWeapons.deep_AK12.effects[1].stats
     and sameStats(legacy.deep_Burst, production.heldWeapons.deep_m4.effects[2])
     and sameStats(legacy.deep_upgrade_tool_steel_tit_confirm_rifle,
         production.heldWeapons.deep_m4.effects[3])
@@ -1218,7 +1259,12 @@ assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
     and sameStats(legacy.deep_muffler, production.weaponAccessories.deep_muffler.effects[1])
     and sameStats(legacy.extended_barrel, production.weaponAccessories.extended_barrel.effects[1])
     and sameStats(legacy["2x_sight"], production.weaponAccessories["2x_sight"])
-    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"]),
+    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"])
+    and sameStats(legacy.chip_cqb_1, production.subItems.chip_cqb)
+    and sameStats(legacy.deep_chip_cqb_equipped, production.subItems.chip_cqb)
+    and sameStats(legacy.deep_plate_metal_3_debuff, production.subItems.deep_plate_metal_3)
+    and sameStats(legacy.chip_captain_1, production.subItems.chip_captain)
+    and sameStats(legacy.holographic_sight, production.weaponAccessories.holographic_sight),
     "legacy Affliction stats drifted from current equipment profiles")
 assert(production.mainItems.deep_hpc
     and production.dynamicInterval == 0.5
@@ -1248,6 +1294,7 @@ assert(production.mainItems.deep_hpc
     and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
     and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance
     and production.heldWeapons.deep_AK12.effects[1].statsKey == "deep_Semi"
+    and production.heldWeapons.deep_AK12.effects[1].timeout == nil
     and production.heldWeapons.deep_m4.effects[1].statGroup == "deep_Semi"
     and production.heldWeapons.deep_m4.effects[2].when
     and production.heldWeapons.deep_m4.effects[2].blocksStatGroups[1] == "deep_Semi"

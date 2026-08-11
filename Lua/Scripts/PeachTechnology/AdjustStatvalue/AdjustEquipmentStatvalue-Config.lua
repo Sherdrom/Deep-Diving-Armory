@@ -145,6 +145,9 @@ merge(weaponAccessories, loadCategory("WeaponChips.lua"))
 merge(weaponAccessories, loadCategory("WeaponUnderbarrels.lua"))
 merge(weaponAccessories, loadCategory("WeaponMagazines.lua"))
 
+local mainItems = loadCategory("MainItems.lua")
+local heldWeapons = loadCategory("HeldWeapons.lua")
+
 local CONFIG = {
     fallbackInterval = 5.0,
     dynamicInterval = 0.5,
@@ -161,11 +164,12 @@ local CONFIG = {
         InvSlotType.LeftHand,
         InvSlotType.RightHand,
     },
-    mainItems = loadCategory("MainItems.lua"),
+    mainItems = mainItems,
     subItems = subItems,
     weaponAccessories = weaponAccessories,
-    heldWeapons = loadCategory("HeldWeapons.lua"),
-    legacyAfflictions = loadCategory("LegacyAfflictions.lua"),
+    heldWeapons = heldWeapons,
 }
+
+CONFIG.legacyAfflictions = loadCategory("LegacyAfflictions.lua")(CONFIG)
 
 _G.AdjustEquipmentConfig = CONFIG
