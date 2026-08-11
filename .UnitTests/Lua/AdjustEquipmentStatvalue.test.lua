@@ -278,12 +278,30 @@ local function makeItem(identifier)
     function item.HasTag(tag) return item.tags[tag] == true end
     function item.GetComponentString(component) return item.components[component] end
     function item:GetRootInventoryOwner() return self.rootOwner end
-    local inventory = {}
+    local inventory = {
+        slotMaxStackSizes = {},
+        slotContainable = {},
+    }
     function inventory:FindItemByTag(tag)
         item.findByTagCalls = item.findByTagCalls + 1
         for _, contained in ipairs(item.contents) do
             if contained.HasTag(tag) then return contained end
         end
+    end
+    function inventory:FindIndex(target)
+        if target.testSlot ~= nil then return target.testSlot end
+        for index, contained in ipairs(item.contents) do
+            if contained == target then return index - 1 end
+        end
+        return -1
+    end
+    inventory.Container = {}
+    function inventory.Container:GetMaxStackSize(slot)
+        return inventory.slotMaxStackSizes[slot] or 1
+    end
+    function inventory.Container:CanBeContained(_, slot)
+        local allowed = inventory.slotContainable[slot]
+        return allowed == nil and true or allowed
     end
     item.OwnInventory = setmetatable(inventory, {
         __index = function(_, key)
@@ -812,9 +830,23 @@ armor.contents = { module1, module2 }
 tick()
 assert(character.stats.MovementSpeed == 12, "think still scanned contained items")
 itemContained(armorContainer, { containedItem = module1 })
-assert(character.stats.MovementSpeed == 14, "same-identifier subitems collapsed")
+assert(character.stats.MovementSpeed == 14, "dedicated subitem slot did not apply")
 assert(character.resistances["burn|dda_adjust_equipment"] == 0.5 and character.addResistanceCalls == 1,
     "resistance reference counting failed")
+
+module1.testSlot = 2
+armor.OwnInventory.slotMaxStackSizes[2] = 32
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 13, "ordinary storage slot still applied the subitem")
+
+armor.OwnInventory.slotMaxStackSizes[2] = 1
+armor.OwnInventory.slotContainable[2] = false
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 13, "mismatched dedicated slot applied the subitem")
+
+module1.testSlot = 0
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 14, "valid dedicated slot did not restore the subitem")
 
 armor.contents = { module2 }
 tick()

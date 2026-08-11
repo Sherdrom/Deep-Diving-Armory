@@ -743,13 +743,30 @@ end
 local function activeSubItems(mainItem, configs)
     local result = {}
     local inventory = mainItem.OwnInventory
+    local checkSubSlot = configs == SUB_CONFIG
+    local container = inventory and inventory.Container
+    -- ponytail: DDA XML marks dedicated equipment slots with maxstacksize=1; add an explicit role if that changes.
+    if checkSubSlot and (not inventory or not container
+        or not inventory.FindIndex
+        or not container.GetMaxStackSize
+        or not container.CanBeContained) then
+        return result
+    end
     local items = inventory and inventory.AllItems or mainItem.ContainedItems
     if items then
         for item in items do
             if item and not item.Removed and item.Prefab then
                 local itemId = tostring(item.Prefab.Identifier)
                 local cfg = configs[itemId]
-                if cfg then result[item] = { cfg = cfg, itemId = itemId } end
+                if cfg then
+                    local slot = checkSubSlot and inventory:FindIndex(item)
+                    if not checkSubSlot
+                        or (type(slot) == "number" and slot >= 0
+                            and container:GetMaxStackSize(slot) == 1
+                            and container:CanBeContained(item, slot)) then
+                        result[item] = { cfg = cfg, itemId = itemId }
+                    end
+                end
             end
         end
     end
