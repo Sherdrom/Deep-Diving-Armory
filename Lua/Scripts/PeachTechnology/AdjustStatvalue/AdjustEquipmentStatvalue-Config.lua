@@ -68,8 +68,6 @@
 --     - strength: 强度值（默认 1）
 --     例: affliction = { id = "burn", strength = 50 }
 --     例(多个): affliction = {
---                  { id = "deep_helmet_tac_detect", strength = 1 },
---                  { id = "deep_gpnvg18", strength = 1 },
 --              }
 --
 --   以上 stats / flags / talentMarkers / resistances / affliction 均为选填，不填则跳过，无副作用。

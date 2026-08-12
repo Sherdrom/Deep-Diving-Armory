@@ -1,33 +1,20 @@
 using Barotrauma;
-using HarmonyLib;
+using Barotrauma.Lights;
+using Microsoft.Xna.Framework;
 
 namespace DeepVisionPatch;
 
-/// <summary>
-/// Manages night vision device states through Lua hooks
-/// Tracks which items have night vision enabled/disabled
-/// </summary>
-
 public class NightVisionPatch
 {
-    /// <summary>
-    /// Tracks night vision status for items (item ID -> is enabled)
-    /// </summary>
-    public static Dictionary<ushort, bool> NightVisionStatus { get; } = new Dictionary<ushort, bool>();
+    public static Dictionary<ushort, bool> NightVisionStatus { get; } = new();
+
+    private static readonly Color NightVisionLightColor = new(255, 255, 255, 150);
+    private static LightSource? nightVisionLight;
+    private static Character? lightCharacter;
+    private static Item? lightItem;
 
     public NightVisionPatch(ILuaEventService luaEventService)
     {
-        // 在构造函数中只注册一次 Hook
-        RegisterHooks(luaEventService);
-    }
-
-    /// <summary>
-    /// Sets up Lua hooks for night vision control
-    /// Called after character control patch
-    /// </summary>
-    private void RegisterHooks(ILuaEventService luaEventService)
-    {
-        // Hook to turn off night vision
         luaEventService.Add("NightVision_Off", (object[] args) =>
         {
             if (args.Length > 2 && args[2] is Item item)
@@ -35,21 +22,8 @@ public class NightVisionPatch
                 HandleNightVision(item, false);
             }
             return null;
-            // Item item = (Item)args[2];
-            // if (item == null) return null;
-            // Character character = Character.Controlled;
-            // if (character == null) return null;
-            // if(item.ParentInventory?.Owner != character) return null;
-
-            // // Only update if the item exists and is currently enabled
-            // if (!NightVisionStatus.TryGetValue(item.ID, out bool currentStatus) || currentStatus)
-            // {
-            //     NightVisionStatus[item.ID] = false;
-            // }
-            // return null;
         });
 
-        // Hook to turn on night vision
         luaEventService.Add("NightVision_On", (object[] args) =>
         {
             if (args.Length > 2 && args[2] is Item item)
@@ -57,28 +31,98 @@ public class NightVisionPatch
                 HandleNightVision(item, true);
             }
             return null;
-            // Item item = (Item)args[2];
-            // if (item == null) return null;
-            // Character character = Character.Controlled;
-            // if (character == null) return null;
-            // if(item.ParentInventory?.Owner != character) return null;
-
-            // // Only update if the item exists and is currently disabled
-            // if (!NightVisionStatus.TryGetValue(item.ID, out bool currentStatus) || !currentStatus)
-            // {
-            //     NightVisionStatus[item.ID] = true;
-            // }
-            // return null;
         });
     }
 
     private void HandleNightVision(Item item, bool enabled)
     {
-        Character character = Character.Controlled;
-        // 检查逻辑：物品是否属于当前玩家控制的角色
-        if (character != null && item.ParentInventory?.Owner == character)
+        Character? character = Character.Controlled;
+        bool isCurrentHead = character?.Inventory.GetItemInLimbSlot(InvSlotType.Head) == item;
+
+        if (!enabled && ReferenceEquals(lightItem, item))
         {
-            NightVisionStatus[item.ID] = enabled;
+            RemoveNightVisionLight();
+            NightVisionStatus[item.ID] = false;
         }
+
+        if (character == null || item.ParentInventory?.Owner != character)
+        {
+            return;
+        }
+
+        NightVisionStatus[item.ID] = enabled;
+        if (enabled && isCurrentHead)
+        {
+            SyncControlledLight(character, item);
+        }
+    }
+
+    public static bool SyncControlledLight(Character? character, Item? headItem)
+    {
+        bool enabled = character != null
+            && headItem != null
+            && NightVisionStatus.TryGetValue(headItem.ID, out bool status)
+            && status;
+
+        if (!enabled)
+        {
+            RemoveNightVisionLight();
+            return false;
+        }
+
+        Limb? headLimb = character!.AnimController?.GetLimb(LimbType.Head);
+        if (headLimb == null || headLimb.IsSevered || headLimb.Removed || headLimb.body == null)
+        {
+            RemoveNightVisionLight();
+            return false;
+        }
+
+        if (nightVisionLight != null &&
+            (!ReferenceEquals(lightCharacter, character) || !ReferenceEquals(lightItem, headItem)))
+        {
+            RemoveNightVisionLight();
+        }
+
+        if (nightVisionLight == null)
+        {
+            nightVisionLight = new LightSource(
+                Vector2.Zero,
+                5000f,
+                NightVisionLightColor,
+                character.Submarine,
+                addLight: false)
+            {
+                CastShadows = false,
+                ParentBody = headLimb.body,
+                OffsetFromBody = Vector2.Zero,
+                ParentSub = character.Submarine,
+                Enabled = true
+            };
+            lightCharacter = character;
+            lightItem = headItem;
+            GameMain.LightManager.AddLight(nightVisionLight);
+        }
+        else
+        {
+            nightVisionLight.ParentBody = headLimb.body;
+            nightVisionLight.ParentSub = character.Submarine;
+            nightVisionLight.OffsetFromBody = Vector2.Zero;
+            nightVisionLight.Enabled = true;
+        }
+
+        return true;
+    }
+
+    public static void RemoveNightVisionLight()
+    {
+        if (nightVisionLight != null)
+        {
+            nightVisionLight.Enabled = false;
+            nightVisionLight.Remove();
+            nightVisionLight = null;
+        }
+
+        lightCharacter = null;
+        lightItem = null;
     }
 }

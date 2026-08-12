@@ -10,16 +10,10 @@ public class DrawNightVision
 {
     public static void Postfix(GameScreen __instance, GraphicsDevice graphics, SpriteBatch spriteBatch, double deltaTime)
     {
-        Character character = Character.Controlled;
-        if (character == null) return;
-        Item headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
-        if (headItem == null) return;
-        // IEnumerable<Item> headItems = headItem.ContainedItems; // 获取头盔内的item
-
-        // if (headItem == null) { return; }
-        // 头盔Hook 战术设备(夜视仪)的开关判断
-        NightVisionPatch.NightVisionStatus.TryGetValue(headItem.ID, out bool NVStatus);
-        if (!NVStatus) { return; }
+        Character? character = Character.Controlled;
+        Item? headItem = character?.Inventory.GetItemInLimbSlot(InvSlotType.Head);
+        bool nightVisionActive = NightVisionPatch.SyncControlledLight(character, headItem);
+        if (!nightVisionActive) return;
 
         DrawNightVisionTexture(spriteBatch, deltaTime, graphics, DeepVisionPatch.CurrentNVTexture);
     }

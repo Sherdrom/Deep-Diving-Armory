@@ -21,6 +21,7 @@ end
 --苯科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/zoom.lua")--瞄具视野
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/reloadPatch.lua")--换弹自动填充
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/TacticalHelmetInterface.lua")--战术头盔开关状态重应用
 --所有贴图修改（减少卡顿）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/AllSprite/AllSprite.lua")
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/6B47.lua")

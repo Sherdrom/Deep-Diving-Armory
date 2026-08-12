@@ -52,8 +52,19 @@ namespace DeepVisionPatch
 
         partial void DisposeProjSpecific()
         {
-            // Cleanup resources
+            NightVisionPatch.RemoveNightVisionLight();
+            NightVisionPatch.NightVisionStatus.Clear();
             _harmonyInstance?.UnpatchSelf();
+        }
+    }
+
+    [HarmonyPatch(typeof(LightManager), nameof(LightManager.ClearLights))]
+    public static class Patch_LightManager_ClearLights
+    {
+        public static void Prefix()
+        {
+            NightVisionPatch.RemoveNightVisionLight();
+            NightVisionPatch.NightVisionStatus.Clear();
         }
     }
 
