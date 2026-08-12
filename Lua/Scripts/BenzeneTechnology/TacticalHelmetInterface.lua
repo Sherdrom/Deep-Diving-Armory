@@ -1,4 +1,4 @@
-local TARGET_ITEMS = {
+local TACTICAL_ITEMS = {
     ["6b47"] = true,
     ["6b47_test_18"] = true,
     ["deep_fast_helmet"] = true,
@@ -7,6 +7,11 @@ local TARGET_ITEMS = {
     ["deep_helmet_sledge_hammer"] = true,
     ["deep_fast_helmet_black"] = true,
     ["deep_fast_helmet_ghost_origin"] = true,
+}
+
+local MASK_ITEMS = {
+    ["deep_altyn"] = true,
+    ["deep_maska"] = true,
 }
 
 local pending = setmetatable({}, { __mode = "k" })
@@ -21,9 +26,19 @@ if LuaUserData and descriptor then
     end
 end
 
-local function isTarget(item)
+local function identifierOf(item)
     local prefab = item and item.Prefab
-    return prefab and TARGET_ITEMS[tostring(prefab.Identifier)] == true
+    return prefab and tostring(prefab.Identifier)
+end
+
+local function isTarget(item)
+    local identifier = identifierOf(item)
+    return identifier and (TACTICAL_ITEMS[identifier] or MASK_ITEMS[identifier]) == true
+end
+
+local function isTacticalTarget(item)
+    local identifier = identifierOf(item)
+    return identifier and TACTICAL_ITEMS[identifier] == true
 end
 
 local function each(value, callback)
@@ -36,7 +51,7 @@ local function each(value, callback)
 end
 
 local function syncVisibility(item, customInterface)
-    if not isTarget(item) or not customInterface then return end
+    if not isTacticalTarget(item) or not customInterface then return end
     local inventory = item.OwnInventory
     local module = inventory and inventory.GetItemAt and inventory.GetItemAt(0)
     local hasTac = module ~= nil and module.HasTag and module.HasTag("deep_helmet_tac") or false

@@ -197,6 +197,37 @@ loaded(preloadedInterface)
 assert(preloadedInterface.DrawHudWhenEquipped == true, "a preloaded module must be detected on load")
 runTimers()
 
+local function assertMaskBridge(identifier)
+    local maskElement = makeElement(true)
+    local maskItem, maskInterface = makeItem(identifier, maskElement)
+    loaded(maskInterface)
+    assert(maskInterface.DrawHudWhenEquipped == nil, "a mask must not use tactical visibility")
+    runTimers()
+    assert(#maskItem.applied == 2
+        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == 2
+        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == 2,
+        identifier .. " load must replay OnUse effects")
+
+    maskItem.applied = {}
+    maskElement.State = false
+    toggle(maskInterface, makeParameterTable({ tickBoxElement = maskElement }))
+    runTimers()
+    assert(#maskItem.applied == 1 and maskItem.applied[1].id == "secondary" and maskItem.applied[1].type == 3,
+        identifier .. " false toggle must replay OnSecondaryUse")
+
+    maskItem.applied = {}
+    maskElement.State = true
+    toggle(maskInterface, makeParameterTable({ tickBoxElement = maskElement }))
+    runTimers()
+    assert(#maskItem.applied == 2
+        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == 2
+        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == 2,
+        identifier .. " true toggle must replay OnUse effects")
+end
+
+assertMaskBridge("deep_altyn")
+assertMaskBridge("deep_maska")
+
 local testItem, testInterface = makeItem("6b47_test_18", makeElement(false), makeModule(true))
 loaded(testInterface)
 assert(testInterface.DrawHudWhenEquipped == true, "the loaded test helmet must use the event bridge")

@@ -1290,14 +1290,14 @@
     </Wearable>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="升起面罩">
+      <TickBox text="升起面罩" continuoussignal="false">
         <!-- 关闭面罩 -->
-        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
           <Hook name="ALTYN_Open" />
           <LuaHook name="ALTYN_Open_Lua" />
         </StatusEffect>
         <!-- 升起面罩 -->
-        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
           <Hook name="ALTYN_Origin" />
           <LuaHook name="ALTYN_Origin_Lua" />
         </StatusEffect>
@@ -1379,14 +1379,14 @@
     </Wearable>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="升起面罩">
+      <TickBox text="升起面罩" continuoussignal="false">
         <!-- 关闭面罩 -->
-        <StatusEffect type="OnUse" interval="60" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
+        <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
           <Hook name="MASKA_Open" />
           <LuaHook name="MASKA_Open_Lua" />
         </StatusEffect>
         <!-- 升起面罩 -->
-        <StatusEffect type="OnSecondaryUse" interval="60" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
+        <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
           <Hook name="MASKA_Origin" />
           <LuaHook name="MASKA_Origin_Lua" />
         </StatusEffect>
