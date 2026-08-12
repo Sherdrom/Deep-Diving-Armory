@@ -8,7 +8,7 @@ public class NightVisionPatch
 {
     public static Dictionary<ushort, bool> NightVisionStatus { get; } = new();
 
-    private static readonly Color NightVisionLightColor = new(255, 255, 255, 150);
+    private static readonly Color NightVisionLightColor = new(235, 235, 235, 100);
     private static LightSource? nightVisionLight;
     private static Character? lightCharacter;
     private static Item? lightItem;

@@ -19,7 +19,7 @@ namespace DeepVisionPatch
         { 
             get
             {
-                if (CurrentColorMode == "White Phosphorus") { return BlueNightVisionTexture; }
+                if (CurrentColorMode == "Blue") { return BlueNightVisionTexture; }
                 return GreenNightVisionTexture;
             }
         }
@@ -46,8 +46,8 @@ namespace DeepVisionPatch
             _harmonyInstance?.PatchAll();
             // Initialize texture creators with their specific parameters
             ViewTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, 256);
-            GreenNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 255, 0, 50));
-            BlueNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(0, 0, 255, 50));
+            GreenNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(55, 210, 90, 100));
+            BlueNightVisionTexture.Initialize(GameMain.GraphicsDeviceManager.GraphicsDevice, new Color(65, 145, 225, 100));
         }
 
         partial void DisposeProjSpecific()
