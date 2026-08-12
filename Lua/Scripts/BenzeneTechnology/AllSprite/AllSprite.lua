@@ -36,14 +36,8 @@ Hook.Add("SixBFortySeven_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(9,9,98,93)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.62)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("SixBFortySeven_Thermal_On", function(_, _, item)
@@ -124,14 +118,8 @@ Hook.Add("FAST_BLACK_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(16,8,94,90)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.62)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("FAST_BLACK_Thermal_On", function(_, _, item)
@@ -212,14 +200,8 @@ Hook.Add("FAST_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(16,8,94,90)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.62)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("FAST_Thermal_On", function(_, _, item)
@@ -300,14 +282,8 @@ Hook.Add("FAST_Ranger_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(13,10,99,91)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.51,0.58)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("FAST_Ranger_Thermal_On", function(_, _, item)
@@ -388,14 +364,8 @@ Hook.Add("FAST_Heavy_Trooper_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(10,11,98,104)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.52,0.55)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("FAST_Heavy_Trooper_Thermal_On", function(_, _, item)
@@ -476,14 +446,8 @@ Hook.Add("FAST_Sledge_Hammer_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(3,4,106,107)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.62)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("FAST_Sledge_Hammer_Thermal_On", function(_, _, item)
@@ -564,14 +528,8 @@ Hook.Add("GHOST_Origin", function(_, _, item)
     if itemComponent.wearableSprites[1].Sprite == nil then return end
     itemComponent.wearableSprites[1].Sprite.SourceRect=Rectangle(5,4,107,98)
     itemComponent.wearableSprites[1].Sprite.RelativeOrigin=Vector2(0.55,0.67)
-    -- 移除战术设备时应当清空所有的执行状态
-    for _ , executed in pairs(isExecuted) do
-        if type(executed) == "table" then
-            for i, _ in pairs(executed) do
-                executed[i] = false
-            end
-        end
-    end
+    -- 移除战术设备时只清空当前头盔的执行状态
+    isExecuted[item.ID] = nil
 end)
 
 Hook.Add("GHOST_Thermal_On", function(_, _, item)
