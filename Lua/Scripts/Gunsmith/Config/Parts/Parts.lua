@@ -22,6 +22,7 @@ local files = { "AR/Structural/Barrel.lua",
     "Shared/BufferTube.lua",
     "Shared/RearSight.lua",
     "Shared/FrontSight.lua",
+    "Shared/Upgrade.lua",
 }
 
 for _, file in ipairs(files) do
