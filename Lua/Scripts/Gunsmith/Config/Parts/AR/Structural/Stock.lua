@@ -329,7 +329,7 @@ parts.deep_hk_slim_line_stock = { type = "stock",
     nameKey = "deep.gunsmith.part.deep_hk_slim_line_stock",
     provides = { "AR_stock" },
     item = { identifier = "deep_hk_slim_line_stock" },
-    stats = { Ergonomics = 3 },
+    stats = { Ergonomics = 40, RangedSpreadReduction = 0.05 , MovementSpeed = 0.05 },
     visual = { 
         texture = texture,
         source = { x = 15, y = 211, w = 116, h = 75 },
