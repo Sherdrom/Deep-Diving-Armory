@@ -54,6 +54,7 @@ namespace DeepVisionPatch
         {
             NightVisionPatch.RemoveNightVisionLight();
             NightVisionPatch.NightVisionStatus.Clear();
+            ViewTexture.Dispose();
             _harmonyInstance?.UnpatchSelf();
         }
     }
@@ -126,6 +127,9 @@ namespace DeepVisionPatch
         private static bool IsCall(CodeInstruction instruction)
             => instruction.opcode == OpCodes.Call || instruction.opcode == OpCodes.Callvirt;
 
+        private static bool HasDdaTag(Item? item, string tag)
+            => item?.HasTag(tag) == true && item.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
+
         private static void DrawDdaVisionOrClear(
             GraphicsDevice graphics,
             Color fallbackColor,
@@ -144,26 +148,16 @@ namespace DeepVisionPatch
             Item rightHand = character.Inventory.GetItemInLimbSlot(InvSlotType.RightHand);
             Item leftHand = character.Inventory.GetItemInLimbSlot(InvSlotType.LeftHand);
             Item? headItem = character.Inventory.GetItemInLimbSlot(InvSlotType.Head);
-            bool hasWeaponInHand = rightHand?.HasTag("weapon") == true || leftHand?.HasTag("weapon") == true;
-            bool hasObstructVisionItem = rightHand?.HasTag("ObstructVision") == true
-                || leftHand?.HasTag("ObstructVision") == true
-                || headItem?.HasTag("ObstructVision") == true;
-            if (!hasWeaponInHand && !hasObstructVisionItem)
+            bool hasDdaWeaponInHand = HasDdaTag(rightHand, "weapon") || HasDdaTag(leftHand, "weapon");
+            bool hasDdaObstructVisionInHand = HasDdaTag(rightHand, "ObstructVision") || HasDdaTag(leftHand, "ObstructVision");
+            bool hasDdaObstructVisionItem = hasDdaObstructVisionInHand || HasDdaTag(headItem, "ObstructVision");
+            if (!hasDdaWeaponInHand && !hasDdaObstructVisionItem)
             {
                 graphics.Clear(fallbackColor);
                 return;
             }
 
-            bool hasDeepVisionItem = rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
-                || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name
-                || headItem?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
-            if (!hasDeepVisionItem)
-            {
-                graphics.Clear(fallbackColor);
-                return;
-            }
-
-            if (!hasObstructVisionItem && (!character.IsKeyDown(InputType.Aim) || !character.CanAim))
+            if (!hasDdaObstructVisionItem && (!character.IsKeyDown(InputType.Aim) || !character.CanAim))
             {
                 graphics.Clear(fallbackColor);
                 return;
@@ -171,7 +165,7 @@ namespace DeepVisionPatch
 
             foreach (KeyValuePair<ushort, bool> maskStatus in HelmetMaskPatch.MaskStatus)
             {
-                if (headItem != null && headItem.ID == maskStatus.Key && !((rightHand != null && rightHand.HasTag("ObstructVision")) || (leftHand != null && leftHand.HasTag("ObstructVision"))))
+                if (headItem != null && headItem.ID == maskStatus.Key && !hasDdaObstructVisionInHand)
                 {
                     if (maskStatus.Value && !character.IsKeyDown(InputType.Aim))
                     {
@@ -181,12 +175,8 @@ namespace DeepVisionPatch
                     if (maskStatus.Value)
                     {
                         headItem = null;
-                        if (!((rightHand != null && rightHand.HasTag("weapon")) || (leftHand != null && leftHand.HasTag("weapon"))))
-                        {
-                            graphics.Clear(fallbackColor);
-                            return;
-                        }
-                        if (!(rightHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name || leftHand?.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name))
+                        hasDdaObstructVisionItem = false;
+                        if (!hasDdaWeaponInHand)
                         {
                             graphics.Clear(fallbackColor);
                             return;
@@ -195,16 +185,16 @@ namespace DeepVisionPatch
                 }
             }
 
-            if (headItem != null && headItem.HasTag("ObstructVision") || (rightHand != null && rightHand.HasTag("ObstructVision")) || (leftHand != null && leftHand.HasTag("ObstructVision")))
+            if (hasDdaObstructVisionItem)
             {
                 float minVal = MathF.PI;
                 foreach (KeyValuePair<string, float> kvp in ObstructVision)
                 {
-                    if (headItem != null && headItem.HasTag(kvp.Key) && kvp.Value < minVal)
+                    if (HasDdaTag(headItem, kvp.Key) && kvp.Value < minVal)
                     {
                         minVal = kvp.Value;
                     }
-                    if ((rightHand != null && rightHand.HasTag(kvp.Key)) || (leftHand != null && leftHand.HasTag(kvp.Key)))
+                    if (HasDdaTag(rightHand, kvp.Key) || HasDdaTag(leftHand, kvp.Key))
                     {
                         if (kvp.Value < minVal) minVal = kvp.Value;
                     }
@@ -229,15 +219,13 @@ namespace DeepVisionPatch
             float rotation = MathUtils.VectorToAngle(lightManager.losOffset);
 
             const float MaxOffset = 256.0f;
-            DeepVisionPatch.ViewTexture.UpdateSectorTexture(FieldOfView, new Color(255, 255, 255, 30));
-            Texture2D texture = DeepVisionPatch.ViewTexture.GetTexture();
+            const float CursorClearance = 128.0f;
             Texture2D textureCircle = DeepVisionPatch.ViewTexture.GetTextureCircle();
             float MinHorizontalScale = MathHelper.Lerp(5f, 1.5f, 0);
             float MaxHorizontalScale = MinHorizontalScale * 5f;
             float VerticalScale = MathHelper.Lerp(4.0f, 1.25f, 0);
 
-            float relativeOriginStartPosition = 0.1f;
-            float originStartPosition = texture.Width * relativeOriginStartPosition * MinHorizontalScale;
+            float circleOriginStartPosition = textureCircle.Width / 2f;
 
             Limb? headLimb = character.AnimController.GetLimb(LimbType.Head);
             if (headLimb == null)
@@ -248,13 +236,14 @@ namespace DeepVisionPatch
             Vector2 headPosition = headLimb.WorldPosition;
 
             Vector2 scale = new Vector2(
-                MathHelper.Clamp(lightManager.losOffset.Length() / MaxOffset, MinHorizontalScale, MaxHorizontalScale), VerticalScale);
+                MathHelper.Clamp((lightManager.losOffset.Length() + CursorClearance) / MaxOffset, MinHorizontalScale, MaxHorizontalScale),
+                VerticalScale);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, transformMatrix: cam.Transform * Matrix.CreateScale(new Vector3(GameSettings.CurrentConfig.Graphics.LightMapScale, GameSettings.CurrentConfig.Graphics.LightMapScale, 1.0f)));
-            spriteBatch.Draw(texture, new Vector2(headPosition.X, -headPosition.Y), null, Color.White, rotation,
-                new Vector2(originStartPosition, texture.Height / 2), scale, SpriteEffects.None, 1.0f);
+            spriteBatch.Begin(SpriteSortMode.Deferred, samplerState: SamplerState.LinearClamp, transformMatrix: cam.Transform * Matrix.CreateScale(new Vector3(GameSettings.CurrentConfig.Graphics.LightMapScale, GameSettings.CurrentConfig.Graphics.LightMapScale, 1.0f)));
+            DeepVisionPatch.ViewTexture.DrawSector(spriteBatch, new Vector2(headPosition.X, -headPosition.Y), rotation,
+                scale, FieldOfView, new Color(255, 255, 255, 30));
             spriteBatch.Draw(textureCircle, new Vector2(headPosition.X, -headPosition.Y + 70f), null, Color.White, 0f,
-                new Vector2(originStartPosition, textureCircle.Height / 2), new Vector2(0.35f, 0.45f), SpriteEffects.None, 1.0f);
+                new Vector2(circleOriginStartPosition, textureCircle.Height / 2), new Vector2(0.35f, 0.45f), SpriteEffects.None, 1.0f);
             spriteBatch.End();
         }
     }
