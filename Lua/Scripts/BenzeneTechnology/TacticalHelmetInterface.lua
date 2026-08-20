@@ -14,6 +14,10 @@ local MASK_ITEMS = {
     ["deep_maska"] = true,
 }
 
+-- Third-party contract: tactical tag enables replay + slot-0 deep_helmet_tac HUD; mask tag replays state only.
+local TACTICAL_INTERFACE_TAG = "deep_tactical_helmet_interface"
+local MASK_INTERFACE_TAG = "deep_tactical_mask_interface"
+
 local pending = setmetatable({}, { __mode = "k" })
 
 local descriptor = Descriptors and Descriptors["Barotrauma.Items.Components.CustomInterface"]
@@ -31,14 +35,24 @@ local function identifierOf(item)
     return prefab and tostring(prefab.Identifier)
 end
 
-local function isTarget(item)
-    local identifier = identifierOf(item)
-    return identifier and (TACTICAL_ITEMS[identifier] or MASK_ITEMS[identifier]) == true
+local function hasTag(item, tag)
+    return item and item.HasTag and item.HasTag(tag) == true
 end
 
 local function isTacticalTarget(item)
     local identifier = identifierOf(item)
-    return identifier and TACTICAL_ITEMS[identifier] == true
+    return (identifier and TACTICAL_ITEMS[identifier] == true)
+        or hasTag(item, TACTICAL_INTERFACE_TAG)
+end
+
+local function isMaskTarget(item)
+    local identifier = identifierOf(item)
+    return (identifier and MASK_ITEMS[identifier] == true)
+        or hasTag(item, MASK_INTERFACE_TAG)
+end
+
+local function isTarget(item)
+    return isTacticalTarget(item) or isMaskTarget(item)
 end
 
 local function each(value, callback)
@@ -101,7 +115,7 @@ end
 
 local function onItemContained(instance, ptable)
     local containedItem = ptable and ptable["containedItem"]
-    if not containedItem or not containedItem.HasTag("deep_helmet_tac") then return end
+    if not hasTag(containedItem, "deep_helmet_tac") then return end
     local item = instance and instance.Item
     if isTarget(item) then
         local customInterface = item.GetComponentString("CustomInterface")
@@ -112,7 +126,7 @@ end
 
 local function onItemRemoved(instance, ptable)
     local containedItem = ptable and ptable["containedItem"]
-    if not containedItem or not containedItem.HasTag("deep_helmet_tac") then return end
+    if not hasTag(containedItem, "deep_helmet_tac") then return end
     local item = instance and instance.Item
     if isTarget(item) then
         syncVisibility(item, item.GetComponentString("CustomInterface"))

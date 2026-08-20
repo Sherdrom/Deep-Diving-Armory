@@ -115,7 +115,7 @@ local function makeModule(isTactical)
     }
 end
 
-local function makeItem(identifier, element, slot0)
+local function makeItem(identifier, element, slot0, interfaceTag)
     local customInterface = {
         customInterfaceElementList = { element },
         DrawHudWhenEquipped = nil,
@@ -125,6 +125,11 @@ local function makeItem(identifier, element, slot0)
         applied = {},
         slot0 = slot0,
     }
+    if interfaceTag then
+        item.HasTag = function(tag)
+            return tag == interfaceTag
+        end
+    end
     item.OwnInventory = {
         GetItemAt = function(index)
             assert(index == 0)
@@ -227,6 +232,49 @@ end
 
 assertMaskBridge("deep_altyn")
 assertMaskBridge("deep_maska")
+
+local thirdPartyTactical, thirdPartyTacticalInterface = makeItem(
+    "third_party_tactical_helmet",
+    makeElement(true),
+    makeModule(true),
+    "deep_tactical_helmet_interface"
+)
+loaded(thirdPartyTacticalInterface)
+assert(thirdPartyTacticalInterface.DrawHudWhenEquipped == true,
+    "the tactical opt-in tag must enable HUD visibility")
+runTimers()
+assert(#thirdPartyTactical.applied == 2
+    and thirdPartyTactical.applied[1].type == 2
+    and thirdPartyTactical.applied[2].type == 2,
+    "the tactical opt-in tag must replay interface state")
+
+local thirdPartyMask, thirdPartyMaskInterface = makeItem(
+    "third_party_mask",
+    makeElement(true),
+    nil,
+    "deep_tactical_mask_interface"
+)
+thirdPartyMaskInterface.DrawHudWhenEquipped = "unchanged"
+loaded(thirdPartyMaskInterface)
+assert(thirdPartyMaskInterface.DrawHudWhenEquipped == "unchanged",
+    "the mask opt-in tag must not change HUD visibility")
+runTimers()
+assert(#thirdPartyMask.applied == 2
+    and thirdPartyMask.applied[1].type == 2
+    and thirdPartyMask.applied[2].type == 2,
+    "the mask opt-in tag must replay interface state")
+
+local unmarkedThirdParty, unmarkedThirdPartyInterface = makeItem(
+    "third_party_unmarked",
+    makeElement(true),
+    makeModule(true),
+    "some_other_tag"
+)
+loaded(unmarkedThirdPartyInterface)
+assert(unmarkedThirdPartyInterface.DrawHudWhenEquipped == nil
+    and #timers == 0
+    and #unmarkedThirdParty.applied == 0,
+    "an unmarked third-party item must remain ignored")
 
 local testItem, testInterface = makeItem("6b47_test_18", makeElement(false), makeModule(true))
 loaded(testInterface)
