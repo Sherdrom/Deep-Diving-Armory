@@ -16,11 +16,11 @@
   <Item name="M4SS枪托" identifier="deep_m4ss_stock" subcategory="deep_rifle_stock" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_rifle_stock" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.25" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="80" />
-      <RequiredItem identifier="titanium" amount="2" />
-      <RequiredItem identifier="glassfibre" amount="1" />
+      <RequiredItem identifier="deep_mold_tit" mincondition="0.0" />
+      <RequiredItem identifier="plastic" amount="2" />
     </Fabricate>
     <Deconstruct time="5">
-      <Item identifier="plastic" />
+      <Item identifier="silicon" />
     </Deconstruct>
     <Sprite texture="%ModDir%/GunSmith/SharedParts/Stock/SharedStockAR.png" sourcerect="16,12,112,84" depth="0.55" origin="0.5,0.5" />
     <Body width="104" height="76" density="10" />

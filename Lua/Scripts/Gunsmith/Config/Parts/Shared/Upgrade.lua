@@ -21,7 +21,7 @@ parts.deep_upgrade_rifle_phy = {
     nameKey = "deep.gunsmith.part.deep_upgrade_rifle_phy",
     provides = { "AR_upgrade_rifle" },
     item = { identifier = "deep_upgrade_rifle_phy" },
-    stats = { Ergonomics = 60, RangedAttackMultiplier = 0.45, RangedSpreadReduction = 0.5 },
+    stats = { Ergonomics = 40, RangedAttackMultiplier = 0.45, RangedSpreadReduction = 0.5 },
     visual = { 
         texture = UpgradeTexture,
         source = { x = 0, y = 0, w = 0, h = 0 },
@@ -36,7 +36,7 @@ parts.deep_upgrade_rifle_tun_phy = {
     nameKey = "deep.gunsmith.part.deep_upgrade_rifle_tun_phy",
     provides = { "AR_upgrade_rifle" },
     item = { identifier = "deep_upgrade_rifle_tun_phy" },
-    stats = { Ergonomics = 90, RangedAttackMultiplier = 0.6, RangedSpreadReduction = 0.7 },
+    stats = { Ergonomics = 50, RangedAttackMultiplier = 0.6, RangedSpreadReduction = 0.7 },
     visual = { 
         texture = UpgradeTexture,
         source = { x = 0, y = 0, w = 0, h = 0 },
