@@ -397,12 +397,12 @@
     <InventoryIcon texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="908,24,67,90" origin="0.5,0.5" />
     <Sprite texture="%ModDir%/weapon/explosive/explosive.png" sourcerect="519,177,40,59" depth="0.55" origin="0.5,0.5" />
     <Body radius="20" height="10" density="30" />
-    <Holdable slots="Any,RightHand,LeftHand" controlpose="false" aimpos="25,15">
+    <Holdable slots="Any,RightHand" controlpose="false" aimpos="25,15">
       <StatusEffect type="OnActive" interval="0.9" targettype="Contained,Character" condition="50" comparison="and" setvalue="true">
         <Conditional deep_chip_blaster="gt 0.0" />
       </StatusEffect>
     </Holdable>
-    <RangedWeapon barrelpos="80,11" spread="1" reload="0.1" MaxChargeTime="0.7" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.5">
+    <RangedWeapon barrelpos="80,11" spread="1" reload="1" MaxChargeTime="0.7" unskilledspread="10" combatPriority="800" drawhudwhenequipped="true" crosshairscale="0.5">
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="grenadepin" emitinterval="10" particleamount="1" anglemin="70" anglemax="100" velocitymin="100" velocitymax="200" copyentityangle="true" scalemin="0.5" scalemax="0.5" />
