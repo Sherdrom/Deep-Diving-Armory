@@ -1373,6 +1373,23 @@
       </ConversationAction>
     </ScriptedEvent>
 
+     <!--合约奖励箱子事件-->
+    <ScriptedEvent identifier="deep_contract_reward_n1" >
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" />
+      <SpawnAction itemidentifier="deep_normal_supply_crate" targetinventory="deep_securesteelcabinet"/>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_contract_reward_n2" >
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" />
+      <SpawnAction itemidentifier="deep_exquisite_supply_crate" targetinventory="deep_securesteelcabinet"/>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_contract_reward_n3" >
+      <TagAction criteria="itemidentifier:deep_securesteelcabinet" tag="deep_securesteelcabinet" />
+      <SpawnAction itemidentifier="deep_rare_supply_crate" targetinventory="deep_securesteelcabinet"/>
+    </ScriptedEvent>
+    <!--合约奖励箱子事件-->
+
     <!-- 通过切换队伍，可取消敌人的消灭入侵者命令，从而避免冲家 
     <ScriptedEvent identifier="deep_Initial_enemy_team_switch">
       <TagAction criteria="jobidentifier:deep_securityofficer_enemy" tag="deep_initial_enemy" ContinueIfNoTargetsFound="true" />
