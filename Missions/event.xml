@@ -722,10 +722,32 @@
       </CountTargetsAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcat_reinforce_end" commonness="150">
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_2">
+      <RNGAction Chance="0.5">
+        <Success>
+           <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_2" />
+        </Success>
+        <Failure>
+           <TriggerEventAction Identifier="deep_pigcat_reinforce_team2_2" />
+        </Failure>
+      </RNGAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_end_3">
+      <RNGAction Chance="0.5">
+        <Success>
+           <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_3" />
+        </Success>
+        <Failure>
+           <TriggerEventAction Identifier="deep_pigcat_reinforce_team2_3" />
+        </Failure>
+      </RNGAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team1_2" commonness="150">
       <TagAction criteria="player" tag="player" />
       <WaitAction time="5" />
-      <ConversationAction text="EventText.deep_pigcat_reinforce_end.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team1_2.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="10" />
       <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_huohuade" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -749,7 +771,7 @@
       <Label name="deep_all_reinforce1_alive" />
       <CountTargetsAction targettag="pigcatteam_2" MaxAmount="0">
         <Success>
-          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team3" />
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_3" />
           <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="2" />
         </Success>
         <Failure>
@@ -759,9 +781,44 @@
       </CountTargetsAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team3" commonness="150">
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team2_2">
       <TagAction criteria="player" tag="player" />
-      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team3.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team2_2.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="10" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_qaz_75" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_qlocks" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_super_sitelin" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_feiyu" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_jiushang" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_xiaosong" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_xishen" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_2" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction itemidentifier="deep_white_keycard" targetinventory="pigcatteam_2" targettag="deep_keycard"/>
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_2" MaxAmount="0">
+        <Success>
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_3" />
+          <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="2" />
+        </Success>
+        <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+        </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team1_3" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team1_3.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
       <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_binary" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -783,7 +840,7 @@
       <Label name="deep_all_reinforce1_alive" />
       <CountTargetsAction targettag="pigcatteam_3" MaxAmount="0">
         <Success>
-          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team4" />
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_4" />
           <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="3" />
         </Success>
         <Failure>
@@ -793,9 +850,41 @@
       </CountTargetsAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team4" commonness="150">
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team2_3" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team4.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team2_3.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <WaitAction time="5" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_ruangutou" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_wuming" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_qingning" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_xiaoguang" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_meilisi" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_luosu" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+      <SpawnAction npcsetidentifier="deep_pigcat_team2" npcidentifier="deep_pigcat_team2_tinqianxi" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_3" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
+      <WaitAction time="1" />
+
+      <Label name="deep_all_reinforce1_alive" />
+      <CountTargetsAction targettag="pigcatteam_3" MaxAmount="0">
+        <Success>
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_4" />
+          <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="3" />
+        </Success>
+        <Failure>
+          <WaitAction time="1" />
+          <Goto name="deep_all_reinforce1_alive" />
+        </Failure>
+      </CountTargetsAction>
+    </ScriptedEvent>
+
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team1_4" commonness="150">
+      <TagAction criteria="player" tag="player" />
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team1_4.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
       <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_39" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_4" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -813,7 +902,7 @@
       <Label name="deep_all_reinforce1_alive" />
       <CountTargetsAction targettag="pigcatteam_4" MaxAmount="0">
         <Success>
-          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team5" />
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_5" />
           <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="4" />
         </Success>
         <Failure>
@@ -823,9 +912,9 @@
       </CountTargetsAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team5" commonness="150">
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team1_5" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team5.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team1_5.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
       <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_noob" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_5" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
@@ -843,7 +932,7 @@
       <Label name="deep_all_reinforce1_alive" />
       <CountTargetsAction targettag="pigcatteam_5" MaxAmount="0">
         <Success>
-          <TriggerEventAction Identifier="deep_pigcat_reinforce_end_team6" />
+          <TriggerEventAction Identifier="deep_pigcat_reinforce_team1_6" />
           <MissionStateAction missionidentifier="deep_destory_pigcatteam_nightmare_first" operation="Set" value="5" />
         </Success>
         <Failure>
@@ -853,9 +942,9 @@
       </CountTargetsAction>
     </ScriptedEvent>
 
-    <ScriptedEvent identifier="deep_pigcat_reinforce_end_team6" commonness="150">
+    <ScriptedEvent identifier="deep_pigcat_reinforce_team1_6" commonness="150">
       <TagAction criteria="player" tag="player" />
-      <ConversationAction text="EventText.deep_pigcat_reinforce_end_team6.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
+      <ConversationAction text="EventText.deep_pigcat_reinforce_team1_6.c1" dialogtype="Small" eventsprite="deep_pigcat_reinforce_end"/>
       <WaitAction time="5" />
       <SpawnAction npcsetidentifier="deep_pigcat_team" npcidentifier="deep_pigcat_team_yangtuo" LootingIsStealing="false" TeamID="None" targettag="pigcatteam_6" spawnlocation="Outpost" spawnpointtag="deep_enemy_reinforce" spawnpointtype="human" RequireSpawnPointTag="true" AllowInPlayerView="false" />
       <WaitAction time="1" />
