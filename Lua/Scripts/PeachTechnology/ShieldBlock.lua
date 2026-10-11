@@ -1,7 +1,7 @@
 local DEBUG = false
 
 local SHIELD_CONFIG = {
-    ["deep_single_handed_shield"] = 1,
+    ["deep_double_handed_shield_heavy"] = 2,
 }
 
 local SHIELD_UPGRADE_CONFIG = {
