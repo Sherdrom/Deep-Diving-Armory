@@ -80,5 +80,11 @@ return {
         },
         flags = { "MoveNormallyWhileDragging"}
     },
+    
+    --友军指示器
+    ["deep_firendlyfire_avoid_tac"] = {
+        blockedByEnemyResistance = false,
+        talentMarkers = { "deep_firendlyfire_avoid_tac_detect" },
+    },
 
 }

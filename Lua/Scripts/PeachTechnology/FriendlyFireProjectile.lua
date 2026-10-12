@@ -1,7 +1,7 @@
 local MOD_ID = "FriendlyFireProjectile"
 local DEBUG = false
-local FRIENDLY_FIRE_MARKER = Identifier("friendly_fire")
-local FRIENDLY_FIRE_CHIP = Identifier("chip_friendly_fire")
+local FRIENDLY_FIRE_MARKER = Identifier("deep_firendlyfire_avoid_tac_detect")
+local FRIENDLY_FIRE_CHIP = Identifier("deep_firendlyfire_avoid_tac")
 
 local HAND_SLOTS = { InvSlotType.LeftHand, InvSlotType.RightHand }
 
