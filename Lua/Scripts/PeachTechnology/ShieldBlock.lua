@@ -2,10 +2,14 @@ local DEBUG = false
 
 local SHIELD_CONFIG = {
     ["deep_double_handed_shield_heavy"] = 2,
+    ["deep_mobile_shield"] = 1,
+    ["deep_single_handed_shield"] = 1,
+    ["deep_wuchuan"] = 2,
 }
 
 local SHIELD_UPGRADE_CONFIG = {
-    ["deep_mobile_shield_fix_plate_steel"] = 1,
+    ["deep_mobile_shield_fix_plate_phy"] = 1,
+    ["deep_mobile_shield_fix_plate_tun"] = 2,
 }
 
 local originalMaxTargetsCache = {}
