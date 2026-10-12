@@ -87,6 +87,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/supernova.
 
 --桃子科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HelperFunctions.lua")--工具函数
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
@@ -102,9 +103,8 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpawnBlindBox.lua")--随机生成
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI随机切换武器
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
---dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透(暂时用不到)
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血（有character性能问题）(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改(暂时用不到)
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）
 --桃子科技
