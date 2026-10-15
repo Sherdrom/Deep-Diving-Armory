@@ -44,6 +44,8 @@ platforms.AR = {
         rear_sight_mount = "deep.gunsmith.path.rear_sight_mount",
         front_sight_mount = "deep.gunsmith.path.front_sight_mount",
         upgrade_rifle = "deep.gunsmith.path.upgrade_rifle",
+        weapon_upgrade_a = "deep.gunsmith.path.weapon_upgrade_a",
+        weapon_upgrade_b = "deep.gunsmith.path.weapon_upgrade_b",
         optic_mount = "deep.gunsmith.path.optic_mount"
     }
 }

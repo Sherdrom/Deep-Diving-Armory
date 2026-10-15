@@ -91,7 +91,7 @@ parts.deep_1_6x_sight = { type = "optic_mount",
     nameKey = "deep.gunsmith.part.deep_1_6x_sight",
     provides = { "medium_optic" },
     item = { identifier = "3x_sight" },
-    stats = { Ergonomics = -15, RangedSpreadReduction = 0.0, WeaponsSkillBonus = 30 },
+    stats = { Ergonomics = -15, RangedSpreadReduction = 0.80, WeaponsSkillBonus = 30, MovementSpeed = -0.2 },
     visual = { 
         texture = sightTexture,
         source = { x = 5, y = 537, w = 381, h = 103 },
@@ -115,18 +115,18 @@ parts.deep_thermalgoggles_sight_6x = { type = "optic_mount",
     }
 }
 
-parts.deep_8x_sight = { type = "optic_mount",
-    nameKey = "deep.gunsmith.part.deep_8x_sight",
-    provides = { "large_optic" },
-    item = { identifier = "8x_sight" },
-    stats = { Ergonomics = -25, RangedSpreadReduction = 0.90, RangedAttackMultiplier = 0.30, WeaponsSkillBonus = 30, MovementSpeed = -0.3 },
-    visual = { 
-        texture = sightTexture,
-        source = { x = 5, y = 667, w = 469, h = 106 },
-        attachPoint = { x = 234, y = 98 },
-        order = 70,
-        scale = 0.45
-    }
-}
+--parts.deep_8x_sight = { type = "optic_mount",
+    --nameKey = "deep.gunsmith.part.deep_8x_sight",
+    --provides = { "large_optic" },
+    --item = { identifier = "8x_sight" },
+    --stats = { Ergonomics = -25, RangedSpreadReduction = 0.90, RangedAttackMultiplier = 0.30, WeaponsSkillBonus = 30, MovementSpeed = -0.3 },
+    --visual = { 
+        --texture = sightTexture,
+        --source = { x = 5, y = 667, w = 469, h = 106 },
+        --attachPoint = { x = 234, y = 98 },
+        --order = 70,
+        --scale = 0.45
+    --}
+--}
 
 

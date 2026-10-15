@@ -38,7 +38,7 @@ parts.deep_laser = { type = "accessory_mount",
     -- accessory 由护木的 optic_mount.accepts 决定。
     provides = { "accessory" },
     item = { identifier = "deep_laser" },
-    stats = { Ergonomics = -8 },
+    stats = { Ergonomics = -8, TeamAttackMultiplier = -0.5 },
     visual = { 
         texture = laserTexture,
         source = { x = 21, y = 9, w = 134, h = 93 },
