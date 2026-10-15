@@ -96,6 +96,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffAll.lua")--伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiFleeGrenade.lua")--AI强制逃离已激活的手雷
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予天赋
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ResistanceLimit.lua")--抗性限制
