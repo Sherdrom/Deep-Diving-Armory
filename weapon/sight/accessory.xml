@@ -157,6 +157,33 @@
       </StatusEffect>
     </Holdable>
   </Item>
+  <Item name="" identifier="deep_ar15_handle_rear_sight_grip" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_accessory,deep_grip" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" subcategory="accessory" scale="0.1" impactsoundtag="impact_metal_light">
+    <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
+    <Price baseprice="100" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Deconstruct time="5">
+      <Item identifier="iron" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/sight/grip.png" sourcerect="524,183,227,63" depth="0.549" origin="0.5,0.8" />
+    <Body width="30" height="50" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为照门" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="deep_ar15_handle_rear_sight" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
+  </Item>
   <Item name="" identifier="focusingflashlight" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,flashlight,deep_accessory,deep_flashlight" canbepicked="true" description="" cargocontaineridentifier="deep_accessory_container" subcategory="accessory" scale="0.12" impactsoundtag="impact_metal_light">
     <PreferredContainer secondary="wrecksecarmcab,abandonedsecarmcab" minamount="1" maxamount="1" spawnprobability="0.02" />
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">

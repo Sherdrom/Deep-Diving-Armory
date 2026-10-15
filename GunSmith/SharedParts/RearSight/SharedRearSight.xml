@@ -25,5 +25,16 @@
     <Sprite texture="%ModDir%/GunSmith/SharedParts/RearSight/SharedRearSight.png" sourcerect="5,42,114,30" depth="0.55" origin="0.5,0.5" />
     <Body width="76" height="34" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect" />
+    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
+      <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
+      <Button text="转为握把" connection="signal_out1">
+        <StatusEffect type="OnUse" target="This" delay="0.1" setvalue="true" stackable="false">
+          <remove />
+        </StatusEffect>
+        <StatusEffect type="OnUse" target="Character" delay="0.05" setvalue="true" stackable="false">
+          <SpawnItem identifiers="deep_ar15_handle_rear_sight_grip" spawnposition="SameInventory" Count="1" />
+        </StatusEffect>
+      </Button>
+    </CustomInterface>
   </Item>
 </Items>

@@ -30,7 +30,7 @@ parts.deep_ar15_handle_rear_sight = {
     nameKey = "deep.gunsmith.part.deep_ar15_handle_rear_sight",
     provides = { "AR_rear_sight" },
     item = { identifier = "deep_ar15_handle_rear_sight" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = -5, MovementSpeed = 0.05 },
     visual = { texture = texture,
         source = { x = 5, y = 42, w = 114, h = 30 },
         attachPoint = { x = 24, y = 28 },

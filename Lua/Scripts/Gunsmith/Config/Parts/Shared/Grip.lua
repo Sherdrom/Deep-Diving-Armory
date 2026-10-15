@@ -92,4 +92,19 @@ parts.deep_corner_grip = { type = "Lower_rail_mount",
     }
 }
 
+parts.deep_ar15_handle_rear_sight_grip = { type = "Lower_rail_mount",
+    nameKey = "deep.gunsmith.part.deep_ar15_handle_rear_sight_grip",
+    -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
+    provides = { "small_grip" },
+    item = { identifier = "deep_ar15_handle_rear_sight_grip" },
+    stats = { Ergonomics = -5, MovementSpeed = 0.05, WeaponsSkillBonus = 10 },
+    visual = { 
+        texture = gripTexture,
+        source = { x = 524, y = 183, w = 227, h = 63 },
+        attachPoint = { x = 90, y = 7 },
+        order = 70,
+        scale = 0.5
+    }
+}
+
 

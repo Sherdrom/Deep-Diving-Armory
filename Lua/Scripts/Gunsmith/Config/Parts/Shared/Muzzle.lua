@@ -12,7 +12,7 @@ local muzzleTexture = Deep_Lua.Path .. "/weapon/sight/accessory_new.png"
         --texture = muzzleTexture,
         --source = { x = 127, y = 221, w = 207, h = 29 },
         --attachPoint = { x = 0, y = 14 },
-        --order = 70,
+        --order = 35,
         --scale = 0.5
     --},
     --quickAttachmentTransform = {
@@ -30,7 +30,7 @@ parts.deep_muzzle_brake = { type = "muzzle_mount",
         texture = muzzleTexture,
         source = { x = 22, y = 214, w = 78, h = 43 },
         attachPoint = { x = 3, y = 22 },
-        order = 70,
+        order = 35,
         scale = 0.5
     },
     quickAttachmentTransform = {
@@ -48,7 +48,7 @@ parts.deep_compensator = { type = "muzzle_mount",
         texture = muzzleTexture,
         source = { x = 25, y = 263, w = 89, h = 37 },
         attachPoint = { x = 3, y = 19 },
-        order = 70,
+        order = 35,
         scale = 0.5
     },
     quickAttachmentTransform = {
@@ -66,7 +66,7 @@ parts.deep_flash_hider = { type = "muzzle_mount",
         texture = muzzleTexture,
         source = { x = 19, y = 170, w = 85, h = 41 },
         attachPoint = { x = 5, y = 21 },
-        order = 70,
+        order = 35,
         scale = 0.5
     },
     quickAttachmentTransform = {
@@ -84,7 +84,7 @@ parts.deep_muffler = { type = "muzzle_mount",
         texture = muzzleTexture,
         source = { x = 129, y = 260, w = 201, h = 46 },
         attachPoint = { x = 1, y = 23 },
-        order = 70,
+        order = 35,
         scale = 0.5
     },
     quickAttachmentTransform = {
