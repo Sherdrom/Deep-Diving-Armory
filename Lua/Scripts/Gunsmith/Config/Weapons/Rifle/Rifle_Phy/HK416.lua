@@ -42,7 +42,7 @@ weapons.deep_hk416 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 20, y = -7 }
+        offset = { x = 50, y = -7 }
     }
 }
 

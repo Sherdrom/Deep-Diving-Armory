@@ -7,7 +7,7 @@ parts.deep_vertical_grip = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "vertical_grip" },
-    stats = { Ergonomics = -1, FlowResistance = 1.00, WeaponsSkillBonus = 5, WalkingSpeed = -0.10 },
+    stats = { Ergonomics = -8, FlowResistance = 1.00, WeaponsSkillBonus = 5, RangedSpreadReduction = 0.15 },
     visual = { 
         texture = gripTexture,
         source = { x = 27, y = 13, w = 64, h = 123 },
@@ -22,7 +22,7 @@ parts.deep_vertical_grips_short = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "vertical_grips_short" },
-    stats = { Ergonomics = -1, FlowResistance = 0.50, WeaponsSkillBonus = 10 },
+    stats = { Ergonomics = -5, FlowResistance = 0.50, WeaponsSkillBonus = 20 },
     visual = { 
         texture = gripTexture,
         source = { x = 126, y = 15, w = 59, h = 99 },
@@ -37,7 +37,7 @@ parts.deep_vertical_grips_hollow_out = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "vertical_grips_hollow_out" },
-    stats = { Ergonomics = -1, WeaponsSkillGainSpeed = 1.00, WeaponsSkillBonus = 15, ExperienceGainMultiplier = 0.30 },
+    stats = { Ergonomics = -8, WeaponsSkillGainSpeed = 1.00, WeaponsSkillBonus = 15, ExperienceGainMultiplier = 0.30 },
     visual = { 
         texture = gripTexture,
         source = { x = 225, y = 13, w = 54, h = 119 },
@@ -52,7 +52,7 @@ parts.deep_cqr_grips = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "cqr_grips" },
-    stats = { Ergonomics = -1, WalkingSpeed = 0.10, WeaponsSkillBonus = 10 },
+    stats = { Ergonomics = -12, MovementSpeed = 0.10, WeaponsSkillBonus = 10 ,RangedSpreadReduction = 0.12 },
     visual = { 
         texture = gripTexture,
         source = { x = 37, y = 176, w = 200, h = 122 },
@@ -67,7 +67,7 @@ parts.deep_oblique_grips = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "oblique_grips" },
-    stats = { Ergonomics = -1, WalkingSpeed = 0.20 },
+    stats = { Ergonomics = -8, MovementSpeed = -0.1, RangedSpreadReduction = 0.2 },
     visual = { 
         texture = gripTexture,
         source = { x = 309, y = 11, w = 66, h = 115 },
@@ -82,7 +82,7 @@ parts.deep_corner_grip = { type = "Lower_rail_mount",
     -- small_grip / medium_grip 由护木的 optic_mount.accepts 决定。
     provides = { "small_grip" },
     item = { identifier = "corner_grip" },
-    stats = { Ergonomics = -1, WalkingSpeed = 0.15, WeaponsSkillBonus = 25 },
+    stats = { Ergonomics = -5, MovementSpeed = 0.15, WeaponsSkillBonus = 25 },
     visual = { 
         texture = gripTexture,
         source = { x = 260, y = 180, w = 234, h = 89 },

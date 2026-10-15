@@ -6,7 +6,7 @@ parts.deep_upgrade_rifle_steel = {
     nameKey = "deep.gunsmith.part.deep_upgrade_rifle_steel",
     provides = { "AR_upgrade_rifle" },
     item = { identifier = "deep_upgrade_rifle_steel" },
-    stats = { Ergonomics = 15, RangedAttackMultiplier = 0.15, RangedSpreadReduction = 0.1 },
+    stats = { Ergonomics = 20, RangedAttackMultiplier = 0.15, RangedSpreadReduction = 0.1 },
     visual = { 
         texture = UpgradeTexture,
         source = { x = 0, y = 0, w = 0, h = 0 },

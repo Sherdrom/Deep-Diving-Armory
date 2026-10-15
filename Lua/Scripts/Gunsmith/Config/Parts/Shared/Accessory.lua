@@ -8,7 +8,7 @@ parts.focusingflashlight = { type = "accessory_mount",
     -- accessory 由护木的 optic_mount.accepts 决定。
     provides = { "accessory" },
     item = { identifier = "focusingflashlight" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.03 },
+    stats = { Ergonomics = -8 },
     visual = { 
         texture = accessoryTexture,
         source = { x = 451, y = 340, w = 188, h = 51 },
@@ -23,7 +23,7 @@ parts.spreadflashlight = { type = "accessory_mount",
     -- accessory 由护木的 optic_mount.accepts 决定。
     provides = { "accessory" },
     item = { identifier = "spreadflashlight" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.03 },
+    stats = { Ergonomics = -8 },
     visual = { 
         texture = accessoryTexture,
         source = { x = 451, y = 422, w = 162, h = 81 },
@@ -38,7 +38,7 @@ parts.deep_laser = { type = "accessory_mount",
     -- accessory 由护木的 optic_mount.accepts 决定。
     provides = { "accessory" },
     item = { identifier = "deep_laser" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.03 },
+    stats = { Ergonomics = -8 },
     visual = { 
         texture = laserTexture,
         source = { x = 21, y = 9, w = 134, h = 93 },
