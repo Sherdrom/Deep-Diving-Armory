@@ -30,7 +30,7 @@ parts.deep_advanced_buffer_tube = {
     nameKey = "deep.gunsmith.part.deep_advanced_buffer_tube",
     provides = { "AR_buffer_tube" },
     item = { identifier = "deep_advanced_buffer_tube" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 15, RangedSpreadReduction = 0.05 },
     visual = { texture = texture,
         source = { x = 8, y = 82, w = 109, h = 24 },
         attachPoint = { x = 106, y = 12 },
