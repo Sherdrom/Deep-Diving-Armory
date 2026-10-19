@@ -105,6 +105,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpawnBlindBox.lua")--随�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI随机切换武器
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeathEquipmentRecycling.lua")--死亡装备回收(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血（有character性能问题）(暂时用不到)
