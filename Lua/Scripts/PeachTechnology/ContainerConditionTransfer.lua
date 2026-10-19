@@ -110,6 +110,13 @@ local CONFIG = {
 
         -- 钛制弹药
         {
+            target = { tag = "tit_ammobox_reload_0_25" },
+            source = "ammobox_7.62",
+            gainPerSecond = 100.0,
+            drainPerSecond = 25.0,
+            fullCondition = 100.0,
+        },
+        {
             target = { tag = "tit_ammobox_reload_0_5" },
             source = "ammobox_7.62",
             gainPerSecond = 100.0,
@@ -174,6 +181,13 @@ local CONFIG = {
         },
 
         -- 刚素弹药
+        {
+            target = { tag = "phy_ammobox_reload_0_25" },
+            source = "ammobox_12.7",
+            gainPerSecond = 100.0,
+            drainPerSecond = 25.0,
+            fullCondition = 100.0,
+        },
         {
             target = { tag = "phy_ammobox_reload_0_5" },
             source = "ammobox_12.7",
