@@ -158,7 +158,7 @@
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
   </Item>
-  <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false">
+  <Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="deep_condition_transfer,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
@@ -213,27 +213,27 @@
       </SubContainer>
 
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox" />
+        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
     </ItemContainer>
   </Item>
 
-  <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false">
+  <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="deep_condition_transfer,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
@@ -253,671 +253,56 @@
         <Conditional attached="false" />
       </StatusEffect>
     </Holdable>
-    <ItemContainer capacity="0" maxstacksize="1" slotsperrow="4" hideitems="true" itempos="48,-175" canbeselected="true">
-      <GuiFrame relativesize="0.2,0.5" anchor="Center" style="ItemUI" />
+    <ItemContainer capacity="0" maxstacksize="1" slotsperrow="6" hideitems="true" itempos="48,-175" canbeselected="true">
+      <GuiFrame relativesize="0.3,0.5" anchor="Center" style="ItemUI" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
       <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
       <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
-      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
-      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
+      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
+      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui3.png" sourcerect="4,246,128,121" origin="0.5,0.5" />
       <SlotIcon slotindex="6" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
       <SlotIcon slotindex="7" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
+      <SlotIcon slotindex="8" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
+      <SlotIcon slotindex="9" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
+      <SlotIcon slotindex="10" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
+      <SlotIcon slotindex="11" texture="%ModDir%/misc/ui3.png" sourcerect="151,254,92,112" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷修复，4主板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，4附加板，修复一板消耗22.22% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-22.22">
-            <Requireditem items="deep_plate_ceramic_addition_repair_22" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，5主板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_repair_28" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，5附加板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_addition_repair_25" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_repair_33" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_repair_40" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_repair_50" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-66.6">
-            <Requireditem items="deep_plate_ceramic_repair_66" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-100">
-            <Requireditem items="deep_plate_ceramic_repair_100" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-33.33">
-            <Requireditem items="deep_plate_composite_repair_33" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-28.5">
-            <Requireditem items="deep_plate_composite_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-40">
-            <Requireditem items="deep_plate_composite_repair_40" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-33.3">
-            <Requireditem items="deep_plate_composite_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-50">
-            <Requireditem items="deep_plate_composite_repair_50" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-40">
-            <Requireditem items="deep_plate_composite_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-66.6">
-            <Requireditem items="deep_plate_composite_repair_66" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-50">
-            <Requireditem items="deep_plate_composite_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="0" Condition="-100">
-            <Requireditem items="deep_plate_composite_repair_100" excludefullcondition="true" type="Contained" targetslot="4" />
-          </StatusEffect>
-        </Containable>
-
-
-
-
-
+        <Containable items="deep_plate_repair_tool"/>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷修复，4主板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，4附加板，修复一板消耗22.22% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-22.22">
-            <Requireditem items="deep_plate_ceramic_addition_repair_22" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，5主板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_repair_28" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，5附加板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_addition_repair_25" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_repair_33" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_repair_40" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_repair_50" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-66.6">
-            <Requireditem items="deep_plate_ceramic_repair_66" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-100">
-            <Requireditem items="deep_plate_ceramic_repair_100" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-33.33">
-            <Requireditem items="deep_plate_composite_repair_33" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-28.5">
-            <Requireditem items="deep_plate_composite_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-40">
-            <Requireditem items="deep_plate_composite_repair_40" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-33.3">
-            <Requireditem items="deep_plate_composite_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-50">
-            <Requireditem items="deep_plate_composite_repair_50" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-40">
-            <Requireditem items="deep_plate_composite_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-66.6">
-            <Requireditem items="deep_plate_composite_repair_66" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-50">
-            <Requireditem items="deep_plate_composite_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="1" Condition="-100">
-            <Requireditem items="deep_plate_composite_repair_100" excludefullcondition="true" type="Contained" targetslot="5" />
-          </StatusEffect>
-        </Containable>
-
-
-
-
+        <Containable items="deep_plate_repair_tool"/>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷修复，4主板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，4附加板，修复一板消耗22.22% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-22.22">
-            <Requireditem items="deep_plate_ceramic_addition_repair_22" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，5主板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_repair_28" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，5附加板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_addition_repair_25" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_repair_33" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_repair_40" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_repair_50" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-66.6">
-            <Requireditem items="deep_plate_ceramic_repair_66" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-100">
-            <Requireditem items="deep_plate_ceramic_repair_100" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-33.33">
-            <Requireditem items="deep_plate_composite_repair_33" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-28.5">
-            <Requireditem items="deep_plate_composite_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-40">
-            <Requireditem items="deep_plate_composite_repair_40" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-33.3">
-            <Requireditem items="deep_plate_composite_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-50">
-            <Requireditem items="deep_plate_composite_repair_50" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-40">
-            <Requireditem items="deep_plate_composite_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-66.6">
-            <Requireditem items="deep_plate_composite_repair_66" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-50">
-            <Requireditem items="deep_plate_composite_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="2" Condition="-100">
-            <Requireditem items="deep_plate_composite_repair_100" excludefullcondition="true" type="Contained" targetslot="6" />
-          </StatusEffect>
-        </Containable>
-
-
-
+        <Containable items="deep_plate_repair_tool"/>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷修复，4主板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_repair_25" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，4附加板，修复一板消耗22.22% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-22.22">
-            <Requireditem items="deep_plate_ceramic_addition_repair_22" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，5主板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_repair_28" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，5附加板，修复一板消耗25% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-25" disableDeltaTime="false">
-            <Requireditem items="deep_plate_ceramic_addition_repair_25" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_repair_33" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-28.5">
-            <Requireditem items="deep_plate_ceramic_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_repair_40" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-33.33">
-            <Requireditem items="deep_plate_ceramic_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_repair_50" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-40">
-            <Requireditem items="deep_plate_ceramic_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-66.6">
-            <Requireditem items="deep_plate_ceramic_repair_66" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--陶瓷修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-50">
-            <Requireditem items="deep_plate_ceramic_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--陶瓷修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_ceramic" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-100">
-            <Requireditem items="deep_plate_ceramic_repair_100" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，6主板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-33.33">
-            <Requireditem items="deep_plate_composite_repair_33" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，6附加板，修复一板消耗28.5% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-28.5">
-            <Requireditem items="deep_plate_composite_addition_repair_28" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，7主板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-40">
-            <Requireditem items="deep_plate_composite_repair_40" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，7附加板，修复一板消耗33.3% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-33.3">
-            <Requireditem items="deep_plate_composite_addition_repair_33" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，8主板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-50">
-            <Requireditem items="deep_plate_composite_repair_50" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，8附加板，修复一板消耗40% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-40">
-            <Requireditem items="deep_plate_composite_addition_repair_40" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，9主板，修复一板消耗66.6% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-66.6">
-            <Requireditem items="deep_plate_composite_repair_66" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-        <!--复合修复，9附加板，修复一板消耗50% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-50">
-            <Requireditem items="deep_plate_composite_addition_repair_50" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合修复，10主板，修复一板消耗100% -->
-        <Containable items="deep_plate_repair_tool_composite" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="3" Condition="-100">
-            <Requireditem items="deep_plate_composite_repair_100" excludefullcondition="true" type="Contained" targetslot="7" />
-          </StatusEffect>
-        </Containable>
-
-
-
+        <Containable items="deep_plate_repair_tool"/>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷板-->
-        <Containable items="deep_plate_ceramic,deep_plate_ceramic_arm,deep_plate_ceramic_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_ceramic" type="Contained" targetslot="0" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合板-->
-        <Containable items="deep_plate_composite,deep_plate_composite_arm,deep_plate_composite_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="4" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_composite" type="Contained" targetslot="0" />
-          </StatusEffect>
-        </Containable>
-
+        <Containable items="deep_plate_repair_tool"/>
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷板-->
-        <Containable items="deep_plate_ceramic,deep_plate_ceramic_arm,deep_plate_ceramic_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_ceramic" type="Contained" targetslot="1" />
-          </StatusEffect>
-        </Containable>
+        <Containable items="deep_plate_repair_tool"/>
+      </SubContainer>
 
-        <!--复合板-->
-        <Containable items="deep_plate_composite,deep_plate_composite_arm,deep_plate_composite_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="5" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_composite" type="Contained" targetslot="1" />
-          </StatusEffect>
-        </Containable>
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷板-->
-        <Containable items="deep_plate_ceramic,deep_plate_ceramic_arm,deep_plate_ceramic_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_ceramic" type="Contained" targetslot="2" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合板-->
-        <Containable items="deep_plate_composite,deep_plate_composite_arm,deep_plate_composite_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="6" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_composite" type="Contained" targetslot="2" />
-          </StatusEffect>
-        </Containable>
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <!--陶瓷板-->
-        <Containable items="deep_plate_ceramic,deep_plate_ceramic_arm,deep_plate_ceramic_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_ceramic" type="Contained" targetslot="3" />
-          </StatusEffect>
-        </Containable>
-
-        <!--复合板-->
-        <Containable items="deep_plate_composite,deep_plate_composite_arm,deep_plate_composite_groin" excludebroken="false" excludefullcondition="false">
-          <StatusEffect type="OnContaining" target="Contained" targetslot="7" Condition="100">
-            <Requireditem items="deep_plate_repair_tool_composite" type="Contained" targetslot="3" />
-          </StatusEffect>
-        </Containable>
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
+      </SubContainer>
+      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
+        <Containable items="deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
     </ItemContainer>
   </Item>

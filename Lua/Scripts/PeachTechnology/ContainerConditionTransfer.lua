@@ -38,7 +38,7 @@ local CONFIG = {
     debug = false,
     -- 容器定义: identifier 与 tag 二选一, 可混用多条
     containers = {
-        { identifier = "ammoreload_machine" },
+        { tag = "deep_condition_transfer" },
         -- { tag = "magpress" },
     },
     -- 配方: 同容器内 target 耐久渐进增加, source 耐久渐进减少
@@ -511,6 +511,109 @@ local CONFIG = {
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
         },
+
+        -- 陶瓷修理包
+        {
+            target = { tag = "ceramic_repair_tool_22" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 22.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_25" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 25.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_28_5" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 28.5,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_33" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 33.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_40" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 40.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_50" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 50.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_66" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 66.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "ceramic_repair_tool_100" },
+            source = "deep_plate_repair_tool_ceramic",
+            gainPerSecond = 100.0,
+            drainPerSecond = 100.0,
+            fullCondition = 100.0,
+        },
+
+        -- 复合修理包
+        {
+            target = { tag = "composite_repair_tool_28_5" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 28.5,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "composite_repair_tool_33" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 33.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "composite_repair_tool_40" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 40.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "composite_repair_tool_50" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 50.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "composite_repair_tool_66" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 66.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "composite_repair_tool_100" },
+            source = "deep_plate_repair_tool_composite",
+            gainPerSecond = 100.0,
+            drainPerSecond = 100.0,
+            fullCondition = 100.0,
+        },
+
         -- 新增配方: 复制以下模板并填写
         -- {
         --     target = "magazine_identifier",   -- 或 { tag = "magazine_tag" }
