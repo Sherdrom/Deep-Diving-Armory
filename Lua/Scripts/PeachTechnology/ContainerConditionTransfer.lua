@@ -117,6 +117,13 @@ local CONFIG = {
             fullCondition = 100.0,
         },
         {
+            target = { tag = "tit_ammobox_reload_0_33" },
+            source = "ammobox_7.62",
+            gainPerSecond = 100.0,
+            drainPerSecond = 18.75,
+            fullCondition = 100.0,
+        },
+        {
             target = { tag = "tit_ammobox_reload_0_5" },
             source = "ammobox_7.62",
             gainPerSecond = 100.0,
@@ -186,6 +193,13 @@ local CONFIG = {
             source = "ammobox_12.7",
             gainPerSecond = 100.0,
             drainPerSecond = 25.0,
+            fullCondition = 100.0,
+        },
+        {
+            target = { tag = "phy_ammobox_reload_0_33" },
+            source = "ammobox_12.7",
+            gainPerSecond = 100.0,
+            drainPerSecond = 18.75,
             fullCondition = 100.0,
         },
         {
