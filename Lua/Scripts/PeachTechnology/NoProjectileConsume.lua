@@ -24,6 +24,15 @@
     mods are completely unaffected - Hook 1 skips tracking their weapons,
     and even another mod using the SRW component keeps vanilla behavior.
 
+    Whitelist (v4.6.4): deep_meteorite (grenade launcher, switchableSlots=0
+    so its MAIN slot is the grenade slot) fires physical rounds. Tracking
+    them made Hook 2 block the mid-funnel DoLaunch Drop (Projectile.cs
+    L550) - the hard prerequisite for leaving the barrel - so the round
+    never left the magazine and every shot was a dry fire. The weapon is
+    excluded from the scope entirely (EXCLUDED_IDENTIFIERS): its rounds
+    consume normally and fly with live physics, exactly like the v4.3
+    underbarrel passthrough but keyed on the weapon prefab.
+
     Tracer fix (v4.5): hitscan tracers vanished when a shooter INSIDE a hull
     hit a target in open water (or inside another sub), while misses and
     same-sub hits rendered fine. Root cause is a coordinate-space mismatch
@@ -68,10 +77,49 @@
     restore hook targets TryLaunch After rather than Use After. Pure
     clients return from TryLaunch before the fetch loop (turret firing is
     server-authoritative, Turret.cs L663), so Hooks 13/14 only do work on
-    the server and in single-player - no new client-side tracking. Unlike
-    SRW, Turret.Launch SetTransforms the barrel position BEFORE
-    Projectile.Use, so Hook 6's restore is not overridden afterwards;
-    Hook 14 repeats it anyway as the final word (parity with Hook 8).
+    the server and in single-player - no new client-side tracking. Note
+    Hook 6 does not fire for turret bolts at all: Turret.Launch calls the
+    (Character, float) Projectile.Use overload (L448), not the
+    (float, Character) override Hook 6 patches for handheld weapons.
+
+    Turret dry-fire fix (v4.6.2): v4.6.1 tracked the bolt at Turret.Launch
+    entry, so Hook 2 blocked the Launch-internal Drop (Turret.cs L900,
+    setTransform: false) that detaches the bolt from the ammo box BEFORE
+    Projectile.Use. Handheld weapons never hit this: their Drop calls sit
+    mid-funnel (Projectile.cs DoHitscan L593 / DoLaunch L550), after hit
+    resolution. For the turret the pre-Use Drop is a hard prerequisite of
+    the vanilla launch path - blocking it diverged every downstream step
+    and produced dry fire: sounds and muzzle particles (the turret's own
+    OnUse effects) played, but no ray, no damage. Fix: the launch path now
+    runs byte-identical to vanilla - the L900 Drop passes, the bolt is
+    tracked later (Hook 13b at the (Character, float) Projectile.Use
+    entry, still before the per-ray loop) and re-contained into the ammo
+    box by Hook 14 once TryLaunch completes (Inventory.TryPutItem, 4-arg
+    pattern verified in AutoRecycleLoot.lua). DoHitscan leaves IsActive =
+    true and vanilla never resets it (vanilla bolts get removed instead),
+    so Hook 14 explicitly clears it - the L453 "can't launch if already
+    launched" guard would otherwise dry-fire every relaunch of the reused
+    bolt. All three deep M2 bolt variants are hitscan="true" in
+    turret.xml; non-hitscan projectiles still pass through vanilla
+    (Hook 13b checks the Hitscan property) so a future physical variant
+    never gets teleported back mid-flight.
+
+    Empty-box passthrough (v4.6.3): with v4.6.2's re-containment a drained
+    box kept firing forever. The XML is NOT at fault - vanilla's empty-box
+    stop relies on the box going dry: Item.Use (Item.cs L3378) blocks the
+    box's OnUse SpawnItem at condition 0 while vanilla bolts despawn on
+    hit, so GetLoadedProjectiles eventually finds nothing. But
+    CheckProjectileContainer (Turret.cs L1918) only durability-checks the
+    DIRECT containers it walks (the turret itself, then each linked
+    loader) - the ammo box INSIDE the loader has no such check (L1944's
+    condition only bounds the search, it does not gate bolt collection),
+    so a re-contained bolt keeps GetLoadedProjectiles fed at box
+    condition 0 and defeats the dry state. Fix: Hook 13 checks
+    boxItem.Condition <= 0 before the handoff and leaves that bolt fully
+    vanilla - no tracking, no re-containment - so it fires and despawns
+    (removeonhit / OnNotContained) without being returned; a truly empty
+    box now runs dry and gets swapped, and any bolt still inside when the
+    box drains is fired off as residual ammo, matching vanilla behavior.
 
     Scope decision: the ammo box's OnUse economy (per-shot SpawnItem +
     condition drain) is deliberately NOT blocked. The script prevents BOLT
@@ -197,6 +245,15 @@ end
 -- downstream hook (2-10) via the trackedItems lookup untouched, so vanilla
 -- and other mods keep 100% vanilla behavior. Result cached per prefab
 -- object - one string compare per weapon prefab per session, O(1) per shot.
+--
+-- v4.6.4 whitelist: deep-package weapons that must NOT be protected.
+-- deep_meteorite fires physical grenades from its MAIN slot; tracking its
+-- rounds makes Hook 2 block DoLaunch's Drop (Projectile.cs L550) and the
+-- weapon dry-fires. Excluded weapons consume ammo and fly vanilla.
+local EXCLUDED_IDENTIFIERS = {
+    ["deep_meteorite"] = true,
+}
+
 local scopedPrefabs = {}
 
 local function IsScopedWeapon(item)
@@ -206,6 +263,7 @@ local function IsScopedWeapon(item)
     if cached == nil then
         local pkg = prefab.ContentPackage
         cached = pkg ~= nil and pkg.Name == MOD_PACKAGE_NAME
+            and not EXCLUDED_IDENTIFIERS[tostring(prefab.Identifier)]
         scopedPrefabs[prefab] = cached
     end
     return cached
@@ -719,32 +777,28 @@ if not SERVER then
 end
 
 ----------------------------------------------------------------------
--- Hook 13: Before Turret.Launch - capture turret bolts (v4.6.1)
+-- Hook 13: Before Turret.Launch - pending handoff (v4.6.2)
 --   Engine Turret.TryLaunch never calls FindProjectile: it fetches the
 --   bolt from the linked loader's ammo box (private GetLoadedProjectiles,
 --   only callers TryLaunch L699/L733), triggers the box's OnUse replenish,
 --   then calls the private Launch() which runs the standard funnel:
 --   item.Drop -> SetTransform(barrel) -> Projectile.Use (hitscan) ->
---   Item.RemoveContained. Launch's entry is the last point BEFORE any
---   funnel step executes, so capturing its projectile parameter tracks
---   precisely the bolt about to fire - what Hooks 2-7 require.
+--   Item.RemoveContained.
 --
---   v4.6.1 fix: the original capture point (GetLoadedProjectiles After)
---   crashed with "arithmetic on a nil value" on the first shot - MoonSharp
---   does not marshal the returned List<Projectile> through the hook
---   ParameterTable as accessible userdata (the safe descriptor silently
---   yields nil for .Count). Launch's `projectile` parameter is a plain
---   Item userdata, the same access pattern every other hook uses here.
+--   v4.6.2: this hook NO LONGER tracks the bolt. Turret.Launch's own Drop
+--   (Turret.cs L900) detaches the bolt from the box BEFORE the hitscan
+--   and is a hard prerequisite of the vanilla launch path - blocking it
+--   (v4.6.1 tracked here, so Hook 2 blocked the Drop) caused dry fire.
+--   Instead this hook only clears stale tracking (a re-fired bolt still
+--   carries its previous shot's entry, which would block the L900 Drop
+--   again) and hands the bolt to Hook 13b via pendingItem, which does the
+--   actual tracking AFTER the Drop, right before the per-ray loop.
 --
 --   Package scope follows the TURRET prefab (IsScopedWeapon): vanilla
---   coilguns/railguns and other mods' turrets are never tracked. The bolt
---   must be inside a container (its ammo box) to be tracked; the box Item
---   is stored as the tracked value so Hook 6/14 can restore position into
---   it.
---
---   Pure clients never reach Launch (TryLaunch returns before the fetch
---   loop - turret firing is server-authoritative), so this hook only does
---   work on the server and in single-player.
+--   coilguns/railguns and other mods' turrets are never touched. Pure
+--   clients never reach Launch (TryLaunch returns before the fetch loop -
+--   turret firing is server-authoritative), so this hook only does work
+--   on the server and in single-player.
 --
 --   parameterTypes = nil: Turret declares exactly one Launch (the private
 --   funnel entry); name-only lookup resolves it via the NonPublic flag.
@@ -766,9 +820,28 @@ Hook.Patch(
             return
         end
 
+        -- a re-fired bolt still carries its previous shot's tracking;
+        -- clear it so the L900 Drop below passes unblocked
+        trackedItems[projItem] = nil
+
         local boxItem = projItem.Container
         if boxItem == nil then
             Log("TurretCapture", "uncontained bolt, skip")
+            pendingItem = nil
+            return
+        end
+
+        -- Empty-box passthrough (v4.6.3): the box's condition IS the ammo
+        -- meter. Vanilla's dry state relies on Item.Use (Item.cs L3378)
+        -- blocking the OnUse SpawnItem at condition 0 while bolts despawn
+        -- on hit, but CheckProjectileContainer (Turret.cs L1918) never
+        -- durability-checks the box inside the loader - re-containing a
+        -- bolt (Hook 14) would keep GetLoadedProjectiles fed forever and
+        -- defeat the empty box. Leave this bolt completely vanilla: no
+        -- tracking, no re-containment, it fires and despawns on its own.
+        if boxItem.Condition <= 0.0 then
+            pendingItem = nil
+            Log("TurretCapture", "ammo box empty, vanilla passthrough")
             return
         end
 
@@ -778,28 +851,79 @@ Hook.Patch(
             ScheduleRenew(pendingItem.item)
         end
 
-        trackedItems[projItem] = boxItem
         pendingItem = { item = projItem, magazine = boxItem }
-        Log("TurretCapture", "tracked " .. tostring(projItem) .. " from box "
+        Log("TurretCapture", "pending " .. tostring(projItem) .. " from box "
             .. tostring(boxItem) .. " on " .. tostring(turretItem))
     end,
     Hook.HookMethodType.Before
 )
 
 ----------------------------------------------------------------------
--- Hook 14: After Turret.TryLaunch - final state restore + renew (v4.6)
+-- Hook 13b: Before Projectile.Use(Character, float) - funnel entry capture
+--   (v4.6.2) Turret.Launch L937 calls the (Character, float) overload
+--   (Projectile.cs L448) with a null character - a DIFFERENT method from
+--   the (float, Character) override Hook 6 patches for handheld weapons.
+--   This hook fires after the L900 Drop (bolt already detached from the
+--   box) and before the per-ray loop (DoHitscan at L491), so tracking
+--   here still covers the whole funnel: Hook 2 blocks the in-funnel Drop
+--   (a no-op for the already-detached bolt, same as handheld weapons),
+--   Hook 4 blocks the delayed removal-queue add, and the v4.5 tracer fix
+--   (Hooks 11/12) applies to the turret's rays.
+--
+--   Non-hitscan bolts are left completely vanilla: tracking one would
+--   make Hook 14 teleport a live flying shell back into the box. All
+--   current deep M2 bolt variants are hitscan="true" (turret.xml); the
+--   check just guards future physical variants.
+----------------------------------------------------------------------
+Hook.Patch(
+    "NoProjectileConsume.TurretFunnelCapture",
+    "Barotrauma.Items.Components.Projectile",
+    "Use",
+    {"Barotrauma.Character", "System.Single"},
+    function(instance, ptable)
+        local pi = pendingItem
+        if pi == nil then return end
+
+        local bolt = pi.item
+        if bolt ~= instance.Item then return end
+
+        if not instance.Hitscan then
+            pendingItem = nil
+            Log("TurretCapture", "non-hitscan bolt, vanilla passthrough")
+            return
+        end
+
+        if trackedItems[bolt] == nil then
+            trackedItems[bolt] = pi.magazine
+        end
+        pi.component = instance
+        Log("TurretCapture", "tracked " .. tostring(bolt) .. " at funnel entry")
+    end,
+    Hook.HookMethodType.Before
+)
+
+----------------------------------------------------------------------
+-- Hook 14: After Turret.TryLaunch - re-containment + renew (v4.6.2)
 --   TryLaunch is reached from THREE paths: Turret.Use (periscope/character),
 --   the trigger_in signal handler (deep_m2_turret is characterusable=false,
 --   so the signal path calls TryLaunch directly, Turret.cs L2025), and AI
 --   auto-operate (L1201). A Use After hook would miss the latter two, so
 --   TryLaunch After is the single point following every launch loop.
 --
---   The funnel's own position restore already happened in Hook 6
---   (Turret.Launch SetTransforms the barrel position BEFORE Projectile.Use,
---   unlike SRW which does it after - nothing re-moves the bolt past
---   Hook 6). This hook repeats Hook 8's restore anyway as the final word
---   and hands the bolt to the renew cycle. Dry fires (no ammo/power/
---   reload gate) never set pendingItem, so they no-op here.
+--   v4.6.2: the launch path ran vanilla (the L900 Drop passed), so the
+--   bolt is now OUT of the box, at the hit position with the removeonhit
+--   state (body disabled, HiddenInGame). Re-contain it into the ammo box:
+--   untrack first so our own PutItem guards (Hooks 9/10) don't block the
+--   insertion, TryPutItem (4-arg pattern verified in AutoRecycleLoot.lua),
+--   retrack, renew. If the box is gone the fallback parks the bolt at the
+--   box's last position in the world, where the 1s OnNotContained
+--   self-remove cleans it up and the box's per-shot SpawnItem replenish
+--   keeps the ammo flow alive.
+--
+--   IsActive is explicitly cleared: DoHitscan sets it (Projectile.cs
+--   L600) and vanilla never resets it (vanilla bolts are removed instead)
+--   - the L453 "can't launch if already launched" guard would dry-fire
+--   every relaunch of the reused bolt.
 --
 --   parameterTypes = nil: TryLaunch has no overloads, name-only lookup
 --   (ResolveMethod's NonPublic flag covers the private declaration).
@@ -813,23 +937,41 @@ Hook.Patch(
         local pi = pendingItem
         pendingItem = nil
 
-        if pi ~= nil then
-            local item = pi.item
-            local boxItem = pi.magazine
+        if pi == nil then return end
 
+        local item = pi.item
+        local boxItem = pi.magazine
+        local pc = pi.component
+
+        -- physical bolts: Hook 13b cleared the handoff, vanilla passthrough
+        if trackedItems[item] == nil then
+            Log("TurretLaunch", "untracked bolt, no re-containment")
+            return
+        end
+
+        if pc ~= nil then
+            pc.IsActive = false
+        end
+        if item.HiddenInGame then
+            item.HiddenInGame = false
+        end
+
+        -- untrack so Hooks 9/10 let our own re-containment through
+        trackedItems[item] = nil
+        local boxInv = boxItem ~= nil and boxItem.OwnInventory or nil
+        if boxInv ~= nil and boxInv:TryPutItem(item, nil, nil, true) then
+            Log("TurretLaunch", "re-contained " .. tostring(item) .. " into " .. tostring(boxItem))
+        else
             if item.body ~= nil then
                 item.body.Enabled = false
-            end
-            if item.HiddenInGame then
-                item.HiddenInGame = false
             end
             if boxItem ~= nil and boxItem.SimPosition ~= nil then
                 item.SetTransform(boxItem.SimPosition, 0.0, true, true, boxItem.Submarine)
             end
-
-            Log("TurretLaunch", "restored " .. tostring(item) .. " into " .. tostring(boxItem))
-            ScheduleRenew(item)
+            Log("TurretLaunch", "re-contain failed, parked at box position")
         end
+        trackedItems[item] = boxItem
+        ScheduleRenew(item)
     end,
     Hook.HookMethodType.After
 )
