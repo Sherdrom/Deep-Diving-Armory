@@ -186,6 +186,7 @@ end
 local vceWarningBox
 local function warnMissingVce(character, item)
     if not CLIENT or character ~= Character.Controlled then return end
+    if not isDdaItem(item) then return end
     if vceWarningBox and not vceWarningBox.Closed then return end
     if not item.HasTag("gun")
         or item.GetComponentString("RangedWeapon")
@@ -201,6 +202,12 @@ local function afflictionList(value)
     if not value then return {} end
     if value.id then return { value } end
     return value
+end
+
+local function findAfflictionPrefab(identifier)
+    if not identifier then return nil end
+    local found, prefab = AfflictionPrefab.Prefabs.TryGet(identifier)
+    if found then return prefab end
 end
 
 local fallbackStates = {}
@@ -275,7 +282,7 @@ local function validateEffectConfig(itemId, cfg)
         end
     end
     for _, affliction in ipairs(afflictionList(cfg.affliction)) do
-        if not affliction.id or not AfflictionPrefab.Prefabs[affliction.id] then
+        if not findAfflictionPrefab(affliction.id) then
             warn("invalid Affliction", itemId, tostring(affliction.id))
         end
     end
@@ -305,7 +312,7 @@ local function validateConfig()
         if type(cfg.timeout) ~= "number" or cfg.timeout <= 0 then
             warn("invalid legacy Affliction timeout", afflictionId, tostring(cfg.timeout))
         end
-        if not AfflictionPrefab.Prefabs[afflictionId] then
+        if not findAfflictionPrefab(afflictionId) then
             warn("legacy Affliction prefab not found", afflictionId)
         end
         for _, effect in ipairs(cfg.effects or { cfg }) do
@@ -553,7 +560,7 @@ local function acquireAfflictions(state, configured)
 
     local head = character.AnimController and character.AnimController:GetLimb(LimbType.Head) or nil
     for _, cfg in ipairs(afflictionList(configured)) do
-        local prefab = cfg.id and AfflictionPrefab.Prefabs[cfg.id]
+        local prefab = findAfflictionPrefab(cfg.id)
         if prefab then
             local ref = state.afflictionRefs[cfg.id]
             if not ref then
@@ -611,7 +618,7 @@ local function refreshAfflictions(state)
             local before = health:GetAfflictionStrengthByIdentifier(id)
             local instance = health:GetAffliction(id, true)
             if not instance then
-                local prefab = AfflictionPrefab.Prefabs[id]
+                local prefab = findAfflictionPrefab(id)
                 if prefab then
                     health:ApplyAffliction(head, prefab:Instantiate(ref.target))
                     instance = health:GetAffliction(id, true)

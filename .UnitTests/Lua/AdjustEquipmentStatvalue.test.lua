@@ -134,6 +134,15 @@ AfflictionPrefab = {
         chip_cqb_1 = migratedLegacyPrefab,
     },
 }
+function AfflictionPrefab.Prefabs.TryGet(identifier)
+    local prefab = rawget(AfflictionPrefab.Prefabs, identifier)
+    return prefab ~= nil, prefab
+end
+setmetatable(AfflictionPrefab.Prefabs, {
+    __index = function(_, identifier)
+        error("The given key '" .. identifier .. "' was not present in the dictionary.")
+    end,
+})
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
@@ -142,6 +151,7 @@ _G.AdjustEquipmentConfig = {
     wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag },
     weaponSlots = { InvSlotType.LeftHand, InvSlotType.RightHand },
     mainItems = {
+        missing_affliction_armor = { affliction = { id = "missing_marker" } },
         armor = {
             stats = {
                 { statType = "MovementSpeed", value = 2 },
@@ -246,6 +256,7 @@ _G.AdjustEquipmentConfig = {
         },
     },
     legacyAfflictions = {
+        deep_chip_blaster_equipped = { timeout = 1.25 },
         legacy_marker = {
             timeout = 2.0,
             stats = { { statType = "MovementSpeed", value = 13 } },
@@ -443,7 +454,21 @@ noneArmor.contents = { noneModule }
 slots[InvSlotType.OuterClothes] = noneArmor
 
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
-events.loaded()
+do
+    local originalPrint, warnings = print, {}
+    print = function(_, message, ...) warnings[message] = { ... } end
+    local serverOk, serverErr, clientOk, clientErr
+    CLIENT = false
+    serverOk, serverErr = pcall(events.loaded)
+    CLIENT = true
+    clientOk, clientErr = pcall(events.loaded)
+    print = originalPrint
+    assert(serverOk, serverErr)
+    assert(clientOk, clientErr)
+    assert(warnings["invalid Affliction"][2] == "missing_marker", "missing effect prefab was not reported")
+    assert(warnings["legacy Affliction prefab not found"][1] == "deep_chip_blaster_equipped",
+        "missing legacy prefab was not reported")
+end
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
 assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was not reset on load")
 assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
@@ -789,17 +814,34 @@ vanillaGun.components.RangedWeapon = {}
 vanillaGun.rootOwner = character
 slots[InvSlotType.LeftHand] = vanillaGun
 equip(vanillaGun, { character = character })
-assert(#warningMessages == 0, "vanilla DDA weapon triggered the VCE warning")
+assert(#warningMessages == 0, "vanilla weapon triggered the VCE warning")
+
+local thirdPartyGun = makeItem("third_party_gun")
+thirdPartyGun.Prefab.ContentPackage = { Name = "Other weapons" }
+thirdPartyGun.tags.gun = true
+thirdPartyGun.rootOwner = character
+slots[InvSlotType.LeftHand] = thirdPartyGun
+equip(thirdPartyGun, { character = character })
+assert(#warningMessages == 0, "third-party weapon without a RangedWeapon component triggered the VCE warning")
+thirdPartyGun.Prefab.ContentPackage = nil
+equip(thirdPartyGun, { character = character })
+assert(#warningMessages == 0, "weapon without a content package triggered the VCE warning")
 
 local vceGun = makeItem("vce_gun")
+vceGun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
 vceGun.tags.gun = true
 vceGun.components.RangedWeapon = {}
 vceGun.rootOwner = character
 slots[InvSlotType.LeftHand] = vceGun
 equip(vceGun, { character = character })
 assert(#warningMessages == 0, "installed VCE triggered the VCE warning")
+vceGun.components.RangedWeapon = nil
+vceGun.components.SwitchableRangedWeapon = {}
+equip(vceGun, { character = character })
+assert(#warningMessages == 0, "switchable DDA weapon triggered the VCE warning")
 
 local missingVceGun = makeItem("missing_vce_gun")
+missingVceGun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
 missingVceGun.tags.gun = true
 missingVceGun.rootOwner = character
 slots[InvSlotType.LeftHand] = missingVceGun
@@ -810,6 +852,17 @@ warningBox.Closed = true
 equip(missingVceGun, { character = character })
 assert(#warningMessages == 2, "VCE warning did not reopen after the previous box closed")
 slots[InvSlotType.LeftHand] = nil
+
+do
+    local missingArmor = makeItem("missing_affliction_armor")
+    missingArmor.rootOwner = character
+    slots[InvSlotType.OuterClothes] = missingArmor
+    equip(missingArmor, { character = character })
+    assert(health:GetAfflictionStrengthByIdentifier("missing_marker") == 0,
+        "missing prefab unexpectedly applied an affliction")
+    slots[InvSlotType.OuterClothes] = nil
+    unequip(missingArmor, { character = character })
+end
 
 local nestedHost = makeItem("nested_host")
 nestedHost.rootOwner = setmetatable({}, {
@@ -836,6 +889,10 @@ for _ = 1, 3 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not repair lowered affliction")
 assert(health.afflictions.marker.Duration == 4, "fallback did not maintain timed affliction")
 health.afflictions.marker = nil
+AfflictionPrefab.Prefabs.marker = nil
+for _ = 1, 4 do tick() end
+assert(health.afflictions.marker == nil, "missing prefab unexpectedly repaired an affliction")
+AfflictionPrefab.Prefabs.marker = markerPrefab
 for _ = 1, 4 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not restore removed affliction")
 
