@@ -22,7 +22,7 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.0.x
 
       - name: Run Lua tests
         shell: bash
@@ -104,6 +104,61 @@ jobs:
           print(f"Verified {len(assemblies)} DLLs and matching deps.json files.")
           PY
 
+      - name: Check release package
+        shell: bash
+        run: &package_release |
+          python3 - "$RUNNER_TEMP/mod" "$RUNNER_TEMP/Deep-Diving-Armory.zip" <<'PY'
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+          import xml.etree.ElementTree as ET
+          from zipfile import ZIP_DEFLATED, ZipFile
+
+
+          def package_release(repo_root, deploy_root, archive):
+              required = set()
+              for assembly in ET.parse(repo_root / "ModConfig.xml").getroot().findall("./Assembly"):
+                  relative = assembly.attrib["File"].replace("%ModDir%", "", 1).lstrip("/\\")
+                  dll = Path(relative.replace("\\", "/"))
+                  required.update((dll, dll.with_suffix(".deps.json")))
+              missing = sorted(str(path) for path in required if not (deploy_root / path).is_file())
+              if missing:
+                  raise ValueError("Missing freshly built files:\n" + "\n".join(missing))
+
+              tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=repo_root).split(b"\0")
+              files = {}
+              for raw_path in tracked:
+                  if not raw_path:
+                      continue
+                  path = Path(os.fsdecode(raw_path))
+                  if path.parts[0] != "bin" and not any(part.startswith(".") for part in path.parts):
+                      files[path] = repo_root / path
+              # Never fall back to checked-in binaries: only this build's output is shipped.
+              for path in (deploy_root / "bin").rglob("*"):
+                  if path.is_file():
+                      files[path.relative_to(deploy_root)] = path
+
+              with ZipFile(archive, "w", ZIP_DEFLATED) as release:
+                  for relative, source in sorted(files.items()):
+                      release.write(source, relative.as_posix())
+
+              with ZipFile(archive) as release:
+                  names = set(release.namelist())
+                  hidden = [name for name in names if any(part.startswith(".") for part in Path(name).parts)]
+                  missing = sorted(path.as_posix() for path in required if path.as_posix() not in names)
+                  if hidden or missing:
+                      raise ValueError(f"Invalid release archive: hidden={hidden}, missing={missing}")
+                  corrupt = release.testzip()
+                  if corrupt:
+                      raise ValueError("Corrupt release entry: " + corrupt)
+              print(f"Packaged {len(files)} files; verified {len(required)} assembly outputs.")
+
+
+          if __name__ == "__main__":
+              package_release(Path.cwd(), Path(sys.argv[1]), Path(sys.argv[2]))
+          PY
+
   release:
     needs: test
     if: startsWith(github.ref, 'refs/tags/')
@@ -119,49 +174,15 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.0.x
 
       - name: Build C# plugins
         shell: bash
-        run: .Tools/build-csharp.sh
+        run: .Tools/build-csharp.sh "$RUNNER_TEMP/mod"
 
       - name: Package release
         shell: bash
-        run: |
-          set -euo pipefail
-          archive="$RUNNER_TEMP/Deep-Diving-Armory.zip"
-          python3 - "$archive" <<'PY'
-          import os
-          from pathlib import Path
-          import subprocess
-          import sys
-          from zipfile import ZIP_DEFLATED, ZipFile
-
-          archive = Path(sys.argv[1])
-          tracked = subprocess.run(
-              ["git", "ls-files", "-z"], check=True, capture_output=True
-          ).stdout.split(b"\0")
-          files = []
-          for raw_path in tracked:
-              if not raw_path:
-                  continue
-              path = Path(os.fsdecode(raw_path))
-              if not any(part.startswith(".") for part in path.parts):
-                  files.append(path)
-
-          with ZipFile(archive, "w", ZIP_DEFLATED) as release:
-              for path in files:
-                  release.write(path, path.as_posix())
-
-          with ZipFile(archive) as release:
-              hidden = [
-                  name for name in release.namelist()
-                  if any(part.startswith(".") for part in Path(name).parts)
-              ]
-          if hidden:
-              raise SystemExit("Release archive contains hidden paths:\n" + "\n".join(hidden))
-          print(f"Packaged {len(files)} files without hidden paths.")
-          PY
+        run: *package_release
 
       - name: Create GitHub release
         env:

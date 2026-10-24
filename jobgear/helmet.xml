@@ -94,6 +94,11 @@
           <LuaHook name="SixBFortySeven_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="SixBFortySeven_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -101,6 +106,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="SixBFortySeven_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -237,6 +245,11 @@
           <LuaHook name="FAST_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="FAST_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -244,6 +257,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -380,6 +396,11 @@
           <LuaHook name="FAST_Ranger_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="FAST_Ranger_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -387,6 +408,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Ranger_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -587,6 +611,11 @@
           <LuaHook name="FAST_Heavy_Trooper_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="FAST_Heavy_Trooper_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -594,6 +623,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Heavy_Trooper_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -732,6 +764,11 @@
           <LuaHook name="FAST_Sledge_Hammer_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="FAST_Sledge_Hammer_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -739,6 +776,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Sledge_Hammer_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -875,6 +915,11 @@
           <LuaHook name="FAST_BLACK_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="FAST_BLACK_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
@@ -882,6 +927,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_BLACK_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -1021,6 +1069,11 @@
           <LuaHook name="GHOST_Health_On" />
           <RequiredItems items="deep_healthscan_helmet" type="Contained" targetslot="0" />
         </StatusEffect>
+        <!-- 检测到友军指示器时，更换对应贴图 -->
+        <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
+          <LuaHook name="GHOST_Firendlyfire_Avoid_Tac" />
+          <RequiredItems items="deep_firendlyfire_avoid_tac" type="Contained" targetslot="0" />
+        </StatusEffect>
       </TickBox>
     </CustomInterface>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" autoinject="true">
@@ -1028,6 +1081,9 @@
         <!-- 插入战术设备时，启动面板 -->
         <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="GHOST_Night_Off" />
+          <RequiredItems items="deep_tac_change_sprite" type="Contained" targetslot="0" />
+        </StatusEffect>
+        <StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
           <sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
         </StatusEffect>
         <!-- 拔出战术设备时，还原贴图，关闭面板 -->
@@ -1276,7 +1332,7 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.05" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
       <sprite texture="%ModDir%/jobgear/helmet/ALTYN.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.55" sourcerect="9,6,128,108" origin="0.52,0.59">
-        <LightComponent LightColor="255,255,255,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+        <LightComponent LightColor="0,255,0,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
       </sprite>
       <SkillModifier skillidentifier="weapons" skillvalue="-20" />
       <!-- 穿上时，给予人物检测 -->
@@ -1290,7 +1346,7 @@
     </Wearable>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="升起面罩" continuoussignal="false">
+      <TickBox text="升起面罩" continuoussignal="true">
         <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
           <Hook name="ALTYN_Open" />
@@ -1373,13 +1429,13 @@
       <damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0" damagesound="LimbArmor" deflectprojectiles="true" />
       <damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="" deflectprojectiles="true" />
       <sprite texture="%ModDir%/jobgear/helmet/MASKA.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.57" sourcerect="6,4,101,111" origin="0.55,0.59">
-        <LightComponent LightColor="255,255,255,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
+        <LightComponent LightColor="0,255,0,0" range="0" castshadows="false" powerconsumption="0" IsOn="false" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
       </sprite>
       <SkillModifier skillidentifier="weapons" skillvalue="-30" />
     </Wearable>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="升起面罩" continuoussignal="false">
+      <TickBox text="升起面罩" continuoussignal="true">
         <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
           <Hook name="MASKA_Open" />

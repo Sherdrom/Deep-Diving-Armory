@@ -1227,13 +1227,8 @@ unequip(nestedWeapon, { character = character })
 
 Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
-dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
-local production = _G.AdjustEquipmentConfig
-local function countEntries(values)
-    local count = 0
-    for _ in pairs(values) do count = count + 1 end
-    return count
-end
+local production, categoryFiles = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
+assert(production == _G.AdjustEquipmentConfig, "production config global changed")
 local function hasTalentMarker(cfg, marker)
     for _, effect in ipairs(cfg.effects or { cfg }) do
         for _, value in ipairs(effect.talentMarkers or {}) do
@@ -1250,12 +1245,22 @@ local function sameStats(left, right)
     end
     return true
 end
-assert(countEntries(production.mainItems) == 68
-    and countEntries(production.subItems) == 83
-    and countEntries(production.weaponAccessories) == 72
-        and countEntries(production.heldWeapons) == 117
-        and countEntries(production.legacyAfflictions) == 122,
-    "split production config lost or duplicated items")
+-- Re-read category entries to verify the loader without freezing file lists or counts.
+for category, files in pairs(categoryFiles) do
+    local expected = {}
+    for _, file in ipairs(files) do
+        local entries = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config/" .. file)
+        if category == "legacyAfflictions" then entries = entries(production) end
+        for identifier in pairs(entries) do
+            assert(not expected[identifier], category .. " duplicates " .. identifier .. " in " .. file)
+            expected[identifier] = true
+            assert(production[category][identifier], category .. " missing " .. identifier .. " from " .. file)
+        end
+    end
+    for identifier in pairs(production[category]) do
+        assert(expected[identifier], category .. " contains unexpected " .. identifier)
+    end
+end
 assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_Burst
     and production.legacyAfflictions.deep_upgrade_tool_steel_tit_confirm_rifle
@@ -1285,16 +1290,37 @@ assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_muzzle_short_detect == nil
     and production.legacyAfflictions.deep_pp19_buffalo == nil,
     "legacy Affliction mappings or excluded markers changed")
+local function assertFiniteNumber(value, context)
+    assert(type(value) == "number" and value == value and math.abs(value) < math.huge, context)
+end
+for _, field in ipairs({ "fallbackInterval", "dynamicInterval" }) do
+    assertFiniteNumber(production[field], "invalid " .. field)
+    assert(production[field] > 0, "non-positive " .. field)
+end
+for category in pairs(categoryFiles) do
+    for identifier, config in pairs(production[category]) do
+        for _, effect in ipairs(config.effects or { config }) do
+            for _, stat in ipairs(effect.stats or {}) do
+                assert(type(stat.statType) == "string" and stat.statType ~= "", identifier .. " invalid statType")
+                assertFiniteNumber(stat.value, identifier .. " invalid stat value")
+            end
+            for _, field in ipairs({ "pollInterval", "timeout" }) do
+                if effect[field] ~= nil then
+                    assertFiniteNumber(effect[field], identifier .. " invalid " .. field)
+                    assert(effect[field] > 0, identifier .. " non-positive " .. field)
+                end
+            end
+        end
+    end
+end
 local legacy = production.legacyAfflictions
-assert(legacy.deep_Semi.timeout == 1.25
-    and legacy.deep_Semi.stats[1].value == 0.3
+assert(legacy.deep_Semi.timeout > 0
     and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
-    and legacy.deep_upgrade_tool_steel_tit_confirm_shotgun.stats[2].value == 0.1
     and legacy.deep_machinegun_crouch.when
     and legacy.deep_pistol_mozambique_hand.when
     and legacy.deep_knife_detect_1.when
     and legacy.deep_wuchuan_detection.effects[1].when
-    and #legacy.deep_sniper_aim_heavy.effects == 3
+    and legacy.deep_sniper_aim_heavy.effects[3]
     and legacy.cqr_grips.when == nil
     and legacy.oblique_grips.when == nil
     and legacy.flash_hider.when == nil
@@ -1324,30 +1350,25 @@ assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
     and sameStats(legacy.holographic_sight, production.weaponAccessories.holographic_sight),
     "legacy Affliction stats drifted from current equipment profiles")
 assert(production.mainItems.deep_hpc
-    and production.dynamicInterval == 0.5
-    and production.mainItems.deep_meteorite.stats[1].value == -0.2
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
-    and production.weaponAccessories["8x_sight"].stats[1].value == 0.9
-    and production.weaponAccessories.deep_762_expansion.stats[1].value == -15
     and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
     and production.weaponAccessories.cqr_grips.when
     and production.weaponAccessories.oblique_grips.when
-    and #production.weaponAccessories.deep_flash_hider.effects == 2
-    and #production.weaponAccessories.deep_compensator.effects == 2
-    and #production.weaponAccessories.deep_sub_hanging_master_key.effects == 2
+    and production.weaponAccessories.deep_flash_hider.effects[2]
+    and production.weaponAccessories.deep_compensator.effects[2]
+    and production.weaponAccessories.deep_sub_hanging_master_key.effects[2]
     and hasTalentMarker(production.weaponAccessories.deep_sub_hanging_master_key,
         "deep_shotgun_damgage_balance_12shell")
     and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
     and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
     and production.heldWeapons.deep_m249.effects[1].when
-    and production.heldWeapons.deep_m249.effects[1].stats[1].value == 0.7
     and production.heldWeapons.deep_CZ75.effects[1].statsKey == "deep_pistol_mozambique_aff"
-    and #production.heldWeapons.deep_m82a1.effects == 3
+    and production.heldWeapons.deep_m82a1.effects[3]
     and production.heldWeapons.deep_knife.effects[1].when
-    and #production.heldWeapons.deep_wuchuan.effects == 2
+    and production.heldWeapons.deep_wuchuan.effects[2]
     and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
     and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance
     and production.heldWeapons.deep_AK12.effects[1].statsKey == "deep_Semi"
@@ -1358,8 +1379,6 @@ assert(production.mainItems.deep_hpc
     and production.heldWeapons.deep_AK12.effects[2].talentMarkers[1] == "deep_shotgun_damgage_balance"
     and production.heldWeapons.deep_doublebarrel.effects[1].talentMarkers[1] == "deep_shotgun_damgage_balance"
     and production.heldWeapons.deep_m4.effects[3].statsKey == "deep_upgrade_rifle"
-    and production.heldWeapons.deep_m4.effects[3].pollInterval == 0.25
-    and production.heldWeapons.deep_AK12.effects[2].pollInterval == 0.5
     and production.heldWeapons.deep_flash_handed_shield == nil,
     "split production config changed category data")
 

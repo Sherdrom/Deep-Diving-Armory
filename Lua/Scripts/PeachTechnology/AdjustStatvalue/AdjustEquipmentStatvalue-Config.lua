@@ -129,22 +129,17 @@ local function merge(target, source)
     end
 end
 
-local subItems = {}
-merge(subItems, loadCategory("ArmorPlates.lua"))
-merge(subItems, loadCategory("ArmorUpgrades.lua"))
-merge(subItems, loadCategory("NeuralAdjustments.lua"))
-merge(subItems, loadCategory("AssistUpgrades.lua"))
-
-local weaponAccessories = {}
-merge(weaponAccessories, loadCategory("WeaponGrips.lua"))
-merge(weaponAccessories, loadCategory("WeaponSights.lua"))
-merge(weaponAccessories, loadCategory("WeaponMuzzles.lua"))
-merge(weaponAccessories, loadCategory("WeaponChips.lua"))
-merge(weaponAccessories, loadCategory("WeaponUnderbarrels.lua"))
-merge(weaponAccessories, loadCategory("WeaponMagazines.lua"))
-
-local mainItems = loadCategory("MainItems.lua")
-local heldWeapons = loadCategory("HeldWeapons.lua")
+-- 分类清单由加载器和测试共用；新增分类文件只在这里登记。
+local categoryFiles = {
+    mainItems = { "MainItems.lua" },
+    subItems = { "ArmorPlates.lua", "ArmorUpgrades.lua", "NeuralAdjustments.lua", "AssistUpgrades.lua" },
+    weaponAccessories = {
+        "WeaponGrips.lua", "WeaponSights.lua", "WeaponMuzzles.lua",
+        "WeaponChips.lua", "WeaponUnderbarrels.lua", "WeaponMagazines.lua",
+    },
+    heldWeapons = { "HeldWeapons.lua" },
+    legacyAfflictions = { "LegacyAfflictions.lua" },
+}
 
 local CONFIG = {
     fallbackInterval = 5.0,
@@ -162,12 +157,21 @@ local CONFIG = {
         InvSlotType.LeftHand,
         InvSlotType.RightHand,
     },
-    mainItems = mainItems,
-    subItems = subItems,
-    weaponAccessories = weaponAccessories,
-    heldWeapons = heldWeapons,
 }
 
-CONFIG.legacyAfflictions = loadCategory("LegacyAfflictions.lua")(CONFIG)
+for category, files in pairs(categoryFiles) do
+    if category ~= "legacyAfflictions" then
+        CONFIG[category] = {}
+        for _, file in ipairs(files) do merge(CONFIG[category], loadCategory(file)) end
+    end
+end
+
+-- 兼容映射依赖已合并的装备配置。
+CONFIG.legacyAfflictions = {}
+for _, file in ipairs(categoryFiles.legacyAfflictions) do
+    merge(CONFIG.legacyAfflictions, loadCategory(file)(CONFIG))
+end
 
 _G.AdjustEquipmentConfig = CONFIG
+
+return CONFIG, categoryFiles
