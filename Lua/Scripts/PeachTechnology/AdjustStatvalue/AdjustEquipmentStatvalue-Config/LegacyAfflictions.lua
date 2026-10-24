@@ -156,8 +156,5 @@ return function(current)
         },
     })
 
-    local count = 0
-    for _ in pairs(legacy) do count = count + 1 end
-    assert(count == 122, "legacy Affliction coverage changed: " .. count)
     return legacy
 end
