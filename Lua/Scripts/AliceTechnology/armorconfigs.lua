@@ -2449,6 +2449,45 @@ Deep_Lua.Armors = {
     },
 
     --EXOSUIT
+    deep_exoskeleton_ast_rivet = {
+        type = "metal",
+        ricochetchance = 0.5,
+        level = 10,
+        aftereffectmultiplier  = 0.2,
+        correctionaffliction = "blunttrauma",
+        correctionmultiplier = 0.0,
+        enablecorrection = false,
+        penresistance = 0.0,
+        targetidentifier = 
+        {
+            ["damage"] = true,
+        },
+        ignoredamage = true,
+
+        isPlateCarrier = false,
+        protectionarea = {
+            [LimbType.Torso] = true,
+            [LimbType.Waist] = true,
+            [LimbType.LeftArm] = true,
+            [LimbType.LeftForearm] = true,
+            [LimbType.LeftHand] = true,
+            [LimbType.RightArm] = true,
+            [LimbType.RightForearm] = true,
+            [LimbType.RightHand] = true,
+            [LimbType.LeftThigh] = true,
+            [LimbType.RightThigh] = true,
+            [LimbType.LeftLeg] = true,
+            [LimbType.RightLeg] = true,
+            [LimbType.LeftFoot] = true,
+            [LimbType.RightFoot] = true,
+            [LimbType.Head] = true,
+        },
+        
+        PlaySound = true,
+        RicochetSoundPath = Deep_Lua.Path .. "/jobgear/sound/ricochet.ogg",
+        SoundRange = 3200,
+    },
+
     deep_alice_battlesuit_longhair_EXO = {
         type = "metal",
         ricochetchance = 0.5,

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_exoskeleton_ast" subcategory="deep_exo" category="Diving,Equipment" tags="diving,deepdiving,deepdivinglarge,divinggear_wearableindoors,human" scale="0.45" fireproof="true" description="" isshootable="true" allowdroppingonswapwith="diving" impactsoundtag="impact_metal_heavy" botpriority="0.01" cargocontaineridentifier="">
+  <Item name="" identifier="deep_exoskeleton_ast_rivet" subcategory="deep_exo" category="Diving,Equipment" tags="diving,deepdiving,deepdivinglarge,divinggear_wearableindoors,human" scale="0.45" fireproof="true" description="" isshootable="true" allowdroppingonswapwith="diving" impactsoundtag="impact_metal_heavy" botpriority="0.01" cargocontaineridentifier="">
     <InventoryIcon texture="%ModDir%/jobgear/exoskeleton/AST.png" sourcerect="614,528,128,112" origin="0.5,0.5" />
     <Sprite name="Exosuit Item" texture="%ModDir%/jobgear/exoskeleton/AST.png" sourcerect="303,477,227,291" depth="0.55" origin="0.5,0.5" />
     <Body width="230" height="280" density="100" />
-    <Wearable slots="OuterClothes" msg="ItemMsgEquipSelect" displaycontainedstatus="true" canbeselected="false" canbepicked="true" pickkey="Select" allowusewhenworn="true">
+    <Wearable slots="Bag+OuterClothes" msg="ItemMsgEquipSelect" displaycontainedstatus="true" canbeselected="false" canbepicked="true" pickkey="Select" allowusewhenworn="true">
       <sprite name="Exosuit Helmet Wearable" texture="%ModDir%/jobgear/exoskeleton/AST.png" limb="Head" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.65" hideotherwearables="true" hidewearablesoftype="" sourcerect="0,0,1,1" origin="0.5,0.5" />
       <sprite name="Exosuit Torso" texture="%ModDir%/jobgear/exoskeleton/AST.png" limb="Torso" scale="0.75" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.52,0.77" inheritlimbdepth="true" inheritsourcerect="false" sourcerect="312,27,213,215" size="1,1" compress="true" ignoretexturescale="false" ignorelimbscale="false" ignoreragdollscale="false">
         <LightComponent range="200.0" lightcolor="250,224,165,255" powerconsumption="10" IsOn="true" allowingameediting="false" offset="-50,-50">
@@ -47,13 +47,13 @@
       <StatusEffect type="OnWearing" target="This,Character" SpeedMultiplier="-10.0" setvalue="true" disabledeltatime="true">
         <Conditional Voltage="lte 0.5" />
       </StatusEffect>
-      <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.6" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="blunttrauma,gunshotwound,lacerations,explosiondamage" damagemultiplier="0.2" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="bitewounds, bleeding" damagemultiplier="0.1" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier armorsector="0.0,360.0" afflictiontypes="stun" damagemultiplier="0.5" probabilitymultiplier="0.25" damagesound="ricochet" deflectprojectiles="true" />
-      <damagemodifier armorsector="0.0,360.0" afflictiontypes="burn" damagemultiplier="0.5" damagesound="" deflectprojectiles="true" />
-      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="radiationsickness" damagemultiplier="0.75" damagesound="ricochet" />
-      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" probabilitymultiplier="0" damagesound="ricochet" />
+      <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictiontypes="damage" damagemultiplier="0" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="bleeding" damagemultiplier="0.05" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictiontypes="stun,burn" damagemultiplier="0.2" damagesound="ricochet" deflectprojectiles="true" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="radiationsickness,hallucinating,watchersgaze" damagemultiplier="0.1" damagesound="ricochet" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" damagemultiplier="0" damagesound="ricochet" />
+      <damagemodifier armorsector="0.0,360.0" afflictiontypes="infection" damagemultiplier="0" damagesound="ricochet" />
       <sound file="Content/Items/Weapons/WEAPONS_chargeUp.ogg" type="OnWearing" range="500.0" volumeproperty="Speed" volume="0.2" loop="true" frequencymultiplier="0.5" />
       <StatValue stattype="FlowResistance" value="0.9" />
       <StatValue stattype="PropulsionSpeed" value="-0.75" />
