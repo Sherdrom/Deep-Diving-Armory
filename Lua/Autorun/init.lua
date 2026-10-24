@@ -107,7 +107,8 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机和插板修理台
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--移动实体优化
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiVision.lua")--敌人后脑勺有眼睛修复
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
