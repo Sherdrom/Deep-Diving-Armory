@@ -3,6 +3,16 @@ local patchCalls = {}
 local timers = {}
 local accessible = {}
 
+local helmetFile = assert(io.open("jobgear/helmet.xml"))
+local helmetXml = helmetFile:read("*a")
+helmetFile:close()
+for _, identifier in ipairs({ "deep_altyn", "deep_maska" }) do
+    local itemXml = assert(helmetXml:match('<Item[^>]-identifier="' .. identifier .. '"[^>]*>(.-)</Item>'))
+    local lightAttributes = assert(itemXml:match("<LightComponent%s+([^>]-)/>"))
+    assert(lightAttributes:match('inheritparentisactive="false"'),
+        identifier .. " mask light must not inherit Wearable.Equip activation (it overwrites IsOn)")
+end
+
 -- MoonSharp exposes ActionType as userdata: tonumber returns nil, equality compares values.
 local actionTypeMetatable = { __eq = function(a, b) return a.value == b.value end }
 local function actionType(value)
