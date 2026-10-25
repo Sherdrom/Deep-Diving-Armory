@@ -3,6 +3,13 @@ local patchCalls = {}
 local timers = {}
 local accessible = {}
 
+-- MoonSharp exposes ActionType as userdata: tonumber returns nil, equality compares values.
+local actionTypeMetatable = { __eq = function(a, b) return a.value == b.value end }
+local function actionType(value)
+    return setmetatable({ value = value }, actionTypeMetatable)
+end
+ActionType = { OnUse = actionType(2), OnSecondaryUse = actionType(3) }
+
 Hook = {
     HookMethodType = { After = "After" },
     Patch = function(identifier, className, methodName, parameterTypes, callback, patchType)
@@ -100,9 +107,9 @@ local function makeElement(state)
     return {
         State = state,
         StatusEffects = {
-            { type = 2, id = "use-1" },
-            { type = 3, id = "secondary" },
-            { type = 2, id = "use-2" },
+            { type = actionType(2), id = "use-1", IsOn = true },
+            { type = actionType(3), id = "secondary", IsOn = false },
+            { type = actionType(2), id = "use-2", IsOn = true },
         },
     }
 end
@@ -145,6 +152,7 @@ local function makeItem(identifier, element, slot0, interfaceTag)
         assert(deltaTime == 1.0 and character == nil and limb == nil and useTarget == nil)
         assert(network == true and checkCondition == false)
         item.applied[#item.applied + 1] = { id = effect.id, effect = effect, type = actionType }
+        item.lightIsOn = effect.IsOn
     end
     return item, customInterface
 end
@@ -161,15 +169,15 @@ loaded(customInterface)
 assert(customInterface.DrawHudWhenEquipped == false, "load without a module must hide the interface")
 runTimers()
 assert(#item.applied == 2
-    and item.applied[1].id == "use-1" and item.applied[1].type == 2
-    and item.applied[2].id == "use-2" and item.applied[2].type == 2)
+    and item.applied[1].id == "use-1" and item.applied[1].type == ActionType.OnUse
+    and item.applied[2].id == "use-2" and item.applied[2].type == ActionType.OnUse)
 
 item.applied = {}
 element.State = false
 toggle(customInterface, makeParameterTable({ tickBoxElement = element }))
 assert(#item.applied == 0, "toggle must be deferred")
 runTimers()
-assert(#item.applied == 1 and item.applied[1].id == "secondary" and item.applied[1].type == 3)
+assert(#item.applied == 1 and item.applied[1].id == "secondary" and item.applied[1].type == ActionType.OnSecondaryUse)
 
 item.applied = {}
 element.State = true
@@ -208,26 +216,35 @@ local function assertMaskBridge(identifier)
     loaded(maskInterface)
     assert(maskInterface.DrawHudWhenEquipped == nil, "a mask must not use tactical visibility")
     runTimers()
+    assert(maskItem.lightIsOn == true, identifier .. " raised mask must disable armor protection")
     assert(#maskItem.applied == 2
-        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == 2
-        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == 2,
+        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == ActionType.OnUse
+        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == ActionType.OnUse,
         identifier .. " load must replay OnUse effects")
 
     maskItem.applied = {}
     maskElement.State = false
     toggle(maskInterface, makeParameterTable({ tickBoxElement = maskElement }))
     runTimers()
-    assert(#maskItem.applied == 1 and maskItem.applied[1].id == "secondary" and maskItem.applied[1].type == 3,
+    assert(maskItem.lightIsOn == false, identifier .. " closed mask must restore armor protection")
+    assert(#maskItem.applied == 1 and maskItem.applied[1].id == "secondary" and maskItem.applied[1].type == ActionType.OnSecondaryUse,
         identifier .. " false toggle must replay OnSecondaryUse")
 
     maskItem.applied = {}
     maskElement.State = true
     toggle(maskInterface, makeParameterTable({ tickBoxElement = maskElement }))
     runTimers()
+    assert(maskItem.lightIsOn == true, identifier .. " reopening must disable armor protection")
     assert(#maskItem.applied == 2
-        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == 2
-        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == 2,
+        and maskItem.applied[1].id == "use-1" and maskItem.applied[1].type == ActionType.OnUse
+        and maskItem.applied[2].id == "use-2" and maskItem.applied[2].type == ActionType.OnUse,
         identifier .. " true toggle must replay OnUse effects")
+
+    local closedItem, closedInterface = makeItem(identifier, makeElement(false))
+    closedItem.lightIsOn = true
+    loaded(closedInterface)
+    runTimers()
+    assert(closedItem.lightIsOn == false, identifier .. " load must correct stale raised-mask state")
 end
 
 assertMaskBridge("deep_altyn")
@@ -244,8 +261,8 @@ assert(thirdPartyTacticalInterface.DrawHudWhenEquipped == true,
     "the tactical opt-in tag must enable HUD visibility")
 runTimers()
 assert(#thirdPartyTactical.applied == 2
-    and thirdPartyTactical.applied[1].type == 2
-    and thirdPartyTactical.applied[2].type == 2,
+    and thirdPartyTactical.applied[1].type == ActionType.OnUse
+    and thirdPartyTactical.applied[2].type == ActionType.OnUse,
     "the tactical opt-in tag must replay interface state")
 
 local thirdPartyMask, thirdPartyMaskInterface = makeItem(
@@ -260,8 +277,8 @@ assert(thirdPartyMaskInterface.DrawHudWhenEquipped == "unchanged",
     "the mask opt-in tag must not change HUD visibility")
 runTimers()
 assert(#thirdPartyMask.applied == 2
-    and thirdPartyMask.applied[1].type == 2
-    and thirdPartyMask.applied[2].type == 2,
+    and thirdPartyMask.applied[1].type == ActionType.OnUse
+    and thirdPartyMask.applied[2].type == ActionType.OnUse,
     "the mask opt-in tag must replay interface state")
 
 local unmarkedThirdParty, unmarkedThirdPartyInterface = makeItem(

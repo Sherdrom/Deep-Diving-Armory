@@ -73,9 +73,9 @@ local function syncVisibility(item, customInterface)
 end
 
 local function applyCurrentState(item, element)
-    local wanted = element.State and 2 or 3
+    local wanted = element.State and ActionType.OnUse or ActionType.OnSecondaryUse
     each(element.StatusEffects, function(effect)
-        if tonumber(effect.type) == wanted then
+        if effect.type == wanted then
             item.ApplyStatusEffect(effect, effect.type, 1.0, nil, nil, nil, true, false)
         end
     end)
