@@ -97,6 +97,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffAll.lua")--伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiFleeGrenade.lua")--AI强制逃离已激活的手雷
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiVision.lua")--敌人后脑勺有眼睛修复
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予天赋
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ResistanceLimit.lua")--抗性限制
@@ -108,7 +109,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机和插板修理台
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiVision.lua")--敌人后脑勺有眼睛修复
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lua")--强制禁止放入物品栏(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
