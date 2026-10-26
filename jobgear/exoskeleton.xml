@@ -25,19 +25,11 @@
       <sprite name="Exosuit Left Shoe" texture="%ModDir%/jobgear/exoskeleton/AST.png" limb="LeftFoot" sound="footstep_armor_heavy" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.44,0.556" inheritsourcerect="false" sourcerect="161,476,123,44" scale="0.75" />
       <sprite name="Exosuit Right Shoe" texture="%ModDir%/jobgear/exoskeleton/AST.png" limb="RightFoot" sound="footstep_armor_heavy" hidelimb="true" inherittexturescale="true" hideotherwearables="true" inheritorigin="false" origin="0.441,0.556" inheritsourcerect="false" sourcerect="1,467,123,56" scale="0.75" inheritlimbdepth="true" />
       <StatusEffect type="OnWearing" target="Character" OxygenAvailable="-100.0" UseHullOxygen="false" />
-      <StatusEffect type="OnWearing" target="Character" LowPassMultiplier="0.2" HideFace="true" ObstructVisionAmount="0.5" PressureProtection="7000.0" setvalue="true" disabledeltatime="true">
+      <StatusEffect type="OnWearing" target="Character" LowPassMultiplier="0.5" HideFace="true" ObstructVisionAmount="0.5" PressureProtection="15000.0" setvalue="true" disabledeltatime="true">
         <Sound file="Content/Items/Diving/DivingSuitLoop1.ogg" range="250" loop="true" />
         <Sound file="Content/Items/Diving/DivingSuitLoop2.ogg" range="250" loop="true" />
         <TriggerAnimation Type="Walk" FileName="HumanWalkExosuit" priority="1" ExpectedSpecies="Human" />
         <TriggerAnimation Type="Run" FileName="HumanRunExosuit" priority="1" ExpectedSpecies="Human" />
-      </StatusEffect>
-      <!-- no HMG stun -->
-      <StatusEffect type="OnWearing" target="Character" interval="0.9" disabledeltatime="true">
-        <Affliction identifier="recoilstabilized" amount="1" />
-      </StatusEffect>
-      <!-- slow movement -->
-      <StatusEffect type="OnWearing" target="This,Character" setvalue="true" disabledeltatime="true">
-        <Conditional Voltage="gt 0.5" />
       </StatusEffect>
       <StatusEffect type="OnWearing" target="Contained,Character" Condition="-0.05" interval="1" disabledeltatime="true" targetslot="1" comparison="Or">
         <Conditional IsDead="false" />
@@ -47,6 +39,16 @@
       <StatusEffect type="OnWearing" target="This,Character" SpeedMultiplier="-10.0" setvalue="true" disabledeltatime="true">
         <Conditional Voltage="lte 0.5" />
       </StatusEffect>
+      <StatusEffect type="NotInWater" target="This" comparison="and" setvalue="true">
+        <Conditional speed="gt 0.2" />
+        <sound file="%ModDir%/jobgear/sound/bigshield.ogg" type="OnActive" range="800.0" volumeproperty="Speed" volume="0.5" loop="true" frequencymultiplier="0.8"/>
+      </StatusEffect>
+      <StatusEffect type="InWater" target="This" comparison="and" setvalue="true" >
+        <Conditional speed="gt 0.2" />
+        <RequiredItems items="reactorfuel" type="Contained" msg="ItemMsgBatteryCellRequired" targetslot="1" />
+        <sound file="Content/Items/Diving/ScooterLoop.ogg" type="OnUse" range="500.0" loop="true" />
+        <ParticleEmitter particle="bubbles" particleamount="1" CopyTargetAngle="true" />
+      </StatusEffect>
       <damagemodifier afflictionidentifiers="Shrapnel_residue" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier armorsector="0.0,360.0" afflictiontypes="damage" damagemultiplier="0" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="bleeding" damagemultiplier="0.05" damagesound="ricochet" deflectprojectiles="true" />
@@ -54,9 +56,10 @@
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="radiationsickness,hallucinating,watchersgaze" damagemultiplier="0.1" damagesound="ricochet" />
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="huskinfection" damagemultiplier="0" damagesound="ricochet" />
       <damagemodifier armorsector="0.0,360.0" afflictiontypes="infection" damagemultiplier="0" damagesound="ricochet" />
-      <sound file="Content/Items/Weapons/WEAPONS_chargeUp.ogg" type="OnWearing" range="500.0" volumeproperty="Speed" volume="0.2" loop="true" frequencymultiplier="0.5" />
-      <StatValue stattype="FlowResistance" value="0.9" />
-      <StatValue stattype="PropulsionSpeed" value="-0.75" />
+      <StatValue stattype="FlowResistance" value="1.0" />
+      <StatValue stattype="MovementSpeed" value="-0.3" />
+      <StatValue stattype="SwimmingSpeed" value="0.6" />
+      <SkillModifier skillidentifier="weapons" skillvalue="-30" />
     </Wearable>
     <ItemContainer capacity="0" hideitems="true" containedstateindicatorstyle="tank" containedstateindicatorslot="0">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="64,448,64,64" origin="0.5,0.5" />
@@ -120,8 +123,8 @@
           </StatusEffect>
         </Containable>
       </SubContainer>
-      <SubContainer capacity="10" maxstacksize="32">
-        <Containable items="smallitem" />
+      <SubContainer capacity="23" maxstacksize="32">
+        <Containable tags="smallitem,mediumitem" excludedidentifiers="deep_container,toolbelt,toolbox,bandolier,deep_bag,deep_rig,deep_quick_launcher_weapon,deep_heavy_launcher_weapon" />
       </SubContainer>
     </ItemContainer>
     <aitarget maxsightrange="1500" />

@@ -735,13 +735,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="转为向左安装" connection="signal_out1">
@@ -764,22 +770,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional deep_enemy_affliction_resistance="gt 0.5" />
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_left" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade,deep_claymore_safe" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -813,13 +803,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="转为向右安装" connection="signal_out1">
@@ -842,22 +838,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="-35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional deep_enemy_affliction_resistance="gt 0.5" />
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_dangerous_right" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -891,13 +871,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="转为向左安装" connection="signal_out1">
@@ -920,36 +906,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_dangerous_left" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -983,13 +939,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="转为向右安装" connection="signal_out1">
@@ -1012,36 +974,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Monster" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_enemy" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade,deep_claymore_safe" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -1075,13 +1007,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="改装成友军阔剑地雷" connection="signal_out1">
@@ -1093,22 +1031,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional deep_enemy_affliction_resistance="lt 0.5" />
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_claymore_left_enemy" subcategory="deep_grenade" category="Weapon" health="100" damagedbyprojectiles="true" damagedbymeleeweapons="true" damagedbyrepairtools="true" maxstacksize="32" maxstacksizecharacterinventory="2" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade,deep_claymore_safe" scale="0.4" impactsoundtag="impact_grenade" CanFlipX="false" condition="99">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -1142,13 +1064,19 @@
       </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
+      <StatusEffect type="OnBroken" target="This" forceplaysounds="true" disabledeltatime="true" stackable="false" comparison="and">
+        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
+        <Explosion range="500.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
+          <Affliction identifier="Shrapnel_residue" strength="600" />
+          <Affliction identifier="explosiondamage" strength="200" />
+          <Affliction identifier="bleeding" strength="300" />
+          <Affliction identifier="stun" strength="5" />
+        </Explosion>
+      </StatusEffect>
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true" stackable="false" comparison="and" delay="0.5" >
+        <remove/>
+      </StatusEffect>
     </Holdable>
-    <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
-      <GuiFrame relativesize="0.09,0.07" anchor="BottomCenter" pivot="BottomRight" relativeoffset="-0.02,0.09" style="ItemUI" />
-      <TickBox text="阔剑地雷开关">
-        <StatusEffect type="OnUse" target="This" condition="99" setValue="true" stackable="false"></StatusEffect>
-      </TickBox>
-    </CustomInterface>
     <CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
       <GuiFrame relativesize="0.15,0.1" anchor="CenterRight" relativeoffset="0,0.1" style="ItemUI" />
       <Button text="改装成友军阔剑地雷" connection="signal_out1">
@@ -1160,22 +1088,6 @@
         </StatusEffect>
       </Button>
     </CustomInterface>
-    <MotionSensor rangex="25" rangey="10" detectoffset="-35,35" canbeselected="false" IgnoreDead="True" minimumvelocity="1" updateinterval="0.025" target="Human" DetectOwnMotion="false">
-      <StatusEffect type="OnNotContained" target="This,NearbyCharacters" forceplaysounds="true" range="200" condition="-100" disabledeltatime="true" stackable="false" checkconditionalalways="true" comparison="and">
-        <Conditional deep_enemy_affliction_resistance="lt 0.5" />
-        <Conditional Condition="lte 99" />
-        <Conditional targetitemcomponent="MotionSensor" MotionDetected="eq true" />
-
-        <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" loop="false" />
-        <Explosion range="400.0" penetration="1" ballastfloradamage="500" structuredamage="0" levelwalldamage="300" itemdamage="400" force="10" severlimbsprobability="0.5" debris="true" decal="explosion" decalsize="1.5">
-          <Affliction identifier="Shrapnel_residue" strength="600" />
-          <Affliction identifier="explosiondamage" strength="200" />
-          <Affliction identifier="bleeding" strength="300" />
-          <Affliction identifier="stun" strength="5" />
-        </Explosion>
-
-      </StatusEffect>
-    </MotionSensor>
   </Item>
   <Item name="" identifier="deep_ied" subcategory="deep_grenade" category="Weapon" maxstacksize="2" maxstacksizecharacterinventory="1" cargocontaineridentifier="deep_explosive_container" tags="smallitem,weapon,explosive,demolitionsexpert,handgrenade" Scale="0.35" impactsoundtag="impact_metal_light">
     <Price baseprice="600" sold="true" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
@@ -1259,7 +1171,7 @@
       </StatusEffect>
     </Holdable>
     <RangedWeapon barrelpos="80,11" reload="0.1" spread="1" unskilledspread="10" combatPriority="1" drawhudwhenequipped="true" crosshairscale="0.2">
-      <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="1000" disableDeltaTime="true" setValue="true " condition="5">
+      <StatusEffect type="OnUse" target="nearbyitems" targettags="deep_ied" Range="2000" disableDeltaTime="true" setValue="true " condition="5">
         <sound file="Content/Items/Button/Button.ogg" type="OnUse" range="500.0" />
       </StatusEffect>
     </RangedWeapon>
@@ -1968,8 +1880,17 @@
       </StatusEffect>
     </Projectile>
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="45,0" handle1="10,-10" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnNotContained" comparison="and" target="This">
-        <Conditional Condition="lt 10" />
+      <!-- 引爆闩锁：遥控器把弹体 condition 写为 5，仅在弹体未被容纳时命中 e5 并把 condition 转写为 0，
+           进而触发下方 OnBroken 爆炸与 condition 归零同步。必须排在"保持满耐久"特效之前，
+           否则 5 会被先重置回 100 导致无法引爆。
+           弹体在物品栏/容器内时本特效不生效（OnNotContained），且耐久会被 OnContained 特效重置为 100，
+           因此揣在身上按遥控器不会自爆（与原版行为一致） -->
+      <StatusEffect type="OnNotContained" target="This" comparison="and" disabledeltatime="true" setValue="true" condition="0">
+        <Conditional condition="e 5.0" />
+      </StatusEffect>
+      <!-- 爆炸挂在 OnBroken 上：condition 归零时服务端与客户端都会执行，
+           客户端通过 condition 同步事件在本地补播音效与爆炸特效（修复多人无特效问题） -->
+      <StatusEffect type="OnBroken" target="This" disabledeltatime="true">
         <Sound file="%ModDir%/weapon/explosive/sound/boom.ogg" type="OnUse" range="3000" volume="2" forcePlaySounds="true" />
         <Explosion range="500" penetration="1" force="30" camerashake="100" ballastfloradamage="1000" structuredamage="400" itemdamage="500" severlimbsprobability="1" smoke="false" playtinnitus="true" DistanceFalloff="true" flash="true" screenColor="255,255,255,255" screenColorDuration="10">
           <Affliction identifier="Shrapnel_residue" strength="1200" />
@@ -1979,10 +1900,19 @@
           <Affliction identifier="stun" strength="20" />
           <Affliction identifier="deep_stun_grenade_reduce" strength="30" />
         </Explosion>
+      </StatusEffect>
+      <!-- 未引爆时保持满耐久；已引爆(condition=0)后不再重置，避免破坏 OnBroken 状态 -->
+      <StatusEffect type="OnNotContained" target="This" comparison="and" disableDeltaTime="true" setValue="true " condition="100">
+        <Conditional condition="gt 0.0" />
+      </StatusEffect>
+      <StatusEffect type="OnContained" target="This" comparison="and" disableDeltaTime="true" setValue="true " condition="100">
+        <Conditional condition="gt 0.0" />
+      </StatusEffect>
+      <!-- 引爆后延时清理本体：先让服务端把 condition=0 同步给客户端（触发客户端特效），再移除 -->
+      <StatusEffect type="OnNotContained" target="This" comparison="and" delay="0.2" stackable="false">
+        <Conditional condition="e 0.0" />
         <Remove />
       </StatusEffect>
-      <StatusEffect type="OnNotContained" target="This" disableDeltaTime="true" setValue="true " condition="100"></StatusEffect>
-      <StatusEffect type="OnContained" target="This" disableDeltaTime="true" setValue="true " condition="100"></StatusEffect>
       <StatusEffect type="OnContained" target="This" comparison="and" delay="0.5">
         <Conditional EntityType="eq character" TargetContainer="True" />
         <Remove />
