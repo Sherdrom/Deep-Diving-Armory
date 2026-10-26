@@ -854,6 +854,65 @@ assert(#warningMessages == 2, "VCE warning did not reopen after the previous box
 slots[InvSlotType.LeftHand] = nil
 
 do
+    local baseline = #warningMessages
+    local vceBox = warningBox
+    local gun = makeItem("deep_hk416")
+    gun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+    gun.tags.gun, gun.tags.gunsmith, gun.tags.deep_gunsmith = true, true, true
+    gun.components.SwitchableRangedWeapon = {}
+    gun.rootOwner = character
+
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "non-held weapon triggered the Gunsmith warning")
+    slots[InvSlotType.LeftHand] = gun
+    CLIENT = false
+    equip(gun, { character = character })
+    CLIENT = true
+    Character.Controlled = nil
+    equip(gun, { character = character })
+    Character.Controlled = character
+    assert(#warningMessages == baseline, "Gunsmith warning was not restricted to the local client")
+
+    gun.Prefab.ContentPackage = { Name = "Other weapons" }
+    equip(gun, { character = character })
+    gun.Prefab.ContentPackage = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "non-DDA weapon triggered the Gunsmith warning")
+    gun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+    gun.tags.deep_gunsmith = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "generic gunsmith tag triggered the Gunsmith warning")
+
+    gun.tags.deep_gunsmith = true
+    gun.components.GunsmithData = {}
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "loaded Gunsmith component triggered the Gunsmith warning")
+    gun.components.GunsmithData = nil
+    GunsmithFramework = { PendingPackages = {} }
+    equip(gun, { character = character })
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 1, "missing Gunsmith did not open exactly one warning")
+    assert(warningMessages[#warningMessages]:find("未检测到 GunsmithFramework", 1, true)
+        and warningMessages[#warningMessages]:find("GunsmithFramework was not detected", 1, true),
+        "Gunsmith warning is missing its bilingual message")
+    warningBox.Closed = true
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 2, "Gunsmith warning did not reopen after closing")
+
+    warningBox.Closed = true
+    vceBox.Closed = true
+    gun.components.SwitchableRangedWeapon = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 4, "missing VCE and Gunsmith did not report both dependencies")
+    assert(warningMessages[baseline + 3]:find("VCE", 1, true)
+        and warningMessages[baseline + 4]:find("Gunsmith", 1, true),
+        "dependency warnings interfered with each other")
+    warningBox.Closed = true
+    GunsmithFramework = nil
+    slots[InvSlotType.LeftHand] = nil
+end
+
+do
     local missingArmor = makeItem("missing_affliction_armor")
     missingArmor.rootOwner = character
     slots[InvSlotType.OuterClothes] = missingArmor

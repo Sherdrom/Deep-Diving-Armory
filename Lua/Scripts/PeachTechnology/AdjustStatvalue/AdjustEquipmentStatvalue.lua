@@ -194,7 +194,21 @@ local function warnMissingVce(character, item)
 
     vceWarningBox = GUI.MessageBox(
         "Deep-Diving-Armory",
-        "未检测到 VCE（Vanilla Components Expanded），请安装并启用，否则 DDA 枪械无法正常使用。\nVCE was not detected; install and enable it to use DDA firearms."
+        "未检测到 VCE（Vanilla Components Expanded），请安装并启用，否则 DDA 枪械无法正常使用。\nVCE(Vanilla Components Expanded) was not detected; install and enable it to use DDA firearms."
+    )
+end
+
+local gunsmithWarningBox
+local function warnMissingGunsmith(character, item)
+    if not CLIENT or character ~= Character.Controlled then return end
+    if not isDdaItem(item) then return end
+    if gunsmithWarningBox and not gunsmithWarningBox.Closed then return end
+    -- The generic "gunsmith" tag also exists on weapons that do not use the framework.
+    if not item.HasTag("deep_gunsmith") or item.GetComponentString("GunsmithData") then return end
+
+    gunsmithWarningBox = GUI.MessageBox(
+        "Deep-Diving-Armory",
+        "未检测到 GunsmithFramework，请安装并启用，否则 DDA 枪匠武器无法正常使用。\nGunsmithFramework was not detected; install and enable it to use DDA Gunsmith weapons."
     )
 end
 
@@ -1319,7 +1333,10 @@ Hook.Patch(
     { "Barotrauma.Character" },
     function(item, ptable)
         local character = ptable["character"]
-        if isStillHeld(character, item) then warnMissingVce(character, item) end
+        if isStillHeld(character, item) then
+            warnMissingVce(character, item)
+            warnMissingGunsmith(character, item)
+        end
         addMain(character, item)
         addWeapon(character, item)
         queueNativeEquipmentCompensation(character)
