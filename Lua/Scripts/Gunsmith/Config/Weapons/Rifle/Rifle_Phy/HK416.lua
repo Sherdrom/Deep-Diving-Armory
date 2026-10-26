@@ -20,7 +20,8 @@ weapons.deep_hk416 = {
         right_rail = { slot = 2 },
         left_rail = { slot = 3 },
         optic = { slot = 4 },
-        muzzle = { slot = 5 }
+        muzzle = { slot = 5 },
+        stock = { slot = 6 }
     },
 
     -- 选填，可注释。UI 预览窗口微调，只影响 GunSmith 窗口里的预览，不影响背包/世界贴图。
@@ -41,7 +42,7 @@ weapons.deep_hk416 = {
         scale = 1.0,
         rotation = 0.0,
         padding = 0,
-        offset = { x = 20, y = -7 }
+        offset = { x = 50, y = -7 }
     }
 }
 
@@ -50,7 +51,7 @@ parts.deep_hk416_receiver_main = {
     nameKey = "deep.gunsmith.part.deep_hk416_receiver_main",
     provides = { "HK416_receiver" },
     item = { identifier = "deep_hk416_receiver_main" },
-    stats = { Ergonomics = 200 },
+    stats = { Ergonomics = 0 },
     visual = {
         texture = texture,
         source = { x = 63, y = 28, w = 129, h = 72 },
@@ -64,7 +65,10 @@ parts.deep_hk416_receiver_main = {
     mounts = {
         { path = "upper_receiver", accepts = { "AR_upper_receiver" }, defaultPart = "deep_hk416a5_upper_receiver", anchor = { x = 13, y = -24 } },
         { path = "pistol_grip", accepts = { "AR_pistol_grip" }, defaultPart = "deep_miad_pistol_grip", anchor = { x = -26, y = 12 } },
-        { path = "stock_mount", accepts = { "AR_buffer_tube","AR_buffer_tube_stock" }, defaultPart = "deep_hket_buffer_tube", anchor = { x = -60, y = -20 } }
+        { path = "stock_mount", accepts = { "AR_buffer_tube","AR_buffer_tube_stock" }, defaultPart = "deep_hket_buffer_tube", anchor = { x = -60, y = -20 } },
+        { path = "upgrade_rifle", accepts = { "upgrade_rifle" }, anchor = { x = 0, y = 0 } },
+        --{ path = "weapon_upgrade_a", accepts = { "weapon_upgrade" }, anchor = { x = 0, y = 0 } },
+        --{ path = "weapon_upgrade_b", accepts = { "weapon_upgrade" }, anchor = { x = 0, y = 0 } },
         -- 例子：receiver_top_rail 是个 virtual part，不提供 item，也不占用实际挂点；它的 mounts 定义了前/后瞄具挂点。
         -- { path = "receiver_top_rail", nameKey = "deep.gunsmith.path.receiver_top_rail", accepts = { "AR_top_rail" }, defaultPart = "AR_receiver_top_rail", anchor = { x = 12, y = -23 } },
     }

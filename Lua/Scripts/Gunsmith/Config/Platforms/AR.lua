@@ -8,7 +8,7 @@ platforms.AR = {
     -- 运行时合成贴图的画布尺寸。
     -- 根槽 roots[].socket 使用这个平台 canvas 坐标系。
     -- 子配件可以用 visual.attachPoint 对齐父配件本地 mount.anchor。
-    canvas = { w = 640, h = 260 },
+    canvas = { w = 700, h = 260 },
 
     -- 平台根路径。V0.9.2 起平台只描述结构规则，不再声明默认枪型。
     -- receiver 是武器身份件，隐藏在普通改装列表外；其子路径会提升到 UI 首页。
@@ -19,7 +19,7 @@ platforms.AR = {
     requiredSlots = { 
         "upper_receiver/barrel",
         "upper_receiver",
-        "buffer_tube",
+        "stock_mount",
         "upper_receiver/barrel/gas_block",
     },
 
@@ -41,6 +41,11 @@ platforms.AR = {
         left_rail = "deep.gunsmith.path.left_rail",
         right_rail = "deep.gunsmith.path.right_rail",
         receiver_top_rail = "deep.gunsmith.path.receiver_top_rail",
+        rear_sight_mount = "deep.gunsmith.path.rear_sight_mount",
+        front_sight_mount = "deep.gunsmith.path.front_sight_mount",
+        upgrade_rifle = "deep.gunsmith.path.upgrade_rifle",
+        weapon_upgrade_a = "deep.gunsmith.path.weapon_upgrade_a",
+        weapon_upgrade_b = "deep.gunsmith.path.weapon_upgrade_b",
         optic_mount = "deep.gunsmith.path.optic_mount"
     }
 }

@@ -13,7 +13,7 @@ parts.deep_hk416a5_upper_receiver = {
     nameKey = "deep.gunsmith.part.deep_hk416a5_upper_receiver",
     provides = { "AR_upper_receiver" },
     item = { identifier = "deep_hk416a5_upper_receiver" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 0 },
     visual = { texture = texture,
         source = { x = 8, y = 5, w = 161, h = 43 },
         attachPoint = { x = 80, y = 22 },
@@ -21,8 +21,8 @@ parts.deep_hk416a5_upper_receiver = {
         scale = 1.0
     },
     mounts = {
-        { path = "optic_mount", nameKey = "deep.gunsmith.mount.upper_receiver.optic_mount", accepts = { "small_optic", "medium_optic" }, anchor = { x = 1, y = -20 }, quick = { key = "optic" } },
         { path = "barrel", accepts = { "AR_barrel" }, defaultPart = "deep_556_45_370mm_barrel", anchor = { x = 47, y = 1 } },
         { path = "handguard", accepts = { "AR_handguard" }, defaultPart = "deep_hk416_four_rail_handguard", anchor = { x = 47, y = 1 } },
+        { path = "rear_sight_mount", accepts = { "AR_rear_sight" }, defaultPart = "deep_ar15_rear_sight", emptyPart = "deep_ar15_no_rear_sight", anchor = { x = -36, y = -18 } },
     }
 }

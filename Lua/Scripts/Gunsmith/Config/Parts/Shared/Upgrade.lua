@@ -1,0 +1,64 @@
+local parts = GunsmithFramework.Config.parts
+local UpgradeTexture = Deep_Lua.Path .. "/GunSmith/SharedParts/Upgrade/Upgrade.png"
+
+parts.deep_upgrade_rifle_steel = {
+    type = "upgrade_rifle",
+    nameKey = "deep.gunsmith.part.deep_upgrade_rifle_steel",
+    provides = { "upgrade_rifle" },
+    item = { identifier = "deep_upgrade_rifle_steel" },
+    stats = { Ergonomics = 20, RangedAttackMultiplier = 0.15, RangedSpreadReduction = 0.1 },
+    visual = { 
+        texture = UpgradeTexture,
+        source = { x = 0, y = 0, w = 0, h = 0 },
+        attachPoint = { x = 0, y = 0 },
+        order = 0,
+        scale = 0.01
+    },
+}
+
+parts.deep_upgrade_rifle_tit = {
+    type = "upgrade_rifle",
+    nameKey = "deep.gunsmith.part.deep_upgrade_rifle_tit",
+    provides = { "upgrade_rifle" },
+    item = { identifier = "deep_upgrade_rifle_tit" },
+    stats = { Ergonomics = 30, RangedAttackMultiplier = 0.3, RangedSpreadReduction = 0.2 },
+    visual = { 
+        texture = UpgradeTexture,
+        source = { x = 0, y = 0, w = 0, h = 0 },
+        attachPoint = { x = 0, y = 0 },
+        order = 0,
+        scale = 0.01
+    },
+}
+
+parts.deep_upgrade_rifle_phy = {
+    type = "upgrade_rifle",
+    nameKey = "deep.gunsmith.part.deep_upgrade_rifle_phy",
+    provides = { "upgrade_rifle" },
+    item = { identifier = "deep_upgrade_rifle_phy" },
+    stats = { Ergonomics = 40, RangedAttackMultiplier = 0.45, RangedSpreadReduction = 0.3 },
+    visual = { 
+        texture = UpgradeTexture,
+        source = { x = 0, y = 0, w = 0, h = 0 },
+        attachPoint = { x = 0, y = 0 },
+        order = 0,
+        scale = 0.01
+    },
+}
+
+parts.deep_upgrade_rifle_tun_phy = {
+    type = "upgrade_rifle",
+    nameKey = "deep.gunsmith.part.deep_upgrade_rifle_tun_phy",
+    provides = { "upgrade_rifle" },
+    item = { identifier = "deep_upgrade_rifle_tun_phy" },
+    stats = { Ergonomics = 50, RangedAttackMultiplier = 0.6, RangedSpreadReduction = 0.4 },
+    visual = { 
+        texture = UpgradeTexture,
+        source = { x = 0, y = 0, w = 0, h = 0 },
+        attachPoint = { x = 0, y = 0 },
+        order = 0,
+        scale = 0.01
+    },
+}
+
+

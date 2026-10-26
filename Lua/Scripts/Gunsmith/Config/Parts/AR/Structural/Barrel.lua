@@ -12,9 +12,9 @@ parts.deep_556_45_260mm_barrel = {
     type = "barrel",
     nameKey = "deep.gunsmith.part.deep_556_45_260mm_barrel",
     provides = { "AR_barrel" },
-    -- excludes = { "deep_hk416_four_rail_handguard" },
+    excludes = { "deep_nl545_10_5mlok_fde_handguard","deep_hk416_13mlok_handguard","deep_hk416_14mrs_handguard","deep_hk416_15mlok_handguard" },
     item = { identifier = "deep_556_45_260mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 70, RangedSpreadReduction = -0.25 },
     visual = { texture = texture,
         source = { x = 6, y = 4, w = 160, h = 24 },
         attachPoint = { x = 0, y = 15 },
@@ -23,7 +23,7 @@ parts.deep_556_45_260mm_barrel = {
     },
     mounts = {
         { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.barrel.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 149, y = -1 }, quick = { key = "muzzle" } },
-        { path = "gas_block", accepts = { "AR_gas_block" }, defaultPart = "deep_mk12_gas_block", anchor = { x = 120, y = -4 } },
+        { path = "gas_block", accepts = { "AR_gas_block" }, anchor = { x = 120, y = -4 } },
     }
 }
 
@@ -31,9 +31,9 @@ parts.deep_556_45_348mm_barrel = {
     type = "barrel",
     nameKey = "deep.gunsmith.part.deep_556_45_348mm_barrel",
     provides = { "AR_barrel" },
-    -- excludes = { "deep_hk416_four_rail_handguard" },
+    excludes = { "deep_hk416_13mlok_handguard","deep_hk416_14mrs_handguard","deep_hk416_15mlok_handguard" },
     item = { identifier = "deep_556_45_348mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 50, RangedSpreadReduction = -0.12 },
     visual = { texture = texture,
         source = { x = 6, y = 40, w = 194, h = 22 },
         attachPoint = { x = 2, y = 13 },
@@ -42,7 +42,7 @@ parts.deep_556_45_348mm_barrel = {
     },
     mounts = {
         { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.barrel.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 181, y = -1 }, quick = { key = "muzzle" } },
-        { path = "gas_block", accepts = { "AR_gas_block" }, defaultPart = "deep_mk12_gas_block", anchor = { x = 111, y = -3 } },
+        { path = "gas_block", accepts = { "AR_gas_block" }, anchor = { x = 111, y = -3 } },
     }
 }
 
@@ -50,9 +50,9 @@ parts.deep_556_45_370mm_barrel = {
     type = "barrel",
     nameKey = "deep.gunsmith.part.deep_556_45_370mm_barrel",
     provides = { "AR_barrel" },
-    -- excludes = { "deep_hk416_four_rail_handguard" },
+    excludes = { "deep_hk416_14mrs_handguard","deep_hk416_15mlok_handguard" },
     item = { identifier = "deep_556_45_370mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 30 },
     visual = { texture = texture,
         source = { x = 5, y = 76, w = 222, h = 23 },
         attachPoint = { x = 1, y = 14 },
@@ -69,9 +69,9 @@ parts.deep_556_45_457mm_barrel = {
     type = "barrel",
     nameKey = "deep.gunsmith.part.deep_556_45_457mm_barrel",
     provides = { "AR_barrel" },
-    -- excludes = { "deep_hk416_four_rail_handguard" },
+    excludes = { "deep_hk416_15mlok_handguard" },
     item = { identifier = "deep_556_45_457mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 10, RangedSpreadReduction = 0.15 },
     visual = { texture = texture,
         source = { x = 7, y = 120, w = 247, h = 19 },
         attachPoint = { x = 1, y = 13 },
@@ -80,7 +80,7 @@ parts.deep_556_45_457mm_barrel = {
     },
     mounts = {
         { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.barrel.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 237, y = -1 }, quick = { key = "muzzle" } },
-        { path = "gas_block", accepts = { "AR_gas_block" }, defaultPart = "deep_mk12_gas_block", anchor = { x = 161, y = -2 } },
+        { path = "gas_block", accepts = { "AR_gas_block" }, anchor = { x = 161, y = -2 } },
     }
 }
 
@@ -89,7 +89,7 @@ parts.deep_556_45_508mm_barrel = {
     nameKey = "deep.gunsmith.part.deep_556_45_508mm_barrel",
     provides = { "AR_barrel" },
     item = { identifier = "deep_556_45_508mm_barrel" },
-    stats = { Ergonomics = -1, RangedSpreadReduction = 0.07 },
+    stats = { Ergonomics = 0, RangedSpreadReduction = 0.3 },
     visual = { texture = texture,
         source = { x = 6, y = 156, w = 275, h = 19 },
         attachPoint = { x = 1, y = 11 },
@@ -98,6 +98,6 @@ parts.deep_556_45_508mm_barrel = {
     },
     mounts = {
         { path = "muzzle_mount", nameKey = "deep.gunsmith.mount.barrel.muzzle_mount", accepts = { "muzzle_mount" }, anchor = { x = 263, y = 0 }, quick = { key = "muzzle" } },
-        { path = "gas_block", accepts = { "AR_gas_block" }, defaultPart = "deep_mk12_gas_block", anchor = { x = 178, y = -1 } },
+        { path = "gas_block", accepts = { "AR_gas_block" }, anchor = { x = 178, y = -1 } },
     }
 }

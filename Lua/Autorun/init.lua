@@ -35,14 +35,17 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/AllSprite/AllSprite.lua"
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/MosinMagIcon.lua")
 
 --枪械改装系统
---if GunsmithFramework and GunsmithFramework.RegisterPackage then
---    GunsmithFramework.RegisterPackage({
---        modDir = Deep_Lua.Path,
---        entry = "Lua/Scripts/Gunsmith/Config.lua"
---    })
---else
---    print("[Deep-Diving-Armory] GunsmithFramework is required for Gunsmith configuration. Load GunsmithFramework before Deep-Diving-Armory.")
---end
+local gunsmithPackage = {
+    modDir = Deep_Lua.Path,
+    entry = "Lua/Scripts/Gunsmith/Config.lua"
+}
+GunsmithFramework = GunsmithFramework or {}
+if GunsmithFramework.RegisterPackage then
+    GunsmithFramework.RegisterPackage(gunsmithPackage)
+else
+    GunsmithFramework.PendingPackages = GunsmithFramework.PendingPackages or {}
+    table.insert(GunsmithFramework.PendingPackages, gunsmithPackage)
+end
 
 --GL特殊换弹
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadGrenadeLauncher/M32.lua")

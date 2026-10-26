@@ -2,13 +2,11 @@
 <Items>
 
   <Item name="HKET缓冲管" identifier="deep_hket_buffer_tube" subcategory="deep_buffer_tube" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_buffer_tube" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.25" impactsoundtag="impact_metal_light">
-    <Price baseprice="520" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false" />
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="8">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
       <RequiredSkill identifier="weapons" level="40" />
-      <RequiredItem identifier="physicorium_part" />
+      <RequiredItem identifier="iron" />
     </Fabricate>
     <Deconstruct time="5">
-      <Item identifier="physicorium" />
     </Deconstruct>
     <Sprite texture="%ModDir%/GunSmith/SharedParts/BufferTube//SharedBufferTube.png" sourcerect="12,5,102,22" depth="0.55" origin="0.5,0.5" />
     <Body width="102" height="22" density="10" />
@@ -16,13 +14,12 @@
   </Item>
 
   <Item name="高级缓冲管" identifier="deep_advanced_buffer_tube" subcategory="deep_buffer_tube" category="Weapon" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_gunsmith_part,deep_buffer_tube" canbepicked="true" cargocontaineridentifier="deep_accessory_container" scale="0.25" impactsoundtag="impact_metal_light">
-    <Price baseprice="520" sold="false" buyingpricemultiplier="2.0" minamount="1" maxamount="1" canbespecial="true" minleveldifficulty="0" displaynonempty="false" />
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="8">
-      <RequiredSkill identifier="weapons" level="40" />
-      <RequiredItem identifier="physicorium_part" />
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_mold_phy" mincondition="0.0" />
+      <RequiredItem identifier="titaniumaluminiumalloy" amount="1" />
     </Fabricate>
     <Deconstruct time="5">
-      <Item identifier="physicorium" />
     </Deconstruct>
     <Sprite texture="%ModDir%/GunSmith/SharedParts/BufferTube//SharedBufferTube.png" sourcerect="8,82,109,24" depth="0.55" origin="0.5,0.5" />
     <Body width="102" height="22" density="10" />
