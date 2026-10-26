@@ -1069,6 +1069,99 @@ unequip(rifle2, { character = character })
 assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.weapon_marker == 0,
     "stowed weapon leaked accessory effects")
 
+do
+    local gunsmithWeapon, normalWeapon = makeItem("none_weapon"), makeItem("normal_weapon")
+    local optic, normalOptic = makeItem("optic"), makeItem("optic")
+    local originalFlag = character.flags.SharedFlag
+    gunsmithWeapon.rootOwner, normalWeapon.rootOwner = character, character
+    gunsmithWeapon.contents, normalWeapon.contents = { optic }, { normalOptic }
+    slots[InvSlotType.LeftHand] = gunsmithWeapon
+    equip(gunsmithWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 4, "missing Gunsmith disabled ordinary accessory stats")
+
+    GunsmithFramework = {
+        Core = {
+            WeaponConfig = function(item)
+                if item == gunsmithWeapon then return {} end
+            end,
+        },
+        Config = { parts = {
+            optic_part = { item = { identifier = "optic" }, stats = { MovementSpeed = 10 } },
+            nested_part = { item = { identifier = "nested_dynamic" }, stats = { MovementSpeed = 12 } },
+            grip_part = { item = { identifier = "grip_a" } },
+        } },
+    }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = optic })
+    assert(character.stats.MovementSpeed == 0, "Gunsmith accessory kept migrated numeric bonuses")
+    assert(approximately(character.stats.RangedAttackSpeed, 0.3)
+        and approximately(character.stats.RangedSpreadReduction, 0.25),
+        "Gunsmith accessory suppression removed held weapon bonuses")
+    assert(character.Info.savedStats.weapon_marker == 1, "Gunsmith accessory lost its functional marker")
+
+    slots[InvSlotType.RightHand] = normalWeapon
+    equip(normalWeapon, { character = character })
+    itemContained({ Item = gunsmithWeapon }, { containedItem = optic })
+    assert(character.stats.MovementSpeed == 4, "Gunsmith changed ordinary weapon shared stats")
+    slots[InvSlotType.RightHand] = nil
+    unequip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 0, "Gunsmith retained another weapon's shared stats")
+
+    local unmanaged = makeItem("blockedoptic")
+    gunsmithWeapon.contents = { optic, unmanaged, makeItem("grip_a") }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = unmanaged })
+    assert(character.stats.MovementSpeed == 9, "unmanaged Gunsmith accessory lost its DDA stats")
+    assert(character.resistances["stun|dda_adjust_equipment"] == 0.7,
+        "Gunsmith accessory lost its non-stat resistance")
+
+    GunsmithFramework.Config.parts.blocked_part = {
+        item = { identifier = "blockedoptic" }, stats = { MovementSpeed = 5 },
+    }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = unmanaged })
+    for _ = 1, 4 do tick() end
+    assert(character.stats.MovementSpeed == 0, "conditional fallback restored migrated Gunsmith stats")
+    health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
+    for _ = 1, 4 do tick() end
+    health.afflictions.deep_enemy_affliction_resistance = nil
+    for _ = 1, 4 do tick() end
+    assert(character.stats.MovementSpeed == 0, "unblocking an accessory bypassed Gunsmith priority")
+
+    local nested, ammo = makeItem("nested_dynamic"), makeItem("ammo")
+    ammo.tags.dynamic_ammo = true
+    nested.contents = { ammo }
+    gunsmithWeapon.contents = { optic, nested }
+    gunsmithWeapon.Condition = 0
+    itemContained({ Item = gunsmithWeapon }, { containedItem = nested })
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 1,
+        "dynamic Gunsmith accessory did not preserve only its functional effect")
+    gunsmithWeapon.Condition = 100
+    for _ = 1, 2 do tick() end
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 0,
+        "dynamic Gunsmith accessory did not deactivate cleanly")
+    gunsmithWeapon.Condition = 0
+    for _ = 1, 2 do tick() end
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 1,
+        "dynamic refresh reapplied migrated Gunsmith accessory stats")
+
+    gunsmithWeapon.contents = {}
+    itemRemoved({ Item = gunsmithWeapon }, { item = optic })
+    assert(character.Info.savedStats.weapon_marker == 0 and character.Info.savedStats.nested_marker == 0,
+        "removing Gunsmith accessories leaked functional markers")
+    normalWeapon.contents = { optic }
+    slots[InvSlotType.RightHand] = normalWeapon
+    equip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 4, "transferring an accessory to a normal weapon lost its stats")
+    slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = nil, nil
+    unequip(gunsmithWeapon, { character = character })
+    unequip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 0
+        and approximately(character.stats.RangedAttackSpeed, 0)
+        and approximately(character.stats.RangedSpreadReduction, 0),
+        "Gunsmith unequip leaked numeric effects")
+    assert(character.flags.SharedFlag == originalFlag, "Gunsmith cleanup changed an external flag")
+    assert(character.Info.savedStats.weapon_marker == 0, "Gunsmith cleanup leaked a shared marker")
+    GunsmithFramework = nil
+end
+
 local gripWeapon1, gripWeapon2 = makeItem("gripWeapon1"), makeItem("gripWeapon2")
 gripWeapon1.rootOwner, gripWeapon2.rootOwner = character, character
 gripWeapon1.contents, gripWeapon2.contents = { makeItem("grip_a") }, { makeItem("grip_b") }
