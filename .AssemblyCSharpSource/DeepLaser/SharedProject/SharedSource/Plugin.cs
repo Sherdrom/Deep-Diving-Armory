@@ -14,7 +14,7 @@ namespace DeepLaser
         {
             harmony = new Harmony("DeepLaser");
             harmony.PatchAll();
-            LoggerService.Log("DeepLaser initialized.");
+            LuaCsSetup.PrintCsMessage("[Deep-Diving-Armory] DeepLaser initialized.");
         }
 
         public void OnLoadCompleted()
@@ -29,7 +29,7 @@ namespace DeepLaser
         {
             harmony?.UnpatchSelf();
             harmony = null;
-            LoggerService.Log("DeepLaser disposed.");
+            LuaCsSetup.PrintCsMessage("[Deep-Diving-Armory] DeepLaser disposed.");
         }
     }
 }

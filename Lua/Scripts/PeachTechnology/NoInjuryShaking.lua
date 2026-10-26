@@ -1,7 +1,8 @@
 local AH = AfflictionHelper
 
-local AimWobbleBuffs = { "deep_calm_buff", "deep_stable_shooting", "deep_contract_harsh_training_detect" }
+local AimWobbleBuffs = { "deep_calm_buff", "deep_contract_harsh_training_detect" }
 local MovePenaltyBuffs = { "deep_calm_buff", "deep_contract_harsh_training_detect" }
+local STABLE_SHOOTING_MARKER = Identifier("deep_stable_shooting")
 
 local function HasAnyBuff(character, buffs)
     if character == nil or character.CharacterHealth == nil then
@@ -16,7 +17,10 @@ local function HasAnyBuff(character, buffs)
 end
 
 Hook.Patch("Barotrauma.AnimController", "GetAimWobble", function(instance, ptable)
-    if HasAnyBuff(instance.Character, AimWobbleBuffs) then
+    local character = instance.Character
+    local hasStableShooting = character and character.Info
+        and character.Info:GetSavedStatValue(StatTypes.None, STABLE_SHOOTING_MARKER) > 0
+    if hasStableShooting or HasAnyBuff(character, AimWobbleBuffs) then
         ptable.PreventExecution = true
         return 0
     end

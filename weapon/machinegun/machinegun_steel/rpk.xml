@@ -34,22 +34,8 @@
         <dropitem/>
       </StatusEffect>
 
-      <!-- 装备升级的钢制，钛制枪械加成 -->
-      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Conditional HasTag="deep_upgrade_tool_steel_tit_confirm" />
-        <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_machinegun" strength="10" />
-      </StatusEffect>
 
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.3" setvalue="true">
-      </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setvalue="true">
-        <Affliction identifier="deep_machinegun_crouch" strength="100"/>
-      </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-        <Affliction identifier="deep_machinegunner_light_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -77,24 +63,13 @@
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
 
-      <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
-      </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1.4" holdtrigger="true" barrelpos="220,14" spread="16" unskilledspread="30" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
@@ -179,7 +154,7 @@
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui3.png" sourcerect="124,2,121,94" origin="0.5,0.5" />
       <SlotIcon slotindex="2" texture="%ModDir%/misc/ui3.png" sourcerect="262,2,121,94" origin="0.5,0.5" />
-      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="6,127,94,103" origin="0.5,0.5" />
+      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui3.png" sourcerect="224,131,120,98" origin="0.5,0.5" />
       <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="11,250,82,81" origin="0.5,0.5" />
       <SubContainer capacity="1" maxstacksize="1">
         <Containable items="flashlight,deep_laser_R" excludedidentifiers="spreadflashlight_L,focusingflashlight_L" hide="false" itempos="9,5" setactive="true" />
@@ -188,15 +163,10 @@
         <Containable items="flashlight,deep_laser" excludedidentifiers="spreadflashlight,focusingflashlight" hide="false" itempos="9,5" setactive="true" />
       </SubContainer>
       <SubContainer capacity="1" maxstacksize="1">
-        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,3x_sight,1_3x_sight" hide="false" itempos="-25,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
+        <Containable items="holographic_sight,red_sight,2x_sight,2.5x_sight,1_3x_sight" hide="false" itempos="-25,14" setactive="true" containedspritedepth="0.45" depth="0.55" />
 
         <Containable items="thermalgoggles_sight" hide="false" itempos="-25,14" setactive="true" containedspritedepth="0.45" depth="0.55">
           <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="1200" setValue="true">
-          </StatusEffect>
-        </Containable>
-
-        <Containable items="thermalgoggles_sight_6x" hide="false" itempos="-25,14" setactive="true" containedspritedepth="0.45" depth="0.55">
-          <StatusEffect type="OnInserted" target="This" TargetItemComponent="StatusHUD" range="2000" setValue="true">
           </StatusEffect>
         </Containable>
 

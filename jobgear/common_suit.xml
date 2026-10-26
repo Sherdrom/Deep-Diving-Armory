@@ -312,66 +312,7 @@
         <RequiredItems tags="deep_travel_light" type="Contained" TargetSlot="0" />
         <dropitem />
       </StatusEffect>
-      <!-- 钢制插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_3" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_3_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_4" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_4_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_5" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_5_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_6" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_6_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_7" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_7_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_8" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_8_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_9" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_9_debuff" strength="1" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_plate_metal_10" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_metal_10_debuff" strength="1" />
-      </StatusEffect>
-      <!-- 陶瓷插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems tags="deep_plate_ceramic" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_ceramic_debuff" strength="1" />
-      </StatusEffect>
-      <!-- 复合插板debuff-->
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems tags="deep_plate_composite" type="Contained" TargetSlot="0" />
-        <Affliction identifier="deep_plate_composite_debuff" strength="1" />
-      </StatusEffect>
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_ergonomics" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_ergonomics_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_heavy_armor" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_heavy_armor" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_strengthening_of_limbs" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_strengthening_of_limbs" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_emergency_defibrillation" type="Contained" TargetSlot="1" />
-        <Affliction identifier="chip_emergency_defibrillation_detect" strength="100" />
-      </StatusEffect>
       <sprite texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.46" origin="0.52,0.6" sourcerect="441,6,65,74" />
       <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="Torso" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
       <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/heyuanmu_suit.png" limb="RightHand" hidelimb="true" inherittexturescale="true" inheritorigin="true" inheritsourcerect="true" />
@@ -842,83 +783,10 @@
     <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
     <Wearable limbtype="Head" slots="Any,Headset" msg="ItemMsgPickUpSelect">
       <sprite texture="%ModDir%/jobgear/suit/yangtuo_suit.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.39" origin="0.59,0.7" sourcerect="425,2,85,119" />
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_learn" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_learn_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_learn_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_learn_2" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_learn_3" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_learn_3" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_mechanical" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_mechanical_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_electrician" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_electrician_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_security" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_security_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_captain" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_captain_1" strength="100" />
-        <Affliction identifier="chip_captain_talent_detect" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_medic" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_medic_1" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_assistant" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_assistant_1" strength="100" />
-        <Affliction identifier="clownpower" strength="100" />
-        <Affliction identifier="psychosis" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_mechanical_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_mechanical_2" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_electrician_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_electrician_2" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_security_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_security_2" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_captain_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_captain_2" strength="100" />
-        <Affliction identifier="chip_captain_talent_detect" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_medic_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_medic_2" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="chip_assistant_2" type="Contained" targetslot="1" />
-        <Affliction identifier="chip_assistant_2" strength="100" />
-        <Affliction identifier="clownpower" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnWearing" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <RequiredItems items="deep_ten_star_general_assist_upgrading" type="Contained" targetslot="1" />
-        <Affliction identifier="deep_chip_ten_star_general_assist_upgrading_effect" strength="100" />
-      </StatusEffect>
     </Wearable>
     <ItemContainer capacity="1" maxstacksize="1" autoinject="true">
       <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
       <Containable items="chem,syringe" />
-      <SubContainer capacity="1" maxstacksize="1">
-        <Containable tags="deep_chip_headset" hide="true" itempos="26,-1.5" setactive="true" containedspritedepth="0.45" depth="0.55" />
-      </SubContainer>
     </ItemContainer>
   </Item>
   <Item name="" identifier="deep_zhenli_suit_copy" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
@@ -1228,6 +1096,52 @@
       <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/suomi_suit_2.png" limb="LeftLeg" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="87,144,27,100" origin="0.6,0.55" scale="0.5" />
       <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/suomi_suit_2.png" limb="RightFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="286,221,48,33" origin="0.6,0.6" scale="0.5" />
       <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/suomi_suit_2.png" limb="LeftFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="348,221,49,33" origin="0.6,0.6" scale="0.5" />
+      <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
+      <SkillModifier skillidentifier="weapons" skillvalue="15" />
+      <SkillModifier skillidentifier="helm" skillvalue="5" />
+      <SkillModifier skillidentifier="mechanical" skillvalue="5" />
+      <SkillModifier skillidentifier="electrical" skillvalue="5" />
+      <SkillModifier skillidentifier="medical" skillvalue="5" />
+    </Wearable>
+    <ItemContainer capacity="4" maxstacksize="32">
+      <Containable items="smallitem" />
+    </ItemContainer>
+  </Item>
+  <Item name="" identifier="deep_mark_suit_knight" InvulnerabletoDamage="true" subcategory="deep_suit" aliases="securityuniform" category="Equipment" tags="smallitem,clothing" fireproof="false" cargocontaineridentifier="metalcrate" description="" scale="0.5" impactsoundtag="impact_soft">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="organicfiber" amount="2" />
+      <RequiredItem identifier="KEVLAR" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="KEVLAR" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/suit/suit_icon.png" sourcerect="656,633,75,140" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Jobgear/MiscJobGear.png" sourcerect="509,151,121,66" depth="0.6" origin="0.5,0.5" />
+    <Body width="100" height="50" density="15" friction="0.8" restitution="0.01" />
+    <Wearable slots="Any,InnerClothes" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Head" hidelimb="true" inherittexturescale="false" hideotherwearables="false" inheritorigin="false" inheritsourcerect="false" inheritlimbdepth="true" scale="0.24" origin="0.614,0.586" sourcerect="822,42,126,115" />
+      <sprite name="Security Officer's Uniform 1 Torso" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Torso" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.4,0.6" sourcerect="351,19,150,287" scale="0.24" size="1,1" compress="true" hideotherwearables="false" />
+      <sprite name="Security Officer's Uniform 1 Right Hand" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightHand" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.337,0.52" sourcerect="567,322,52,78" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Hand" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftHand" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="700,321,48,82" origin="0.55,0.52" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Lower Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftForearm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="709,197,40,118" origin="0.48,0.51" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Lower Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightForearm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.369,0.515" sourcerect="574,184,58,129" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Upper Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftArm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="703,8,51,147" origin="0.5,0.57" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Upper Arm" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightArm" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" origin="0.365,0.57" sourcerect="566,7,62,149" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Waist" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="Waist" hidelimb="false" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="356,385,117,124" origin="0.5,0.539" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Right Thigh" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightThigh" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="6,8,98,229" origin="0.5,0.541" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Left Thigh" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftThigh" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="169,9,95,215" origin="0.5,0.54" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Right Leg" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightLeg" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="20,264,64,209" origin="0.39,0.62" scale="0.27" compress="true" inheritlimbdepth="true" />
+      <sprite name="Security Officer's Uniform 1 Left Leg" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftLeg" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="181,263,67,208" origin="0.39,0.62" scale="0.27" />
+      <sprite name="Security Officer's Uniform 1 Right Shoe" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="RightFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="548,443,103,71" origin="0.396,0.5" scale="0.25" />
+      <sprite name="Security Officer's Uniform 1 Left Shoe" texture="%ModDir%/jobgear/suit/deep_mark_suit_knight.png" limb="LeftFoot" hidelimb="true" inherittexturescale="false" inheritorigin="false" inheritsourcerect="false" sourcerect="681,443,103,70" origin="0.396,0.5" scale="0.25" />
       <damagemodifier armorsector="0.0,360.0" afflictionidentifiers="gunshotwound,bitewounds,lacerations,blunttrauma,bleeding" damagemultiplier="0.8" />
       <SkillModifier skillidentifier="weapons" skillvalue="15" />
       <SkillModifier skillidentifier="helm" skillvalue="5" />

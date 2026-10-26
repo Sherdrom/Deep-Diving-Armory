@@ -21,18 +21,10 @@
     <Sprite texture="%ModDir%/weapon/smg/smg_phy/smg_phy.png" sourcerect="20,13,275,98" depth="0.55" origin="0.5,0.5" />
     <Body width="200" height="65" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" controlpose="true" holdpos="40,-10" aimpos="40,3" handle1="15,-20" handle2="80,20" holdangle="-35" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.25" setvalue="true">
-      </StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
-      </StatusEffect>
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="smg" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
@@ -74,31 +66,16 @@
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
 
-      <!-- 半自动射击，获得伤害加成和高精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 1" />
-        <Affliction identifier="deep_Semi" strength="100" />
-      </StatusEffect>
 
       <!-- 三连发，获得伤害加成和精度-->
-      <StatusEffect type="OnActive" interval="0.9" stackable="false" targettype="This,Character" comparison="and" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Conditional currentFireModeSelected="eq 2" />
-        <Affliction identifier="deep_Burst" strength="100" />
-      </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
 
 
     </Holdable>
     <SwitchableRangedWeapon reload="0.06" weapondamagemodifier="1" holdtrigger="true" barrelpos="138,13" spread="2" unskilledspread="4" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Semi,Burst" firemodeswitchkey="V" burstReload="0.06" shotsPerBurst="3">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <!-- 普通枪声，消音器枪声 -->

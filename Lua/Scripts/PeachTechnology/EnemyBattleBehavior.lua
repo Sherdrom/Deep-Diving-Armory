@@ -1,3 +1,5 @@
+if not SERVER and Game.IsMultiplayer then return end
+
 local AH = AfflictionHelper
 
 local LimbType_Head = 11
@@ -156,7 +158,7 @@ Hook.Patch(
 
 local JOB_CONFIGS = {
     ["deep_securityofficer_enemy"] = {
-        AttackDistanceLimit = 1200,
+        AttackDistanceLimit = 1100,
         CanReport = false,
         BlockedByAffliction = {
             Identifier = "deep_enemy_attacked_result",
@@ -164,7 +166,7 @@ local JOB_CONFIGS = {
         },
     },
     ["deep_medicaldoctor_enemy"] = {
-        AttackDistanceLimit = 1200,
+        AttackDistanceLimit = 1100,
         CanReport = false,
         BlockedByAffliction = {
             Identifier = "deep_enemy_attacked_result",

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_single_handed_shield" subcategory="deep_shield" category="Equipment" tags="mediumitem,ObstructVision,ObstructVision_45" health="300" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="true" scale="0.5" allowasextracargo="true">
+  <Item name="" identifier="deep_single_handed_shield" subcategory="deep_shield" category="Equipment" tags="mediumitem,ObstructVision,ObstructVision_45" health="300" impactsoundtag="impact_metal_light" cargocontaineridentifier="metalcrate" damagedbyprojectiles="true" damagedbymeleeweapons="true" DamagedByExplosions="false" scale="0.5" allowasextracargo="true">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="60" />
       <RequiredItem identifier="steel" amount="4" />
@@ -62,39 +62,39 @@
       <damagemodifier armorsector="0.0,-180.0" afflictionidentifiers="bitewounds,bleeding" damagemultiplier="0.1" probabilitymultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
       <damagemodifier armorsector="0.0,-180.0" afflictiontypes="stun" damagemultiplier="0.5" damagesound="ricochet" deflectprojectiles="true" />
 
-      <StatusEffect type="NotInWater" target="This" comparison="and" condition="10" disabledeltatime="true" targetslot="0">
-        <Conditional condition="lt 300.0" />
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="500" disabledeltatime="true" targetslot="0">
+        <Conditional condition="lt 400.0" />
         <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained" />
-      </StatusEffect>
-
-      <StatusEffect type="OnDamaged" target="Contained" condition="-5" disabledeltatime="true" targetslot="0">
-        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained" />
-      </StatusEffect>
-
-      <StatusEffect type="NotInWater" target="This" comparison="and" condition="20" disabledeltatime="true" targetslot="0">
-        <Conditional condition="lt 300.0" />
-        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained" />
-      </StatusEffect>
-
-      <StatusEffect type="OnDamaged" target="Contained" condition="-3.33" disabledeltatime="true" targetslot="0">
-        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained" />
-      </StatusEffect>
-
-      <StatusEffect type="NotInWater" target="This" comparison="and" condition="30" disabledeltatime="true" targetslot="0">
-        <Conditional condition="lt 300.0" />
-        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained" />
       </StatusEffect>
 
       <StatusEffect type="OnDamaged" target="Contained" condition="-2.5" disabledeltatime="true" targetslot="0">
-        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained" />
+        <RequiredItems items="deep_mobile_shield_fix_plate_steel" type="Contained" />
       </StatusEffect>
 
-      <StatusEffect type="NotInWater" target="This" comparison="and" condition="50" disabledeltatime="true" targetslot="0">
-        <Conditional condition="lt 300.0" />
-        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained" />
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="500" disabledeltatime="true" targetslot="0">
+        <Conditional condition="lt 400.0" />
+        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained" />
       </StatusEffect>
 
       <StatusEffect type="OnDamaged" target="Contained" condition="-1.66" disabledeltatime="true" targetslot="0">
+        <RequiredItems items="deep_mobile_shield_fix_plate_tit" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="500" disabledeltatime="true" targetslot="0">
+        <Conditional condition="lt 400.0" />
+        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-1.25" disabledeltatime="true" targetslot="0">
+        <RequiredItems items="deep_mobile_shield_fix_plate_phy" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="NotInWater" target="This" comparison="and" condition="500" disabledeltatime="true" targetslot="0">
+        <Conditional condition="lt 400.0" />
+        <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained" />
+      </StatusEffect>
+
+      <StatusEffect type="OnDamaged" target="Contained" condition="-0.83" disabledeltatime="true" targetslot="0">
         <RequiredItems items="deep_mobile_shield_fix_plate_tun" type="Contained" />
       </StatusEffect>
 

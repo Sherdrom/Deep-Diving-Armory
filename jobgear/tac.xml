@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="thermalgoggles_t7" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="thermalgoggles_t7" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac,deep_tac_change_sprite" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
@@ -17,7 +17,7 @@
     <Body width="70" height="70" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  <Item name="" identifier="gpnvg_18" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac,NightVisionGoggle,NVG_Green" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="gpnvg_18" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_thermal,deep_helmet_tac,deep_tac,deep_tac_change_sprite,NightVisionGoggle,NVG_Green" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="weapons" level="100" />
       <RequiredItem identifier="fpgacircuit" amount="2" />
@@ -35,7 +35,7 @@
     <Body width="70" height="70" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  <Item name="" identifier="deep_healthscan_helmet" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_health,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_healthscan_helmet" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_tac_health,deep_helmet_tac,deep_tac,deep_tac_change_sprite" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.3" impactsoundtag="impact_metal_light">
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
       <RequiredSkill identifier="medical" level="50" />
       <RequiredItem identifier="fpgacircuit" />
@@ -46,6 +46,23 @@
     </Deconstruct>
     <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="197,231,100,78" />
     <Sprite texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="197,231,100,78" depth="0.65" origin="0.5,0.5" />
+    <Body width="70" height="70" density="20" />
+    <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_firendlyfire_avoid_tac" subcategory="deep_tac" category="Equipment" maxstacksize="4" maxstacksizecharacterinventory="1" Tags="smallitem,deep_helmet_tac,deep_tac" canbepicked="true" description="" cargocontaineridentifier="metalcrate" scale="0.15" impactsoundtag="impact_metal_light">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="fpgacircuit" amount="2" />
+      <RequiredItem identifier="engineeringplastic" amount="1" />
+      <RequiredItem identifier="fulgurium" amount="2" />
+      <RequiredItem identifier="deep_ssd" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="fpgacircuit" />
+      <Item identifier="fulgurium" amount="1" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="28,556,105,101" />
+    <Sprite texture="%ModDir%/jobgear/tac/tac_icon.png" sourcerect="28,556,105,101" depth="0.65" origin="0.5,0.5" />
     <Body width="70" height="70" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
@@ -103,7 +120,7 @@
     <Body width="70" height="70" density="20" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
-  <Item name="" identifier="deep_surrender_without_fight_handcuffs" category="Equipment" maxstacksize="8" cargocontaineridentifier="metalcrate" tags="smallitem,handlocker" scale="0.5" impactsoundtag="impact_metal_light" equipconfirmationtext="handcuffequipconfirmation">
+  <Item name="" identifier="deep_surrender_without_fight_handcuffs" health="120" category="Equipment" maxstacksize="8" cargocontaineridentifier="metalcrate" tags="smallitem,handlocker" scale="0.5" impactsoundtag="impact_metal_light" equipconfirmationtext="handcuffequipconfirmation">
     <Deconstruct time="5" />
     <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="192,0,64,64" origin="0.5,0.5" />
     <Sprite texture="Content/Items/Jobgear/Mechanic/safetyharness.png" sourcerect="405,0,56,49" depth="0.6" origin="0.5,0.5" />
@@ -112,6 +129,10 @@
       <sprite texture="Content/Items/Jobgear/Mechanic/safetyharness.png" limb="RightHand" sourcerect="462,1,25,16" origin="0.5,0.8" depth="0.09" inheritlimbdepth="false" inherittexturescale="true" />
       <sprite texture="Content/Items/Jobgear/Mechanic/safetyharness.png" limb="LeftHand" sourcerect="487,1,25,16" origin="0.5,0.8" depth="0.09" inheritlimbdepth="true" inherittexturescale="true" />
       <StatusEffect type="OnWearing" target="Character" lockhands="true" setvalue="true" />
+      <StatusEffect type="OnWearing" target="This" condition="-1" />
+      <StatusEffect type="OnBroken" target="This">
+        <remove />
+      </StatusEffect>
       <StatusEffect type="OnNotcontained" target="This" setvalue="true">
         <remove />
       </StatusEffect>

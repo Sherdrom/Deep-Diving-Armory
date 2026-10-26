@@ -31,9 +31,6 @@
         <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" />
         <RequiredItems items="deep_gauss_mag" type="Contained" />
       </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -43,19 +40,12 @@
         <Conditional chip_bodyshot_detect="lt 10.0" />
       </StatusEffect>
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/sniperrifle/sniper.png" canbehiddenbyotherwearables="false" sourcerect="45,714,369,82" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.5" origin="0.5,0.9" />
-      <StatusEffect type="OnWearing" target="Character" SpeedMultiplier="0.8" setvalue="true" />
     </Wearable>
     <SwitchableRangedWeapon reload="3" MaxChargeTime="2" weapondamagemodifier="1" reloadnoskill="5" reloadskillrequirement="100" holdtrigger="true" barrelpos="180,5" spread="0" unskilledspread="0" combatPriority="100" drawhudwhenequipped="true" crosshairscale="1" botreload="3" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <ChargeSound file="%ModDir%/weapon/ammo/gauss_charge.ogg" range="3000" forceplaysounds="true" />
       <ParticleEmitterCharge particle="chargenucleargun" particlespersecond="30" scalemultiplier="0.75,0.75" scalemin="1.0" scalemax="1.0" anglemax="360" />
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />

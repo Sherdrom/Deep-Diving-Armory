@@ -26,9 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.2">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -46,12 +43,12 @@
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
       <!-- 右键瞄准时，设置电压为1.0-->
       <StatusEffect type="OnSecondaryUse" interval="0.1" target="This" Voltage="1.0" setvalue="true" stackable="false">
-        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
       </StatusEffect>
       <!-- 电压大于0.9时，开启热成像-->
       <StatusEffect type="OnSecondaryUse" interval="0.5" target="This" overlaycolor="176,0,0,120" thermalgoggles="true" setvalue="true" comparison="and" stackable="false">
         <Conditional Voltage="gte 0.9" />
-        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="4" />
+        <RequiredItems tags="deep_thermalgoggles_sight" type="Contained" targetslot="3" />
       </StatusEffect>
       <!-- 松开右键，电压小于0.8时，关闭热成像-->
       <StatusEffect type="OnContained" interval="0.5" target="This" overlaycolor="0,0,0,0" thermalgoggles="false" setvalue="true" comparison="and" stackable="false">
@@ -59,15 +56,9 @@
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
     </Holdable>
     <SwitchableRangedWeapon reload="1.4" weapondamagemodifier="1.5" reloadnoskill="1.8" reloadskillrequirement="100" holdtrigger="true" barrelpos="345,31" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.4" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <ParticleEmitter particle="deep_muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />

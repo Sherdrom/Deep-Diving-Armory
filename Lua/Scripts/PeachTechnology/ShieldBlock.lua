@@ -1,14 +1,18 @@
 local DEBUG = false
 
 local SHIELD_CONFIG = {
+    ["deep_double_handed_shield_heavy"] = 2,
+    ["deep_mobile_shield"] = 1,
     ["deep_single_handed_shield"] = 1,
+    ["deep_wuchuan"] = 2,
 }
 
 local SHIELD_UPGRADE_CONFIG = {
-    ["deep_mobile_shield_fix_plate_steel"] = 1,
+    ["deep_mobile_shield_fix_plate_phy"] = 1,
+    ["deep_mobile_shield_fix_plate_tun"] = 2,
 }
 
-local originalMaxTargetsCache = {}
+local maxTargetsCache = setmetatable({}, { __mode = "k" })
 
 print("[ShieldBlock] Loaded")
 
@@ -92,29 +96,32 @@ local function GetTotalShieldBlockCount(userData)
     return total
 end
 
+-- 首见缓存原始值, 否则恢复为原始值; 返回原始值
+local function NormalizeMaxTargets(instance)
+    local pristine = maxTargetsCache[instance]
+    if pristine == nil then
+        pristine = instance.MaxTargetsToHit
+        maxTargetsCache[instance] = pristine
+    else
+        instance.MaxTargetsToHit = pristine
+    end
+    return pristine
+end
+
+-- 物理碰撞回调内的归一化: 保证 Projectile.cs L974 的 hits.Count >= MaxTargetsToHit
+-- 判定始终使用原始值 (该回调早于 HandleProjectileCollision 执行)
 Hook.Patch(
     "Barotrauma.Items.Components.Projectile",
-    "DoHitscan",
-    { "Microsoft.Xna.Framework.Vector2" },
+    "OnProjectileCollision",
+    {
+        "FarseerPhysics.Dynamics.Fixture",
+        "FarseerPhysics.Dynamics.Fixture",
+        "FarseerPhysics.Dynamics.Contacts.Contact"
+    },
     function(instance, ptable)
-        if originalMaxTargetsCache[instance] == nil then
-            originalMaxTargetsCache[instance] = instance.MaxTargetsToHit
-        end
+        NormalizeMaxTargets(instance)
     end,
     Hook.HookMethodType.Before
-)
-
-Hook.Patch(
-    "Barotrauma.Items.Components.Projectile",
-    "DoHitscan",
-    { "Microsoft.Xna.Framework.Vector2" },
-    function(instance, ptable)
-        local original = originalMaxTargetsCache[instance]
-        if original ~= nil then
-            instance.MaxTargetsToHit = original
-        end
-    end,
-    Hook.HookMethodType.After
 )
 
 Hook.Patch(
@@ -126,6 +133,8 @@ Hook.Patch(
         "Microsoft.Xna.Framework.Vector2"
     },
     function(instance, ptable)
+        local pristine = NormalizeMaxTargets(instance)
+
         local target = ptable["target"]
         local userData = GetUserData(target)
         if userData == nil then
@@ -137,18 +146,23 @@ Hook.Patch(
             return
         end
 
-        local original = originalMaxTargetsCache[instance] or instance.MaxTargetsToHit
-        local newValue = original - totalBlock + 1
+        local newValue = pristine - totalBlock + 1
         if newValue < 1 then
             newValue = 1
         end
 
         log(string.format(
             "Shield blocked: blockCount=%d | MaxTargetsToHit %d -> %d",
-            totalBlock, original, newValue
+            totalBlock, pristine, newValue
         ))
 
         instance.MaxTargetsToHit = newValue
     end,
     Hook.HookMethodType.Before
 )
+
+Hook.Add("roundStart", "ShieldBlock.RoundStart", function()
+    for key in pairs(maxTargetsCache) do
+        maxTargetsCache[key] = nil
+    end
+end)

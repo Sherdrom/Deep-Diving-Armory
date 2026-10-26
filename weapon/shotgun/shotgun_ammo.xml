@@ -18,9 +18,6 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" sourcerect="479,212,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
@@ -69,9 +66,6 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
@@ -120,9 +114,6 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="16,12,82,83" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
@@ -171,9 +162,6 @@
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="18,189,82,100" depth="0.55" origin="0.5,0.5" />
     <Body width="23" height="10" density="15" />
     <Holdable slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
     <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="15">
@@ -385,7 +373,7 @@
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>-->
 
-  <Item name="" identifier="deep_aa12_12shell" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_tit_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_aa12_12shell" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,tit_ammobox_reload_0_33" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -395,9 +383,9 @@
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
-      <RequiredItem identifier="titanium" amount="4" />
-      <RequiredItem identifier="gun_powder" amount="4" />
-      <RequiredItem identifier="copper" amount="4" />
+      <RequiredItem identifier="titanium" amount="3" />
+      <RequiredItem identifier="gun_powder" amount="3" />
+      <RequiredItem identifier="copper" amount="3" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5">
@@ -405,27 +393,19 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_3.png" sourcerect="34,236,104,186" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="34,236,73,186" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="1" SpawnWithId="deep_12shell_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_aa12" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
-        <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" Count="2" />
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1">
-        <SpawnItem identifiers="deep_12shell_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 
-  <Item name="" identifier="deep_aa12_slug" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,aa12_phy_reload" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_aa12_slug" subcategory="shotgun_ammo" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.13" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,phy_ammobox_reload_0_33" impactsoundtag="impact_metal_light">
     <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -435,9 +415,9 @@
     </Price>
     <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="1">
       <RequiredSkill identifier="weapons" level="100" />
-      <RequiredItem identifier="physicorium" amount="4" />
-      <RequiredItem identifier="gun_powder" amount="4" />
-      <RequiredItem identifier="copper" amount="4" />
+      <RequiredItem identifier="physicorium" amount="3" />
+      <RequiredItem identifier="gun_powder" amount="3" />
+      <RequiredItem identifier="copper" amount="3" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5">
@@ -445,15 +425,10 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_3.png" sourcerect="170,236,104,186" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.65" sourcerect="170,236,73,186" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_slug_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="1" SpawnWithId="deep_slug_aa12" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_slug_aa12" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-4" disabledeltatime="true">
-        <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" Count="2" />
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1">
-        <SpawnItem identifiers="deep_slug_aa12" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
@@ -548,22 +523,14 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_shotgun.png" sourcerect="166,10,115,107" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_shotgun.png" depth="0.65" sourcerect="20,102,75,77" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="2" SpawnWithId="deep_12shell_three" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
+    <ItemContainer hideitems="true" capacity="1" SpawnWithId="deep_12shell_three" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
       <Containable items="deep_12shell_three" />
       <!--30发弹容，每发-3.22耐久，耐久为0打完-->
       <StatusEffect type="OnUse" target="This" condition="-50" disabledeltatime="true">
-        <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" Count="2" />
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-      <StatusEffect type="OnInserted" target="This" interval="1">
-        <SpawnItem identifiers="deep_12shell_three" spawnposition="ThisInventory" SpawnIfInventoryFull="false" Count="1" />
       </StatusEffect>
     </ItemContainer>
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.5" target="Character" setvalue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_damage_fall_off_600_1200_detect" strength="5" />
-      </StatusEffect>
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>

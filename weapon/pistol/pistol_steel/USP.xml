@@ -23,21 +23,8 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_steel/pistol_steel.png" sourcerect="18,196,98,71" depth="0.55" origin="0.5,0.5" />
     <Body width="70" height="50" density="10" />
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-25,-7" handle2="-15,-7" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="0.9" target="This" Scale="0.32" setvalue="true">
-      </StatusEffect>
 
-      <!-- 装备升级的钢制，钛制枪械加成 -->
-      <StatusEffect type="OnActive" interval="0.25" targettype="This,Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Conditional HasTag="deep_upgrade_tool_steel_tit_confirm" />
-        <Affliction identifier="deep_upgrade_tool_steel_tit_confirm_pistol" strength="10" />
-      </StatusEffect>
 
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <Affliction identifier="deep_pistol_mozambique_hand" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
-      </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
         <Conditional chip_bodyshot_detect="gt 10.0" />
@@ -79,16 +66,10 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon barrelpos="49,27" spread="2" unskilledspread="4" combatPriority="20" drawhudwhenequipped="true" crosshairscale="0.5" reload="0.1" holdtrigger="true" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="0.2">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
       <!-- 普通枪声，消音器枪声 -->

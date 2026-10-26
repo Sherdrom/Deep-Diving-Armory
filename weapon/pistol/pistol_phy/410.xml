@@ -21,17 +21,10 @@
     <Sprite texture="%ModDir%/weapon/pistol/pistol_phy/pistol_phy.png" sourcerect="15,107,110,77" depth="0.55" origin="0.5,0.5" />
     <Body width="180" height="30" density="10" />
     <Holdable slots="Any,RightHand+LeftHand" holdpos="80,-20" holdangle="-35" controlpose="true" aimpos="85,5" handle1="-30,-7" handle2="-30,-7" msg="ItemMsgPickUpSelect">
-      <StatusEffect type="OnActive" interval="3" target="This" Scale="0.32" setvalue="true"></StatusEffect>
       <!-- 二战老兵合约-->
       <StatusEffect type="OnActive" interval="0.9" targettype="This,Character" setvalue="true" comparison="and">
         <Conditional deep_contract_wwt_detect="gt 0.0" />
         <dropitem />
-      </StatusEffect>
-      <StatusEffect type="Onactive" interval="0.9" target="Character" setvalue="true">
-        <Affliction identifier="deep_shotgun_damgage_balance" strength="100" />
-      </StatusEffect>
-      <StatusEffect type="OnActive" interval="0.9" target="Character" setValue="true" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deepgun_inwater_detect" strength="100" />
       </StatusEffect>
       <!-- 有碎甲芯片时，增加1级穿甲-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
@@ -61,16 +54,10 @@
       </StatusEffect>
 
       <!-- VCE检测 -->
-      <StatusEffect type="OnActive" interval="0.9" delay="1" target="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_none" strength="100" />
-      </StatusEffect>
 
     </Holdable>
     <SwitchableRangedWeapon weapondamagemodifier="1" barrelpos="55,28" spread="0.1" unskilledspread="3" combatPriority="100" reload="0.1" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" botreload="0.2">
       <!-- VCE检测 -->
-      <StatusEffect type="OnContained" interval="0.9" targettype="Character" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-        <Affliction identifier="deep_VCE_yes" strength="100" />
-      </StatusEffect>
       <StatusEffect type="OnUse" target="This" Condition="-400" />
       <StatusEffect type="NotInWater" target="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="150" />

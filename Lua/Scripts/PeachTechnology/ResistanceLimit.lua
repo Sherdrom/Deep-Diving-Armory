@@ -26,7 +26,7 @@ local ENEMY_JOB_IDS = {
 -- ============================================================
 
 local RESISTANCE_OVERRIDES = {
-     gunshotwound = 0.7,
+     gunshotwound = 0.8,
     -- bleeding = 0.3,
     -- damage = 0.2,
 }
