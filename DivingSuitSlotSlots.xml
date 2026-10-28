@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ============================================================
+  Deep-Diving-Armory 正式槽位声明（三槽）
+  ============================================================
+  布局：第二行（ID 卡槽上方），横向吸附原版列，与下方槽位对齐：
+    [弹挂 chestrig]=原版头盔(Head)列  [目镜 goggles]=原版耳机(Headset)列  [头套 mask]=原版ID卡(Card)列
+    align 字段 = 横向吸附目标（原版 InvSlotType 名）；col 仅作 align 未命中时的回退。
+  图标：框架自动加载本包 UI/slot_<id>.png 作为各槽图标（128x128）。
+  双端一致：主机与所有客机都必须启用同一份本文件。
+-->
+<DivingSuitSlots>
+
+  <!-- ============ 弹挂槽 chestrig（bit 1024） ============
+       匹配 DDA 全部 10 款普通胸挂（不能用 headset 标签——会误伤真耳机），
+       它们当前占据 Headset（耳机）槽 → 迁入 1024 专属槽；
+       align="Head" = 吸附原版头盔列 -->
+  <Slot bit="1024" id="chestrig"
+        identifiers="tanzan_m22,deep_56rig,deep_alpha,deep_separatists,deep_commando,deep_coalition,deep_mk3,deep_m43,deep_ghost,deep_thunder"
+        from="Headset" priority="0" row="1" col="-2" align="Head" yoff="0" />
+
+  <!-- ============ 目镜槽 goggles（bit 2048） ============
+       匹配 DDA 热成像/夜视目镜（thermalgoggles_t7 / gpnvg_18，tag=deep_tac_thermal），
+       它们当前被任意携带（Any 槽）→ 迁入 2048 专属槽；
+       align="Headset" = 吸附原版耳机列 -->
+  <Slot bit="2048" id="goggles"
+        tags="deep_tac_thermal"
+        from="Any" priority="0" row="1" col="-1" align="Headset" yoff="0" />
+
+  <!-- ============ 头套槽 mask（bit 4096，原背包槽位） ============
+       匹配 DDA 四款战术头套（战术头套/提花头巾/半头巾/战术护目面罩），
+       它们当前穿戴在 Card（ID 卡）槽 → 迁入 4096 专属槽（col=0 基准列=ID 卡列） -->
+  <Slot bit="4096" id="mask"
+        identifiers="deep_tac_mask,deep_jacquard_headscarf,deep_half_face_towel,deep_tactical_visor"
+        from="Card" priority="0" row="1" col="0" yoff="0" />
+
+</DivingSuitSlots>
