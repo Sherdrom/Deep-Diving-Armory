@@ -20,7 +20,9 @@ local function reInputMag(handItem, character)
     if not MagState[handItem.ID] then
         MagState[handItem.ID] = { isExecuted = false, Mag = nil }
     end
-    if Mag.ConditionIncreasedRecently and not MagState[handItem.ID].isExecuted then
+    -- Virtual magazines reload through an actual inventory swap, not a condition increase.
+    if not LuaUserData.IsTargetType(Mag.OwnInventory.Container, "VCE_VirtualizedMagazine.VirtualizedMagazine")
+        and Mag.ConditionIncreasedRecently and not MagState[handItem.ID].isExecuted then
         -- print("Mag ConditionIncreasedRecently")
         MagState[handItem.ID].isExecuted = true
         MagState[handItem.ID].Mag = Mag

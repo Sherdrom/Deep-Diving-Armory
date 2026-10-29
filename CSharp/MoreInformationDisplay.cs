@@ -48,6 +48,60 @@ namespace MoreInformationDisplay
         }
     }
 
+    internal static class VirtualMagazineTooltip
+    {
+        private static ItemContainer Magazine(Item item)
+        {
+            if (item == null || !item.HasTag(new Identifier("556mag"))) return null;
+            var container = item.GetComponent<ItemContainer>();
+            return container?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine" ? container : null;
+        }
+
+        private static IEnumerable<Identifier> Rounds(ItemContainer magazine)
+        {
+            // shortcut: read VCE's stack until it exposes a read-only contents API; never unload to inspect it.
+            return AccessTools.Field(magazine.GetType(), "loadedammoidentifiers")?.GetValue(magazine) as IEnumerable<Identifier>;
+        }
+
+        internal static int State(Item item)
+        {
+            var magazine = Magazine(item);
+            if (magazine == null) return 0;
+            var type = magazine.GetType();
+            var hash = new HashCode();
+            hash.Add((int)type.GetProperty("LoadedCount").GetValue(magazine));
+            hash.Add((Identifier)type.GetProperty("TopIdentifier").GetValue(magazine));
+            var rounds = Rounds(magazine);
+            if (rounds != null) foreach (var ammo in rounds) hash.Add(ammo);
+            return hash.ToHashCode();
+        }
+
+        private static string AmmoName(Identifier id)
+        {
+            string fallback = ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : id.Value;
+            return TextManager.Get("dda.ammo." + id.Value).Fallback(fallback).Value;
+        }
+
+        internal static string Describe(Item item)
+        {
+            var magazine = Magazine(item);
+            if (magazine == null) return "";
+            var type = magazine.GetType();
+            int count = (int)type.GetProperty("LoadedCount").GetValue(magazine);
+            int capacity = (int)type.GetProperty("MaxSize").GetValue(magazine);
+            var next = (Identifier)type.GetProperty("TopIdentifier").GetValue(magazine);
+            string nextName = count > 0 ? AmmoName(next) : TextManager.Get("dda.magazine.empty").Value;
+            string text = $"{TextManager.Get("dda.magazine.loaded")}: {count}/{capacity}\n{TextManager.Get("dda.magazine.next")}: {nextName}";
+            var rounds = Rounds(magazine);
+            if (count > 0 && rounds != null)
+            {
+                text += "\n" + TextManager.Get("dda.magazine.contents").Value + ": "
+                    + string.Join(" / ", rounds.GroupBy(id => id).Select(group => $"{AmmoName(group.Key)} × {group.Count()}"));
+            }
+            return text;
+        }
+    }
+
     /// <summary>
     /// 库存提示框缓存与显示条件同步：
     /// SlotReference 的提示文本构建后被缓存，仅当 TooltipNeedsRefresh 判定需要更新时才重建
@@ -63,6 +117,7 @@ namespace MoreInformationDisplay
         private sealed class BuildState
         {
             public bool ShiftDown;
+            public int MagazineState;
         }
 
         private static readonly ConditionalWeakTable<Inventory.SlotReference, BuildState> buildStates
@@ -76,7 +131,8 @@ namespace MoreInformationDisplay
 
             bool shiftDown = PlayerInput.IsShiftDown();
             if (buildStates.TryGetValue(__instance, out var state)
-                && state.ShiftDown == shiftDown)
+                && state.ShiftDown == shiftDown
+                && state.MagazineState == VirtualMagazineTooltip.State(__instance.Item))
             {
                 return;
             }
@@ -89,6 +145,7 @@ namespace MoreInformationDisplay
         {
             BuildState state = buildStates.GetOrCreateValue(__instance);
             state.ShiftDown = PlayerInput.IsShiftDown();
+            state.MagazineState = VirtualMagazineTooltip.State(__instance.Item);
         }
     }
 
@@ -97,11 +154,20 @@ namespace MoreInformationDisplay
     {
         static void Postfix(ItemComponent __instance, ref LocalizedString name, ref LocalizedString description)
         {
+            Item item = __instance.Item;
+            if (item == null) return;
+            if (__instance == item.Components.First())
+            {
+                string magazineInfo = VirtualMagazineTooltip.Describe(item);
+                if (!string.IsNullOrEmpty(magazineInfo))
+                {
+                    if (!description.IsNullOrEmpty()) description += "\n";
+                    description += magazineInfo;
+                }
+            }
             // 显示条件：仅当鼠标悬停物品且按住 Shift 时显示（提示框仅在悬停时构建，此处补充 Shift 条件）
             if (!PlayerInput.IsShiftDown()) return;
 
-            Item item = __instance.Item;
-            if (item == null) return;
             // 去重
             if (__instance == item.Components.First())
             {

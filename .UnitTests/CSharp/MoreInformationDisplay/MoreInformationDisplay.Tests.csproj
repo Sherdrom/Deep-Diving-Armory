@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseAppHost>false</UseAppHost>
+    <Refs>../../../.Tools/Refs</Refs>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- LuaCs supplies these imports when compiling scripts in game. -->
+    <Using Include="Barotrauma.LuaCs" />
+    <Using Include="Barotrauma.Extensions" />
+    <Compile Include="../../../CSharp/MoreInformationDisplay.cs" Link="MoreInformationDisplay.cs" />
+    <Reference Include="Barotrauma"><HintPath>$(Refs)/Windows/Barotrauma.dll</HintPath></Reference>
+    <Reference Include="BarotraumaCore"><HintPath>$(Refs)/Windows/BarotraumaCore.dll</HintPath></Reference>
+    <Reference Include="0Harmony"><HintPath>$(Refs)/0Harmony.dll</HintPath></Reference>
+    <Reference Include="MonoGame.Framework.Windows.NetStandard"><HintPath>$(Refs)/MonoGame.Framework.Windows.NetStandard.dll</HintPath></Reference>
+    <Reference Include="Farseer.NetStandard"><HintPath>$(Refs)/Farseer.NetStandard.dll</HintPath></Reference>
+    <Reference Include="Lidgren.NetStandard"><HintPath>$(Refs)/Lidgren.NetStandard.dll</HintPath></Reference>
+    <Reference Include="MoonSharp.Interpreter"><HintPath>$(Refs)/MoonSharp.Interpreter.dll</HintPath></Reference>
+    <Reference Include="XNATypes"><HintPath>$(Refs)/XNATypes.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>

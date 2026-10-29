@@ -5,10 +5,14 @@ local virtualType = "VCE_VirtualizedMagazine.VirtualizedMagazine"
 LuaUserData = {
     CreateStatic = function() return tostring end,
     RegisterType = function() end,
+    MakeFieldAccessible = function() end,
     IsTargetType = function(value, typeName) return value.__type == typeName end,
 }
-local callbacks, now = {}, 0
-Hook = { Add = function(_, name, callback) callbacks[name] = callback end }
+Descriptors = { ["Barotrauma.Items.Components.CustomInterface"] = {} }
+TextManager = { Get = function(key) return { Value = key .. " [loaded]/[total]" } end }
+local callbacks, patches, now = {}, {}, 0
+Hook = { Add = function(_, name, callback) callbacks[name] = callback end,
+    Patch = function(name, _, _, _, callback) patches[name] = callback end, HookMethodType = { After = 1 } }
 Timer = { GetTime = function() return now end }
 Item = { ItemList = {} }
 assert(loadfile("Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua"))()
@@ -18,7 +22,7 @@ local function close(actual, expected, message)
 end
 
 local function item(id, tags, condition)
-    local value = { Prefab = { Identifier = id }, Condition = condition, __type = "Barotrauma.Item" }
+    local value = { Prefab = { Identifier = id }, Tags = tags, Condition = condition, __type = "Barotrauma.Item" }
     function value:HasTag(tag) return tags[tag] == true end
     return value
 end
@@ -42,13 +46,43 @@ local function magazine(id, size, loaded, tag, ammoId, acceptLimit)
 end
 
 local previousPress
-local function press(contents)
+local function start(sourceSlot, targetSlot, count)
+    local interface = previousPress.GetComponentString("CustomInterface")
+    for i, value in ipairs({ sourceSlot or 1, targetSlot or 1, count or 0 }) do
+        interface.customInterfaceElementList[i].Signal = tostring(value)
+    end
+    callbacks["ContainerConditionTransfer.StartPress"](nil, 0, previousPress)
+end
+
+local function press(contents, options)
+    options = options or {}
     if previousPress then previousPress.Removed = true end
     local machine = item("ammoreload_machine", { deep_condition_transfer = true }, 100)
-    machine.OwnInventory = { AllItemsMod = contents }
+    local sources, targets = {}, {}
+    for _, value in ipairs(contents) do
+        local collection = value.Prefab.Identifier:find("^ammobox") and sources or targets
+        collection[#collection + 1] = value
+    end
+    machine.OwnInventory = { AllItemsMod = contents, GetItemAt = function(slot)
+        if slot < 6 then return sources[slot + 1] end
+        return targets[slot - 5]
+    end }
+    local interface = { customInterfaceElementList = { {}, {}, {} } }
+    machine.GetComponentString = function() return interface end
     Item.ItemList = { machine }
     previousPress = machine
     callbacks["ContainerConditionTransfer.ScanLoaded"]()
+    local targetSlot = options.target or 1
+    if not options.target then
+        for i, value in ipairs(targets) do
+            local component = value.OwnInventory and value.OwnInventory.Container
+            if component and component.LoadedCount < component.MaxSize then targetSlot = i; break end
+        end
+    end
+    if options.start ~= false and targets[targetSlot].OwnInventory then
+        start(options.source, targetSlot, options.count)
+    end
+    return machine, sources, targets
 end
 
 local function tick()
@@ -135,7 +169,7 @@ target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45r
 local residue, unsupported = item("ammobox1", {}, cost / 2), item("ammobox_rip", {}, 100)
 local second = item("ammobox_12.7", {}, 100)
 source = item("ammobox_7.62", {}, 100)
-press({ target, residue, unsupported, source, second })
+press({ target, residue, unsupported, source, second }, { source = 3 })
 tick()
 assert(mag.LoadedCount == 7, "multiple boxes accelerated loading or a residue blocked loading")
 close(residue.Condition, cost / 2, "charged an unaffordable source")
@@ -144,9 +178,12 @@ close(second.Condition, 100, "consumed more than one source in a tick")
 source.Condition = 0
 mag.ExpectedAmmo = "5.56x45round_phy"
 tick()
-assert(mag.LoadedCount == 15 and mag.Rounds[7] == "5.56x45round_tit"
-    and mag.Rounds[8] == "5.56x45round_phy", "source change reset the stack or loading progress")
-close(second.Condition, 100 - 8 * cost, "source change charged incorrectly")
+assert(mag.LoadedCount == 7, "silently switched to a different ammo box")
+start(4)
+tick()
+assert(mag.LoadedCount == 14 and mag.Rounds[7] == "5.56x45round_tit"
+    and mag.Rounds[8] == "5.56x45round_phy", "selected source change reset the stack")
+close(second.Condition, 100 - 7 * cost, "source change charged incorrectly")
 
 target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 press({ target, unsupported })
@@ -172,4 +209,61 @@ tick()
 close(target.Condition, 25, "legacy condition transfer changed")
 close(source.Condition, 100 - 1.5625 / 4, "legacy resource cost changed")
 
-print("ok: source-driven mixed ammo refill, capacity, timing, resource cost and legacy transfers")
+target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+source = item("ammobox1", {}, 100)
+press({ target, source }, { start = false })
+tick()
+assert(mag.LoadedCount == 0, "started loading before the player selected a batch")
+for _, count in ipairs({ -1, 61, 1.5, "invalid" }) do
+    start(1, 1, count)
+    tick()
+    assert(mag.LoadedCount == 0, "accepted an invalid batch size")
+end
+start(0, 1, 5)
+tick()
+assert(mag.LoadedCount == 0, "accepted an invalid source slot")
+start(1, 7, 5)
+tick()
+assert(mag.LoadedCount == 0, "accepted an invalid target slot")
+start(1, 1, 2)
+tick()
+tick()
+assert(mag.LoadedCount == 2, "exceeded requested rounds or resumed after completion")
+close(source.Condition, 100 - 2 * cost, "batch cost incorrect")
+
+start(1, 1, 20)
+tick()
+assert(mag.LoadedCount == 9)
+start(1, 1, 20)
+for _ = 1, 3 do tick() end
+assert(mag.LoadedCount == 22, "repeated start extended the active batch")
+start(1, 1, 20)
+tick()
+callbacks["ContainerConditionTransfer.StopPress"](nil, 0, previousPress)
+local stopped = mag.LoadedCount
+for _ = 1, 4 do tick() end
+assert(mag.LoadedCount == stopped, "stop continued loading")
+
+target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+source = item("ammobox1", {}, 100)
+local machine, sources, targets = press({ target, source })
+tick()
+targets[1] = nil
+tick()
+targets[1] = target
+tick()
+assert(mag.LoadedCount == 7, "removed/reinserted target resumed an old job")
+start()
+patches["ContainerConditionTransfer.CancelRemoved"]({ Item = machine }, { containedItem = source })
+tick()
+assert(mag.LoadedCount == 7, "removal callback did not cancel immediately")
+start()
+sources[1] = item("ammobox1", {}, 100)
+tick()
+assert(mag.LoadedCount == 7, "replacement source inherited a job")
+
+Game.IsMultiplayer = true
+start()
+tick()
+assert(mag.LoadedCount == 7, "started an unsupported multiplayer batch")
+print("ok: selected ammo/batches, start/stop, resources, cancellation, bounds and legacy transfers")

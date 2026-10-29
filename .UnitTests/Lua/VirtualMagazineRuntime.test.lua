@@ -44,7 +44,16 @@ local function begin()
     put(t.items.press, t.items.box, 0)
     put(t.items.press, t.items.mag, 6)
     put(t.items.press, t.items.drum, 7)
+    local interface = t.items.press.GetComponentString('CustomInterface')
+    assert(interface, 'Press controls missing')
+    interface.Signals = '1,1,0,1,1'
+    Hook.Call('dda.magpress.start', nil, 0, t.items.press)
     later(3500, function()
+        assert(magazine.LoadedCount == 30 and drum.LoadedCount == 0, 'Press did not honor selected magazine')
+        interface.Signals = '1,2,0,1,1'
+        Hook.Call('dda.magpress.start', nil, 0, t.items.press)
+    end)
+    later(7000, function()
         assert(magazine.LoadedCount == 30 and drum.LoadedCount == 60, 'Press did not fill both magazines')
         assert(top(magazine) == '5.56x45round_tit' and top(drum) == '5.56x45round_tit', 'Box type not used')
         local spent = t.before - t.items.box.Condition
