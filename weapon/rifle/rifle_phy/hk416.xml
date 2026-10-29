@@ -66,7 +66,7 @@
     <SwitchableRangedWeapon reload="0.07" weapondamagemodifier="1" holdtrigger="true" barrelpos="234,26" spread="2" unskilledspread="4" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0,1" switchableFiremodes="Auto,Semi,Burst" firemodeswitchkey="V" burstReload="0.07" shotsPerBurst="3">
       <!-- SwitchableRangedWeapon 相关-->
 
-      <!--使用主弹药时,只使用0号位弹匣 -->
+      <!-- 主弹匣射击后 Use 一次，由 VirtualizedMagazine 弹出一发；下挂仍使用 1 号槽。 -->
       <StatusEffect type="OnUse" target="Contained,This" disabledeltatime="true" stackable="false" targetslot="0" comparison="and">
         <Conditional currentProjectileSelected="eq 0" />
         <Use />

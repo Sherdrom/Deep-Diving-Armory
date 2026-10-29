@@ -785,6 +785,57 @@ end
 if SERVER or not Game.IsMultiplayer then
 
     local IdentifierStatic = LuaUserData.CreateStatic("Barotrauma.Identifier")
+    LuaUserData.RegisterType("VCE_VirtualizedMagazine.VirtualizedMagazine")
+
+    -- 5.56 虚拟弹匣按弹药箱选新增弹种，原弹匣配方只提供容量对应的速率与消耗。
+    local virtualAmmo = {
+        ["ammobox1"] = "5.56x45round",
+        ["ammobox_7.62"] = "5.56x45round_tit",
+        ["ammobox_12.7"] = "5.56x45round_phy",
+        ["ammobox_phy_ful"] = "556x45round_M995",
+        ["ammobox_tun_ful"] = "556x45round_SSA_AP",
+        ["ammobox_du"] = "556x45round_depleted_uranium",
+    }
+    local virtualMagazineTag = IdentifierStatic("556mag")
+    local roundProgress = setmetatable({}, { __mode = "k" })
+
+    local function GetVirtualMagazine(item)
+        local container = item.OwnInventory and item.OwnInventory.Container
+        if container and LuaUserData.IsTargetType(container, "VCE_VirtualizedMagazine.VirtualizedMagazine") then
+            return container
+        end
+    end
+
+    local function RefillVirtualMagazine(target, magazine, sources, recipe, dt)
+        if not target:HasTag(virtualMagazineTag) then return end
+        local remaining = magazine.MaxSize - magazine.LoadedCount
+        local costPerRound = recipe.fullCondition * recipe.drainRatio / magazine.MaxSize
+        local source, affordable
+        -- 只取库存顺序中首个足够支付一发的弹药箱，避免多种来源叠加装填速度。
+        for _, candidate in ipairs(sources) do
+            local count = costPerRound > 0 and math.floor(candidate.Condition / costPerRound + 1e-6) or remaining
+            if count > 0 then
+                source, affordable = candidate, count
+                break
+            end
+        end
+        if not source then return end
+        local ammoId = virtualAmmo[string.lower(tostring(source.Prefab.Identifier))]
+        local progress = math.min(remaining, (roundProgress[target] or 0)
+            + recipe.gainPerSecond * dt * magazine.MaxSize / recipe.fullCondition)
+        local count = math.min(math.floor(progress + 1e-6), affordable)
+        if count > 0 then
+            local rounds = {}
+            for i = 1, count do rounds[i] = IdentifierStatic(ammoId) end
+            local before = magazine.LoadedCount
+            magazine.PushAmmoArray(rounds)
+            local loaded = magazine.LoadedCount - before
+            source.Condition = math.max(0, source.Condition - loaded * costPerRound)
+            progress = progress - loaded
+        end
+        -- Keep fractional loading time, never charge for rejected or incomplete rounds.
+        roundProgress[target] = math.max(0, math.min(progress, 1))
+    end
 
     BuildConfig()
 
@@ -933,14 +984,20 @@ if SERVER or not Game.IsMultiplayer then
         if ownInventory == nil then return false end
 
         -- 收集: 每配方取首个未满 target 与首个有耐久 source (顺序填充语义)
-        local targetOf, sourceOf = {}, {}
+        local targetOf, sourceOf, virtualSources = {}, {}, {}
         local hasRecipeItem = false
         for _, contained in pairs(ownInventory.AllItemsMod) do
+            if virtualAmmo[string.lower(tostring(contained.Prefab.Identifier))] and contained.Condition > 0.0 then
+                table.insert(virtualSources, contained)
+            end
             local roles = ResolveItemRoles(contained)
+            local magazine = GetVirtualMagazine(contained)
             for i = 1, #roles.targets do
                 local recipe = roles.targets[i]
                 hasRecipeItem = true
-                if targetOf[recipe] == nil and contained.Condition < recipe.fullCondition then
+                local needsAmmo = magazine and magazine.LoadedCount < magazine.MaxSize
+                    or not magazine and contained.Condition < recipe.fullCondition
+                if targetOf[recipe] == nil and needsAmmo then
                     targetOf[recipe] = contained
                 end
             end
@@ -956,9 +1013,12 @@ if SERVER or not Game.IsMultiplayer then
         if not hasRecipeItem then return false end
 
         for recipe in pairs(targetOf) do
+            local target = targetOf[recipe]
+            local magazine = GetVirtualMagazine(target)
             local source = sourceOf[recipe]
-            if source ~= nil then
-                local target = targetOf[recipe]
+            if magazine then
+                RefillVirtualMagazine(target, magazine, virtualSources, recipe, dt)
+            elseif source ~= nil then
                 local remaining = recipe.fullCondition - target.Condition
                 if remaining > 0.0 then
                     -- gain/drain 严格成比例 (drain = gain x drainRatio), 任一侧被钳制时

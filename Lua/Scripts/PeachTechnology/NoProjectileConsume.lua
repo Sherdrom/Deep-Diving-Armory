@@ -324,6 +324,9 @@ Hook.Patch(
         local projItem = projectile.Item
         local weaponItem = instance.Item
 
+        -- VCE owns the virtual projectile's lifetime and position.
+        if LuaUserData.IsTargetType(projectile, "VCE_VirtualizedMagazine.VirtualizedProjectile") then return end
+
         -- v4.4 package scope: protect Deep-Diving-Armory weapons ONLY.
         -- Vanilla and other mods' weapons - including any that use the SRW
         -- component - are never tracked, so they keep vanilla consumption
@@ -463,6 +466,14 @@ Hook.Patch(
     { "Barotrauma.Item" },
     function(instance, ptable)
         local contained = ptable["contained"]
+        if contained ~= nil and contained.Container ~= nil and instance ~= contained.Container and IsScopedWeapon(instance) then
+            local projectile = contained.GetComponentString("Projectile")
+            -- SRW clears Container after every shot, even when VCE kept the projectile in its magazine.
+            if projectile and LuaUserData.IsTargetType(projectile, "VCE_VirtualizedMagazine.VirtualizedProjectile") then
+                ptable.PreventExecution = true
+                return
+            end
+        end
         if contained ~= nil and trackedItems[contained] ~= nil then
             if ContainerDying(contained) then
                 Log("RemoveContained", "container dying, following " .. tostring(contained))

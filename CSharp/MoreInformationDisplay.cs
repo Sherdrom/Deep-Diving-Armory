@@ -43,7 +43,7 @@ namespace MoreInformationDisplay
             var patchInfo = Harmony.GetPatchInfo(tooltipMethod);
             if (patchInfo?.Owners.Contains(StandaloneHarmonyId) != true) return;
 
-            new Harmony(StandaloneHarmonyId).UnpatchAll(StandaloneHarmonyId);
+            new Harmony(StandaloneHarmonyId).UnpatchSelf();
             LuaCsLogger.Log("[MoreInformationDisplay] 检测到独立显示物品属性模组，已停用其补丁");
         }
     }
@@ -277,7 +277,14 @@ namespace MoreInformationDisplay
             if (!proj.FriendlyFire)
                 sb.AppendLine("‖color:gui.green‖可穿透友军‖color:end‖");
 
-            string headshot = BuildHeadshotMultiplierLine(proj.Item.Prefab);
+            ItemPrefab ammoPrefab = proj.Item.Prefab;
+            var magazine = proj.Item.Container?.GetComponent<ItemContainer>();
+            if (magazine?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine")
+            {
+                var ammoId = (Identifier)magazine.GetType().GetProperty("TopIdentifier").GetValue(magazine);
+                if (ItemPrefab.Prefabs.TryGet(ammoId, out var loadedPrefab)) ammoPrefab = loadedPrefab;
+            }
+            string headshot = BuildHeadshotMultiplierLine(ammoPrefab);
             if (!string.IsNullOrEmpty(headshot)) sb.AppendLine(headshot);
 
             string affs = BuildAfflictions(proj.Attack);

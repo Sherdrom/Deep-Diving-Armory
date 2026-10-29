@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_5.56x45" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -19,17 +19,12 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="7,2,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="11,0,61,91" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round"></Containable>
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.56x45_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,tit_ammobox,tit_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,tit_ammobox,tit_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="150" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -48,17 +43,12 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="140,3,118,107" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="8,6,64,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round_tit" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.56x45_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy_ammobox,phy_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy_ammobox,phy_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="225" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -77,17 +67,12 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="273,465,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="76,3,73,93" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round_phy" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_M995" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy_ful_ammobox,phy_ful_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_M995" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,phy_ful_ammobox,phy_ful_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -106,17 +91,12 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="150,10,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="79,693,59,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="556x45round_M995" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="556x45round_M995" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995,556x45round_M995" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_SSA_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,tun_ful_ammobox,tun_ful_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_SSA_AP" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.23" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,tun_ful_ammobox,tun_ful_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -135,13 +115,8 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle_2.png" sourcerect="8,121,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_3.png" depth="0.551" sourcerect="146,695,57,87" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="556x45round_SSA_AP" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="556x45round_SSA_AP" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP,556x45round_SSA_AP" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
       <!-- 禁用高穿弹合约-->
       <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
@@ -151,7 +126,7 @@
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_5.56x45_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_5.56x45_expansion" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="150" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -170,19 +145,14 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="8,459,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round" />
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,deep_5.56x45_expansion,tit_ammobox,tit_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_expansion_tit" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,deep_5.56x45_expansion,tit_ammobox,tit_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -201,19 +171,14 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="137,593,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round_tit" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round_tit" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit,5.56x45round_tit" />
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
     </Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,deep_5.56x45_expansion,phy_ammobox,phy_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_expansion_phy" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="2" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,deep_5.56x45_expansion,phy_ammobox,phy_ammobox_reload_2,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="450" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -232,13 +197,8 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="278,812,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="639,18,81,122" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="5.56x45round_phy" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="5.56x45round_phy" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-1.66" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy,5.56x45round_phy" />
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
     </Holdable>
@@ -277,7 +237,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
-  <Item name="" identifier="deep_556x45_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,du_ammobox,du_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_du" subcategory="rifle_mag" maxstacksize="32" maxstacksizecharacterinventory="8" scale="0.24" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,du_ammobox,du_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="180" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -297,13 +257,8 @@
     <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="574,9,118,109" />
     <Sprite texture="%ModDir%/weapon/ammo/ammo_2.png" depth="0.551" sourcerect="569,163,58,89" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <ItemContainer hideitems="true" capacity="1" SpawnWithId="556x45round_depleted_uranium" drawinventory="false" canbeselected="false" ShowConditionInContainedStateIndicator="true" removecontaineditemsondeconstruct="true" containedstateindicatorstyle="bullet">
-      <Containable items="556x45round_depleted_uranium" />
-      <!--30发弹容，每发-3.22耐久，耐久为0打完-->
-      <StatusEffect type="OnUse" target="This" condition="-3.33" disabledeltatime="true">
-      </StatusEffect>
-      <!--间隔1s生成子弹，避免弹匣空弹，无法发射（暂时停用）-->
-    </ItemContainer>
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
+      ProjectileIdentifiers="556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium,556x45round_depleted_uranium" />
     <!--Magazines can be combined to raise condition.-->
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <Upgrade gameversion="0.10.0.0" scale="0.5" />
