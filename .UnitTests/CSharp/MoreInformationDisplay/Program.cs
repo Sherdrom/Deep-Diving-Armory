@@ -54,11 +54,11 @@ namespace VCE_VirtualizedMagazine
 {
     public class VirtualizedMagazine : ItemContainer
     {
-        private Stack<Identifier> loadedammoidentifiers;
-        public int LoadedCount => loadedammoidentifiers.Count;
+        public Stack<Identifier> LoadedAmmoIdentifiers { get; set; }
+        public int LoadedCount => LoadedAmmoIdentifiers.Count;
         public int MaxSize => 30;
-        public Identifier TopIdentifier => loadedammoidentifiers.TryPeek(out var id) ? id : default;
+        public Identifier TopIdentifier => LoadedAmmoIdentifiers.TryPeek(out var id) ? id : default;
         public VirtualizedMagazine(Item item, ContentXElement element) : base(item, element) { }
-        public void Load(params string[] ammo) => loadedammoidentifiers = new(ammo.Select(id => new Identifier(id)));
+        public void Load(params string[] ammo) => LoadedAmmoIdentifiers = new(ammo.Select(id => new Identifier(id)));
     }
 }

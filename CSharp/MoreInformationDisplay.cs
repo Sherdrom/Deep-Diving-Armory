@@ -60,7 +60,7 @@ namespace MoreInformationDisplay
         private static IEnumerable<Identifier> Rounds(ItemContainer magazine)
         {
             // shortcut: read VCE's stack until it exposes a read-only contents API; never unload to inspect it.
-            return AccessTools.Field(magazine.GetType(), "loadedammoidentifiers")?.GetValue(magazine) as IEnumerable<Identifier>;
+            return AccessTools.Property(magazine.GetType(), "LoadedAmmoIdentifiers")?.GetValue(magazine) as IEnumerable<Identifier>;
         }
 
         internal static int State(Item item)
