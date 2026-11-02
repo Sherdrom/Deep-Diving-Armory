@@ -38,6 +38,9 @@ local HEADSET_CONFIGS = {
     { identifier = "gssh01_headset", volumeMult = 3.0, rangeMult = 3.5, selfVolumeMult = 2.0, hearThroughDoors = 0.2 },
     { identifier = "m32_headset",    volumeMult = 2.0, rangeMult = 3.0, selfVolumeMult = 1.0, hearThroughDoors = 0.4 },
     { identifier = "walker_headset", volumeMult = 2.0, rangeMult = 3.0, selfVolumeMult = 0.5, hearThroughDoors = 0.5 },
+
+    { identifier = "deep_fast_helmet_ghost_origin", volumeMult = 2.2, rangeMult = 3.2, selfVolumeMult = 1.0, hearThroughDoors = 0.4 },
+    { identifier = "deep_fast_helmet_ghost", volumeMult = 2.2, rangeMult = 3.2, selfVolumeMult = 1.0, hearThroughDoors = 0.4 },
 }
 
 -- 脚步声判定：前缀匹配所有 footstep 变体（原版鞋类穿戴件标签含 footstep_metal_boots、
