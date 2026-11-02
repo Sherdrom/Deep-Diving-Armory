@@ -11,29 +11,31 @@
 -->
 <DeepSlotExpandeds>
 
-  <!-- ============ 弹挂槽 chestrig（bit 1024） ============
+  <!-- ============ 弹挂槽 chestrig（bit 16777216 = 2^24） ============
        匹配 DDA 全部 10 款普通胸挂（不能用 headset 标签——会误伤真耳机），
-       它们当前占据 Headset（耳机）槽 → 迁入 1024 专属槽；
+       它们当前占据 Headset（耳机）槽 → 迁入 2^24 专属槽；
+       bit 选用 2^24 起的高段：常见自定义槽模组占用 1024/2048/4096 等低位，
+       高段 bit 可避免与其他模组声明冲突（框架合法范围 1024~2^30，2^31 为符号位不可用）；
        align="Card" + col="0" = 直接吸附原版 ID 卡列——不经过 Bag 换算，
        本地 Default 布局与 BOT 互动视图（Left/Right 布局）下都精确落在 ID 卡正上方；
        row="1" + yoff="-12" = ID 卡上方一行（微调 -12px） -->
-  <Slot bit="1024" id="chestrig"
-        tags="deep_chestrig" 
-        from="Headset" priority="0" row="1" col="-2" align="Card" yoff="-14" />
+  <Slot bit="16777216" id="chestrig"
+        tags="deep_chestrig"
+        from="Headset" priority="0" row="1" col="-2" align="Card" yoff="-13" />
 
-  <!-- ============ 目镜槽 goggles（bit 2048） ============
+  <!-- ============ 目镜槽 goggles（bit 33554432 = 2^25） ============
        匹配 DDA 热成像/夜视目镜（thermalgoggles_t7 / gpnvg_18，tag=deep_tac_thermal），
-       它们当前占据 Card（ID 卡）槽 → 迁入 2048 专属槽；
+       它们当前占据 Card（ID 卡）槽 → 迁入 2^25 专属槽；
        align="Headset" + col="0" = 精确吸附原版耳机列（三槽中间位） -->
-  <Slot bit="2048" id="goggles"
+  <Slot bit="33554432" id="goggles"
         tags="deep_goggles"
-        from="Card" priority="0" row="1" col="0" align="Headset" yoff="-14" />
+        from="Card" priority="0" row="1" col="0" align="Headset" yoff="-13" />
 
-  <!-- ============ 头套槽 mask（bit 4096，原背包槽位） ============
+  <!-- ============ 头套槽 mask（bit 67108864 = 2^26，原背包槽位） ============
        匹配 DDA 四款战术头套（战术头套/提花头巾/半头巾/战术护目面罩），
-       它们当前穿戴在 Card（ID 卡）槽 → 迁入 4096 专属槽（col=0 基准列=ID 卡列） -->
-  <Slot bit="4096" id="mask"
+       它们当前穿戴在 Card（ID 卡）槽 → 迁入 2^26 专属槽（col=0 基准列=ID 卡列） -->
+  <Slot bit="67108864" id="mask"
         tags="deep_mask"
-        from="Card" priority="0" row="1" col="0" yoff="-14" />
+        from="Card" priority="0" row="1" col="0" yoff="-13" />
 
 </DeepSlotExpandeds>
