@@ -114,6 +114,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")-
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepClaymoreAutoArm.lua")--敌我识别阔剑
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lua")--强制禁止放入物品栏
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外插槽UI（大肥鱼科技）
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手持加特林旋转枪管(客户端)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）

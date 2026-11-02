@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ============================================================
+  DDA 框架：槽位图标样式（辅助；新构建主要靠框架自动向 LimbSlotIcons 注入
+  本包 UI/slot_<id>.png，本样式作为兜底/兼容旧路径）
+  ============================================================
+  样式名 = InventorySlot.<bit数值>，Sprite 的 name 必须与样式名一致。
+  贴图 = 本包 UI/slot_<id>.png（128x128 整图）。
+-->
+<style>
+  <!-- 1024 = 弹挂槽 chestrig -->
+  <InventorySlot.1024 color="255,255,255,255">
+    <Sprite name="InventorySlot.1024" texture="%ModDir%/UI/SlotIcon/slot_chestrig.png" tile="false" sourcerect="0,0,128,128" origin="0.5,0.5" maintainaspectratio="true"/>
+  </InventorySlot.1024>
+
+  <!-- 2048 = 目镜槽 goggles -->
+  <InventorySlot.2048 color="255,255,255,255">
+    <Sprite name="InventorySlot.2048" texture="%ModDir%/UI/SlotIcon/slot_goggles.png" tile="false" sourcerect="0,0,128,128" origin="0.5,0.5" maintainaspectratio="true"/>
+  </InventorySlot.2048>
+
+  <!-- 4096 = 头套槽 mask -->
+  <InventorySlot.4096 color="255,255,255,255">
+    <Sprite name="InventorySlot.4096" texture="%ModDir%/UI/SlotIcon/slot_mask.png" tile="false" sourcerect="0,0,128,128" origin="0.5,0.5" maintainaspectratio="true"/>
+  </InventorySlot.4096>
+</style>
