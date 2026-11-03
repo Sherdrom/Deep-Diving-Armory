@@ -88,7 +88,10 @@ jobs:
           import xml.etree.ElementTree as ET
 
           deploy_root = Path(sys.argv[1])
-          assemblies = ET.parse("ModConfig.xml").getroot().findall("./Assembly")
+          assemblies = [
+              assembly for assembly in ET.parse("ModConfig.xml").getroot().findall("./Assembly")
+              if assembly.get("IsScript", "false").lower() != "true"
+          ]
 
           missing = []
           for assembly in assemblies:
@@ -119,6 +122,8 @@ jobs:
           def package_release(repo_root, deploy_root, archive):
               required = set()
               for assembly in ET.parse(repo_root / "ModConfig.xml").getroot().findall("./Assembly"):
+                  if assembly.get("IsScript", "false").lower() == "true":
+                      continue
                   relative = assembly.attrib["File"].replace("%ModDir%", "", 1).lstrip("/\\")
                   dll = Path(relative.replace("\\", "/"))
                   required.update((dll, dll.with_suffix(".deps.json")))
