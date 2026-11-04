@@ -8,7 +8,7 @@ parts.deep_sub_hanging_master_key = {
     -- AR_sub_hanging_gl 由护木的 optic_mount.accepts 决定。
     provides = { "sub_hanging_shotgun" },
     item = { identifier = "deep_sub_hanging_master_key" },
-    stats = { Ergonomics = -1, MovementSpeed = -0.20, WeaponsSkillBonus = -20 },
+    stats = { Ergonomics = -15, MovementSpeed = -0.20, WeaponsSkillBonus = -20 },
     visual = { 
         texture = subhangingTexture,
         source = { x = 4, y = 10, w = 337, h = 174 },
@@ -27,7 +27,7 @@ parts.deep_sub_hanging_m203 = {
     -- AR_sub_hanging_gl 由护木的 optic_mount.accepts 决定。
     provides = { "AR_sub_hanging_gl" },
     item = { identifier = "deep_sub_hanging_m203" },
-    stats = { Ergonomics = -1, MovementSpeed = -0.20, WeaponsSkillBonus = -20 },
+    stats = { Ergonomics = -15, MovementSpeed = -0.20, WeaponsSkillBonus = -20 },
     visual = { 
         texture = subhangingTexture,
         source = { x = 3, y = 356, w = 399, h = 98 },

@@ -6,7 +6,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/HelpFunctions.lua")--Help 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/armorconfigs.lua")--Armor configs
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/deployables.lua")--Deployables
-dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/APSList.lua")--APS List
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/Airburst.lua")--Airburst stuff, work both side
 
@@ -22,6 +21,7 @@ end
 --苯科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/zoom.lua")--瞄具视野
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/reloadPatch.lua")--换弹自动填充
+dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/TacticalHelmetInterface.lua")--战术头盔开关状态重应用
 --所有贴图修改（减少卡顿）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/AllSprite/AllSprite.lua")
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/HelmetTacSprite/6B47.lua")
@@ -35,14 +35,17 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/AllSprite/AllSprite.lua"
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadSniperRifle/MosinMagIcon.lua")
 
 --枪械改装系统
---if GunsmithFramework and GunsmithFramework.RegisterPackage then
---    GunsmithFramework.RegisterPackage({
---        modDir = Deep_Lua.Path,
---        entry = "Lua/Scripts/Gunsmith/Config.lua"
---    })
---else
---    print("[Deep-Diving-Armory] GunsmithFramework is required for Gunsmith configuration. Load GunsmithFramework before Deep-Diving-Armory.")
---end
+local gunsmithPackage = {
+    modDir = Deep_Lua.Path,
+    entry = "Lua/Scripts/Gunsmith/Config.lua"
+}
+GunsmithFramework = GunsmithFramework or {}
+if GunsmithFramework.RegisterPackage then
+    GunsmithFramework.RegisterPackage(gunsmithPackage)
+else
+    GunsmithFramework.PendingPackages = GunsmithFramework.PendingPackages or {}
+    table.insert(GunsmithFramework.PendingPackages, gunsmithPackage)
+end
 
 --GL特殊换弹
 dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadGrenadeLauncher/M32.lua")
@@ -87,6 +90,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/BenzeneTechnology/ReloadShotGun/supernova.
 
 --桃子科技
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HelperFunctions.lua")--工具函数
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
@@ -95,17 +99,29 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DamageFallOffAll.lua")--伤害衰减
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/EnemyBattleBehavior.lua")--敌人脑子修改
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiFleeGrenade.lua")--AI强制逃离已激活的手雷
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiVision.lua")--敌人后脑勺有眼睛修复
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予天赋
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ResistanceLimit.lua")--抗性限制
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpawnBlindBox.lua")--随机生成
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI随机切换武器
-
---dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌(暂时用不到)
---dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透(暂时用不到)
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机和插板修理台
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepClaymoreAutoArm.lua")--敌我识别阔剑
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lua")--强制禁止放入物品栏
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外插槽UI（大肥鱼科技）
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetTeamAutoSwitch.lua")--耳机阵营切换
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手持加特林旋转枪管(客户端)
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeathEquipmentRecycling.lua")--死亡装备回收(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血（有character性能问题）(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改(暂时用不到)
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）
 --桃子科技

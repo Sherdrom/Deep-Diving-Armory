@@ -21,7 +21,8 @@
         {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
-            harmonyInstance?.PatchAll();
+            // JIT inlining can make parameterless PatchAll scan the game's assembly.
+            harmonyInstance?.PatchAll(typeof(RemainedAmmo).Assembly);
         }
 
         public void PreInitPatching()

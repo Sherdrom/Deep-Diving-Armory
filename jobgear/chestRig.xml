@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="tanzan_m22" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="tanzan_m22" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -21,7 +21,7 @@
     </Fabricate>
     <WifiComponent range="50000.0" LinkToChat="true" MinChatMessageInterval="0.0" />
     <Wearable slots="Any,Headset" msg="ItemMsgPickUpSelect">
-      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.68" inheritorigin="false" origin="0.45,0.5" inheritsourcerect="false" sourcerect="11,177,151,177"></sprite>
+      <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.66" inheritorigin="false" origin="0.43,0.5" inheritsourcerect="false" sourcerect="11,177,151,177"></sprite>
       <SkillModifier skillidentifier="weapons" skillvalue="10" />
       <StatValue stattype="MovementSpeed" value="0.1" />
       <!-- 穿上胸挂时，给予人物胸挂检测 -->
@@ -34,66 +34,11 @@
       </StatusEffect>
 
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="10" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="12" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_56rig" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_56rig" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="120" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -127,11 +72,11 @@
       </StatusEffect>
 
     </Wearable>
-    <ItemContainer capacity="12" maxstacksize="32" hideitems="true">
-      <Containable tags="smallitem" hide="true" excludeditems="toolbelt,toolbox,bandolier" />
+    <ItemContainer capacity="12" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_alpha" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_alpha" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -166,66 +111,11 @@
       <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.72" inheritorigin="false" origin="0.54,0.47" inheritsourcerect="false" sourcerect="508,179,158,198" />
       <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="14" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="16" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_separatists" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_separatists" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -261,66 +151,11 @@
       <SkillModifier skillidentifier="weapons" skillvalue="30" />
       <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="22" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="24" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_commando" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_commando" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -354,66 +189,11 @@
       <SkillModifier skillidentifier="weapons" skillvalue="10" />
       <StatValue stattype="MovementSpeed" value="0.1" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="10" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="12" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_coalition" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_coalition" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -448,66 +228,11 @@
       <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.63" inheritorigin="false" origin="0.45,0.46" inheritsourcerect="false" sourcerect="198,398,145,225" />
       <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="14" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="16" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_mk3" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_mk3" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -543,66 +268,11 @@
       <SkillModifier skillidentifier="weapons" skillvalue="30" />
       <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="22" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="24" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_m43" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_m43" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="200" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -636,66 +306,11 @@
       <SkillModifier skillidentifier="weapons" skillvalue="10" />
       <StatValue stattype="MovementSpeed" value="0.1" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="10" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="12" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_ghost" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_ghost" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="15" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -730,66 +345,11 @@
       <sprite texture="%ModDir%/jobgear/chestrig/rig.png" limb="Torso" depthlimb="Head" hidelimb="false" inheritscale="true" scale="0.65" inheritorigin="false" origin="0.45,0.52" inheritsourcerect="false" sourcerect="200,628,174,206" />
       <SkillModifier skillidentifier="weapons" skillvalue="20" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="14" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="16" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
-  <Item name="" identifier="deep_thunder" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_thunder" InvulnerabletoDamage="true" subcategory="deep_rig" scale="0.35" category="Equipment" tags="mediumitem,deep_rig,deep_cloth_invisible,headset,deep_chestrig" description="" cargocontaineridentifier="metalcrate" impactsoundtag="impact_metal_light">
     <Price baseprice="600" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -825,63 +385,8 @@
       <SkillModifier skillidentifier="weapons" skillvalue="30" />
       <StatValue stattype="MovementSpeed" value="-0.1" />
     </Wearable>
-    <ItemContainer capacity="1" maxstacksize="1" hideitems="true" containedstateindicatorslot="0">
-      <!-- 学习1 -->
-      <Containable items="chip_learn" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习2 -->
-      <Containable items="chip_learn_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 学习3 -->
-      <Containable items="chip_learn_3" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修1 -->
-      <Containable items="chip_mechanical" hide="true" setactive="true">
-      </Containable>
-      <!-- 机修2 -->
-      <Containable items="chip_mechanical_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师1 -->
-      <Containable items="chip_electrician" hide="true" setactive="true">
-      </Containable>
-      <!-- 工程师2 -->
-      <Containable items="chip_electrician_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官1 -->
-      <Containable items="chip_security" hide="true" setactive="true">
-      </Containable>
-      <!-- 安全官2 -->
-      <Containable items="chip_security_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生1 -->
-      <Containable items="chip_medic" hide="true" setactive="true">
-      </Containable>
-      <!-- 医生2 -->
-      <Containable items="chip_medic_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长1 -->
-      <Containable items="chip_captain" hide="true" setactive="true">
-      </Containable>
-      <!-- 船长2 -->
-      <Containable items="chip_captain_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手1 -->
-      <Containable items="chip_assistant" hide="true" setactive="true">
-      </Containable>
-      <!-- 助手2 -->
-      <Containable items="chip_assistant_2" hide="true" setactive="true">
-      </Containable>
-      <!-- 十星将军 -->
-      <Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
-      </Containable>
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="Content/UI/StatusMonitorUI.png" sourcerect="384,448,64,64" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" autoinject="true">
-        <Containable items="chem,syringe" />
-      </SubContainer>
-      <SubContainer capacity="22" maxstacksize="32">
-        <Containable tags="smallitem" hide="true" itempos="2,-8" rotation="0" setactive="true" excludeditems="toolbelt,toolbox,bandolier,deep_rig,deep_chip_headset" />
-      </SubContainer>
+    <ItemContainer capacity="24" maxstacksize="32" hideitems="true" containedstateindicatorslot="0">
+      <Containable tags="smallitem" hide="true" itempos="2,-8" excludeditems="toolbelt,toolbox,bandolier,deep_rig" />
     </ItemContainer>
   </Item>
   <!--已整理的插板甲,可能需要重新添加不同插板的惩罚等参数-->

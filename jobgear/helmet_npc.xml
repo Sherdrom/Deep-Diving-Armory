@@ -26,6 +26,8 @@
 			</sprite>
 		</Wearable>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -61,7 +63,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -89,15 +155,7 @@
 			<damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
 			<damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="12,219,142,93" origin="0.42,0.62">
-				<LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 			</sprite>
-			<StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
-				<Affliction identifier="deep_gpnvg18" amount="1" />
-				<Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
-			</StatusEffect>
-			<StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-				<Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-			</StatusEffect>
 		</Wearable>
 		<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
 			<GuiFrame relativesize="0.09,0.07" anchor="CenterRight" pivot="CenterRight" relativeoffset="-0.02,0.09" style="ItemUI" />
@@ -117,6 +175,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -152,7 +212,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -197,6 +321,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -232,7 +358,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -277,6 +467,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -312,7 +504,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -343,6 +599,8 @@
 			<SkillModifier skillidentifier="weapons" skillvalue="10" />
 		</Wearable>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -378,7 +636,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -406,15 +728,7 @@
 			<damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
 			<damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="18,231,134,89" origin="0.42,0.62">
-				<LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 			</sprite>
-			<StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
-				<Affliction identifier="deep_gpnvg18" amount="1" />
-				<Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
-			</StatusEffect>
-			<StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-				<Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-			</StatusEffect>
 			<SkillModifier skillidentifier="weapons" skillvalue="10" />
 		</Wearable>
 		<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
@@ -438,6 +752,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -473,7 +789,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -519,6 +899,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -554,7 +936,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -600,6 +1046,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -635,7 +1083,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -666,6 +1178,8 @@
 			<SkillModifier skillidentifier="weapons" skillvalue="10" />
 		</Wearable>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -701,7 +1215,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -729,15 +1307,7 @@
 			<damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
 			<damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/FAST_BLACK.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="18,231,134,89" origin="0.42,0.62">
-				<LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 			</sprite>
-			<StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
-				<Affliction identifier="deep_gpnvg18" amount="1" />
-				<Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
-			</StatusEffect>
-			<StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-				<Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-			</StatusEffect>
 			<SkillModifier skillidentifier="weapons" skillvalue="10" />
 		</Wearable>
 		<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">
@@ -761,6 +1331,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -796,7 +1368,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -842,6 +1478,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -877,7 +1515,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -923,6 +1625,8 @@
 			</TickBox>
 		</CustomInterface>
 		<ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0">
+			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="384,190,113,115" origin="0.5,0.5" />
 			<!-- CQB训练 -->
 			<Containable items="chip_cqb" hide="true" setactive="true">
 			</Containable>
@@ -958,7 +1662,71 @@
 			<!-- 战地医师 -->
 			<Containable items="chip_doc" hide="true" setactive="true">
 			</Containable>
-			<SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="278,200,87,86" origin="0.5,0.5" />
+			<SubContainer capacity="1" maxstacksize="1">
+				<!-- 学习1 -->
+				<Containable items="chip_learn" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习2 -->
+				<Containable items="chip_learn_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 学习3 -->
+				<Containable items="chip_learn_3" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修1 -->
+				<Containable items="chip_mechanical" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 机修2 -->
+				<Containable items="chip_mechanical_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师1 -->
+				<Containable items="chip_electrician" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 工程师2 -->
+				<Containable items="chip_electrician_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官1 -->
+				<Containable items="chip_security" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 安全官2 -->
+				<Containable items="chip_security_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生1 -->
+				<Containable items="chip_medic" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 医生2 -->
+				<Containable items="chip_medic_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长1 -->
+				<Containable items="chip_captain" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 船长2 -->
+				<Containable items="chip_captain_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手1 -->
+				<Containable items="chip_assistant" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 助手2 -->
+				<Containable items="chip_assistant_2" hide="true" setactive="true">
+				</Containable>
+
+				<!-- 十星将军 -->
+				<Containable items="deep_ten_star_general_assist_upgrading" hide="true" setactive="true">
+				</Containable>
+			</SubContainer>
 		</ItemContainer>
 	</Item>
 
@@ -1124,15 +1892,7 @@
 			<damagemodifier afflictiontypes="bleeding" armorsector="0.0,360.0" damagemultiplier="0.1" damagesound="ricochet" deflectprojectiles="true" />
 			<damagemodifier afflictionidentifiers="concussion" armorsector="0.0,360.0" damagemultiplier="0.0" damagesound="ricochet" deflectprojectiles="true" />
 			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/GHOST.png" depth="0.5" limb="Head" depthlimb="Jaw" hidelimb="true" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.57" sourcerect="6,229,140,99" origin="0.42,0.66">
-				<LightComponent LightColor="100,255,0,150" range="5000" castshadows="false" powerconsumption="infinity" IsOn="true" flicker="0" flickerspeed="0" pulsefrequency="0" pulseamount="0" />
 			</sprite>
-			<StatusEffect type="OnWearing" target="This,Character" interval="0.1" disabledeltatime="true" setvalue="true" multiplyafflictionsbymaxvitality="true">
-				<Affliction identifier="deep_gpnvg18" amount="1" />
-				<Conditional targetcontainer="false" targetitemcomponent="LightComponent" IsOn="true" />
-			</StatusEffect>
-			<StatusEffect type="OnWearing" target="This,Character" voltage="1.0" interval="0.1" setvalue="true" comparison="and" multiplyafflictionsbymaxvitality="true">
-				<Conditional IsLocalPlayer="true" deep_gpnvg18="gt 0" />
-			</StatusEffect>
 			<SkillModifier skillidentifier="weapons" skillvalue="10" />
 		</Wearable>
 		<CustomInterface canbeselected="false" drawhudwhenequipped="true" allowuioverlap="true">

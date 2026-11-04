@@ -186,6 +186,7 @@ end
 local vceWarningBox
 local function warnMissingVce(character, item)
     if not CLIENT or character ~= Character.Controlled then return end
+    if not isDdaItem(item) then return end
     if vceWarningBox and not vceWarningBox.Closed then return end
     if not item.HasTag("gun")
         or item.GetComponentString("RangedWeapon")
@@ -193,7 +194,21 @@ local function warnMissingVce(character, item)
 
     vceWarningBox = GUI.MessageBox(
         "Deep-Diving-Armory",
-        "未检测到 VCE（Vanilla Components Expanded），请安装并启用，否则 DDA 枪械无法正常使用。\nVCE was not detected; install and enable it to use DDA firearms."
+        "未检测到 VCE（Vanilla Components Expanded），请安装并启用，否则 DDA 枪械无法正常使用。\nVCE(Vanilla Components Expanded) was not detected; install and enable it to use DDA firearms."
+    )
+end
+
+local gunsmithWarningBox
+local function warnMissingGunsmith(character, item)
+    if not CLIENT or character ~= Character.Controlled then return end
+    if not isDdaItem(item) then return end
+    if gunsmithWarningBox and not gunsmithWarningBox.Closed then return end
+    -- The generic "gunsmith" tag also exists on weapons that do not use the framework.
+    if not item.HasTag("deep_gunsmith") or item.GetComponentString("GunsmithData") then return end
+
+    gunsmithWarningBox = GUI.MessageBox(
+        "Deep-Diving-Armory",
+        "未检测到 GunsmithFramework，请安装并启用，否则 DDA 枪匠武器无法正常使用。\nGunsmithFramework was not detected; install and enable it to use DDA Gunsmith weapons."
     )
 end
 
@@ -201,6 +216,12 @@ local function afflictionList(value)
     if not value then return {} end
     if value.id then return { value } end
     return value
+end
+
+local function findAfflictionPrefab(identifier)
+    if not identifier then return nil end
+    local found, prefab = AfflictionPrefab.Prefabs.TryGet(identifier)
+    if found then return prefab end
 end
 
 local fallbackStates = {}
@@ -275,7 +296,7 @@ local function validateEffectConfig(itemId, cfg)
         end
     end
     for _, affliction in ipairs(afflictionList(cfg.affliction)) do
-        if not affliction.id or not AfflictionPrefab.Prefabs[affliction.id] then
+        if not findAfflictionPrefab(affliction.id) then
             warn("invalid Affliction", itemId, tostring(affliction.id))
         end
     end
@@ -305,7 +326,7 @@ local function validateConfig()
         if type(cfg.timeout) ~= "number" or cfg.timeout <= 0 then
             warn("invalid legacy Affliction timeout", afflictionId, tostring(cfg.timeout))
         end
-        if not AfflictionPrefab.Prefabs[afflictionId] then
+        if not findAfflictionPrefab(afflictionId) then
             warn("legacy Affliction prefab not found", afflictionId)
         end
         for _, effect in ipairs(cfg.effects or { cfg }) do
@@ -369,7 +390,8 @@ local function refreshStats(state)
         local target = effects.statRef or effects
         if not seen[target] then
             seen[target] = true
-            local shouldApply = canAdjustCharacter(state.character) and not blocked[target.cfg.statGroup]
+            local shouldApply = canAdjustCharacter(state.character)
+                and not target.statsSuppressed and not blocked[target.cfg.statGroup]
             if shouldApply and not target.statsApplied then
                 target.stats = applyStats(state.character, target.cfg.stats)
                 target.statsApplied = true
@@ -512,7 +534,8 @@ local function releaseResistances(state, applied)
     end
 end
 
-local function acquireStats(state, cfg)
+local function acquireStats(state, cfg, suppressStats)
+    if suppressStats then return nil, {}, false end
     if not cfg.statsKey then
         return nil, applyStats(state.character, cfg.stats), true
     end
@@ -553,7 +576,7 @@ local function acquireAfflictions(state, configured)
 
     local head = character.AnimController and character.AnimController:GetLimb(LimbType.Head) or nil
     for _, cfg in ipairs(afflictionList(configured)) do
-        local prefab = cfg.id and AfflictionPrefab.Prefabs[cfg.id]
+        local prefab = findAfflictionPrefab(cfg.id)
         if prefab then
             local ref = state.afflictionRefs[cfg.id]
             if not ref then
@@ -611,7 +634,7 @@ local function refreshAfflictions(state)
             local before = health:GetAfflictionStrengthByIdentifier(id)
             local instance = health:GetAffliction(id, true)
             if not instance then
-                local prefab = AfflictionPrefab.Prefabs[id]
+                local prefab = findAfflictionPrefab(id)
                 if prefab then
                     health:ApplyAffliction(head, prefab:Instantiate(ref.target))
                     instance = health:GetAffliction(id, true)
@@ -632,13 +655,14 @@ local function refreshAfflictions(state)
     updateFallbackState(state)
 end
 
-local function applyEffects(state, cfg)
-    local statRef, stats, statsApplied = acquireStats(state, cfg)
+local function applyEffects(state, cfg, suppressStats)
+    local statRef, stats, statsApplied = acquireStats(state, cfg, suppressStats)
     return {
         cfg = cfg,
         statRef = statRef,
         stats = stats,
         statsApplied = statsApplied,
+        statsSuppressed = suppressStats,
         flags = acquireFlags(state, cfg.flags),
         talentMarkers = acquireTalentMarkers(state, cfg.talentMarkers),
         resistances = acquireResistances(state, cfg.resistances),
@@ -659,11 +683,25 @@ local function isEffectActive(state, cfg, host, accessory)
         and (not cfg.when or cfg.when(state.character, host, accessory))
 end
 
+local function gunsmithOwnsAccessoryStats(host, accessory)
+    local gunsmith = GunsmithFramework
+    local core = gunsmith and gunsmith.Core
+    if not accessory or not core or not core.WeaponConfig or not core.WeaponConfig(host) then return false end
+
+    local itemId = tostring(accessory.Prefab.Identifier)
+    for _, part in pairs(gunsmith.Config.parts or {}) do
+        if part.item and part.item.identifier == itemId then return true end
+    end
+    return false
+end
+
 local function applyConfig(state, cfg, host, accessory)
     local applied = {}
+    -- Gunsmith owns registered parts' numeric stats; functional markers and resistances remain here.
+    local suppressStats = gunsmithOwnsAccessoryStats(host, accessory)
     for index, effect in ipairs(cfg.effects or { cfg }) do
         if isEffectActive(state, effect, host, accessory) then
-            applied[index] = applyEffects(state, effect)
+            applied[index] = applyEffects(state, effect, suppressStats)
         end
     end
     if configNeedsDynamic(cfg) then
@@ -685,7 +723,7 @@ local function applyConfig(state, cfg, host, accessory)
         }
         dynamicStates[state] = true
     elseif configNeedsFallback(cfg) then
-        state.conditionalConfigs[applied] = cfg
+        state.conditionalConfigs[applied] = { cfg = cfg, host = host, accessory = accessory }
     end
     updateFallbackState(state)
     return applied
@@ -721,15 +759,18 @@ end
 syncConfigEffect = function(state, cfg, applied, index, host, accessory)
     local effect = (cfg.effects or { cfg })[index]
     local active = isEffectActive(state, effect, host, accessory)
-    if not active and applied[index] then
+    local suppressStats = gunsmithOwnsAccessoryStats(host, accessory)
+    local changed = false
+    if applied[index] and (not active or applied[index].statsSuppressed ~= suppressStats) then
         removeEffects(state, applied[index])
         applied[index] = nil
-        return true
-    elseif active and not applied[index] then
-        applied[index] = applyEffects(state, effect)
+        changed = true
+    end
+    if active and not applied[index] then
+        applied[index] = applyEffects(state, effect, suppressStats)
         return true
     end
-    return false
+    return changed
 end
 
 local function removeConfigEffects(state, effects)
@@ -743,13 +784,30 @@ end
 local function activeSubItems(mainItem, configs)
     local result = {}
     local inventory = mainItem.OwnInventory
+    local checkSubSlot = configs == SUB_CONFIG
+    local container = inventory and inventory.Container
+    -- ponytail: DDA XML marks dedicated equipment slots with maxstacksize=1; add an explicit role if that changes.
+    if checkSubSlot and (not inventory or not container
+        or not inventory.FindIndex
+        or not container.GetMaxStackSize
+        or not container.CanBeContained) then
+        return result
+    end
     local items = inventory and inventory.AllItems or mainItem.ContainedItems
     if items then
         for item in items do
             if item and not item.Removed and item.Prefab then
                 local itemId = tostring(item.Prefab.Identifier)
                 local cfg = configs[itemId]
-                if cfg then result[item] = { cfg = cfg, itemId = itemId } end
+                if cfg then
+                    local slot = checkSubSlot and inventory:FindIndex(item)
+                    if not checkSubSlot
+                        or (type(slot) == "number" and slot >= 0
+                            and container:GetMaxStackSize(slot) == 1
+                            and container:CanBeContained(item, slot)) then
+                        result[item] = { cfg = cfg, itemId = itemId }
+                    end
+                end
             end
         end
     end
@@ -1275,7 +1333,10 @@ Hook.Patch(
     { "Barotrauma.Character" },
     function(item, ptable)
         local character = ptable["character"]
-        if isStillHeld(character, item) then warnMissingVce(character, item) end
+        if isStillHeld(character, item) then
+            warnMissingVce(character, item)
+            warnMissingGunsmith(character, item)
+        end
         addMain(character, item)
         addWeapon(character, item)
         queueNativeEquipmentCompensation(character)
@@ -1517,7 +1578,9 @@ Hook.Add("think", "AdjustEquipmentStatvalue.Think", function()
             state.dead = true
             updateFallbackState(state)
         else
-            for applied, cfg in pairs(state.conditionalConfigs) do syncConfigEffects(state, cfg, applied) end
+            for applied, entry in pairs(state.conditionalConfigs) do
+                syncConfigEffects(state, entry.cfg, applied, entry.host, entry.accessory)
+            end
             refreshAfflictions(state)
         end
     end

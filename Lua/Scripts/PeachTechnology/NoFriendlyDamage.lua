@@ -1,8 +1,6 @@
 local AH = AfflictionHelper
 
 local DEBUG = false
-local MARKER_EXPIRY_TIME = 2.0
-local CLEANUP_INTERVAL = 5.0
 
 local NO_FRIENDLY_FIRE_AFFLICTIONS = {
     { id = "friendly_fire", marker = Identifier("friendly_fire"), multiplier = 0.0 },
@@ -53,7 +51,7 @@ local function ApplyDamageModification(attackResult, multiplier)
 
     local modifiedCount = 0
     for _, affliction in ipairs(afflictions) do
-        if affliction ~= nil then
+        if affliction ~= nil and not (affliction.Prefab and affliction.Prefab.IsBuff) then
             local original = affliction.Strength
             affliction.Strength = original * multiplier
             modifiedCount = modifiedCount + 1
@@ -67,8 +65,6 @@ local function ApplyDamageModification(attackResult, multiplier)
 end
 
 local NoFriendlyDamage = {
-    pendingDamages = {},
-    lastCleanupTime = 0,
     stats = {
         totalChecks = 0,
         appliedModifications = 0,
@@ -76,52 +72,48 @@ local NoFriendlyDamage = {
     },
 }
 
-Hook.Add("character.damageLimb", "NFD.OnDamageLimb", function(
-    character, worldPosition, hitLimb, afflictions, stun,
-    playSound, attackImpulse, attacker, damageMultiplier,
-    allowStacking, penetration, shouldImplode)
+-- DamageLimb is also used by medicines, so only arm the filter inside combat producers.
+local attackStack = {}
 
-    if DEBUG then
-        NoFriendlyDamage.stats.totalChecks = NoFriendlyDamage.stats.totalChecks + 1
-    end
+local function RegisterAttackContext(identifier, className, methodName, getAttacker)
+    Hook.Patch(
+        "NFD_" .. identifier .. "_Before",
+        className,
+        methodName,
+        function(instance, ptable)
+            attackStack[#attackStack + 1] = getAttacker(instance, ptable) or false
+        end,
+        Hook.HookMethodType.Before
+    )
+    Hook.Patch(
+        "NFD_" .. identifier .. "_After",
+        className,
+        methodName,
+        function(instance, ptable)
+            if #attackStack > 0 then
+                attackStack[#attackStack] = nil
+            end
+        end,
+        Hook.HookMethodType.After
+    )
+end
 
-    if attacker == nil or character == nil then
-        return nil
-    end
+for _, methodName in ipairs({ "DoDamage", "DoDamageToLimb" }) do
+    RegisterAttackContext(methodName, "Barotrauma.Attack", methodName, function(instance, ptable)
+        return ptable["attacker"]
+    end)
+end
 
-    if not attacker.IsHuman then
-        return nil
-    end
+RegisterAttackContext("ApplyAttack", "Barotrauma.Character", "ApplyAttack", function(instance, ptable)
+    return ptable["attacker"]
+end)
 
-    local multiplier, afflictionId = FindActiveFFConfig(attacker)
-    if not multiplier then
-        if DEBUG then
-            NoFriendlyDamage.stats.skippedAttacks = NoFriendlyDamage.stats.skippedAttacks + 1
-        end
-        return nil
-    end
+RegisterAttackContext("Explosion", "Barotrauma.Explosion", "Explode", function(instance, ptable)
+    return ptable["attacker"]
+end)
 
-    if not IsSameTeam(attacker, character) then
-        if DEBUG then
-            NoFriendlyDamage.stats.skippedAttacks = NoFriendlyDamage.stats.skippedAttacks + 1
-        end
-        dbg("skip: different team - " .. attacker.Name .. " -> " .. character.Name)
-        return nil
-    end
-
-    local charId = tostring(character.ID or "unknown")
-
-    NoFriendlyDamage.pendingDamages[charId] = {
-        time = Timer.GetTime(),
-        multiplier = multiplier,
-        sourceAffliction = afflictionId,
-    }
-
-    dbg(string.format("mark pending: %s -> %s (%s, x%.2f)",
-        tostring(attacker.Name), tostring(character.Name),
-        afflictionId, multiplier))
-
-    return nil
+RegisterAttackContext("Fire", "Barotrauma.FireSource", "DamageCharacters", function(instance, ptable)
+    return instance.SourceCharacter
 end)
 
 Hook.Patch(
@@ -131,29 +123,32 @@ Hook.Patch(
     function(instance, ptable)
         local attackResult = ptable["attackResult"]
         local character = instance.Character
+        local attacker = attackStack[#attackStack]
 
-        if attackResult == nil or character == nil then
+        if attackResult == nil or character == nil or attacker == nil or attacker == false then
             return
         end
 
-        local charId = tostring(character.ID or "unknown")
-        local pendingData = NoFriendlyDamage.pendingDamages[charId]
+        if DEBUG then
+            NoFriendlyDamage.stats.totalChecks = NoFriendlyDamage.stats.totalChecks + 1
+        end
 
-        if pendingData == nil then
+        if not attacker.IsHuman or attacker == character then
             return
         end
 
-        local currentTime = Timer.GetTime()
-        if currentTime - pendingData.time > MARKER_EXPIRY_TIME then
-            NoFriendlyDamage.pendingDamages[charId] = nil
-            dbg("marker expired: " .. charId)
+        local multiplier, afflictionId = FindActiveFFConfig(attacker)
+        if multiplier == nil or not IsSameTeam(attacker, character) then
+            if DEBUG then
+                NoFriendlyDamage.stats.skippedAttacks = NoFriendlyDamage.stats.skippedAttacks + 1
+            end
             return
         end
 
         dbg(string.format("apply damage modification: %s (%s, x%.2f)",
-            tostring(character.Name), pendingData.sourceAffliction, pendingData.multiplier))
+            tostring(character.Name), afflictionId, multiplier))
 
-        local success = ApplyDamageModification(attackResult, pendingData.multiplier)
+        local success = ApplyDamageModification(attackResult, multiplier)
 
         if success then
             if DEBUG then
@@ -163,33 +158,9 @@ Hook.Patch(
         else
             dbg("modification failed or no afflictions")
         end
-
-        NoFriendlyDamage.pendingDamages[charId] = nil
     end,
     Hook.HookMethodType.Before
 )
-
-Hook.Add("think", "NFD.Cleanup", function()
-    local currentTime = Timer.GetTime()
-
-    if currentTime - NoFriendlyDamage.lastCleanupTime < CLEANUP_INTERVAL then
-        return
-    end
-
-    NoFriendlyDamage.lastCleanupTime = currentTime
-
-    local count = 0
-    for charId, data in pairs(NoFriendlyDamage.pendingDamages) do
-        if currentTime - data.time > MARKER_EXPIRY_TIME * 2 then
-            NoFriendlyDamage.pendingDamages[charId] = nil
-            count = count + 1
-        end
-    end
-
-    if count > 0 then
-        dbg("cleaned " .. count .. " expired entries")
-    end
-end)
 
 function NoFriendlyDamage.GetStats()
     return {
