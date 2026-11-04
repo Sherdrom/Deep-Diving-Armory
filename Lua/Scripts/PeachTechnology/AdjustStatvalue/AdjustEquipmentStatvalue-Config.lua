@@ -68,8 +68,6 @@
 --     - strength: 强度值（默认 1）
 --     例: affliction = { id = "burn", strength = 50 }
 --     例(多个): affliction = {
---                  { id = "deep_helmet_tac_detect", strength = 1 },
---                  { id = "deep_gpnvg18", strength = 1 },
 --              }
 --
 --   以上 stats / flags / talentMarkers / resistances / affliction 均为选填，不填则跳过，无副作用。
@@ -131,19 +129,17 @@ local function merge(target, source)
     end
 end
 
-local subItems = {}
-merge(subItems, loadCategory("ArmorPlates.lua"))
-merge(subItems, loadCategory("ArmorUpgrades.lua"))
-merge(subItems, loadCategory("NeuralAdjustments.lua"))
-merge(subItems, loadCategory("AssistUpgrades.lua"))
-
-local weaponAccessories = {}
-merge(weaponAccessories, loadCategory("WeaponGrips.lua"))
-merge(weaponAccessories, loadCategory("WeaponSights.lua"))
-merge(weaponAccessories, loadCategory("WeaponMuzzles.lua"))
-merge(weaponAccessories, loadCategory("WeaponChips.lua"))
-merge(weaponAccessories, loadCategory("WeaponUnderbarrels.lua"))
-merge(weaponAccessories, loadCategory("WeaponMagazines.lua"))
+-- 分类清单由加载器和测试共用；新增分类文件只在这里登记。
+local categoryFiles = {
+    mainItems = { "MainItems.lua" },
+    subItems = { "ArmorPlates.lua", "ArmorUpgrades.lua", "NeuralAdjustments.lua", "AssistUpgrades.lua" },
+    weaponAccessories = {
+        "WeaponGrips.lua", "WeaponSights.lua", "WeaponMuzzles.lua",
+        "WeaponChips.lua", "WeaponUnderbarrels.lua", "WeaponMagazines.lua",
+    },
+    heldWeapons = { "HeldWeapons.lua" },
+    legacyAfflictions = { "LegacyAfflictions.lua" },
+}
 
 local CONFIG = {
     fallbackInterval = 5.0,
@@ -161,11 +157,21 @@ local CONFIG = {
         InvSlotType.LeftHand,
         InvSlotType.RightHand,
     },
-    mainItems = loadCategory("MainItems.lua"),
-    subItems = subItems,
-    weaponAccessories = weaponAccessories,
-    heldWeapons = loadCategory("HeldWeapons.lua"),
-    legacyAfflictions = loadCategory("LegacyAfflictions.lua"),
 }
 
+for category, files in pairs(categoryFiles) do
+    if category ~= "legacyAfflictions" then
+        CONFIG[category] = {}
+        for _, file in ipairs(files) do merge(CONFIG[category], loadCategory(file)) end
+    end
+end
+
+-- 兼容映射依赖已合并的装备配置。
+CONFIG.legacyAfflictions = {}
+for _, file in ipairs(categoryFiles.legacyAfflictions) do
+    merge(CONFIG.legacyAfflictions, loadCategory(file)(CONFIG))
+end
+
 _G.AdjustEquipmentConfig = CONFIG
+
+return CONFIG, categoryFiles

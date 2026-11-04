@@ -105,10 +105,67 @@ local function GetCrosshairPosition(instance)
     )
 end
 
+-- 判定本地玩家是否正在操作炮塔：经潜望镜等控制器注视带 Turret 组件的设备（ViewTarget），
+-- 或直接选中带 Turret 组件的物品（SelectedItem）。
+-- 操作炮塔时，手持武器仍会经原版装备栏循环触发 RangedWeapon.DrawHUD（原版内部守卫只是提前 return，
+-- 本脚本的 After 钩子照常执行），其提示画在手持武器的固定位置而非炮塔准星，需抑制以避免双重命中反馈。
+local function IsOperatingTurret()
+    local controlled = Character.Controlled
+    if controlled == nil then return false end
+
+    local viewTarget = controlled.ViewTarget
+    if viewTarget ~= nil
+        and LuaUserData.IsTargetType(viewTarget, "Barotrauma.Item")
+        and viewTarget.GetComponentString("Turret") ~= nil then
+        return true
+    end
+
+    local selectedItem = controlled.SelectedItem
+    if selectedItem ~= nil and selectedItem.GetComponentString("Turret") ~= nil then
+        return true
+    end
+
+    return false
+end
+
 Hook.Patch("Barotrauma.Items.Components.RangedWeapon", "DrawHUD",
     { "Microsoft.Xna.Framework.Graphics.SpriteBatch", "Barotrauma.Character" },
     function(instance, ptable)
+        if IsOperatingTurret() then return end
         local position = GetCrosshairPosition(instance)
+        if position == nil then return end
+        DrawHint(ptable["spriteBatch"], position)
+    end,
+    Hook.HookMethodType.After)
+
+-- 炮塔支持：操作炮塔（直接选中或经潜望镜）时游戏走 Turret.DrawHUD，不会调用 RangedWeapon.DrawHUD，
+-- 因此命中提示需要单独的绘制入口。坐标公式逐行复刻原版 Turret.UpdateHUDComponentSpecific
+-- （准星 = 炮塔屏幕坐标沿炮管方向偏移鼠标距离），保证提示与原版准星贴图重合。
+local function GetTurretCrosshairPosition(instance)
+    if instance == nil or instance.item == nil then
+        return PlayerInput.MousePosition
+    end
+    local screen = Screen.Selected
+    if screen == nil or screen.Cam == nil then
+        return PlayerInput.MousePosition
+    end
+
+    local itemPos = screen.Cam.WorldToScreen(instance.item.WorldPosition)
+    local rotation = instance.Rotation
+    -- 屏幕系 Y 向下，与原版一致使用 (cos, sin)，勿沿用世界系旋转的 -sin
+    local turretDir = Vector2(math.cos(rotation), math.sin(rotation))
+    local mouseDist = Vector2.Distance(itemPos, PlayerInput.MousePosition)
+
+    return Vector2(
+        itemPos.X + turretDir.X * mouseDist,
+        itemPos.Y + turretDir.Y * mouseDist
+    )
+end
+
+Hook.Patch("Barotrauma.Items.Components.Turret", "DrawHUD",
+    { "Microsoft.Xna.Framework.Graphics.SpriteBatch", "Barotrauma.Character" },
+    function(instance, ptable)
+        local position = GetTurretCrosshairPosition(instance)
         if position == nil then return end
         DrawHint(ptable["spriteBatch"], position)
     end,

@@ -158,7 +158,7 @@ Hook.Patch(
 
 local JOB_CONFIGS = {
     ["deep_securityofficer_enemy"] = {
-        AttackDistanceLimit = 1200,
+        AttackDistanceLimit = 1100,
         CanReport = false,
         BlockedByAffliction = {
             Identifier = "deep_enemy_attacked_result",
@@ -166,7 +166,7 @@ local JOB_CONFIGS = {
         },
     },
     ["deep_medicaldoctor_enemy"] = {
-        AttackDistanceLimit = 1200,
+        AttackDistanceLimit = 1100,
         CanReport = false,
         BlockedByAffliction = {
             Identifier = "deep_enemy_attacked_result",

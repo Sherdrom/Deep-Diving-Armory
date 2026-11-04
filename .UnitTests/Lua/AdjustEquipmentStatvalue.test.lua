@@ -123,6 +123,7 @@ end
 local legacyMarkerPrefab = makeLegacyPrefab("legacy_marker")
 local legacySemiPrefab = makeLegacyPrefab("deep_Semi")
 local legacyBurstPrefab = makeLegacyPrefab("deep_Burst")
+local migratedLegacyPrefab = makeLegacyPrefab("chip_cqb_1")
 AfflictionPrefab = {
     Prefabs = {
         marker = markerPrefab,
@@ -130,8 +131,18 @@ AfflictionPrefab = {
         legacy_marker = legacyMarkerPrefab,
         deep_Semi = legacySemiPrefab,
         deep_Burst = legacyBurstPrefab,
+        chip_cqb_1 = migratedLegacyPrefab,
     },
 }
+function AfflictionPrefab.Prefabs.TryGet(identifier)
+    local prefab = rawget(AfflictionPrefab.Prefabs, identifier)
+    return prefab ~= nil, prefab
+end
+setmetatable(AfflictionPrefab.Prefabs, {
+    __index = function(_, identifier)
+        error("The given key '" .. identifier .. "' was not present in the dictionary.")
+    end,
+})
 ItemPrefab = { GetItemPrefab = function() return true end }
 
 _G.AdjustEquipmentConfig = {
@@ -140,6 +151,7 @@ _G.AdjustEquipmentConfig = {
     wearableSlots = { InvSlotType.Head, InvSlotType.OuterClothes, InvSlotType.Bag },
     weaponSlots = { InvSlotType.LeftHand, InvSlotType.RightHand },
     mainItems = {
+        missing_affliction_armor = { affliction = { id = "missing_marker" } },
         armor = {
             stats = {
                 { statType = "MovementSpeed", value = 2 },
@@ -244,6 +256,7 @@ _G.AdjustEquipmentConfig = {
         },
     },
     legacyAfflictions = {
+        deep_chip_blaster_equipped = { timeout = 1.25 },
         legacy_marker = {
             timeout = 2.0,
             stats = { { statType = "MovementSpeed", value = 13 } },
@@ -259,6 +272,10 @@ _G.AdjustEquipmentConfig = {
             statsKey = "legacy_burst",
             blocksStatGroups = { "deep_Semi" },
             stats = { { statType = "MovementSpeed", value = 5 } },
+        },
+        chip_cqb_1 = {
+            timeout = 1.0,
+            stats = { { statType = "MovementSpeed", value = 7 } },
         },
     },
 }
@@ -278,12 +295,30 @@ local function makeItem(identifier)
     function item.HasTag(tag) return item.tags[tag] == true end
     function item.GetComponentString(component) return item.components[component] end
     function item:GetRootInventoryOwner() return self.rootOwner end
-    local inventory = {}
+    local inventory = {
+        slotMaxStackSizes = {},
+        slotContainable = {},
+    }
     function inventory:FindItemByTag(tag)
         item.findByTagCalls = item.findByTagCalls + 1
         for _, contained in ipairs(item.contents) do
             if contained.HasTag(tag) then return contained end
         end
+    end
+    function inventory:FindIndex(target)
+        if target.testSlot ~= nil then return target.testSlot end
+        for index, contained in ipairs(item.contents) do
+            if contained == target then return index - 1 end
+        end
+        return -1
+    end
+    inventory.Container = {}
+    function inventory.Container:GetMaxStackSize(slot)
+        return inventory.slotMaxStackSizes[slot] or 1
+    end
+    function inventory.Container:CanBeContained(_, slot)
+        local allowed = inventory.slotContainable[slot]
+        return allowed == nil and true or allowed
     end
     item.OwnInventory = setmetatable(inventory, {
         __index = function(_, key)
@@ -419,7 +454,21 @@ noneArmor.contents = { noneModule }
 slots[InvSlotType.OuterClothes] = noneArmor
 
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
-events.loaded()
+do
+    local originalPrint, warnings = print, {}
+    print = function(_, message, ...) warnings[message] = { ... } end
+    local serverOk, serverErr, clientOk, clientErr
+    CLIENT = false
+    serverOk, serverErr = pcall(events.loaded)
+    CLIENT = true
+    clientOk, clientErr = pcall(events.loaded)
+    print = originalPrint
+    assert(serverOk, serverErr)
+    assert(clientOk, clientErr)
+    assert(warnings["invalid Affliction"][2] == "missing_marker", "missing effect prefab was not reported")
+    assert(warnings["legacy Affliction prefab not found"][1] == "deep_chip_blaster_equipped",
+        "missing legacy prefab was not reported")
+end
 assert(character.Info.savedStats.talent_marker == 0, "saved talent marker was not reset on load")
 assert(character.Info.savedStats.weapon_marker == 0, "saved weapon marker was not reset on load")
 assert(character.Info.savedStats.nested_marker == 0, "saved nested marker was not reset on load")
@@ -750,6 +799,13 @@ assert(character.stats.MovementSpeed == legacyStatBaseline + 3,
 advanceTime(0.9)
 assert(character.stats.MovementSpeed == legacyStatBaseline,
     "legacy Semi remained active after its refreshed deadline")
+
+health:ApplyAffliction(nil, migratedLegacyPrefab:Instantiate(1))
+assert(character.stats.MovementSpeed == legacyStatBaseline + 7,
+    "newly restored legacy identifier did not use the compatibility bridge")
+advanceTime(1.1)
+assert(character.stats.MovementSpeed == legacyStatBaseline,
+    "newly restored legacy identifier did not expire")
 now = 0
 
 local vanillaGun = makeItem("vanilla_gun")
@@ -758,17 +814,34 @@ vanillaGun.components.RangedWeapon = {}
 vanillaGun.rootOwner = character
 slots[InvSlotType.LeftHand] = vanillaGun
 equip(vanillaGun, { character = character })
-assert(#warningMessages == 0, "vanilla DDA weapon triggered the VCE warning")
+assert(#warningMessages == 0, "vanilla weapon triggered the VCE warning")
+
+local thirdPartyGun = makeItem("third_party_gun")
+thirdPartyGun.Prefab.ContentPackage = { Name = "Other weapons" }
+thirdPartyGun.tags.gun = true
+thirdPartyGun.rootOwner = character
+slots[InvSlotType.LeftHand] = thirdPartyGun
+equip(thirdPartyGun, { character = character })
+assert(#warningMessages == 0, "third-party weapon without a RangedWeapon component triggered the VCE warning")
+thirdPartyGun.Prefab.ContentPackage = nil
+equip(thirdPartyGun, { character = character })
+assert(#warningMessages == 0, "weapon without a content package triggered the VCE warning")
 
 local vceGun = makeItem("vce_gun")
+vceGun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
 vceGun.tags.gun = true
 vceGun.components.RangedWeapon = {}
 vceGun.rootOwner = character
 slots[InvSlotType.LeftHand] = vceGun
 equip(vceGun, { character = character })
 assert(#warningMessages == 0, "installed VCE triggered the VCE warning")
+vceGun.components.RangedWeapon = nil
+vceGun.components.SwitchableRangedWeapon = {}
+equip(vceGun, { character = character })
+assert(#warningMessages == 0, "switchable DDA weapon triggered the VCE warning")
 
 local missingVceGun = makeItem("missing_vce_gun")
+missingVceGun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
 missingVceGun.tags.gun = true
 missingVceGun.rootOwner = character
 slots[InvSlotType.LeftHand] = missingVceGun
@@ -779,6 +852,76 @@ warningBox.Closed = true
 equip(missingVceGun, { character = character })
 assert(#warningMessages == 2, "VCE warning did not reopen after the previous box closed")
 slots[InvSlotType.LeftHand] = nil
+
+do
+    local baseline = #warningMessages
+    local vceBox = warningBox
+    local gun = makeItem("deep_hk416")
+    gun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+    gun.tags.gun, gun.tags.gunsmith, gun.tags.deep_gunsmith = true, true, true
+    gun.components.SwitchableRangedWeapon = {}
+    gun.rootOwner = character
+
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "non-held weapon triggered the Gunsmith warning")
+    slots[InvSlotType.LeftHand] = gun
+    CLIENT = false
+    equip(gun, { character = character })
+    CLIENT = true
+    Character.Controlled = nil
+    equip(gun, { character = character })
+    Character.Controlled = character
+    assert(#warningMessages == baseline, "Gunsmith warning was not restricted to the local client")
+
+    gun.Prefab.ContentPackage = { Name = "Other weapons" }
+    equip(gun, { character = character })
+    gun.Prefab.ContentPackage = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "non-DDA weapon triggered the Gunsmith warning")
+    gun.Prefab.ContentPackage = { Name = "Deep-Diving-Armory" }
+    gun.tags.deep_gunsmith = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "generic gunsmith tag triggered the Gunsmith warning")
+
+    gun.tags.deep_gunsmith = true
+    gun.components.GunsmithData = {}
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline, "loaded Gunsmith component triggered the Gunsmith warning")
+    gun.components.GunsmithData = nil
+    GunsmithFramework = { PendingPackages = {} }
+    equip(gun, { character = character })
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 1, "missing Gunsmith did not open exactly one warning")
+    assert(warningMessages[#warningMessages]:find("未检测到 GunsmithFramework", 1, true)
+        and warningMessages[#warningMessages]:find("GunsmithFramework was not detected", 1, true),
+        "Gunsmith warning is missing its bilingual message")
+    warningBox.Closed = true
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 2, "Gunsmith warning did not reopen after closing")
+
+    warningBox.Closed = true
+    vceBox.Closed = true
+    gun.components.SwitchableRangedWeapon = nil
+    equip(gun, { character = character })
+    assert(#warningMessages == baseline + 4, "missing VCE and Gunsmith did not report both dependencies")
+    assert(warningMessages[baseline + 3]:find("VCE", 1, true)
+        and warningMessages[baseline + 4]:find("Gunsmith", 1, true),
+        "dependency warnings interfered with each other")
+    warningBox.Closed = true
+    GunsmithFramework = nil
+    slots[InvSlotType.LeftHand] = nil
+end
+
+do
+    local missingArmor = makeItem("missing_affliction_armor")
+    missingArmor.rootOwner = character
+    slots[InvSlotType.OuterClothes] = missingArmor
+    equip(missingArmor, { character = character })
+    assert(health:GetAfflictionStrengthByIdentifier("missing_marker") == 0,
+        "missing prefab unexpectedly applied an affliction")
+    slots[InvSlotType.OuterClothes] = nil
+    unequip(missingArmor, { character = character })
+end
 
 local nestedHost = makeItem("nested_host")
 nestedHost.rootOwner = setmetatable({}, {
@@ -805,6 +948,10 @@ for _ = 1, 3 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not repair lowered affliction")
 assert(health.afflictions.marker.Duration == 4, "fallback did not maintain timed affliction")
 health.afflictions.marker = nil
+AfflictionPrefab.Prefabs.marker = nil
+for _ = 1, 4 do tick() end
+assert(health.afflictions.marker == nil, "missing prefab unexpectedly repaired an affliction")
+AfflictionPrefab.Prefabs.marker = markerPrefab
 for _ = 1, 4 do tick() end
 assert(health.afflictions.marker.Strength == 1, "fallback did not restore removed affliction")
 
@@ -812,9 +959,23 @@ armor.contents = { module1, module2 }
 tick()
 assert(character.stats.MovementSpeed == 12, "think still scanned contained items")
 itemContained(armorContainer, { containedItem = module1 })
-assert(character.stats.MovementSpeed == 14, "same-identifier subitems collapsed")
+assert(character.stats.MovementSpeed == 14, "dedicated subitem slot did not apply")
 assert(character.resistances["burn|dda_adjust_equipment"] == 0.5 and character.addResistanceCalls == 1,
     "resistance reference counting failed")
+
+module1.testSlot = 2
+armor.OwnInventory.slotMaxStackSizes[2] = 32
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 13, "ordinary storage slot still applied the subitem")
+
+armor.OwnInventory.slotMaxStackSizes[2] = 1
+armor.OwnInventory.slotContainable[2] = false
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 13, "mismatched dedicated slot applied the subitem")
+
+module1.testSlot = 0
+itemContained(armorContainer, { containedItem = module1 })
+assert(character.stats.MovementSpeed == 14, "valid dedicated slot did not restore the subitem")
 
 armor.contents = { module2 }
 tick()
@@ -966,6 +1127,99 @@ slots[InvSlotType.RightHand] = nil
 unequip(rifle2, { character = character })
 assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.weapon_marker == 0,
     "stowed weapon leaked accessory effects")
+
+do
+    local gunsmithWeapon, normalWeapon = makeItem("none_weapon"), makeItem("normal_weapon")
+    local optic, normalOptic = makeItem("optic"), makeItem("optic")
+    local originalFlag = character.flags.SharedFlag
+    gunsmithWeapon.rootOwner, normalWeapon.rootOwner = character, character
+    gunsmithWeapon.contents, normalWeapon.contents = { optic }, { normalOptic }
+    slots[InvSlotType.LeftHand] = gunsmithWeapon
+    equip(gunsmithWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 4, "missing Gunsmith disabled ordinary accessory stats")
+
+    GunsmithFramework = {
+        Core = {
+            WeaponConfig = function(item)
+                if item == gunsmithWeapon then return {} end
+            end,
+        },
+        Config = { parts = {
+            optic_part = { item = { identifier = "optic" }, stats = { MovementSpeed = 10 } },
+            nested_part = { item = { identifier = "nested_dynamic" }, stats = { MovementSpeed = 12 } },
+            grip_part = { item = { identifier = "grip_a" } },
+        } },
+    }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = optic })
+    assert(character.stats.MovementSpeed == 0, "Gunsmith accessory kept migrated numeric bonuses")
+    assert(approximately(character.stats.RangedAttackSpeed, 0.3)
+        and approximately(character.stats.RangedSpreadReduction, 0.25),
+        "Gunsmith accessory suppression removed held weapon bonuses")
+    assert(character.Info.savedStats.weapon_marker == 1, "Gunsmith accessory lost its functional marker")
+
+    slots[InvSlotType.RightHand] = normalWeapon
+    equip(normalWeapon, { character = character })
+    itemContained({ Item = gunsmithWeapon }, { containedItem = optic })
+    assert(character.stats.MovementSpeed == 4, "Gunsmith changed ordinary weapon shared stats")
+    slots[InvSlotType.RightHand] = nil
+    unequip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 0, "Gunsmith retained another weapon's shared stats")
+
+    local unmanaged = makeItem("blockedoptic")
+    gunsmithWeapon.contents = { optic, unmanaged, makeItem("grip_a") }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = unmanaged })
+    assert(character.stats.MovementSpeed == 9, "unmanaged Gunsmith accessory lost its DDA stats")
+    assert(character.resistances["stun|dda_adjust_equipment"] == 0.7,
+        "Gunsmith accessory lost its non-stat resistance")
+
+    GunsmithFramework.Config.parts.blocked_part = {
+        item = { identifier = "blockedoptic" }, stats = { MovementSpeed = 5 },
+    }
+    itemContained({ Item = gunsmithWeapon }, { containedItem = unmanaged })
+    for _ = 1, 4 do tick() end
+    assert(character.stats.MovementSpeed == 0, "conditional fallback restored migrated Gunsmith stats")
+    health.afflictions.deep_enemy_affliction_resistance = { Strength = 1 }
+    for _ = 1, 4 do tick() end
+    health.afflictions.deep_enemy_affliction_resistance = nil
+    for _ = 1, 4 do tick() end
+    assert(character.stats.MovementSpeed == 0, "unblocking an accessory bypassed Gunsmith priority")
+
+    local nested, ammo = makeItem("nested_dynamic"), makeItem("ammo")
+    ammo.tags.dynamic_ammo = true
+    nested.contents = { ammo }
+    gunsmithWeapon.contents = { optic, nested }
+    gunsmithWeapon.Condition = 0
+    itemContained({ Item = gunsmithWeapon }, { containedItem = nested })
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 1,
+        "dynamic Gunsmith accessory did not preserve only its functional effect")
+    gunsmithWeapon.Condition = 100
+    for _ = 1, 2 do tick() end
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 0,
+        "dynamic Gunsmith accessory did not deactivate cleanly")
+    gunsmithWeapon.Condition = 0
+    for _ = 1, 2 do tick() end
+    assert(character.stats.MovementSpeed == 0 and character.Info.savedStats.nested_marker == 1,
+        "dynamic refresh reapplied migrated Gunsmith accessory stats")
+
+    gunsmithWeapon.contents = {}
+    itemRemoved({ Item = gunsmithWeapon }, { item = optic })
+    assert(character.Info.savedStats.weapon_marker == 0 and character.Info.savedStats.nested_marker == 0,
+        "removing Gunsmith accessories leaked functional markers")
+    normalWeapon.contents = { optic }
+    slots[InvSlotType.RightHand] = normalWeapon
+    equip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 4, "transferring an accessory to a normal weapon lost its stats")
+    slots[InvSlotType.LeftHand], slots[InvSlotType.RightHand] = nil, nil
+    unequip(gunsmithWeapon, { character = character })
+    unequip(normalWeapon, { character = character })
+    assert(character.stats.MovementSpeed == 0
+        and approximately(character.stats.RangedAttackSpeed, 0)
+        and approximately(character.stats.RangedSpreadReduction, 0),
+        "Gunsmith unequip leaked numeric effects")
+    assert(character.flags.SharedFlag == originalFlag, "Gunsmith cleanup changed an external flag")
+    assert(character.Info.savedStats.weapon_marker == 0, "Gunsmith cleanup leaked a shared marker")
+    GunsmithFramework = nil
+end
 
 local gripWeapon1, gripWeapon2 = makeItem("gripWeapon1"), makeItem("gripWeapon2")
 gripWeapon1.rootOwner, gripWeapon2.rootOwner = character, character
@@ -1125,13 +1379,8 @@ unequip(nestedWeapon, { character = character })
 
 Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
-dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
-local production = _G.AdjustEquipmentConfig
-local function countEntries(values)
-    local count = 0
-    for _ in pairs(values) do count = count + 1 end
-    return count
-end
+local production, categoryFiles = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
+assert(production == _G.AdjustEquipmentConfig, "production config global changed")
 local function hasTalentMarker(cfg, marker)
     for _, effect in ipairs(cfg.effects or { cfg }) do
         for _, value in ipairs(effect.talentMarkers or {}) do
@@ -1148,12 +1397,22 @@ local function sameStats(left, right)
     end
     return true
 end
-assert(countEntries(production.mainItems) == 68
-    and countEntries(production.subItems) == 83
-    and countEntries(production.weaponAccessories) == 72
-        and countEntries(production.heldWeapons) == 117
-        and countEntries(production.legacyAfflictions) == 18,
-    "split production config lost or duplicated items")
+-- Re-read category entries to verify the loader without freezing file lists or counts.
+for category, files in pairs(categoryFiles) do
+    local expected = {}
+    for _, file in ipairs(files) do
+        local entries = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config/" .. file)
+        if category == "legacyAfflictions" then entries = entries(production) end
+        for identifier in pairs(entries) do
+            assert(not expected[identifier], category .. " duplicates " .. identifier .. " in " .. file)
+            expected[identifier] = true
+            assert(production[category][identifier], category .. " missing " .. identifier .. " from " .. file)
+        end
+    end
+    for identifier in pairs(production[category]) do
+        assert(expected[identifier], category .. " contains unexpected " .. identifier)
+    end
+end
 assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_Burst
     and production.legacyAfflictions.deep_upgrade_tool_steel_tit_confirm_rifle
@@ -1161,22 +1420,71 @@ assert(production.legacyAfflictions.deep_Semi
     and production.legacyAfflictions.deep_sniper_aim_heavy
     and production.legacyAfflictions.deep_muffler
     and production.legacyAfflictions["8x_sight"]
+    and production.legacyAfflictions.chip_cqb_1
+    and production.legacyAfflictions.deep_chip_cqb_equipped
+    and production.legacyAfflictions.deep_plate_metal_3_debuff
+    and production.legacyAfflictions.chip_captain_1
+    and production.legacyAfflictions.chip_captain_only_one
+    and production.legacyAfflictions.holographic_sight
     and production.legacyAfflictions.deepgun_inwater_detect == nil
     and production.legacyAfflictions.deep_VCE_none == nil
-    and production.legacyAfflictions.deep_VCE_yes == nil,
+    and production.legacyAfflictions.deep_VCE_yes == nil
+    and production.legacyAfflictions.clownpower == nil
+    and production.legacyAfflictions.psychosis == nil
+    and production.legacyAfflictions.chip_assistant_2 == nil
+    and production.legacyAfflictions.chip_bodyshot_detect == nil
+    and production.legacyAfflictions.chip_heavy_armor == nil
+    and production.legacyAfflictions.chip_strengthening_of_limbs == nil
+    and production.legacyAfflictions.deep_chip_blaster == nil
+    and production.legacyAfflictions.deep_machinegunner_detect == nil
+    and production.legacyAfflictions.deep_muzzle_long_detect == nil
+    and production.legacyAfflictions.deep_muzzle_none_detect == nil
+    and production.legacyAfflictions.deep_muzzle_short_detect == nil
+    and production.legacyAfflictions.deep_pp19_buffalo == nil,
     "legacy Affliction mappings or excluded markers changed")
+local function assertFiniteNumber(value, context)
+    assert(type(value) == "number" and value == value and math.abs(value) < math.huge, context)
+end
+for _, field in ipairs({ "fallbackInterval", "dynamicInterval" }) do
+    assertFiniteNumber(production[field], "invalid " .. field)
+    assert(production[field] > 0, "non-positive " .. field)
+end
+for category in pairs(categoryFiles) do
+    for identifier, config in pairs(production[category]) do
+        for _, effect in ipairs(config.effects or { config }) do
+            for _, stat in ipairs(effect.stats or {}) do
+                assert(type(stat.statType) == "string" and stat.statType ~= "", identifier .. " invalid statType")
+                assertFiniteNumber(stat.value, identifier .. " invalid stat value")
+            end
+            for _, field in ipairs({ "pollInterval", "timeout" }) do
+                if effect[field] ~= nil then
+                    assertFiniteNumber(effect[field], identifier .. " invalid " .. field)
+                    assert(effect[field] > 0, identifier .. " non-positive " .. field)
+                end
+            end
+        end
+    end
+end
 local legacy = production.legacyAfflictions
-assert(legacy.deep_Semi.timeout == 1.25
-    and legacy.deep_Semi.stats[1].value == 0.3
+assert(legacy.deep_Semi.timeout > 0
     and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
-    and legacy.deep_upgrade_tool_steel_tit_confirm_shotgun.stats[2].value == 0.1
     and legacy.deep_machinegun_crouch.when
-    and #legacy.deep_sniper_aim_heavy.effects == 3
+    and legacy.deep_pistol_mozambique_hand.when
+    and legacy.deep_knife_detect_1.when
+    and legacy.deep_wuchuan_detection.effects[1].when
+    and legacy.deep_sniper_aim_heavy.effects[3]
+    and legacy.cqr_grips.when == nil
+    and legacy.oblique_grips.when == nil
+    and legacy.flash_hider.when == nil
+    and legacy.deep_compensator.when == nil
+    and legacy.chip_captain_only_one.stats == nil
     and hasTalentMarker(legacy.deep_shotgun_damgage_balance, "deep_shotgun_damgage_balance")
+    and hasTalentMarker(legacy.deepgun_inwater_detect_chip, "deepgun_inwater_detect_chip")
     and hasTalentMarker(legacy.deep_machinegunner_light_detect, "deep_machinegunner_light_detect")
     and hasTalentMarker(legacy.deep_muffler, "deep_muffler"),
     "legacy Affliction effect profiles changed")
 assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
+    and legacy.deep_Semi.stats == production.heldWeapons.deep_AK12.effects[1].stats
     and sameStats(legacy.deep_Burst, production.heldWeapons.deep_m4.effects[2])
     and sameStats(legacy.deep_upgrade_tool_steel_tit_confirm_rifle,
         production.heldWeapons.deep_m4.effects[3])
@@ -1186,44 +1494,43 @@ assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
     and sameStats(legacy.deep_muffler, production.weaponAccessories.deep_muffler.effects[1])
     and sameStats(legacy.extended_barrel, production.weaponAccessories.extended_barrel.effects[1])
     and sameStats(legacy["2x_sight"], production.weaponAccessories["2x_sight"])
-    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"]),
+    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"])
+    and sameStats(legacy.chip_cqb_1, production.subItems.chip_cqb)
+    and sameStats(legacy.deep_chip_cqb_equipped, production.subItems.chip_cqb)
+    and sameStats(legacy.deep_plate_metal_3_debuff, production.subItems.deep_plate_metal_3)
+    and sameStats(legacy.chip_captain_1, production.subItems.chip_captain)
+    and sameStats(legacy.holographic_sight, production.weaponAccessories.holographic_sight),
     "legacy Affliction stats drifted from current equipment profiles")
 assert(production.mainItems.deep_hpc
-    and production.dynamicInterval == 0.5
-    and production.mainItems.deep_meteorite.stats[1].value == -0.2
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
-    and production.weaponAccessories["8x_sight"].stats[1].value == 0.9
-    and production.weaponAccessories.deep_762_expansion.stats[1].value == -15
     and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
     and production.weaponAccessories.cqr_grips.when
     and production.weaponAccessories.oblique_grips.when
-    and #production.weaponAccessories.deep_flash_hider.effects == 2
-    and #production.weaponAccessories.deep_compensator.effects == 2
-    and #production.weaponAccessories.deep_sub_hanging_master_key.effects == 2
+    and production.weaponAccessories.deep_flash_hider.effects[2]
+    and production.weaponAccessories.deep_compensator.effects[2]
+    and production.weaponAccessories.deep_sub_hanging_master_key.effects[2]
     and hasTalentMarker(production.weaponAccessories.deep_sub_hanging_master_key,
         "deep_shotgun_damgage_balance_12shell")
     and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
     and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
     and production.heldWeapons.deep_m249.effects[1].when
-    and production.heldWeapons.deep_m249.effects[1].stats[1].value == 0.7
     and production.heldWeapons.deep_CZ75.effects[1].statsKey == "deep_pistol_mozambique_aff"
-    and #production.heldWeapons.deep_m82a1.effects == 3
+    and production.heldWeapons.deep_m82a1.effects[3]
     and production.heldWeapons.deep_knife.effects[1].when
-    and #production.heldWeapons.deep_wuchuan.effects == 2
+    and production.heldWeapons.deep_wuchuan.effects[2]
     and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
     and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance
     and production.heldWeapons.deep_AK12.effects[1].statsKey == "deep_Semi"
+    and production.heldWeapons.deep_AK12.effects[1].timeout == nil
     and production.heldWeapons.deep_m4.effects[1].statGroup == "deep_Semi"
     and production.heldWeapons.deep_m4.effects[2].when
     and production.heldWeapons.deep_m4.effects[2].blocksStatGroups[1] == "deep_Semi"
     and production.heldWeapons.deep_AK12.effects[2].talentMarkers[1] == "deep_shotgun_damgage_balance"
     and production.heldWeapons.deep_doublebarrel.effects[1].talentMarkers[1] == "deep_shotgun_damgage_balance"
     and production.heldWeapons.deep_m4.effects[3].statsKey == "deep_upgrade_rifle"
-    and production.heldWeapons.deep_m4.effects[3].pollInterval == 0.25
-    and production.heldWeapons.deep_AK12.effects[2].pollInterval == 0.5
     and production.heldWeapons.deep_flash_handed_shield == nil,
     "split production config changed category data")
 

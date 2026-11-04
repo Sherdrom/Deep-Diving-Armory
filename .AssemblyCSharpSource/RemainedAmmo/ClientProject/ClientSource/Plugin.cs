@@ -64,19 +64,68 @@ namespace RemainedAmmo
             }
             return currentAmmoNumber;
         }
+
+        private static ItemPrefab[]? ddaItemPrefabs;
+
+        private static bool IsDdaPrefab(ItemPrefab prefab)
+            => prefab.ContentPackage?.Name == RemainedAmmo.Package.Name;
+
+        private static bool IsDdaItem(Item item) => IsDdaPrefab(item.Prefab);
+
+        private static bool CanContainDdaItem(int targetSlot, ItemContainer itemContainer)
+        {
+            ddaItemPrefabs ??= ItemPrefab.Prefabs.Where(IsDdaPrefab).ToArray();
+            return ddaItemPrefabs.Any(prefab =>
+                itemContainer.Inventory.CanBePutInSlot(prefab, targetSlot, condition: null, quality: null));
+        }
+
+        private static bool HasDdaAmmoOrCompatibleSlot(int targetSlot, ItemContainer itemContainer)
+        {
+            if (targetSlot >= itemContainer.Inventory.Capacity) { return false; }
+
+            Item[] loadedItems = itemContainer.Inventory.GetItemsAt(targetSlot).ToArray();
+            if (loadedItems.Any(IsDdaItem) ||
+                loadedItems.Any(item => item.OwnInventory?.slots.Any(slot => slot.items.Any(IsDdaItem)) == true))
+            {
+                return true;
+            }
+
+            if (loadedItems.Length == 0)
+            {
+                return CanContainDdaItem(targetSlot, itemContainer);
+            }
+
+            foreach (Item loadedItem in loadedItems)
+            {
+                var nestedContainer = loadedItem.GetComponent<ItemContainer>();
+                if (nestedContainer == null) { continue; }
+
+                for (int i = 0; i < nestedContainer.Inventory.Capacity; i++)
+                {
+                    if (!nestedContainer.Inventory.GetItemsAt(i).Any() && CanContainDdaItem(i, nestedContainer))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public static void DrawMyString(object rangedWeaponObj, SpriteBatch spriteBatch)
         {
             // 支持RangedWeapon和SwitchableRangedWeapon
             if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
 
-            if(rangedWeapon.Item.Prefab.ContentPackage == null || rangedWeapon.Item.Prefab.ContentPackage.Name != RemainedAmmo.Package.Name || rangedWeapon.Item.HasTag("noammocount")) {return;}
-            int remainedAmmo = 0;
-            var ItemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
-            if (ItemContainer == null) { return; }
-            float containedIndicatorState = rangedWeapon.Item.GetComponent<ItemContainer>().GetContainedIndicatorState();
+            if(rangedWeapon.Item.HasTag("noammocount")) {return;}
+            Item ammoHostItem = rangedWeapon.Item;
+            var itemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
+            if (itemContainer == null) { return; }
+            float containedIndicatorState = itemContainer.GetContainedIndicatorState();
+            bool selectedAmmoMissing = false;
 
             // 获取当前选择的弹匣（支持SwitchableRangedWeapon的双弹匣系统）
-            int targetSlot = Math.Max(ItemContainer.ContainedStateIndicatorSlot, 0);
+            int targetSlot = Math.Max(itemContainer.ContainedStateIndicatorSlot, 0);
 
             // 检查是否为SwitchableRangedWeapon（使用字符串模式匹配避免访问级别问题）
             if (rangedWeapon.GetType().Name == "SwitchableRangedWeapon")
@@ -90,35 +139,30 @@ namespace RemainedAmmo
                     // 处理下挂组件的特殊情况
                     if (targetSlot == 1)
                     {
-                        IEnumerable<Item> itemsAt = ItemContainer.Inventory.GetItemsAt(targetSlot);
+                        IEnumerable<Item> itemsAt = itemContainer.Inventory.GetItemsAt(targetSlot);
                         Item? hangWeaponItem = itemsAt.FirstOrDefault();
-                        if(hangWeaponItem != null)
+                        var hangWeaponContainer = hangWeaponItem?.GetComponent<ItemContainer>();
+                        if (hangWeaponItem == null || hangWeaponContainer == null)
                         {
-                            var hangWeaponContainer = hangWeaponItem.GetComponent<ItemContainer>();
-                            if(hangWeaponContainer != null)
-                            {
-                                float hangContainedIndicatorState = hangWeaponItem.GetComponent<ItemContainer>().GetContainedIndicatorState();
-                                remainedAmmo = GetRemainedAmmo(0, hangWeaponItem, hangWeaponContainer, hangContainedIndicatorState);
-                            }
+                            selectedAmmoMissing = true;
+                        }
+                        else
+                        {
+                            ammoHostItem = hangWeaponItem;
+                            itemContainer = hangWeaponContainer;
+                            containedIndicatorState = hangWeaponContainer.GetContainedIndicatorState();
+                            targetSlot = 0;
                         }
                     }
-                    else
-                    {
-                        // 主武器模式，使用标准逻辑
-                        remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
-                    }
-                }
-                else
-                {
-                    // 如果反射失败，使用默认逻辑
-                    remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
                 }
             }
-            else
-            {
-                // 非SwitchableRangedWeapon，使用标准逻辑
-                remainedAmmo = GetRemainedAmmo(targetSlot, rangedWeapon.item, ItemContainer, containedIndicatorState);
-            }
+
+            if (!IsDdaItem(rangedWeapon.Item) &&
+                !IsDdaItem(ammoHostItem) &&
+                !HasDdaAmmoOrCompatibleSlot(targetSlot, itemContainer)) { return; }
+            int remainedAmmo = selectedAmmoMissing
+                ? 0
+                : GetRemainedAmmo(targetSlot, ammoHostItem, itemContainer, containedIndicatorState);
 
             // 绘制相关图像
             // drawRemained:
