@@ -259,7 +259,8 @@ namespace DeepSlotExpanded
         //   1. Lua 全局脚本调用 DeepSlotExpanded.SetDebug(true)
         //   2. 游戏安装目录放置空文件 dda_debug.txt（启动后自动检测一次）
         public static bool DebugMode = false;
-        private static bool debugFileChecked = false;
+        // internal：SlotLuaApi.SetDebug 需要写入（private 跨类访问会 CS0122 编译失败）
+        internal static bool debugFileChecked = false;
 
         private static void CheckDebugFile()
         {
@@ -332,10 +333,9 @@ namespace DeepSlotExpanded
         {
             try
             {
-                Barotrauma.LuaCsSetup setup = Barotrauma.LuaCsSetup.Instance;
-                if (setup == null) { SlotRegistry.LogDebug("[发现] LuaCsSetup.Instance 不可用，跳过 XML 扫描"); return; }
-
-                var packages = setup.GetEnabledPackagesList();
+                // 用公开 API 取启用包列表（LuaCsSetup.GetEnabledPackagesList 是私有方法，
+                // 在 LuaCs 回退编译路径（非公有化引用）下会 CS0122）
+                var packages = Barotrauma.ContentPackageManager.EnabledPackages.Regular;
                 int total = 0;
                 foreach (var pkg in packages)
                 {
@@ -592,7 +592,8 @@ namespace DeepSlotExpanded
             {
                 if (c_harmony != null)
                 {
-                    c_harmony.UnpatchAll(HarmonyId);
+                    // HarmonyX 2.16 起实例 UnpatchAll(string) 废弃即报错（CS0619），UnpatchSelf 语义等价
+                    c_harmony.UnpatchSelf();
                     c_harmony = null;
                 }
             }
@@ -1710,27 +1711,24 @@ namespace DeepSlotExpanded
                 string pkgDir = null;
                 try
                 {
-                    Barotrauma.LuaCsSetup setup = Barotrauma.LuaCsSetup.Instance;
-                    if (setup != null)
+                    // 公开 API 取启用包列表（私有方法 GetEnabledPackagesList 在回退编译路径下 CS0122）
+                    string[] markers = new[]
                     {
-                        string[] markers = new[]
+                        System.IO.Path.Combine("CSharp", "Shared", "DeepSlotExpanded.cs"),
+                        System.IO.Path.Combine("CSharp", "DeepSlotExpanded.cs"),
+                        "DeepSlotExpandedSlots.xml"
+                    };
+                    foreach (var pkg in Barotrauma.ContentPackageManager.EnabledPackages.Regular)
+                    {
+                        try
                         {
-                            System.IO.Path.Combine("CSharp", "Shared", "DeepSlotExpanded.cs"),
-                            System.IO.Path.Combine("CSharp", "DeepSlotExpanded.cs"),
-                            "DeepSlotExpandedSlots.xml"
-                        };
-                        foreach (var pkg in setup.GetEnabledPackagesList())
-                        {
-                            try
+                            foreach (var mk in markers)
                             {
-                                foreach (var mk in markers)
-                                {
-                                    if (System.IO.File.Exists(System.IO.Path.Combine(pkg.Dir, mk))) { pkgDir = pkg.Dir; break; }
-                                }
-                                if (pkgDir != null) { break; }
+                                if (System.IO.File.Exists(System.IO.Path.Combine(pkg.Dir, mk))) { pkgDir = pkg.Dir; break; }
                             }
-                            catch { }
+                            if (pkgDir != null) { break; }
                         }
+                        catch { }
                     }
                 }
                 catch { }

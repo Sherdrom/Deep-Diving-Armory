@@ -43,7 +43,7 @@ namespace MoreInformationDisplay
             var patchInfo = Harmony.GetPatchInfo(tooltipMethod);
             if (patchInfo?.Owners.Contains(StandaloneHarmonyId) != true) return;
 
-            new Harmony(StandaloneHarmonyId).UnpatchAll(StandaloneHarmonyId);
+            new Harmony(StandaloneHarmonyId).UnpatchSelf();
             LuaCsLogger.Log("[MoreInformationDisplay] 检测到独立显示物品属性模组，已停用其补丁");
         }
     }
