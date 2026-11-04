@@ -1,7 +1,7 @@
 if NAT_MissileFramework == true then end--do nothing bcuz the framework does not exist yet :)
 
 LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.Turret"], "targetRotation")
-LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.Items.Components.Turret"], "set_Rotation")
+LuaUserData.MakePropertyAccessible(Descriptors["Barotrauma.Items.Components.Turret"], "BarrelRotation")
 LuaUserData.MakeMethodAccessible(Descriptors["Barotrauma.Items.Components.Turret"], "Launch")
 
 local locktarget = {}
@@ -69,7 +69,6 @@ end,Hook.HookMethodType.Before)--Add projectile to upd table when launched, for 
 Hook.Patch("Barotrauma.Items.Components.Turret", "Launch", function(instance,ptable)
 	local projectile = ptable["projectile"]
 	local aimtarget = nil
-	local gunrotation = instance.Rotation
 	local sub = instance.item.Submarine
 	if launchercd[instance.item] == true then
 		ptable.preventExecution = true
@@ -96,7 +95,7 @@ Hook.Patch("Barotrauma.Items.Components.Turret", "Launch", function(instance,pta
 	end
 	if instance.item.HasTag("vls") then
 		instance.RotationLimits = Vector2(0,360)                             --Remove rotationlimit to allow guidence
-		instance.set_Rotation(instance.item.RotationRad - math.pi * 0.5)     --Launch "Vertically"
+		instance.BarrelRotation = instance.item.RotationRad - math.pi * 0.5  --Launch "Vertically"
 	end
 	local newMissile = Missile:getMissile(projectile, instance, aimtarget, true)
 	aimtarget = nil

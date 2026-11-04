@@ -25,9 +25,10 @@ local function SetAimTarget(target, limb)
 end
 
 Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
-    if instance.AnimController.Crouching then
+    local animController = instance.Character.AnimController
+    if animController.Crouching then
         if AH.GetAffStrength(instance.Character, "deep_enemy_affliction_resistance") > 0.1 then
-            instance.AnimController.Crouching = false
+            animController.Crouching = false
         end
     end
 end, Hook.HookMethodType.After)
