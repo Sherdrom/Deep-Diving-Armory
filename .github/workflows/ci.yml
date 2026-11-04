@@ -73,6 +73,7 @@ jobs:
             for project in "${projects[@]}"; do
               dotnet test "$project" -c Release -m:1
             done
+            dotnet test .UnitTests/CSharp/UnstableCompatibility/UnstableCompatibility.Tests.csproj -c Release -m:1 -p:BuildTarget=Server
           fi
 
       - name: Build C# plugins

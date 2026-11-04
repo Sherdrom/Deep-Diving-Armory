@@ -1,7 +1,7 @@
 --[[
     NoProjectileConsume - Prevent projectile consumption when firing RangedWeapons.
 
-    Targets deep mod weapons: they use SRW.SwitchableRangedWeapon
+    Targets deep mod weapons: they use VCE_SRW.SwitchableRangedWeapon
     (Vanilla-Components-Expanded), which fully overrides Use() without calling
     base and hides FindProjectile() with `new`. Patching the vanilla
     RangedWeapon methods would never fire for these weapons, so both capture
@@ -183,16 +183,16 @@ local DEBUG = false
 -- be consumed and fly with live physics - they pass through untouched.
 local PROTECTED_SLOT = 0
 
--- SRW.SwitchableRangedWeapon is a mod assembly type, NOT pre-registered with
+-- VCE_SRW.SwitchableRangedWeapon is a mod assembly type, NOT pre-registered with
 -- MoonSharp: instance userdata falls back to the registered BASE descriptor
 -- (RangedWeapon/ItemComponent), so base members like instance.Item work while
 -- members declared on the derived type (CurrentSelected) throw
--- "cannot access field of userdata<^SRW.SwitchableRangedWeapon>".
+-- "cannot access field of userdata<^VCE_SRW.SwitchableRangedWeapon>".
 -- Registering the type + exposing the property fixes Hook 1's slot guard.
 -- Pattern copied from verified PeachTechnology scripts (ImmuneToImpact.lua);
 -- RegisterType overwrites any stale registration, so both calls are
 -- unconditional and reload-safe.
-local srwDescriptor = LuaUserData.RegisterType("SRW.SwitchableRangedWeapon")
+local srwDescriptor = LuaUserData.RegisterType("VCE_SRW.SwitchableRangedWeapon")
 LuaUserData.MakePropertyAccessible(srwDescriptor, "CurrentSelected")
 
 -- XNA Rectangle is likewise not guaranteed to be pre-registered; the v4.5
@@ -311,7 +311,7 @@ local tracerFix = nil
 ----------------------------------------------------------------------
 Hook.Patch(
     "NoProjectileConsume.FindProj",
-    "SRW.SwitchableRangedWeapon",
+    "VCE_SRW.SwitchableRangedWeapon",
     "FindProjectile",
     { "System.Boolean" },
     function(instance, ptable)
@@ -371,7 +371,7 @@ Hook.Patch(
     "NoProjectileConsume.Drop",
     "Barotrauma.Item",
     "Drop",
-    { "Barotrauma.Character", "System.Boolean", "System.Boolean" },
+    { "Barotrauma.Character", "System.Boolean", "System.Boolean", "System.Boolean" },
     function(instance, ptable)
         if trackedItems[instance] ~= nil then
             if ContainerDying(instance) then
@@ -433,7 +433,7 @@ Hook.Patch(
     "NoProjectileConsume.RemoveQueue",
     "Barotrauma.EntitySpawner",
     "AddItemToRemoveQueue",
-    { "Barotrauma.Item" },
+    { "Barotrauma.Item", "System.Action`1[Barotrauma.Entity]" },
     function(instance, ptable)
         local targetItem = ptable["item"]
         if targetItem ~= nil and trackedItems[targetItem] ~= nil then
@@ -604,7 +604,7 @@ end
 ----------------------------------------------------------------------
 Hook.Patch(
     "NoProjectileConsume.UsePost",
-    "SRW.SwitchableRangedWeapon",
+    "VCE_SRW.SwitchableRangedWeapon",
     "Use",
     { "System.Single", "Barotrauma.Character" },
     function(instance, ptable)

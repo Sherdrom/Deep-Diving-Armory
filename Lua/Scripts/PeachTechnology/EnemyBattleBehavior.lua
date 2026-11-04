@@ -273,7 +273,7 @@ Hook.Patch(
 
 -- ------------------------------------------------------------
 -- [PATCH 2] Disable Attack Reporting + Force Immediate Counterattack
--- Target: HumanAIController.RespondToAttack(Character, AttackResult)
+-- Target: HumanAIController.RespondToAttack(Character, AttackResult, AttackResult?)
 -- Not affected by NFF (NFF does not patch RespondToAttack)
 -- ------------------------------------------------------------
 
@@ -281,7 +281,6 @@ Hook.Patch(
     "AttackDistanceLimit_NoReport",
     "Barotrauma.HumanAIController",
     "RespondToAttack",
-    { "Barotrauma.Character", "Barotrauma.AttackResult" },
     function(instance, ptable)
         local config = GetJobConfig(instance.Character)
         if config == nil then

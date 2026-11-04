@@ -1330,7 +1330,7 @@ Hook.Patch(
     "AdjustEquipmentStatvalue.Equip",
     "Barotrauma.Item",
     "Equip",
-    { "Barotrauma.Character" },
+    { "Barotrauma.Character", "System.Boolean" },
     function(item, ptable)
         local character = ptable["character"]
         if isStillHeld(character, item) then

@@ -28,7 +28,7 @@ Hook.Patch(
     "GiveTalents.Equip",
     "Barotrauma.Item",
     "Equip",
-    { "Barotrauma.Character" },
+    { "Barotrauma.Character", "System.Boolean" },
     function(item, ptable) giveTalent(item, ptable["character"]) end,
     Hook.HookMethodType.After
 )

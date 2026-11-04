@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../.AssemblyCSharpSource/LuaCsModTemplate/Build.props" />
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>UnstableCompatibility.Tests</AssemblyName>
+    <BuildTarget Condition="'$(BuildTarget)' == ''">Client</BuildTarget>
+    <DefineConstants Condition="'$(BuildTarget)' == 'Client'">$(DefineConstants);CLIENT</DefineConstants>
+    <DefineConstants Condition="'$(BuildTarget)' == 'Server'">$(DefineConstants);SERVER</DefineConstants>
+    <Nullable>disable</Nullable>
+    <IsTestProject>true</IsTestProject>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" PrivateAssets="all" />
+    <Reference Include="Barotrauma" HintPath="$(Libs)/Windows/Barotrauma.dll" Condition="'$(BuildTarget)' == 'Client'" />
+    <Reference Include="DedicatedServer" HintPath="$(Libs)/Windows/DedicatedServer.dll" Condition="'$(BuildTarget)' == 'Server'" />
+    <Reference Include="BarotraumaCore" HintPath="$(Libs)/Windows/BarotraumaCore.dll" />
+    <Reference Include="MonoGame.Framework.Windows.NetStandard" HintPath="$(Libs)/MonoGame.Framework.Windows.NetStandard.dll" />
+    <Reference Include="LuaCsForBarotraumaPlugin$(BuildTarget)" HintPath="$(Libs)/Windows/LuaCsForBarotraumaPlugin$(BuildTarget).dll" />
+    <Using Include="Barotrauma" />
+    <Using Include="Barotrauma.LuaCs" />
+    <Compile Include="../../../CSharp/DeepSlotExpanded.cs" Link="DeepSlotExpanded.cs" />
+    <Compile Include="../../../CSharp/MoreInformationDisplay.cs" Link="MoreInformationDisplay.cs" Condition="'$(BuildTarget)' == 'Client'" />
+  </ItemGroup>
+</Project>

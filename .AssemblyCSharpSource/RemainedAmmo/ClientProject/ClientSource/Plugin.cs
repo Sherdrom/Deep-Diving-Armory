@@ -117,7 +117,7 @@ namespace RemainedAmmo
             // 支持RangedWeapon和SwitchableRangedWeapon
             if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
 
-            if(rangedWeapon.Item.HasTag("noammocount")) {return;}
+            if(rangedWeapon.Item.HasTag("noammocount".ToIdentifier())) {return;}
             Item ammoHostItem = rangedWeapon.Item;
             var itemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (itemContainer == null) { return; }

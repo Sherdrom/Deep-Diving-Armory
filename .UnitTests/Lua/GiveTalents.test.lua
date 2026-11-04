@@ -7,6 +7,7 @@ function Hook.Add(name, _, callback) events[name] = callback end
 function Hook.Patch(_, className, methodName, parameterTypes, callback, patchType)
     assert(className == "Barotrauma.Item" and methodName == "Equip")
     assert(parameterTypes[1] == "Barotrauma.Character")
+    assert(#parameterTypes == 2 and parameterTypes[2] == "System.Boolean")
     assert(patchType == Hook.HookMethodType.After)
     patches[className .. "." .. methodName] = callback
 end

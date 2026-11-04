@@ -338,7 +338,7 @@ namespace DeepLaser
             foreach (MapEntity mapEntity in Submarine.VisibleEntities)
             {
                 if (mapEntity == null || mapEntity.Removed) { continue; }
-                if (mapEntity is Item item && item.HasTag("deep_gunsmith"))
+                if (mapEntity is Item item && item.HasTag("deep_gunsmith".ToIdentifier()))
                 {
                     continue;
                 }
@@ -524,7 +524,7 @@ namespace DeepLaser
         {
             foreach ((string tag, Color mappedColor) in LaserColors)
             {
-                if (item.HasTag(tag))
+                if (item.HasTag(tag.ToIdentifier()))
                 {
                     color = mappedColor;
                     return true;

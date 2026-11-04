@@ -15,7 +15,7 @@ namespace DeepSlotExpanded
     /// 本框架不注册任何槽位——全部槽位由 XML/Lua 声明产生（见《框架接口说明书.md》）。
     ///
     /// 原理：
-    ///  - InvSlotType 是 int32 底层 [Flags] 枚举，1024 及以上的位未被游戏使用（最多 21 个自定义槽）；
+    ///  - InvSlotType 是 int32 底层 [Flags] 枚举，16384 及以上的位可用于自定义槽；
     ///  - SlotRegistry 维护「槽位声明」列表：每个声明 = 一个空闲 bit + 触发迁移的物品标签/identifier + 来源槽掩码；
     ///  - ParseSlotTypes postfix：角色槽位表含某声明的来源槽时，追加该声明的 bit（按 bit 升序，双端确定性一致）；
     ///  - Item 构造 postfix：物品标签/identifier 命中声明时，把来源槽位改写为新 bit（Item.allowedSlots 与 Pickable.AllowedSlots 双同步）；
@@ -30,7 +30,7 @@ namespace DeepSlotExpanded
     {
         public const string Version = "1.0.0";
         public const int VanillaPersonalSlotsMask = 504; // Head|InnerClothes|OuterClothes|Headset|Card|Bag
-        public const int FirstCustomBit = 1024;          // InvSlotType 第 10 位起未被使用
+        public const int FirstCustomBit = 16384;         // Unstable 的 1024~8192 已用于义肢槽。
         public const int MaxCustomBit = 1 << 30;         // bit31 是符号位，不可用
     }
 
@@ -39,7 +39,7 @@ namespace DeepSlotExpanded
     /// </summary>
     public class SlotDef
     {
-        public int Bit;                 // 槽位标志位（1024/2048/...，必须是 2 的幂）
+        public int Bit;                 // 槽位标志位（16384/32768/...，必须是 2 的幂）
         public string Id;               // 诊断用标识
         public string[] Tags;           // 物品标签（命中即迁移），大小写不敏感
         public string[] Identifiers;    // 可选：物品 identifier 精确匹配（与 Tags 取并集，命中其一即迁移）
@@ -75,7 +75,7 @@ namespace DeepSlotExpanded
             if (!hasTags && !hasIds) { return false; }
             if (!IsValidBit(def.Bit))
             {
-                Log("[框架] 拒绝非法 bit=" + def.Bit + " (id=" + def.Id + ")，必须为 1024~2^30 的 2 的幂");
+                Log("[框架] 拒绝非法 bit=" + def.Bit + " (id=" + def.Id + ")，必须为 16384~2^30 的 2 的幂");
                 return false;
             }
             lock (Lock)
@@ -259,7 +259,7 @@ namespace DeepSlotExpanded
         //   1. Lua 全局脚本调用 DeepSlotExpanded.SetDebug(true)
         //   2. 游戏安装目录放置空文件 dda_debug.txt（启动后自动检测一次）
         public static bool DebugMode = false;
-        private static bool debugFileChecked = false;
+        internal static bool debugFileChecked = false;
 
         private static void CheckDebugFile()
         {
@@ -318,7 +318,7 @@ namespace DeepSlotExpanded
     /// 第三方模组零代码即可声明新服装槽。
     /// 格式：
     /// &lt;DeepSlotExpandeds&gt;
-    ///   &lt;Slot bit="2048" id="belt" tags="..." identifiers="toolbelt" from="Bag" priority="0" row="1" col="0" /&gt;
+    ///   &lt;Slot bit="16384" id="belt" tags="..." identifiers="toolbelt" from="Bag" priority="0" row="1" col="0" /&gt;
     /// &lt;/DeepSlotExpandeds&gt;
     /// bit 必填；tags 与 identifiers 至少其一；from 缺省 OuterClothes；priority 缺省 0；
     /// row 缺省 1（装备行上方第一排；0 = 与 align 吸附槽同排）；col 缺省自动填空位（M8）；
@@ -335,7 +335,7 @@ namespace DeepSlotExpanded
                 Barotrauma.LuaCsSetup setup = Barotrauma.LuaCsSetup.Instance;
                 if (setup == null) { SlotRegistry.LogDebug("[发现] LuaCsSetup.Instance 不可用，跳过 XML 扫描"); return; }
 
-                var packages = setup.GetEnabledPackagesList();
+                var packages = ContentPackageManager.EnabledPackages.Regular;
                 int total = 0;
                 foreach (var pkg in packages)
                 {
@@ -457,7 +457,7 @@ namespace DeepSlotExpanded
     /// <summary>
     /// Lua API（M4）：向 LuaCs 全局环境注册 DeepSlotExpanded 表，Lua 模组可动态声明槽位。
     /// 用法：
-    ///   DeepSlotExpanded.RegisterSlot({ bit=4096, id="x", tags={"a","b"}, identifiers="toolbelt", from="Bag", priority=0, row=1, col=0 })
+    ///   DeepSlotExpanded.RegisterSlot({ bit=16384, id="x", tags={"a","b"}, identifiers="toolbelt", from="Bag", priority=0, row=1, col=0 })
     /// tags/identifiers 可以是逗号分隔字符串或字符串数组；from 缺省 OuterClothes；priority 缺省 0；
     /// row 缺省 1（装备行上方第一排；0 = 与 align 吸附槽同排）；col 缺省自动填空位（M8）；align 可选。
     /// bit 冲突/非法时 Register 会拒绝并输出告警日志（冲突日志）。
@@ -592,7 +592,7 @@ namespace DeepSlotExpanded
             {
                 if (c_harmony != null)
                 {
-                    c_harmony.UnpatchAll(HarmonyId);
+                    c_harmony.UnpatchSelf();
                     c_harmony = null;
                 }
             }
@@ -1719,7 +1719,7 @@ namespace DeepSlotExpanded
                             System.IO.Path.Combine("CSharp", "DeepSlotExpanded.cs"),
                             "DeepSlotExpandedSlots.xml"
                         };
-                        foreach (var pkg in setup.GetEnabledPackagesList())
+                        foreach (var pkg in ContentPackageManager.EnabledPackages.Regular)
                         {
                             try
                             {
@@ -1997,7 +1997,7 @@ namespace DeepSlotExpanded
 
         /// <summary>
         /// Item 构造 postfix：标签命中声明后，把来源槽位改写为新 bit。
-        /// Item.allowedSlots（装备校验主数据）与 Pickable.AllowedSlots（AI/快捷键等使用）双同步。
+        /// 通过 Pickable.SetAllowedSlots 同步组件槽位与 Item 的装备校验缓存。
         /// </summary>
         public static void ItemCtorPostfix(object __instance)
         {
@@ -2046,20 +2046,6 @@ namespace DeepSlotExpanded
 
                 bool changed = false;
 
-                // Item.allowedSlots (HashSet<InvSlotType>) —— 装备校验的主数据
-                var af = AccessTools.Field(itemType, "allowedSlots");
-                if (af != null && af.GetValue(__instance) is HashSet<Barotrauma.InvSlotType> set)
-                {
-                    foreach (int bit in SlotRegistry.BitsOf(def.FromMask))
-                    {
-                        if (set.Remove((Barotrauma.InvSlotType)bit))
-                        {
-                            set.Add((Barotrauma.InvSlotType)def.Bit);
-                            changed = true;
-                        }
-                    }
-                }
-
                 // 组件层: Wearable 继承自 Pickable，同步它的 AllowedSlots 列表
                 var componentsProp = itemType.GetProperty("Components");
                 if (componentsProp != null && componentsProp.GetValue(__instance) is IEnumerable comps)
@@ -2067,8 +2053,8 @@ namespace DeepSlotExpanded
                     foreach (var comp in comps)
                     {
                         if (!(comp is Barotrauma.Items.Components.Pickable pickable)) { continue; }
-                        var list = pickable.AllowedSlots;
-                        if (list == null) { continue; }
+                        var list = pickable.AllowedSlots.ToList();
+                        bool slotsChanged = false;
                         foreach (int bit in SlotRegistry.BitsOf(def.FromMask))
                         {
                             if (list.Remove((Barotrauma.InvSlotType)bit))
@@ -2077,8 +2063,13 @@ namespace DeepSlotExpanded
                                 {
                                     list.Add((Barotrauma.InvSlotType)def.Bit);
                                 }
-                                changed = true;
+                                slotsChanged = true;
                             }
+                        }
+                        if (slotsChanged)
+                        {
+                            pickable.SetAllowedSlots(list);
+                            changed = true;
                         }
                     }
                 }
