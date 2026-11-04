@@ -50,9 +50,9 @@
       <StatusEffect type="OnUse" target="This" stackable="false" disabledeltatime="true" comparison="and" forceplaysounds="true">
         <Conditional currentProjectileSelected="eq 0" />
         <Explosion range="150.0" force="0.4" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="10" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" range="800" frequencymultiplier="0.95"/>
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_55645_1.ogg" range="800" frequencymultiplier="1.05"/>
         <ParticleEmitter particle="deep_casingfirearm_556" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
       </StatusEffect>
       <!-- 使用下挂弹药时,只使用1号位弹匣 -->
@@ -63,9 +63,9 @@
         <Conditional currentProjectileSelected="eq 1" />
         <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="30" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="0.95" />
-        <Sound file="%ModDir%/weapon/ammo/1014.ogg" type="OnUse" range="3000" frequencymultiplier="1.05" />
+        <Sound file="%ModDir%/weapon/ammo/1014.ogg" range="3000" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/1014.ogg" range="3000" frequencymultiplier="0.95" />
+        <Sound file="%ModDir%/weapon/ammo/1014.ogg" range="3000" frequencymultiplier="1.05" />
         <ParticleEmitter particle="deep_muzzleflash" Distance="50" angle="-3" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
         <ParticleEmitter particle="deep_plasmaspark" Distance="50" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
@@ -77,10 +77,10 @@
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
@@ -124,7 +124,7 @@
         <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="63,8" handle1="-120,-60" handle2="80,10" holdangle="-35" aimangle="0" disabledeltatime="true" delay="1.6" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1.6" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/5.56reload.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/5.56reload.ogg" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>

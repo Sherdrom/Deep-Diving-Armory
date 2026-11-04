@@ -95,11 +95,11 @@
 			<Containable tags="deep_helmet_tac" hide="false" itempos="20,12" setactive="true">
 				<!-- 插入战术设备时，启动面板 -->
 				<StatusEffect type="OnInserted" interval="0.9" target="This" disabledeltatime="true" setValue="true">
-					<sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+					<sound file="%ModDir%/Sound/HelmetTac/Night/night.ogg" range="500.0" loop="false" volume="1" />
 				</StatusEffect>
 				<!-- 拔出战术设备时，还原贴图，关闭面板 -->
 				<StatusEffect type="OnRemoved" interval="0.9" target="This" disabledeltatime="true" setValue="true">
-					<sound file="%ModDir%/jobgear/sound/thermal.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+					<sound file="%ModDir%/jobgear/sound/thermal.ogg" range="500.0" loop="false" volume="1" />
 				</StatusEffect>
 				<!-- 拔出战术设备时，确保所有显示关闭 -->
 				<StatusEffect type="OnRemoved" interval="60" target="This" TargetItemComponent="StatusHUD" drawhudwhenequipped="false" thermalgoggles="false" showdeadcharacters="false" showtexts="false" disabledeltatime="true" setValue="true">

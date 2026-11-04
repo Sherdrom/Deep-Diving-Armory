@@ -77,7 +77,7 @@
       <!-- 短枪管音效与特效 -->
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
         <RequiredItems tags="deep_muzzle_no_mute" matchonempty="true" type="Contained" targetslot="3" />
-        <Sound file="%ModDir%/weapon/ammo/m1911.ogg" type="OnUse" range="3000" />
+        <Sound file="%ModDir%/weapon/ammo/m1911.ogg" range="3000" />
         <ParticleEmitter particle="deep_muzzleflash" Distance="20" angle="18" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
         <ParticleEmitter particle="deep_plasmaspark" Distance="20" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
@@ -85,16 +85,16 @@
       <!-- 延长枪管音效与特效 -->
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
         <RequiredItems tags="deep_muzzle_no_mute_long" type="Contained" targetslot="3" />
-        <Sound file="%ModDir%/weapon/ammo/m1911.ogg" type="OnUse" range="3000" />
+        <Sound file="%ModDir%/weapon/ammo/m1911.ogg" range="3000" />
         <ParticleEmitter particle="deep_muzzleflash" Distance="40" angle="15" particleamount="1" velocitymin="0" velocitymax="0" CopyTargetAngle="true" />
         <ParticleEmitter particle="deep_plasmaspark" Distance="40" particleamount="1" anglemin="-20" anglemax="20" velocitymin="100" velocitymax="800" CopyTargetAngle="true" />
       </StatusEffect>
 
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
         <RequiredItems tags="deep_muzzle_mute" type="Contained" targetslot="3" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95"/>
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05"/>
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" range="800" frequencymultiplier="0.95"/>
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_76239_1.ogg" range="800" frequencymultiplier="1.05"/>
       </StatusEffect>
       <!-- 普通枪声，消音器枪声 -->
       <StatusEffect type="OnUse" target="This">
@@ -132,7 +132,7 @@
         <StatusEffect type="OnInserted" target="This" handle1="-30,-7" handle2="-30,-7" holdangle="45" holdpos="30,-20" aimangle="0" aimpos="85,5" disabledeltatime="true" delay="1" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/m1911re.ogg" type="OnUse" range="200.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/m1911re.ogg" range="200.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>

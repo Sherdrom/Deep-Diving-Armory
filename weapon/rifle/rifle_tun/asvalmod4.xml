@@ -54,9 +54,9 @@
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
       <!-- 普通枪声，消音器枪声 -->
       <StatusEffect type="OnUse" target="This" forceplaysounds="true" disableDeltaTime="true">
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" selectionmode="Random" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" frequencymultiplier="0.95" />
-        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" type="OnUse" range="800" frequencymultiplier="1.05" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" range="800" selectionmode="Random" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" range="800" frequencymultiplier="0.95" />
+        <Sound file="%ModDir%/weapon/ammo/mute/rifle_mute_sound_939_1.ogg" range="800" frequencymultiplier="1.05" />
       </StatusEffect>
       <!-- 普通枪声，消音器枪声 -->
       <!-- 枪械过热卡壳 -->
@@ -64,10 +64,10 @@
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
@@ -125,7 +125,7 @@
         <!-- 换弹音效，禁止换弹中开火 -->
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1.5" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/939_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/939_re.ogg" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>
