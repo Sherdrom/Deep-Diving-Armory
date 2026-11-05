@@ -66,6 +66,16 @@ Hook.Patch(
     MOD_ID .. "." .. projectileType,
     projectileType,
     "Shoot",
+    {
+        "Barotrauma.Character",
+        "Microsoft.Xna.Framework.Vector2",
+        "Microsoft.Xna.Framework.Vector2",
+        "System.Single",
+        "System.Collections.Generic.List`1[[FarseerPhysics.Dynamics.Body, Farseer.NetStandard]]",
+        "System.Boolean",
+        "System.Single",
+        "System.Single",
+    },
     function(instance, ptable)
         local user = ptable["user"]
 

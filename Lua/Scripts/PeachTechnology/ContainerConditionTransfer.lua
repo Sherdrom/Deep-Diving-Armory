@@ -945,7 +945,7 @@ if SERVER or not Game.IsMultiplayer then
         local interface = container.GetComponentString("CustomInterface")
         if not interface or not container.OwnInventory then return end
         local values, index = {}, 0
-        for _, element in pairs(interface.customInterfaceElementList) do
+        for element in interface.customInterfaceElementList do
             index = index + 1
             values[index] = tonumber(element.Signal)
             if index == 3 then break end
@@ -1020,11 +1020,11 @@ if SERVER or not Game.IsMultiplayer then
     end)
 
     -- 初始扫描: 覆盖脚本加载前已存在的容器实例
-    -- AllItemsMod 物化为 List<Item>, pairs 迭代为项目已验证模式 (AllItems 为 yield 迭代器不可用)
+    -- C# 集合使用 LuaCs 的直接迭代，pairs 仅用于 Lua 表。
     local function ScanExistingItems()
-        for _, item in pairs(Item.ItemList) do
+        for item in Item.ItemList do
             if IsConfiguredContainer(item) and item.OwnInventory ~= nil then
-                for _, contained in pairs(item.OwnInventory.AllItemsMod) do
+                for contained in item.OwnInventory.AllItemsMod do
                     local roles = ResolveItemRoles(contained)
                     if #roles.targets > 0 or #roles.sources > 0 then
                         ActivateContainer(item)
@@ -1055,7 +1055,7 @@ if SERVER or not Game.IsMultiplayer then
         -- 收集: 每配方取首个未满 target 与首个有耐久 source (顺序填充语义)
         local targetOf, sourceOf = {}, {}
         local hasRecipeItem = false
-        for _, contained in pairs(ownInventory.AllItemsMod) do
+        for contained in ownInventory.AllItemsMod do
             local roles = ResolveItemRoles(contained)
             local magazine = GetVirtualMagazine(contained)
             for i = 1, #roles.targets do

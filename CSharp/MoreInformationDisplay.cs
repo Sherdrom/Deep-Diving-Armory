@@ -69,7 +69,8 @@ namespace MoreInformationDisplay
             if (magazine == null) return 0;
             var type = magazine.GetType();
             var hash = new HashCode();
-            hash.Add((int)type.GetProperty("LoadedCount").GetValue(magazine));
+            // LuaCs exposes private overloads to the compiler; select the public generic method.
+            hash.Add<int>((int)type.GetProperty("LoadedCount").GetValue(magazine));
             hash.Add((Identifier)type.GetProperty("TopIdentifier").GetValue(magazine));
             var rounds = Rounds(magazine);
             if (rounds != null) foreach (var ammo in rounds) hash.Add(ammo);

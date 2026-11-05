@@ -9,6 +9,18 @@ local reference = { ContentPackage = package, compatible = true }
 ItemPrefab = { GetItemPrefab = function() return reference end }
 assert(loadfile("Lua/Scripts/BenzeneTechnology/VirtualMagazineReload.lua"))()
 
+-- Model C# collections: direct iteration yields values, while pairs is unsupported.
+local function iterable(values)
+    local index = 0
+    return setmetatable(values, {
+        __call = function(_, _, previous)
+            index = previous == nil and 1 or index + 1
+            return values[index]
+        end,
+        __pairs = function() error("C# collection passed to pairs") end,
+    })
+end
+
 local nextId = 0
 local function item(count, compatible)
     nextId = nextId + 1
@@ -22,7 +34,7 @@ end
 local function setup(current, reserve)
     local weapon = item()
     weapon.weapon = true
-    local inventory = { current = current, calls = {}, AllItemsMod = {} }
+    local inventory = { current = current, calls = {}, AllItemsMod = iterable({}) }
     inventory.Container = { ContainedStateIndicatorSlot = 0, CanBeContained = function(value, slot)
         return slot == 0 and value.compatible
     end }
@@ -35,7 +47,7 @@ local function setup(current, reserve)
         return true
     end
     weapon.OwnInventory = inventory
-    local character = { Inventory = { AllItemsMod = reserve } }
+    local character = { Inventory = { AllItemsMod = iterable(reserve) } }
     character.CanAccessInventory = function(source) return not source.Locked end
     return { character = character, weapon = weapon, inventory = inventory, handled = false }
 end
@@ -63,9 +75,9 @@ local wrong, empty, blocked = item(60, false), item(0), item(30)
 blocked.blocked = true
 local otherGun, lockedBag, bag = item(), item(), item()
 otherGun.weapon = true
-otherGun.OwnInventory = { AllItemsMod = { item(60) } }
-lockedBag.OwnInventory = { Locked = true, AllItemsMod = { item(60) } }
-bag.OwnInventory = { AllItemsMod = { high } }
+otherGun.OwnInventory = { AllItemsMod = iterable({ item(60) }) }
+lockedBag.OwnInventory = { Locked = true, AllItemsMod = iterable({ item(60) }) }
+bag.OwnInventory = { AllItemsMod = iterable({ high }) }
 request = setup(nil, { wrong, empty, blocked, otherGun, lockedBag, bag })
 request.otherWeapon = otherGun
 callback(request)

@@ -31,7 +31,7 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
     local function collect(source)
         if visited[source] or not character.CanAccessInventory(source) then return end
         visited[source] = true
-        for _, item in pairs(source.AllItemsMod) do
+        for item in source.AllItemsMod do
             if not item.Removed and item ~= weapon and item ~= request.otherWeapon and not item.HasTag("weapon") then
                 local magazine = magazineOf(item)
                 if magazine and item ~= current and magazine.LoadedCount > 0

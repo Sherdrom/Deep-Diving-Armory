@@ -1,10 +1,12 @@
 local callbacks = {}
+local signatures = {}
 Hook = {
     HookMethodType = { Before = "before", After = "after" },
     Patch = function(...)
         local args = { ... }
         local class, method = args[1], args[2]
         if type(args[3]) == "string" then class, method = args[2], args[3] end
+        signatures[class .. "." .. method] = type(args[3]) == "string" and args[4] or args[3]
         for _, value in ipairs(args) do
             if type(value) == "function" then
                 callbacks[class .. "." .. method] = value
@@ -24,6 +26,13 @@ assert(loadfile("Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua"))()
 
 local vanilla = "Barotrauma.Items.Components.Projectile"
 local virtual = "VCE_VirtualizedMagazine.VirtualizedProjectile"
+for _, class in ipairs({ vanilla, virtual }) do
+    local signature = signatures[class .. ".Shoot"]
+    assert(type(signature) == "table" and #signature == 8,
+        class .. ".Shoot must select its overload explicitly")
+    assert(signature[1] == "Barotrauma.Character" and signature[6] == "System.Boolean",
+        class .. ".Shoot selected the wrong parameter types")
+end
 local shooter = { IsHuman = true, Info = { GetSavedStatValue = function() return 1 end } }
 for _, class in ipairs({ vanilla, virtual }) do
     local projectile = { FriendlyFire = true, User = shooter }

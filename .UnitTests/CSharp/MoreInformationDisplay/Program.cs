@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using Barotrauma;
 using Barotrauma.Items.Components;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using MoreInformationDisplay;
 
 // Offline fixtures against the local LuaCs reference assemblies, without game/UI startup.
@@ -23,20 +25,21 @@ var cache = (IDictionary)Activator.CreateInstance(Field(typeof(Item), "component
 cache[typeof(ItemContainer)] = components;
 Set(item, "componentsByType", cache);
 Set(magazine, "item", item);
+var scriptState = CompileScriptState();
 
 magazine.Load("test_standard", "test_ap", "test_standard");
-int before = VirtualMagazineTooltip.State(item);
+int before = scriptState(item);
 string text = VirtualMagazineTooltip.Describe(item);
 Assert(text.Contains("3/30") && text.Contains("test_standard × 2") && text.Contains("test_ap × 1"), "wrong count or composition");
 Assert(text.Split('\n')[1].EndsWith("test_standard"), "wrong next round");
-Assert(magazine.LoadedCount == 3 && before == VirtualMagazineTooltip.State(item), "tooltip mutated ammo");
+Assert(magazine.LoadedCount == 3 && before == scriptState(item), "tooltip mutated ammo");
 magazine.Load("test_ap", "test_standard", "test_standard");
-Assert(before != VirtualMagazineTooltip.State(item), "same-count/same-top reorder did not invalidate tooltip");
+Assert(before != scriptState(item), "same-count/same-top reorder did not invalidate tooltip");
 
 magazine.Load();
 text = VirtualMagazineTooltip.Describe(item);
 Assert(text.Contains("0/30") && !text.Contains("×"), "empty magazine retained old contents");
-Assert(VirtualMagazineTooltip.State(null) == 0 && VirtualMagazineTooltip.Describe(null) == "", "null item handling");
+Assert(scriptState(null) == 0 && VirtualMagazineTooltip.Describe(null) == "", "null item handling");
 Set(item, "tags", new HashSet<Identifier>());
 // No prefab is needed when the native HasTag lookup is short-circuited by the positive tag above.
 // For the out-of-scope case use a real prefab fixture so the fallback tag lookup is valid.
@@ -44,7 +47,29 @@ var prefab = (ItemPrefab)RuntimeHelpers.GetUninitializedObject(typeof(ItemPrefab
 Set(prefab, "tags", System.Collections.Immutable.ImmutableHashSet<Identifier>.Empty);
 Set(item, "Prefab", prefab);
 Assert(VirtualMagazineTooltip.Describe(item) == "", "non-5.56 item was changed");
-Console.WriteLine("ok: actual tooltip source compiles; contents, next round, empty state and same-count refresh pass (offline references)");
+Console.WriteLine("ok: LuaCs-style script compilation and execution; contents, next round, empty state and same-count refresh pass");
+
+static Func<Item, int> CompileScriptState()
+{
+    // LuaCs AssemblyLoader exposes private overloads to Roslyn, but CLR access checks still apply.
+    var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
+        optimizationLevel: OptimizationLevel.Release, metadataImportOptions: MetadataImportOptions.All);
+    typeof(CSharpCompilationOptions).GetProperty("TopLevelBinderFlags", BindingFlags.Instance | BindingFlags.NonPublic)
+        .SetValue(options, 37748738u);
+    var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator)
+        .Select(path => MetadataReference.CreateFromFile(path));
+    var source = "global using System; global using System.Collections.Generic; global using System.Linq; "
+        + "global using Barotrauma.LuaCs; global using Barotrauma.Extensions;\n"
+        + File.ReadAllText("CSharp/MoreInformationDisplay.cs");
+    var compilation = CSharpCompilation.Create("TooltipScriptRegression",
+        new[] { CSharpSyntaxTree.ParseText(source) }, references, options);
+    using var stream = new MemoryStream();
+    var result = compilation.Emit(stream);
+    Assert(result.Success, string.Join("\n", result.Diagnostics));
+    stream.Position = 0;
+    return AssemblyLoadContext.Default.LoadFromStream(stream).GetType("MoreInformationDisplay.VirtualMagazineTooltip")
+        .GetMethod("State", BindingFlags.Static | BindingFlags.NonPublic).CreateDelegate<Func<Item, int>>();
+}
 
 static FieldInfo Field(Type type, string name)
 {

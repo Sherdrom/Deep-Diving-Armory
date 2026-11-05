@@ -14,7 +14,18 @@ local callbacks, patches, now = {}, {}, 0
 Hook = { Add = function(_, name, callback) callbacks[name] = callback end,
     Patch = function(name, _, _, _, callback) patches[name] = callback end, HookMethodType = { After = 1 } }
 Timer = { GetTime = function() return now end }
-Item = { ItemList = {} }
+-- Model C# collections: direct iteration yields values, while pairs is unsupported.
+local function iterable(values)
+    local index = 0
+    return setmetatable(values, {
+        __call = function(_, _, previous)
+            index = previous == nil and 1 or index + 1
+            return values[index]
+        end,
+        __pairs = function() error("C# collection passed to pairs") end,
+    })
+end
+Item = { ItemList = iterable({}) }
 assert(loadfile("Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua"))()
 
 local function close(actual, expected, message)
@@ -63,13 +74,13 @@ local function press(contents, options)
         local collection = value.Prefab.Identifier:find("^ammobox") and sources or targets
         collection[#collection + 1] = value
     end
-    machine.OwnInventory = { AllItemsMod = contents, GetItemAt = function(slot)
+    machine.OwnInventory = { AllItemsMod = iterable(contents), GetItemAt = function(slot)
         if slot < 6 then return sources[slot + 1] end
         return targets[slot - 5]
     end }
-    local interface = { customInterfaceElementList = { {}, {}, {} } }
+    local interface = { customInterfaceElementList = iterable({ {}, {}, {} }) }
     machine.GetComponentString = function() return interface end
-    Item.ItemList = { machine }
+    Item.ItemList = iterable({ machine })
     previousPress = machine
     callbacks["ContainerConditionTransfer.ScanLoaded"]()
     local targetSlot = options.target or 1
@@ -208,6 +219,16 @@ press({ target, source })
 tick()
 close(target.Condition, 25, "legacy condition transfer changed")
 close(source.Condition, 100 - 1.5625 / 4, "legacy resource cost changed")
+callbacks["ContainerConditionTransfer.ScanRoundStart"]()
+tick()
+close(target.Condition, 50, "round-start rescan lost the legacy transfer")
+close(source.Condition, 100 - 1.5625 / 2, "round-start rescan changed the resource cost")
+
+local emptyPress = press({}, { start = false })
+callbacks["ContainerConditionTransfer.OnItemCreated"](emptyPress)
+tick()
+callbacks["ContainerConditionTransfer.ScanRoundStart"]()
+tick()
 
 target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 source = item("ammobox1", {}, 100)
@@ -266,4 +287,4 @@ Game.IsMultiplayer = true
 start()
 tick()
 assert(mag.LoadedCount == 7, "started an unsupported multiplayer batch")
-print("ok: selected ammo/batches, start/stop, resources, cancellation, bounds and legacy transfers")
+print("ok: C# collection iteration, empty inventories, rescans, selected ammo/batches, start/stop, resources, cancellation, bounds and legacy transfers")
