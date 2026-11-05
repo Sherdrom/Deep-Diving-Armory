@@ -785,6 +785,52 @@ end
 if SERVER or not Game.IsMultiplayer then
 
     local IdentifierStatic = LuaUserData.CreateStatic("Barotrauma.Identifier")
+    LuaUserData.RegisterType("VCE_VirtualizedMagazine.VirtualizedMagazine")
+
+    -- 5.56 虚拟弹匣按选定弹药箱装填，原配方只提供容量对应的速率与消耗。
+    local virtualAmmo = {
+        ["ammobox1"] = "5.56x45round",
+        ["ammobox_7.62"] = "5.56x45round_tit",
+        ["ammobox_12.7"] = "5.56x45round_phy",
+        ["ammobox_phy_ful"] = "556x45round_M995",
+        ["ammobox_tun_ful"] = "556x45round_SSA_AP",
+        ["ammobox_du"] = "556x45round_depleted_uranium",
+    }
+    local virtualMagazineTag = IdentifierStatic("556mag")
+
+    local function GetVirtualMagazine(item)
+        local container = item.OwnInventory and item.OwnInventory.Container
+        if container and LuaUserData.IsTargetType(container, "VCE_VirtualizedMagazine.VirtualizedMagazine") then
+            return container
+        end
+    end
+
+    local function RefillVirtualMagazine(job, dt)
+        local target, source, magazine, recipe = job.target, job.source, job.magazine, job.recipe
+        local remaining = math.min(magazine.MaxSize - magazine.LoadedCount, job.remaining)
+        if remaining <= 0 then return "done" end
+        local costPerRound = recipe.fullCondition * recipe.drainRatio / magazine.MaxSize
+        local affordable = costPerRound > 0 and math.floor(source.Condition / costPerRound + 1e-6) or remaining
+        if affordable <= 0 then return "empty" end
+        local ammoId = virtualAmmo[string.lower(tostring(source.Prefab.Identifier))]
+        local progress = math.min(remaining, job.progress
+            + recipe.gainPerSecond * dt * magazine.MaxSize / recipe.fullCondition)
+        local count = math.min(math.floor(progress + 1e-6), affordable)
+        if count > 0 then
+            local rounds = {}
+            for i = 1, count do rounds[i] = IdentifierStatic(ammoId) end
+            local before = magazine.LoadedCount
+            magazine.PushAmmoArray(rounds)
+            local loaded = magazine.LoadedCount - before
+            source.Condition = math.max(0, source.Condition - loaded * costPerRound)
+            job.remaining = job.remaining - loaded
+            progress = progress - loaded
+            if loaded < count then return "rejected" end
+        end
+        -- Keep fractional loading time, never charge for rejected or incomplete rounds.
+        job.progress = math.max(0, math.min(progress, 1))
+        if job.remaining == 0 or magazine.LoadedCount == magazine.MaxSize then return "done" end
+    end
 
     BuildConfig()
 
@@ -871,6 +917,80 @@ if SERVER or not Game.IsMultiplayer then
         end
     end
 
+    LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.CustomInterface"], "customInterfaceElementList")
+
+    local function PressStatus(container, status, job)
+        local interface = container.GetComponentString("CustomInterface")
+        if not interface then return end
+        local text = TextManager.Get("dda.magpress." .. status).Value
+        if job then
+            text = text:gsub("%[loaded%]", tostring(job.total - job.remaining)):gsub("%[total%]", tostring(job.total))
+        end
+        interface.Labels = "dda.magpress.source,dda.magpress.target,dda.magpress.count," .. text .. ",dda.magpress.stop"
+    end
+
+    local function StopPress(container, status)
+        local state = activeContainers[container]
+        PressStatus(container, status, state and state.virtualJob)
+        if state then state.virtualJob = nil end
+    end
+
+    Hook.Add("dda.magpress.start", MOD_NAME .. ".StartPress", function(effect, deltaTime, container)
+        if not container or tostring(container.Prefab.Identifier) ~= "ammoreload_machine" then return end
+        -- shortcut: controlled mixed-ammo loading is single-player until VCE synchronizes its stack.
+        if Game.IsMultiplayer then PressStatus(container, "singleplayer"); return end
+        ActivateContainer(container)
+        local state = activeContainers[container]
+        if state.virtualJob then return end
+        local interface = container.GetComponentString("CustomInterface")
+        if not interface or not container.OwnInventory then return end
+        local values, index = {}, 0
+        for _, element in pairs(interface.customInterfaceElementList) do
+            index = index + 1
+            values[index] = tonumber(element.Signal)
+            if index == 3 then break end
+        end
+        local sourceSlot, targetSlot, count = values[1], values[2], values[3]
+        local function valid(value, minimum, maximum)
+            return value and value >= minimum and value <= maximum and value == math.floor(value)
+        end
+        if not valid(sourceSlot, 1, 6) or not valid(targetSlot, 1, 6) or not valid(count, 0, 60) then
+            PressStatus(container, "invalid"); return
+        end
+        local inventory = container.OwnInventory
+        local source, target = inventory.GetItemAt(sourceSlot - 1), inventory.GetItemAt(targetSlot + 5)
+        local magazine = target and GetVirtualMagazine(target)
+        if not source or not virtualAmmo[string.lower(tostring(source.Prefab.Identifier))]
+            or not magazine or not target:HasTag(virtualMagazineTag) then
+            PressStatus(container, "invalid"); return
+        end
+        local recipe = ResolveItemRoles(target).targets[1]
+        if not recipe then PressStatus(container, "invalid"); return end
+        local remaining = magazine.MaxSize - magazine.LoadedCount
+        if count > 0 then remaining = math.min(remaining, count) end
+        state.virtualJob = {
+            target = target, source = source, magazine = magazine, recipe = recipe,
+            sourceSlot = sourceSlot - 1, targetSlot = targetSlot + 5,
+            remaining = remaining, total = remaining, progress = 0,
+        }
+        PressStatus(container, "loading", state.virtualJob)
+    end)
+
+    Hook.Add("dda.magpress.stop", MOD_NAME .. ".StopPress", function(effect, deltaTime, container)
+        if container and tostring(container.Prefab.Identifier) == "ammoreload_machine" then
+            StopPress(container, "stopped")
+        end
+    end)
+
+    Hook.Patch(MOD_NAME .. ".CancelRemoved", "Barotrauma.Items.Components.ItemContainer", "OnItemRemoved",
+        { "Barotrauma.Item" }, function(instance, ptable)
+            local state = activeContainers[instance.Item]
+            local job = state and state.virtualJob
+            if job and (ptable.containedItem == job.source or ptable.containedItem == job.target) then
+                StopPress(instance.Item, "stopped")
+            end
+        end, Hook.HookMethodType.After)
+
     -- inventoryPutItem: 物品放入任意库存, 命中配置容器与配方物品即标记激活
     -- 事件为 Prefix 时机 (物品尚未真正入容器), 正确性由下一 think 周期复核收编
     Hook.Add("inventoryPutItem", MOD_NAME .. ".OnPutItem", function(inventory, item)
@@ -937,10 +1057,12 @@ if SERVER or not Game.IsMultiplayer then
         local hasRecipeItem = false
         for _, contained in pairs(ownInventory.AllItemsMod) do
             local roles = ResolveItemRoles(contained)
+            local magazine = GetVirtualMagazine(contained)
             for i = 1, #roles.targets do
                 local recipe = roles.targets[i]
                 hasRecipeItem = true
-                if targetOf[recipe] == nil and contained.Condition < recipe.fullCondition then
+                local needsAmmo = not magazine and contained.Condition < recipe.fullCondition
+                if targetOf[recipe] == nil and needsAmmo then
                     targetOf[recipe] = contained
                 end
             end
@@ -953,12 +1075,25 @@ if SERVER or not Game.IsMultiplayer then
             end
         end
 
+        local job = state.virtualJob
+        if job then
+            if container.Condition <= 0 or job.target.Removed or job.source.Removed
+                or ownInventory.GetItemAt(job.sourceSlot) ~= job.source
+                or ownInventory.GetItemAt(job.targetSlot) ~= job.target then
+                StopPress(container, "stopped")
+            else
+                local status = RefillVirtualMagazine(job, dt)
+                if status then StopPress(container, status)
+                else PressStatus(container, "loading", job) end
+            end
+        end
+
         if not hasRecipeItem then return false end
 
         for recipe in pairs(targetOf) do
+            local target = targetOf[recipe]
             local source = sourceOf[recipe]
             if source ~= nil then
-                local target = targetOf[recipe]
                 local remaining = recipe.fullCondition - target.Condition
                 if remaining > 0.0 then
                     -- gain/drain 严格成比例 (drain = gain x drainRatio), 任一侧被钳制时

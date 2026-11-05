@@ -179,7 +179,7 @@
       </StatusEffect>
     </Holdable>
     <ItemContainer capacity="0" maxstacksize="1" slotsperrow="6" hideitems="true" itempos="48,-175" canbeselected="true">
-      <GuiFrame relativesize="0.3,0.5" anchor="Center" style="ItemUI" />
+      <GuiFrame relativesize="0.3,0.25" minsize="340,180" anchor="Center" relativeoffset="-0.2,0" style="ItemUI" />
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
       <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
       <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
@@ -231,6 +231,19 @@
         <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
       </SubContainer>
     </ItemContainer>
+    <CustomInterface canbeselected="true">
+      <GuiFrame relativesize="0.3,0.34" minsize="400,260" anchor="Center" relativeoffset="0.2,0" style="ItemUI" />
+      <!-- CustomInterface requires a property name for numeric inputs; Lua reads the signals directly. -->
+      <NumberInput text="dda.magpress.source" propertyname="DdaAmmoSourceSlot" targetonlyparentproperty="true" min="1" max="6" signal="1" />
+      <NumberInput text="dda.magpress.target" propertyname="DdaAmmoTargetSlot" targetonlyparentproperty="true" min="1" max="6" signal="1" />
+      <NumberInput text="dda.magpress.count" propertyname="DdaAmmoLoadCount" targetonlyparentproperty="true" min="0" max="60" signal="0" />
+      <Button text="dda.magpress.start">
+        <StatusEffect type="OnUse" target="This"><LuaHook name="dda.magpress.start" /></StatusEffect>
+      </Button>
+      <Button text="dda.magpress.stop">
+        <StatusEffect type="OnUse" target="This"><LuaHook name="dda.magpress.stop" /></StatusEffect>
+      </Button>
+    </CustomInterface>
   </Item>
 
   <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="deep_condition_transfer,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false">

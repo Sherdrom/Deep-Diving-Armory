@@ -29,6 +29,8 @@ jobs:
         run: |
           set -euo pipefail
           for test in .UnitTests/Lua/*.test.lua; do
+            # These scripts require a running single-player game session.
+            [[ "$test" == .UnitTests/Lua/VirtualMagazineRuntime*.test.lua ]] && continue
             lua5.4 "$test"
           done
 
@@ -74,6 +76,8 @@ jobs:
               dotnet test "$project" -c Release -m:1
             done
             dotnet test .UnitTests/CSharp/UnstableCompatibility/UnstableCompatibility.Tests.csproj -c Release -m:1 -p:BuildTarget=Server
+            dotnet build .UnitTests/CSharp/MoreInformationDisplay -c Release -m:1
+            dotnet build .UnitTests/CSharp/VirtualMagazine -c Release -m:1
           fi
 
       - name: Build C# plugins

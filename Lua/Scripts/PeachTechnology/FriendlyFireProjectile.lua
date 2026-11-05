@@ -58,9 +58,13 @@ local function HasFriendlyFireMarker(character)
         or HeldItemContainsChip(character)
 end
 
-Hook.Patch(
-    MOD_ID,
+for _, projectileType in ipairs({
     "Barotrauma.Items.Components.Projectile",
+    "VCE_VirtualizedMagazine.VirtualizedProjectile",
+}) do
+Hook.Patch(
+    MOD_ID .. "." .. projectileType,
+    projectileType,
     "Shoot",
     function(instance, ptable)
         local user = ptable["user"]
@@ -81,8 +85,8 @@ Hook.Patch(
 
 -- 新功能: 友军识别器 — 目标携带标记时, 同阵营其他角色发射的子弹穿过目标
 Hook.Patch(
-    MOD_ID .. ".TargetPassthrough",
-    "Barotrauma.Items.Components.Projectile",
+    MOD_ID .. ".TargetPassthrough." .. projectileType,
+    projectileType,
     "ShouldIgnoreCharacterCollision",
     function(instance, ptable)
         local character = ptable["character"]
@@ -107,3 +111,4 @@ Hook.Patch(
     end,
     Hook.HookMethodType.Before
 )
+end
