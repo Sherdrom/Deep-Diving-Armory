@@ -9,7 +9,12 @@ using Microsoft.CodeAnalysis.CSharp;
 using MoreInformationDisplay;
 
 // Offline fixtures against the local LuaCs reference assemblies, without game/UI startup.
-if (args.Length != 1) throw new ArgumentException("Expected game directory for the Unstable runtime dependencies.");
+if (args.Length != 1)
+{
+    Console.Error.WriteLine("Usage: MoreInformationDisplay.Tests <Unstable game directory>");
+    Environment.ExitCode = 2;
+    return;
+}
 string gameDirectory = Path.GetFullPath(args[0]);
 AssemblyLoadContext.Default.Resolving += (context, name) =>
 {

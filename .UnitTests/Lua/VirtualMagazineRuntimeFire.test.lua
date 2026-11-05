@@ -6,8 +6,8 @@ local function log(s)
     File.Write('LocalMods/Deep-Diving-Armory/.UnitTests/runtime-magazine.log', table.concat(t.lines, '\n'))
     print('DDA_RUNTIME: ' .. s)
 end
-for _, c in pairs(t.items.gun.Components) do
-    if LuaUserData.IsTargetType(c, 'SRW.SwitchableRangedWeapon') then t.weapon = c end
+for c in t.items.gun.Components do
+    if LuaUserData.IsTargetType(c, 'VCE_SRW.SwitchableRangedWeapon') then t.weapon = c end
 end
 assert(t.weapon and t.weapon.FindProjectile(), 'SRW or projectile missing')
 log('PASS HK416 actual SRW component, primary-slot projectile and HUD count = 30')
@@ -17,6 +17,8 @@ t.items.gun.RequireAimToUse = false
 local function fire(magazine, expected, done)
     local shots = 0
     local function step()
+        -- Lua timers continue while the console pauses weapon cooldown updates.
+        if Game.Paused then Timer.Wait(step, 250); return end
         local ok, err = pcall(function()
             local before = magazine.LoadedCount
             t.items.gun.Use(0.2, Character.Controlled, nil, nil, nil)

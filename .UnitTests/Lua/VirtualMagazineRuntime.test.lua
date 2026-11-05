@@ -1,9 +1,10 @@
 -- Manual integration test in a disposable single-player editor test session.
--- Run: cl_lua dofile('LocalMods/Deep-Diving-Armory/.UnitTests/Lua/VirtualMagazineRuntime.test.lua')
+-- Run: cl_lua load(File.Read('LocalMods/Deep-Diving-Armory/.UnitTests/Lua/VirtualMagazineRuntime.test.lua'))()
 assert(not Game.IsMultiplayer and Character.Controlled, 'Requires a single-player test character')
-assert(not DDA_RUNTIME_TEST, 'Already started; use a fresh test session to rerun')
+assert(not DDA_RUNTIME_TEST or (DDA_RUNTIME_TEST.items.gun and DDA_RUNTIME_TEST.items.gun.Removed),
+    'Already started; use a fresh test session to rerun')
 LuaUserData.RegisterType('VCE_VirtualizedMagazine.VirtualizedMagazine')
-LuaUserData.RegisterType('SRW.SwitchableRangedWeapon')
+LuaUserData.RegisterType('VCE_SRW.SwitchableRangedWeapon')
 LuaUserData.RegisterType('RemainedAmmo.RemainedAmmo')
 local Id = LuaUserData.CreateStatic('Barotrauma.Identifier')
 local HUD = LuaUserData.CreateStatic('RemainedAmmo.RemainedAmmo')
@@ -46,11 +47,11 @@ local function begin()
     put(t.items.press, t.items.drum, 7)
     local interface = t.items.press.GetComponentString('CustomInterface')
     assert(interface, 'Press controls missing')
-    interface.Signals = '1,1,0,1,1'
+    interface.Signals = '1;1;0;1;1'
     Hook.Call('dda.magpress.start', nil, 0, t.items.press)
     later(3500, function()
         assert(magazine.LoadedCount == 30 and drum.LoadedCount == 0, 'Press did not honor selected magazine')
-        interface.Signals = '1,2,0,1,1'
+        interface.Signals = '1;2;0;1;1'
         Hook.Call('dda.magpress.start', nil, 0, t.items.press)
     end)
     later(7000, function()
@@ -76,8 +77,8 @@ local function begin()
         put(t.items.gun, t.items.mag, 0)
         local container = t.items.gun.OwnInventory.Container
         assert(HUD.GetRemainedAmmo(0, t.items.gun, container, 0.99) == 30, 'Live HUD count')
-        for _, component in pairs(t.items.gun.Components) do
-            if LuaUserData.IsTargetType(component, 'SRW.SwitchableRangedWeapon') then t.weapon = component end
+        for component in t.items.gun.Components do
+            if LuaUserData.IsTargetType(component, 'VCE_SRW.SwitchableRangedWeapon') then t.weapon = component end
         end
         assert(t.weapon and t.weapon.FindProjectile(), 'Weapon cannot find virtual projectile')
         log('PASS HK416 primary slot and live HUD count = 30; ready for firing')
@@ -87,7 +88,7 @@ local pending = 5
 for key, id in pairs({press='ammoreload_machine', mag='deep_5.56x45', drum='deep_5.56x45_expansion', box='ammobox_7.62', gun='deep_hk416'}) do
     local prefab = ItemPrefab.GetItemPrefab(id)
     assert(prefab, 'Missing prefab: ' .. id)
-    Entity.Spawner.AddItemToSpawnQueue(prefab, Character.Controlled.WorldPosition, nil, nil, function(item)
+    Entity.Spawner.AddItemToSpawnQueue(prefab, Character.Controlled.Position, Character.Controlled.Submarine, nil, nil, function(item)
         t.items[key] = item
         pending = pending - 1
         if pending == 0 then later(1000, begin) end
