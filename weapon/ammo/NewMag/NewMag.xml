@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_5.56x45" subcategory="rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.24" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_556x45_virtual_30" subcategory="rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag" impactsoundtag="impact_metal_light">
     <Price baseprice="75" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -16,12 +16,10 @@
       <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/ammo_rifle.png" sourcerect="7,2,118,109" />
-    <Sprite texture="%ModDir%/weapon/ammo/ammo.png" depth="0.551" sourcerect="11,0,61,91" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="11,11,54,120" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="11,11,54,120" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round"
-      ProjectileIdentifiers="5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round,5.56x45round" />
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
-    <Upgrade gameversion="0.10.0.0" scale="0.5" />
   </Item>
 </Items>
