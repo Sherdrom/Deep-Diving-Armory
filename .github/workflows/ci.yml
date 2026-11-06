@@ -21,6 +21,9 @@ jobs:
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
+        env:
+          # Keep the runner's preinstalled SDKs out of version selection.
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
           dotnet-version: 9.0.x
 
@@ -183,6 +186,9 @@ jobs:
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
+        env:
+          # Keep the runner's preinstalled SDKs out of version selection.
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
           dotnet-version: 9.0.x
 
