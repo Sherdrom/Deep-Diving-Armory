@@ -31,37 +31,35 @@ local function empty(mag)
 end
 local function top(mag) return string.lower(tostring(mag.TopIdentifier)) end
 local function begin()
-    local magazine, drum = t.items.mag.OwnInventory.Container, t.items.drum.OwnInventory.Container
-    t.magazine, t.drum = magazine, drum
-    assert(magazine.MaxSize == 30 and magazine.LoadedCount == 30, '30-round initial capacity')
-    assert(drum.MaxSize == 60 and drum.LoadedCount == 60, '60-round initial capacity')
+    local magazine, spare = t.items.mag.OwnInventory.Container, t.items.spare.OwnInventory.Container
+    t.magazine, t.spare = magazine, spare
+    assert(magazine.MaxSize == 30 and magazine.LoadedCount == 0, '30-round magazine must spawn empty')
+    assert(spare.MaxSize == 30 and spare.LoadedCount == 0, '30-round spare must spawn empty')
     assert(t.items.mag.OwnInventory.GetItemAt(0), 'Virtual projectile missing')
-    log('PASS initial magazines: 30/30 and 60/60; virtual projectile spawned')
-    empty(magazine)
-    empty(drum)
+    log('PASS initial empty magazines: 0/30 and 0/30; virtual projectile placeholder spawned')
     magazine.PushAmmoArray({Id('5.56x45round'), Id('556x45round_M995')})
     assert(magazine.LoadedCount == 2 and top(magazine) == '556x45round_m995', 'Mixed stack setup')
     t.before = t.items.box.Condition
     put(t.items.press, t.items.box, 0)
     put(t.items.press, t.items.mag, 6)
-    put(t.items.press, t.items.drum, 7)
+    put(t.items.press, t.items.spare, 7)
     local interface = t.items.press.GetComponentString('CustomInterface')
     assert(interface, 'Press controls missing')
     interface.Signals = '1;1;0;1;1'
     Hook.Call('dda.magpress.start', nil, 0, t.items.press)
     later(3500, function()
-        assert(magazine.LoadedCount == 30 and drum.LoadedCount == 0, 'Press did not honor selected magazine')
+        assert(magazine.LoadedCount == 30 and spare.LoadedCount == 0, 'Press did not honor selected magazine')
         interface.Signals = '1;2;0;1;1'
         Hook.Call('dda.magpress.start', nil, 0, t.items.press)
     end)
     later(7000, function()
-        assert(magazine.LoadedCount == 30 and drum.LoadedCount == 60, 'Press did not fill both magazines')
-        assert(top(magazine) == '5.56x45round_tit' and top(drum) == '5.56x45round_tit', 'Box type not used')
+        assert(magazine.LoadedCount == 30 and spare.LoadedCount == 30, 'Press did not fill both magazines')
+        assert(top(magazine) == '5.56x45round_tit' and top(spare) == '5.56x45round_tit', 'Box type not used')
         local spent = t.before - t.items.box.Condition
-        assert(math.abs(spent - 88 * 1.5625 / 30) < 0.001, 'Incorrect resource charge: ' .. spent)
+        assert(math.abs(spent - 58 * 1.5625 / 30) < 0.001, 'Incorrect resource charge: ' .. spent)
         t.items.mag.Drop(nil, false)
-        t.items.drum.Drop(nil, false)
-        log(string.format('PASS real press: 28 + 60 titanium rounds; box cost %.6f', spent))
+        t.items.spare.Drop(nil, false)
+        log(string.format('PASS real press: 28 + 30 titanium rounds; box cost %.6f', spent))
         for i = 1, 28 do
             assert(top(magazine) == '5.56x45round_tit', 'New rounds not first')
             magazine.Use(1, nil)
@@ -85,7 +83,7 @@ local function begin()
     end)
 end
 local pending = 5
-for key, id in pairs({press='ammoreload_machine', mag='deep_5.56x45', drum='deep_5.56x45_expansion', box='ammobox_7.62', gun='deep_hk416'}) do
+for key, id in pairs({press='ammoreload_machine', mag='deep_556x45_virtual_30', spare='deep_556x45_virtual_30', box='ammobox_7.62', gun='deep_hk416'}) do
     local prefab = ItemPrefab.GetItemPrefab(id)
     assert(prefab, 'Missing prefab: ' .. id)
     Entity.Spawner.AddItemToSpawnQueue(prefab, Character.Controlled.Position, Character.Controlled.Submarine, nil, nil, function(item)

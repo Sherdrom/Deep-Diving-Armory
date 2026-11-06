@@ -12,7 +12,7 @@ end
 Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request)
     if request.handled then return end
     local character, weapon, inventory = request.character, request.weapon, request.inventory
-    local reference = ItemPrefab.GetItemPrefab("deep_5.56x45")
+    local reference = ItemPrefab.GetItemPrefab("deep_556x45_virtual_30")
     if not character or not weapon or not inventory or not reference
         or weapon.Prefab.ContentPackage ~= reference.ContentPackage then return end
 
@@ -21,11 +21,6 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
     if not container.CanBeContained(reference, slot) then return end
     local current = inventory.GetItemAt(slot)
     if current and not magazineOf(current) then return end
-
-    -- A failed swap must not fall through to Press R's automatic ammo merging.
-    request.handled = true
-    -- shortcut: VCE does not synchronize its ammo stack yet; enable multiplayer after upstream support.
-    if Game.IsMultiplayer or not character.CanAccessInventory(inventory) then return end
 
     local candidates, visited = {}, {}
     local function collect(source)
@@ -44,6 +39,12 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
         end
     end
     collect(character.Inventory)
+    -- Empty weapons with only legacy magazines still use Press R's original reload.
+    if not current and #candidates == 0 then return end
+    -- A failed virtual swap must not fall through to automatic ammo merging.
+    request.handled = true
+    -- shortcut: VCE does not synchronize its ammo stack yet; enable multiplayer after upstream support.
+    if Game.IsMultiplayer or not character.CanAccessInventory(inventory) then return end
     table.sort(candidates, function(a, b)
         if a.count ~= b.count then return a.count > b.count end
         return a.item.ID < b.item.ID

@@ -101,7 +101,7 @@ local function tick()
     callbacks["ContainerConditionTransfer.Update"]()
 end
 
-local target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+local target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 local source = item("ammobox1", {}, 100)
 press({ target, source })
 for _, expected in ipairs({ 7, 15, 22, 30 }) do
@@ -113,12 +113,12 @@ tick()
 close(source.Condition, 100 - 1.5625, "full magazine consumed resources")
 
 local full = target
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 press({ full, target, source })
 tick()
 assert(mag.LoadedCount == 7, "full magazine blocked the next magazine")
 
-target, mag = magazine("deep_5.56x45_expansion", 60, 0, "lead_ammobox_reload_2", "5.56x45round")
+target, mag = magazine("test_556_virtual_60", 60, 0, "lead_ammobox_reload_2", "5.56x45round")
 source = item("ammobox1", {}, 100)
 press({ target, source })
 for _ = 1, 4 do tick() end
@@ -126,14 +126,14 @@ assert(mag.LoadedCount == 60)
 close(source.Condition, 100 - 3.125, "60-round drum cost changed")
 
 local cost = 1.5625 / 30
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 source = item("ammobox1", {}, cost * 2)
 press({ target, source })
 tick()
 assert(mag.LoadedCount == 2, "source exhaustion overfilled the magazine")
 close(source.Condition, 0, "source exhaustion charged incorrectly")
 
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 source = item("ammobox1", {}, cost / 2)
 press({ target, source })
 tick()
@@ -141,7 +141,7 @@ assert(mag.LoadedCount == 0, "created an unaffordable round")
 close(source.Condition, cost / 2, "charged for an incomplete round")
 
 for _, accepted in ipairs({ 0, 3 }) do
-    target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round", accepted)
+    target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round", accepted)
     source = item("ammobox1", {}, 100)
     press({ target, source })
     tick()
@@ -157,7 +157,7 @@ for _, case in ipairs({
     { "ammobox_tun_ful", "556x45round_SSA_AP" },
     { "ammobox_du", "556x45round_depleted_uranium" },
 }) do
-    target, mag = magazine("deep_5.56x45", 30, 2, "lead_ammobox_reload_4", case[2])
+    target, mag = magazine("deep_556x45_virtual_30", 30, 2, "lead_ammobox_reload_4", case[2])
     mag.Rounds[1], mag.Rounds[2] = "5.56x45round", "556x45round_SSA_AP"
     source = item(case[1], {}, 100)
     press({ target, source })
@@ -168,15 +168,15 @@ for _, case in ipairs({
     close(source.Condition, 100 - 7 * cost, "mixed magazine charged incorrectly")
 end
 
--- Empty drums also follow the source, with the original full-drum cost and duration.
-target, mag = magazine("deep_556x45_expansion_phy", 60, 0, "phy_ammobox_reload_2", "5.56x45round_tit")
+-- Synthetic 60-round fixtures retain coverage of capacity-dependent refill costs.
+target, mag = magazine("test_556_virtual_60_phy", 60, 0, "phy_ammobox_reload_2", "5.56x45round_tit")
 source = item("ammobox_7.62", {}, 100)
 press({ target, source })
 for _ = 1, 4 do tick() end
 assert(mag.LoadedCount == 60)
 close(source.Condition, 100 - 3.125, "changed ammo type changed the drum cost")
 
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round_tit")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round_tit")
 local residue, unsupported = item("ammobox1", {}, cost / 2), item("ammobox_rip", {}, 100)
 local second = item("ammobox_12.7", {}, 100)
 source = item("ammobox_7.62", {}, 100)
@@ -196,7 +196,7 @@ assert(mag.LoadedCount == 14 and mag.Rounds[7] == "5.56x45round_tit"
     and mag.Rounds[8] == "5.56x45round_phy", "selected source change reset the stack")
 close(second.Condition, 100 - 7 * cost, "source change charged incorrectly")
 
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 press({ target, unsupported })
 tick()
 assert(mag.LoadedCount == 0, "unsupported box created ammo")
@@ -230,7 +230,7 @@ tick()
 callbacks["ContainerConditionTransfer.ScanRoundStart"]()
 tick()
 
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 source = item("ammobox1", {}, 100)
 press({ target, source }, { start = false })
 tick()
@@ -265,7 +265,7 @@ local stopped = mag.LoadedCount
 for _ = 1, 4 do tick() end
 assert(mag.LoadedCount == stopped, "stop continued loading")
 
-target, mag = magazine("deep_5.56x45", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
+target, mag = magazine("deep_556x45_virtual_30", 30, 0, "lead_ammobox_reload_4", "5.56x45round")
 source = item("ammobox1", {}, 100)
 local machine, sources, targets = press({ target, source })
 tick()

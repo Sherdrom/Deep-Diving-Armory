@@ -6,7 +6,10 @@ Hook = { Add = function(_, _, fn) callback = fn end }
 LuaUserData = { RegisterType = function() end, IsTargetType = function(value) return value.virtual end }
 local package = {}
 local reference = { ContentPackage = package, compatible = true }
-ItemPrefab = { GetItemPrefab = function() return reference end }
+ItemPrefab = { GetItemPrefab = function(id)
+    assert(id == "deep_556x45_virtual_30", "reload compatibility must use the dedicated magazine")
+    return reference
+end }
 assert(loadfile("Lua/Scripts/BenzeneTechnology/VirtualMagazineReload.lua"))()
 
 -- Model C# collections: direct iteration yields values, while pairs is unsupported.
@@ -87,9 +90,26 @@ request = setup(old, { high })
 request.inventory.Container.ContainedStateIndicatorSlot = 1
 callback(request)
 assert(not request.handled, "hijacked the underbarrel slot")
-request = setup(item(), { high })
+local legacy = item()
+legacy.HasTag = function(tag) return tag == "556mag" end
+legacy.OwnInventory = { Container = {}, AllItemsMod = iterable({}) }
+request = setup(legacy, { high })
 callback(request)
 assert(not request.handled, "hijacked a legacy magazine")
+request = setup(nil, { legacy, empty, wrong, blocked })
+callback(request)
+assert(not request.handled and #request.inventory.calls == 0, "blocked legacy reload into an empty weapon")
+request = setup(nil, {})
+callback(request)
+assert(not request.handled, "claimed an empty weapon without a virtual magazine")
+request = setup(nil, { legacy, high })
+callback(request)
+assert(request.handled and request.inventory.current == high, "did not select a virtual spare alongside legacy magazines")
+high.reject = true
+request = setup(nil, { legacy, high })
+callback(request)
+assert(request.handled and request.inventory.current == nil, "failed virtual insertion fell through to legacy merging")
+high.reject = nil
 request = setup(old, { high })
 request.weapon.Prefab.ContentPackage = {}
 callback(request)

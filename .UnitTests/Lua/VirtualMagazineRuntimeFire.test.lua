@@ -45,8 +45,8 @@ local function fire(magazine, expected, done)
 end
 fire(t.magazine, 30, function()
     t.items.mag.Drop(nil, false)
-    assert(t.items.gun.OwnInventory.TryPutItem(t.items.drum, 0, false, false, nil, false), 'Drum swap failed')
-    fire(t.drum, 60, function()
+    assert(t.items.gun.OwnInventory.TryPutItem(t.items.spare, 0, false, false, nil, false), 'Spare swap failed')
+    fire(t.spare, 30, function()
         t.items.gun.RequireAimToUse = aim
         log('PASS firing integration complete; original aim requirement restored')
     end)
