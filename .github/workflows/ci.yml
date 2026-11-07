@@ -81,6 +81,7 @@ jobs:
             dotnet test .UnitTests/CSharp/UnstableCompatibility/UnstableCompatibility.Tests.csproj -c Release -m:1 -p:BuildTarget=Server
             dotnet build .UnitTests/CSharp/MoreInformationDisplay -c Release -m:1
             dotnet build .UnitTests/CSharp/VirtualMagazine -c Release -m:1
+            dotnet build .UnitTests/CSharp/AmmoLoaderSupply -c Release -m:1
           fi
 
       - name: Build C# plugins

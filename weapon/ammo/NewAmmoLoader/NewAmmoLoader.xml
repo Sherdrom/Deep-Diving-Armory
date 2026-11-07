@@ -2,11 +2,14 @@
 <Items>
   <Item identifier="deep_new_ammoloader" name="" category="Machine" tags="vceammoloader,donttakeitems,dontsellitems" scale="0.5">
     <Sprite name="ammoreloadmachine" texture="%ModDir%/machine/machine.png" sourcerect="534,12,220,274" depth="0.74" origin="0.5,0.5" />
-    <AmmoLoader inputcontainerindex="0" targetcontainerindex="1" canbeselected="true" msg="ItemMsgInteractSelect">
+    <AmmoLoader inputcontainerindex="0" outputcontainerindex="1" targetcontainerindex="2" usesupplystorage="true" textprefix="dda.ammoloader." canbeselected="true" msg="ItemMsgInteractSelect">
       <GuiFrame relativesize="0.75,0.78" minsize="900,600" anchor="Center" style="ItemUI" />
     </AmmoLoader>
     <ItemContainer capacity="6" slotsperrow="6" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
-      <Containable items="deep_ammo,deep_ammopackage,deep_ammopackage_large" />
+      <Containable items="deep_ammobox,deep_ammopackage" />
+    </ItemContainer>
+    <ItemContainer capacity="6" slotsperrow="6" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
+      <Containable items="deep_ammopackage" />
     </ItemContainer>
     <ItemContainer capacity="1" slotsperrow="1" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
       <Containable items="deep_virtualmagazine" />
