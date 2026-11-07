@@ -79,8 +79,7 @@ namespace MoreInformationDisplay
 
         private static string AmmoName(Identifier id)
         {
-            string fallback = ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : id.Value;
-            return TextManager.Get("dda.ammo." + id.Value).Fallback(fallback).Value;
+            return ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : id.Value;
         }
 
         internal static string Describe(Item item)
@@ -91,12 +90,12 @@ namespace MoreInformationDisplay
             int count = (int)type.GetProperty("LoadedCount").GetValue(magazine);
             int capacity = (int)type.GetProperty("MaxSize").GetValue(magazine);
             var next = (Identifier)type.GetProperty("TopIdentifier").GetValue(magazine);
-            string nextName = count > 0 ? AmmoName(next) : TextManager.Get("dda.magazine.empty").Value;
-            string text = $"{TextManager.Get("dda.magazine.loaded")}: {count}/{capacity}\n{TextManager.Get("dda.magazine.next")}: {nextName}";
+            string nextName = count > 0 ? AmmoName(next) : "空匣";
+            string text = $"余弹: {count}/{capacity}\n下一发: {nextName}";
             var rounds = Rounds(magazine);
             if (count > 0 && rounds != null)
             {
-                text += "\n" + TextManager.Get("dda.magazine.contents").Value + ": "
+                text += "\n弹种组成: "
                     + string.Join(" / ", rounds.GroupBy(id => id).Select(group => $"{AmmoName(group.Key)} × {group.Count()}"));
             }
             return text;
@@ -147,6 +146,18 @@ namespace MoreInformationDisplay
             BuildState state = buildStates.GetOrCreateValue(__instance);
             state.ShiftDown = PlayerInput.IsShiftDown();
             state.MagazineState = VirtualMagazineTooltip.State(__instance.Item);
+        }
+    }
+
+    // 虚拟库存没有 Item 实例，通过 prefab 的提示接口复用弹药详情。
+    [HarmonyPatch(typeof(ItemPrefab), nameof(ItemPrefab.GetTooltip))]
+    internal static class Patch_PrefabAmmoTooltip
+    {
+        internal static void Postfix(ItemPrefab __instance, ref LocalizedString __result)
+        {
+            if (!PlayerInput.IsShiftDown()) return;
+            string extra = Patch_ItemStatsTooltip.ParseProjectileFromPrefab(__instance);
+            if (!string.IsNullOrWhiteSpace(extra)) __result += "\n\n" + extra;
         }
     }
 
@@ -1080,7 +1091,7 @@ namespace MoreInformationDisplay
             return result;
         }
 
-        private static string ParseProjectileFromPrefab(ItemPrefab prefab)
+        internal static string ParseProjectileFromPrefab(ItemPrefab prefab)
         {
             var cfg = prefab.ConfigElement;
             if (cfg == null) return "";

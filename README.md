@@ -11,24 +11,25 @@
 
 2026-11-06：新弹匣系统统一在 `weapon/ammo/NewMag/NewMag.xml` 中定义，沿用独立物品 ID `deep_556x45_virtual_30` 继续开发。原有 9 种通用 5.56 弹匣／弹鼓恢复改造前的耐久计弹、堆叠和自动复装定义，保留原 ID、贴图、配方和价格。
 
+2026-11-07：深潜武装通用压弹机（`ammoreload_machine`）及共享耐久转移脚本恢复到 `525a859c` 加入混装弹药前的版本，包括原来的集合遍历方式；移除混装／定量装填界面及钩子。新压弹机单独开发，以下历史混装压弹验收记录不代表当前旧版压弹机的能力。
+
 下述 2026-11-05 Windows 游戏 `1.15.26.0`、VCE `Dev`（`5067ce6`）验收记录对应拆分前的原型；新物品尚未在游戏内复测。之前已保存的虚拟版旧 ID 弹匣不做弹序迁移，测试时请重新生成物品。
 
 此前 macOS 试验使用的本地 VCE `Dev` 基线为 `3226456`，另含弹药修正 `f585b28` 和护盾修正 `2e18034`；该历史环境与当前 Unstable 验收环境不同。
 
 - 试点武器为 `deep_hk416`。新系统专用物品为 `deep_556x45_virtual_30`（5.56x45通用30发弹匣），定义在 `weapon/ammo/NewMag/NewMag.xml`；使用 `VirtualizedMagazine`，容量 30 发，初始为空匣，不预装子弹。
 - 图标与地面贴图均取自 `weapon/ammo/NewMag/Mag1.png` 左上角弹匣，裁切区域 `11,11,54,120`。新弹匣沿用普通 30 发弹匣的价格和制造配方，保留 `deep_5.56x45`／`556mag` 兼容标签，可装入原有兼容枪械。
-- 新弹匣由压弹机内的弹药箱决定新增弹种：铅制／钛制／刚素制／雷刚／钨刚／贫铀复装弹药箱分别补入普通／钛／刚素／M995／SSA AP／贫铀弹。空匣也遵循此规则，旧式弹匣仍匹配原有弹药箱。
-- 压弹机通过数字输入框选择上排弹药箱格位、下排弹匣格位（各排从左到右 1–6）和装入发数（0 为补满），点击开始后只装填选中的弹匣。保留原有装填时间、满匣资源消耗，按实际装入的整发数结算；点击停止、取走任一物品、材料不足或弹匣装满时结束。已有混装子弹及其相对顺序保留，新增子弹优先发射。旧式弹匣仍自动补弹。
+- 旧版通用压弹机按原有配方自动为普通弹匣补充耐久，保留原速率和弹药箱消耗，不再提供混装选弹或定量装填。新系统弹匣的装填由新压弹机承担。
 - 接入 `Press R to Reload` 的 `pressrtoreload.reload` 钩子：优先选择身上可访问、兼容且余弹最多的备匣，交换整只弹匣并由原生库存交换收纳旧匣；失败也不回落到自动合并。不从另一把武器取匣，不接管下挂和旧式弹匣；空枪没有可用新备匣时交回原有换弹流程。
 - 新弹匣的空匣和满匣均不堆叠，旧弹匣恢复原有堆叠。悬停提示显示余弹／容量、下一发和各弹种数量，无需按 Shift；同总数下更换弹种或顺序也会刷新。
-- shortcut: VCE 已提供弹序序列化，但完整存读档、旧存档迁移和多人同步尚未验收；DDA 的新装填和换匣入口仍限单机，待上游同步能力验证后再接入联机。
+- shortcut: VCE 已提供弹序序列化，但完整存读档、旧存档迁移和多人同步尚未验收；DDA 的新换匣入口仍限单机，待上游同步能力验证后再接入联机。
 
-游戏内验收：新生成 HK416 和两只 `deep_556x45_virtual_30`，分别射击至空匣，检查各 30 发计数；另用旧 5.56 弹匣检查耐久扣弹、堆叠、自动复装和空枪 R 装填；用压弹机依次装入指定数量的不同弹种，检查指定来源／目标、发数上限、停止／移出取消、资源扣除及新增弹先发射；检查悬停提示、不堆叠、R 换匣与旧匣收纳（含背包满／无备匣／双持／下挂槽），以及换弹动画、点射／连发、友军识别芯片。联网和旧存档迁移不在本轮验收范围，VCE 的手动合并与卸弹问题留给上游处理。
+游戏内验收：新生成 HK416 和两只 `deep_556x45_virtual_30`，由测试脚本直接填入弹序后分别射击至空匣，检查各 30 发计数；另用旧 5.56 弹匣检查耐久扣弹、堆叠、旧压弹机自动复装和空枪 R 装填；检查悬停提示、不堆叠、R 换匣与旧匣收纳（含背包满／无备匣／双持／下挂槽），以及换弹动画、点射／连发、友军识别芯片。此脚本不验证新压弹机。联网和旧存档迁移不在本轮验收范围，VCE 的手动合并与卸弹问题留给上游处理。
 
 自动检查（仓库根目录执行；提示测试需传入本机 Unstable 游戏目录以加载运行依赖，CI 仅编译该测试）：
 
 ```sh
-lua .UnitTests/Lua/VirtualMagazineRefill.test.lua
+lua .UnitTests/Lua/ContainerConditionTransfer.test.lua
 lua .UnitTests/Lua/VirtualMagazineReload.test.lua
 lua .UnitTests/Lua/VirtualProjectileHooks.test.lua
 dotnet run --project .UnitTests/CSharp/MoreInformationDisplay -c Release -- "<游戏目录>"
@@ -58,8 +59,8 @@ LuaCs 插件目录是包含 `PluginInfo.xml` 的包根目录。测试检查实�
 
 当前复测脚本已改为生成两只新系统专用 30 发弹匣（`mag`／`spare`），以下操作接在下方两个运行脚本完成之后，仍只使用可丢弃场景；上述历史验收不代表这些改动已复测：
 
-1. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; assert(t.items.press.OwnInventory.TryPutItem(t.items.mag,6,false,false,nil,false)); t.uiBoxBefore=t.items.box.Condition; Character.Controlled.SelectedItem=t.items.press`，关闭控制台；界面选择来源 1、目标 1、发数 5，点击开始并检查提示。
-2. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; local c=Character.Controlled; assert(t.magazine.LoadedCount==5 and math.abs(t.uiBoxBefore-t.items.box.Condition-5*1.5625/30)<0.001); c.SelectedItem=nil; assert(c.Inventory.TryPutItem(t.items.mag,c,{InvSlotType.Any},false)); local hands={}; for s in t.items.gun.AllowedSlots do if s~=InvSlotType.Any then hands[#hands+1]=s end end; assert(c.Inventory.TryPutItem(t.items.gun,c,hands,false))`，关闭控制台，按 R 两次（第二次无有弹备匣）。
+1. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; assert(t.magazine.LoadedCount==0); local Id=LuaUserData.CreateStatic('Barotrauma.Identifier'); local rounds={}; for i=1,5 do rounds[i]=Id('5.56x45round_tit') end; t.magazine.PushAmmoArray(rounds)`，直接准备 5 发换匣夹具。
+2. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; local c=Character.Controlled; assert(t.magazine.LoadedCount==5); c.SelectedItem=nil; assert(c.Inventory.TryPutItem(t.items.mag,c,{InvSlotType.Any},false)); local hands={}; for s in t.items.gun.AllowedSlots do if s~=InvSlotType.Any then hands[#hands+1]=s end end; assert(c.Inventory.TryPutItem(t.items.gun,c,hands,false))`，关闭控制台，按 R 两次（第二次无有弹备匣）。
 3. 执行 `cl_lua load(File.Read('LocalMods/Deep-Diving-Armory/.UnitTests/Lua/VirtualMagazineRuntimeReload.test.lua'))()`；关闭控制台，等待背包填满，再按 R 一次。最后执行 `cl_lua DDA_RUNTIME_TEST.checkFullInventoryReload()`，核对日志中的通过记录。
 
 ### 2026-10-30 DDA 交互适配（离线验证）
