@@ -1,0 +1,40 @@
+<Project>
+  <PropertyGroup>
+    <Libs Condition="'$(Libs)' == ''">$(MSBuildThisFileDirectory)../../.Tools/Refs</Libs>
+    <ModDeployDir Condition="'$(ModDeployDir)' == ''">$(MSBuildThisFileDirectory)../../</ModDeployDir>
+    <AssemblyName>DeepAmmoLoader</AssemblyName>
+    <RootNamespace>DDA.AmmoLoading</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <DefineConstants Condition="'$(BuildTarget)' == 'Client'">$(DefineConstants);CLIENT</DefineConstants>
+    <DefineConstants Condition="'$(BuildTarget)' == 'Server'">$(DefineConstants);SERVER</DefineConstants>
+    <MonoGameAssembly Condition="'$(PlatformName)' == 'Windows'">MonoGame.Framework.Windows.NetStandard</MonoGameAssembly>
+    <MonoGameAssembly Condition="'$(PlatformName)' == 'Linux'">MonoGame.Framework.Linux.NetStandard</MonoGameAssembly>
+    <MonoGameAssembly Condition="'$(PlatformName)' == 'OSX'">MonoGame.Framework.MacOS.NetStandard</MonoGameAssembly>
+    <GameReferencePlatform>$(PlatformName)</GameReferencePlatform>
+    <GameReferencePlatform Condition="'$(PlatformName)' == 'OSX'">Mac</GameReferencePlatform>
+    <GameAssembly Condition="'$(BuildTarget)' == 'Client'">Barotrauma</GameAssembly>
+    <GameAssembly Condition="'$(BuildTarget)' == 'Server'">DedicatedServer</GameAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Barotrauma.ReferenceAssemblies.Vanilla.Publicized" Version="1.15.24" GeneratePathProperty="true" ExcludeAssets="all" />
+    <Compile Include="$(MSBuildThisFileDirectory)SharedProject/*.cs" Link="%(Filename)%(Extension)" />
+    <Reference Include="VanillaComponentsExpanded$(BuildTarget)" HintPath="$(Libs)/$(PlatformName)/VanillaComponentsExpanded$(BuildTarget).dll" Private="false" />
+    <Reference Include="Farseer.NetStandard" HintPath="$(Libs)/Farseer.NetStandard.dll" Private="false" />
+    <Reference Include="Lidgren.NetStandard" HintPath="$(Libs)/Lidgren.NetStandard.dll" Private="false" />
+    <Reference Include="$(GameAssembly)" HintPath="$(PkgBarotrauma_ReferenceAssemblies_Vanilla_Publicized)/assemblies/$(GameReferencePlatform)/$(GameAssembly).dll" Private="false" />
+    <Reference Include="BarotraumaCore" HintPath="$(PkgBarotrauma_ReferenceAssemblies_Vanilla_Publicized)/assemblies/$(GameReferencePlatform)/BarotraumaCore.dll" Private="false" />
+    <Reference Include="LuaCsForBarotraumaPlugin$(BuildTarget)" HintPath="$(Libs)/$(PlatformName)/LuaCsForBarotraumaPlugin$(BuildTarget).dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(Libs)/0Harmony.dll" Private="false" />
+    <Reference Include="$(MonoGameAssembly)" HintPath="$(Libs)/$(MonoGameAssembly).dll" Private="false" />
+    <Reference Include="XNATypes" HintPath="$(Libs)/XNATypes.dll" Private="false" />
+    <Reference Include="System.Collections.Immutable" HintPath="$(Libs)/System.Collections.Immutable.dll" Private="false" />
+  </ItemGroup>
+  <Target Name="CopyFiles" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).deps.json" DestinationFolder="$(ModDeployDir)/bin/$(BuildTarget)/$(PlatformName)/" />
+  </Target>
+</Project>

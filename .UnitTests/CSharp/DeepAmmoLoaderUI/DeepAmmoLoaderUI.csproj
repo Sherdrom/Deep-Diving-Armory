@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><UseAppHost>false</UseAppHost>
+    <TargetFramework>net9.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <Libs>$(MSBuildThisFileDirectory)../../../.Tools/Refs</Libs>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/SharedProject/IgnoresAccessChecksToAttribute.cs" />
+    <Reference Include="Barotrauma" HintPath="$(Libs)/Windows/Barotrauma.dll" Private="false" />
+    <Reference Include="BarotraumaCore" HintPath="$(Libs)/Windows/BarotraumaCore.dll" Private="false" />
+    <Reference Include="MonoGame.Framework.Windows.NetStandard" HintPath="$(Libs)/MonoGame.Framework.Windows.NetStandard.dll" Private="false" />
+    <Reference Include="XNATypes" HintPath="$(Libs)/XNATypes.dll" Private="false" />
+    <Reference Include="VanillaComponentsExpandedClient" HintPath="$(Libs)/Windows/VanillaComponentsExpandedClient.dll" Private="false" />
+    <Reference Include="DeepAmmoLoader" HintPath="../../../bin/Client/Windows/DeepAmmoLoader.dll" Private="false" />
+  </ItemGroup>
+</Project>

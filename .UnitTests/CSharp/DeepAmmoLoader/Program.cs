@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
@@ -8,7 +7,7 @@ using System.Xml.Linq;
 // Uses deployed assemblies without starting the game; no rendering, physics or network session.
 if (args.Length is < 4 or > 5 || args.Length == 5 && args[4] is not ("Client" or "Server"))
 {
-    Console.Error.WriteLine("Usage: AmmoLoaderSupply.Tests <game directory> <VCE directory> <DDA directory> <LuaCs plugin directory> [Client|Server]");
+    Console.Error.WriteLine("Usage: DeepAmmoLoader.Tests <game directory> <VCE directory> <DDA directory> <LuaCs plugin directory> [Client|Server]");
     return 2;
 }
 try { Run(args); return 0; }
@@ -33,12 +32,12 @@ static void Run(string[] args)
     };
     Assembly game = Assembly.Load(target == "Client" ? "Barotrauma" : "DedicatedServer"), core = Assembly.Load("BarotraumaCore");
     Assembly vce = Assembly.Load("VanillaComponentsExpanded" + target);
-    Assembly adapter = Assembly.Load("AmmoLoaderSupply");
+    Assembly adapter = Assembly.Load("DeepAmmoLoader");
     Type GameType(string name) => game.GetType("Barotrauma." + name) ?? core.GetType("Barotrauma." + name, true)!;
     Type itemType = GameType("Item"), prefabType = GameType("ItemPrefab"), identifierType = GameType("Identifier");
     Type componentType = GameType("Items.Components.ItemComponent");
-    Type loaderType = vce.GetType("VCE.AmmoLoading.AmmoLoader", true)!;
-    Type pluginType = adapter.GetType("DdaAmmoSupply.Plugin", true)!;
+    Type loaderType = adapter.GetType("DDA.AmmoLoading.DeepAmmoLoader", true)!;
+    Type pluginType = adapter.GetType("DDA.AmmoLoading.Plugin", true)!;
     PropertyInfo supply = loaderType.GetProperty("SupplyResolver")!;
     object plugin = Activator.CreateInstance(pluginType)!;
     IList items = (IList)itemType.GetField("ItemList")!.GetValue(null)!;
@@ -53,31 +52,27 @@ static void Run(string[] args)
     }
     object Loader(string id)
     {
-        object item = Item(id), loader = RuntimeHelpers.GetUninitializedObject(loaderType);
-        Field(componentType, "item").SetValue(loader, item);
-        ((IList)Field(itemType, "components").GetValue(item)!).Add(loader);
-        items.Add(item);
-        return loader;
+        object element = Activator.CreateInstance(GameType("ContentXElement"), null, XElement.Parse("<DeepAmmoLoader />"))!;
+        return Activator.CreateInstance(loaderType, Item(id), element)!;
     }
     var existing = Loader("deep_new_ammoloader");
-    var unrelated = Loader("other_ammoloader");
-    var attach = pluginType.GetMethod("Attach", BindingFlags.Static | BindingFlags.NonPublic)!;
-    var onLoaded = loaderType.GetMethod("OnItemLoaded")!;
+    var onLoaded = itemType.GetMethods().Single(m => m.Name == "Load" && m.IsStatic);
     Type harmonyType = Assembly.Load("0Harmony").GetType("HarmonyLib.Harmony", true)!;
     bool Patched()
     {
         object? info = harmonyType.GetMethod("GetPatchInfo")!.Invoke(null, [onLoaded]);
         return info != null && ((IEnumerable)info.GetType().GetProperty("Owners")!.GetValue(info)!)
-            .Cast<string>().Contains("deepdivingarmory.ammoloadersupply");
+            .Cast<string>().Contains("deepdivingarmory.deepammoloader");
     }
     try
     {
-        pluginType.GetMethod("OnLoadCompleted")!.Invoke(plugin, null);
-        Assert(Patched(), "New-machine lifecycle hook was not installed.");
-        Assert(supply.GetValue(existing) != null && supply.GetValue(unrelated) == null, "Existing-machine binding scope is wrong.");
-        var created = Loader("deep_new_ammoloader");
-        attach.Invoke(null, [created]);
-        Assert(supply.GetValue(created) != null, "New DDA machine was not attached.");
+        pluginType.GetMethod("Initialize")!.Invoke(plugin, null);
+        Assert(Patched(), "Saved-component migration was not installed.");
+        Assert(supply.GetValue(existing) != null, "DDA supply must be available when the component is constructed.");
+        Assert(loaderType.Assembly == adapter && loaderType.BaseType == componentType,
+            "DeepAmmoLoader must own its implementation, not inherit VCE's loader.");
+        Assert(loaderType.GetMethod(target == "Client" ? "ClientEventRead" : "ServerEventRead") != null,
+            "Missing target-specific network handler.");
         var resolver = (Delegate)supply.GetValue(existing)!;
         var expected = new Dictionary<string, string>
         {
@@ -96,16 +91,33 @@ static void Run(string[] args)
         }
         Assert(resolver.DynamicInvoke(Item("ammobox_rip")) == null && resolver.DynamicInvoke(Item("unrelated")) == null,
             "Unfinished or unrelated sources must remain unmapped.");
-        var parameter = Expression.Parameter(itemType);
-        var external = Expression.Lambda(supply.PropertyType, Expression.Default(supply.PropertyType.GetGenericArguments()[1]), parameter).Compile();
-        supply.SetValue(created, external);
-        attach.Invoke(null, [created]);
-        Assert(ReferenceEquals(supply.GetValue(created), external), "Another provider was overwritten.");
+        var migrate = pluginType.GetMethod("MigrateSavedComponent", BindingFlags.Static | BindingFlags.NonPublic)!;
+        foreach (string id in new[] { "deep_new_ammoloader", "other_ammoloader" })
+        {
+            var saved = XElement.Parse($"<Item identifier='{id}'><AmmoLoader><Stock><Ammo id='unknown_mod_round' count='17' /></Stock></AmmoLoader><ItemContainer /></Item>");
+            string stock = saved.Element("AmmoLoader")!.Element("Stock")!.ToString();
+            object element = Activator.CreateInstance(GameType("ContentXElement"), null, saved)!;
+            migrate.Invoke(null, [element]);
+            string name = id == "deep_new_ammoloader" ? "DeepAmmoLoader" : "AmmoLoader";
+            Assert(saved.Element(name)?.Element("Stock")?.ToString() == stock && saved.Element("ItemContainer") != null,
+                "Component rename must preserve stock and leave other machines untouched.");
+            migrate.Invoke(null, [element]);
+            Assert(saved.Elements(name).Count() == 1, "Migration must be idempotent.");
+        }
+        object savedComponent = Activator.CreateInstance(GameType("ContentXElement"), null,
+            XElement.Parse("<DeepAmmoLoader><Stock><Ammo id='unknown_mod_round' count='17' /></Stock></DeepAmmoLoader>"))!;
+        loaderType.GetMethod("Load", [GameType("ContentXElement"), typeof(bool), GameType("IdRemap"), typeof(bool)])!
+            .Invoke(existing, [savedComponent, false, null, false]);
+        object restoredStock = loaderType.GetProperty("Stock")!.GetValue(existing)!;
+        Assert((int)restoredStock.GetType().GetProperty("Item")!.GetValue(restoredStock, ["unknown_mod_round"])! == 17,
+            "Migrated stock must load into DDA's component without losing unknown ammunition.");
+        var roundTrip = (XElement)loaderType.GetMethod("Save")!.Invoke(existing, [new XElement("Item")])!;
+        Assert(roundTrip.Name == "DeepAmmoLoader" && roundTrip.Element("Stock")!.Element("Ammo")!.Attribute("count")!.Value == "17",
+            "Saving must keep migrated stock under the new component name.");
         ValidateXml(dda, expected);
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
-        Assert(!Patched() && supply.GetValue(existing) == null && ReferenceEquals(supply.GetValue(created), external),
-            "Unload must remove only this plugin's hook and bindings.");
-        Console.WriteLine($"PASS ({target}): actual DDA DLL, VCE API binding, six costs/mappings, existing/new machines, unrelated provider preservation, unload and XML registration.");
+        Assert(!Patched(), "Unload must remove the migration hook.");
+        Console.WriteLine($"PASS ({target}): DDA-owned loader, network handler, six supply costs/mappings, saved-stock rename, unload and XML registration.");
     }
     finally
     {
@@ -117,7 +129,7 @@ static void Run(string[] args)
 static void ValidateXml(string dda, Dictionary<string, string> expected)
 {
     var machine = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoLoader/NewAmmoLoader.xml"));
-    var component = machine.Descendants("AmmoLoader").Single();
+    var component = machine.Descendants("DeepAmmoLoader").Single();
     Assert((string?)component.Attribute("usesupplystorage") == "true" &&
         (string?)component.Attribute("textprefix") == "dda.ammoloader." &&
         (string?)component.Attribute("targetcontainerindex") == "2" && (string?)component.Attribute("outputcontainerindex") == "1",
@@ -162,12 +174,12 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
         { Assert(texts.Count(t => t.Name.LocalName == "entityname." + package.Attribute("identifier")!.Value) == 1, "Missing package name."); }
     }
     var registrations = XDocument.Load(Path.Combine(dda, "ModConfig.xml")).Descendants("Assembly")
-        .Where(x => x.Attribute("File")!.Value.Contains("AmmoLoaderSupply")).ToArray();
+        .Where(x => x.Attribute("File")!.Value.Contains("DeepAmmoLoader")).ToArray();
     Assert(registrations.Length == 6, "Expected six binary registrations.");
     foreach (var target in new[] { "Client", "Server" })
     foreach (var platform in new[] { "Windows", "Linux", "OSX" })
     {
-        string relative = $"bin/{target}/{platform}/AmmoLoaderSupply.dll";
+        string relative = $"bin/{target}/{platform}/DeepAmmoLoader.dll";
         Assert(registrations.Count(x => x.Attribute("File")!.Value == "%ModDir%/" + relative &&
             x.Attribute("Target")?.Value == target && x.Attribute("Platform")?.Value == platform && x.Attribute("IsScript") == null) == 1,
             "Incorrect binary registration: " + relative);
