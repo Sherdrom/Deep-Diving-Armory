@@ -7,6 +7,22 @@
 ## 进阶
 博文：[如何作为Collaborator在Github更新仓库（上传代码）](https://blog.csdn.net/m0_48319758/article/details/122832675)
 
+## AmmoBox identifier 命名
+
+复装弹药箱统一使用 `deep_ammobox_<material>`：全小写英文和下划线，材质写全称，不使用口径、容量或历史序号。分类标签继续使用 `smallitem,deep_ammobox`，子分类为 `deep_ammobox`。
+
+| 弹药箱 | 旧 identifier | 新 identifier |
+| --- | --- | --- |
+| 铅制 | `ammobox1` | `deep_ammobox_lead` |
+| 钛制 | `ammobox_7.62` | `deep_ammobox_titanium` |
+| 刚素 | `ammobox_12.7` | `deep_ammobox_physicorium` |
+| 雷刚 | `ammobox_phy_ful` | `deep_ammobox_fulgurium_physicorium` |
+| 钨刚 | `ammobox_tun_ful` | `deep_ammobox_tungsten_physicorium` |
+| 贫铀 | `ammobox_du` | `deep_ammobox_depleted_uranium` |
+| 铜制空尖弹（RIP） | `ammobox_rip` | `deep_ammobox_copper` |
+
+XML、Lua、C# 和本地化统一引用新 ID；不保留旧 ID 别名或旧存档迁移。价格、配方、容量和供弹消耗不变。
+
 ## 新弹匣系统（Dev_Unstable）
 
 2026-11-06：新弹匣系统统一在 `weapon/ammo/NewMag/NewMag.xml` 中定义，沿用独立物品 ID `deep_556x45_virtual_30` 继续开发。原有 9 种通用 5.56 弹匣／弹鼓恢复改造前的耐久计弹、堆叠和自动复装定义，保留原 ID、贴图、配方和价格。

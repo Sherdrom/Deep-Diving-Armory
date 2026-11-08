@@ -7,14 +7,14 @@ internal static class DdaSupply
     internal static readonly Dictionary<string, Dictionary<string, double>> SupplyCosts =
         new Dictionary<string, Dictionary<string, double>>(StringComparer.OrdinalIgnoreCase)
         {
-            ["ammobox1"] = new Dictionary<string, double> { ["5.56x45round"] = CostPer556Round },
-            ["ammobox_7.62"] = new Dictionary<string, double> { ["5.56x45round_tit"] = CostPer556Round },
-            ["ammobox_12.7"] = new Dictionary<string, double> { ["5.56x45round_phy"] = CostPer556Round },
-            ["ammobox_phy_ful"] = new Dictionary<string, double> { ["556x45round_m995"] = CostPer556Round },
-            ["ammobox_tun_ful"] = new Dictionary<string, double> { ["556x45round_ssa_ap"] = CostPer556Round },
-            ["ammobox_du"] = new Dictionary<string, double> { ["556x45round_depleted_uranium"] = CostPer556Round },
+            ["deep_ammobox_lead"] = new Dictionary<string, double> { ["5.56x45round"] = CostPer556Round },
+            ["deep_ammobox_titanium"] = new Dictionary<string, double> { ["5.56x45round_tit"] = CostPer556Round },
+            ["deep_ammobox_physicorium"] = new Dictionary<string, double> { ["5.56x45round_phy"] = CostPer556Round },
+            ["deep_ammobox_fulgurium_physicorium"] = new Dictionary<string, double> { ["556x45round_m995"] = CostPer556Round },
+            ["deep_ammobox_tungsten_physicorium"] = new Dictionary<string, double> { ["556x45round_ssa_ap"] = CostPer556Round },
+            ["deep_ammobox_depleted_uranium"] = new Dictionary<string, double> { ["556x45round_depleted_uranium"] = CostPer556Round },
             // Leave unfinished virtual calibers unmapped; add their projectile costs when implemented.
-            ["ammobox_rip"] = new Dictionary<string, double>()
+            ["deep_ammobox_copper"] = new Dictionary<string, double>()
         };
 
     private static readonly Dictionary<string, AmmoSupplyDefinition> definitions = SupplyCosts

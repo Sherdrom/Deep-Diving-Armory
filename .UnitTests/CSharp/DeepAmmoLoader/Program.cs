@@ -84,9 +84,9 @@ static void Run(string[] args)
         var resolver = (Delegate)supply.GetValue(existing)!;
         var expected = new Dictionary<string, string>
         {
-            ["ammobox1"] = "5.56x45round", ["ammobox_7.62"] = "5.56x45round_tit",
-            ["ammobox_12.7"] = "5.56x45round_phy", ["ammobox_phy_ful"] = "556x45round_m995",
-            ["ammobox_tun_ful"] = "556x45round_ssa_ap", ["ammobox_du"] = "556x45round_depleted_uranium"
+            ["deep_ammobox_lead"] = "5.56x45round", ["deep_ammobox_titanium"] = "5.56x45round_tit",
+            ["deep_ammobox_physicorium"] = "5.56x45round_phy", ["deep_ammobox_fulgurium_physicorium"] = "556x45round_m995",
+            ["deep_ammobox_tungsten_physicorium"] = "556x45round_ssa_ap", ["deep_ammobox_depleted_uranium"] = "556x45round_depleted_uranium"
         };
         foreach (var entry in expected)
         {
@@ -97,7 +97,7 @@ static void Run(string[] args)
             Assert(costs.Count == 1 && costs.TryGetValue(entry.Value, out double cost) && Math.Abs(cost * 30 - 1.5625) < 1e-12,
                 "Wrong projectile/cost for " + entry.Key);
         }
-        Assert(resolver.DynamicInvoke(Item("ammobox_rip")) == null && resolver.DynamicInvoke(Item("unrelated")) == null,
+        Assert(resolver.DynamicInvoke(Item("deep_ammobox_copper")) == null && resolver.DynamicInvoke(Item("unrelated")) == null,
             "Unfinished or unrelated sources must remain unmapped.");
         var migrate = pluginType.GetMethod("MigrateSavedComponent", BindingFlags.Static | BindingFlags.NonPublic)!;
         foreach (string id in new[] { "deep_new_ammoloader", "other_ammoloader" })
