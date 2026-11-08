@@ -1,6 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Items>
-  <Item name="" identifier="deep_556x45_virtual_30" subcategory="rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+  <!--5.56x45-->
+  <Item name="" identifier="deep_556x45_virtual_30" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="25" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="20" />
+      <RequiredItem identifier="iron" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="11,11,54,120" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="11,11,54,120" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_556x45_virtual_40" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="40" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="35" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="2">
+      <RequiredSkill identifier="weapons" level="30" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="405,11,62,147" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="405,11,62,147" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="40" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_556x45_virtual_60_extended_mag" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="45" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="2">
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="steel" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="69,11,67,138" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="69,11,67,138" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_556x45_virtual_100_extended_mag" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="100" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="55" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="steel" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="142,11,98,197" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="142,11,98,197" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="100" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_556x45_virtual_60_drum" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="65" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="plastic" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="248,12,66,109" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="248,12,66,109" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_556x45_virtual_100_drum" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="100" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.56x45,lead_ammobox,lead_ammobox_reload_4,556mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
     <Price baseprice="75" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -8,18 +104,92 @@
       <Price storeidentifier="merchantmilitary" multiplier="1" />
       <Price storeidentifier="merchantmine" multiplier="1" />
     </Price>
-    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="10" amount="4">
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="322,11,73,103" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="322,11,73,103" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="100" AllowedAmmoTags="deep_556_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <!--5.45x39-->
+  <Item name="" identifier="deep_545x39_virtual_30" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="30" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,lead_ammobox,lead_ammobox_reload_4,545mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="25" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="20" />
+      <RequiredItem identifier="iron" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="10,218,73,120" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="10,218,73,120" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_545x39_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_545x39_virtual_45_extended_mag" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="45" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,lead_ammobox,lead_ammobox_reload_4,545mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="25" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="2">
       <RequiredSkill identifier="weapons" level="40" />
-      <RequiredItem identifier="lead" />
-      <RequiredItem identifier="gun_powder" />
-      <RequiredItem identifier="copper" />
       <RequiredItem identifier="plastic" />
     </Fabricate>
     <Deconstruct time="5"></Deconstruct>
-    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="11,11,54,120" />
-    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="11,11,54,120" origin="0.5,0.5" />
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="87,218,94,145" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="87,218,94,145" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
-    <VirtualizedMagazine MaxSize="30" AllowedAmmoTags="deep_556_round" />
+    <VirtualizedMagazine MaxSize="45" AllowedAmmoTags="deep_545x39_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_545x39_virtual_60_extended_mag" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="60" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,lead_ammobox,lead_ammobox_reload_4,545mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="25" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="50" />
+      <RequiredItem identifier="steel" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="181,219,72,120" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="181,219,72,120" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="60" AllowedAmmoTags="deep_545x39_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+  </Item>
+  <Item name="" identifier="deep_545x39_virtual_95_drum" subcategory="deep_virtual_rifle_mag" allowdroppingonswap="false" maxstacksize="1" maxstacksizecharacterinventory="1" scale="0.2" health="95" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_5.45x39,lead_ammobox,lead_ammobox_reload_4,545mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="25" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" sourcerect="253,221,74,116" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag1.png" depth="0.551" sourcerect="253,221,74,116" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="95" AllowedAmmoTags="deep_545x39_round" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
   </Item>
 </Items>
