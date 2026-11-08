@@ -62,6 +62,14 @@ public sealed partial class DeepAmmoLoader
         int supplyWidth = root.Rect.Width - magazineWidth - gap;
         int upperHeight = (int)(root.Rect.Height * 0.56f);
         int dockHeight = (int)(98 * GUI.Scale);
+        int lowerHeight = root.Rect.Height - upperHeight - dockHeight - gap * 2;
+        stockList = new GUIListBox(new RectTransform(new Point(supplyWidth - listInset * 2, (int)((int)(lowerHeight * 0.95f) * 0.84f))))
+            { AutoHideScrollBar = false, KeepSpaceForScrollBar = true, Spacing = (int)(4 * GUI.Scale) };
+        stockList.UpdateDimensions();
+        // Native grid rows reserve trailing spacing as well as the scrollbar and style padding.
+        int unusedWidth = stockList.Content.Rect.Width % ((int)(72 * GUI.Scale) + stockList.Spacing);
+        supplyWidth -= unusedWidth;
+        magazineWidth += unusedWidth;
         var upper = PanelRow(upperHeight);
         var presets = Column(upper, presetWidth, listInset);
         presetScope = Label(presets, "", 0.055f);
@@ -151,7 +159,7 @@ public sealed partial class DeepAmmoLoader
         loadButton = Button(magazineActions, "load", 0.49f, 1,
             () => { message = ""; RequestLoad(draft.ToArray()); uiDirty = true; });
 
-        var lower = PanelRow(root.Rect.Height - upperHeight - dockHeight - gap * 2);
+        var lower = PanelRow(lowerHeight);
         var supply = Column(lower, supplyWidth, listInset);
         var supplyOptions = Row(supply, 0.14f);
         stockSummary = Label(supplyOptions, "", 1, 0.6f);
@@ -159,9 +167,9 @@ public sealed partial class DeepAmmoLoader
         addQuantity = new GUINumberInput(new RectTransform(new Vector2(0.18f, 1), supplyOptions.RectTransform), NumberType.Int)
             { MinValueInt = 1, MaxValueInt = AmmoPlan.MaxRounds, IntValue = addCount, Enabled = !withdrawMode };
         addQuantity.OnValueChanged += _ => { if (addQuantity.IntValue > 0) { addCount = addQuantity.IntValue; uiDirty = true; } };
-        stockList = List(supply, 0.84f);
+        stockList.RectTransform.Parent = supply.RectTransform;
+        stockList.RectTransform.Resize(new Vector2(1, 0.84f));
         stockList.ToolTip = L("addhint");
-        stockList.Spacing = (int)(4 * GUI.Scale);
         stockList.CurrentSelectMode = GUIListBox.SelectMode.None;
         stockList.CanTakeKeyBoardFocus = false;
         var checks = Column(lower, magazineWidth, listInset);
@@ -488,12 +496,12 @@ public sealed partial class DeepAmmoLoader
         var supplied = withdrawMode && !UseSupplyStorage ? new Dictionary<string, int>() :
             SuppliedAmmo(withdrawMode ? QuoteSupply(new Dictionary<string, int>()) : quote);
         var visibleStock = stock.Counts.Keys.Concat(supplied.Keys).Distinct(StringComparer.OrdinalIgnoreCase)
-            .Where(id => withdrawMode || target == null || IsCompatible(target, id)).OrderBy(AmmoName)
+            .Where(id => target == null || IsCompatible(target, id)).OrderBy(AmmoName)
             .Select(id => new KeyValuePair<string, int>(id, stock[id])).ToArray();
         stockList.UseGridLayout = visibleStock.Length > 0;
         stockList.ToolTip = L(withdrawMode ? "withdrawmodehint" : "addhint");
         bool hasSupply = (!withdrawMode || UseSupplyStorage) && supplies.Length > 0;
-        stockSummary!.Text = message.Length > 0 ? message : $"{L(hasSupply ? "availableammo" : withdrawMode || target == null ? "allstock" : "compatiblestock")} · {visibleStock.Length} {L("types")} · {(hasSupply ? L("stored") + " " : "")}{visibleStock.Sum(p => (long)p.Value):N0} {L("rounds")}";
+        stockSummary!.Text = message.Length > 0 ? message : $"{L(hasSupply ? "availableammo" : target == null ? "allstock" : "compatiblestock")} · {visibleStock.Length} {L("types")} · {(hasSupply ? L("stored") + " " : "")}{visibleStock.Sum(p => (long)p.Value):N0} {L("rounds")}";
         stockSummary.ToolTip = stockSummary.Text + (hasSupply ? "\n" + L(withdrawMode ? "withdrawmodehint" : "supplyhint") + "\n" +
             string.Join("\n", supplies.Select(p => $"{AmmoName(p.Prefab)} · {p.Amount:N2}/{p.Capacity:N2}")) : "");
         if (visibleStock.Length == 0) { TextRow(stockList, L("emptystock").Value); }

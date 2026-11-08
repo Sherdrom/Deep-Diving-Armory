@@ -126,9 +126,37 @@ static void Run(string[] args)
         Assert(roundTrip.Name == "DeepAmmoLoader" && roundTrip.Element("Stock")!.Element("Ammo")!.Attribute("count")!.Value == "17",
             "Saving must keep migrated stock under the new component name.");
         ValidateXml(dda, expected);
+        var prefabRegistry = prefabType.GetField("Prefabs")!.GetValue(null)!;
+        var addPrefab = prefabRegistry.GetType().GetMethod("Add", [prefabType, typeof(bool)])!;
+        var removePrefab = prefabRegistry.GetType().GetMethod("Remove", [prefabType])!;
+        var registered = new List<object>();
+        object Register(XElement xml)
+        {
+            object prefab = RuntimeHelpers.GetUninitializedObject(prefabType);
+            Field(prefabType, "Identifier").SetValue(prefab, Activator.CreateInstance(identifierType, (string)xml.Attribute("identifier")!));
+            prefabType.GetProperty("ConfigElement")!.SetValue(prefab, Activator.CreateInstance(GameType("ContentXElement"), null, xml));
+            prefabType.GetProperty("Health")!.SetValue(prefab, (float?)xml.Attribute("health") ?? 100f);
+            addPrefab.Invoke(prefabRegistry, [prefab, false]);
+            registered.Add(prefab);
+            return prefab;
+        }
+        try
+        {
+            var projectiles = XDocument.Load(Path.Combine(dda, "weapon/rifle/rifle_round.xml")).Root!.Elements("Item")
+                .ToDictionary(x => (string)x.Attribute("identifier")!, StringComparer.OrdinalIgnoreCase);
+            foreach (var package in XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoPackages/Pack_5.56x45.xml")).Root!.Elements("Item"))
+            {
+                string ammo = (string)package.Element("VirtualizedAmmoStorage")!.Attribute("ProjectileIdentifier")!;
+                Register(projectiles[ammo]);
+                object prefab = Register(package);
+                Assert(ReferenceEquals(loaderType.GetMethod("FindWithdrawalPackage")!.Invoke(null, [ammo]), prefab),
+                    "Native component lookup failed for XML-defined package: " + package.Attribute("identifier")!.Value);
+            }
+        }
+        finally { foreach (object prefab in registered) { removePrefab.Invoke(prefabRegistry, [prefab]); } }
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         Assert(!Patched(), "Unload must remove the migration hook.");
-        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, seven supply sources, saved-stock rename, unload and XML registration.");
+        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, seven supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
     }
     finally
     {
@@ -166,7 +194,7 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
             .Value.Split(',').Contains("deep_ammobox"), "Source rejected by intake.");
         var package = packages.Single(p => string.Equals((string?)p.Element("VirtualizedAmmoStorage")?.Attribute("ProjectileIdentifier"),
             entry.Value, StringComparison.OrdinalIgnoreCase));
-        Assert((string?)package.Attribute("health") == "30" && package.Attribute("tags")!.Value.Split(',').Contains("vceammopackage") &&
+        Assert((string?)package.Attribute("health") == "30" &&
             !package.Descendants("Fabricate").Any() && !projectiles[entry.Value].Descendants("Fabricate").Any(),
             "New ammunition and its 30-round package must not have crafting recipes.");
         foreach (string attribute in new[] { "texture", "sourcerect" })

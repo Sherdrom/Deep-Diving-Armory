@@ -73,8 +73,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
     public static ItemPrefab? FindWithdrawalPackage(string id)
     {
         if (!IsProjectile(id)) { return null; }
-        return ItemPrefab.Prefabs.Where(p => p.Tags.Contains("vceammopackage".ToIdentifier()) &&
-                float.IsFinite(p.Health) && p.Health >= 1 && p.Health < int.MaxValue &&
+        return ItemPrefab.Prefabs.Where(p => float.IsFinite(p.Health) && p.Health >= 1 && p.Health < int.MaxValue &&
                 ElementHelper.GetFirstComponentElementByID<VirtualizedAmmoStorage>(p.Identifier)?
                     .GetAttributeIdentifier("ProjectileIdentifier", Identifier.Empty) == id.ToIdentifier() &&
                 ElementHelper.GetFirstComponentElementByID<ItemContainer>(p.Identifier) == null)

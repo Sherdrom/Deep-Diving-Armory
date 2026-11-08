@@ -10,6 +10,8 @@ LuaCs 从已加载程序集发现 ItemComponent，项目继续由 ModConfig.xml 
 5.56 仍为每 30 发消耗 1.5625 点 Condition；MG42 按标称 300 发换算，保留 Lua 配方的小数精度。
 投料、取包、目标弹匣容器顺序为 0/1/2。卸弹和投入弹药包优先回填箱子，剩余存入机器库存；
 装填和取包优先消耗现存子弹。原有弹药箱、旧式弹药及配方不变。
+取包按 `VirtualizedAmmoStorage` 的弹种配置和有效容量识别非容器弹药包，不依赖标签名称；取包与装填共用目标弹匣筛选。
+弹药列表按完整网格列收齐宽度，保留原生滚动条、卡片尺寸，以及上下相邻面板的共同边线。
 
 `Plugin.cs` 仅对 `deep_new_ammoloader` 的旧存档组件名作迁移，保留其 Stock 和属性；其他装弹机不改名。
 本地预设改存 `DDA/DeepAmmoLoaderPresets.json`，首次保存前可读取原 `VCE/AmmoLoaderPresets.json`。

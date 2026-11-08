@@ -213,7 +213,11 @@ ItemPrefab Package(string id, uint number, float health, string ammo, bool tagge
 var largest = Package("a_package", 10, 120, "a");
 Package("z_package", 11, 120, "a");
 Package("small_package", 12, 24, "a");
-Package("untagged_package", 13, 1000, "a", tagged: false);
+var untagged = Package("untagged_package", 13, 1000, "a", tagged: false);
+Check(DeepAmmoLoader.FindWithdrawalPackage("a") == untagged, "storage component identifies packages without a hard-coded tag");
+untagged.Tags.Add("renamed_package_tag".ToIdentifier());
+Check(DeepAmmoLoader.FindWithdrawalPackage("a") == untagged, "renaming package tags does not change withdrawal eligibility");
+ItemPrefab.Prefabs.Values.Remove(untagged);
 Package("container_package", 14, 1000, "a", container: true);
 Package("infinite_package", 15, float.PositiveInfinity, "a");
 Package("oversized_package", 16, float.MaxValue, "a");
@@ -221,6 +225,17 @@ var bPackage = Package("b_package", 17, 100, "b");
 Check(DeepAmmoLoader.FindWithdrawalPackage("a") == largest, "largest valid package wins with a stable identifier tie-break");
 Check(DeepAmmoLoader.FindWithdrawalPackage("wrong") == null && DeepAmmoLoader.FindWithdrawalPackage("unknown") == null,
     "missing packages and unknown projectile types cannot be withdrawn");
+uint packageNumber = 10000;
+foreach (var element in XDocument.Load("weapon/ammo/NewAmmoPackages/Pack_5.56x45.xml").Root!.Elements("Item"))
+{
+    string ammo = (string)element.Element("VirtualizedAmmoStorage")!.Attribute("ProjectileIdentifier")!;
+    ItemPrefab.Prefabs.Values.Add(new ItemPrefab(ammo, packageNumber++));
+    var definedPackage = new ItemPrefab((string)element.Attribute("identifier")!, packageNumber++,
+        ((string)element.Attribute("tags")!).Split(','))
+        { Health = (float)element.Attribute("health")!, ConfigElement = new(element) };
+    ItemPrefab.Prefabs.Values.Add(definedPackage);
+    Check(DeepAmmoLoader.FindWithdrawalPackage(ammo) == definedPackage, "DDA XML-defined package resolves its configured projectile");
+}
 machine = new Item(40, bulletA);
 intake = new ItemContainer(machine, 6);
 var pickup = new ItemContainer(machine, 3);

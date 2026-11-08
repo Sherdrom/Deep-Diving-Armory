@@ -390,6 +390,8 @@ static void Run()
     }
     Console.WriteLine("PASS: native intake/pickup/target slots with configurable counts and rows remain centered at three dock sizes after moving/rebinding.");
 
+    config.Graphics.HUDScale = 1;
+    typeof(GameSettings).GetField("currentConfig", fields)!.SetValue(null, config);
     var layoutLoader = (DeepAmmoLoader)RuntimeHelpers.GetUninitializedObject(typeof(DeepAmmoLoader));
     typeof(ItemComponent).GetField("GuiFrameSource", fields)!.SetValue(layoutLoader, new XElement("GuiFrame", new XAttribute("draggable", false)));
     var layoutContainers = new List<ItemContainer>();
@@ -418,6 +420,33 @@ static void Run()
     {
         layoutLoader.GuiFrame = new GUIFrame(new RectTransform(size), style: null);
         layoutLoader.CreateGUI();
+        var grid = (GUIListBox)typeof(DeepAmmoLoader).GetField("stockList", fields)!.GetValue(layoutLoader)!;
+        grid.UpdateDimensions();
+        int cellSize = (int)(72 * GUI.Scale);
+        int columns = grid.Content.Rect.Width / (cellSize + grid.Spacing);
+        if (columns < 1 || grid.Content.Rect.Width % (cellSize + grid.Spacing) != 0 || layoutLoader.GuiFrame.Rect.Size != size)
+        { throw new Exception($"Stock grid leaves a partial column or resizes the window at {size}: {grid.Content.Rect}."); }
+        grid.UseGridLayout = true;
+        for (int i = 0; i < columns * 3; i++)
+        { _ = new GUIFrame(new RectTransform(new Point(cellSize), grid.Content.RectTransform, isFixedSize: true), style: null); }
+        foreach (var offset in new[] { Point.Zero, new Point(37, 23) })
+        {
+            layoutLoader.GuiFrame.RectTransform.AbsoluteOffset = offset;
+            grid.UpdateManually(0);
+            var cells = grid.Content.Children.ToArray();
+            if (cells[0].Rect.Left != grid.Content.Rect.Left ||
+                grid.Content.Rect.Right - cells[columns - 1].Rect.Right != grid.Spacing ||
+                cells[columns].Rect.Left != cells[0].Rect.Left ||
+                cells[columns].Rect.Top - cells[0].Rect.Bottom != grid.Spacing)
+            { throw new Exception("Native grid wrapping lost its tight right edge or spacing after moving."); }
+        }
+        var actual = (GUIListBox)typeof(DeepAmmoLoader).GetField("actualList", fields)!.GetValue(layoutLoader)!;
+        var check = (GUIListBox)typeof(DeepAmmoLoader).GetField("checkList", fields)!.GetValue(layoutLoader)!;
+        var editorPreview = (GUIListBox)typeof(DeepAmmoLoader).GetField("previewList", fields)!.GetValue(layoutLoader)!;
+        if (actual.Rect.Left != check.Rect.Left || actual.Rect.Right != check.Rect.Right ||
+            grid.Rect.Right != editorPreview.Rect.Right)
+        { throw new Exception("Snapping the stock grid broke the shared panel columns."); }
+        layoutLoader.GuiFrame.RectTransform.AbsoluteOffset = Point.Zero;
         var holders = new[] { "inputHolder", "outputHolder", "targetHolder" }
             .Select(name => (GUIFrame)typeof(DeepAmmoLoader).GetField(name, fields)!.GetValue(layoutLoader)!).ToArray();
         if (!(holders[0].Rect.Right < holders[1].Rect.Left && holders[1].Rect.Right < holders[2].Rect.Left))
@@ -468,7 +497,7 @@ static void Run()
         layoutLoader.TextPrefix = "";
     }
     GUI.KeyboardDispatcher = layoutKeyboard;
-    Console.WriteLine("PASS: native dock panels fit configurable multi-row slots at three window sizes; checkbox switches and preserves mode/quantity.");
+    Console.WriteLine("PASS: native grid rows fit tightly at three window sizes after moving, retain shared column edges, and preserve dock slots and mode/quantity on rebuild.");
 
     config.Graphics.HUDScale = 1;
     typeof(GameSettings).GetField("currentConfig", fields)!.SetValue(null, config);
@@ -751,6 +780,44 @@ static void Run()
         stockTile.OnClicked(stockTile, null);
         if (refreshDraft.Sum(r => r.Count) != 5) { throw new Exception("Leaving withdrawal mode did not restore stock-to-draft clicks."); }
         Console.WriteLine("PASS: stock clicks route to withdrawal without changing the draft and return to adding the configured batch when unchecked.");
+        typeof(ItemPrefab).GetProperty(nameof(ItemPrefab.ConfigElement))!.SetValue(ammoPrefab,
+            new ContentXElement(null, XElement.Parse("<Item><Projectile /></Item>")));
+        SetPrefabField("tags", ImmutableHashSet.Create("test_caliber".ToIdentifier()));
+        typeof(MapEntity).GetField(nameof(MapEntity.Prefab))!.SetValue(magazineItem, ammoPrefab);
+        ItemPrefab.Prefabs.Add(ammoPrefab, false);
+        magazine.LoadedAmmoIdentifiers.Clear();
+        refreshDraft.Clear();
+        refreshLoader.UseSupplyStorage = true;
+        refreshLoader.TextPrefix = "test.ammoloader.";
+        foreach (bool suppliedOnly in new[] { false, true })
+        {
+            refreshLoader.Stock.Load(null);
+            refreshLoader.Stock.TryAdd(new Dictionary<string, int> { ["normal"] = 1 });
+            if (!suppliedOnly) { refreshLoader.Stock.TryAdd(new Dictionary<string, int> { [ammoPrefab.Identifier.Value] = 2 }); }
+            SetSupplies(suppliedOnly ? $$$"""
+                [{"Id":"filter","Prefab":"box","Amount":5,"Capacity":100,"Costs":{"{{{ammoPrefab.Identifier.Value}}}":1}}]
+                """ : "[]");
+            foreach (bool withdraw in new[] { false, true, false })
+            foreach (string? caliber in new[] { "test_caliber", "other_caliber", null })
+            {
+                SetRefreshField("withdrawMode", withdraw);
+                SetRefreshField("targetContainer", caliber == null ? null! : capacityTarget);
+                typeof(VirtualizedMagazine).GetProperty(nameof(VirtualizedMagazine.AllowedAmmoTags))!
+                    .SetValue(magazine, ImmutableHashSet.Create((caliber ?? "").ToIdentifier()));
+                SetRefreshField("uiDirty", true);
+                Tick();
+                var visible = lists[3].Content.Children.OfType<GUIButton>()
+                    .Select(tile => ((ValueTuple<string, ItemPrefab?>)tile.UserData).Item1).ToArray();
+                if (visible.Length != (caliber == null ? 2 : caliber == "test_caliber" ? 1 : 0) ||
+                    caliber == "test_caliber" && visible.Single() != ammoPrefab.Identifier.Value)
+                { throw new Exception($"Magazine filter failed with withdrawal={withdraw}, supply-only={suppliedOnly}, caliber={caliber}."); }
+            }
+        }
+        ItemPrefab.Prefabs.Remove(ammoPrefab);
+        refreshLoader.UseSupplyStorage = false;
+        refreshLoader.TextPrefix = "";
+        SetRefreshField("withdrawMode", false);
+        Console.WriteLine("PASS: stored and supply-only ammo keep the magazine filter across withdrawal toggles, target changes and target removal.");
         SetSupplies("""
             [{"Id":"shared","Prefab":"box","Amount":5,"Capacity":100,"Costs":{"normal":0.5,"ap":1}}]
             """);
