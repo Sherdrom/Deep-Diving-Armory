@@ -113,12 +113,18 @@ static Func<Item, int> CompileScriptState()
     typeof(CSharpCompilationOptions).GetProperty("TopLevelBinderFlags", BindingFlags.Instance | BindingFlags.NonPublic)
         .SetValue(options, 37748738u);
     var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator)
+        .Concat(new[] { "bin/Client/Windows/DeepAmmoLoader.dll", ".Tools/Refs/MonoMod.Utils.dll" })
         .Select(path => MetadataReference.CreateFromFile(path));
     var source = "global using System; global using System.Collections.Generic; global using System.Linq; "
-        + "global using Barotrauma.LuaCs; global using Barotrauma.Extensions;\n"
+        + "global using Barotrauma; global using Barotrauma.LuaCs; global using Barotrauma.Extensions;\n"
         + File.ReadAllText("CSharp/MoreInformationDisplay.cs");
+    // LuaCs injects these attributes while both the mod DLL and MonoMod are compiler references.
+    var attributes = "using System.Runtime.CompilerServices; "
+        + "[assembly: IgnoresAccessChecksTo(\"BarotraumaCore\")] [assembly: IgnoresAccessChecksTo(\"Barotrauma\")]";
+    var parseOptions = new CSharpParseOptions(preprocessorSymbols: new[] { "CLIENT" });
     var compilation = CSharpCompilation.Create("TooltipScriptRegression",
-        new[] { CSharpSyntaxTree.ParseText(source) }, references, options);
+        new[] { CSharpSyntaxTree.ParseText(source, parseOptions), CSharpSyntaxTree.ParseText(attributes, parseOptions),
+            CSharpSyntaxTree.ParseText(File.ReadAllText("CSharp/DeepSlotExpanded.cs"), parseOptions) }, references, options);
     using var stream = new MemoryStream();
     var result = compilation.Emit(stream);
     Assert(result.Success, string.Join("\n", result.Diagnostics));

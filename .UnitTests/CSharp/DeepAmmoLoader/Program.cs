@@ -18,8 +18,7 @@ static void Run(string[] args)
     string platform = OperatingSystem.IsWindows() ? "Windows" : OperatingSystem.IsMacOS() ? "Mac" : "Linux";
     string target = args.Length == 5 ? args[4] : "Client";
     string dda = Path.GetFullPath(args[2]);
-    string[] directories = [Path.GetFullPath(args[0]), Path.Combine(Path.GetFullPath(args[1]), "bin", platform, target),
-        Path.Combine(dda, "bin", target, platform == "Mac" ? "OSX" : platform),
+    string[] directories = [Path.GetFullPath(args[0]),
         Path.Combine(Path.GetFullPath(args[3]), platform, target)];
     AssemblyLoadContext.Default.Resolving += (context, name) =>
     {
@@ -31,8 +30,13 @@ static void Run(string[] args)
         return null;
     };
     Assembly game = Assembly.Load(target == "Client" ? "Barotrauma" : "DedicatedServer"), core = Assembly.Load("BarotraumaCore");
-    Assembly vce = Assembly.Load("VanillaComponentsExpanded" + target);
-    Assembly adapter = Assembly.Load("DeepAmmoLoader");
+    // Native VCE and LuaCs mods occupy separate contexts in the unstable game.
+    var vceContext = new AssemblyLoadContext("VCE-native", isCollectible: true);
+    var ddaContext = new AssemblyLoadContext("DDA-LuaCs", isCollectible: true);
+    Assembly vce = vceContext.LoadFromAssemblyPath(Path.Combine(Path.GetFullPath(args[1]), "bin", platform, target,
+        "VanillaComponentsExpanded" + target + ".dll"));
+    Assembly adapter = ddaContext.LoadFromAssemblyPath(Path.Combine(dda, "bin", target,
+        platform == "Mac" ? "OSX" : platform, "DeepAmmoLoader.dll"));
     Type GameType(string name) => game.GetType("Barotrauma." + name) ?? core.GetType("Barotrauma." + name, true)!;
     Type itemType = GameType("Item"), prefabType = GameType("ItemPrefab"), identifierType = GameType("Identifier");
     Type componentType = GameType("Items.Components.ItemComponent");
@@ -55,7 +59,6 @@ static void Run(string[] args)
         object element = Activator.CreateInstance(GameType("ContentXElement"), null, XElement.Parse("<DeepAmmoLoader />"))!;
         return Activator.CreateInstance(loaderType, Item(id), element)!;
     }
-    var existing = Loader("deep_new_ammoloader");
     var onLoaded = itemType.GetMethods().Single(m => m.Name == "Load" && m.IsStatic);
     Type harmonyType = Assembly.Load("0Harmony").GetType("HarmonyLib.Harmony", true)!;
     bool Patched()
@@ -68,6 +71,11 @@ static void Run(string[] args)
     {
         pluginType.GetMethod("Initialize")!.Invoke(plugin, null);
         Assert(Patched(), "Saved-component migration was not installed.");
+        var existing = Loader("deep_new_ammoloader");
+        Assert(loaderType.GetProperty("Target")!.PropertyType == vce.GetType("VCE_VirtualizedMagazine.VirtualizedMagazine", true),
+            "DeepAmmoLoader must use the already-loaded native VCE type.");
+        Assert(!ddaContext.Assemblies.Any(a => a.GetName().Name!.StartsWith("VanillaComponentsExpanded")),
+            "The LuaCs context must not load a second copy of VCE.");
         Assert(supply.GetValue(existing) != null, "DDA supply must be available when the component is constructed.");
         Assert(loaderType.Assembly == adapter && loaderType.BaseType == componentType,
             "DeepAmmoLoader must own its implementation, not inherit VCE's loader.");
@@ -117,12 +125,14 @@ static void Run(string[] args)
         ValidateXml(dda, expected);
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         Assert(!Patched(), "Unload must remove the migration hook.");
-        Console.WriteLine($"PASS ({target}): DDA-owned loader, network handler, six supply costs/mappings, saved-stock rename, unload and XML registration.");
+        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, six supply costs/mappings, saved-stock rename, unload and XML registration.");
     }
     finally
     {
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         items.Clear();
+        ddaContext.Unload();
+        vceContext.Unload();
     }
 }
 
