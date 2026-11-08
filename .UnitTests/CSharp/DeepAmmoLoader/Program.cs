@@ -94,11 +94,14 @@ static void Run(string[] args)
             Assert(definition != null, "Missing source: " + entry.Key);
             Assert((string)definition!.GetType().GetProperty("PoolId")!.GetValue(definition)! == "dda." + entry.Key, "Wrong supply pool.");
             var costs = (IReadOnlyDictionary<string, double>)definition.GetType().GetProperty("Costs")!.GetValue(definition)!;
-            Assert(costs.Count == 1 && costs.TryGetValue(entry.Value, out double cost) && Math.Abs(cost * 30 - 1.5625) < 1e-12,
+            Assert(costs.TryGetValue(entry.Value, out double cost) && Math.Abs(cost * 30 - 1.5625) < 1e-12,
                 "Wrong projectile/cost for " + entry.Key);
         }
-        Assert(resolver.DynamicInvoke(Item("deep_ammobox_copper")) == null && resolver.DynamicInvoke(Item("unrelated")) == null,
-            "Unfinished or unrelated sources must remain unmapped.");
+        object copper = resolver.DynamicInvoke(Item("deep_ammobox_copper"))!;
+        var copperCosts = (IReadOnlyDictionary<string, double>)copper.GetType().GetProperty("Costs")!.GetValue(copper)!;
+        Assert(copperCosts.Count == 1 && copperCosts.TryGetValue("smg_vector_round_rip", out double ripCost) &&
+            Math.Abs(ripCost * 30 - 1.0417) < 1e-12, "Copper supply must use the base Vector RIP magazine cost.");
+        Assert(resolver.DynamicInvoke(Item("unrelated")) == null, "Unrelated sources must remain unmapped.");
         var migrate = pluginType.GetMethod("MigrateSavedComponent", BindingFlags.Static | BindingFlags.NonPublic)!;
         foreach (string id in new[] { "deep_new_ammoloader", "other_ammoloader" })
         {
@@ -125,7 +128,7 @@ static void Run(string[] args)
         ValidateXml(dda, expected);
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         Assert(!Patched(), "Unload must remove the migration hook.");
-        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, six supply costs/mappings, saved-stock rename, unload and XML registration.");
+        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, seven supply sources, saved-stock rename, unload and XML registration.");
     }
     finally
     {

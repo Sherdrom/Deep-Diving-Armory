@@ -5,7 +5,9 @@
 VCE 的虚拟弹匣、弹药存储和弹匣预设仍是运行依赖；DDA 不再调用 VCE 的 AmmoLoader 或反射绑定 SupplyResolver。
 LuaCs 从已加载程序集发现 ItemComponent，项目继续由 ModConfig.xml 注册。
 
-`SharedProject/DdaSupply.cs` 保留六种 5.56 弹药箱映射，每 30 发消耗 1.5625 点 Condition，未完成的 RIP 不映射。
+`SharedProject/DdaSupply.cs` 按 `ContainerConditionTransfer.lua` 补齐七种材质弹药箱的 175 个弹药映射，包括铜制 RIP。
+单发消耗 = Lua 配方的整匣消耗 ÷ 基础弹匣标称发数；同一弹种的扩容弹匣、弹鼓配方有差异时，以基础弹匣为准。
+5.56 仍为每 30 发消耗 1.5625 点 Condition；MG42 按标称 300 发换算，保留 Lua 配方的小数精度。
 投料、取包、目标弹匣容器顺序为 0/1/2。卸弹和投入弹药包优先回填箱子，剩余存入机器库存；
 装填和取包优先消耗现存子弹。原有弹药箱、旧式弹药及配方不变。
 
