@@ -25,7 +25,7 @@ jobs:
           # Keep the runner's preinstalled SDKs out of version selection.
           DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 8.0.x
 
       - name: Run Lua tests
         shell: bash
@@ -193,7 +193,7 @@ jobs:
           # Keep the runner's preinstalled SDKs out of version selection.
           DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 8.0.x
 
       - name: Build C# plugins
         shell: bash

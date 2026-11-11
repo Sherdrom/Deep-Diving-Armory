@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType><UseAppHost>false</UseAppHost>
-    <TargetFramework>net9.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
     <Libs>$(MSBuildThisFileDirectory)../../../.Tools/Refs</Libs>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Collections.Immutable" HintPath="$(Libs)/System.Collections.Immutable.dll" Private="false" />
     <Reference Include="MonoMod.Utils" HintPath="$(Libs)/MonoMod.Utils.dll" Private="false" />
     <Reference Include="Barotrauma" HintPath="$(Libs)/Windows/Barotrauma.dll" Private="false" />
     <Reference Include="BarotraumaCore" HintPath="$(Libs)/Windows/BarotraumaCore.dll" Private="false" />
