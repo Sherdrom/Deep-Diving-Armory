@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../../.AssemblyCSharpSource/LuaCsModTemplate/Build.props" />
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>UnstableCompatibility.Tests</AssemblyName>
     <BuildTarget Condition="'$(BuildTarget)' == ''">Client</BuildTarget>
     <DefineConstants Condition="'$(BuildTarget)' == 'Client'">$(DefineConstants);CLIENT</DefineConstants>
@@ -11,6 +11,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" PrivateAssets="all" />
