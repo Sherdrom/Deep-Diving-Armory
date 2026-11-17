@@ -70,6 +70,8 @@ var bulletA = new ItemPrefab("a", 1, "compatible");
 var bulletB = new ItemPrefab("b", 2, "compatible");
 var wrongBullet = new ItemPrefab("wrong", 3, "different");
 ItemPrefab.Prefabs.Values.AddRange([bulletA, bulletB, wrongBullet]);
+var player = new Character();
+var client = new Client { Character = player };
 var machine = new Item(10, bulletA);
 var intake = new ItemContainer(machine, 6);
 var targetSlot = new ItemContainer(machine, 1);
@@ -79,7 +81,7 @@ loader.OnItemLoaded();
 var magItem = new Item(20, bulletA);
 var mag = new VCE_VirtualizedMagazine.VirtualizedMagazine(magItem);
 magItem.Components.Add(mag);
-targetSlot.Inventory.AllItems.Add(magItem);
+magItem.ParentInventory = player.Inventory;
 var packItem = new Item(30, bulletA) { Condition = 120, MaxCondition = 120 };
 var pack = new VirtualizedAmmoStorage(packItem, new(XElement.Parse("<VirtualizedAmmoStorage ProjectileIdentifier='a' />")));
 packItem.Components.Add(pack);
@@ -93,10 +95,15 @@ Check(loader.Stock["a"] == 120 && packItem.IsInRemoveQueue, "queued/saved packag
 uint Revision() => (uint)loader.ServerGetEventData().GetType().GetProperty("Revision")!.GetValue(loader.ServerGetEventData())!;
 void Send(byte command, uint rev, ushort target, bool allowed = true, params (uint Id, ushort Count)[] groups)
 {
+    client.Allowed = allowed;
+    SendAs(client, command, rev, target, groups);
+}
+void SendAs(Client sender, byte command, uint rev, ushort target, params (uint Id, ushort Count)[] groups)
+{
     var msg = new Message();
     msg.WriteByte(command); msg.WriteUInt32(rev); msg.WriteUInt16(target); msg.WriteByte((byte)groups.Length);
     foreach (var group in groups) { msg.WriteUInt32(group.Id); msg.WriteUInt16(group.Count); }
-    loader.ServerEventRead(msg.Rewind(), new Client { Allowed = allowed });
+    loader.ServerEventRead(msg.Rewind(), sender);
     Timing.TotalTime++;
 }
 loader.Stock.TryAdd(Amount("b", 24));
@@ -116,6 +123,61 @@ uint beforeUnload = Revision();
 Send(2, beforeUnload, 20);
 Send(2, beforeUnload, 20);
 Check(mag.LoadedCount == 0 && loader.Stock["a"] == 120 && loader.Stock["b"] == 24, "repeated unload returns once");
+var otherPlayer = new Character();
+var otherClient = new Client { Character = otherPlayer };
+var otherMagItem = new Item(21, bulletA) { ParentInventory = otherPlayer.Inventory };
+var otherMag = new VirtualizedMagazine(otherMagItem);
+otherMagItem.Components.Add(otherMag);
+uint sharedRevision = Revision();
+SendAs(client, 1, sharedRevision, 20, (1, 2));
+SendAs(otherClient, 1, sharedRevision, 21, (2, 3));
+Check(mag.LoadedCount == 2 && otherMag.LoadedCount == 3 && loader.Stock["a"] == 118 && loader.Stock["b"] == 21,
+    "two players load their own magazines from the same snapshot without invalidating each other");
+SendAs(client, 1, sharedRevision, 20, (1, 2));
+SendAs(otherClient, 1, sharedRevision, 21, (2, 3));
+Check(mag.LoadedCount == 2 && otherMag.LoadedCount == 3 && loader.Stock["a"] == 118 && loader.Stock["b"] == 21,
+    "each player's old successful request remains protected against replay");
+SendAs(client, 2, Revision(), 21);
+SendAs(otherClient, 1, Revision(), 20, (2, 1));
+Check(mag.LoadedCount == 2 && otherMag.LoadedCount == 3, "clients cannot load or unload another player's magazine");
+sharedRevision = Revision();
+SendAs(client, 2, sharedRevision, 20);
+SendAs(otherClient, 2, sharedRevision, 21);
+Check(loader.Stock["a"] == 120 && loader.Stock["b"] == 24 && mag.LoadedCount == 0 && otherMag.LoadedCount == 0,
+    "simultaneous unloads return each magazine's rounds exactly once");
+otherMagItem.ParentInventory = null;
+SendAs(otherClient, 1, Revision(), 21, (2, 1));
+Check(otherMag.LoadedCount == 0, "a dropped magazine cannot be loaded using an old selection");
+otherMagItem.ParentInventory = otherPlayer.Inventory;
+otherMagItem.IsInRemoveQueue = true;
+SendAs(otherClient, 1, Revision(), 21, (2, 1));
+Check(otherMag.LoadedCount == 0, "a magazine queued for removal cannot consume ammunition");
+otherMagItem.IsInRemoveQueue = false;
+otherClient.Character = null;
+SendAs(otherClient, 1, Revision(), 21, (2, 1));
+Check(otherMag.LoadedCount == 0, "a disconnected character cannot use a retained selection");
+otherClient.Character = otherPlayer;
+var carriedBag = new Item(22, bulletA) { ParentInventory = otherPlayer.Inventory };
+otherMagItem.ParentInventory = new ItemInventory(6) { Owner = carriedBag };
+SendAs(otherClient, 1, Revision(), 21, (2, 1));
+Check(otherMag.LoadedCount == 1, "a magazine inside the player's carried bag is selectable");
+SendAs(otherClient, 2, Revision(), 21);
+SendAs(client, 1, Revision() + 1, 20, (1, 1));
+Check(mag.LoadedCount == 0 && loader.Stock["a"] == 120 && loader.Stock["b"] == 24,
+    "future revisions remain invalid and concurrent operations conserve shared stock");
+sharedRevision = Revision();
+SendAs(client, 1, sharedRevision, 20, (2, 20));
+SendAs(otherClient, 1, sharedRevision, 21, (2, 20));
+Check(mag.LoadedCount == 20 && otherMag.LoadedCount == 0 && loader.Stock["b"] == 4,
+    "competing requests use remaining shared stock without partial loading or double spending");
+SendAs(client, 2, Revision(), 20);
+magItem.ParentInventory = targetSlot.Inventory;
+targetSlot.Inventory.AllItems.Add(magItem);
+SendAs(client, 1, Revision(), 20, (1, 1));
+Check(mag.LoadedCount == 0 && targetSlot.Inventory.GetItemAt(0) == magItem && loader.Stock["a"] == 120,
+    "a legacy stored magazine stays available for retrieval but cannot be loaded as a personal selection");
+targetSlot.Inventory.AllItems.Clear();
+magItem.ParentInventory = player.Inventory;
 mag.MaxSize = 6;
 Send(1, Revision(), 20, true, (2, 1), (1, 1));
 uint beforeTopUp = Revision();
@@ -311,7 +373,7 @@ loader.Stock.Load(new XElement("Stock", new XElement("Ammo", new XAttribute("id"
 mag = new VirtualizedMagazine(magItem);
 magItem.Components.Clear();
 magItem.Components.Add(mag);
-targetSlot.Inventory.AllItems.Add(magItem);
+magItem.ParentInventory = player.Inventory;
 Send(3, Revision(), 20, true, (1, 1));
 Send(1, Revision(), 20, true, (1, 25));
 Entity.Spawner.ProcessQueue();
@@ -342,7 +404,7 @@ loader.OnItemLoaded();
 mag = new VirtualizedMagazine(magItem);
 magItem.Components.Clear();
 magItem.Components.Add(mag);
-targetSlot.Inventory.AllItems.Add(magItem);
+magItem.ParentInventory = player.Inventory;
 var box = new Item(51, largest) { Condition = 2, MaxCondition = 100 };
 var otherBox = new Item(52, largest) { Condition = 3, MaxCondition = 100 };
 box.Components.Add(new VirtualizedAmmoStorage(box, new(XElement.Parse("<VirtualizedAmmoStorage ProjectileIdentifier='a' />"))));
@@ -410,7 +472,10 @@ box.Condition = 3;
 loader.Update(1, new Camera());
 Check(Revision() > supplyRevision, "external Condition changes invalidate the published supply state");
 Send(1, supplyRevision, 20, true, (1, 1));
-Check(mag.LoadedCount == 0 && box.Condition == 3, "stale supply revision rejected");
+Check(mag.LoadedCount == 1 && box.Condition == 2.5f, "an unrelated stock change is revalidated against current supplies");
+Send(2, Revision(), 20);
+loader.Stock.Load(null);
+box.Condition = 3;
 GameMain.NetworkMember = new() { IsClient = true };
 Send(1, Revision(), 20, true, (1, 1));
 Check(mag.LoadedCount == 0 && box.Condition == 3, "only the authority can debit supplies");
@@ -457,7 +522,7 @@ loader.OnItemLoaded();
 mag = new VirtualizedMagazine(magItem);
 magItem.Components.Clear();
 magItem.Components.Add(mag);
-targetSlot.Inventory.AllItems.Add(magItem);
+magItem.ParentInventory = player.Inventory;
 box = new Item(71, largest) { MaxCondition = 10, Condition = 9 };
 otherBox = new Item(72, largest) { MaxCondition = 10, Condition = 9.25f };
 intake.Inventory.AllItems.AddRange([box, otherBox]);

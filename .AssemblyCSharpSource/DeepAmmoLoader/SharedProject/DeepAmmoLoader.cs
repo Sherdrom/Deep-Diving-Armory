@@ -13,8 +13,6 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
     private XElement? invalidStock;
     private uint revision;
     private float scanTimer;
-    private ushort observedTarget;
-    private Identifier[] observedRounds = [];
 
     [Serialize(0, IsPropertySaveable.No)]
     public int InputContainerIndex { get; set; }
@@ -31,7 +29,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
     [Serialize("", IsPropertySaveable.No)]
     public string TextPrefix { get; set; } = "";
 
-    public VirtualizedMagazine? Target => targetContainer?.Inventory?.GetItemAt(0)?.GetComponent<VirtualizedMagazine>();
+    public VirtualizedMagazine? Target { get; private set; }
     public ItemContainer? InputContainer => inputContainer;
     public ItemContainer? TargetContainer => targetContainer;
     public ItemContainer? OutputContainer => outputContainer;
@@ -63,12 +61,17 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
     }
 
     partial void InitClient();
+    partial void UpdateTargetSelection();
 
     public static bool IsProjectile(string id) =>
         ElementHelper.GetFirstComponentElementByID<Projectile>(id.ToIdentifier()) != null;
 
     public static bool IsCompatible(VirtualizedMagazine? magazine, string id) =>
         IsProjectile(id) && (magazine == null || magazine.IsAmmoCompatible(id.ToIdentifier()));
+
+    private static VirtualizedMagazine? GetOwnedMagazine(Item? item, Character? character) =>
+        item is { Removed: false, IsInRemoveQueue: false } && character != null && item.IsOwnedBy(character)
+            ? item.GetComponent<VirtualizedMagazine>() : null;
 
     public static ItemPrefab? FindWithdrawalPackage(string id)
     {
@@ -139,6 +142,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
 
     public override void Update(float deltaTime, Camera cam)
     {
+        UpdateTargetSelection();
         if (!IsAuthority) { return; }
 #if CLIENT
         if (Screen.Selected == GameMain.SubEditorScreen) { return; }
@@ -176,21 +180,12 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
                 changed = true;
             }
         }
-        var target = Target;
-        var rounds = target?.LoadedAmmoIdentifiers.ToArray() ?? [];
-        if (observedTarget != (target?.Item.ID ?? 0) || !observedRounds.SequenceEqual(rounds))
-        {
-            observedTarget = target?.Item.ID ?? 0;
-            observedRounds = rounds;
-            changed = true;
-        }
         if (changed) { Changed(); }
     }
 
-    private bool TryLoad(IReadOnlyList<AmmoRun> plan, ushort targetId)
+    private bool TryLoad(IReadOnlyList<AmmoRun> plan, VirtualizedMagazine? magazine)
     {
-        var magazine = Target;
-        if (!IsAuthority || !Ready || magazine == null || magazine.Item.ID != targetId || magazine.LoadedCount >= magazine.MaxSize ||
+        if (!IsAuthority || !Ready || magazine == null || magazine.LoadedCount >= magazine.MaxSize ||
             !AmmoPlan.IsValid(plan, AmmoPlan.MaxRounds))
         {
             return false;
@@ -226,10 +221,9 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         return true;
     }
 
-    private bool TryUnload(ushort targetId)
+    private bool TryUnload(VirtualizedMagazine? magazine)
     {
-        var magazine = Target;
-        if (!IsAuthority || !Ready || magazine == null || magazine.Item.ID != targetId || magazine.LoadedCount == 0) { return false; }
+        if (!IsAuthority || !Ready || magazine == null || magazine.LoadedCount == 0) { return false; }
         if (RefreshSupplies()) { Changed(); }
         var returned = AmmoStock.Count(magazine.LoadedAmmoIdentifiers.Select(id => id.Value));
         if (!TryPrepareReturn(returned, out var stored, out var credits)) { return false; }
@@ -265,8 +259,6 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
     private void Changed()
     {
         revision++;
-        observedTarget = Target?.Item.ID ?? 0;
-        observedRounds = Target?.LoadedAmmoIdentifiers.ToArray() ?? [];
         PublishState();
     }
 

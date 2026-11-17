@@ -237,6 +237,7 @@ public sealed partial class DeepAmmoLoader
         BindInventory(InputContainer, inputHolder);
         BindInventory(OutputContainer, outputHolder);
         BindInventory(TargetContainer, targetHolder);
+        CreateTargetSlot();
         uiDirty = true;
     }
 
@@ -364,6 +365,7 @@ public sealed partial class DeepAmmoLoader
 
     public override void AddToGUIUpdateList(int order = 0)
     {
+        UpdateTargetSlot();
         // Rebuild before collection: HUD updates run later, leaving detached rows in this frame's update/draw list.
         if (uiDirty && presetList != null && GUI.KeyboardDispatcher.Subscriber is not GUITextBox &&
             presetList.DraggedElement == null && planList?.DraggedElement == null && previewList?.DraggedElement == null)

@@ -362,9 +362,11 @@ static void Run()
     }
     Console.WriteLine("PASS: native drag follows all four directions and screen bounds at 720p, 1080p and 1440p after HUD bounds reset.");
     var config = GameSettings.CurrentConfig;
+    config.KeyMap = GameSettings.Config.KeyMapping.GetDefault();
     config.Graphics.InventoryScale = 1;
     typeof(GameSettings).GetField("currentConfig", fields)!.SetValue(null, config);
     Inventory.DraggableIndicator ??= (Sprite)RuntimeHelpers.GetUninitializedObject(typeof(Sprite));
+    Inventory.UnequippedIndicator ??= (Sprite)RuntimeHelpers.GetUninitializedObject(typeof(Sprite));
     var bindInventory = typeof(DeepAmmoLoader).GetMethod("BindInventory", fields)!;
     foreach (int height in new[] { 42, 63, 84 })
     foreach (var (capacity, columns) in new[] { (1, 1), (3, 3), (6, 6), (8, 4), (12, 6) })
@@ -399,6 +401,7 @@ static void Run()
     {
         var container = (ItemContainer)RuntimeHelpers.GetUninitializedObject(typeof(ItemContainer));
         typeof(ItemContainer).GetField(nameof(ItemContainer.Inventory))!.SetValue(container, new ItemInventory(null, container, capacity, columns));
+        container.CanBeSelected = true;
         typeof(DeepAmmoLoader).GetField(name, fields)!.SetValue(layoutLoader, container);
         layoutContainers.Add(container);
     }
@@ -412,7 +415,8 @@ static void Run()
         ["test.ammoloader.intake".ToIdentifier()] = [new("Replacement intake caption", false, captionPack)],
         ["test.ammoloader.stockandsupply".ToIdentifier()] = [new("库存[stock]\n弹药箱[supply]", false, captionPack)],
         ["dda.ammoloader.stockandsupply".ToIdentifier()] = [new("Stock [stock] + Supply [supply]", false, captionPack)],
-        ["dda.ammoloader.output".ToIdentifier()] = [new("Ammo pickup", false, captionPack)]
+        ["dda.ammoloader.output".ToIdentifier()] = [new("Ammo pickup", false, captionPack)],
+        ["dda.ammoloader.targethint".ToIdentifier()] = [new("Select a carried magazine", false, captionPack)]
     }.ToImmutableDictionary());
     TextManager.TextPacks[TextManager.DefaultLanguage] = [captionPack];
     typeof(TextManager).GetProperty(nameof(TextManager.LanguageVersion))!.SetValue(null, TextManager.LanguageVersion + 1);
@@ -420,6 +424,16 @@ static void Run()
     {
         layoutLoader.GuiFrame = new GUIFrame(new RectTransform(size), style: null);
         layoutLoader.CreateGUI();
+        var personalSlot = (GUIComponent)typeof(DeepAmmoLoader).GetField("targetSlot", fields)!.GetValue(layoutLoader)!;
+        foreach (var offset in new[] { Point.Zero, new Point(37, 23) })
+        {
+            layoutLoader.GuiFrame.RectTransform.AbsoluteOffset = offset;
+            layoutContainers[2].Inventory.CreateSlots();
+            if (personalSlot.Rect != layoutContainers[2].Inventory.visualSlots[0].Rect ||
+                !personalSlot.Visible || layoutContainers[2].DrawInventory)
+            { throw new Exception("The personal target slot must retain native geometry and replace only the empty shared slot."); }
+        }
+        layoutLoader.GuiFrame.RectTransform.AbsoluteOffset = Point.Zero;
         var grid = (GUIListBox)typeof(DeepAmmoLoader).GetField("stockList", fields)!.GetValue(layoutLoader)!;
         grid.UpdateDimensions();
         int cellSize = (int)(72 * GUI.Scale);
@@ -498,6 +512,24 @@ static void Run()
     }
     GUI.KeyboardDispatcher = layoutKeyboard;
     Console.WriteLine("PASS: native grid rows fit tightly at three window sizes after moving, retain shared column edges, and preserve dock slots and mode/quantity on rebuild.");
+
+    var legacyItem = (Item)RuntimeHelpers.GetUninitializedObject(typeof(Item));
+    var legacyInventory = layoutContainers[2].Inventory;
+    var legacySlot = ((Array)typeof(Inventory).GetField("slots", fields)!.GetValue(legacyInventory)!).GetValue(0)!;
+    var updateTargetSlot = typeof(DeepAmmoLoader).GetMethod("UpdateTargetSlot", fields)!;
+    legacySlot.GetType().GetMethod("Add")!.Invoke(legacySlot, new object[] { legacyItem });
+    updateTargetSlot.Invoke(layoutLoader, null);
+    var selectionSlot = (GUIComponent)typeof(DeepAmmoLoader).GetField("targetSlot", fields)!.GetValue(layoutLoader)!;
+    var nativeTargetGui = new GUICustomComponent(new RectTransform(Vector2.One, selectionSlot.Parent.RectTransform))
+        { CanBeFocused = false };
+    typeof(ItemContainer).GetField("guiCustomComponent", fields)!.SetValue(layoutContainers[2], nativeTargetGui);
+    if (selectionSlot.Visible || !layoutContainers[2].DrawInventory || !layoutContainers[2].CanBeSelected || legacyInventory.GetItemAt(0) != legacyItem)
+    { throw new Exception("A saved magazine must remain in the visible native slot for retrieval."); }
+    legacySlot.GetType().GetMethod("RemoveAllItems")!.Invoke(legacySlot, null);
+    updateTargetSlot.Invoke(layoutLoader, null);
+    if (!selectionSlot.Visible || layoutContainers[2].DrawInventory || layoutContainers[2].CanBeSelected || nativeTargetGui.Visible)
+    { throw new Exception("Taking back the saved magazine must reveal the personal selection slot."); }
+    Console.WriteLine("PASS: saved target magazines remain reachable; the virtual slot appears after the legacy slot is emptied.");
 
     config.Graphics.HUDScale = 1;
     typeof(GameSettings).GetField("currentConfig", fields)!.SetValue(null, config);
@@ -606,14 +638,129 @@ static void Run()
     if (magazine.LoadedCount != 3 || !remaining.SequenceEqual(new[] { ammoPrefab.Identifier, "missing_round".ToIdentifier() }))
     { throw new Exception("Full magazines must preserve existing rounds and return rejected input; empty assignment must not clear them."); }
     Console.WriteLine("PASS: actual magazine assignment appends up to capacity, preserves old rounds and returns rejected LoadAmmoArray input.");
-    var capacityTarget = (ItemContainer)RuntimeHelpers.GetUninitializedObject(typeof(ItemContainer));
-    var targetInventory = new ItemInventory(null, capacityTarget, 1, 1);
-    typeof(ItemContainer).GetField(nameof(ItemContainer.Inventory))!.SetValue(capacityTarget, targetInventory);
-    var targetSlot = ((Array)typeof(Inventory).GetField("slots", fields)!.GetValue(targetInventory)!).GetValue(0)!;
-    targetSlot.GetType().GetMethod("Add")!.Invoke(targetSlot, new object[] { magazineItem });
     typeof(Item).GetField("componentsByType", fields)!.SetValue(magazineItem,
         new Dictionary<Type, List<ItemComponent>> { [typeof(VirtualizedMagazine)] = [magazine] });
-    typeof(DeepAmmoLoader).GetField("targetContainer", fields)!.SetValue(loader, capacityTarget);
+    var controlledField = typeof(Character).GetField("controlled", fields)!;
+    var originalCharacter = controlledField.GetValue(null);
+    var characterA = (Character)RuntimeHelpers.GetUninitializedObject(typeof(Character));
+    var characterB = (Character)RuntimeHelpers.GetUninitializedObject(typeof(Character));
+    var personalInventory = new Inventory(characterA, 1);
+    var parentField = typeof(Item).GetField("parentInventory", fields)!;
+    parentField.SetValue(magazineItem, personalInventory);
+    var inventorySlot = ((Array)typeof(Inventory).GetField("slots", fields)!.GetValue(personalInventory)!).GetValue(0)!;
+    inventorySlot.GetType().GetMethod("Add")!.Invoke(inventorySlot, new object[] { magazineItem });
+    var selectTarget = typeof(DeepAmmoLoader).GetMethod("SelectTarget", fields)!;
+    var handleDrop = typeof(DeepAmmoLoader).GetMethod("HandleTargetDrop", fields)!;
+    var updateSelection = typeof(DeepAmmoLoader).GetMethod("UpdateTargetSelection", fields)!;
+    var station = (Item)RuntimeHelpers.GetUninitializedObject(typeof(Item));
+    typeof(Item).GetField("componentsByType", fields)!.SetValue(station, new Dictionary<Type, List<ItemComponent>>());
+    typeof(ItemComponent).GetField("item", fields)!.SetValue(layoutLoader, station);
+    typeof(Item).GetField("activeHUDs", fields)!.SetValue(station,
+        new List<ItemComponent> { layoutLoader }.Concat(layoutContainers.Where(c => c.CanBeSelected)).ToList());
+    var hudField = typeof(CharacterHUD).GetField("hudFrame", fields)!;
+    var previousHud = hudField.GetValue(null);
+    var hideHudField = typeof(CharacterHUD).GetField("hideHUDUntil", fields)!;
+    var previousHideHud = hideHudField.GetValue(null);
+    hideHudField.SetValue(null, -1d);
+    var screenProperty = typeof(Screen).GetProperty(nameof(Screen.Selected))!;
+    var previousScreen = screenProperty.GetValue(null);
+    screenProperty.SetValue(null, RuntimeHelpers.GetUninitializedObject(typeof(GameScreen)));
+    var inventoryHud = new GUIFrame(new RectTransform(new Point(1)), style: null) { CanBeFocused = false };
+    hudField.SetValue(null, inventoryHud);
+    var targetKeyboard = GUI.KeyboardDispatcher;
+    var targetKeyboardProperty = typeof(GUI).GetProperty(nameof(GUI.KeyboardDispatcher))!;
+    targetKeyboardProperty.SetValue(null, RuntimeHelpers.GetUninitializedObject(targetKeyboardProperty.PropertyType));
+    var selectedItemField = typeof(Character).GetField("_selectedItem", fields)!;
+    selectedItemField.SetValue(characterA, station);
+    selectedItemField.SetValue(characterB, station);
+    try
+    {
+        controlledField.SetValue(null, characterA);
+        Inventory.DraggingItems.Add(magazineItem);
+        MouseAt(selectionSlot.Rect.Center, ButtonState.Pressed);
+        MouseAt(selectionSlot.Rect.Center, ButtonState.Released);
+        if (!(bool)handleDrop.Invoke(layoutLoader, null)! || layoutLoader.Target != magazine ||
+            Inventory.DraggingItems.Any() || Inventory.DraggingSlot != null ||
+            magazineItem.ParentInventory != personalInventory || personalInventory.GetItemAt(0) != magazineItem)
+        { throw new Exception("Dropping on the target must select the magazine without moving or discarding it."); }
+        var nativeTooltipSlot = (Inventory.SlotReference)RuntimeHelpers.GetUninitializedObject(typeof(Inventory.SlotReference));
+        typeof(Inventory.SlotReference).GetField(nameof(Inventory.SlotReference.ParentInventory))!.SetValue(nativeTooltipSlot, personalInventory);
+        typeof(Inventory.SlotReference).GetField(nameof(Inventory.SlotReference.Item))!.SetValue(nativeTooltipSlot, magazineItem);
+        var nativeTooltip = RichString.Rich("‖color:gui.orange‖Magazine details‖color:end‖");
+        typeof(Inventory.SlotReference).GetProperty(nameof(Inventory.SlotReference.Tooltip))!.SetValue(nativeTooltipSlot, nativeTooltip);
+        typeof(DeepAmmoLoader).GetField("targetTooltipSlot", fields)!.SetValue(layoutLoader, nativeTooltipSlot);
+        selectionSlot.OnDrawToolTip(selectionSlot);
+        updateTargetSlot.Invoke(layoutLoader, null);
+        if (!ReferenceEquals(selectionSlot.ToolTip, nativeTooltip) || !selectionSlot.Parent.ToolTip.IsNullOrEmpty())
+        { throw new Exception("An occupied target must show the native rich item tooltip without the slot instructions."); }
+        controlledField.SetValue(null, characterB);
+        var otherView = (DeepAmmoLoader)RuntimeHelpers.GetUninitializedObject(typeof(DeepAmmoLoader));
+        if ((bool)selectTarget.Invoke(otherView, new object[] { magazineItem })! || otherView.Target != null || layoutLoader.Target != magazine)
+        { throw new Exception("A different player's view may neither select this magazine nor change the first view's selection."); }
+        parentField.SetValue(magazineItem, new Inventory(characterB, 1));
+        controlledField.SetValue(null, characterA);
+        updateSelection.Invoke(layoutLoader, null);
+        if (layoutLoader.Target != null) { throw new Exception("A transferred magazine must clear the old player's selection."); }
+        parentField.SetValue(magazineItem, personalInventory);
+        selectTarget.Invoke(layoutLoader, new object[] { magazineItem });
+        foreach (var container in layoutContainers) { container.Inventory.CreateSlots(); }
+        GUI.ForceMouseOn(null);
+        GUI.ClearUpdateList();
+        layoutLoader.GuiFrame.AddToGUIUpdateList();
+        inventoryHud.AddToGUIUpdateList();
+        typeof(GUI).GetMethod("RefreshUpdateList", fields)!.Invoke(null, null);
+        // Match the game's HUD ordering and resolve hover without forcing focus onto the virtual slot.
+        MouseAt(selectionSlot.Rect.Center, ButtonState.Released);
+        GUI.MouseCursor = CursorState.Waiting;
+        GUI.UpdateMouseOn();
+        GUI.MouseCursor = CursorState.Default;
+        if (!GUI.IsMouseOn(selectionSlot))
+        { throw new Exception($"The virtual target must receive native mouse focus: got {GUI.MouseOn}, inventory hover={Inventory.IsMouseOnInventory}."); }
+        controlledField.SetValue(null, null);
+        GUI.UpdateMouseOn();
+        controlledField.SetValue(null, characterA);
+        if (GUI.MouseCursor != CursorState.Hand)
+        { throw new Exception("The target slot must show the native hand cursor on hover."); }
+        foreach (bool releaseOutside in new[] { false, true })
+        {
+            MouseAt(selectionSlot.Rect.Center, ButtonState.Pressed);
+            if (!(bool)handleDrop.Invoke(layoutLoader, null)! || Inventory.DraggingItems.Any())
+            { throw new Exception("Dragging the virtual selection must never expose a real item to inventory drop handlers."); }
+            var outside = selectionSlot.Rect.Location - new Point(20);
+            MouseAt(outside, ButtonState.Pressed);
+            if (!(bool)handleDrop.Invoke(layoutLoader, null)! || layoutLoader.Target != magazine)
+            { throw new Exception("Holding a drag outside the target must retain the selection until release."); }
+            MouseAt(releaseOutside ? outside : selectionSlot.Rect.Center, ButtonState.Released);
+            handleDrop.Invoke(layoutLoader, null);
+            if (layoutLoader.Target != (releaseOutside ? null : magazine) || Inventory.DraggingItems.Any() ||
+                magazineItem.ParentInventory != personalInventory || personalInventory.GetItemAt(0) != magazineItem)
+            { throw new Exception("Only releasing outside may clear the selection; the magazine must remain carried."); }
+        }
+        selectionSlot.OnDrawToolTip(selectionSlot);
+        updateTargetSlot.Invoke(layoutLoader, null);
+        if (selectionSlot.ToolTip.SanitizedValue != "Select a carried magazine" ||
+            selectionSlot.Parent.ToolTip.SanitizedValue != "Select a carried magazine")
+        { throw new Exception("Clearing the target must restore the empty-slot instructions."); }
+        selectTarget.Invoke(layoutLoader, new object[] { magazineItem });
+        selectedItemField.SetValue(characterA, null);
+        updateSelection.Invoke(layoutLoader, null);
+        if (layoutLoader.Target != null) { throw new Exception("Closing the station must clear its local selection."); }
+    }
+    finally
+    {
+        GUI.ClearUpdateList();
+        hudField.SetValue(null, previousHud);
+        hideHudField.SetValue(null, previousHideHud);
+        screenProperty.SetValue(null, previousScreen);
+        targetKeyboardProperty.SetValue(null, targetKeyboard);
+        controlledField.SetValue(null, originalCharacter);
+        parentField.SetValue(magazineItem, null);
+        Inventory.DraggingItems.Clear();
+        Inventory.DraggingSlot = null;
+        GUI.ForceMouseOn(null);
+    }
+    Console.WriteLine("PASS: native hover starts target dragging; release inside retains and release outside clears only the selection; personal views, ownership changes and close preserve inventory ownership.");
+    typeof(DeepAmmoLoader).GetProperty(nameof(DeepAmmoLoader.Target))!.SetValue(loader, magazine);
     typeof(Item).GetProperty(nameof(Item.MaxCondition))!.SetValue(magazineItem, 30f);
     typeof(DeepAmmoLoader).GetField("addCount", fields)!.SetValue(loader, 5);
     magazine.LoadedAmmoIdentifiers.Clear();
@@ -658,7 +805,7 @@ static void Run()
     for (int i = 0; i < 3; i++) { magazine.LoadedAmmoIdentifiers.Push(ammoPrefab.Identifier); }
     Add("normal", 1);
     if (draft.Count != 0) { throw new Exception("A full target magazine still accepts new draft ammunition."); }
-    typeof(DeepAmmoLoader).GetField("targetContainer", fields)!.SetValue(loader, null);
+    typeof(DeepAmmoLoader).GetProperty(nameof(DeepAmmoLoader.Target))!.SetValue(loader, null);
     Add("normal", 31);
     if (draft.Single().Count != 31) { throw new Exception("Removing the magazine did not restore generic preset editing."); }
     draft.Clear();
@@ -801,7 +948,7 @@ static void Run()
             foreach (string? caliber in new[] { "test_caliber", "other_caliber", null })
             {
                 SetRefreshField("withdrawMode", withdraw);
-                SetRefreshField("targetContainer", caliber == null ? null! : capacityTarget);
+                typeof(DeepAmmoLoader).GetProperty(nameof(DeepAmmoLoader.Target))!.SetValue(refreshLoader, caliber == null ? null : magazine);
                 typeof(VirtualizedMagazine).GetProperty(nameof(VirtualizedMagazine.AllowedAmmoTags))!
                     .SetValue(magazine, ImmutableHashSet.Create((caliber ?? "").ToIdentifier()));
                 SetRefreshField("uiDirty", true);

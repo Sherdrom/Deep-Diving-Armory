@@ -1,10 +1,12 @@
 using Barotrauma.Networking;
+using System.Runtime.CompilerServices;
 
 namespace DDA.AmmoLoading;
 
 public sealed partial class DeepAmmoLoader
 {
     private double nextRefresh;
+    private readonly ConditionalWeakTable<Client, StrongBox<uint>> clientRevisions = new();
 
     public override IEventData ServerGetEventData() => CapturePages()[0];
     public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<SnapshotPage>(data, out _);
@@ -49,7 +51,10 @@ public sealed partial class DeepAmmoLoader
             }
             return;
         }
-        if (!valid || expectedRevision != revision)
+        // Other players may change stock; only this client's completed commands invalidate its next request.
+        if (!valid || expectedRevision > revision ||
+            (command == Command.Withdraw && expectedRevision != revision) ||
+            (clientRevisions.TryGetValue(client, out var previous) && expectedRevision < previous.Value))
         {
             if (Timing.TotalTime >= nextRefresh)
             {
@@ -58,13 +63,15 @@ public sealed partial class DeepAmmoLoader
             }
             return;
         }
+        var magazine = GetOwnedMagazine(Entity.FindEntityByID(targetId) as Item, client.Character);
         bool success = command switch
         {
-            Command.Load => TryLoad(plan, targetId),
-            Command.Unload => TryUnload(targetId),
+            Command.Load => TryLoad(plan, magazine),
+            Command.Unload => TryUnload(magazine),
             Command.Withdraw => plan.Count == 1 && plan[0].Count == 1 && TryWithdraw(plan[0].Id),
             _ => false
         };
-        if (!success) { PublishState(); }
+        if (success) { clientRevisions.GetOrCreateValue(client).Value = revision; }
+        else { PublishState(); }
     }
 }

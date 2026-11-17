@@ -37,12 +37,14 @@ public sealed partial class DeepAmmoLoader
 
     private void Send(Command command, AmmoRun[]? plan = null)
     {
+        var magazine = GetOwnedMagazine(Target?.Item, Character.Controlled);
+        if ((command is Command.Load or Command.Unload) && magazine == null) { return; }
         if (GameMain.Client != null)
         {
             Item.CreateClientEvent(this, new Request(command, revision, Target?.Item.ID ?? 0, plan ?? []));
         }
-        else if (command == Command.Load) { TryLoad(plan ?? [], Target?.Item.ID ?? 0); }
-        else if (command == Command.Unload) { TryUnload(Target?.Item.ID ?? 0); }
+        else if (command == Command.Load && Character.Controlled!.CanInteractWith(Item)) { TryLoad(plan ?? [], magazine); }
+        else if (command == Command.Unload && Character.Controlled!.CanInteractWith(Item)) { TryUnload(magazine); }
         else if (command == Command.Withdraw && plan is { Length: 1 }) { TryWithdraw(plan[0].Id); }
     }
 

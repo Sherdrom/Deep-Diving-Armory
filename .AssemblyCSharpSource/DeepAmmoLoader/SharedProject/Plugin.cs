@@ -23,6 +23,9 @@ public sealed class Plugin : IAssemblyPlugin
         harmony.Patch(AccessTools.Method(typeof(Item), nameof(Item.Load),
                 [typeof(ContentXElement), typeof(Submarine), typeof(IdRemap), typeof(bool)]),
             prefix: new HarmonyMethod(typeof(Plugin), nameof(MigrateSavedComponent)));
+#if CLIENT
+        harmony.CreateClassProcessor(typeof(DeepAmmoLoaderTargetInputPatch)).Patch();
+#endif
     }
 
     // LuaCs discovers ItemComponent subclasses from the loaded assembly.

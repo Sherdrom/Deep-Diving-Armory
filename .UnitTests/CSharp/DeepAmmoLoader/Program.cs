@@ -19,7 +19,7 @@ static void Run(string[] args)
     string target = args.Length == 5 ? args[4] : "Client";
     string dda = Path.GetFullPath(args[2]);
     string[] directories = [Path.GetFullPath(args[0]),
-        Path.Combine(Path.GetFullPath(args[3]), platform, target)];
+        Path.Combine(Path.GetFullPath(args[3]), platform, target), Path.Combine(Path.GetFullPath(args[3]), target)];
     AssemblyLoadContext.Default.Resolving += (context, name) =>
     {
         foreach (string directory in directories)
@@ -61,9 +61,9 @@ static void Run(string[] args)
     }
     var onLoaded = itemType.GetMethods().Single(m => m.Name == "Load" && m.IsStatic);
     Type harmonyType = Assembly.Load("0Harmony").GetType("HarmonyLib.Harmony", true)!;
-    bool Patched()
+    bool Patched(MethodBase? method = null)
     {
-        object? info = harmonyType.GetMethod("GetPatchInfo")!.Invoke(null, [onLoaded]);
+        object? info = harmonyType.GetMethod("GetPatchInfo")!.Invoke(null, [method ?? onLoaded]);
         return info != null && ((IEnumerable)info.GetType().GetProperty("Owners")!.GetValue(info)!)
             .Cast<string>().Contains("deepdivingarmory.deepammoloader");
     }
@@ -71,6 +71,9 @@ static void Run(string[] args)
     {
         pluginType.GetMethod("Initialize")!.Invoke(plugin, null);
         Assert(Patched(), "Saved-component migration was not installed.");
+        MethodInfo[] inputMethods = target == "Client" ? [GameType("Inventory").GetMethod("UpdateDragging")!,
+            GameType("Inventory").GetMethod("DrawFront")!] : [];
+        Assert(inputMethods.All(method => Patched(method)), "Personal magazine input/drawing hooks were not installed.");
         var existing = Loader("deep_new_ammoloader");
         Assert(loaderType.GetProperty("Target")!.PropertyType == vce.GetType("VCE_VirtualizedMagazine.VirtualizedMagazine", true),
             "DeepAmmoLoader must use the already-loaded native VCE type.");
@@ -156,6 +159,7 @@ static void Run(string[] args)
         finally { foreach (object prefab in registered) { removePrefab.Invoke(prefabRegistry, [prefab]); } }
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         Assert(!Patched(), "Unload must remove the migration hook.");
+        Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");
         Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, seven supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
     }
     finally

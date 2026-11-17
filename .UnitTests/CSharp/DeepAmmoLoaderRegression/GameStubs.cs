@@ -60,10 +60,16 @@ namespace Barotrauma
         public ContentXElement ConfigElement = new(XElement.Parse("<Item><Projectile /></Item>"));
         public static ItemPrefab FindByIdentifier(Identifier id) => Prefabs.Values.Single(p => p.Identifier == id);
     }
-    public sealed class Item(ushort id, ItemPrefab prefab)
+    public sealed class Character
     {
-        public ushort ID = id;
-        public ItemPrefab Prefab = prefab;
+        public readonly ItemInventory Inventory;
+        public Character() { Inventory = new(20) { Owner = this }; }
+    }
+    public sealed class Item
+    {
+        public Item(ushort id, ItemPrefab prefab) { ID = id; Prefab = prefab; Entity.Items[id] = this; }
+        public ushort ID;
+        public ItemPrefab Prefab;
         private float condition = 100;
         public Action<float>? BeforeConditionSet;
         public bool IgnoreConditionChanges;
@@ -88,11 +94,18 @@ namespace Barotrauma
         public T? GetComponent<T>() => Components.OfType<T>().FirstOrDefault();
         public IEnumerable<T> GetComponents<T>() => Components.OfType<T>();
         public bool CanClientAccess(Client client) => client.Allowed;
+        public bool IsOwnedBy(Character character)
+        {
+            for (var inventory = ParentInventory; inventory != null; inventory = (inventory.Owner as Item)?.ParentInventory)
+            { if (inventory.Owner == character) { return true; } }
+            return false;
+        }
         public void CreateServerEvent(ItemComponent component, ItemComponent.IEventData data) => Events.Add(data);
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
     public sealed class ItemInventory(int capacity)
     {
+        public object? Owner;
         public int Capacity = capacity;
         public readonly List<Item> AllItems = [];
         public Item? GetItemAt(int slot) => AllItems.ElementAtOrDefault(slot);
@@ -142,7 +155,12 @@ namespace Barotrauma
         }
         public void AddItemToRemoveQueue(Item item) => item.IsInRemoveQueue = true;
     }
-    public static class Entity { public static EntitySpawner Spawner = new(); }
+    public static class Entity
+    {
+        public static EntitySpawner Spawner = new();
+        public static readonly Dictionary<ushort, Item> Items = [];
+        public static object? FindEntityByID(ushort id) => Items.GetValueOrDefault(id);
+    }
 }
 
 namespace Barotrauma.Items.Components
@@ -179,7 +197,7 @@ namespace Barotrauma.Networking
 {
     public interface IClientSerializable { }
     public interface IServerSerializable { }
-    public sealed class Client { public bool Allowed = true; }
+    public sealed class Client { public bool Allowed = true; public Character? Character; }
     public static class NetEntityEvent
     {
         public interface IData { }
