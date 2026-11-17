@@ -8,8 +8,8 @@ local function add(itemIds, cfg)
 end
 
 add({
-    "deep_5.45x39_expansion",
-    "deep_5.56x45_expansion",
+    "deep_545x39_expansion",
+    "deep_556x45_expansion",
     "deep_545x39_expansion_phy",
     "deep_545x39_expansion_tit",
     "deep_556x45_expansion_phy",

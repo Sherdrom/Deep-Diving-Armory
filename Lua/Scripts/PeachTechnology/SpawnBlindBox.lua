@@ -91,29 +91,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK74M", contains = { { id = "deep_5.45x39_tit", amount = 1 } }},
-                               { id = "deep_5.45x39_tit", amount = 4},
+                               { id = "deep_AK74M", contains = { { id = "deep_545x39_tit", amount = 1 } }},
+                               { id = "deep_545x39_tit", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK103", contains = { { id = "deep_7.62x39", amount = 1 } }},
-                               { id = "deep_7.62x39", amount = 4},
+                               { id = "deep_AK103", contains = { { id = "deep_762x39", amount = 1 } }},
+                               { id = "deep_762x39", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AKM", contains = { { id = "deep_7.62x39", amount = 1 } }},
-                               { id = "deep_7.62x39", amount = 4},
+                               { id = "deep_AKM", contains = { { id = "deep_762x39", amount = 1 } }},
+                               { id = "deep_762x39", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK201", contains = { { id = "deep_5.56x45_tit", amount = 1 } }},
-                               { id = "deep_5.56x45_tit", amount = 4},
+                               { id = "deep_AK201", contains = { { id = "deep_556x45_tit", amount = 1 } }},
+                               { id = "deep_556x45_tit", amount = 4},
                            },
                 },
             },
@@ -349,29 +349,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_hk416", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_hk416", contains = { { id = "deep_556x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_phy", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_R4C", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_R4C", contains = { { id = "deep_556x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_phy", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_qbz_97", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_qbz_97", contains = { { id = "deep_556x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_phy", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK19", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_AK19", contains = { { id = "deep_556x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_phy", amount = 4},
                            },
                 },
             },

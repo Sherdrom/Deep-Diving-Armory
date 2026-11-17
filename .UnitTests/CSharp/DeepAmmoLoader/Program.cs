@@ -84,8 +84,8 @@ static void Run(string[] args)
         var resolver = (Delegate)supply.GetValue(existing)!;
         var expected = new Dictionary<string, string>
         {
-            ["deep_ammobox_lead"] = "5.56x45round", ["deep_ammobox_titanium"] = "5.56x45round_tit",
-            ["deep_ammobox_physicorium"] = "5.56x45round_phy", ["deep_ammobox_fulgurium_physicorium"] = "556x45round_m995",
+            ["deep_ammobox_lead"] = "556x45round", ["deep_ammobox_titanium"] = "556x45round_tit",
+            ["deep_ammobox_physicorium"] = "556x45round_phy", ["deep_ammobox_fulgurium_physicorium"] = "556x45round_m995",
             ["deep_ammobox_tungsten_physicorium"] = "556x45round_ssa_ap", ["deep_ammobox_depleted_uranium"] = "556x45round_depleted_uranium"
         };
         foreach (var entry in expected)
@@ -189,7 +189,7 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
     Assert(packages.Length == expected.Count, "Expected one package per implemented projectile.");
     foreach (var entry in expected)
     {
-        Assert(projectiles[entry.Value].Element("Projectile") != null && projectiles[entry.Value].Attribute("tags")!.Value.Split(',').Contains("deep_556_round"), "Incompatible projectile.");
+        Assert(projectiles[entry.Value].Element("Projectile") != null && projectiles[entry.Value].Attribute("tags")!.Value.Split(',').Contains("deep_556x45_round"), "Incompatible projectile.");
         Assert(boxes[entry.Key].Attributes().Single(a => a.Name.LocalName.Equals("tags", StringComparison.OrdinalIgnoreCase))
             .Value.Split(',').Contains("deep_ammobox"), "Source rejected by intake.");
         var package = packages.Single(p => string.Equals((string?)p.Element("VirtualizedAmmoStorage")?.Attribute("ProjectileIdentifier"),

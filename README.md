@@ -34,7 +34,7 @@ XML、Lua、C# 和本地化统一引用新 ID；不保留旧 ID 别名或旧存�
 此前 macOS 试验使用的本地 VCE `Dev` 基线为 `3226456`，另含弹药修正 `f585b28` 和护盾修正 `2e18034`；该历史环境与当前 Unstable 验收环境不同。
 
 - 试点武器为 `deep_hk416`。新系统专用物品为 `deep_556x45_virtual_30`（5.56x45通用30发弹匣），定义在 `weapon/ammo/NewMag/NewMag.xml`；使用 `VirtualizedMagazine`，容量 30 发，初始为空匣，不预装子弹。
-- 图标与地面贴图均取自 `weapon/ammo/NewMag/Mag1.png` 左上角弹匣，裁切区域 `11,11,54,120`。新弹匣沿用普通 30 发弹匣的价格和制造配方，保留 `deep_5.56x45`／`556mag` 兼容标签，可装入原有兼容枪械。
+- 图标与地面贴图均取自 `weapon/ammo/NewMag/Mag1.png` 左上角弹匣，裁切区域 `11,11,54,120`。新弹匣沿用普通 30 发弹匣的价格和制造配方，保留 `deep_556x45`／`556mag` 兼容标签，可装入原有兼容枪械。
 - 旧版通用压弹机按原有配方自动为普通弹匣补充耐久，保留原速率和弹药箱消耗，不再提供混装选弹或定量装填。新系统弹匣的装填由新压弹机承担。
 - 接入 `Press R to Reload` 的 `pressrtoreload.reload` 钩子：优先选择身上可访问、兼容且余弹最多的备匣，交换整只弹匣并由原生库存交换收纳旧匣；失败也不回落到自动合并。不从另一把武器取匣，不接管下挂和旧式弹匣；空枪没有可用新备匣时交回原有换弹流程。
 - 新弹匣的空匣和满匣均不堆叠，旧弹匣恢复原有堆叠。悬停提示显示余弹／容量、下一发和各弹种数量，无需按 Shift；同总数下更换弹种或顺序也会刷新。
@@ -75,7 +75,7 @@ LuaCs 插件目录是包含 `PluginInfo.xml` 的包根目录。测试检查实�
 
 当前复测脚本已改为生成两只新系统专用 30 发弹匣（`mag`／`spare`），以下操作接在下方两个运行脚本完成之后，仍只使用可丢弃场景；上述历史验收不代表这些改动已复测：
 
-1. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; assert(t.magazine.LoadedCount==0); local Id=LuaUserData.CreateStatic('Barotrauma.Identifier'); local rounds={}; for i=1,5 do rounds[i]=Id('5.56x45round_tit') end; t.magazine.PushAmmoArray(rounds)`，直接准备 5 发换匣夹具。
+1. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; assert(t.magazine.LoadedCount==0); local Id=LuaUserData.CreateStatic('Barotrauma.Identifier'); local rounds={}; for i=1,5 do rounds[i]=Id('556x45round_tit') end; t.magazine.PushAmmoArray(rounds)`，直接准备 5 发换匣夹具。
 2. 控制台执行 `cl_lua local t=DDA_RUNTIME_TEST; local c=Character.Controlled; assert(t.magazine.LoadedCount==5); c.SelectedItem=nil; assert(c.Inventory.TryPutItem(t.items.mag,c,{InvSlotType.Any},false)); local hands={}; for s in t.items.gun.AllowedSlots do if s~=InvSlotType.Any then hands[#hands+1]=s end end; assert(c.Inventory.TryPutItem(t.items.gun,c,hands,false))`，关闭控制台，按 R 两次（第二次无有弹备匣）。
 3. 执行 `cl_lua load(File.Read('LocalMods/Deep-Diving-Armory/.UnitTests/Lua/VirtualMagazineRuntimeReload.test.lua'))()`；关闭控制台，等待背包填满，再按 R 一次。最后执行 `cl_lua DDA_RUNTIME_TEST.checkFullInventoryReload()`，核对日志中的通过记录。
 

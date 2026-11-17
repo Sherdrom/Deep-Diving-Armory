@@ -789,9 +789,9 @@ if SERVER or not Game.IsMultiplayer then
 
     -- 5.56 虚拟弹匣按选定弹药箱装填，原配方只提供容量对应的速率与消耗。
     local virtualAmmo = {
-        ["deep_ammobox_lead"] = "5.56x45round",
-        ["deep_ammobox_titanium"] = "5.56x45round_tit",
-        ["deep_ammobox_physicorium"] = "5.56x45round_phy",
+        ["deep_ammobox_lead"] = "556x45round",
+        ["deep_ammobox_titanium"] = "556x45round_tit",
+        ["deep_ammobox_physicorium"] = "556x45round_phy",
         ["deep_ammobox_fulgurium_physicorium"] = "556x45round_M995",
         ["deep_ammobox_tungsten_physicorium"] = "556x45round_SSA_AP",
         ["deep_ammobox_depleted_uranium"] = "556x45round_depleted_uranium",

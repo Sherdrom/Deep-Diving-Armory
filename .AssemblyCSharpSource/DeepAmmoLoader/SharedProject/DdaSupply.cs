@@ -15,8 +15,8 @@ internal static class DdaSupply
                 [".45acp"] = 0.78125 / 7,
 
                 // Rifles
-                ["5.56x45round"] = 1.5625 / 30,
-                ["5.45x39round"] = 1.5625 / 30,
+                ["556x45round"] = 1.5625 / 30,
+                ["545x39round"] = 1.5625 / 30,
                 ["762x39round_lead"] = 1.5625 / 30,
                 ["762x51round_lead"] = 1.5625 / 20,
                 ["58x42round_lead"] = 1.5625 / 30,
@@ -54,10 +54,10 @@ internal static class DdaSupply
                 ["9mmround_3"] = 0.78125 / 15, // CZ75 standard 15-round magazine.
 
                 // Rifles
-                ["5.56x45round_tit"] = 1.5625 / 30,
-                ["5.45x39round_tit"] = 1.5625 / 30,
-                ["7.62x39round"] = 1.5625 / 30,
-                ["7.62x51round"] = 1.5625 / 20,
+                ["556x45round_tit"] = 1.5625 / 30,
+                ["545x39round_tit"] = 1.5625 / 30,
+                ["762x39round"] = 1.5625 / 30,
+                ["762x51round"] = 1.5625 / 20,
                 ["58x42round_tit"] = 1.5625 / 30,
                 ["792x33round_tit"] = 1.5625 / 30,
                 ["9x39round_tit"] = 1.5625 / 20, // 9A-91 standard 20-round magazine.
@@ -105,11 +105,11 @@ internal static class DdaSupply
                 ["9mmround_phy"] = 0.78125 / 17, // Glock standard 17-round magazine.
 
                 // Rifles
-                ["5.56x45round_phy"] = 1.5625 / 30,
-                ["5.45x39round_phy"] = 1.5625 / 30,
-                ["7.62x39round_phy"] = 1.5625 / 30,
-                ["7.62x51round_phy"] = 1.5625 / 20,
-                ["12.7x55round"] = 1.5625 / 20,
+                ["556x45round_phy"] = 1.5625 / 30,
+                ["545x39round_phy"] = 1.5625 / 30,
+                ["762x39round_phy"] = 1.5625 / 30,
+                ["762x51round_phy"] = 1.5625 / 20,
+                ["127x55round"] = 1.5625 / 20,
                 ["58x42round_phy"] = 1.5625 / 30,
                 ["792x33round_phy"] = 1.5625 / 30,
                 ["9x39round_phy"] = 1.5625 / 20, // 9A-91 standard 20-round magazine.
@@ -181,7 +181,7 @@ internal static class DdaSupply
             {
                 // Rifles
                 ["556x45round_ssa_ap"] = 1.5625 / 30,
-                ["5.45x39round_7n39"] = 1.5625 / 30,
+                ["545x39round_7n39"] = 1.5625 / 30,
                 ["762x39round_mai_ap"] = 1.5625 / 30,
                 ["762x51round_m993"] = 1.5625 / 20,
                 ["58x42round_ap"] = 1.5625 / 30,
