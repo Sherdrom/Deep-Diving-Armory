@@ -56,8 +56,8 @@ internal static class DdaSupply
                 // Rifles
                 ["556x45round_tit"] = 1.5625 / 30,
                 ["545x39round_tit"] = 1.5625 / 30,
-                ["762x39round"] = 1.5625 / 30,
-                ["762x51round"] = 1.5625 / 20,
+                ["762x39round_tit"] = 1.5625 / 30,
+                ["762x51round_tit"] = 1.5625 / 20,
                 ["58x42round_tit"] = 1.5625 / 30,
                 ["792x33round_tit"] = 1.5625 / 30,
                 ["9x39round_tit"] = 1.5625 / 20, // 9A-91 standard 20-round magazine.
