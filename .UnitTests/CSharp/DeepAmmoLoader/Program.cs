@@ -100,10 +100,7 @@ static void Run(string[] args)
             Assert(costs.TryGetValue(entry.Value, out double cost) && Math.Abs(cost * 30 - 1.5625) < 1e-12,
                 "Wrong projectile/cost for " + entry.Key);
         }
-        object copper = resolver.DynamicInvoke(Item("deep_ammobox_copper"))!;
-        var copperCosts = (IReadOnlyDictionary<string, double>)copper.GetType().GetProperty("Costs")!.GetValue(copper)!;
-        Assert(copperCosts.Count == 1 && copperCosts.TryGetValue("smg_vector_round_rip", out double ripCost) &&
-            Math.Abs(ripCost * 30 - 1.0417) < 1e-12, "Copper supply must use the base Vector RIP magazine cost.");
+        Assert(resolver.DynamicInvoke(Item("deep_ammobox_copper")) == null, "Copper has no active RIP projectile.");
         Assert(resolver.DynamicInvoke(Item("unrelated")) == null, "Unrelated sources must remain unmapped.");
         var migrate = pluginType.GetMethod("MigrateSavedComponent", BindingFlags.Static | BindingFlags.NonPublic)!;
         foreach (string id in new[] { "deep_new_ammoloader", "other_ammoloader" })
@@ -145,7 +142,7 @@ static void Run(string[] args)
         }
         try
         {
-            var projectiles = XDocument.Load(Path.Combine(dda, "weapon/rifle/rifle_round.xml")).Root!.Elements("Item")
+            var projectiles = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoRound/5.56x45.xml")).Root!.Elements("Item")
                 .ToDictionary(x => (string)x.Attribute("identifier")!, StringComparer.OrdinalIgnoreCase);
             foreach (var package in XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoPackages/Pack_5.56x45.xml")).Root!.Elements("Item"))
             {
@@ -160,7 +157,7 @@ static void Run(string[] args)
         pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
         Assert(!Patched(), "Unload must remove the migration hook.");
         Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");
-        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, seven supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
+        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, six supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
     }
     finally
     {
@@ -185,7 +182,7 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
         "DDA intake spacing or pickup capacity changed unexpectedly.");
     Assert(machine.Descendants("ItemContainer").First().Element("Containable")!.Attribute("items")!.Value.Split(',').Contains("deep_ammobox"),
         "Intake must accept ammo boxes.");
-    var projectiles = XDocument.Load(Path.Combine(dda, "weapon/rifle/rifle_round.xml")).Root!.Elements("Item")
+    var projectiles = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoRound/5.56x45.xml")).Root!.Elements("Item")
         .ToDictionary(x => x.Attribute("identifier")!.Value, StringComparer.OrdinalIgnoreCase);
     var boxes = XDocument.Load(Path.Combine(dda, "weapon/ammo/ammobox.xml")).Root!.Elements("Item")
         .ToDictionary(x => x.Attribute("identifier")!.Value, StringComparer.OrdinalIgnoreCase);
@@ -201,11 +198,12 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
         Assert((string?)package.Attribute("health") == "30" &&
             !package.Descendants("Fabricate").Any() && !projectiles[entry.Value].Descendants("Fabricate").Any(),
             "New ammunition and its 30-round package must not have crafting recipes.");
-        foreach (string attribute in new[] { "texture", "sourcerect" })
-        {
-            Assert((string?)package.Element("InventoryIcon")!.Attribute(attribute) == (string?)projectiles[entry.Value].Element("InventoryIcon")!.Attribute(attribute),
-                "Packages must reuse their projectile's existing icon.");
-        }
+        var packageIcon = package.Element("InventoryIcon") ?? package.Element("Sprite")!;
+        var roundIcon = projectiles[entry.Value].Element("InventoryIcon") ?? projectiles[entry.Value].Element("Sprite")!;
+        Assert((string?)packageIcon.Attribute("texture") == (string?)roundIcon.Attribute("texture") &&
+            packageIcon.Attribute("sourcerect")!.Value.Split(',').Take(3)
+                .SequenceEqual(roundIcon.Attribute("sourcerect")!.Value.Split(',').Take(3)),
+            "Package and round icons must show the same variant in the atlas.");
     }
     Assert(XDocument.Load(Path.Combine(dda, "filelist.xml")).Descendants("Item")
         .Count(x => (string?)x.Attribute("file") == "%ModDir%/weapon/ammo/NewAmmoPackages/Pack_5.56x45.xml") == 1, "Package file is not registered exactly once.");

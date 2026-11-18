@@ -288,16 +288,51 @@ Check(DeepAmmoLoader.FindWithdrawalPackage("a") == largest, "largest valid packa
 Check(DeepAmmoLoader.FindWithdrawalPackage("wrong") == null && DeepAmmoLoader.FindWithdrawalPackage("unknown") == null,
     "missing packages and unknown projectile types cannot be withdrawn");
 uint packageNumber = 10000;
-foreach (var element in XDocument.Load("weapon/ammo/NewAmmoPackages/Pack_5.56x45.xml").Root!.Elements("Item"))
+var supplyByRound = new Dictionary<string, (string Box, double Cost)>(StringComparer.OrdinalIgnoreCase);
+foreach (var element in XDocument.Load("weapon/ammo/ammobox.xml").Root!.Elements("Item"))
+{
+    string boxId = (string)element.Attribute("identifier")!;
+    var supply = DdaSupply.Resolve(new Item(0, new ItemPrefab(boxId, 0)));
+    if (boxId == "deep_ammobox_copper")
+    {
+        Check(supply == null, "retired copper RIP must not invalidate other supply pools");
+        continue;
+    }
+    Check(supply?.PoolId == "dda." + boxId, $"missing supply pool for {boxId}");
+    foreach (var (id, cost) in supply!.Costs)
+    {
+        Check(double.IsFinite(cost) && cost > 0 && supplyByRound.TryAdd(id, (boxId, cost)), $"invalid or duplicate supply for {id}");
+    }
+}
+var itemFiles = XDocument.Load("filelist.xml").Root!.Elements("Item").Select(e => (string)e.Attribute("file")!).ToArray();
+IEnumerable<XElement> AmmoItems(string folder) => itemFiles.Where(p => p.StartsWith("%ModDir%/weapon/ammo/" + folder + "/"))
+    .SelectMany(p => XDocument.Load(p["%ModDir%/".Length..]).Root!.Elements("Item"));
+var rounds = AmmoItems("NewAmmoRound").Where(e => e.Element("Projectile") != null)
+    .ToDictionary(e => (string)e.Attribute("identifier")!, StringComparer.OrdinalIgnoreCase);
+var packaged = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+foreach (var element in AmmoItems("NewAmmoPackages"))
 {
     string ammo = (string)element.Element("VirtualizedAmmoStorage")!.Attribute("ProjectileIdentifier")!;
-    ItemPrefab.Prefabs.Values.Add(new ItemPrefab(ammo, packageNumber++));
-    var definedPackage = new ItemPrefab((string)element.Attribute("identifier")!, packageNumber++,
+    string packageId = (string)element.Attribute("identifier")!;
+    string material = packageId.Split("_package_").Last() switch
+    {
+        "lead" => "lead", "tit" => "titanium", "phy" => "physicorium", "du" => "depleted_uranium",
+        "fu" or "m995" or "bs" or "bp" or "m61" => "fulgurium_physicorium",
+        "ap" or "ssa_ap" or "7n39" or "mai_ap" or "m993" or "7n37" => "tungsten_physicorium",
+        _ => throw new Exception("Unknown package material: " + packageId)
+    };
+    Check(packaged.Add(ammo) && supplyByRound[ammo].Box == "deep_ammobox_" + material, $"wrong supply for {packageId}");
+    ItemPrefab.Prefabs.Values.Add(new ItemPrefab(ammo, packageNumber++) { ConfigElement = new(rounds[ammo]) });
+    var definedPackage = new ItemPrefab(packageId, packageNumber++,
         ((string)element.Attribute("tags")!).Split(','))
         { Health = (float)element.Attribute("health")!, ConfigElement = new(element) };
     ItemPrefab.Prefabs.Values.Add(definedPackage);
     Check(DeepAmmoLoader.FindWithdrawalPackage(ammo) == definedPackage, "DDA XML-defined package resolves its configured projectile");
 }
+Check(packaged.Count > 0 && packaged.SetEquals(rounds.Keys), "every active round must have a package");
+Check(supplyByRound["deep_12shell_aa12"] == ("deep_ammobox_titanium", 18.75 / 25) &&
+    supplyByRound["deep_slug_aa12"] == ("deep_ammobox_physicorium", 18.75 / 25), "preserve AA-12 supply");
+Check(supplyByRound.Count == packaged.Count + 2, "supply must contain only active rounds and the two AA-12 shells");
 machine = new Item(40, bulletA);
 intake = new ItemContainer(machine, 6);
 var pickup = new ItemContainer(machine, 3);
