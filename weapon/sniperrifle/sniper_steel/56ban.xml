@@ -102,12 +102,12 @@
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
 
-      <RequiredItems items="sks_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_sks_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="50" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="sks_mag" hide="false" itempos="-6,11" setactive="true" rotation="0">
+      <Containable tags="deep_sks_mag" hide="false" itempos="-6,11" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->

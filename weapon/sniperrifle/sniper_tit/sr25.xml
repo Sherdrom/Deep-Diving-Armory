@@ -154,13 +154,13 @@
         <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
         <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
-      <RequiredItems items="deep_sr25_mag,tsm_762ammo_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_762x51_mag,762_51mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
       <StatusEffect type="OnBroken" target="This" Condition="3000" disabledeltatime="true" delay="2" stackable="false" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_sr25_mag,tsm_762ammo_mag" hide="false" itempos="1,-7" setactive="true" rotation="0">
+      <Containable items="deep_762x51_mag,762_51mag" hide="false" itempos="1,-7" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->

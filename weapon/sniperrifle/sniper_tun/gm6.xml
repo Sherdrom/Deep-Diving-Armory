@@ -108,12 +108,12 @@
         <ReduceAffliction identifier="6x_sight_reduce" strength="2.2" />
         <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
-      <RequiredItems items="deep_gm6_mag,tsm_127ammo_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_127x99_gm6_mag,tsm_127ammo_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_gm6_mag,tsm_127ammo_mag" excludedidentifiers="deep_m82a1_mag" hide="false" itempos="-38,-5" setactive="true" rotation="0">
+      <Containable items="deep_127x99_gm6_mag,tsm_127ammo_mag" excludedidentifiers="deep_127x99_virtual_10_m82a1,deep_127x99_virtual_20_m82a1" hide="false" itempos="-38,-5" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->

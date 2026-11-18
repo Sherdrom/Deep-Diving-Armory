@@ -131,12 +131,12 @@
       <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" aimpos="70,0" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="100,20" handle1="-150,-15" />
       <!-- ============== 拉栓动画结束 ================= -->
-      <RequiredItems items="deep_Mosin_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_mosin_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_Mosin_mag" hide="false" itempos="-21,7" setactive="true" rotation="0">
+      <Containable tags="deep_mosin_mag" hide="false" itempos="-21,7" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->

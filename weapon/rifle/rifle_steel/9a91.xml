@@ -130,12 +130,12 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_9a91_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_9x39_9a91_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="50" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_9a91_mag" hide="false" itempos="11,-6" setactive="true" rotation="0">
+      <Containable tags="deep_9x39_9a91_mag" hide="false" itempos="11,-6" setactive="true" rotation="0">
         <!-- 立即锁定弹匣 -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- 延迟解锁弹匣 -->

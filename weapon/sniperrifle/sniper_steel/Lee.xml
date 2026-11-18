@@ -131,12 +131,12 @@
       <StatusEffect type="OnUse" target="This" delay="0.8" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnUse" target="This" delay="0.9" setvalue="true" handle2="80,-5" handle1="-120,-5" />
       <!-- ============== 拉栓动画结束 ================= -->
-      <RequiredItems items="deep_LEE_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_303_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_LEE_mag" hide="false" itempos="-15,9" setactive="true" rotation="0">
+      <Containable tags="deep_303_mag" hide="false" itempos="-15,9" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
