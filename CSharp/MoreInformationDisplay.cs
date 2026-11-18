@@ -52,7 +52,7 @@ namespace MoreInformationDisplay
     {
         private static ItemContainer Magazine(Item item)
         {
-            if (item == null || !item.HasTag(new Identifier("556mag"))) return null;
+            if (item == null || !item.HasTag(new Identifier("deep_virtualmagazine"))) return null;
             var container = item.GetComponent<ItemContainer>();
             return container?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine" ? container : null;
         }
