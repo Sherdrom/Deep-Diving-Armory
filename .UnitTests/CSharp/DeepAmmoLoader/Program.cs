@@ -196,6 +196,11 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
     Assert(magazines.Length > 0 && magazines.All(m => m.Element("VirtualizedMagazine") != null &&
         m.Elements("ManualMagazineLoading").Count() == 1 && m.Elements().Last().Name == "ManualMagazineLoading"),
         "All virtual magazines must append manual loading without shifting saved component indices.");
+    var pressClips = XDocument.Load(Path.Combine(dda, "music/music.xml")).Root!.Elements("dda_manual_press")
+        .Select(e => ((string)e.Attribute("file")!).Replace("%ModDir%/", "")).ToArray();
+    Assert(pressClips.Length == 4 && pressClips.Distinct().Count() == 4 &&
+        pressClips.All(path => File.Exists(Path.Combine(dda, path))),
+        "Manual loading must register four distinct press clips that ship with the mod.");
     Assert((string?)component.Attribute("usesupplystorage") == "true" &&
         (string?)component.Attribute("textprefix") == "dda.ammoloader." &&
         (string?)component.Attribute("targetcontainerindex") == "2" && (string?)component.Attribute("outputcontainerindex") == "1",

@@ -1,3 +1,4 @@
+using Barotrauma.Extensions;
 using Barotrauma.LuaCs.Data;
 using Barotrauma.Networking;
 using HarmonyLib;
@@ -15,6 +16,7 @@ public sealed partial class ManualMagazineLoading
     private static uint nextSession;
     private static ManualMagazineLoading? local;
     private static ManualMagazineLoading? justFinished;
+    private static SoundPrefab? lastPressSound;
     private static double hideAt;
 
     private sealed record Request(uint Session, ushort Source) : IEventData;
@@ -33,10 +35,21 @@ public sealed partial class ManualMagazineLoading
         int rounds = msg.ReadInt32();
         float seconds = msg.ReadSingle();
         if (local != this || Character.Controlled?.ID != user || session != token) { return; }
-        if (seconds != 0) { loaded = rounds; }
+        if (seconds != 0 && (duration == 0 || rounds > loaded))
+        {
+            // The first server response supplies the starting count.
+            if (duration > 0) { PlayPressSound(); }
+            loaded = rounds;
+        }
         if (seconds <= 0) { End(seconds < 0); return; }
         elapsed = 0;
         duration = seconds;
+    }
+
+    private static void PlayPressSound()
+    {
+        lastPressSound = SoundPrefab.Prefabs.GetRandomUnsynced(p => p.ElementName == "dda_manual_press" && p != lastPressSound);
+        lastPressSound?.Sound?.Play(null, lastPressSound.Volume, Rand.Range(0.94f, 1.06f, Rand.RandSync.Unsynced));
     }
 
     internal static bool HandleDrop()
@@ -88,6 +101,7 @@ public sealed partial class ManualMagazineLoading
     {
         local?.End(false);
         justFinished = null;
+        lastPressSound = null;
         StopControl = null;
     }
 

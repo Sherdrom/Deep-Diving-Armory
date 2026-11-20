@@ -91,6 +91,9 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         if (elapsed < duration) { return; }
         if (!CommitRound(package, magazine)) { End(false); return; }
         loaded++;
+#if CLIENT
+        PlayPressSound();
+#endif
         remaining--;
         if (remaining == 0 || package.Item.Condition < 1 || loaded >= magazine.MaxSize)
         {
