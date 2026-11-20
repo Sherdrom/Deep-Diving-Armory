@@ -16,6 +16,11 @@ public sealed class Plugin : IAssemblyPlugin
 {
     private Harmony? harmony;
 
+#if CLIENT
+    public IPluginManagementService LuaCsPluginService { get; set; } = null!;
+    public IConfigService LuaCsConfigService { get; set; } = null!;
+#endif
+
     public void Initialize()
     {
         AssemblyLoadContext.GetLoadContext(typeof(Plugin).Assembly)!.Resolving += ResolveVce;
@@ -25,15 +30,26 @@ public sealed class Plugin : IAssemblyPlugin
             prefix: new HarmonyMethod(typeof(Plugin), nameof(MigrateSavedComponent)));
 #if CLIENT
         harmony.CreateClassProcessor(typeof(DeepAmmoLoaderTargetInputPatch)).Patch();
+        harmony.CreateClassProcessor(typeof(ManualMagazineLoading)).Patch();
 #endif
     }
 
     // LuaCs discovers ItemComponent subclasses from the loaded assembly.
     public void PreInitPatching() { }
-    public void OnLoadCompleted() { }
+    public void OnLoadCompleted()
+    {
+#if CLIENT
+        if (LuaCsPluginService.TryGetPackageForPlugin<Plugin>(out var package) &&
+            LuaCsConfigService.TryGetConfig<Barotrauma.LuaCs.Data.ISettingControl>(package, "StopManualLoading", out var control))
+        { ManualMagazineLoading.StopControl = control; }
+#endif
+    }
     public void Dispose()
     {
         AssemblyLoadContext.GetLoadContext(typeof(Plugin).Assembly)!.Resolving -= ResolveVce;
+#if CLIENT
+        ManualMagazineLoading.ResetClient();
+#endif
         harmony?.UnpatchSelf();
         harmony = null;
     }

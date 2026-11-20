@@ -139,7 +139,7 @@ internal static class DeepAmmoLoaderTargetInputPatch
 {
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
     [HarmonyPrefix]
-    private static bool BeforeDragging() => DeepAmmoLoader.ActiveTargetLoader?.HandleTargetDrop() != true;
+    private static bool BeforeDragging() => DeepAmmoLoader.ActiveTargetLoader?.HandleTargetDrop() != true && !ManualMagazineLoading.HandleDrop();
 
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.DrawFront))]
     [HarmonyPrefix]

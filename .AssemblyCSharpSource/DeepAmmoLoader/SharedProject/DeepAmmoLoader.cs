@@ -246,7 +246,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         return true;
     }
 
-    private static void RestoreMagazine(VirtualizedMagazine magazine, Identifier[] rounds)
+    internal static void RestoreMagazine(VirtualizedMagazine magazine, Identifier[] rounds)
     {
         magazine.LoadedAmmoIdentifiers.Clear();
         try { magazine.LoadedAmmoIdentifiersArray = rounds; }

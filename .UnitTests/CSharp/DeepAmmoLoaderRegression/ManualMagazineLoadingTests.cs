@@ -1,0 +1,108 @@
+using System.Xml.Linq;
+using DDA.AmmoLoading;
+using VCE_VirtualizedMagazine;
+
+internal static class ManualMagazineLoadingTests
+{
+    internal static void Run(Action<bool, string> check)
+    {
+        var user = new Character { ID = 501 };
+        var client = new Client { Character = user };
+        var prefab = new ItemPrefab("test_package", 700, "deep_ammopackage");
+        var source = new Item(502, prefab) { ParentInventory = user.Inventory, Condition = 8 };
+        var stackMate = new Item(503, prefab) { ParentInventory = user.Inventory, Condition = 30 };
+        var target = new Item(504, prefab) { ParentInventory = user.Inventory };
+        var magazine = new VirtualizedMagazine(target);
+        var element = new ContentXElement(new XElement("ManualMagazineLoading"));
+        var loading = new ManualMagazineLoading(target, element);
+        target.Components.AddRange([magazine, loading]);
+        var storage = new VirtualizedAmmoStorage(source, new(XElement.Parse("<Storage ProjectileIdentifier='a' />")));
+        source.Components.Add(storage);
+        user.Inventory.AllItems.AddRange([source, stackMate, target]);
+        loading.OnItemLoaded();
+        List<Identifier> initial = Enumerable.Repeat("b".ToIdentifier(), 12).ToList();
+        magazine.LoadAmmoArray(ref initial);
+
+        void Request(uint id, ushort sourceId, Client? sender = null)
+        {
+            var msg = new Message();
+            msg.WriteUInt32(id);
+            msg.WriteUInt16(sourceId);
+            loading.ServerEventRead(msg.Rewind(), sender ?? client);
+        }
+        (ushort User, uint Token, int Loaded, float Seconds) LastState()
+        {
+            var msg = new Message();
+            loading.ServerEventWrite(msg, client, new NetEntityEvent.Wrapper(target.Events[^1]));
+            msg.Rewind();
+            return (msg.ReadUInt16(), msg.ReadUInt32(), msg.ReadInt32(), msg.ReadSingle());
+        }
+        void Tick(float seconds) => loading.Update(seconds, new Camera());
+
+        Request(1, source.ID);
+        check(LastState() == (user.ID, 1u, 12, 1f), "manual load starts at the existing count with skill 0");
+        check(ManualMagazineLoading.CapacityProgress(12, 30, 0, 1) == 12f / 30 &&
+            ManualMagazineLoading.CapacityProgress(12, 30, 0.5f, 1) == 12.5f / 30, "ring interpolates from 12/30");
+        user.WeaponsSkill = 50;
+        Tick(0.9f);
+        check(source.Condition == 8 && magazine.LoadedCount == 12, "partially timed round consumes nothing");
+        Tick(0.1f);
+        check(magazine.LoadedCount == 13 && source.Condition == 7 && Math.Abs(LastState().Seconds - .7f) < .00001,
+            "each new round reads the effective skill");
+        Request(2, 0);
+        Request(1, 0, new Client { Character = new Character() });
+        check(loading.IsActive, "stale and foreign cancellations do not interrupt the owner");
+        Tick(.35f);
+        Request(1, 0);
+        Tick(1f);
+        check(!loading.IsActive && magazine.LoadedCount == 13 && source.Condition == 7, "stop preserves finished rounds only");
+
+        Request(1, source.ID);
+        check(!loading.IsActive, "repeating a completed request cannot restart the timer");
+        user.WeaponsSkill = 150;
+        Request(3, source.ID);
+        check(Math.Abs(LastState().Seconds - .4f) < .00001, "skill above 100 uses 0.4 seconds");
+        for (int i = 0; i < 7; i++) { Tick(.4f); }
+        check(!loading.IsActive && LastState() == (user.ID, 3u, 20, -1f) && source.IsInRemoveQueue &&
+            stackMate.Condition == 30 && source.StatusEvents == 8 && magazine.LoadedAmmoIdentifiers.Take(8).All(id => id.Value == "a"),
+            "eight from the chosen package reach 20/30 and keep the original feed order");
+        check(ManualMagazineLoading.CapacityProgress(20, 30, 0, 0) == 20f / 30, "empty source must not fill the ring");
+
+        source.IsInRemoveQueue = false;
+        source.Condition = 20;
+        Request(4, source.ID);
+        user.Inventory.AllItems.Reverse();
+        Tick(1);
+        check(!loading.IsActive && source.Condition == 20 && magazine.LoadedCount == 20, "moving a slot cancels before debit");
+        Request(5, source.ID);
+        source.IgnoreConditionChanges = true;
+        Tick(1);
+        source.IgnoreConditionChanges = false;
+        check(!loading.IsActive && magazine.LoadedCount == 20 && source.Condition == 20, "rejected debit rolls back the append");
+        Request(6, source.ID);
+        magazine.ThrowOnRefresh = true;
+        Tick(1);
+        magazine.ThrowOnRefresh = false;
+        check(!loading.IsActive && magazine.LoadedCount == 20 && source.Condition == 20, "VCE exception cannot duplicate ammunition");
+        source.ParentInventory = new Character().Inventory;
+        Request(7, source.ID);
+        check(!loading.IsActive, "foreign source rejected by server");
+        source.ParentInventory = user.Inventory;
+        storage.AmmoIdentifier = "wrong".ToIdentifier();
+        Request(8, source.ID);
+        check(!loading.IsActive && source.Condition == 20, "wrong caliber rejected");
+        storage.AmmoIdentifier = "a".ToIdentifier();
+        Request(9, source.ID);
+        client.InGame = false;
+        Tick(1);
+        check(!loading.IsActive && source.Condition == 20, "disconnect stops the timer before debit");
+        client.InGame = true;
+        Request(10, source.ID);
+        for (int i = 0; i < 10; i++) { Tick(.4f); }
+        check(!loading.IsActive && magazine.LoadedCount == 30 && source.Condition == 10 &&
+            ManualMagazineLoading.CapacityProgress(30, 30, 0, 0) == 1 &&
+            ManualMagazineLoading.CapacityProgress(29, 30, 1, 1) < 1, "only a full magazine fills the ring");
+        Request(11, source.ID);
+        check(!loading.IsActive, "full magazine rejects a new drag");
+    }
+}

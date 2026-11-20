@@ -72,8 +72,28 @@ static void Run(string[] args)
         pluginType.GetMethod("Initialize")!.Invoke(plugin, null);
         Assert(Patched(), "Saved-component migration was not installed.");
         MethodInfo[] inputMethods = target == "Client" ? [GameType("Inventory").GetMethod("UpdateDragging")!,
-            GameType("Inventory").GetMethod("DrawFront")!] : [];
+            GameType("Inventory").GetMethod("DrawFront")!, GameType("Inventory").GetMethod("DrawSlot")!,
+            GameType("PlayerInput").GetMethod("Update")!] : [];
         Assert(inputMethods.All(method => Patched(method)), "Personal magazine input/drawing hooks were not installed.");
+        if (target == "Client")
+        {
+            const BindingFlags hiddenStatic = BindingFlags.Static | BindingFlags.NonPublic;
+            var manualType = adapter.GetType("DDA.AmmoLoading.ManualMagazineLoading", true)!;
+            var config = XDocument.Load(Path.Combine(dda, "Config/ConfigClient.xml")).Descendants("Setting")
+                .Single(x => (string?)x.Attribute("Name") == "StopManualLoading");
+            var binding = manualType.GetProperty("StopKey", hiddenStatic)!;
+            Assert((string?)config.Attribute("Type") == "control" && (string?)config.Attribute("Value") == "Escape" &&
+                binding.GetValue(null)!.ToString() == "Escape", "The default must be a native Escape binding.");
+            var controlType = Assembly.Load("LuaCsForBarotraumaPluginClient").GetType("Barotrauma.LuaCs.Data.SettingControl", true)!;
+            var control = RuntimeHelpers.GetUninitializedObject(controlType);
+            var keyType = binding.PropertyType.GetProperty("Key")?.PropertyType ?? binding.PropertyType.GetField("Key")!.FieldType;
+            var customKey = Activator.CreateInstance(binding.PropertyType, Enum.Parse(keyType, "K"));
+            controlType.GetMethod("TrySetValue")!.Invoke(control, [customKey]);
+            manualType.GetField("StopControl", hiddenStatic)!.SetValue(null, control);
+            Assert(binding.GetValue(null)!.ToString() == "K", "Changing the native client control must change the stop key.");
+            Assert((string?)controlType.GetMethod("GetDefaultStringValue")!.Invoke(control, null) == "Escape",
+                "Resetting the DDA binding in the LuaCs settings menu must restore Escape.");
+        }
         var existing = Loader("deep_new_ammoloader");
         Assert(loaderType.GetProperty("Target")!.PropertyType == vce.GetType("VCE_VirtualizedMagazine.VirtualizedMagazine", true),
             "DeepAmmoLoader must use the already-loaded native VCE type.");
@@ -172,6 +192,10 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
 {
     var machine = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoLoader/NewAmmoLoader.xml"));
     var component = machine.Descendants("DeepAmmoLoader").Single();
+    var magazines = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewMag/NewMag.xml")).Root!.Elements("Item").ToArray();
+    Assert(magazines.Length > 0 && magazines.All(m => m.Element("VirtualizedMagazine") != null &&
+        m.Elements("ManualMagazineLoading").Count() == 1 && m.Elements().Last().Name == "ManualMagazineLoading"),
+        "All virtual magazines must append manual loading without shifting saved component indices.");
     Assert((string?)component.Attribute("usesupplystorage") == "true" &&
         (string?)component.Attribute("textprefix") == "dda.ammoloader." &&
         (string?)component.Attribute("targetcontainerindex") == "2" && (string?)component.Attribute("outputcontainerindex") == "1",

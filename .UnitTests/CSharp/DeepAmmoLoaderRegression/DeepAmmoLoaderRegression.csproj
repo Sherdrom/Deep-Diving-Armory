@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <DefineConstants>$(DefineConstants);SERVER</DefineConstants>
     <OutputType>Exe</OutputType><UseAppHost>false</UseAppHost>
     <TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/ClientProject/AmmoPresets.cs" />
     <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/SharedProject/*.cs" Exclude="../../../.AssemblyCSharpSource/DeepAmmoLoader/SharedProject/Plugin.cs" />
-    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/ServerProject/DeepAmmoLoader.Server.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/ServerProject/*.cs" />
   </ItemGroup>
 </Project>

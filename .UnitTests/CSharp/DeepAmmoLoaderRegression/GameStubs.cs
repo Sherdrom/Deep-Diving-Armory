@@ -62,6 +62,11 @@ namespace Barotrauma
     }
     public sealed class Character
     {
+        public ushort ID;
+        public bool CanInteract = true;
+        public float WeaponsSkill;
+        public float GetSkillLevel(Identifier id) => id.Value == "weapons" ? WeaponsSkill : 0;
+        public bool CanInteractWith(Item item) => CanInteract && item.IsOwnedBy(this);
         public readonly ItemInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
@@ -91,6 +96,7 @@ namespace Barotrauma
         public readonly List<Item> ContainedItems = [];
         public readonly List<ItemComponent.IEventData> Events = [];
         public readonly List<ItemComponent.IEventData> Requests = [];
+        public bool HasTag(Identifier id) => Prefab.Tags.Contains(id);
         public T? GetComponent<T>() => Components.OfType<T>().FirstOrDefault();
         public IEnumerable<T> GetComponents<T>() => Components.OfType<T>();
         public bool CanClientAccess(Client client) => client.Allowed;
@@ -100,13 +106,17 @@ namespace Barotrauma
             { if (inventory.Owner == character) { return true; } }
             return false;
         }
+        public int StatusEvents;
+        public void CreateStatusEvent(bool loadingRound) => StatusEvents++;
         public void CreateServerEvent(ItemComponent component, ItemComponent.IEventData data) => Events.Add(data);
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
-    public sealed class ItemInventory(int capacity)
+    public sealed class ItemInventory(int capacity) : Inventory(capacity);
+    public class Inventory(int capacity)
     {
         public object? Owner;
         public int Capacity = capacity;
+        public int FindIndex(Item item) => AllItems.IndexOf(item);
         public readonly List<Item> AllItems = [];
         public Item? GetItemAt(int slot) => AllItems.ElementAtOrDefault(slot);
         public Func<ItemPrefab, bool>? Accepts;
@@ -169,7 +179,8 @@ namespace Barotrauma.Items.Components
     {
         public ItemComponent(Item item, ContentXElement element) { Item = item; }
         public Item Item;
-        public bool IsActive;
+        public bool IsActive, UpdateWhenBroken;
+        public virtual void RemoveComponentSpecific() { }
         public void PlaySound(ActionType type) { }
         public void StopSounds(ActionType type) { }
         public interface IEventData { }
@@ -197,7 +208,7 @@ namespace Barotrauma.Networking
 {
     public interface IClientSerializable { }
     public interface IServerSerializable { }
-    public sealed class Client { public bool Allowed = true; public Character? Character; }
+    public sealed class Client { public bool Allowed = true, InGame = true; public Character? Character; }
     public static class NetEntityEvent
     {
         public interface IData { }
@@ -205,12 +216,12 @@ namespace Barotrauma.Networking
     }
     public interface IWriteMessage
     {
-        void WriteByte(byte n); void WriteUInt32(uint n); void WriteUInt16(ushort n);
+        void WriteSingle(float n); void WriteByte(byte n); void WriteUInt32(uint n); void WriteUInt16(ushort n);
         void WriteInt32(int n); void WriteString(string text);
     }
     public interface IReadMessage
     {
-        byte ReadByte(); uint ReadUInt32(); ushort ReadUInt16(); int ReadInt32(); string ReadString();
+        float ReadSingle(); byte ReadByte(); uint ReadUInt32(); ushort ReadUInt16(); int ReadInt32(); string ReadString();
     }
     public sealed class Message : IWriteMessage, IReadMessage
     {
@@ -220,6 +231,8 @@ namespace Barotrauma.Networking
         public Message() { writer = new(stream); reader = new(stream); }
         public int Length => (int)stream.Length;
         public Message Rewind() { stream.Position = 0; return this; }
+        public void WriteSingle(float n) => writer.Write(n);
+        public float ReadSingle() => reader.ReadSingle();
         public void WriteByte(byte n) => writer.Write(n);
         public void WriteUInt32(uint n) => writer.Write(n);
         public void WriteUInt16(ushort n) => writer.Write(n);

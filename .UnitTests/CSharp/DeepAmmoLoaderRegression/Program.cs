@@ -70,6 +70,7 @@ var bulletA = new ItemPrefab("a", 1, "compatible");
 var bulletB = new ItemPrefab("b", 2, "compatible");
 var wrongBullet = new ItemPrefab("wrong", 3, "different");
 ItemPrefab.Prefabs.Values.AddRange([bulletA, bulletB, wrongBullet]);
+ManualMagazineLoadingTests.Run(Check);
 var player = new Character();
 var client = new Client { Character = player };
 var machine = new Item(10, bulletA);
