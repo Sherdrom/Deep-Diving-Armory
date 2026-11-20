@@ -41,12 +41,13 @@ internal static class ManualMagazineLoadingTests
 
         Request(1, source.ID);
         check(LastState() == (user.ID, 1u, 12, 1f), "manual load starts at the existing count with skill 0");
-        check(ManualMagazineLoading.CapacityProgress(12, 30, 0, 1) == 12f / 30 &&
-            ManualMagazineLoading.CapacityProgress(12, 30, 0.5f, 1) == 12.5f / 30, "ring interpolates from 12/30");
+        check(loading.CapacityProgress == 12f / 30, "ring starts at the existing count");
         user.WeaponsSkill = 50;
         Tick(0.9f);
+        check(loading.CapacityProgress == 12f / 30, "ring holds still between completed rounds");
         check(source.Condition == 8 && magazine.LoadedCount == 12, "partially timed round consumes nothing");
         Tick(0.1f);
+        check(loading.CapacityProgress == 13f / 30, "one completed round advances the ring by one step");
         check(magazine.LoadedCount == 13 && source.Condition == 7 && Math.Abs(LastState().Seconds - .7f) < .00001,
             "each new round reads the effective skill");
         Request(2, 0);
@@ -66,7 +67,7 @@ internal static class ManualMagazineLoadingTests
         check(!loading.IsActive && LastState() == (user.ID, 3u, 20, -1f) && source.IsInRemoveQueue &&
             stackMate.Condition == 30 && source.StatusEvents == 8 && magazine.LoadedAmmoIdentifiers.Take(8).All(id => id.Value == "a"),
             "eight from the chosen package reach 20/30 and keep the original feed order");
-        check(ManualMagazineLoading.CapacityProgress(20, 30, 0, 0) == 20f / 30, "empty source must not fill the ring");
+        check(loading.CapacityProgress == 20f / 30, "empty source must not fill the ring");
 
         source.IsInRemoveQueue = false;
         source.Condition = 20;
@@ -98,10 +99,12 @@ internal static class ManualMagazineLoadingTests
         check(!loading.IsActive && source.Condition == 20, "disconnect stops the timer before debit");
         client.InGame = true;
         Request(10, source.ID);
-        for (int i = 0; i < 10; i++) { Tick(.4f); }
+        for (int i = 0; i < 9; i++) { Tick(.4f); }
+        Tick(.39f);
+        check(loading.CapacityProgress == 29f / 30, "ring holds at 29/30 until the final round is loaded");
+        Tick(.02f);
         check(!loading.IsActive && magazine.LoadedCount == 30 && source.Condition == 10 &&
-            ManualMagazineLoading.CapacityProgress(30, 30, 0, 0) == 1 &&
-            ManualMagazineLoading.CapacityProgress(29, 30, 1, 1) < 1, "only a full magazine fills the ring");
+            loading.CapacityProgress == 1, "only a full magazine fills the ring");
         Request(11, source.ID);
         check(!loading.IsActive, "full magazine rejects a new drag");
     }

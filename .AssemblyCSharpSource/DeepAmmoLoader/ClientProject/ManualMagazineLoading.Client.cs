@@ -54,7 +54,7 @@ public sealed partial class ManualMagazineLoading
             local = loading;
             if (GameMain.Client != null)
             {
-                loading.duration = 0; // Wait for the server's first round before animating.
+                loading.duration = 0; // Start the timeout for the server's initial response.
                 loading.Item.CreateClientEvent(loading, new Request(loading.session, source.ID));
             }
             slot.ForceTooltipRefresh = true;
@@ -131,11 +131,10 @@ public sealed partial class ManualMagazineLoading
     {
         var loading = local ?? justFinished;
         if (loading == null || loading.Item != item || inventory == null || !drawItem || item.ParentInventory != inventory) { return; }
-        float progress = CapacityProgress(loading.loaded, loading.magazine!.MaxSize,
-            loading == local ? loading.elapsed : 0, loading.duration);
+        float progress = loading.CapacityProgress;
         Vector2 center = slot.Rect.Center.ToVector2() + slot.DrawOffset;
-        float radius = Math.Min(slot.Rect.Width, slot.Rect.Height) * 0.43f;
-        float width = Math.Max(2, MathF.Round(radius / 10));
+        float radius = Math.Min(slot.Rect.Width, slot.Rect.Height) * 0.36f;
+        float width = Math.Max(3, MathF.Round(radius / 5));
         var radii = new Range<float>(radius - width, radius);
         GUI.DrawDonutSection(spriteBatch, center, radii, MathF.Tau, Color.Black * 0.65f);
         if (progress > 0) { GUI.DrawDonutSection(spriteBatch, center, radii, MathF.Tau * progress, GUIStyle.Green); }

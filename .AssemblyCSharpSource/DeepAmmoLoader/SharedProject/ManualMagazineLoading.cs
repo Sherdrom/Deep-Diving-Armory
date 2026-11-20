@@ -28,9 +28,9 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private static float RoundTime(Character user) =>
         1f - 0.6f * (Math.Clamp(user.GetSkillLevel(weapons), 0f, 100f) / 100f);
 
-    internal static float CapacityProgress(int rounds, int capacity, float elapsed, float duration) =>
-        capacity <= 0 ? 0 : rounds >= capacity ? 1 :
-        Math.Clamp((rounds + (duration > 0 ? Math.Clamp(elapsed / duration, 0, 1) : 0)) / capacity, 0, MathF.BitDecrement(1f));
+    internal float CapacityProgress => magazine is { MaxSize: > 0 }
+        ? Math.Clamp((float)loaded / magazine.MaxSize, 0f, 1f)
+        : 0f;
 
     private static bool Accessible(Item item, Character user) =>
         !item.Removed && !item.IsInRemoveQueue && item.IsOwnedBy(user) && user.CanInteractWith(item);
