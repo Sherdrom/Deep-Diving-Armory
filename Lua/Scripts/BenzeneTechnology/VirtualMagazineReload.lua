@@ -4,21 +4,18 @@ local virtualType = "VCE_VirtualizedMagazine.VirtualizedMagazine"
 LuaUserData.RegisterType(virtualType)
 
 local function magazineOf(item)
-    if not item or not item.HasTag("556mag") then return end
-    local container = item.OwnInventory and item.OwnInventory.Container
+    local container = item and item.OwnInventory and item.OwnInventory.Container
     if container and LuaUserData.IsTargetType(container, virtualType) then return container end
 end
 
 Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request)
     if request.handled then return end
     local character, weapon, inventory = request.character, request.weapon, request.inventory
-    local reference = ItemPrefab.GetItemPrefab("deep_556x45_virtual_30")
-    if not character or not weapon or not inventory or not reference
-        or weapon.Prefab.ContentPackage ~= reference.ContentPackage then return end
+    local package = weapon and weapon.Prefab.ContentPackage
+    if not character or not inventory or not package or package.Name ~= "Deep-Diving-Armory" then return end
 
     local container = inventory.Container
     local slot = math.max(container.ContainedStateIndicatorSlot, 0)
-    if not container.CanBeContained(reference, slot) then return end
     local current = inventory.GetItemAt(slot)
     if current and not magazineOf(current) then return end
 
@@ -43,8 +40,7 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
     if not current and #candidates == 0 then return end
     -- A failed virtual swap must not fall through to automatic ammo merging.
     request.handled = true
-    -- shortcut: VCE does not synchronize its ammo stack yet; enable multiplayer after upstream support.
-    if Game.IsMultiplayer or not character.CanAccessInventory(inventory) then return end
+    if not character.CanAccessInventory(inventory) then return end
     table.sort(candidates, function(a, b)
         if a.count ~= b.count then return a.count > b.count end
         return a.item.ID < b.item.ID
