@@ -118,6 +118,9 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lu
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外插槽UI（大肥鱼科技）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetTeamAutoSwitch.lua")--耳机阵营切换
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大
+if SERVER or not Game.IsMultiplayer then
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")--NPC虚拟弹匣按身份填充弹药(服务端)
+end
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手持加特林旋转枪管(客户端)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
