@@ -85,6 +85,9 @@ static void RunTests(string[] args)
     Type harmonyType = Assembly.Load("0Harmony").GetType("HarmonyLib.Harmony", true)!;
     Type harmonyMethodType = Assembly.Load("0Harmony").GetType("HarmonyLib.HarmonyMethod", true)!;
     object harmony = Activator.CreateInstance(harmonyType, "DDA.VirtualMagazine.Tests")!;
+    Assembly loader = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
+        "bin/Client", platform == "Mac" ? "OSX" : platform, "DeepAmmoLoader.dll"));
+    object plugin = Activator.CreateInstance(loader.GetType("DDA.AmmoLoading.Plugin", true)!)!;
     try
     {
         // The game owns IBarotraumaPlugin services; exercise VCE's real firing patch without faking that host.
@@ -135,7 +138,8 @@ static void RunTests(string[] args)
         componentCache[containerType] = components;
         Set(magazineItem, "componentsByType", componentCache);
         object weaponContainer = Empty(containerType);
-        Set(weaponContainer, "Inventory", Inventory(magazineItem));
+        object weaponInventory = Inventory(magazineItem);
+        Set(weaponContainer, "Inventory", weaponInventory);
         Assembly hud = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
             "bin/Client", platform == "Mac" ? "OSX" : platform, "RemainedAmmo.dll"));
         MethodInfo countAmmo = hud.GetType("RemainedAmmo.RemainedAmmo", throwOnError: true)!.GetMethod("GetRemainedAmmo")
@@ -152,9 +156,10 @@ static void RunTests(string[] args)
         rounds = (IList)NewList(identifierType);
         rounds.Add(Id("otherallowed"));
         magazineType.GetMethod("LoadAmmoArray")!.Invoke(magazine, new object[] { rounds });
-        PropertyInfo serialized = magazineType.GetProperty("LoadedAmmoIdentifiersString")!;
-        string saved = (string)serialized.GetValue(magazine)!;
-        Assert(saved == "allowed,otherallowed", "serialized rounds must be bottom-first");
+        PropertyInfo serialized = magazineType.GetProperty("LoadedAmmoIdentifiersArray")!;
+        var saved = (Array)serialized.GetValue(magazine)!;
+        Assert(saved.Cast<object>().Select(id => id.ToString()).SequenceEqual(["allowed", "otherallowed"]),
+            "serialized rounds must be bottom-first");
         magazineType.GetMethod("UnLoadAmmoArray")!.Invoke(magazine, new object?[] { null });
         Assert(Count() == 0, "unload did not clear the stack");
         serialized.SetValue(magazine, saved);
@@ -166,9 +171,99 @@ static void RunTests(string[] args)
         rounds.Add(Id("wrongcaliber"));
         magazineType.GetMethod("PushAmmoArray")!.Invoke(magazine, new object[] { rounds });
         Assert(Count() == 2, "empty whitelist must still accept valid ammo in VCE's demo magazine");
-        Console.WriteLine("PASS: deployed VCE firing patch, whitelist, capacity, consumption, HUD, MoonSharp and empty-stack serialization round-trip.");
+        // Exercise the same lookup, cleanup and magazine Use as a DDA weapon, without simulating ballistics.
+        var weapon = Empty(itemType);
+        var weaponPrefab = Empty(prefabType);
+        var file = Empty(GameType("Barotrauma.ItemFile"));
+        var package = Empty(GameType("Barotrauma.RegularPackage"));
+        Set(package, "<Name>k__BackingField", "Renamed Armory");
+        Set(file, "ContentPackage", package);
+        Set(weaponPrefab, "ContentFile", file);
+        Set(weapon, "Prefab", weaponPrefab);
+        Set(weapon, "ownInventory", weaponInventory);
+        var srw = Empty(vce.GetType("VCE_SRW.SwitchableRangedWeapon", true)!);
+        Set(srw, "item", weapon);
+        Set(srw, "switchableSlots", new List<int> { 0 });
+        Set(srw, "domagcheck", true);
+        var find = srw.GetType().GetMethod("FindProjectile", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)!;
+        var proxy = Empty(vce.GetType("VCE_VirtualizedMagazine.VirtualizedProjectile", true)!);
+        var proxyItem = Empty(itemType);
+        Set(proxy, "item", proxyItem);
+        Set(proxy, "Launcher", weapon);
+        Set(proxyItem, "Prefab", Empty(prefabType));
+        Set(proxyItem, "container", magazineItem);
+        Set(proxyItem, "condition", 100f);
+        var projectileComponents = (IList)NewList(GameType("Barotrauma.Items.Components.ItemComponent"));
+        projectileComponents.Add(proxy);
+        var proxyCache = (IDictionary)Activator.CreateInstance(componentCache.GetType())!;
+        proxyCache[proxy.GetType()] = proxyCache[proxy.GetType().BaseType!] = projectileComponents;
+        Set(proxyItem, "componentsByType", proxyCache);
+        var magazineInventory = Inventory(proxyItem);
+        Set(weaponInventory, "container", weaponContainer);
+        Set(magazineInventory, "container", magazine);
+        Set(magazineItem, "ownInventory", magazineInventory);
+        Set(magazine, "Inventory", magazineInventory);
+        var remove = itemType.GetMethod("RemoveContained")!;
+        // Neither inventory notifications nor sprite refresh can run without a game scene.
+        foreach (var notification in new[] { containerType.GetMethod("OnItemRemoved"), itemType.GetMethod("SetActiveSprite") })
+        {
+            patchArgs[0] = notification;
+            patch.Invoke(harmony, patchArgs);
+        }
+        Set(magazineItem, "condition", (float)Count());
+        Assert(find.Invoke(srw, [true]) == proxy, "initial round missing");
+        remove.Invoke(weapon, [proxyItem]);
+        Assert(find.Invoke(srw, [true]) == null, "unpatched shot cleanup should reproduce the missing second round");
+        Set(proxyItem, "container", magazineItem);
+        foreach (string name in new[] { "LuaCsPluginService", "LuaCsConfigService" })
+        {
+            var property = plugin.GetType().GetProperty(name)!;
+            var service = (TestPluginServices)DispatchProxy.Create(property.PropertyType, typeof(TestPluginServices));
+            service.OwnerPackage = package;
+            property.SetValue(plugin, service);
+        }
+        plugin.GetType().GetMethod("Initialize")!.Invoke(plugin, null);
+        plugin.GetType().GetMethod("OnLoadCompleted")!.Invoke(plugin, null);
+        var cleanup = plugin.GetType().GetMethod("RemoveFiredProjectile", BindingFlags.Static | BindingFlags.NonPublic)!;
+        var getInstructions = harmonyType.Assembly.GetType("HarmonyLib.PatchProcessor")!.GetMethods()
+            .Single(m => m.Name == "GetCurrentInstructions" && m.GetParameters()[1].ParameterType == typeof(int));
+        foreach (var weaponType in new[] { srw.GetType(), srw.GetType().BaseType! })
+        {
+            var fire = weaponType.GetMethod("Use", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)!;
+            var il = (IEnumerable)getInstructions.Invoke(null, [fire, int.MaxValue, null])!;
+            var calls = il.Cast<object>().Select(i => i.GetType().GetField("operand")!.GetValue(i)).OfType<MethodInfo>().ToArray();
+            Assert(calls.Contains(cleanup) && !calls.Contains(remove) && calls.Any(m => m.Name == "DispatchShoot"),
+                $"{weaponType.Name}.Use must keep VCE shooting and use DDA cleanup even when RemoveContained would be inlined");
+        }
+        for (int remaining = 2; remaining > 0; remaining--)
+        {
+            Set(magazineItem, "condition", (float)Count()); // UpdateAmmoData is stubbed in this harness.
+            Assert(Count() == remaining && find.Invoke(srw, [true]) == proxy, "SRW lost the loaded projectile");
+            Assert(magazineType.GetProperty("TopIdentifier")!.GetValue(magazine)!.ToString() ==
+                (remaining == 2 ? "wrongcaliber" : "allowed"), "mixed magazine fired out of order");
+            cleanup.Invoke(null, [weapon, proxyItem]);
+            use.Invoke(magazine, [1f, null]);
+        }
+        Set(magazineItem, "condition", (float)Count());
+        Assert(Count() == 0 && find.Invoke(srw, [true]) == null, "SRW should stop on the empty magazine");
+        var otherPackage = Empty(package.GetType());
+        Set(otherPackage, "<Name>k__BackingField", "Renamed Armory");
+        Set(file, "ContentPackage", otherPackage);
+        cleanup.Invoke(null, [weapon, proxyItem]);
+        Assert(itemType.GetProperty("Container")!.GetValue(proxyItem) == null, "another package with the same name must retain its own behavior");
+        Set(file, "ContentPackage", package);
+        Set(proxyItem, "container", magazineItem);
+        proxyCache.Remove(proxy.GetType());
+        projectileComponents[0] = Empty(proxy.GetType().BaseType!);
+        cleanup.Invoke(null, [weapon, proxyItem]);
+        Assert(itemType.GetProperty("Container")!.GetValue(proxyItem) == null, "ordinary projectiles must still be removed");
+        Console.WriteLine("PASS: deployed SRW consecutive shots and empty stop, cleanup scope, VCE consumption, HUD and mixed-stack round-trip.");
     }
-    finally { harmonyType.GetMethod("UnpatchSelf")!.Invoke(harmony, null); }
+    finally
+    {
+        plugin.GetType().GetMethod("Dispose")!.Invoke(plugin, null);
+        harmonyType.GetMethod("UnpatchSelf")!.Invoke(harmony, null);
+    }
 }
 
 static FieldInfo Field(Type type, string name)
@@ -198,3 +293,15 @@ static void CheckLua(object magazine, Type identifierType)
         """);
 }
 public static class TestHooks { public static bool SkipRefresh() => false; }
+
+public class TestPluginServices : DispatchProxy
+{
+    public object? OwnerPackage;
+    protected override object? Invoke(MethodInfo? method, object?[]? args)
+    {
+        if (method?.Name == "TryGetConfig") { return false; }
+        if (method?.Name != "TryGetPackageForPlugin") { throw new NotSupportedException(method?.Name); }
+        args![0] = OwnerPackage;
+        return true;
+    }
+}

@@ -1,10 +1,13 @@
 global using Barotrauma;
 global using Microsoft.Xna.Framework;
+using Barotrauma.Items.Components;
 using Barotrauma.LuaCs;
 using HarmonyLib;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using VCE_SRW;
+using VCE_VirtualizedMagazine;
 
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
@@ -15,9 +18,10 @@ namespace DDA.AmmoLoading;
 public sealed class Plugin : IAssemblyPlugin
 {
     private Harmony? harmony;
+    private static ContentPackage? ownerPackage;
 
-#if CLIENT
     public IPluginManagementService LuaCsPluginService { get; set; } = null!;
+#if CLIENT
     public IConfigService LuaCsConfigService { get; set; } = null!;
 #endif
 
@@ -38,9 +42,15 @@ public sealed class Plugin : IAssemblyPlugin
     public void PreInitPatching() { }
     public void OnLoadCompleted()
     {
+        if (!LuaCsPluginService.TryGetPackageForPlugin<Plugin>(out ownerPackage)) { return; }
+        var transpiler = new HarmonyMethod(typeof(Plugin), nameof(PatchProjectileCleanup));
+        foreach (var type in new[] { typeof(RangedWeapon), typeof(SwitchableRangedWeapon) })
+        {
+            harmony!.Patch(AccessTools.DeclaredMethod(type, nameof(RangedWeapon.Use), [typeof(float), typeof(Character)]),
+                transpiler: transpiler);
+        }
 #if CLIENT
-        if (LuaCsPluginService.TryGetPackageForPlugin<Plugin>(out var package) &&
-            LuaCsConfigService.TryGetConfig<Barotrauma.LuaCs.Data.ISettingControl>(package, "StopManualLoading", out var control))
+        if (LuaCsConfigService.TryGetConfig<Barotrauma.LuaCs.Data.ISettingControl>(ownerPackage, "StopManualLoading", out var control))
         { ManualMagazineLoading.StopControl = control; }
 #endif
     }
@@ -52,6 +62,7 @@ public sealed class Plugin : IAssemblyPlugin
 #endif
         harmony?.UnpatchSelf();
         harmony = null;
+        ownerPackage = null;
     }
 
     private static Assembly? ResolveVce(AssemblyLoadContext context, AssemblyName name)
@@ -59,6 +70,18 @@ public sealed class Plugin : IAssemblyPlugin
         if (name.Name is not ("VanillaComponentsExpandedClient" or "VanillaComponentsExpandedServer")) { return null; }
         // LuaCs cannot resolve VCE in the native plugin context; share its existing types.
         return AssemblyLoadContext.All.SelectMany(c => c.Assemblies).FirstOrDefault(a => a.FullName == name.FullName);
+    }
+
+    private static IEnumerable<CodeInstruction> PatchProjectileCleanup(IEnumerable<CodeInstruction> instructions) =>
+        Transpilers.MethodReplacer(instructions, AccessTools.Method(typeof(Item), nameof(Item.RemoveContained)),
+            AccessTools.Method(typeof(Plugin), nameof(RemoveFiredProjectile)));
+
+    private static void RemoveFiredProjectile(Item weapon, Item projectile)
+    {
+        // VCE reuses the projectile in its magazine. RemoveContained would clear that ownership.
+        if (projectile.Container is { } magazine && magazine != weapon &&
+            weapon.ContentPackage == ownerPackage && projectile.GetComponent<VirtualizedProjectile>() != null) { return; }
+        weapon.RemoveContained(projectile);
     }
 
     internal static void MigrateSavedComponent(ContentXElement element)
