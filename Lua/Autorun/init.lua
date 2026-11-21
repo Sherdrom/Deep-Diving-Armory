@@ -111,7 +111,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机和插板修理台
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepClaymoreAutoArm.lua")--敌我识别阔剑
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lua")--强制禁止放入物品栏
@@ -128,4 +127,5 @@ end
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血（有character性能问题）(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改(暂时用不到)
+--dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化（已废弃）
 --桃子科技
