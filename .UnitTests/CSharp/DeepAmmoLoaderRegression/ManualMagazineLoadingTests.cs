@@ -107,5 +107,68 @@ internal static class ManualMagazineLoadingTests
             loading.CapacityProgress == 1, "only a full magazine fills the ring");
         Request(11, source.ID);
         check(!loading.IsActive, "full magazine rejects a new drag");
+
+        Request(12, target.ID);
+        check(!loading.IsActive, "a backpack magazine cannot be manually unloaded");
+        user.HeldItem = target;
+        Request(13, target.ID);
+        Tick(.39f);
+        check(loading.CapacityProgress == 1 && source.Condition == 10, "starting unload keeps the full ring until one round completes");
+        Tick(.02f);
+        check(loading.CapacityProgress == 29f / 30 && source.Condition == 11 && LastState().Loaded == 29,
+            "one tick credits one matching package and reduces the ring by one");
+        Request(13, 0);
+        Tick(2);
+        check(!loading.IsActive && source.Condition == 11 && magazine.LoadedCount == 29, "stop preserves the unprocessed rounds");
+        Request(14, target.ID);
+        user.HeldItem = null;
+        Tick(1);
+        check(!loading.IsActive && magazine.LoadedCount == 29, "putting the magazine away stops unloading");
+        user.HeldItem = target;
+        Request(15, target.ID);
+        source.IgnoreConditionChanges = true;
+        Tick(1);
+        source.IgnoreConditionChanges = false;
+        check(!loading.IsActive && source.Condition == 11 && magazine.LoadedCount == 29, "rejected package credit restores the magazine");
+
+        magazine.LoadedAmmoIdentifiers.Clear();
+        magazine.LoadedAmmoIdentifiersArray = ["a".ToIdentifier(), "b".ToIdentifier(), "a".ToIdentifier()];
+        var packB = new ItemPrefab("manual_pack_b", 701, "deep_ammopackage") { Health = 30,
+            ConfigElement = new(XElement.Parse("<Item><VirtualizedAmmoStorage ProjectileIdentifier='b'/></Item>")) };
+        ItemPrefab.Prefabs.Values.Add(packB);
+        Request(16, target.ID);
+        Tick(.4f);
+        Tick(.4f);
+        check(source.Condition == 12 && magazine.LoadedCount == 2 && Entity.Spawner.Pending.Count == 1,
+            "mixed magazine returns the top round first and waits for a new matching package");
+        Request(16, 0);
+        Request(17, target.ID);
+        Entity.Spawner.ProcessQueue();
+        check(magazine.LoadedCount == 2 && loading.IsActive && !user.Inventory.AllItems.Any(i => i.Prefab == packB),
+            "canceled spawn cannot mint a round or interrupt a later session");
+        Tick(.4f);
+        user.Inventory.RejectInsertion = true;
+        Entity.Spawner.ProcessQueue();
+        user.Inventory.RejectInsertion = false;
+        check(!loading.IsActive && magazine.LoadedCount == 2 && !user.Inventory.AllItems.Any(i => i.Prefab == packB),
+            "failed insertion leaves the next round in the magazine");
+        Request(18, target.ID);
+        Tick(.4f);
+        user.Inventory.Capacity = user.Inventory.AllItems.Count;
+        Entity.Spawner.ProcessQueue();
+        Tick(.4f);
+        check(!loading.IsActive && magazine.LoadedCount == 2, "full inventory cancels even when the spawn callback is skipped");
+        user.Inventory.Capacity = 20;
+        Request(19, target.ID);
+        Tick(.4f);
+        Tick(.4f);
+        check(Entity.Spawner.Pending.Count == 1, "delayed spawning only enqueues one package");
+        Entity.Spawner.ProcessQueue();
+        check(user.Inventory.AllItems.Single(i => i.Prefab == packB).Condition == 1 &&
+            magazine.LoadedCount == 1 && loading.CapacityProgress == 1f / 30, "new package receives exactly its first round");
+        Tick(.4f);
+        check(!loading.IsActive && LastState() == (user.ID, 19u, 0, -1f) && loading.CapacityProgress == 0 &&
+            source.Condition == 13, "mixed magazine ends empty, with all three rounds accounted for");
+        ItemPrefab.Prefabs.Values.Remove(packB);
     }
 }

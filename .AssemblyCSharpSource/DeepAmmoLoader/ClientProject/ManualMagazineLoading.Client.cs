@@ -18,6 +18,7 @@ public sealed partial class ManualMagazineLoading
     private static ManualMagazineLoading? justFinished;
     private static SoundPrefab? lastPressSound;
     private static double hideAt;
+    private GUIButton? unloadButton;
 
     private sealed record Request(uint Session, ushort Source) : IEventData;
     public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<Request>(data, out _);
@@ -35,7 +36,7 @@ public sealed partial class ManualMagazineLoading
         int rounds = msg.ReadInt32();
         float seconds = msg.ReadSingle();
         if (local != this || Character.Controlled?.ID != user || session != token) { return; }
-        if (seconds != 0 && (duration == 0 || rounds > loaded))
+        if (seconds != 0 && (duration == 0 || (Unloading ? rounds < loaded : rounds > loaded)))
         {
             // The first server response supplies the starting count.
             if (duration > 0) { PlayPressSound(); }
@@ -52,6 +53,31 @@ public sealed partial class ManualMagazineLoading
         lastPressSound?.Sound?.Play(null, lastPressSound.Volume, Rand.Range(0.94f, 1.06f, Rand.RandSync.Unsynced));
     }
 
+    public override void AddToGUIUpdateList(int order = 0)
+    {
+        if (Screen.Selected != GameMain.GameScreen || Character.Controlled is not { } user || !HeldBy(user) ||
+            !CharacterHUD.ShouldDrawInventory(user) || user.SelectedItem != null && user.SelectedItem != Item) { return; }
+        int top = HUDLayoutSettings.InventoryTopY;
+        if (top <= 0) { return; }
+        var size = new Point((int)(144 * GUI.Scale), (int)(34 * GUI.Scale));
+        int gap = (int)(6 * GUI.Scale);
+        unloadButton ??= new GUIButton(new RectTransform(size, GUI.Canvas, Anchor.TopCenter), "", style: "GUIButtonSmallFreeScale")
+        {
+            OnClicked = (_, _) =>
+            {
+                if (local == this && Unloading) { CancelLocal(); return true; }
+                return Character.Controlled is { } player && StartLocal(player, Item);
+            }
+        };
+        bool left = user.HasEquippedItem(Item, InvSlotType.LeftHand);
+        unloadButton.RectTransform.NonScaledSize = size;
+        unloadButton.RectTransform.AbsoluteOffset = new Point((left ? -1 : 1) * (size.X + gap) / 2, Math.Max(0, top - size.Y - gap));
+        unloadButton.Text = TextManager.Get(Unloading ? "dda.manualunload.stop" : "dda.manualunload.start");
+        unloadButton.ToolTip = Item.Name;
+        unloadButton.Enabled = Unloading || (local == null && user.CanInteract && magazine is { LoadedCount: > 0 });
+        unloadButton.AddToGUIUpdateList(order: order);
+    }
+
     internal static bool HandleDrop()
     {
         if (Screen.Selected != GameMain.GameScreen || GUI.InputBlockingMenuOpen || Character.Controlled is not { } user ||
@@ -60,21 +86,24 @@ public sealed partial class ManualMagazineLoading
             !slot.Slot.MouseOn() || !source.IsOwnedBy(user) || !target.IsOwnedBy(user) ||
             target.GetComponent<ManualMagazineLoading>() is not { } loading) { return false; }
 
-        bool accepted = loading.Begin(user, source, ++nextSession);
-        if (accepted)
-        {
-            justFinished = null;
-            local = loading;
-            if (GameMain.Client != null)
-            {
-                loading.duration = 0; // Start the timeout for the server's initial response.
-                loading.Item.CreateClientEvent(loading, new Request(loading.session, source.ID));
-            }
-            slot.ForceTooltipRefresh = true;
-        }
+        bool accepted = loading.StartLocal(user, source);
+        if (accepted) { slot.ForceTooltipRefresh = true; }
         Inventory.DraggingItems.Clear();
         Inventory.DraggingSlot = null;
         SoundPlayer.PlayUISound(accepted ? GUISoundType.PickItem : GUISoundType.PickItemFail);
+        return true;
+    }
+
+    private bool StartLocal(Character user, Item source)
+    {
+        if (!Begin(user, source, ++nextSession)) { return false; }
+        justFinished = null;
+        local = this;
+        if (GameMain.Client != null)
+        {
+            duration = 0; // Wait for the server's starting count.
+            Item.CreateClientEvent(this, new Request(session, source.ID));
+        }
         return true;
     }
 
@@ -108,7 +137,7 @@ public sealed partial class ManualMagazineLoading
     public override void AddTooltipInfo(ref LocalizedString name, ref LocalizedString description)
     {
         if (local == this)
-        { description += "\n" + TextManager.Get("dda.manualloading.stop").Value.Replace("[key]", StopKey.GetName().Value); }
+        { description += "\n" + TextManager.Get(Unloading ? "dda.manualunload.hint" : "dda.manualloading.stop").Value.Replace("[key]", StopKey.GetName().Value); }
     }
 
     [HarmonyPatch(typeof(SettingControl), nameof(SettingControl.GetDefaultStringValue))]

@@ -14,6 +14,7 @@ namespace Barotrauma
     public static class Identifiers { public static Identifier ToIdentifier(this string id) => new(id); }
     public enum IsPropertySaveable { No, Yes }
     public enum ActionType { OnBroken, OnActive }
+    [Flags] public enum InvSlotType { LeftHand = 1, RightHand = 2 }
     public sealed class SerializeAttribute : Attribute
     {
         public SerializeAttribute(object value, IsPropertySaveable saveable, bool alwaysUseInstanceValues = false) { }
@@ -67,6 +68,8 @@ namespace Barotrauma
         public float WeaponsSkill;
         public float GetSkillLevel(Identifier id) => id.Value == "weapons" ? WeaponsSkill : 0;
         public bool CanInteractWith(Item item) => CanInteract && item.IsOwnedBy(this);
+        public Item? HeldItem;
+        public bool HasEquippedItem(Item item, InvSlotType slot) => HeldItem == item;
         public readonly ItemInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
@@ -119,6 +122,7 @@ namespace Barotrauma
         public int FindIndex(Item item) => AllItems.IndexOf(item);
         public readonly List<Item> AllItems = [];
         public Item? GetItemAt(int slot) => AllItems.ElementAtOrDefault(slot);
+        public Item? FindItem(Func<Item, bool> predicate, bool recursive) => AllItems.FirstOrDefault(predicate);
         public Func<ItemPrefab, bool>? Accepts;
         public bool RejectInsertion;
         public bool CanProbablyBePut(ItemPrefab prefab, float? condition = null, int? quality = null) =>
