@@ -28,7 +28,7 @@ public class SlotCompatibilityTests
         }
         Assert.NotNull(root);
         var init = File.ReadAllText(Path.Combine(root.FullName, "Lua/Autorun/init.lua"));
-        var methods = new HashSet<string> { "Equip", "Drop", "RespondToAttack", "AddItemToRemoveQueue" };
+        var methods = new HashSet<string> { "Equip", "RespondToAttack", "InitializeItem", "GiveJobItems" };
         var checkedMethods = new HashSet<string>();
         var gameAssembly = typeof(Item).Assembly;
         var systemAssembly = typeof(object).Assembly;
@@ -61,6 +61,6 @@ public class SlotCompatibilityTests
                 checkedMethods.Add(method);
             }
         }
-        Assert.True(methods.SetEquals(checkedMethods), "Not all migrated hook signatures were checked");
+        Assert.Empty(methods.Except(checkedMethods));
     }
 }
