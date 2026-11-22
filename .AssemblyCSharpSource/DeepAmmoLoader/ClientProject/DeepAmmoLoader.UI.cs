@@ -9,7 +9,7 @@ public sealed partial class DeepAmmoLoader
     private GUIListBox? presetList, planList, previewList, stockList, actualList, checkList;
     private GUITextBox? presetName;
     private GUITextBlock? targetLabel, planLabel, draftLabel, stockSummary, presetScope, checkAmountHeader;
-    private GUIButton? loadButton, unloadButton, presetLoadButton, saveButton, clearButton, presetDelete;
+    private GUIButton? loadButton, unloadButton, batchButton, presetLoadButton, saveButton, clearButton, presetDelete;
     private GUIFrame? inputHolder, targetHolder, outputHolder;
     private GUINumberInput? addQuantity;
     private bool uiDirty = true, draftDirty, withdrawMode;
@@ -20,6 +20,7 @@ public sealed partial class DeepAmmoLoader
     private int displayedCount = -1;
     private string message = "";
     private int addCount = 5;
+    private float batchRefreshTimer;
 
     private int DraftCapacity => Target is { } target
         ? Math.Clamp(target.MaxSize - target.LoadedCount, 0, AmmoPlan.MaxRounds) : AmmoPlan.MaxRounds;
@@ -151,13 +152,19 @@ public sealed partial class DeepAmmoLoader
 
         var magazine = Column(upper, magazineWidth, listInset);
         targetLabel = Label(magazine, "", 0.055f);
-        actualList = List(magazine, 0.83f);
+        actualList = List(magazine, 0.73f);
         actualList.ToolTip = L("topfirst");
-        var magazineActions = Row(magazine, 0.08f);
-        unloadButton = Button(magazineActions, "unload", 0.49f, 1,
-            () => { message = ""; RequestUnload(); uiDirty = true; });
-        loadButton = Button(magazineActions, "load", 0.49f, 1,
+        var loadActions = Row(magazine, 0.08f);
+        loadButton = Button(loadActions, "load", 0.49f, 1,
             () => { message = ""; RequestLoad(draft.ToArray()); uiDirty = true; });
+        batchButton = Button(loadActions, "batchload", 0.49f, 1, () => Send(Command.LoadBatch, draft.ToArray()));
+        loadActions.RelativeSpacing = 0;
+        loadActions.AbsoluteSpacing = loadActions.Rect.Width - loadButton.Rect.Width - batchButton.Rect.Width;
+        batchButton.TextBlock.AutoScaleHorizontal = true;
+        batchButton.Enabled = false;
+        var unloadActions = Row(magazine, 0.08f);
+        unloadButton = Button(unloadActions, "unload", 1, 1,
+            () => { message = ""; RequestUnload(); uiDirty = true; });
 
         var lower = PanelRow(lowerHeight);
         var supply = Column(lower, supplyWidth, listInset);
@@ -221,12 +228,15 @@ public sealed partial class DeepAmmoLoader
 
         root.ForceLayoutRecalculation();
         int listBottom = presetList.Rect.Bottom;
-        foreach (var list in new[] { planList, previewList, actualList })
+        foreach (var list in new[] { planList, previewList })
         {
             list.RectTransform.Resize(new Point(list.Rect.Width, listBottom - list.Rect.Top));
         }
+        loadActions.IgnoreLayoutGroups = true;
+        loadActions.RectTransform.AbsoluteOffset = new Point(0, listBottom - loadActions.RectTransform.Parent.Rect.Top - loadActions.Rect.Height);
+        actualList.RectTransform.Resize(new Point(actualList.Rect.Width, loadActions.Rect.Top - listInset - actualList.Rect.Top));
         int actionCenter = (listBottom + lower.Rect.Top) / 2;
-        foreach (var actions in new[] { presetActions, editorActions, magazineActions })
+        foreach (var actions in new[] { presetActions, editorActions, unloadActions })
         {
             actions.IgnoreLayoutGroups = true;
             actions.RectTransform.RelativeOffset = Vector2.Zero;
@@ -390,6 +400,8 @@ public sealed partial class DeepAmmoLoader
         }
         UpdateClientState(deltaTime);
         UpdateWithdrawalButtons();
+        batchRefreshTimer -= deltaTime;
+        if (batchRefreshTimer <= 0) { UpdateBatchButton(); }
         var target = Target;
         bool synchronized = IsSynchronized;
         if (displayedTarget != (target?.Item.ID ?? 0) || displayedCount != (target?.LoadedCount ?? 0) ||
@@ -401,6 +413,29 @@ public sealed partial class DeepAmmoLoader
             displayedSynchronized = synchronized;
             uiDirty = true;
         }
+    }
+
+    private void UpdateBatchButton()
+    {
+        if (batchButton == null) { return; }
+        batchRefreshTimer = 0.25f;
+        var targets = BatchTargets(Character.Controlled, Target);
+        batchButton.Text = L("batchload").Value.Replace("[count]", targets.Count.ToString());
+        batchButton.ToolTip = L("batchhint");
+        batchButton.Enabled = Ready && IsSynchronized && targets.Count > 0 && AmmoPlan.IsValid(draft, AmmoPlan.MaxRounds);
+        if (!batchButton.Enabled) { return; }
+        var first = targets[0];
+        var demand = AmmoStock.Count(AmmoPlan.Expand(draft).TakeLast(first.MaxSize - first.LoadedCount));
+        string? problem = demand.Keys.Any(id => !IsCompatible(first, id)) ? "incompatible" :
+            !QuoteSupply(demand).CanLoad ? "notenough" : null;
+        if (problem != null) { batchButton.Enabled = false; batchButton.ToolTip = L(problem); }
+    }
+
+    private void ShowBatchResult(BatchResult result)
+    {
+        message = L("batchresult").Value.Replace("[loaded]", result.Loaded.ToString()).Replace("[total]", result.Total.ToString());
+        if (result.Shortage) { message += " · " + L("notenough").Value; }
+        uiDirty = true;
     }
 
     private void UpdateWithdrawalButtons()
@@ -617,6 +652,7 @@ public sealed partial class DeepAmmoLoader
             demand.Keys.Any(id => !IsCompatible(target, id)) ? "incompatible" : !quote.CanLoad ? "notenough" : "ready";
         loadButton!.Enabled = problem == "ready";
         loadButton.ToolTip = L(problem);
+        UpdateBatchButton();
         unloadButton!.Enabled = Ready && IsSynchronized && target?.LoadedCount > 0;
         unloadButton.ToolTip = L("unloadhint", "unload");
         // Visibility culling during collection needs the new scroll range, including after a list shrinks.

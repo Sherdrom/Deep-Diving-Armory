@@ -457,6 +457,14 @@ static void Run()
             { throw new Exception("Native grid wrapping lost its tight right edge or spacing after moving."); }
         }
         var actual = (GUIListBox)typeof(DeepAmmoLoader).GetField("actualList", fields)!.GetValue(layoutLoader)!;
+        var batch = (GUIButton)typeof(DeepAmmoLoader).GetField("batchButton", fields)!.GetValue(layoutLoader)!;
+        var single = (GUIButton)typeof(DeepAmmoLoader).GetField("loadButton", fields)!.GetValue(layoutLoader)!;
+        var unload = (GUIButton)typeof(DeepAmmoLoader).GetField("unloadButton", fields)!.GetValue(layoutLoader)!;
+        if (single.Rect.Top <= actual.Rect.Bottom || single.Rect.Left != actual.Rect.Left ||
+            single.Rect.Top != batch.Rect.Top || single.Rect.Bottom != batch.Rect.Bottom || single.Rect.Right >= batch.Rect.Left ||
+            batch.Rect.Right != actual.Rect.Right || unload.Rect.Top <= batch.Rect.Bottom ||
+            unload.Rect.Left != actual.Rect.Left || unload.Rect.Right != actual.Rect.Right)
+        { throw new Exception($"Magazine buttons at {size}: list {actual.Rect}, load {single.Rect}, batch {batch.Rect}, unload {unload.Rect}."); }
         var check = (GUIListBox)typeof(DeepAmmoLoader).GetField("checkList", fields)!.GetValue(layoutLoader)!;
         var editorPreview = (GUIListBox)typeof(DeepAmmoLoader).GetField("previewList", fields)!.GetValue(layoutLoader)!;
         if (actual.Rect.Left != check.Rect.Left || actual.Rect.Right != check.Rect.Right ||
@@ -646,7 +654,7 @@ static void Run()
     var originalCharacter = controlledField.GetValue(null);
     var characterA = (Character)RuntimeHelpers.GetUninitializedObject(typeof(Character));
     var characterB = (Character)RuntimeHelpers.GetUninitializedObject(typeof(Character));
-    var personalInventory = new Inventory(characterA, 1);
+    var personalInventory = new Inventory(characterA, 2);
     var parentField = typeof(Item).GetField("parentInventory", fields)!;
     parentField.SetValue(magazineItem, personalInventory);
     var inventorySlot = ((Array)typeof(Inventory).GetField("slots", fields)!.GetValue(personalInventory)!).GetValue(0)!;
@@ -681,6 +689,21 @@ static void Run()
         Inventory.DraggingItems.Add(magazineItem);
         MouseAt(selectionSlot.Rect.Center, ButtonState.Pressed);
         MouseAt(selectionSlot.Rect.Center, ButtonState.Released);
+        var opened = (HashSet<Inventory.SlotReference>)typeof(Inventory).GetField("highlightedSubInventorySlots", fields)!.GetValue(null)!;
+        var belt = new Inventory(characterA, 1) { visualSlots = [new VisualSlot(selectionSlot.Rect)] };
+        var beltAnchor = selectionSlot.Rect;
+        beltAnchor.Offset(0, beltAnchor.Height * 2);
+        var beltPopup = new Inventory.SlotReference(new Inventory(characterA, 1), new VisualSlot(beltAnchor), 0, false, belt);
+        opened.Add(beltPopup);
+        Inventory.DraggingSlot = belt.visualSlots[0];
+        try
+        {
+            if ((bool)handleDrop.Invoke(layoutLoader, null)! || layoutLoader.Target != null ||
+                !Inventory.DraggingItems.SequenceEqual([magazineItem]) || Inventory.DraggingSlot != belt.visualSlots[0] ||
+                (bool)typeof(DeepAmmoLoader).GetProperty("IsMouseOnTargetSlot", fields)!.GetValue(layoutLoader)!)
+            { throw new Exception("The opened toolbelt must retain the drag and hover when it covers the target."); }
+        }
+        finally { opened.Remove(beltPopup); }
         if (!(bool)handleDrop.Invoke(layoutLoader, null)! || layoutLoader.Target != magazine ||
             Inventory.DraggingItems.Any() || Inventory.DraggingSlot != null ||
             magazineItem.ParentInventory != personalInventory || personalInventory.GetItemAt(0) != magazineItem)
@@ -743,6 +766,76 @@ static void Run()
         if (selectionSlot.ToolTip.SanitizedValue != "Select a carried magazine" ||
             selectionSlot.Parent.ToolTip.SanitizedValue != "Select a carried magazine")
         { throw new Exception("Clearing the target must restore the empty-slot instructions."); }
+        layoutLoader.GuiFrame.RectTransform.Parent = new RectTransform(layoutLoader.GuiFrame.Rect.Size);
+        var afterSlot = typeof(DeepAmmoLoader).Assembly.GetType("DDA.AmmoLoading.DeepAmmoLoaderTargetInputPatch")!
+            .GetMethod("AfterSlotUpdate", fields)!;
+        var spare = (Item)RuntimeHelpers.GetUninitializedObject(typeof(Item));
+        parentField.SetValue(spare, personalInventory);
+        ((List<Item>)inventorySlot.GetType().GetField("items", fields)!.GetValue(inventorySlot)!).Add(spare);
+        Inventory.doubleClickedItems.AddRange([magazineItem, spare]);
+        Inventory.DraggingItems.AddRange([magazineItem, spare]);
+        MouseAt(selectionSlot.Rect.Location - new Point(40), ButtonState.Released);
+        typeof(DebugConsole).GetField("isOpen", fields)!.SetValue(null, false);
+        selectedItemField.SetValue(characterA, null);
+        afterSlot.Invoke(null, null);
+        if (Inventory.doubleClickedItems.Count != 2 || layoutLoader.Target != null)
+        { throw new Exception("A closed loader must leave inventory double-clicks to native quick-use."); }
+        selectedItemField.SetValue(characterA, station);
+        afterSlot.Invoke(null, null);
+        if (layoutLoader.Target != magazine || Inventory.doubleClickedItems.Count != 0 || Inventory.DraggingItems.Count != 0 ||
+            !personalInventory.GetItemsAt(0).SequenceEqual([magazineItem, spare]))
+        { throw new Exception("An inventory double-click must map one magazine and consume native quick-use without moving the stack."); }
+        var doubleClick = typeof(PlayerInput).GetField("primaryDoubleClicked", fields)!;
+        void ReleaseMappedAt(Point pos, bool twice = false)
+        {
+            MouseAt(selectionSlot.Rect.Center, ButtonState.Pressed);
+            GUI.ForceMouseOn(selectionSlot);
+            handleDrop.Invoke(layoutLoader, null);
+            MouseAt(pos, ButtonState.Released);
+            doubleClick.SetValue(null, twice);
+            try { handleDrop.Invoke(layoutLoader, null); }
+            finally { doubleClick.SetValue(null, false); }
+        }
+        ReleaseMappedAt(selectionSlot.Rect.Center, twice: true);
+        if (layoutLoader.Target != null || personalInventory.GetItemAt(0) != magazineItem)
+        { throw new Exception("Double-clicking the mapped slot must clear it and leave the real magazine in its slot."); }
+        selectTarget.Invoke(layoutLoader, new object[] { magazineItem });
+        // Supply the character state the native inventory access check reads in a live round.
+        var health = (CharacterHealth)RuntimeHelpers.GetUninitializedObject(typeof(CharacterHealth));
+        typeof(CharacterHealth).GetField(nameof(CharacterHealth.Character))!.SetValue(health, characterA);
+        typeof(CharacterHealth).GetField("vitality", fields)!.SetValue(health, 100f);
+        typeof(CharacterHealth).GetField("stunAffliction", fields)!.SetValue(health, RuntimeHelpers.GetUninitializedObject(typeof(Affliction)));
+        typeof(Character).GetProperty(nameof(Character.CharacterHealth))!.SetValue(characterA, health);
+        var characterParams = (CharacterParams)RuntimeHelpers.GetUninitializedObject(typeof(CharacterParams));
+        characterParams.CanInteract = true;
+        typeof(Character).GetField(nameof(Character.Params))!.SetValue(characterA, characterParams);
+        var anim = (HumanoidAnimController)RuntimeHelpers.GetUninitializedObject(typeof(HumanoidAnimController));
+        typeof(Ragdoll).GetField("limbs", fields)!.SetValue(anim, Array.Empty<Limb>());
+        typeof(Character).GetField(nameof(Character.AnimController))!.SetValue(characterA, anim);
+        var access = (CharacterInventory)RuntimeHelpers.GetUninitializedObject(typeof(CharacterInventory));
+        access.AccessibleByOwner = true;
+        typeof(Character).GetProperty(nameof(Character.Inventory))!.SetValue(characterA, access);
+        typeof(Item).GetField("components", fields)!.SetValue(magazineItem, new List<ItemComponent>());
+        typeof(Item).GetField(nameof(Item.OwnInventories))!.SetValue(magazineItem, ImmutableArray<ItemInventory>.Empty);
+        typeof(MapEntity).GetField(nameof(MapEntity.Prefab))!.SetValue(magazineItem, ammoPrefab);
+        var destRect = selectionSlot.Rect;
+        destRect.Offset(-destRect.Width * 3, 0);
+        var destination = new Inventory.SlotReference(personalInventory, new VisualSlot(destRect), 1, false);
+        var selectedSlotField = typeof(Inventory).GetField("selectedSlot", fields)!;
+        selectedSlotField.SetValue(null, destination);
+        try
+        {
+            personalInventory.Locked = true;
+            ReleaseMappedAt(destRect.Center);
+            if (layoutLoader.Target != magazine || personalInventory.GetItemAt(1) != null)
+            { throw new Exception("A rejected drop must preserve both the mapping and the real item."); }
+            personalInventory.Locked = false;
+            ReleaseMappedAt(destRect.Center);
+            if (layoutLoader.Target != null || personalInventory.GetItemAt(1) != magazineItem ||
+                personalInventory.GetItemsAt(0).Single() != spare || magazineItem.ParentInventory != personalInventory)
+            { throw new Exception("Dropping the mapped magazine into a carried slot must move only that instance."); }
+        }
+        finally { selectedSlotField.SetValue(null, null); }
         selectTarget.Invoke(layoutLoader, new object[] { magazineItem });
         selectedItemField.SetValue(characterA, null);
         updateSelection.Invoke(layoutLoader, null);
@@ -761,7 +854,7 @@ static void Run()
         Inventory.DraggingSlot = null;
         GUI.ForceMouseOn(null);
     }
-    Console.WriteLine("PASS: native hover starts target dragging; release inside retains and release outside clears only the selection; personal views, ownership changes and close preserve inventory ownership.");
+    Console.WriteLine("PASS: magazine double-clicks map and unmap, inventory drops move one instance, and rejected drops preserve the selection.");
     typeof(DeepAmmoLoader).GetProperty(nameof(DeepAmmoLoader.Target))!.SetValue(loader, magazine);
     typeof(Item).GetProperty(nameof(Item.MaxCondition))!.SetValue(magazineItem, 30f);
     typeof(DeepAmmoLoader).GetField("addCount", fields)!.SetValue(loader, 5);

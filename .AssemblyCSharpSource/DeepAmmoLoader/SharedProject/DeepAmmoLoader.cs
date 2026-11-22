@@ -183,13 +183,19 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         if (changed) { Changed(); }
     }
 
-    private static void SeparateChangedMagazine(VirtualizedMagazine magazine)
+    private static bool SameMagazineContents(VirtualizedMagazine magazine, Item other) =>
+        other.Prefab == magazine.Item.Prefab && other.GetComponent<VirtualizedMagazine>() is { } peer &&
+        peer.LoadedAmmoIdentifiers.SequenceEqual(magazine.LoadedAmmoIdentifiers);
+
+    private static void RestackChangedMagazine(VirtualizedMagazine magazine)
     {
         var item = magazine.Item;
         if (item.ParentInventory is not { } source || item.GetRootInventoryOwner() is not Character user) { return; }
-        bool SameRounds(Item other) => other.GetComponent<VirtualizedMagazine>() is { } peer &&
-            peer.LoadedAmmoIdentifiers.SequenceEqual(magazine.LoadedAmmoIdentifiers);
-        if (!source.FindIndices(item).Any(i => source.GetItemsAt(i).Any(other => other != item && !SameRounds(other)))) { return; }
+        var indices = source.FindIndices(item);
+        bool needsSplit = indices.Any(i => source.GetItemsAt(i).Any(other => other != item && !SameMagazineContents(magazine, other)));
+        if (!needsSplit && (magazine.LoadedCount == 0 || indices is not [var slot] ||
+            source.GetItemsAt(slot).Any(other => other != item) || InWeapon(item) ||
+            (source is CharacterInventory worn && worn.SlotTypes[slot] != InvSlotType.Any))) { return; }
 
         bool TryPlace(Inventory inventory, bool stack)
         {
@@ -199,7 +205,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
                     (inventory is CharacterInventory character && character.SlotTypes[i] != InvSlotType.Any) ||
                     !inventory.CanBePutInSlot(item, i)) { continue; }
                 // Full magazines can have the same condition but different firing orders.
-                if (stack && !inventory.GetItemsAt(i).All(other => other != item && SameRounds(other))) { continue; }
+                if (stack && !inventory.GetItemsAt(i).All(other => other != item && SameMagazineContents(magazine, other))) { continue; }
                 if (inventory.TryPutItem(item, i, allowSwapping: false, allowCombine: false, user, triggerOnInsertedEffects: false))
                 { return true; }
             }
@@ -207,11 +213,72 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         }
         bool TryCarriedSlots(bool stack) => TryPlace(source, stack) ||
             (source != user.Inventory && TryPlace(user.Inventory, stack));
-        if (!TryCarriedSlots(stack: true) && !TryCarriedSlots(stack: false)) { item.Drop(user); }
+        if (!TryCarriedSlots(stack: true) && needsSplit && !TryCarriedSlots(stack: false)) { item.Drop(user); }
     }
 
-    private bool TryLoad(IReadOnlyList<AmmoRun> plan, VirtualizedMagazine? magazine)
+    private static bool InWeapon(Item item)
     {
+        for (var owner = item.ParentInventory?.Owner as Item; owner != null; owner = owner.ParentInventory?.Owner as Item)
+        {
+            if (owner.GetComponent<RangedWeapon>() != null) { return true; }
+        }
+        return false;
+    }
+
+    private static List<VirtualizedMagazine> BatchTargets(Character? user, VirtualizedMagazine? selected)
+    {
+        var targets = new List<VirtualizedMagazine>();
+        if (user?.Inventory == null || selected == null || GetOwnedMagazine(selected.Item, user) != selected || InWeapon(selected.Item))
+        { return targets; }
+        if (selected.LoadedCount < selected.MaxSize) { targets.Add(selected); }
+        void Collect(Inventory inventory)
+        {
+            foreach (var item in inventory.AllItems)
+            {
+                if (item.Removed || item.IsInRemoveQueue || item.GetComponent<RangedWeapon>() != null) { continue; }
+                if (item.GetComponent<VirtualizedMagazine>() is { } magazine)
+                {
+                    if (item != selected.Item && item.Prefab == selected.Item.Prefab && magazine.LoadedCount == 0)
+                    { targets.Add(magazine); }
+                    continue;
+                }
+                foreach (var container in item.GetComponents<ItemContainer>()) { Collect(container.Inventory); }
+            }
+        }
+        Collect(user.Inventory);
+        return targets;
+    }
+
+    private sealed record BatchResult(int Loaded, int Total, bool Shortage);
+
+    private BatchResult LoadBatch(Character? user, VirtualizedMagazine? selected, IReadOnlyList<AmmoRun> plan)
+    {
+        if (!IsAuthority || !Ready || !AmmoPlan.IsValid(plan, AmmoPlan.MaxRounds)) { return new(0, 0, false); }
+        // Snapshot the instances before loading moves them to new slots or drops them.
+        var targets = BatchTargets(user, selected);
+        int loaded = 0;
+        bool shortage = false;
+        uint before = revision;
+        try
+        {
+            foreach (var magazine in targets)
+            {
+                if (GetOwnedMagazine(magazine.Item, user) != magazine || InWeapon(magazine.Item) ||
+                    (magazine != selected && magazine.LoadedCount != 0)) { continue; }
+                if (!TryLoad(plan, magazine, out shortage, publish: false)) { break; }
+                loaded++;
+            }
+        }
+        finally { if (revision != before) { PublishState(); } }
+        return new(loaded, targets.Count, shortage);
+    }
+
+    private bool TryLoad(IReadOnlyList<AmmoRun> plan, VirtualizedMagazine? magazine) =>
+        TryLoad(plan, magazine, out _, publish: true);
+
+    private bool TryLoad(IReadOnlyList<AmmoRun> plan, VirtualizedMagazine? magazine, out bool shortage, bool publish)
+    {
+        shortage = false;
         if (!IsAuthority || !Ready || magazine == null || magazine.LoadedCount >= magazine.MaxSize ||
             !AmmoPlan.IsValid(plan, AmmoPlan.MaxRounds))
         {
@@ -220,9 +287,9 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         var rounds = AmmoPlan.Expand(plan).TakeLast(magazine.MaxSize - magazine.LoadedCount).ToArray();
         var demand = AmmoStock.Count(rounds);
         if (demand.Keys.Any(id => !IsCompatible(magazine, id))) { return false; }
-        if (RefreshSupplies()) { Changed(); }
+        if (RefreshSupplies()) { Changed(publish); }
         var quote = QuoteSupply(demand);
-        if (!TryPrepareSupplyDebit(quote, out var debits)) { return false; }
+        if (!TryPrepareSupplyDebit(quote, out var debits)) { shortage = !quote.CanLoad; return false; }
         var original = magazine.LoadedAmmoIdentifiersArray;
         // The plan's tail is inserted first; discard the head that no longer fits.
         var toLoad = Enumerable.Reverse(rounds).Select(id => id.ToIdentifier()).ToList();
@@ -243,9 +310,9 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
             RestoreMagazine(magazine, original);
             return false;
         }
-        SeparateChangedMagazine(magazine);
+        RestackChangedMagazine(magazine);
         RefreshSupplies();
-        Changed();
+        Changed(publish);
         return true;
     }
 
@@ -269,7 +336,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
             return false;
         }
         Stock.TryAdd(stored);
-        SeparateChangedMagazine(magazine);
+        RestackChangedMagazine(magazine);
         RefreshSupplies();
         Changed();
         return true;
@@ -285,10 +352,10 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         }
     }
 
-    private void Changed()
+    private void Changed(bool publish = true)
     {
         revision++;
-        PublishState();
+        if (publish) { PublishState(); }
     }
 
     partial void PublishState();
@@ -315,7 +382,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         }
     }
 
-    private enum Command : byte { Refresh, Load, Unload, Withdraw }
+    private enum Command : byte { Refresh, Load, Unload, Withdraw, LoadBatch }
     private sealed record Request(Command Command, uint Revision, ushort Target, AmmoRun[] Plan) : IEventData;
     private sealed record Snapshot(uint Revision, Dictionary<string, int> Stock, SupplyPool[]? Supplies = null, bool SupplyError = false);
     private sealed record SnapshotPage(uint Revision, int Index, int Count, string Data) : IEventData;

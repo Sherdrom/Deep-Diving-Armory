@@ -43,12 +43,13 @@ public sealed partial class DeepAmmoLoader
         if (!open) { draggingTargetSelection = false; }
         if (Target != null && (!open || GetOwnedMagazine(Target.Item, Character.Controlled) != Target))
         {
+            draggingTargetSelection = false;
             Target = null;
             uiDirty = true;
         }
     }
 
-    private bool SelectTarget(Item? item)
+    internal bool SelectTarget(Item? item)
     {
         var magazine = GetOwnedMagazine(item, Character.Controlled);
         if (magazine == null) { return false; }
@@ -62,15 +63,46 @@ public sealed partial class DeepAmmoLoader
             loader.GuiFrame is { Visible: true } frame && frame.RectTransform.Parent != null &&
             loader.targetSlot is { Visible: true });
 
+    private static Inventory.SlotReference? HoveredInventorySlot =>
+        Inventory.SelectedSlot is { } slot && slot.Slot.MouseOn() ? slot : null;
+
+    private bool MoveTargetTo(Inventory.SlotReference slot)
+    {
+        var user = Character.Controlled;
+        var destination = slot.ParentInventory;
+        if (user == null || GetOwnedMagazine(Target?.Item, user) is not { } magazine ||
+            (destination.Owner != user && !(destination.Owner is Item container && container.IsOwnedBy(user))) ||
+            slot.Slot.Disabled || !user.CanAccessInventory(destination)) { return false; }
+        var item = magazine.Item;
+        if (item.ParentInventory is not { } source || (source != destination && !user.CanAccessInventory(source)) ||
+            item.IsStuckInHandSlot || destination.ItemOwnsSelf(item)) { return false; }
+        var contents = destination.GetItemsAt(slot.SlotIndex);
+        if (contents.Contains(item)) { return true; }
+        if (contents.Any(other => other.Prefab == item.Prefab && !SameMagazineContents(magazine, other))) { return false; }
+        if (destination.CanBePutInSlot(item, slot.SlotIndex))
+        {
+            return destination.TryPutItem(item, slot.SlotIndex, allowSwapping: false, allowCombine: false, user);
+        }
+        return destination.TrySwapping(slot.SlotIndex, item, user, createNetworkEvent: true, swapWholeStack: false, triggerOnInsertedEffects: true);
+    }
+
     internal bool HandleTargetDrop()
     {
-        bool hovered = targetSlot!.Rect.Contains(PlayerInput.MousePosition);
+        bool hovered = IsMouseOnTargetSlot;
         if (draggingTargetSelection)
         {
             if (!PlayerInput.PrimaryMouseButtonHeld())
             {
                 draggingTargetSelection = false;
-                if (PlayerInput.PrimaryMouseButtonClicked() && !hovered) { Target = null; uiDirty = true; }
+                if (!PlayerInput.PrimaryMouseButtonClicked() || (hovered && !PlayerInput.DoubleClicked())) { return true; }
+                if (!hovered && HoveredInventorySlot is { } slot)
+                {
+                    bool moved = MoveTargetTo(slot);
+                    SoundPlayer.PlayUISound(moved ? GUISoundType.PickItem : GUISoundType.PickItemFail);
+                    if (!moved) { return true; }
+                }
+                Target = null;
+                uiDirty = true;
             }
             return true;
         }
@@ -99,12 +131,12 @@ public sealed partial class DeepAmmoLoader
         var slot = targetVisualSlot!;
         slot.Rect = slot.InteractRect = component.Rect;
         var dragged = Inventory.DraggingItems.FirstOrDefault();
-        bool hovered = !GUI.InputBlockingMenuOpen && component.Rect.Contains(PlayerInput.MousePosition) &&
+        bool hovered = !GUI.InputBlockingMenuOpen && IsMouseOnTargetSlot &&
             (dragged != null || GUI.IsMouseOn(component));
         slot.HighlightColor = !hovered ? Color.Transparent : dragged == null ? Color.White * 0.35f :
             GetOwnedMagazine(dragged, Character.Controlled) != null ? GUIStyle.Green : GUIStyle.Red;
         Inventory.DrawSlot(spriteBatch, null, slot, Target?.Item, -1,
-            drawItem: !draggingTargetSelection || component.Rect.Contains(PlayerInput.MousePosition));
+            drawItem: !draggingTargetSelection || IsMouseOnTargetSlot);
     }
 
     private void UpdateTargetTooltip()
@@ -122,23 +154,37 @@ public sealed partial class DeepAmmoLoader
 
     internal void DrawTargetDrag(SpriteBatch spriteBatch)
     {
-        if (!draggingTargetSelection || Target?.Item is not { } item || targetSlot!.Rect.Contains(PlayerInput.MousePosition)) { return; }
+        if (!draggingTargetSelection || Target?.Item is not { } item || IsMouseOnTargetSlot) { return; }
         var sprite = item.OverrideInventorySprite ?? item.Prefab.InventoryIcon ?? item.Sprite;
         if (sprite == null) { return; }
         float size = 64 * GUI.Scale;
         float scale = Math.Min(Math.Min(size / sprite.size.X, size / sprite.size.Y), 1.5f);
         sprite.Draw(spriteBatch, PlayerInput.MousePosition, item.GetInventoryIconColor(), scale: scale);
         GUI.DrawString(spriteBatch, PlayerInput.MousePosition + new Vector2(size * 0.5f, 0),
-            L("cleartarget"), Color.LightYellow, Color.Black * 0.65f, 0, GUIStyle.SmallFont);
+            L(HoveredInventorySlot == null ? "cleartarget" : "movetarget"), Color.LightYellow, Color.Black * 0.65f, 0, GUIStyle.SmallFont);
     }
 
-    internal bool IsMouseOnTargetSlot => targetSlot!.Rect.Contains(PlayerInput.MousePosition);
+    internal bool IsMouseOnTargetSlot => targetSlot!.Rect.Contains(PlayerInput.MousePosition) &&
+        !Inventory.highlightedSubInventorySlots.Any(slot => Inventory.GetSubInventoryHoverArea(slot).Contains(PlayerInput.MousePosition));
     internal GUIComponent TargetSlot => targetSlot!;
 }
 
 [HarmonyPatch]
 internal static class DeepAmmoLoaderTargetInputPatch
 {
+    [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateSlot))]
+    [HarmonyPostfix]
+    private static void AfterSlotUpdate()
+    {
+        if (Inventory.doubleClickedItems.Count == 0 || DeepAmmoLoader.ActiveTargetLoader is not { } loader ||
+            loader.IsMouseOnTargetSlot || !loader.SelectTarget(Inventory.doubleClickedItems[0])) { return; }
+        // Consume the native quick-use queue before it moves the stack into the selected station.
+        Inventory.doubleClickedItems.Clear();
+        Inventory.DraggingItems.Clear();
+        Inventory.DraggingSlot = null;
+        SoundPlayer.PlayUISound(GUISoundType.PickItem);
+    }
+
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.UpdateDragging))]
     [HarmonyPrefix]
     private static bool BeforeDragging() => DeepAmmoLoader.ActiveTargetLoader?.HandleTargetDrop() != true && !ManualMagazineLoading.HandleDrop();

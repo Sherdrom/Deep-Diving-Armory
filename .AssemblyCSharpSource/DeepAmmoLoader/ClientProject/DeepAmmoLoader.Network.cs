@@ -38,12 +38,14 @@ public sealed partial class DeepAmmoLoader
     private void Send(Command command, AmmoRun[]? plan = null)
     {
         var magazine = GetOwnedMagazine(Target?.Item, Character.Controlled);
-        if ((command is Command.Load or Command.Unload) && magazine == null) { return; }
+        if ((command is Command.Load or Command.Unload or Command.LoadBatch) && magazine == null) { return; }
         if (GameMain.Client != null)
         {
             Item.CreateClientEvent(this, new Request(command, revision, Target?.Item.ID ?? 0, plan ?? []));
         }
         else if (command == Command.Load && Character.Controlled!.CanInteractWith(Item)) { TryLoad(plan ?? [], magazine); }
+        else if (command == Command.LoadBatch && Character.Controlled!.CanInteractWith(Item))
+        { ShowBatchResult(LoadBatch(Character.Controlled, magazine, plan ?? [])); }
         else if (command == Command.Unload && Character.Controlled!.CanInteractWith(Item)) { TryUnload(magazine); }
         else if (command == Command.Withdraw && plan is { Length: 1 }) { TryWithdraw(plan[0].Id); }
     }
@@ -68,6 +70,11 @@ public sealed partial class DeepAmmoLoader
         int index = msg.ReadInt32();
         int count = msg.ReadInt32();
         string data = msg.ReadString();
+        if (index == -1 && count == 0)
+        {
+            if (data.Length != 0 && JsonSerializer.Deserialize<BatchResult>(data) is { } result) { ShowBatchResult(result); }
+            return;
+        }
         if (count is < 1 or > 16384 || index < 0 || index >= count) { return; }
         if (hasSnapshot && incomingRevision <= revision) { return; }
         if (pages.Length == 0 || receivingRevision != incomingRevision)

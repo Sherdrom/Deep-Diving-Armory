@@ -111,6 +111,105 @@ loader.Stock.TryAdd(Amount("b", 24));
 {
     var carrier = new Character();
     var sender = new Client { Character = carrier };
+    ushort nextId = 900;
+    Item Store(Inventory inventory, int slot, ItemPrefab prefab, float condition = 100)
+    {
+        var item = new Item(nextId++, prefab) { Condition = condition };
+        Check(inventory.TryPutItem(item, slot, false, false, carrier), "place batch fixture");
+        return item;
+    }
+    VirtualizedMagazine Magazine(Inventory inventory, int slot, ItemPrefab prefab)
+    {
+        var item = Store(inventory, slot, prefab, condition: 0);
+        var component = new VirtualizedMagazine(item) { MaxSize = 20 };
+        item.Components.Add(component);
+        return component;
+    }
+    ItemContainer Container(Item item, int capacity)
+    {
+        var container = new ItemContainer(item, capacity);
+        container.Inventory.Owner = item;
+        item.Components.Add(container);
+        return container;
+    }
+    var bagItem = Store(carrier.Inventory, 0, bulletB);
+    var bag = Container(bagItem, 3);
+    var belt = Container(Store(bag.Inventory, 0, bulletB), 2);
+    var firstEmpty = Magazine(belt.Inventory, 0, bulletA);
+    var lastEmpty = Magazine(belt.Inventory, 1, bulletA);
+    var selected = Magazine(carrier.Inventory, 1, bulletA);
+    selected.LoadedAmmoIdentifiersArray = ["a".ToIdentifier()];
+    var partial = Magazine(carrier.Inventory, 2, bulletA);
+    partial.LoadedAmmoIdentifiersArray = ["a".ToIdentifier()];
+    var otherModel = Magazine(bag.Inventory, 1, bulletB);
+    var gun = Store(bag.Inventory, 2, bulletB);
+    gun.Components.Add(new RangedWeapon(gun, new(new XElement("RangedWeapon"))));
+    var inserted = Magazine(Container(gun, 1).Inventory, 0, bulletA);
+    var crewMate = new Character();
+    var theirs = Magazine(crewMate.Inventory, 0, bulletA);
+    var start = Revision();
+    SendAs(sender, 4, start, selected.Item.ID, (2, 10));
+    Check(selected.LoadedCount == 11 && firstEmpty.LoadedCount == 10 && lastEmpty.LoadedCount == 0 && loader.Stock["b"] == 4,
+        "batch applies one plan per magazine, selected first, then nested empties, and stops before a partial debit");
+    Check(partial.LoadedCount == 1 && otherModel.LoadedCount == 0 && inserted.LoadedCount == 0 && theirs.LoadedCount == 0,
+        "batch skips other partial magazines, other models, magazines in weapons, and other characters");
+    var reply = new NetEntityEvent.Wrapper(machine.Events.Last());
+    string Feedback(Client recipient)
+    {
+        var msg = new Message();
+        loader.ServerEventWrite(msg, recipient, reply);
+        msg.Rewind(); msg.ReadUInt32();
+        Check(msg.ReadInt32() == -1 && msg.ReadInt32() == 0, "batch reply is separate from stock pages");
+        return msg.ReadString();
+    }
+    var result = System.Text.Json.JsonDocument.Parse(Feedback(sender)).RootElement;
+    Check(result.GetProperty("Loaded").GetInt32() == 2 && result.GetProperty("Total").GetInt32() == 3 &&
+        result.GetProperty("Shortage").GetBoolean() && Feedback(client) == "", "only the requester receives the batch result and shortage");
+    SendAs(sender, 4, start, selected.Item.ID, (2, 1));
+    SendAs(sender, 4, Revision(), inserted.Item.ID, (2, 1));
+    SendAs(sender, 4, Revision(), theirs.Item.ID, (2, 1));
+    Check(loader.Stock["b"] == 4 && selected.LoadedCount == 11 && lastEmpty.LoadedCount == 0,
+        "replayed batches, weapon-contained templates and another character's templates cannot start a batch");
+    selected.MaxSize = selected.LoadedCount;
+    SendAs(sender, 4, Revision(), selected.Item.ID, (2, 1));
+    Check(selected.LoadedCount == 11 && lastEmpty.LoadedCount == 1 && loader.Stock["b"] == 3,
+        "a full selected magazine can be used as the template for the remaining empties");
+    foreach (var target in new[] { selected, firstEmpty, lastEmpty }) { SendAs(sender, 2, Revision(), target.Item.ID); }
+    Check(loader.Stock.TryTake(Amount("a", 1)) && loader.Stock["a"] == 120 && loader.Stock["b"] == 24,
+        "batch loading and unloading conserve shared stock");
+
+    var twoSlots = new Character();
+    twoSlots.Inventory.Capacity = 2;
+    var empties = Enumerable.Range(0, 3).Select(_ => Magazine(twoSlots.Inventory, 0, bulletA)).ToArray();
+    foreach (var empty in empties) { empty.Item.MaxCondition = empty.MaxSize = 2; }
+    var batchUser = new Client { Character = twoSlots };
+    SendAs(batchUser, 4, Revision(), empties[0].Item.ID, (1, 2));
+    Check(twoSlots.Inventory.GetItemAt(0) == null && twoSlots.Inventory.GetItemsAt(1).SequenceEqual(empties.Select(m => m.Item)) &&
+        empties.All(m => m.LoadedCount == 2) && loader.Stock["a"] == 114,
+        "the entire batch including its last empty magazine forms one loaded stack and frees the original slot");
+    foreach (var filled in empties) { SendAs(batchUser, 2, Revision(), filled.Item.ID); }
+    var packed = new Character();
+    packed.Inventory.Capacity = 1;
+    var stack = Enumerable.Range(0, 3).Select(_ =>
+    {
+        var item = new Item(nextId++, bulletA) { Condition = 0 };
+        var mag = new VirtualizedMagazine(item);
+        item.Components.Add(mag);
+        Check(packed.Inventory.TryPutItem(item, 0, false, false, packed), "stack an empty magazine");
+        return mag;
+    }).ToArray();
+    int eventsBefore = machine.Events.Count;
+    SendAs(new Client { Character = packed }, 4, Revision(), stack[0].Item.ID, (1, 2));
+    Check(stack.All(m => m.LoadedCount == 2) && stack.Take(2).All(m => m.Item.DroppedBy == packed) &&
+        packed.Inventory.GetItemsAt(0).Single() == stack[2].Item && loader.Stock["a"] == 114,
+        "a batch continues with the saved item list after its selected magazine drops and charges once per instance");
+    Check(machine.Events.Skip(eventsBefore).Count(e => e.GetType().Name == "SnapshotPage") == 1,
+        "batch publishes the small final stock snapshot once");
+    loader.Stock.TryAdd(Amount("a", 6));
+}
+{
+    var carrier = new Character();
+    var sender = new Client { Character = carrier };
     var bag = new Item(750, bulletA) { ParentInventory = carrier.Inventory };
     var slots = new ItemInventory(4) { Owner = bag };
     ushort nextId = 751;
@@ -131,6 +230,10 @@ loader.Stock.TryAdd(Amount("b", 24));
     Check(slots.GetItemsAt(0).Single() == spare.Item && slots.GetItemsAt(1).Single() == reversed.Item &&
         slots.GetItemAt(2) == null && slots.GetItemsAt(3).SequenceEqual([matching.Item, selected.Item]),
         "mapped load splits only the selected instance and prefers an identical firing order over a free slot");
+    SendAs(sender, 1, Revision(), spare.Item.ID, (1, 1), (2, 1));
+    Check(slots.GetItemAt(0) == null && slots.GetItemsAt(3).SequenceEqual([matching.Item, selected.Item, spare.Item]),
+        "loading the last empty magazine frees its original slot and joins the matching loaded stack");
+    SendAs(sender, 2, Revision(), spare.Item.ID);
     SendAs(sender, 2, Revision(), selected.Item.ID);
     Check(slots.GetItemsAt(0).SequenceEqual([spare.Item, selected.Item]) && slots.GetItemsAt(3).Single() == matching.Item,
         "unloading one full magazine rejoins the empty stack and leaves the other full magazine alone");

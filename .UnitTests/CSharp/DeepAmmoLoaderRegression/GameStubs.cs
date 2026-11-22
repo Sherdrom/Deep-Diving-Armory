@@ -234,6 +234,7 @@ namespace Barotrauma.Items.Components
         public readonly ItemInventory Inventory = new(capacity);
     }
     public sealed class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { }
 }
 
 namespace Barotrauma.Networking

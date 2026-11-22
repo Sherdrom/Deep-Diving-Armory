@@ -1,5 +1,6 @@
 using Barotrauma.Networking;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace DDA.AmmoLoading;
 
@@ -7,9 +8,11 @@ public sealed partial class DeepAmmoLoader
 {
     private double nextRefresh;
     private readonly ConditionalWeakTable<Client, StrongBox<uint>> clientRevisions = new();
+    private sealed record BatchReply(Client Recipient, BatchResult Result) : IEventData;
 
     public override IEventData ServerGetEventData() => CapturePages()[0];
-    public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<SnapshotPage>(data, out _);
+    public override bool ValidateEventData(NetEntityEvent.IData data) =>
+        TryExtractEventData<SnapshotPage>(data, out _) || TryExtractEventData<BatchReply>(data, out _);
 
     partial void PublishState()
     {
@@ -19,7 +22,9 @@ public sealed partial class DeepAmmoLoader
 
     public void ServerEventWrite(IWriteMessage msg, Client client, NetEntityEvent.IData extraData = null!)
     {
-        var page = ExtractEventData<SnapshotPage>(extraData);
+        var page = TryExtractEventData<BatchReply>(extraData, out var reply)
+            ? new SnapshotPage(revision, -1, 0, reply.Recipient == client ? JsonSerializer.Serialize(reply.Result) : "")
+            : ExtractEventData<SnapshotPage>(extraData);
         msg.WriteUInt32(page.Revision);
         msg.WriteInt32(page.Index);
         msg.WriteInt32(page.Count);
@@ -64,6 +69,13 @@ public sealed partial class DeepAmmoLoader
             return;
         }
         var magazine = GetOwnedMagazine(Entity.FindEntityByID(targetId) as Item, client.Character);
+        if (command == Command.LoadBatch)
+        {
+            var result = LoadBatch(client.Character, magazine, plan);
+            if (result.Loaded > 0) { clientRevisions.GetOrCreateValue(client).Value = revision; }
+            Item.CreateServerEvent(this, new BatchReply(client, result));
+            return;
+        }
         bool success = command switch
         {
             Command.Load => TryLoad(plan, magazine),
