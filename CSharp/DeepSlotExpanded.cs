@@ -607,6 +607,8 @@ namespace DeepSlotExpanded
             slotIconsDone = false;
             diagEntryLogged = false;
             diagPostfixEntered = false;
+            mismatchDiagLogged = false;
+            emptyRegistryRescanAttempted = false;
             SlotRegistry.ClearForReload();
             SlotRegistry.Log("框架已卸载（回主菜单），下次进入会话时自动重新初始化");
         }
@@ -660,6 +662,13 @@ namespace DeepSlotExpanded
         public static void SelfHealPrefix()
         {
             ApplyPatches();
+            // 联机时序兜底：客户端加入时启用包可能尚未就绪导致 XML 扫描为空，
+            // 角色槽位表解析时注册表仍为空则补扫一次（每会话一次，Register 保证幂等）
+            if (!emptyRegistryRescanAttempted && SlotRegistry.GetSlotsByBit().Count == 0)
+            {
+                emptyRegistryRescanAttempted = true;
+                SlotXmlDiscovery.ScanEnabledPackages();
+            }
         }
 
         /// <summary>
@@ -669,6 +678,8 @@ namespace DeepSlotExpanded
         /// </summary>
         private static bool luaApiDone = false;
         private static bool luaApiWarned = false;
+        private static bool mismatchDiagLogged = false;           // 越界防护诊断每会话只记一次
+        private static bool emptyRegistryRescanAttempted = false; // 空注册表补扫每会话只做一次
 
         private static void TryRegisterLuaApi()
         {
@@ -739,6 +750,16 @@ namespace DeepSlotExpanded
 
             // 3) AI 槽位识别补丁（v1.2.0 逻辑泛化到全部注册 bit）
             PatchAI(harmony);
+
+            // 4) Inventory.SharedRead 越界防护（双端）：原版按消息里的槽位区间直接写数组，
+            //    联机双端槽位声明数不一致时（对端比本地多）receivedItemIds[j] 越界，
+            //    客户端表现为持续刷 "Error while reading a message from server"。
+            var sharedRead = AccessTools.Method(typeof(Barotrauma.Inventory), "SharedRead");
+            if (sharedRead != null)
+            {
+                harmony.Patch(sharedRead, prefix: new HarmonyMethod(typeof(DeepSlotExpandedPlugin), nameof(SharedReadPrefix)));
+                SlotRegistry.Log("物品栏同步容错补丁已应用 (Inventory.SharedRead)");
+            }
         }
 
         /// <summary>
@@ -1895,6 +1916,46 @@ namespace DeepSlotExpanded
         }
 
         // ===================== 前缀/后缀实现 =====================
+
+        /// <summary>
+        /// Inventory.SharedRead 替换前缀（双端）：原版实现收到消息里的槽位区间 [start,end) 后
+        /// 直接 receivedItemIds[j] = ... 写入，j ≥ 本地容量时抛 IndexOutOfRangeException。
+        /// 联机双端槽位声明数不一致（对端容量 > 本地容量）时每条物品栏状态事件都越界，
+        /// 客户端持续刷 "Error while reading a message from server"、物品栏停止同步。
+        /// 本前缀按原版字节序完整消费消息（count+ids 逐槽读取），仅丢弃超出本地容量的槽位：
+        /// 线上协议零改动，双端容量一致时与原版行为逐字节等价；不一致时不再崩溃。
+        /// </summary>
+        public static bool SharedReadPrefix(Barotrauma.Inventory __instance,
+            Barotrauma.Networking.IReadMessage msg,
+            System.Collections.Generic.List<ushort>[] receivedItemIds,
+            out bool readyToApply)
+        {
+            byte start = msg.ReadByte();
+            byte end = msg.ReadByte();
+            if (start == 0)
+            {
+                for (int i = 0; i < receivedItemIds.Length; i++) { receivedItemIds[i] = null; }
+            }
+            for (int j = start; j < end; j++)
+            {
+                var newItemIds = new System.Collections.Generic.List<ushort>();
+                int itemCount = msg.ReadRangedInteger(0, 63);
+                for (int k = 0; k < itemCount; k++) { newItemIds.Add(msg.ReadUInt16()); }
+                if (j < receivedItemIds.Length)
+                {
+                    receivedItemIds[j] = newItemIds;
+                }
+                else if (!mismatchDiagLogged)
+                {
+                    mismatchDiagLogged = true;
+                    SlotRegistry.Log("[同步] 物品栏状态槽位区间超出本地容量: 本地槽位数=" + receivedItemIds.Length
+                        + " 消息区间=[" + start + "," + end + ") 实例=" + (__instance == null ? "null" : __instance.GetType().Name)
+                        + " (超界槽位已忽略并继续消费消息字节; 联机双端槽位声明数不一致, 请确认双端启用同一份槽位声明)");
+                }
+            }
+            readyToApply = !System.Linq.Enumerable.Contains(receivedItemIds, null);
+            return false; // 跳过原版实现（字节消费已完成，语义等价）
+        }
 
         /// <summary>HasEquippedItem(Item, InvSlotType?, Func&lt;InvSlotType,bool&gt;) 前缀。</summary>
         public static void HasEquippedItemPrefix(ref Barotrauma.InvSlotType? slotType)
