@@ -310,7 +310,7 @@ end
 
 local function validateItemConfigs(configs)
     for itemId, cfg in pairs(configs) do
-        if ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
+        if cfg.optionalPrefab ~= true and ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
             warn("item prefab not found", itemId)
         end
         for _, effect in ipairs(cfg.effects or { cfg }) do validateEffectConfig(itemId, effect) end
