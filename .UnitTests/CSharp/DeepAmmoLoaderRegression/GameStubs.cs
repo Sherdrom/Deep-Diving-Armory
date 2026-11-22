@@ -14,7 +14,7 @@ namespace Barotrauma
     public static class Identifiers { public static Identifier ToIdentifier(this string id) => new(id); }
     public enum IsPropertySaveable { No, Yes }
     public enum ActionType { OnBroken, OnActive }
-    [Flags] public enum InvSlotType { LeftHand = 1, RightHand = 2 }
+    [Flags] public enum InvSlotType { LeftHand = 1, RightHand = 2, Any = 4 }
     public sealed class SerializeAttribute : Attribute
     {
         public SerializeAttribute(object value, IsPropertySaveable saveable, bool alwaysUseInstanceValues = false) { }
@@ -70,7 +70,7 @@ namespace Barotrauma
         public bool CanInteractWith(Item item) => CanInteract && item.IsOwnedBy(this);
         public Item? HeldItem;
         public bool HasEquippedItem(Item item, InvSlotType slot) => HeldItem == item;
-        public readonly ItemInventory Inventory;
+        public readonly CharacterInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
     public sealed class Item
@@ -94,7 +94,16 @@ namespace Barotrauma
         public void ApplyStatusEffects(ActionType type, float deltaTime) { if (type == ActionType.OnBroken) { BrokenEffects++; } }
         public float MaxCondition = 100;
         public bool Removed, IsInRemoveQueue;
-        public ItemInventory? ParentInventory;
+        public Inventory? ParentInventory;
+        public Character? DroppedBy;
+        public object GetRootInventoryOwner() => ParentInventory?.Owner is Item parent
+            ? parent.GetRootInventoryOwner() : ParentInventory?.Owner ?? this;
+        public void Drop(Character user)
+        {
+            DroppedBy = user;
+            ParentInventory?.AllItems.Remove(this);
+            ParentInventory = null;
+        }
         public readonly List<ItemComponent> Components = [];
         public readonly List<Item> ContainedItems = [];
         public readonly List<ItemComponent.IEventData> Events = [];
@@ -115,13 +124,32 @@ namespace Barotrauma
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
     public sealed class ItemInventory(int capacity) : Inventory(capacity);
+    public sealed class CharacterInventory(int capacity) : Inventory(capacity)
+    {
+        public readonly InvSlotType[] SlotTypes = Enumerable.Repeat(InvSlotType.Any, capacity).ToArray();
+    }
     public class Inventory(int capacity)
     {
         public object? Owner;
         public int Capacity = capacity;
-        public int FindIndex(Item item) => AllItems.IndexOf(item);
+        private readonly Dictionary<Item, int> assignedSlots = [];
+        public int FindIndex(Item item) => assignedSlots.GetValueOrDefault(item, AllItems.IndexOf(item));
+        public List<int> FindIndices(Item item) => AllItems.Contains(item) ? [FindIndex(item)] : [];
         public readonly List<Item> AllItems = [];
-        public Item? GetItemAt(int slot) => AllItems.ElementAtOrDefault(slot);
+        public IEnumerable<Item> GetItemsAt(int slot) => AllItems.Where(i => FindIndex(i) == slot);
+        public Item? GetItemAt(int slot) => GetItemsAt(slot).FirstOrDefault();
+        public bool CanBePutInSlot(Item item, int slot) => slot >= 0 && slot < Capacity && (Accepts?.Invoke(item.Prefab) ?? true) &&
+            GetItemsAt(slot).All(other => other.Prefab == item.Prefab && other.Condition == item.Condition &&
+                (item.Condition == 0 || item.Condition == item.MaxCondition));
+        public bool TryPutItem(Item item, int slot, bool allowSwapping, bool allowCombine, Character user, bool triggerOnInsertedEffects = true)
+        {
+            if (RejectInsertion || !CanBePutInSlot(item, slot)) { return false; }
+            item.ParentInventory?.AllItems.Remove(item);
+            assignedSlots[item] = slot;
+            AllItems.Add(item);
+            item.ParentInventory = this;
+            return true;
+        }
         public Item? FindItem(Func<Item, bool> predicate, bool recursive) => AllItems.FirstOrDefault(predicate);
         public Func<ItemPrefab, bool>? Accepts;
         public bool RejectInsertion;
@@ -132,13 +160,13 @@ namespace Barotrauma
     {
         public bool Removed;
         public interface IEntitySpawnInfo { }
-        public sealed record ItemSpawnInfo(ItemPrefab Prefab, ItemInventory Inventory, float? Condition,
+        public sealed record ItemSpawnInfo(ItemPrefab Prefab, Inventory Inventory, float? Condition,
             Action<Item>? OnSpawned, bool SpawnIfInventoryFull) : IEntitySpawnInfo;
         public readonly Queue<ItemSpawnInfo> Pending = [];
         public readonly List<Item> Spawned = [];
         public Action<Item>? BeforeCallback;
         public bool IsInSpawnQueue(Predicate<IEntitySpawnInfo> predicate) => Pending.Any(p => predicate(p));
-        public void AddItemToSpawnQueue(ItemPrefab prefab, ItemInventory inventory, float? condition = null,
+        public void AddItemToSpawnQueue(ItemPrefab prefab, Inventory inventory, float? condition = null,
             int? quality = null, Action<Item>? onSpawned = null, bool spawnIfInventoryFull = true) =>
             Pending.Enqueue(new(prefab, inventory, condition, onSpawned, spawnIfInventoryFull));
         public void ProcessQueue()

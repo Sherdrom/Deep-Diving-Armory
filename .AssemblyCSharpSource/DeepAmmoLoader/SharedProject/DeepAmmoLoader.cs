@@ -183,6 +183,33 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         if (changed) { Changed(); }
     }
 
+    private static void SeparateChangedMagazine(VirtualizedMagazine magazine)
+    {
+        var item = magazine.Item;
+        if (item.ParentInventory is not { } source || item.GetRootInventoryOwner() is not Character user) { return; }
+        bool SameRounds(Item other) => other.GetComponent<VirtualizedMagazine>() is { } peer &&
+            peer.LoadedAmmoIdentifiers.SequenceEqual(magazine.LoadedAmmoIdentifiers);
+        if (!source.FindIndices(item).Any(i => source.GetItemsAt(i).Any(other => other != item && !SameRounds(other)))) { return; }
+
+        bool TryPlace(Inventory inventory, bool stack)
+        {
+            for (int i = 0; i < inventory.Capacity; i++)
+            {
+                if ((inventory.GetItemAt(i) != null) != stack ||
+                    (inventory is CharacterInventory character && character.SlotTypes[i] != InvSlotType.Any) ||
+                    !inventory.CanBePutInSlot(item, i)) { continue; }
+                // Full magazines can have the same condition but different firing orders.
+                if (stack && !inventory.GetItemsAt(i).All(other => other != item && SameRounds(other))) { continue; }
+                if (inventory.TryPutItem(item, i, allowSwapping: false, allowCombine: false, user, triggerOnInsertedEffects: false))
+                { return true; }
+            }
+            return false;
+        }
+        bool TryCarriedSlots(bool stack) => TryPlace(source, stack) ||
+            (source != user.Inventory && TryPlace(user.Inventory, stack));
+        if (!TryCarriedSlots(stack: true) && !TryCarriedSlots(stack: false)) { item.Drop(user); }
+    }
+
     private bool TryLoad(IReadOnlyList<AmmoRun> plan, VirtualizedMagazine? magazine)
     {
         if (!IsAuthority || !Ready || magazine == null || magazine.LoadedCount >= magazine.MaxSize ||
@@ -216,6 +243,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
             RestoreMagazine(magazine, original);
             return false;
         }
+        SeparateChangedMagazine(magazine);
         RefreshSupplies();
         Changed();
         return true;
@@ -241,6 +269,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
             return false;
         }
         Stock.TryAdd(stored);
+        SeparateChangedMagazine(magazine);
         RefreshSupplies();
         Changed();
         return true;

@@ -108,6 +108,60 @@ void SendAs(Client sender, byte command, uint rev, ushort target, params (uint I
     Timing.TotalTime++;
 }
 loader.Stock.TryAdd(Amount("b", 24));
+{
+    var carrier = new Character();
+    var sender = new Client { Character = carrier };
+    var bag = new Item(750, bulletA) { ParentInventory = carrier.Inventory };
+    var slots = new ItemInventory(4) { Owner = bag };
+    ushort nextId = 751;
+    VirtualizedMagazine PutMagazine(int slot, params string[] feedOrder)
+    {
+        var item = new Item(nextId++, bulletA) { MaxCondition = 2 };
+        var magazineComponent = new VirtualizedMagazine(item) { MaxSize = 2 };
+        item.Components.Add(magazineComponent);
+        magazineComponent.LoadedAmmoIdentifiersArray = feedOrder.Reverse().Select(s => s.ToIdentifier()).ToArray();
+        Check(slots.TryPutItem(item, slot, false, false, carrier), "set up magazine stack");
+        return magazineComponent;
+    }
+    var selected = PutMagazine(0);
+    var spare = PutMagazine(0);
+    var reversed = PutMagazine(1, "b", "a");
+    var matching = PutMagazine(3, "a", "b");
+    SendAs(sender, 1, Revision(), selected.Item.ID, (1, 1), (2, 1));
+    Check(slots.GetItemsAt(0).Single() == spare.Item && slots.GetItemsAt(1).Single() == reversed.Item &&
+        slots.GetItemAt(2) == null && slots.GetItemsAt(3).SequenceEqual([matching.Item, selected.Item]),
+        "mapped load splits only the selected instance and prefers an identical firing order over a free slot");
+    SendAs(sender, 2, Revision(), selected.Item.ID);
+    Check(slots.GetItemsAt(0).SequenceEqual([spare.Item, selected.Item]) && slots.GetItemsAt(3).Single() == matching.Item,
+        "unloading one full magazine rejoins the empty stack and leaves the other full magazine alone");
+    SendAs(sender, 1, Revision(), selected.Item.ID, (2, 1));
+    Check(slots.GetItemAt(2) == selected.Item && selected.LoadedCount == 1 && spare.LoadedCount == 0,
+        "a partial load uses an empty slot in its own bag");
+    SendAs(sender, 2, Revision(), selected.Item.ID);
+    Check(slots.GetItemAt(2) == selected.Item, "a magazine that started alone stays in its slot");
+    var another = PutMagazine(0);
+    carrier.Inventory.SlotTypes[0] = InvSlotType.LeftHand;
+    SendAs(sender, 1, Revision(), another.Item.ID, (1, 1));
+    Check(carrier.Inventory.GetItemAt(1) == another.Item && slots.GetItemAt(0) == spare.Item,
+        "a full bag falls back to character storage without equipping the loaded magazine");
+    SendAs(sender, 2, Revision(), another.Item.ID);
+    var overflow = PutMagazine(0);
+    carrier.Inventory.Capacity = 2;
+    uint beforeOverflow = Revision();
+    SendAs(sender, 1, beforeOverflow, overflow.Item.ID, (3, 1));
+    Check(overflow.Item.ParentInventory == slots && overflow.LoadedCount == 0 && Revision() == beforeOverflow,
+        "a failed load keeps the stack intact even when there is nowhere to put the result");
+    SendAs(sender, 1, beforeOverflow, overflow.Item.ID, (1, 2));
+    Check(overflow.Item.ParentInventory == null && overflow.Item.DroppedBy == carrier && overflow.LoadedCount == 2 &&
+        slots.GetItemsAt(0).Single() == spare.Item && spare.Item.DroppedBy == null && loader.Stock["a"] == 118,
+        "only the completed magazine drops beside its owner and its ammunition is paid for once");
+    SendAs(sender, 1, beforeOverflow, overflow.Item.ID, (1, 2));
+    Check(overflow.LoadedCount == 2 && loader.Stock["a"] == 118, "replaying the request for a dropped magazine cannot debit again");
+    carrier.Inventory.Capacity = 3;
+    Check(carrier.Inventory.TryPutItem(overflow.Item, 2, false, false, carrier), "pick up the dropped magazine");
+    SendAs(sender, 2, Revision(), overflow.Item.ID);
+    Check(loader.Stock["a"] == 120 && loader.Stock["b"] == 24, "picking up and unloading the dropped magazine conserves ammunition");
+}
 uint beforeLoad = Revision();
 Send(1, beforeLoad, 20, false, (1, 2), (2, 1));
 Check(mag.LoadedCount == 0 && loader.Stock["a"] == 120, "inaccessible client rejected");

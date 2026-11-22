@@ -224,9 +224,9 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
             .Value.Split(',').Contains("deep_ammobox"), "Source rejected by intake.");
         var package = packages.Single(p => string.Equals((string?)p.Element("VirtualizedAmmoStorage")?.Attribute("ProjectileIdentifier"),
             entry.Value, StringComparison.OrdinalIgnoreCase));
-        Assert((string?)package.Attribute("health") == "30" &&
-            !package.Descendants("Fabricate").Any() && !projectiles[entry.Value].Descendants("Fabricate").Any(),
-            "New ammunition and its 30-round package must not have crafting recipes.");
+        Assert((int?)package.Attribute("health") == 180, $"The {entry.Value} package must hold 180 rounds.");
+        Assert(!package.Descendants("Fabricate").Any() && !projectiles[entry.Value].Descendants("Fabricate").Any(),
+            $"Neither {entry.Value} nor its package should have a crafting recipe.");
         var packageIcon = package.Element("InventoryIcon") ?? package.Element("Sprite")!;
         var roundIcon = projectiles[entry.Value].Element("InventoryIcon") ?? projectiles[entry.Value].Element("Sprite")!;
         Assert((string?)packageIcon.Attribute("texture") == (string?)roundIcon.Attribute("texture") &&
