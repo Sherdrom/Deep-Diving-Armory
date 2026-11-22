@@ -37,6 +37,9 @@
 --   VCE (Vanilla Components Expanded) 的 VirtualizedMagazine 组件,
 --   组件不存在或弹药未配置时自动跳过, 不产生副作用.
 
+local VIRTUAL_COMPONENT_TYPE = Deep_Lua.HF.VirtualMagazineType
+if not VIRTUAL_COMPONENT_TYPE then return end
+
 local MOD_NAME = "NpcMagazineLoadout"
 -- 虚拟弹匣标签: NewMag.xml 全部弹匣均带此标签, 工厂件(MF)不带
 local MAG_TAG = "deep_virtualmagazine"
@@ -221,12 +224,7 @@ local Config = {
     DefaultCrewAmmo = nil,
 }
 
--- VCE组件不在游戏默认命名空间, GetComponentString按类名查不到,
--- 按代码库已验证方式(VirtualMagazineReload.lua)注册类型后遍历匹配
-local VIRTUAL_COMPONENT_TYPE = "VCE_VirtualizedMagazine.VirtualizedMagazine"
 local EMPTY_PREFERENCE = {}
-
-LuaUserData.RegisterType(VIRTUAL_COMPONENT_TYPE)
 
 local pendingCharacters = {}
 local queuedCharacters = {}

@@ -785,7 +785,7 @@ end
 if SERVER or not Game.IsMultiplayer then
 
     local IdentifierStatic = LuaUserData.CreateStatic("Barotrauma.Identifier")
-    LuaUserData.RegisterType("VCE_VirtualizedMagazine.VirtualizedMagazine")
+    local virtualMagazineType = Deep_Lua.HF.VirtualMagazineType
 
     -- 5.56 虚拟弹匣按选定弹药箱装填，原配方只提供容量对应的速率与消耗。
     local virtualAmmo = {
@@ -800,7 +800,7 @@ if SERVER or not Game.IsMultiplayer then
 
     local function GetVirtualMagazine(item)
         local container = item.OwnInventory and item.OwnInventory.Container
-        if container and LuaUserData.IsTargetType(container, "VCE_VirtualizedMagazine.VirtualizedMagazine") then
+        if virtualMagazineType and container and LuaUserData.IsTargetType(container, virtualMagazineType) then
             return container
         end
     end
@@ -1057,12 +1057,11 @@ if SERVER or not Game.IsMultiplayer then
         local hasRecipeItem = false
         for contained in ownInventory.AllItemsMod do
             local roles = ResolveItemRoles(contained)
-            local magazine = GetVirtualMagazine(contained)
+            local conditionTarget = #roles.targets > 0 and not Deep_Lua.HF.IsVirtualMagazine(contained)
             for i = 1, #roles.targets do
                 local recipe = roles.targets[i]
                 hasRecipeItem = true
-                local needsAmmo = not magazine and contained.Condition < recipe.fullCondition
-                if targetOf[recipe] == nil and needsAmmo then
+                if conditionTarget and targetOf[recipe] == nil and contained.Condition < recipe.fullCondition then
                     targetOf[recipe] = contained
                 end
             end

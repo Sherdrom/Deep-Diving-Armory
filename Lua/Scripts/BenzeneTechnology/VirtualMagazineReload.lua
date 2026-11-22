@@ -1,12 +1,6 @@
 if SERVER then return end
 
-local virtualType = "VCE_VirtualizedMagazine.VirtualizedMagazine"
-LuaUserData.RegisterType(virtualType)
-
-local function magazineOf(item)
-    local container = item and item.OwnInventory and item.OwnInventory.Container
-    if container and LuaUserData.IsTargetType(container, virtualType) then return container end
-end
+local isVirtualMagazine = Deep_Lua.HF.IsVirtualMagazine
 
 Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request)
     if request.handled then return end
@@ -17,7 +11,7 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
     local container = inventory.Container
     local slot = math.max(container.ContainedStateIndicatorSlot, 0)
     local current = inventory.GetItemAt(slot)
-    if current and not magazineOf(current) then return end
+    if current and not isVirtualMagazine(current) then return end
 
     local candidates, visited = {}, {}
     local function collect(source)
@@ -25,11 +19,12 @@ Hook.Add("pressrtoreload.reload", "DDA.VirtualMagazine.Reload", function(request
         visited[source] = true
         for item in source.AllItemsMod do
             if not item.Removed and item ~= weapon and item ~= request.otherWeapon and not item.HasTag("weapon") then
-                local magazine = magazineOf(item)
-                if magazine and item ~= current and magazine.LoadedCount > 0
+                local virtual = isVirtualMagazine(item)
+                -- VCE mirrors the round count to the item's Condition.
+                if virtual and item ~= current and item.Condition > 0
                     and item.IsInteractable(character) and container.CanBeContained(item, slot) then
-                    candidates[#candidates + 1] = { item = item, count = magazine.LoadedCount }
-                elseif not magazine and item.OwnInventory then
+                    candidates[#candidates + 1] = { item = item, count = item.Condition }
+                elseif not virtual and item.OwnInventory then
                     collect(item.OwnInventory)
                 end
             end
