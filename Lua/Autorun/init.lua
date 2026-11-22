@@ -5,6 +5,16 @@ Deep_Lua.Path = ...
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/HelpFunctions.lua")--Help Functions
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/armorconfigs.lua")--Armor configs
 
+--VCE Legacy 护甲框架移植(跳弹/穿深/插板耐久), 插板配置见本目录 armorconfigs.lua
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/VCEFramework.lua")--VCE 命名空间引导(双端)
+if SERVER or not Game.IsMultiplayer then
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/armorMain.lua")--护甲主体(服务端/单机)
+end
+if CLIENT or not Game.IsMultiplayer then
+    dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/CL_PlayRicochetSound.lua")--跳弹音效(客户端/单机)
+end
+dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/configmisc.lua")--护甲配置注册接口 AddtoMain(双端)
+
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/deployables.lua")--Deployables
 
 dofile(Deep_Lua.Path .. "/Lua/Scripts/AliceTechnology/Airburst.lua")--Airburst stuff, work both side
