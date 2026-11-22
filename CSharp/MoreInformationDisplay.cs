@@ -79,7 +79,8 @@ namespace MoreInformationDisplay
 
         private static string AmmoName(Identifier id)
         {
-            return ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : id.Value;
+            string name = ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : null;
+            return string.IsNullOrWhiteSpace(name) ? id.Value : name;
         }
 
         internal static string Describe(Item item)

@@ -23,7 +23,10 @@ AssemblyLoadContext.Default.Resolving += (context, name) =>
 };
 var magazine = (VCE_VirtualizedMagazine.VirtualizedMagazine)RuntimeHelpers.GetUninitializedObject(typeof(VCE_VirtualizedMagazine.VirtualizedMagazine));
 var item = (Item)RuntimeHelpers.GetUninitializedObject(typeof(Item));
-Set(item, "tags", new HashSet<Identifier> { new("556mag") });
+var prefab = (ItemPrefab)RuntimeHelpers.GetUninitializedObject(typeof(ItemPrefab));
+Set(prefab, "tags", System.Collections.Immutable.ImmutableHashSet<Identifier>.Empty);
+Set(item, "Prefab", prefab);
+Set(item, "tags", new HashSet<Identifier> { new("deep_virtualmagazine") });
 var components = new List<ItemComponent> { magazine };
 Set(item, "components", components);
 var cache = (IDictionary)Activator.CreateInstance(Field(typeof(Item), "componentsByType").FieldType);
@@ -42,18 +45,31 @@ Assert(magazine.LoadedCount == 3 && before == scriptState(item), "tooltip mutate
 magazine.Load("test_ap", "test_standard", "test_standard");
 Assert(before != scriptState(item), "same-count/same-top reorder did not invalidate tooltip");
 
+var lead = (ItemPrefab)RuntimeHelpers.GetUninitializedObject(typeof(ItemPrefab));
+Set(lead, "Identifier", new Identifier("556x45round"));
+Set(lead, "name", (LocalizedString)"");
+ItemPrefab.Prefabs.Add(lead, false);
+try
+{
+    magazine.Load("556x45round", "556x45round", "556x45round", "556x45round_tit", "556x45round_tit", "556x45round");
+    text = VirtualMagazineTooltip.Describe(item);
+    Assert(text.Contains("下一发: 556x45round\n") && text.Contains("556x45round × 4") && text.Contains("556x45round_tit × 2"),
+        "a registered round without a translation lost its identifier");
+    Set(lead, "name", (LocalizedString)"5.56×45 铅制弹");
+    Assert(VirtualMagazineTooltip.Describe(item).Contains("下一发: 5.56×45 铅制弹\n"), "a translated round lost its display name");
+}
+finally
+{
+    ItemPrefab.Prefabs.Remove(lead);
+}
+
 magazine.Load();
 text = VirtualMagazineTooltip.Describe(item);
 Assert(text.Contains("0/30") && !text.Contains("×"), "empty magazine retained old contents");
 Assert(text.EndsWith("下一发: 空匣"), "empty magazine requires a removed localization key");
 Assert(scriptState(null) == 0 && VirtualMagazineTooltip.Describe(null) == "", "null item handling");
 Set(item, "tags", new HashSet<Identifier>());
-// No prefab is needed when the native HasTag lookup is short-circuited by the positive tag above.
-// For the out-of-scope case use a real prefab fixture so the fallback tag lookup is valid.
-var prefab = (ItemPrefab)RuntimeHelpers.GetUninitializedObject(typeof(ItemPrefab));
-Set(prefab, "tags", System.Collections.Immutable.ImmutableHashSet<Identifier>.Empty);
-Set(item, "Prefab", prefab);
-Assert(VirtualMagazineTooltip.Describe(item) == "", "non-5.56 item was changed");
+Assert(VirtualMagazineTooltip.Describe(item) == "", "an item without the virtual magazine tag was changed");
 Console.WriteLine("ok: LuaCs-style script compilation and execution; contents, next round, empty state and same-count refresh pass");
 
 // Prefab-backed virtual ammunition uses the same Shift detail patch without spawning an Item.

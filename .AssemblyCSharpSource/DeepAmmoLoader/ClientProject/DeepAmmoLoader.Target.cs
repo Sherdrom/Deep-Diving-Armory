@@ -94,6 +94,8 @@ public sealed partial class DeepAmmoLoader
 
     private void DrawTargetSlot(SpriteBatch spriteBatch, GUICustomComponent component)
     {
+        // The HUD can still draw for a frame after a campaign transition releases the character.
+        if (Character.Controlled is not { Removed: false } user || Item.Removed || !user.IsAnySelectedItem(Item)) { return; }
         var slot = targetVisualSlot!;
         slot.Rect = slot.InteractRect = component.Rect;
         var dragged = Inventory.DraggingItems.FirstOrDefault();

@@ -206,6 +206,10 @@ public sealed partial class DeepAmmoLoader
             Barotrauma.LuaCsLogger.Log($"DeepAmmoLoader supply transfer rolled back: {e.Message}");
             return false;
         }
+#if SERVER
+        // Fractional debits and credits can stay below the game's condition sync threshold.
+        foreach (var change in changes) { change.Item.CreateStatusEvent(loadingRound: false); }
+#endif
         return true;
     }
 

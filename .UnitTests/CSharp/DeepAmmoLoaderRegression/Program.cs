@@ -665,8 +665,11 @@ Send(2, Revision(), 20);
 Check(mag.LoadedCount == 0 && box.Condition == 100 && loader.Stock.Counts.Count == 0, "full DDA load-return roundtrip conserves box contents");
 for (int cycle = 0; cycle < 30; cycle++)
 {
+    int eventsBefore = box.StatusEvents;
     Send(1, Revision(), 20, true, (1, 1));
+    Check(box.StatusEvents == eventsBefore + 1, "a fractional debit publishes the physical box condition");
     Send(2, Revision(), 20);
+    Check(box.StatusEvents == eventsBefore + 2, "a fractional refund publishes the physical box condition");
     Check(mag.LoadedCount == 0 && box.Condition == 100 && loader.Stock.Counts.Count == 0, "single-round supply return must not accumulate float drift or leftover stock");
 }
 Console.WriteLine($"Backend including refillable supplies: {checks} checks passed (game boundary stubbed).");

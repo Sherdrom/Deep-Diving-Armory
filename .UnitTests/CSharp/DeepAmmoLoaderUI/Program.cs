@@ -395,6 +395,8 @@ static void Run()
     config.Graphics.HUDScale = 1;
     typeof(GameSettings).GetField("currentConfig", fields)!.SetValue(null, config);
     var layoutLoader = (DeepAmmoLoader)RuntimeHelpers.GetUninitializedObject(typeof(DeepAmmoLoader));
+    // A queued HUD draw after the player is cleared must not touch the slot or renderer.
+    typeof(DeepAmmoLoader).GetMethod("DrawTargetSlot", fields)!.Invoke(layoutLoader, new object?[] { null, null });
     typeof(ItemComponent).GetField("GuiFrameSource", fields)!.SetValue(layoutLoader, new XElement("GuiFrame", new XAttribute("draggable", false)));
     var layoutContainers = new List<ItemContainer>();
     foreach (var (name, capacity, columns) in new[] { ("inputContainer", 6, 6), ("outputContainer", 8, 4), ("targetContainer", 1, 1) })
