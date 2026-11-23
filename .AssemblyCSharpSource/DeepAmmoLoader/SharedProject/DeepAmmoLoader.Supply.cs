@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Barotrauma.Items.Components;
 
 namespace DDA.AmmoLoading;
@@ -15,23 +14,42 @@ public sealed partial class DeepAmmoLoader
     public Func<Item, AmmoSupplyDefinition?>? SupplyResolver { get; set; }
 
     private sealed record SupplyPool(string Id, string Prefab, double Amount, double Capacity, Dictionary<string, double> Costs);
-    private sealed record SupplySource(Item Item, string PoolId);
+    private readonly record struct SupplySource(Item Item, string PoolId, float Condition, float Capacity);
     private sealed record SupplyQuote(Dictionary<string, int> Stock, Dictionary<string, double> Pools, bool CanLoad);
     private SupplyPool[] supplies = [];
+    private Dictionary<string, SupplyPool> supplyByAmmo = new(StringComparer.OrdinalIgnoreCase);
     private SupplySource[] supplySources = [];
+    private Dictionary<Item, SupplySource> supplyByItem = [];
+    private bool usingDdaSupply;
     private bool supplyError;
-    private string observedSupply = "[]";
+
+    private bool DdaSuppliesUnchanged(Inventory inventory)
+    {
+        int count = 0;
+        foreach (var item in inventory.AllItems)
+        {
+            if (item.Removed || item.IsInRemoveQueue || DdaSupply.Resolve(item) == null) { continue; }
+            if (!supplyByItem.TryGetValue(item, out var source) ||
+                source.Condition != item.Condition || source.Capacity != item.MaxCondition) { return false; }
+            count++;
+        }
+        return count == supplyByItem.Count;
+    }
 
     private bool RefreshSupplies()
     {
+        var inventory = inputContainer?.Inventory;
+        bool builtIn = SupplyResolver == DdaSupply.Resolve;
+        if (builtIn && usingDdaSupply && !supplyError && inventory != null && DdaSuppliesUnchanged(inventory)) { return false; }
         var pools = new Dictionary<string, SupplyPool>(StringComparer.OrdinalIgnoreCase);
         var sources = new List<SupplySource>();
+        var ammoIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         bool failed = false;
         try
         {
-            if (SupplyResolver != null && inputContainer?.Inventory != null)
+            if (SupplyResolver != null && inventory != null)
             {
-                foreach (var source in inputContainer.Inventory.AllItems.OrderBy(i => i.ID))
+                foreach (var source in inventory.AllItems.OrderBy(i => i.ID))
                 {
                     if (source.Removed || source.IsInRemoveQueue) { continue; }
                     var definition = SupplyResolver(source);
@@ -40,15 +58,23 @@ public sealed partial class DeepAmmoLoader
                         definition.Costs.Count == 0 || !float.IsFinite(source.Condition) || source.Condition < 0 ||
                         !float.IsFinite(source.MaxCondition) || source.MaxCondition <= 0)
                     { throw new ArgumentException("Invalid supply definition or source Condition."); }
+                    string id = definition.PoolId.ToLowerInvariant();
+                    pools.TryGetValue(id, out var pool);
+                    if (builtIn && pool != null)
+                    {
+                        // DdaSupply describes every box of a given material with the same definition.
+                        pools[id] = pool with { Amount = pool.Amount + source.Condition, Capacity = pool.Capacity + source.MaxCondition };
+                        sources.Add(new(source, id, source.Condition, source.MaxCondition));
+                        continue;
+                    }
                     var costs = new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
-                    foreach (var p in definition.Costs.OrderBy(p => p.Key, StringComparer.OrdinalIgnoreCase))
+                    foreach (var p in definition.Costs)
                     {
                         if (string.IsNullOrWhiteSpace(p.Key) || !IsProjectile(p.Key) || !double.IsFinite(p.Value) || p.Value <= 0 ||
                             !costs.TryAdd(p.Key.ToLowerInvariant(), p.Value))
                         { throw new ArgumentException("Supply costs must identify unique projectiles with finite positive costs."); }
                     }
-                    string id = definition.PoolId.ToLowerInvariant();
-                    if (pools.TryGetValue(id, out var pool))
+                    if (pool != null)
                     {
                         if (pool.Costs.Count != costs.Count || pool.Costs.Any(p => !costs.TryGetValue(p.Key, out double cost) || cost != p.Value))
                         { throw new ArgumentException("Sources in the same supply pool must have identical costs."); }
@@ -57,11 +83,11 @@ public sealed partial class DeepAmmoLoader
                     else
                     {
                         // shortcut: one pool per projectile; add alternative-pool allocation when a mod needs it.
-                        if (pools.Values.Any(p => p.Costs.Keys.Any(costs.ContainsKey)))
+                        if (costs.Keys.Any(key => !ammoIds.Add(key)))
                         { throw new ArgumentException("Each projectile must belong to only one supply pool."); }
                         pools.Add(id, new(id, source.Prefab.Identifier.Value, source.Condition, source.MaxCondition, costs));
                     }
-                    sources.Add(new(source, id));
+                    sources.Add(new(source, id, source.Condition, source.MaxCondition));
                 }
             }
         }
@@ -70,15 +96,35 @@ public sealed partial class DeepAmmoLoader
             failed = true;
             if (!supplyError) { Barotrauma.LuaCsLogger.Log($"DeepAmmoLoader supply disabled: {e.Message}"); }
             pools.Clear();
+            sources.Clear();
         }
         var next = pools.Values.OrderBy(p => p.Id, StringComparer.Ordinal).ToArray();
-        string state = JsonSerializer.Serialize(next);
-        bool changed = state != observedSupply || failed != supplyError;
-        supplies = next;
+        bool changed = failed != supplyError || next.Length != supplies.Length;
+        for (int i = 0; !changed && i < next.Length; i++)
+        {
+            var before = supplies[i];
+            var after = next[i];
+            changed = before.Id != after.Id || before.Prefab != after.Prefab || before.Amount != after.Amount ||
+                before.Capacity != after.Capacity || before.Costs.Count != after.Costs.Count ||
+                before.Costs.Any(p => !after.Costs.TryGetValue(p.Key, out double cost) || p.Value != cost);
+        }
+        if (changed) { SetSupplies(next); }
         supplySources = sources.ToArray();
-        observedSupply = state;
+        supplyByItem = [];
+        foreach (var source in sources) { supplyByItem[source.Item] = source; }
+        usingDdaSupply = builtIn;
         supplyError = failed;
         return changed;
+    }
+
+    private void SetSupplies(SupplyPool[] pools)
+    {
+        supplies = pools;
+        supplyByAmmo = new(StringComparer.OrdinalIgnoreCase);
+        foreach (var pool in pools)
+        {
+            foreach (var id in pool.Costs.Keys) { supplyByAmmo.Add(id, pool); }
+        }
     }
 
     private SupplyQuote QuoteSupply(IReadOnlyDictionary<string, int> demand)
@@ -92,8 +138,7 @@ public sealed partial class DeepAmmoLoader
             if (stored > 0) { stock.Add(p.Key, stored); }
             int missing = p.Value - stored;
             if (missing <= 0) { continue; }
-            var pool = supplies.FirstOrDefault(s => s.Costs.ContainsKey(p.Key));
-            if (pool == null) { available = false; continue; }
+            if (!supplyByAmmo.TryGetValue(p.Key, out var pool)) { available = false; continue; }
             costs[pool.Id] = costs.GetValueOrDefault(pool.Id) + pool.Costs[p.Key] * missing;
         }
         available &= supplies.All(p => double.IsFinite(costs.GetValueOrDefault(p.Id)) && costs.GetValueOrDefault(p.Id) <= p.Amount);
@@ -123,7 +168,7 @@ public sealed partial class DeepAmmoLoader
 
     private int AvailableAmount(string id)
     {
-        var pool = supplies.FirstOrDefault(p => p.Costs.ContainsKey(id));
+        var pool = supplyByAmmo.GetValueOrDefault(id);
         return (int)Math.Min(int.MaxValue, (double)Stock[id] + (pool == null ? 0 : Math.Floor(pool.Amount / pool.Costs[id])));
     }
 
@@ -137,8 +182,7 @@ public sealed partial class DeepAmmoLoader
             var amounts = new Dictionary<string, double>();
             foreach (var p in rounds.OrderBy(p => p.Key, StringComparer.Ordinal))
             {
-                var pool = supplies.FirstOrDefault(s => s.Costs.ContainsKey(p.Key));
-                if (pool == null) { continue; }
+                if (!supplyByAmmo.TryGetValue(p.Key, out var pool)) { continue; }
                 double free = Math.Max(0, pool.Capacity - pool.Amount - amounts.GetValueOrDefault(pool.Id));
                 int count = (int)Math.Min(p.Value, Math.Floor(free / pool.Costs[p.Key]));
                 if (count <= 0) { continue; }

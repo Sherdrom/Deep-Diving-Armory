@@ -7,10 +7,11 @@ public sealed partial class DeepAmmoLoader
 {
     private uint receivingRevision;
     private string?[] pages = [];
+    private int remainingPages;
     private bool hasSnapshot;
     private float refreshTimer;
 
-    public bool IsSynchronized => GameMain.Client == null || (hasSnapshot && receivingRevision == revision && pages.All(p => p != null));
+    public bool IsSynchronized => GameMain.Client == null || (hasSnapshot && receivingRevision == revision);
 
     public void UpdateClientState(float deltaTime)
     {
@@ -75,29 +76,30 @@ public sealed partial class DeepAmmoLoader
             if (data.Length != 0 && JsonSerializer.Deserialize<BatchResult>(data) is { } result) { ShowBatchResult(result); }
             return;
         }
-        if (count is < 1 or > 16384 || index < 0 || index >= count) { return; }
+        if (count is < 1 or > MaxSnapshotPages || index < 0 || index >= count || data.Length > SnapshotPageSize) { return; }
         if (hasSnapshot && incomingRevision <= revision) { return; }
+        if (incomingRevision < receivingRevision) { return; }
         if (pages.Length == 0 || receivingRevision != incomingRevision)
         {
-            if (pages.Length > 0 && incomingRevision < receivingRevision) { return; }
             receivingRevision = incomingRevision;
             pages = new string?[count];
+            remainingPages = count;
         }
         if (pages.Length != count) { return; }
+        if (pages[index] == null) { remainingPages--; }
         pages[index] = data;
-        if (pages.Any(p => p == null)) { return; }
-        Snapshot? snapshot;
-        try { snapshot = JsonSerializer.Deserialize<Snapshot>(string.Concat(pages)); }
-        catch (JsonException) { return; }
+        if (remainingPages != 0) { return; }
+        var snapshot = DecodeSnapshot(string.Concat(pages));
+        pages = [];
         if (snapshot?.Stock == null || snapshot.Revision != incomingRevision) { return; }
         var restored = new AmmoStock();
         if (snapshot.Stock.Count != 0 && !restored.TryAdd(snapshot.Stock)) { return; }
         var receivedSupplies = snapshot.Supplies ?? [];
         if (!ValidSupplies(receivedSupplies) || (snapshot.SupplyError && receivedSupplies.Length != 0)) { return; }
-        supplies = receivedSupplies.Select(p => p with
+        SetSupplies(receivedSupplies.Select(p => p with
         {
             Costs = new Dictionary<string, double>(p.Costs, StringComparer.OrdinalIgnoreCase)
-        }).ToArray();
+        }).ToArray());
         supplyError = snapshot.SupplyError;
         Stock = restored;
         revision = snapshot.Revision;

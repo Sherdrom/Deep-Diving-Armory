@@ -399,9 +399,12 @@ public sealed partial class DeepAmmoLoader
             saveButton.Enabled = !string.IsNullOrWhiteSpace(presetName?.Text) && AmmoPlan.IsValid(draft, AmmoPlan.MaxRounds);
         }
         UpdateClientState(deltaTime);
-        UpdateWithdrawalButtons();
         batchRefreshTimer -= deltaTime;
-        if (batchRefreshTimer <= 0) { UpdateBatchButton(); }
+        if (batchRefreshTimer <= 0)
+        {
+            UpdateBatchButton();
+            UpdateWithdrawalButtons();
+        }
         var target = Target;
         bool synchronized = IsSynchronized;
         if (displayedTarget != (target?.Item.ID ?? 0) || displayedCount != (target?.LoadedCount ?? 0) ||
@@ -441,11 +444,14 @@ public sealed partial class DeepAmmoLoader
     private void UpdateWithdrawalButtons()
     {
         if (!withdrawMode || stockList == null) { return; }
+        bool synchronized = IsSynchronized;
         foreach (var tile in stockList.Content.Children.OfType<GUIButton>())
         {
             if (tile.UserData is ValueTuple<string, ItemPrefab?> package)
             {
-                tile.Enabled = IsSynchronized && WithdrawalProblem(package.Item1, package.Item2) == "withdraw";
+                bool enabled = synchronized && WithdrawalProblem(package.Item1, package.Item2) == "withdraw";
+                if (tile.Enabled == enabled) { continue; }
+                tile.Enabled = enabled;
                 foreach (var image in tile.Children.OfType<GUIImage>())
                 { if (image.UserData is Color tint) { image.Color = tint * (tile.Enabled ? 1f : 0.4f); } }
             }
@@ -542,6 +548,9 @@ public sealed partial class DeepAmmoLoader
         stockSummary.ToolTip = stockSummary.Text + (hasSupply ? "\n" + L(withdrawMode ? "withdrawmodehint" : "supplyhint") + "\n" +
             string.Join("\n", supplies.Select(p => $"{AmmoName(p.Prefab)} · {p.Amount:N2}/{p.Capacity:N2}")) : "");
         if (visibleStock.Length == 0) { TextRow(stockList, L("emptystock").Value); }
+        var packages = withdrawMode
+            ? FindWithdrawalPackages(visibleStock.Where(p => IsProjectile(p.Key)).Select(p => p.Key.ToIdentifier()).ToHashSet())
+            : null;
         int stockCellSize = (int)(72 * GUI.Scale);
         foreach (var p in visibleStock)
         {
@@ -552,14 +561,14 @@ public sealed partial class DeepAmmoLoader
             int stockCaptionHeight = (int)((stockCaption.Contains('\n') ? 30 : 16) * GUI.Scale);
             int stockImageHeight = stockCellSize - stockCaptionHeight;
             var prefab = ItemPrefab.FindByIdentifier(p.Key.ToIdentifier()) as ItemPrefab;
-            var package = withdrawMode ? FindWithdrawalPackage(p.Key) : null;
+            var package = packages?.GetValueOrDefault(p.Key.ToIdentifier());
             var tile = new GUIButton(new RectTransform(new Point(stockCellSize), stockList.Content.RectTransform, isFixedSize: true),
                 style: "GUIButtonSmallFreeScale")
             {
                 UserData = (p.Key, package),
                 OnClicked = (_, _) =>
                 {
-                    if (withdrawMode) { RequestWithdraw(p.Key); uiDirty = true; }
+                    if (withdrawMode) { RequestWithdraw(p.Key); }
                     else { AddRun(p.Key, addCount); }
                     return true;
                 },
@@ -601,7 +610,7 @@ public sealed partial class DeepAmmoLoader
         var checkNames = new List<GUITextBlock>();
         foreach (var id in demand.Keys.OrderBy(AmmoName))
         {
-            int needed = supplies.Any(p => p.Costs.ContainsKey(id)) ? quote.Stock.GetValueOrDefault(id) : demand[id];
+            int needed = supplyByAmmo.ContainsKey(id) ? quote.Stock.GetValueOrDefault(id) : demand[id];
             if (needed == 0) { continue; }
             var row = ListRow(checkList);
             var name = AmmoLabel(row, id, AmmoName(id));

@@ -93,7 +93,7 @@ packItem.IsInRemoveQueue = false;
 loader.Update(1, new Camera());
 Check(loader.Stock["a"] == 120 && packItem.IsInRemoveQueue, "queued/saved package cannot redeem twice");
 
-uint Revision() => (uint)loader.ServerGetEventData().GetType().GetProperty("Revision")!.GetValue(loader.ServerGetEventData())!;
+uint Revision() => loader.StateRevision;
 void Send(byte command, uint rev, ushort target, bool allowed = true, params (uint Id, ushort Count)[] groups)
 {
     client.Allowed = allowed;
@@ -396,8 +396,30 @@ var save = loader.Save(new XElement("Item"));
 loader.Load(new(save), false, new IdRemap(), false);
 loader.Load(new(save), false, new IdRemap(), false);
 Check(loader.Stock["a"] == 120, "machine save/load replaces stock");
+var oldPage = loader.ServerGetEventData();
 for (int i = 0; i < 300; i++) { loader.Stock.TryAdd(Amount("mod_" + i, 100000)); }
+int beforeRefresh = machine.Events.Count;
 Send(0, Revision(), 20);
+var snapshotEvents = machine.Events.Skip(beforeRefresh).ToArray();
+Check(snapshotEvents.Length > 1 && snapshotEvents[0].Equals(oldPage),
+    "mid-round sync reuses the same page identity across stock revisions");
+string[] chunks = new string[snapshotEvents.Length];
+for (int i = 0; i < snapshotEvents.Length; i++)
+{
+    var msg = new Message();
+    loader.ServerEventWrite(msg, client, new NetEntityEvent.Wrapper(i == 0 ? oldPage : snapshotEvents[i]));
+    msg.Rewind();
+    Check(msg.ReadUInt32() == Revision() && msg.ReadInt32() == i && msg.ReadInt32() == chunks.Length,
+        "queued page writes the current snapshot revision and page count");
+    chunks[i] = msg.ReadString();
+}
+var decode = typeof(DeepAmmoLoader).GetMethod("DecodeSnapshot", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!;
+var encoded = string.Concat(chunks);
+var decoded = decode.Invoke(null, [encoded]);
+var decodedStock = decoded?.GetType().GetProperty("Stock")!.GetValue(decoded) as IReadOnlyDictionary<string, int>;
+Check(encoded.StartsWith('~') && decodedStock?.Count == loader.Stock.Counts.Count && decodedStock["mod_299"] == 100000,
+    "large snapshots compress and round-trip stock including unavailable mod types");
+Check(decode.Invoke(null, ["~broken"]) == null, "corrupt compressed snapshots are rejected");
 foreach (var data in machine.Events)
 {
     var msg = new Message();

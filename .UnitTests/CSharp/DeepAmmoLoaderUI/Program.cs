@@ -5,6 +5,7 @@ using System.Runtime.Loader;
 using System.Xml.Linq;
 using Barotrauma;
 using Barotrauma.Items.Components;
+using Barotrauma.Networking;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using DDA.AmmoLoading;
@@ -916,9 +917,43 @@ static void Run()
     SetRefreshField("draft", refreshDraft);
     SetRefreshField("message", "");
     var suppliesType = typeof(DeepAmmoLoader).GetField("supplies", fields)!.FieldType;
-    void SetSupplies(string json) => SetRefreshField("supplies", System.Text.Json.JsonSerializer.Deserialize(json, suppliesType)!);
+    void SetSupplies(string json) => typeof(DeepAmmoLoader).GetMethod("SetSupplies", fields)!
+        .Invoke(refreshLoader, [System.Text.Json.JsonSerializer.Deserialize(json, suppliesType)!]);
     SetSupplies("[]");
     typeof(DeepAmmoLoader).GetProperty(nameof(DeepAmmoLoader.Stock))!.SetValue(refreshLoader, new AmmoStock());
+    {
+        var receiver = (DeepAmmoLoader)RuntimeHelpers.GetUninitializedObject(typeof(DeepAmmoLoader));
+        typeof(DeepAmmoLoader).GetField("pages", fields)!.SetValue(receiver, Array.Empty<string>());
+        void Receive(uint revision, int index, int count, string data)
+        {
+            var msg = new ReadWriteMessage();
+            msg.WriteUInt32(revision);
+            msg.WriteInt32(index);
+            msg.WriteInt32(count);
+            msg.WriteString(data);
+            msg.BitPosition = 0;
+            receiver.ClientEventRead(msg, 0);
+        }
+        Receive(1, 0, 1, "{\"Revision\":1,\"Stock\":{\"legacy\":1}}");
+        if (receiver.StateRevision != 1 || receiver.Stock["legacy"] != 1)
+        { throw new Exception("Legacy inventory snapshot failed to decode."); }
+        refreshLoader.Stock.TryAdd(Enumerable.Range(0, 300).ToDictionary(i => $"stored_{i}", i => i + 1));
+        SetRefreshField("revision", 3u);
+        string encoded = (string)typeof(DeepAmmoLoader).GetMethod("EncodeSnapshot", fields)!.Invoke(refreshLoader, null)!;
+        var split = encoded.Chunk(128).Select(chunk => new string(chunk)).ToArray();
+        Receive(2, 0, 3, "uncompleted old revision");
+        Receive(3, split.Length - 1, split.Length, split[^1]);
+        Receive(3, split.Length - 1, split.Length, split[^1]);
+        Receive(2, 1, 3, "late page");
+        if (split.Length < 2 || receiver.StateRevision != 1 || receiver.Stock["legacy"] != 1)
+        { throw new Exception("Incomplete or duplicate pages replaced the current stock."); }
+        for (int i = split.Length - 2; i >= 0; i--) { Receive(3, i, split.Length, split[i]); }
+        if (receiver.StateRevision != 3 || receiver.Stock.Counts.Count != 300 || receiver.Stock["stored_299"] != 300)
+        { throw new Exception("The newest compressed snapshot did not replace stock after all pages arrived."); }
+        SetRefreshField("revision", 0u);
+        refreshLoader.Stock.Load(null);
+        Console.WriteLine("PASS: native network reader applies legacy and compressed snapshots, including reordered, stale and duplicate pages.");
+    }
     refreshLoader.GuiFrame = new GUIFrame(new RectTransform(new Point(1800, 800)), style: null);
     var lists = new[] { "presetList", "planList", "previewList", "stockList", "actualList", "checkList" }
         .Select((name, index) =>
