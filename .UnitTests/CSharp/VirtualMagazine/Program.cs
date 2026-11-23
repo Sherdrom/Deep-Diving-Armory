@@ -258,6 +258,9 @@ static void RunTests(string[] args)
         cleanup.Invoke(null, [weapon, proxyItem]);
         Assert(itemType.GetProperty("Container")!.GetValue(proxyItem) == null, "ordinary projectiles must still be removed");
         Console.WriteLine("PASS: deployed SRW consecutive shots and empty stop, cleanup scope, VCE consumption, HUD and mixed-stack round-trip.");
+        var fixes = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
+            "bin/Client", platform == "Mac" ? "OSX" : platform, "VanillaBugFixes.dll"));
+        CheckNetworkImpacts(game, fixes, proxy);
     }
     finally
     {
@@ -276,6 +279,42 @@ static FieldInfo Field(Type type, string name)
     throw new MissingFieldException(type.FullName, name);
 }
 static void Assert(bool condition, string message) { if (!condition) throw new Exception(message); }
+
+static void CheckNetworkImpacts(Assembly game, Assembly fixes, object virtualProjectile)
+{
+    const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+    var client = game.GetType("Barotrauma.GameMain", true)!.GetField("Client", flags)!;
+    var itemEvent = fixes.GetType("WeaponSyncFix.NetworkEventContext", true)!.GetField("IsItemEvent", flags)!;
+    var prefix = fixes.GetType("DamageRollbackFix.ApplyStatusEffectsDedupPatch", true)!.GetMethod("Prefix", flags)!;
+    var mark = fixes.GetType("DamageRollbackFix.ImpactTimeTracker", true)!.GetMethod("RecordImpact", flags)!;
+    var onImpact = Enum.Parse(game.GetType("Barotrauma.ActionType", true)!, "OnImpact");
+    bool ShouldApply(object projectile) =>
+        (bool)prefix.Invoke(null, [projectile, onImpact, 1f, null, null, null, null, null, 1f])!;
+
+    var previousClient = client.GetValue(null);
+    var previousEvent = itemEvent.GetValue(null);
+    try
+    {
+        client.SetValue(null, RuntimeHelpers.GetUninitializedObject(client.FieldType));
+        itemEvent.SetValue(null, true);
+        var projectileType = game.GetType("Barotrauma.Items.Components.Projectile", true)!;
+        projectileType.GetProperty("Hitscan")!.SetValue(virtualProjectile, true);
+        Assert(ShouldApply(virtualProjectile), "a virtual ray impact must bypass the vanilla launch queue");
+        mark.Invoke(null, [virtualProjectile]);
+        Assert(ShouldApply(virtualProjectile) && ShouldApply(virtualProjectile),
+            "successive network impacts on a reused virtual projectile must both pass");
+        var ordinary = RuntimeHelpers.GetUninitializedObject(projectileType);
+        mark.Invoke(null, [ordinary]);
+        Assert(!ShouldApply(ordinary), "a predicted vanilla impact must still be suppressed");
+        Console.WriteLine("PASS: immediate VCE ray impacts, consecutive hits, and vanilla prediction deduplication.");
+    }
+    finally
+    {
+        itemEvent.SetValue(null, previousEvent);
+        client.SetValue(null, previousClient);
+    }
+}
+
 [MethodImpl(MethodImplOptions.NoInlining)]
 static void CheckLua(object magazine, Type identifierType)
 {
