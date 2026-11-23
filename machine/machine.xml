@@ -158,7 +158,7 @@
     <ItemContainer capacity="10" canbeselected="true" hideitems="true" slotsperrow="10" uilabel="" allowuioverlap="true" />
     <ItemContainer capacity="1" canbeselected="true" hideitems="true" slotsperrow="1" uilabel="" allowuioverlap="true" />
   </Item>
-  <!--<Item name="" identifier="ammoreload_machine" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="deep_condition_transfer,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false">
+  <Item name="" identifier="deep_new_ammoloader" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="vceammoloader,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.5" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">
       <RequiredSkill identifier="electrical" level="20" />
       <RequiredSkill identifier="mechanical" level="30" />
@@ -178,59 +178,19 @@
         <Conditional attached="false" />
       </StatusEffect>
     </Holdable>
-    <ItemContainer capacity="0" maxstacksize="1" slotsperrow="6" hideitems="true" itempos="48,-175" canbeselected="true">
-      <GuiFrame relativesize="0.3,0.5" anchor="Center" style="ItemUI" />
-      <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="1" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="2" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="3" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="4" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="5" texture="%ModDir%/misc/ui.png" sourcerect="18,118,68,52" origin="0.5,0.5" />
-      <SlotIcon slotindex="6" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="7" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="8" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="9" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="10" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SlotIcon slotindex="11" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="1" itemsperrow="1" hideitems="true">
-        <Containable items="deep_ammobox"/>
-      </SubContainer>
-
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
-      <SubContainer capacity="1" maxstacksize="4" itemsperrow="1" hideitems="true">
-        <Containable items="smallitem" excludedidentifiers="deep_ammobox,deep_plate_repair_tool,deep_plate,deep_plate_arm,deep_plate_groin" />
-      </SubContainer>
+    <DeepAmmoLoader inputcontainerindex="0" outputcontainerindex="1" targetcontainerindex="2" usesupplystorage="true" textprefix="dda.ammoloader." canbeselected="true" msg="ItemMsgInteractSelect">
+      <GuiFrame relativesize="0.75,0.78" minsize="900,600" anchor="Center" style="ItemUI" />
+    </DeepAmmoLoader>
+    <ItemContainer capacity="6" slotsperrow="6" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
+      <Containable items="deep_ammobox,deep_ammopackage" />
     </ItemContainer>
-  </Item>-->
+    <ItemContainer capacity="6" slotsperrow="6" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
+      <Containable items="deep_ammopackage" />
+    </ItemContainer>
+    <ItemContainer capacity="1" slotsperrow="1" maxstacksize="1" canbeselected="true" hideitems="true" allowuioverlap="true" uilabel="">
+      <Containable items="deep_virtualmagazine" />
+    </ItemContainer>
+  </Item>
 
   <Item name="" identifier="deep_plate_repairtable" subcategory="deep_machine" category="Machine" linkable="false" damagedbyexplosions="true" tags="deep_condition_transfer,donttakeitems,dontsellitems" explosiondamagemultiplier="0.2" scale="0.25" CanFlipX="false">
     <Fabricate suitablefabricators="fabricator" requiredtime="10">

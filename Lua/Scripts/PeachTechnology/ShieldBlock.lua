@@ -96,7 +96,16 @@ local function GetTotalShieldBlockCount(userData)
     return total
 end
 
--- 首见缓存原始值, 否则恢复为原始值; 返回原始值
+-- 计算命中目标的盾牌拦截量; 非盾牌返回nil
+local function GetTargetBlockCount(target)
+    local userData = GetUserData(target)
+    if userData == nil then
+        return nil
+    end
+    return GetTotalShieldBlockCount(userData)
+end
+
+-- 首见缓存原始值, 否则恢复为原始值; 返回原始值 (原版路径专用)
 local function NormalizeMaxTargets(instance)
     local pristine = maxTargetsCache[instance]
     if pristine == nil then
@@ -108,7 +117,8 @@ local function NormalizeMaxTargets(instance)
     return pristine
 end
 
--- 物理碰撞回调内的归一化: 保证 Projectile.cs L974 的 hits.Count >= MaxTargetsToHit
+-- ============ 补丁1: 原版物理弹 (OnProjectileCollision) ============
+-- 物理碰撞回调内的归一化: 保证 HandleProjectileCollision 内 hits.Count >= MaxTargetsToHit
 -- 判定始终使用原始值 (该回调早于 HandleProjectileCollision 执行)
 Hook.Patch(
     "Barotrauma.Items.Components.Projectile",
@@ -124,6 +134,7 @@ Hook.Patch(
     Hook.HookMethodType.Before
 )
 
+-- ============ 补丁2: 原版弹 (物理碰撞 + 原版hitscan共用此签名) ============
 Hook.Patch(
     "Barotrauma.Items.Components.Projectile",
     "HandleProjectileCollision",
@@ -135,13 +146,7 @@ Hook.Patch(
     function(instance, ptable)
         local pristine = NormalizeMaxTargets(instance)
 
-        local target = ptable["target"]
-        local userData = GetUserData(target)
-        if userData == nil then
-            return
-        end
-
-        local totalBlock = GetTotalShieldBlockCount(userData)
+        local totalBlock = GetTargetBlockCount(ptable["target"])
         if totalBlock == nil then
             return
         end
@@ -157,6 +162,40 @@ Hook.Patch(
         ))
 
         instance.MaxTargetsToHit = newValue
+    end,
+    Hook.HookMethodType.Before
+)
+
+-- ============ 补丁3: VCE虚拟弹匣 (VirtualizedProjectile) ============
+-- VirtualizedProjectile 为纯hitscan: DoHitscan 逐命中调用其私有
+-- HandleProjectileCollision(Fixture, Vector2), 与原版签名 (Fixture, Vector2, Vector2)
+-- 不同, 补丁2不会触发; 其穿透停止判定为 DoHitscan 循环内的 hitCount >= MaxTargetsToHit
+-- 同一弹丸实例被整个弹匣复用, ParseProjectileData 每发射击前按当前弹种重设
+-- MaxTargetsToHit, 因此对盾牌命中采用增量扣减 (在当前值上直接扣拦截量),
+-- 无需维护原始值缓存, 跨发/混装弹匣切换弹种均自愈
+Hook.Patch(
+    "VCE_VirtualizedMagazine.VirtualizedProjectile",
+    "HandleProjectileCollision",
+    function(instance, ptable)
+        local totalBlock = GetTargetBlockCount(ptable["target"])
+        if totalBlock == nil then
+            return
+        end
+
+        local current = instance.MaxTargetsToHit
+        local newValue = current - totalBlock + 1
+        if newValue < 1 then
+            newValue = 1
+        end
+
+        log(string.format(
+            "VCE shield blocked: blockCount=%d | MaxTargetsToHit %d -> %d",
+            totalBlock, current, newValue
+        ))
+
+        if newValue ~= current then
+            instance.MaxTargetsToHit = newValue
+        end
     end,
     Hook.HookMethodType.Before
 )
