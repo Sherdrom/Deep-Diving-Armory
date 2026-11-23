@@ -465,7 +465,7 @@
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <ManualMagazineLoading />
   </Item>
-    <Item name="" identifier="deep_762x51_virtual_20_m700" subcategory="deep_virtual_mag" allowdroppingonswap="false" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.25" health="20" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+  <Item name="" identifier="deep_762x51_virtual_20_m700" subcategory="deep_virtual_mag" allowdroppingonswap="false" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.25" health="20" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_m700_mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
     <Price baseprice="40" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
       <Price storeidentifier="merchantoutpost" multiplier="1" />
       <Price storeidentifier="merchantcity" multiplier="1" />
@@ -1723,6 +1723,27 @@
     <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag2.png" depth="0.551" sourcerect="6,1335,77,76" origin="0.5,0.5" />
     <Body width="40" height="50" density="10" />
     <VirtualizedMagazine MaxSize="6" AllowedAmmoTags="deep_44mg_round" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
+    <ManualMagazineLoading />
+  </Item>
+  <!--shotgun_ammo-->
+  <Item name="" identifier="deep_12shell_virtual_25_aa12" subcategory="deep_virtual_mag" allowdroppingonswap="false" maxstacksize="32" maxstacksizecharacterinventory="1" scale="0.2" health="25" category="Weapon" cargocontaineridentifier="metalcrate" linkable="true" tags="smallitem,deep_aa12_mag,deep_virtualmagazine" impactsoundtag="impact_metal_light">
+    <Price baseprice="40" sold="false" buyingpricemultiplier="2.0" minamount="8" maxamount="8" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5" amount="1">
+      <RequiredSkill identifier="weapons" level="40" />
+      <RequiredItem identifier="plastic" amount="1" />
+    </Fabricate>
+    <Deconstruct time="5"></Deconstruct>
+    <InventoryIcon texture="%ModDir%/weapon/ammo/NewMag/Mag2.png" sourcerect="11,1426,63,180" />
+    <Sprite texture="%ModDir%/weapon/ammo/NewMag/Mag2.png" depth="0.551" sourcerect="11,1426,63,180" origin="0.5,0.5" />
+    <Body width="40" height="50" density="10" />
+    <VirtualizedMagazine MaxSize="25" AllowedAmmoTags="deep_shotgun_ammo" />
     <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect"></Holdable>
     <ManualMagazineLoading />
   </Item>
