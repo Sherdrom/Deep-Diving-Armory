@@ -261,6 +261,7 @@ static void RunTests(string[] args)
         var fixes = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
             "bin/Client", platform == "Mac" ? "OSX" : platform, "VanillaBugFixes.dll"));
         CheckNetworkImpacts(game, fixes, proxy);
+        CheckWeaponUseFeedback(fixes);
     }
     finally
     {
@@ -279,6 +280,26 @@ static FieldInfo Field(Type type, string name)
     throw new MissingFieldException(type.FullName, name);
 }
 static void Assert(bool condition, string message) { if (!condition) throw new Exception(message); }
+
+static void CheckWeaponUseFeedback(Assembly fixes)
+{
+    var type = fixes.GetType("WeaponSyncFix.WeaponShots", true)!;
+    var shots = Activator.CreateInstance(type)!;
+    var take = type.GetMethod("Take", BindingFlags.NonPublic | BindingFlags.Instance)!;
+    var claim = type.GetMethod("Claim", BindingFlags.NonPublic | BindingFlags.Instance)!;
+    object Local(ushort input) => take.Invoke(shots, [input, 1d])!;
+    object Echo(ushort input, uint ordinal = 0) =>
+        Activator.CreateInstance(take.ReturnType, input, ordinal)!;
+    bool Play(object key, double now = 1d) => (bool)claim.Invoke(shots, [key, now])!;
+
+    Assert(Play(Local(21)) && Play(Local(23)), "predicted shots play immediately");
+    Assert(!Play(Echo(23)) && Play(Echo(22)) && !Play(Echo(21)) && !Play(Echo(22)),
+        "only the missing middle shot plays, including reordered or repeated echoes");
+    Assert(Play(Echo(24)) && !Play(Local(24)), "an early confirmation plays once");
+    Assert(Play(Local(24)) && !Play(Echo(24, 1)), "two uses within one input remain distinct");
+    Assert(Play(Echo(23), 1200d), "a wrapped input can play again");
+    Console.WriteLine("PASS: per-shot weapon use feedback.");
+}
 
 static void CheckNetworkImpacts(Assembly game, Assembly fixes, object virtualProjectile)
 {
