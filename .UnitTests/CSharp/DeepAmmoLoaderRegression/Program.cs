@@ -768,17 +768,18 @@ Entity.Spawner = new();
 foreach (var shell in shotgunPackages)
 {
     string id = shell.Identifier.Value;
-    var source = materialBoxes[supplyByRound[id].Box];
+    var (boxId, cost) = supplyByRound[id];
+    var source = materialBoxes[boxId];
     float before = source.Condition;
     Send(1, Revision(), 20, true, (shell.UintIdentifier, 25));
     Check(mag.LoadedCount == 25 && mag.LoadedAmmoIdentifiers.All(round => round == shell.Identifier) &&
-        source.Condition == before - 18.75f, $"{id}: loading 25 rounds debits the matching box");
+        source.Condition == (float)(before - 25 * cost), $"{id}: loading 25 rounds debits the matching box");
     Send(2, Revision(), 20);
     Check(mag.LoadedCount == 0 && source.Condition == before && loader.Stock[id] == 0, $"{id}: unload refunds the box");
     Send(3, Revision(), 20, true, (shell.UintIdentifier, 1));
     Entity.Spawner.ProcessQueue();
     Check(pickup.Inventory.AllItems.SingleOrDefault() is { Condition: 1 } item && item.Prefab == shell &&
-        source.Condition == before - 0.75f, $"{id}: withdrawal delivers one shell and charges for one round");
+        source.Condition == (float)(before - cost), $"{id}: withdrawal delivers one shell and charges for one round");
     pickup.Inventory.AllItems.Clear();
 }
 intake.Inventory.AllItems.Clear();

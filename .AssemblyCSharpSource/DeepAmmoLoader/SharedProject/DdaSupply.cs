@@ -21,9 +21,10 @@ internal static class DdaSupply
         var tungsten = AddBox("tungsten_physicorium");
         var uranium = AddBox("depleted_uranium");
 
-        void AddRounds(string prefix, double cost, string leadSuffix = "_lead", string fuSuffix = "_fu",
+        void AddRounds(string prefix, int roundsPerBox, string leadSuffix = "_lead", string fuSuffix = "_fu",
             string apSuffix = "_ap", string duSuffix = "_depleted_uranium")
         {
+            double cost = 100.0 / roundsPerBox;
             lead.Add(prefix + leadSuffix, cost);
             titanium.Add(prefix + "_tit", cost);
             physicorium.Add(prefix + "_phy", cost);
@@ -33,37 +34,37 @@ internal static class DdaSupply
         }
 
         // Each caliber shares one price across magazines. Cost is Condition consumed per projectile,
-        // so a 100% condition ammo box (budget 100) yields 100 / cost rounds; cost is written as 100 / rounds.
+        // so the number below is the rounds supplied by a full ammo box.
         // value 0.6 => 3200, 1 => 1920, 2 => 960, 3 => 640, 4 => 480, 8 => 240, 10 => 192 rounds per box.
-        AddRounds("556x45round", 100 / 1920, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
-        AddRounds("545x39round", 100 / 1920, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
-        AddRounds("58x42round", 100 / 1920, duSuffix: "_du");
-        AddRounds("762x39round", 100 / 1920, fuSuffix: "_bp", apSuffix: "_mai_ap");
-        AddRounds("762x51round", 100 / 640, fuSuffix: "_m61", apSuffix: "_m993");
-        AddRounds("762x54rround", 100 / 640, apSuffix: "_7n37");
-        AddRounds("762x63round", 100 / 640);
-        AddRounds("792x33round", 100 / 1920, leadSuffix: "");
-        AddRounds("792x57round", 100 / 640);
-        AddRounds("65x50round", 100 / 640);
-        AddRounds("303round", 100 / 640);
-        AddRounds("9x39round", 100 / 960, duSuffix: "_du");
-        AddRounds("127x55round", 100 / 480, leadSuffix: "");
-        AddRounds("127x99round", 100 / 192);
-        AddRounds("338lmround", 100 / 480);
-        AddRounds("338nmround", 100 / 480);
-        AddRounds("50beowulfround", 100 / 640);
-        AddRounds("9x18round", 100 / 3200);
-        AddRounds("9x19round", 100 / 3200);
-        AddRounds("45acpround", 100 / 3200);
-        AddRounds("57x28round", 100 / 3200);
-        AddRounds("46x30round", 100 / 3200);
-        AddRounds("44mground", 100 / 640);
-        AddRounds("50aeround", 100 / 640);
-        AddRounds("50glround", 100 / 640);
-        AddRounds("50swround", 100 / 480);
+        AddRounds("556x45round", 1920, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
+        AddRounds("545x39round", 1920, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
+        AddRounds("58x42round", 1920, duSuffix: "_du");
+        AddRounds("762x39round", 1920, fuSuffix: "_bp", apSuffix: "_mai_ap");
+        AddRounds("762x51round", 640, fuSuffix: "_m61", apSuffix: "_m993");
+        AddRounds("762x54rround", 640, apSuffix: "_7n37");
+        AddRounds("762x63round", 640);
+        AddRounds("792x33round", 1920, leadSuffix: "");
+        AddRounds("792x57round", 640);
+        AddRounds("65x50round", 640);
+        AddRounds("303round", 640);
+        AddRounds("9x39round", 960, duSuffix: "_du");
+        AddRounds("127x55round", 480, leadSuffix: "");
+        AddRounds("127x99round", 192);
+        AddRounds("338lmround", 480);
+        AddRounds("338nmround", 480);
+        AddRounds("50beowulfround", 640);
+        AddRounds("9x18round", 3200);
+        AddRounds("9x19round", 3200);
+        AddRounds("45acpround", 3200);
+        AddRounds("57x28round", 3200);
+        AddRounds("46x30round", 3200);
+        AddRounds("44mground", 640);
+        AddRounds("50aeround", 640);
+        AddRounds("50glround", 640);
+        AddRounds("50swround", 480);
 
-        AddRounds("deep_12shell", 100 / 240, duSuffix: "_du");
-        AddRounds("deep_12slug", 100 / 240, duSuffix: "_du");
+        AddRounds("deep_12shell", 240, duSuffix: "_du");
+        AddRounds("deep_12slug", 240, duSuffix: "_du");
     }
 
     internal static AmmoSupplyDefinition? Resolve(Item source) =>
