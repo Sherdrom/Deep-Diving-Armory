@@ -492,14 +492,22 @@ foreach (var element in XDocument.Load("weapon/ammo/ammobox.xml").Root!.Elements
 var itemFiles = XDocument.Load("filelist.xml").Root!.Elements("Item").Select(e => (string)e.Attribute("file")!).ToArray();
 IEnumerable<XElement> AmmoItems(string folder) => itemFiles.Where(p => p.StartsWith("%ModDir%/weapon/ammo/" + folder + "/"))
     .SelectMany(p => XDocument.Load(p["%ModDir%/".Length..]).Root!.Elements("Item"));
+string[] ReadTags(XElement element, string attribute) => ((string?)element.Attribute(attribute) ?? "")
+    .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+var magazineAmmoTags = AmmoItems("NewMag").Elements("VirtualizedMagazine")
+    .Select(m => ReadTags(m, "AllowedAmmoTags").ToHashSet(StringComparer.OrdinalIgnoreCase)).ToArray();
 var rounds = AmmoItems("NewAmmoRound").Where(e => e.Element("Projectile") != null)
     .ToDictionary(e => (string)e.Attribute("identifier")!, StringComparer.OrdinalIgnoreCase);
+var virtualRounds = from round in rounds
+                    let tags = ReadTags(round.Value, "tags")
+                    where magazineAmmoTags.Any(allowed => allowed.Count == 0 || allowed.Overlaps(tags))
+                    select round.Key;
 var packaged = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 var shotgunPackages = new List<ItemPrefab>();
 foreach (var element in rounds.Values.Concat(AmmoItems("NewAmmoPackages")))
 {
     string packageId = (string)element.Attribute("identifier")!;
-    var prefab = new ItemPrefab(packageId, packageNumber++, ((string)element.Attribute("tags")!).Split(','))
+    var prefab = new ItemPrefab(packageId, packageNumber++, ReadTags(element, "tags"))
         { Health = (float?)element.Attribute("health") ?? 100, ConfigElement = new(element) };
     ItemPrefab.Prefabs.Values.Add(prefab);
     if (element.Element("VirtualizedAmmoStorage") is not { } storage) { continue; }
@@ -520,8 +528,8 @@ foreach (var element in rounds.Values.Concat(AmmoItems("NewAmmoPackages")))
         shotgunPackages.Add(prefab);
     }
 }
-Check(packaged.Count > 0 && packaged.SetEquals(rounds.Keys), "every active round must have a package");
-Check(packaged.SetEquals(supplyByRound.Keys), "supply must match the active rounds exactly");
+Check(packaged.Count > 0 && packaged.SetEquals(virtualRounds), "packages must match the rounds accepted by virtual magazines");
+Check(packaged.SetEquals(supplyByRound.Keys), "supply must match the packaged rounds exactly");
 machine = new Item(40, bulletA);
 intake = new ItemContainer(machine, 6);
 var pickup = new ItemContainer(machine, 3);
