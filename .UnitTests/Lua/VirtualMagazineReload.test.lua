@@ -1,6 +1,7 @@
 local vceType = "VCE_VirtualizedMagazine.VirtualizedMagazine"
 local function loadScripts(server, multiplayer, csActive, vceInstalled)
     SERVER, Game, CSActive = server, { IsMultiplayer = multiplayer }, csActive
+    Identifier = function(value) return value end
     Deep_Lua, Descriptors = {}, {}
     local hooks, registrations = {}, 0
     Hook = {
@@ -26,7 +27,7 @@ local function loadScripts(server, multiplayer, csActive, vceInstalled)
     if server or not multiplayer then
         dofile("Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")
         assert(hooks["ContainerConditionTransfer.Update"], "legacy press failed to load")
-        assert((hooks.NpcMagazineLoadout ~= nil) == (csActive and vceInstalled))
+        assert(hooks.NpcMagazineLoadout, "sandboxed spawns must still listen for new loadouts")
     end
     return hooks["DDA.VirtualMagazine.Reload"], registrations
 end

@@ -21,7 +21,7 @@ Deep_Lua.HF = {
 
 }
 
--- Only the press and NPC loadouts need to write the VCE component.
+-- Only the legacy press needs direct access to the VCE component.
 if CSActive and (SERVER or not Game.IsMultiplayer) then
     local typeName = "VCE_VirtualizedMagazine.VirtualizedMagazine"
     if pcall(LuaUserData.RegisterType, typeName) then

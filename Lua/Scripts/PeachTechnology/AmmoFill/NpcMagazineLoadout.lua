@@ -4,10 +4,7 @@
 --   Hook.Patch (After) on Barotrauma.HumanPrefab.InitializeItem:
 --   引擎按ItemSet给NPC发放物品的静态方法, 每件物品调用一次,
 --   参数同时携带 Character 与 HumanPrefab.
---   注意: Character.Prefab 对npcset NPC是基础 Human 预制,
---   npcset身份(如 deep_co_soldier)必须从 HumanPrefab.Identifier 读取.
---   本环境用 LuaUserData.IsTargetType 从参数表识别 HumanPrefab
---   (避免依赖具体参数名), 识别后记录 身份->角色 映射并入队(每角色一次).
+--   Character.Prefab 对 npcset NPC 是基础 Human 预制，因此从 humanPrefab 参数读取 NPC 身份。
 --   延迟 ProcessDelay 秒(默认0.5)后在 think 中处理:
 --   等待 ItemSet 物品与弹匣内部虚拟弹容器就位
 --   (EntitySpawnerBudget 插件会延迟重放 InitializeItem, 该延迟一并覆盖).
@@ -19,7 +16,7 @@
 --      逐个经 IsAmmoCompatible 兼容检查, 取第一个兼容弹药
 --   3. 均未命中则跳过, 弹匣保持空弹状态
 --   标识符统一用 tostring(Prefab.Identifier) 读取(代码库已验证方式).
---   填充通过 LoadedAmmoIdentifiersArray 属性 setter 完成:
+--   通过游戏的可序列化属性写入 LoadedAmmoIdentifiersArray:
 --   setter 内部 LoadAmmoArray 按 MaxSize 截断并拒收不兼容弹药,
 --   结尾 UpdateAmmoData 同步 Condition 并触发 SyncAmmoState,
 --   服务端自动 CreateServerEvent 把弹栈全量同步给客户端.
@@ -36,9 +33,6 @@
 -- 依赖:
 --   VCE (Vanilla Components Expanded) 的 VirtualizedMagazine 组件,
 --   组件不存在或弹药未配置时自动跳过, 不产生副作用.
-
-local VIRTUAL_COMPONENT_TYPE = Deep_Lua.HF.VirtualMagazineType
-if not VIRTUAL_COMPONENT_TYPE then return end
 
 local MOD_NAME = "NpcMagazineLoadout"
 -- 虚拟弹匣标签: NewMag.xml 全部弹匣均带此标签, 工厂件(MF)不带
@@ -224,7 +218,7 @@ local Config = {
     DefaultCrewAmmo = nil,
 }
 
-local EMPTY_PREFERENCE = {}
+local loadedAmmoProperty = Identifier("LoadedAmmoIdentifiersArray")
 
 local pendingCharacters = {}
 local queuedCharacters = {}
@@ -239,16 +233,6 @@ local function LogDebug(msg)
     if Config.Debug then Log(msg) end
 end
 
--- 遍历物品组件按类型匹配虚拟弹匣组件
-local function GetVirtualComponent(item)
-    for comp in item.Components do
-        if LuaUserData.IsTargetType(comp, VIRTUAL_COMPONENT_TYPE) then
-            return comp
-        end
-    end
-    return nil
-end
-
 -- 从补丁参数表取 HumanPrefab, 返回其 npcset 身份标识符
 -- 注意: 本环境ptable是userdata, 不可pairs遍历, 只能按参数名取值
 local function GetNpcIdentifier(ptable)
@@ -257,47 +241,23 @@ local function GetNpcIdentifier(ptable)
     return tostring(prefab.Identifier)
 end
 
--- 选出该弹匣应填充的弹药标识符, 返回nil表示跳过
-local function SelectAmmo(comp, itemIdentifier, preference)
-    local ammoId = Config.MagOverrides[itemIdentifier]
-    if ammoId ~= nil then return ammoId end
-    if preference == nil then return nil end
-    for _, candidate in ipairs(preference) do
-        if comp.IsAmmoCompatible(candidate) then return candidate end
-    end
-    return nil
-end
-
--- 清空并按指定弹药填满弹匣, 返回是否成功
 local function ProcessMagazine(item, preference)
-    local itemIdentifier = tostring(item.Prefab.Identifier)
-    local comp = GetVirtualComponent(item)
-    if comp == nil then
-        LogDebug("no " .. VIRTUAL_COMPONENT_TYPE .. " component on " .. itemIdentifier)
-        return false
-    end
+    local override = Config.MagOverrides[tostring(item.Prefab.Identifier)]
+    local candidates = override and { override } or preference
+    local before = item.Condition
+    local remaining = math.floor(item.MaxCondition) - math.floor(before)
+    if not candidates or #candidates == 0 or remaining <= 0 then return false end
 
-    local ammoId = SelectAmmo(comp, itemIdentifier, preference or EMPTY_PREFERENCE)
-    if ammoId == nil then
-        LogDebug("no compatible ammo for " .. itemIdentifier)
-        return false
-    end
+    local magazine = item.OwnInventory and item.OwnInventory.Container
+    local property = magazine and magazine.SerializableProperties[loadedAmmoProperty]
+    if not property then return false end
 
-    local maxSize = comp.MaxSize
-    if maxSize == nil or maxSize <= 0 then
-        LogDebug("invalid MaxSize on " .. itemIdentifier)
-        return false
+    -- 每个候选弹种都足以填满空位，VCE 按顺序接收第一个兼容弹种，只同步一次。
+    local batches = {}
+    for i, ammoId in ipairs(candidates) do
+        batches[i] = string.rep(ammoId, remaining, ";")
     end
-
-    -- NPC弹匣生成时弹栈为空(无ProjectileIdentifiers配置), 直接压入即可;
-    -- setter内部按MaxSize截断, 泛型Stack未注册不可直接调Clear/Push
-    local rounds = {}
-    for i = 1, maxSize do
-        rounds[i] = ammoId
-    end
-    comp.LoadedAmmoIdentifiersArray = rounds
-    LogDebug("filled " .. itemIdentifier .. " with " .. tostring(ammoId) .. " x" .. maxSize)
-    return true
+    return property:TrySetValue(magazine, table.concat(batches, ";")) and item.Condition > before
 end
 
 -- 递归收集白名单弹匣: AllItemsMod不递归, 枪内/包内弹匣需经OwnInventory下钻

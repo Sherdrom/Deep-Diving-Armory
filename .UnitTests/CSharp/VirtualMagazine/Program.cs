@@ -151,6 +151,17 @@ static void RunTests(string[] args)
         Assert(Count() == 0, "empty magazine underflowed");
         Assert((int)countAmmo.Invoke(null, new object[] { 0, Empty(itemType), weaponContainer, 0.99f })! == 0,
             "empty magazine HUD was nonzero");
+        cache[Id("556x45round_tit")] = cache[Id("wrongcaliber")];
+        cache[Id("762x51round_tit")] = cache[Id("allowed")];
+        cache[Id("57x28round_tit")] = cache[Id("otherallowed")];
+        cache[Id("762x39round_lead")] = cache[Id("wrongcaliber")];
+        cache[Id("556x45round")] = cache[Id("allowed")];
+        cache[Id("45acpround_lead")] = cache[Id("otherallowed")];
+        Type propertyType = GameType("Barotrauma.SerializableProperty");
+        Set(magazine, "<SerializableProperties>k__BackingField",
+            propertyType.GetMethod("GetProperties", [typeof(object)])!.Invoke(null, [magazine]));
+        CheckSandboxLoadout(ddaDirectory, magazine, identifierType, containerType, propertyType, Count);
+        magazineType.GetMethod("UnLoadAmmoArray")!.Invoke(magazine, new object?[] { null });
         CheckLua(magazine, identifierType);
         Assert(Count() == 1, "Lua ref-list conversion failed to load the real magazine");
         rounds = (IList)NewList(identifierType);
@@ -334,6 +345,59 @@ static void CheckNetworkImpacts(Assembly game, Assembly fixes, object virtualPro
         itemEvent.SetValue(null, previousEvent);
         client.SetValue(null, previousClient);
     }
+}
+
+[MethodImpl(MethodImplOptions.NoInlining)]
+static void CheckSandboxLoadout(string ddaDirectory, object magazine, Type identifierType, Type containerType,
+    Type propertyType, Func<int> count)
+{
+    // LuaCs exposes the base game types in the sandbox.
+    Assert(!UserData.IsTypeRegistered(magazine.GetType()), "sandbox test requires an unregistered VCE type");
+    UserData.RegisterType(containerType);
+    UserData.RegisterType(propertyType);
+    UserData.RegisterType(identifierType);
+    var script = new Script(CoreModules.Preset_SoftSandbox);
+    script.Globals["Identifier"] = UserData.CreateStatic(identifierType);
+    script.Globals["magazine"] = magazine;
+    script.Globals["roundCount"] = count;
+    script.DoString("""
+        CSActive = false
+        hooks = {}
+        Hook = {
+            HookMethodType = { After = 1 },
+            Patch = function(id, _, _, _, callback) hooks[id] = callback end,
+            Add = function(event, _, callback) hooks[event] = callback end
+        }
+        CharacterTeamType = { Team1 = 1 }
+        Timer = { GetTime = function() return 0 end }
+        local item = { Prefab = { Identifier = "testmag" }, MaxCondition = 2.75,
+            HasTag = function(tag) return tag == "deep_virtualmagazine" end,
+            OwnInventory = { Container = magazine, AllItemsMod = function() end } }
+        setmetatable(item, { __index = function(_, key) if key == "Condition" then return roundCount() end end })
+        function spawn()
+            return { Name = "test", IsHuman = true, IsBot = true, TeamID = 2,
+                Inventory = { AllItemsMod = function(_, previous) if not previous then return item end end } }
+        end
+        """);
+    script.DoString(File.ReadAllText(Path.Combine(ddaDirectory, "Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")));
+    script.DoString("""
+        hooks["NpcMagazineLoadout.QueueOnInitializeItem"](nil,
+            { character = spawn(), humanPrefab = { Identifier = "deep_co_soldier" } })
+        Timer.GetTime = function() return 1 end
+        hooks.think()
+        """);
+    var type = magazine.GetType();
+    string[] Rounds() => ((Array)type.GetProperty("LoadedAmmoIdentifiersArray")!.GetValue(magazine)!)
+        .Cast<object>().Select(id => id.ToString()!).ToArray();
+    Assert(Rounds().SequenceEqual(["762x51round_tit", "762x51round_tit"]), "sandboxed NPC ammo priority or capacity failed");
+    type.GetMethod("Use")!.Invoke(magazine, [1f, null]);
+    script.DoString("""
+        hooks["NpcMagazineLoadout.QueueOnGiveJobItems"]({ Prefab = { Identifier = "securityofficer" } }, { character = spawn() })
+        Timer.GetTime = function() return 2 end
+        hooks.think()
+        """);
+    Assert(Rounds().SequenceEqual(["762x51round_tit", "556x45round"]), "sandboxed crew failed to top up with job ammo");
+    Console.WriteLine("PASS: sandboxed NPC and crew loadouts with the deployed VCE magazine.");
 }
 
 [MethodImpl(MethodImplOptions.NoInlining)]
