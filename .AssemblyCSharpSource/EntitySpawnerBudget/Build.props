@@ -1,4 +1,11 @@
 <Project>
+  <!-- shortcut: vscode-solution-explorer skips ImportGroup, use Visible metadata when supported. -->
+  <ImportGroup>
+    <Import Project="SharedProject/SharedProject.projitems" Label="Shared" />
+  </ImportGroup>
+  <ItemGroup>
+    <None Remove="*.csproj" />
+  </ItemGroup>
   <PropertyGroup>
     <Libs>..\..\..\.Tools/Refs</Libs>
   </PropertyGroup>

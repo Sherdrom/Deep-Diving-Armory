@@ -20,9 +20,14 @@
     <GameAssembly Condition="'$(BuildTarget)' == 'Client'">Barotrauma</GameAssembly>
     <GameAssembly Condition="'$(BuildTarget)' == 'Server'">DedicatedServer</GameAssembly>
   </PropertyGroup>
+  <!-- shortcut: vscode-solution-explorer skips ImportGroup, use Visible metadata when supported. -->
+  <ImportGroup>
+    <Import Project="SharedProject/SharedSource.projitems" Label="Shared" />
+  </ImportGroup>
   <ItemGroup>
+    <!-- Hide sibling platform project files in VS Code Solution Explorer. -->
+    <None Remove="*.csproj" />
     <PackageReference Include="Barotrauma.ReferenceAssemblies.Vanilla.Publicized" Version="1.15.24" GeneratePathProperty="true" ExcludeAssets="all" />
-    <Compile Include="$(MSBuildThisFileDirectory)SharedProject/*.cs" Link="%(Filename)%(Extension)" />
     <Reference Include="VanillaComponentsExpanded$(BuildTarget)" HintPath="$(Libs)/$(PlatformName)/VanillaComponentsExpanded$(BuildTarget).dll" Private="false" />
     <Reference Include="Farseer.NetStandard" HintPath="$(Libs)/Farseer.NetStandard.dll" Private="false" />
     <Reference Include="Lidgren.NetStandard" HintPath="$(Libs)/Lidgren.NetStandard.dll" Private="false" />
