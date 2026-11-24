@@ -229,7 +229,7 @@ namespace MoreInformationDisplay
                 {
                     var sb = new StringBuilder();
                     sb.AppendLine("‖color:gui.orange‖<远程武器>‖color:end‖");
-                    sb.AppendLine($"穿甲: {ranged.Penetration:F2}{PenArmorSuffix(ranged.Penetration)}");
+                    sb.AppendLine($"穿甲: {ranged.Penetration:F2}{PenArmorSuffix(ranged.Penetration, item.Prefab)}");
                     sb.AppendLine($"重装: {ranged.Reload:F2}s");
                     sb.AppendLine($"散布: {ranged.Spread:F2}");
                     if (ranged.MaxChargeTime > 0f)
@@ -244,7 +244,7 @@ namespace MoreInformationDisplay
                 // 4. 投射物处理
                 var proj = FindProjectile(item);
                 if (proj?.Attack != null)
-                    parts.Add(BuildProjectileInfo(proj));
+                    parts.Add(BuildProjectileInfo(proj, item));
 
                 // 5. 弹药盒子弹信息
                 if (proj?.Attack == null)
@@ -312,7 +312,7 @@ namespace MoreInformationDisplay
         {
             var sb = new StringBuilder();
             sb.AppendLine($"‖color:gui.orange‖<{title}>‖color:end‖");
-            sb.AppendLine($"穿甲: {atk.Penetration:F2}{PenArmorSuffix(atk.Penetration)}");
+            sb.AppendLine($"穿甲: {atk.Penetration:F2}{PenArmorSuffix(atk.Penetration, item.Prefab)}");
             sb.AppendLine($"结构伤害: {atk.StructureDamage:F1}");
             sb.AppendLine($"物品伤害: {atk.ItemDamage:F1}");
             sb.AppendLine($"重装: {reload:F2}s");
@@ -339,13 +339,13 @@ namespace MoreInformationDisplay
             return sb.ToString().Trim();
         }
 
-        private static string BuildProjectileInfo(Projectile proj)
+        private static string BuildProjectileInfo(Projectile proj, Item item)
         {
             var sb = new StringBuilder();
             int bullets = (proj.Hitscan && proj.HitScanCount > 0) ? proj.HitScanCount : 1;
 
             sb.AppendLine("‖color:gui.orange‖<发射物>‖color:end‖");
-            sb.AppendLine($"穿甲: {proj.Attack.Penetration:F2}{PenArmorSuffix(proj.Attack.Penetration)}");
+            sb.AppendLine($"穿甲: {proj.Attack.Penetration:F2}{PenArmorSuffix(proj.Attack.Penetration, item.Prefab)}");
             sb.AppendLine($"射弹数: {bullets}");
             sb.AppendLine($"结构伤害: {proj.Attack.StructureDamage:F1}");
             sb.AppendLine($"物品伤害: {proj.Attack.ItemDamage:F1}");
@@ -403,12 +403,16 @@ namespace MoreInformationDisplay
 
         // 根据穿甲值生成防护等级提示：等级 = 穿甲值 * 10 截断取整，如 0.45 → 4级，1.0 → 10级
         // 穿甲值小于等于 0 时不追加
-        private static string PenArmorSuffix(float penetration)
+        // tags 含 gun 的物品（枪械）改用"增加穿甲等级"措辞，其余物品保留"可击穿防护"措辞
+        private static string PenArmorSuffix(float penetration, ItemPrefab prefab)
         {
             // 加 0.0001 余量修正浮点表示偏差（0.7f 实为 0.69999988，直接截断会得 6 而非 7）
             int level = (int)MathF.Floor(penetration * 10f + 0.0001f);
             if (level <= 0) return "";
-            return $"    ‖color:gui.green‖可击穿{level}级防护‖color:end‖";
+            bool isGun = prefab != null && prefab.Tags.Contains(new Identifier("gun"));
+            return isGun
+                ? $"    ‖color:gui.green‖增加{level}级穿甲等级‖color:end‖"
+                : $"    ‖color:gui.green‖可击穿{level}级防护‖color:end‖";
         }
 
         // 子弹爆头倍率：识别 prefab tags 中 deep_headshot_gunshotwound_<倍率>，
@@ -620,7 +624,7 @@ namespace MoreInformationDisplay
             if (penAttr != null)
             {
                 float penetration = el.GetAttributeFloat("penetration", 0f);
-                sb.AppendLine($"穿甲: {penetration:F2}{PenArmorSuffix(penetration)}");
+                sb.AppendLine($"穿甲: {penetration:F2}{PenArmorSuffix(penetration, prefab)}");
             }
             sb.AppendLine($"重装: {el.GetAttributeFloat("reload", 0f):F2}s");
             sb.AppendLine($"散布: {el.GetAttributeFloat("spread", 0f):F2}");
@@ -1125,7 +1129,7 @@ namespace MoreInformationDisplay
                 var idAttr = atkEl.GetAttribute("itemdamage");
                 if (idAttr != null) float.TryParse(idAttr.Value, out itemDamage);
 
-                sb.Append($"穿甲:{penetration:F2}{PenArmorSuffix(penetration)}");
+                sb.Append($"穿甲:{penetration:F2}{PenArmorSuffix(penetration, prefab)}");
                 sb.Append($"\n射弹数:{bullets}");
                 sb.Append($"\n结构伤害:{structureDamage:F1}");
                 sb.Append($"\n物品伤害:{itemDamage:F1}");

@@ -417,15 +417,15 @@ local CONFIG = {
                 {
                      weight = 25,
                      bundle = {
-                               { id = "deep_m4_super90", contains = { { id = "deep_12shell_boneshark", amount = 7 }}},
-                               { id = "deep_12shell_boneshark", amount = 12},
+                               { id = "deep_m4_super90", contains = { { id = "deep_12shell_lead", amount = 7 }}},
+                               { id = "deep_12shell_lead", amount = 12},
                            },
                 },
                 {
                      weight = 25,
                      bundle = {
-                               { id = "deep_m4_super90", contains = { { id = "deep_slug_phy", amount = 7 }}},
-                               { id = "deep_slug_phy", amount = 12},
+                               { id = "deep_m4_super90", contains = { { id = "deep_12slug_phy", amount = 7 }}},
+                               { id = "deep_12slug_phy", amount = 12},
                            },
                 },
                 {

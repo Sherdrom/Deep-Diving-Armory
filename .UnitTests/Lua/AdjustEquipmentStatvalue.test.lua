@@ -1522,7 +1522,8 @@ assert(production.mainItems.deep_hpc
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
-    and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
+    and production.weaponAccessories.deep_12shell_lead.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
+    and production.weaponAccessories.deep_12slug_lead == nil
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
     and production.weaponAccessories.cqr_grips.when
     and production.weaponAccessories.oblique_grips.when

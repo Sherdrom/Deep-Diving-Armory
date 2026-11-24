@@ -46,12 +46,14 @@ add({ "deep_9x19_virtual_50_glock" }, {
     },
 })
 
+-- 12号霰弹(6种材质)保留600-1200衰减标记；独头弹(deep_12slug_*)无衰减，不登记。
 add({
-    "deep_12shell",
-    "deep_12shell_arrow",
-    "deep_12shell_boneshark",
-    "deep_12shell_tigershark",
-    "deep_aa12_12shell",
+    "deep_12shell_lead",
+    "deep_12shell_tit",
+    "deep_12shell_phy",
+    "deep_12shell_fu",
+    "deep_12shell_ap",
+    "deep_12shell_du",
     "deep_three_mag",
 }, {
     talentMarkers = { "deep_damage_fall_off_600_1200_detect" },
