@@ -21,48 +21,47 @@ internal static class DdaSupply
         var tungsten = AddBox("tungsten_physicorium");
         var uranium = AddBox("depleted_uranium");
 
-        void AddCaliber(string caliber, double cost, string leadSuffix = "_lead", string fuSuffix = "_fu",
+        void AddRounds(string prefix, double cost, string leadSuffix = "_lead", string fuSuffix = "_fu",
             string apSuffix = "_ap", string duSuffix = "_depleted_uranium")
         {
-            string round = caliber + "round";
-            lead.Add(round + leadSuffix, cost);
-            titanium.Add(round + "_tit", cost);
-            physicorium.Add(round + "_phy", cost);
-            fulgurium.Add(round + fuSuffix, cost);
-            tungsten.Add(round + apSuffix, cost);
-            uranium.Add(round + duSuffix, cost);
+            lead.Add(prefix + leadSuffix, cost);
+            titanium.Add(prefix + "_tit", cost);
+            physicorium.Add(prefix + "_phy", cost);
+            fulgurium.Add(prefix + fuSuffix, cost);
+            tungsten.Add(prefix + apSuffix, cost);
+            uranium.Add(prefix + duSuffix, cost);
         }
 
         // Each caliber shares one price across magazines: legacy base-magazine Condition / nominal rounds.
-        AddCaliber("556x45", 1.5625 / 30, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
-        AddCaliber("545x39", 1.5625 / 30, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
-        AddCaliber("58x42", 1.5625 / 30, duSuffix: "_du");
-        AddCaliber("762x39", 1.5625 / 30, fuSuffix: "_bp", apSuffix: "_mai_ap");
-        AddCaliber("762x51", 1.5625 / 20, fuSuffix: "_m61", apSuffix: "_m993");
-        AddCaliber("762x54r", 1.5625 / 5, apSuffix: "_7n37");
-        AddCaliber("762x63", 1.5625 / 8);
-        AddCaliber("792x33", 1.5625 / 30, leadSuffix: "");
-        AddCaliber("792x57", 1.5625 / 10);
-        AddCaliber("65x50", 1.5625 / 5);
-        AddCaliber("303", 1.5625 / 10);
-        AddCaliber("9x39", 1.5625 / 20, duSuffix: "_du");
-        AddCaliber("127x55", 1.5625 / 20, leadSuffix: "");
-        AddCaliber("127x99", 6.25 / 10);
-        AddCaliber("338lm", 3.125 / 5);
-        AddCaliber("338nm", 12.5 / 100);
-        AddCaliber("50beowulf", 3.125 / 10);
-        AddCaliber("9x18", 0.78125 / 8);
-        AddCaliber("9x19", 0.78125 / 15);
-        AddCaliber("45acp", 0.78125 / 7);
-        AddCaliber("57x28", 0.78125 / 20);
-        AddCaliber("46x30", 1.0417 / 40);
-        AddCaliber("44mg", 0.78125 / 6);
-        AddCaliber("50ae", 0.78125 / 7);
-        AddCaliber("50gl", 0.78125 / 7);
-        AddCaliber("50sw", 0.78125 / 5);
+        AddRounds("556x45round", 1.5625 / 30, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
+        AddRounds("545x39round", 1.5625 / 30, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
+        AddRounds("58x42round", 1.5625 / 30, duSuffix: "_du");
+        AddRounds("762x39round", 1.5625 / 30, fuSuffix: "_bp", apSuffix: "_mai_ap");
+        AddRounds("762x51round", 1.5625 / 20, fuSuffix: "_m61", apSuffix: "_m993");
+        AddRounds("762x54rround", 1.5625 / 5, apSuffix: "_7n37");
+        AddRounds("762x63round", 1.5625 / 8);
+        AddRounds("792x33round", 1.5625 / 30, leadSuffix: "");
+        AddRounds("792x57round", 1.5625 / 10);
+        AddRounds("65x50round", 1.5625 / 5);
+        AddRounds("303round", 1.5625 / 10);
+        AddRounds("9x39round", 1.5625 / 20, duSuffix: "_du");
+        AddRounds("127x55round", 1.5625 / 20, leadSuffix: "");
+        AddRounds("127x99round", 6.25 / 10);
+        AddRounds("338lmround", 3.125 / 5);
+        AddRounds("338nmround", 12.5 / 100);
+        AddRounds("50beowulfround", 3.125 / 10);
+        AddRounds("9x18round", 0.78125 / 8);
+        AddRounds("9x19round", 0.78125 / 15);
+        AddRounds("45acpround", 0.78125 / 7);
+        AddRounds("57x28round", 0.78125 / 20);
+        AddRounds("46x30round", 1.0417 / 40);
+        AddRounds("44mground", 0.78125 / 6);
+        AddRounds("50aeround", 0.78125 / 7);
+        AddRounds("50glround", 0.78125 / 7);
+        AddRounds("50swround", 0.78125 / 5);
 
-        titanium.Add("deep_12shell_aa12", 18.75 / 25);
-        physicorium.Add("deep_slug_aa12", 18.75 / 25);
+        AddRounds("deep_12shell", 18.75 / 25, duSuffix: "_du");
+        AddRounds("deep_12slug", 18.75 / 25, duSuffix: "_du");
     }
 
     internal static AmmoSupplyDefinition? Resolve(Item source) =>

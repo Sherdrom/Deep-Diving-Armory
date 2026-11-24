@@ -10,6 +10,8 @@ namespace Barotrauma
     {
         public static Identifier Empty => new("");
         public bool IsEmpty => string.IsNullOrEmpty(Value);
+        public bool Equals(Identifier other) => StringComparer.OrdinalIgnoreCase.Equals(Value, other.Value);
+        public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(Value ?? "");
     }
     public static class Identifiers { public static Identifier ToIdentifier(this string id) => new(id); }
     public enum IsPropertySaveable { No, Yes }

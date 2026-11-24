@@ -495,29 +495,33 @@ IEnumerable<XElement> AmmoItems(string folder) => itemFiles.Where(p => p.StartsW
 var rounds = AmmoItems("NewAmmoRound").Where(e => e.Element("Projectile") != null)
     .ToDictionary(e => (string)e.Attribute("identifier")!, StringComparer.OrdinalIgnoreCase);
 var packaged = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-foreach (var element in AmmoItems("NewAmmoPackages"))
+var shotgunPackages = new List<ItemPrefab>();
+foreach (var element in rounds.Values.Concat(AmmoItems("NewAmmoPackages")))
 {
-    string ammo = (string)element.Element("VirtualizedAmmoStorage")!.Attribute("ProjectileIdentifier")!;
     string packageId = (string)element.Attribute("identifier")!;
-    string material = packageId.Split("_package_").Last() switch
+    var prefab = new ItemPrefab(packageId, packageNumber++, ((string)element.Attribute("tags")!).Split(','))
+        { Health = (float?)element.Attribute("health") ?? 100, ConfigElement = new(element) };
+    ItemPrefab.Prefabs.Values.Add(prefab);
+    if (element.Element("VirtualizedAmmoStorage") is not { } storage) { continue; }
+    string ammo = (string)storage.Attribute("ProjectileIdentifier")!;
+    string material = packageId.Split('_')[^1] switch
     {
         "lead" => "lead", "tit" => "titanium", "phy" => "physicorium", "du" => "depleted_uranium",
         "fu" or "m995" or "bs" or "bp" or "m61" => "fulgurium_physicorium",
-        "ap" or "ssa_ap" or "7n39" or "mai_ap" or "m993" or "7n37" => "tungsten_physicorium",
+        "ap" or "7n39" or "m993" or "7n37" => "tungsten_physicorium",
         _ => throw new Exception("Unknown package material: " + packageId)
     };
-    Check(packaged.Add(ammo) && supplyByRound[ammo].Box == "deep_ammobox_" + material, $"wrong supply for {packageId}");
-    ItemPrefab.Prefabs.Values.Add(new ItemPrefab(ammo, packageNumber++) { ConfigElement = new(rounds[ammo]) });
-    var definedPackage = new ItemPrefab(packageId, packageNumber++,
-        ((string)element.Attribute("tags")!).Split(','))
-        { Health = (float)element.Attribute("health")!, ConfigElement = new(element) };
-    ItemPrefab.Prefabs.Values.Add(definedPackage);
-    Check(DeepAmmoLoader.FindWithdrawalPackage(ammo) == definedPackage, "DDA XML-defined package resolves its configured projectile");
+    Check(packaged.Add(ammo) && supplyByRound.TryGetValue(ammo, out var source) && source.Box == "deep_ammobox_" + material,
+        $"missing, duplicate or incorrect supply for {packageId}");
+    Check(DeepAmmoLoader.FindWithdrawalPackage(ammo) == prefab, $"withdrawal resolves {packageId} for {ammo}");
+    if (prefab.Tags.Contains("deep_shotgun_ammo".ToIdentifier()))
+    {
+        Check(prefab.Identifier == ammo.ToIdentifier() && prefab.Health == 1, $"{packageId} is its own one-round package");
+        shotgunPackages.Add(prefab);
+    }
 }
 Check(packaged.Count > 0 && packaged.SetEquals(rounds.Keys), "every active round must have a package");
-Check(supplyByRound["deep_12shell_aa12"] == ("deep_ammobox_titanium", 18.75 / 25) &&
-    supplyByRound["deep_slug_aa12"] == ("deep_ammobox_physicorium", 18.75 / 25), "preserve AA-12 supply");
-Check(supplyByRound.Count == packaged.Count + 2, "supply must contain only active rounds and the two AA-12 shells");
+Check(packaged.SetEquals(supplyByRound.Keys), "supply must match the active rounds exactly");
 machine = new Item(40, bulletA);
 intake = new ItemContainer(machine, 6);
 var pickup = new ItemContainer(machine, 3);
@@ -743,6 +747,33 @@ mag = new VirtualizedMagazine(magItem);
 magItem.Components.Clear();
 magItem.Components.Add(mag);
 magItem.ParentInventory = player.Inventory;
+var materialBoxes = new Dictionary<string, Item>();
+foreach (var boxId in supplyByRound.Values.Select(s => s.Box).Distinct())
+{
+    var materialBox = new Item((ushort)(8000 + materialBoxes.Count), new ItemPrefab(boxId, 0)) { Condition = 50 };
+    intake.Inventory.AllItems.Add(materialBox);
+    materialBoxes.Add(boxId, materialBox);
+}
+Check(shotgunPackages.Count == 12, "all six buckshot and slug variants are present");
+mag.AllowedAmmoTags.Add("deep_shotgun_ammo".ToIdentifier());
+Entity.Spawner = new();
+foreach (var shell in shotgunPackages)
+{
+    string id = shell.Identifier.Value;
+    var source = materialBoxes[supplyByRound[id].Box];
+    float before = source.Condition;
+    Send(1, Revision(), 20, true, (shell.UintIdentifier, 25));
+    Check(mag.LoadedCount == 25 && mag.LoadedAmmoIdentifiers.All(round => round == shell.Identifier) &&
+        source.Condition == before - 18.75f, $"{id}: loading 25 rounds debits the matching box");
+    Send(2, Revision(), 20);
+    Check(mag.LoadedCount == 0 && source.Condition == before && loader.Stock[id] == 0, $"{id}: unload refunds the box");
+    Send(3, Revision(), 20, true, (shell.UintIdentifier, 1));
+    Entity.Spawner.ProcessQueue();
+    Check(pickup.Inventory.AllItems.SingleOrDefault() is { Condition: 1 } item && item.Prefab == shell &&
+        source.Condition == before - 0.75f, $"{id}: withdrawal delivers one shell and charges for one round");
+    pickup.Inventory.AllItems.Clear();
+}
+intake.Inventory.AllItems.Clear();
 box = new Item(71, largest) { MaxCondition = 10, Condition = 9 };
 otherBox = new Item(72, largest) { MaxCondition = 10, Condition = 9.25f };
 intake.Inventory.AllItems.AddRange([box, otherBox]);
