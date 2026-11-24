@@ -12,8 +12,9 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private VirtualizedMagazine? magazine;
     private VirtualizedAmmoStorage? package;
     private Character? owner;
-    private Inventory? sourceInventory, targetInventory;
-    private int sourceSlot, targetSlot, loaded, remaining;
+    private (Inventory? Inventory, int Index) sourceSlot, originalStack, targetSlot;
+    private Queue<Item>? nextPackages;
+    private int loaded;
     private float elapsed, duration;
     private uint session;
     private ItemPrefab? pendingPackage;
@@ -40,15 +41,23 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private static bool Accessible(Item item, Character user) =>
         !item.Removed && !item.IsInRemoveQueue && item.IsOwnedBy(user) && user.CanInteractWith(item);
 
-    private bool Begin(Character user, Item source, uint token)
+    private static (Inventory? Inventory, int Index) SlotOf(Item item) =>
+        (item.ParentInventory, item.ParentInventory?.FindIndex(item) ?? -1);
+
+    private bool Begin(Character user, IReadOnlyList<Item> sources, uint token)
     {
-        if (owner != null || active.ContainsKey(user) || !user.CanInteract || magazine == null || !Accessible(Item, user))
+        if (sources.Count is 0 or > Inventory.MaxPossibleStackSize || owner != null || active.ContainsKey(user) ||
+            !user.CanInteract || magazine == null || !Accessible(Item, user))
         { return false; }
+        var source = sources[0];
+        var slot = SlotOf(source);
+        targetSlot = SlotOf(Item);
+        if (slot.Index < 0 || targetSlot.Index < 0) { return false; }
         VirtualizedAmmoStorage? storage = null;
         // The magazine's own ID requests unloading; zero is reserved for cancellation.
         if (source == Item)
         {
-            if (!HeldBy(user) || magazine.LoadedCount == 0) { return false; }
+            if (sources.Count != 1 || !HeldBy(user) || magazine.LoadedCount == 0) { return false; }
         }
         else
         {
@@ -56,19 +65,17 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
             if (!Accessible(source, user) || !source.HasTag(packageTag) || storage == null || source.Condition < 1 ||
                 magazine.LoadedCount >= magazine.MaxSize || !DeepAmmoLoader.IsCompatible(magazine, storage.AmmoIdentifier.Value))
             { return false; }
+            if (sources.Count > 1 && (sources.Distinct().Count() != sources.Count || sources.Skip(1).Any(other =>
+                other.Prefab != source.Prefab || SlotOf(other) != slot || !Accessible(other, user) || other.Condition < 1 ||
+                other.GetComponent<VirtualizedAmmoStorage>()?.AmmoIdentifier != storage.AmmoIdentifier))) { return false; }
         }
 
-        sourceInventory = source.ParentInventory;
-        targetInventory = Item.ParentInventory;
-        sourceSlot = sourceInventory?.FindIndex(source) ?? -1;
-        targetSlot = targetInventory?.FindIndex(Item) ?? -1;
-        if (sourceSlot < 0 || targetSlot < 0) { return false; }
-
+        sourceSlot = originalStack = slot;
+        nextPackages = sources.Count > 1 ? new Queue<Item>(sources.Skip(1)) : null;
         owner = user;
         package = storage;
         session = token;
         loaded = magazine.LoadedCount;
-        remaining = storage == null ? loaded : Math.Min((int)source.Condition, magazine.MaxSize - loaded);
         elapsed = 0;
         duration = RoundTime(user);
         active.Add(user, this);
@@ -78,11 +85,8 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
 
     private bool HeldBy(Character user) => user.HasEquippedItem(Item, InvSlotType.LeftHand | InvSlotType.RightHand);
 
-    private bool StillInPlace(Character user, Item source) =>
-        user.CanInteract && Accessible(Item, user) && Accessible(source, user) &&
-        (source != Item || HeldBy(user)) &&
-        source.ParentInventory == sourceInventory && Item.ParentInventory == targetInventory &&
-        sourceInventory!.FindIndex(source) == sourceSlot && targetInventory!.FindIndex(Item) == targetSlot;
+    private bool TargetInPlace(Character user) => user.CanInteract && Accessible(Item, user) &&
+        SlotOf(Item) == targetSlot && (!Unloading || HeldBy(user));
 
     private bool CanContinue(Character user, Item source) =>
 #if SERVER
@@ -90,7 +94,7 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
 #else
         Character.Controlled == user &&
 #endif
-        StillInPlace(user, source);
+        TargetInPlace(user) && Accessible(source, user) && SlotOf(source) == sourceSlot;
 
     public override void Update(float deltaTime, Camera cam)
     {
@@ -100,9 +104,8 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         if (owner != Character.Controlled) { CancelLocal(); return; }
         if (GameMain.Client != null)
         {
-            // The empty package may disappear just before the server's final progress event.
-            if ((Unloading || (!source.IsInRemoveQueue && !source.Removed)) && !StillInPlace(owner, source))
-            { CancelLocal(); return; }
+            // The authority splits and replaces source packages as the selected stack is consumed.
+            if (!TargetInPlace(owner)) { CancelLocal(); return; }
             elapsed += deltaTime;
             if (duration == 0 && elapsed > 10) { CancelLocal(); }
             return;
@@ -122,6 +125,7 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         if (elapsed < duration) { return; }
         if (package == null) { UnloadRound(owner, magazine); return; }
         if (!CommitRound(package, magazine, unloading: false)) { End(false); return; }
+        sourceSlot = SlotOf(source);
         if (source.Condition == 0 && !source.IsInRemoveQueue) { Entity.Spawner?.AddItemToRemoveQueue(source); }
         FinishRound();
     }
@@ -132,11 +136,19 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
 #if CLIENT
         PlayPressSound();
 #endif
-        remaining--;
-        if (remaining == 0 || package?.Item.Condition < 1)
+        if (Unloading ? loaded == 0 : loaded >= magazine.MaxSize)
         {
             End(true);
             return;
+        }
+        if (package is { Item.Condition: < 1 })
+        {
+            if (nextPackages == null || !nextPackages.TryDequeue(out var next)) { End(true); return; }
+            if (SlotOf(next) != originalStack || !Accessible(next, owner!) || next.Condition < 1 ||
+                next.GetComponent<VirtualizedAmmoStorage>() is not { } storage || storage.AmmoIdentifier != package.AmmoIdentifier)
+            { End(false); return; }
+            package = storage;
+            sourceSlot = originalStack;
         }
         elapsed -= duration;
         duration = RoundTime(owner!);
@@ -179,41 +191,60 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         });
     }
 
-    private static bool CommitRound(VirtualizedAmmoStorage storage, VirtualizedMagazine magazine, bool unloading)
+    private bool CommitRound(VirtualizedAmmoStorage storage, VirtualizedMagazine magazine, bool unloading)
     {
-        var original = magazine.LoadedAmmoIdentifiersArray;
-        float before = storage.Item.Condition;
+        var item = storage.Item;
+        float before = item.Condition;
         float after = before + (unloading ? 1 : -1);
+        if (unloading && (after > item.MaxCondition || !magazine.LoadedAmmoIdentifiers.TryPeek(out var top) ||
+            top != storage.AmmoIdentifier)) { return false; }
+        var (inventory, slot) = SlotOf(item);
+        if (inventory == null || slot < 0) { return false; }
+        bool split = after > 0 && inventory.GetItemsAt(slot).Any(other => other != item);
+        if (split && !DeepAmmoLoader.TryPlaceCarriedItem(item, owner!, stack: false)) { return false; }
+        var original = magazine.LoadedAmmoIdentifiersArray;
+        bool committed = false;
         try
         {
             if (unloading)
             {
-                if (after > storage.Item.MaxCondition || !magazine.LoadedAmmoIdentifiers.TryPeek(out var top) ||
-                    top != storage.AmmoIdentifier) { return false; }
                 magazine.LoadedAmmoIdentifiers.Pop();
                 magazine.UpdateAmmoData();
+                item.Condition = after;
             }
             else
             {
                 List<Identifier> round = [storage.AmmoIdentifier];
                 magazine.LoadAmmoArray(ref round);
-                if (round.Count != 0) { return false; }
+                if (round.Count == 0) { item.Condition = after; }
             }
-            storage.Item.Condition = after;
-            if (storage.Item.Condition == after)
-            {
-#if SERVER
-                // Vanilla may defer a one-point condition change until a second round is loaded.
-                storage.Item.CreateStatusEvent(loadingRound: false);
-#endif
-                return true;
-            }
+            committed = item.Condition == after;
         }
         catch (Exception e) { LuaCsLogger.Log($"DDA manual loading failed: {e.Message}"); }
 
-        DeepAmmoLoader.RestoreMagazine(magazine, original);
-        if (storage.Item.Condition != before) { storage.Item.SetCondition(before, isNetworkEvent: false, executeEffects: false); }
-        return false;
+        if (!committed)
+        {
+            DeepAmmoLoader.RestoreMagazine(magazine, original);
+            if (item.Condition != before) { item.SetCondition(before, isNetworkEvent: false, executeEffects: false); }
+            if (split) { inventory.TryPutItem(item, slot, false, false, owner!, triggerOnInsertedEffects: false); }
+            return false;
+        }
+#if SERVER
+        // Vanilla may defer a one-point condition change until a second round is loaded.
+        item.CreateStatusEvent(loadingRound: false);
+#endif
+        if (unloading && item.Condition == item.MaxCondition) { StackFullPackage(storage, owner!); }
+        return true;
+    }
+
+    private static void StackFullPackage(VirtualizedAmmoStorage storage, Character user)
+    {
+        var item = storage.Item;
+        var peer = user.Inventory.FindItem(p => p != item && p.Prefab == item.Prefab && Accessible(p, user) &&
+            p.GetComponent<VirtualizedAmmoStorage>()?.AmmoIdentifier == storage.AmmoIdentifier &&
+            p.ParentInventory is { } parent && parent.CanBePutInSlot(item, parent.FindIndex(p)), recursive: true);
+        if (peer?.ParentInventory is { } inventory)
+        { inventory.TryPutItem(item, inventory.FindIndex(peer), false, false, user, triggerOnInsertedEffects: false); }
     }
 
     private void End(bool finished)
@@ -224,7 +255,8 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         owner = null;
         package = null;
         pendingPackage = null;
-        targetInventory = sourceInventory = null;
+        nextPackages = null;
+        sourceSlot = originalStack = targetSlot = default;
         IsActive = false;
     }
 

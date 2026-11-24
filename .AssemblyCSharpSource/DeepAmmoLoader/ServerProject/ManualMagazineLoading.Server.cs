@@ -34,13 +34,27 @@ public sealed partial class ManualMagazineLoading
         var previous = lastStart.GetOrCreateValue(client);
         if (unchecked((int)(token - previous.Value)) <= 0) { return; }
         previous.Value = token;
-        if (client.InGame && Entity.FindEntityByID(sourceId) is Item source && Begin(user, source, token))
+        if (client.InGame && Begin(user, ReadSources(msg, sourceId), token))
         {
             requester = client;
             PublishProgress();
         }
         else if (Item.IsOwnedBy(user))
         { Item.CreateServerEvent(this, new State(user.ID, token, 0, 0)); }
+    }
+
+    private static Item[] ReadSources(IReadMessage msg, ushort sourceId)
+    {
+        if (sourceId != ushort.MaxValue) { return Entity.FindEntityByID(sourceId) is Item source ? [source] : []; }
+        int count = msg.ReadByte();
+        if (count is < 2 or > Inventory.MaxPossibleStackSize) { return []; }
+        var sources = new Item[count];
+        for (int i = 0; i < count; i++)
+        {
+            if (Entity.FindEntityByID(msg.ReadUInt16()) is not Item item) { return []; }
+            sources[i] = item;
+        }
+        return sources;
     }
 
     public void ServerEventWrite(IWriteMessage msg, Client client, NetEntityEvent.IData extraData = null!)

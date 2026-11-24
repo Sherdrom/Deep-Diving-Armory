@@ -57,6 +57,7 @@ namespace Barotrauma
         public Identifier Identifier = new(id);
         public uint UintIdentifier = number;
         public float Health = 100;
+        public int MaxStackSize = Inventory.MaxPossibleStackSize;
         public HashSet<Identifier> Tags = tags.Select(t => t.ToIdentifier()).ToHashSet();
         public ContentXElement ConfigElement = new(XElement.Parse("<Item><Projectile /></Item>"));
         public static ItemPrefab FindByIdentifier(Identifier id) => Prefabs.Values.Single(p => p.Identifier == id);
@@ -130,6 +131,7 @@ namespace Barotrauma
     }
     public class Inventory(int capacity)
     {
+        public const int MaxPossibleStackSize = 63;
         public object? Owner;
         public int Capacity = capacity;
         private readonly Dictionary<Item, int> assignedSlots = [];
@@ -139,6 +141,7 @@ namespace Barotrauma
         public IEnumerable<Item> GetItemsAt(int slot) => AllItems.Where(i => FindIndex(i) == slot);
         public Item? GetItemAt(int slot) => GetItemsAt(slot).FirstOrDefault();
         public bool CanBePutInSlot(Item item, int slot) => slot >= 0 && slot < Capacity && (Accepts?.Invoke(item.Prefab) ?? true) &&
+            GetItemsAt(slot).Count() < item.Prefab.MaxStackSize &&
             GetItemsAt(slot).All(other => other.Prefab == item.Prefab && other.Condition == item.Condition &&
                 (item.Condition == 0 || item.Condition == item.MaxCondition));
         public bool TryPutItem(Item item, int slot, bool allowSwapping, bool allowCombine, Character user, bool triggerOnInsertedEffects = true)

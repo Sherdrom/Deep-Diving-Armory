@@ -20,13 +20,20 @@ public sealed partial class ManualMagazineLoading
     private static double hideAt;
     private GUIButton? unloadButton;
 
-    private sealed record Request(uint Session, ushort Source) : IEventData;
+    private sealed record Request(uint Session, ushort[] Sources) : IEventData;
     public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<Request>(data, out _);
     public void ClientEventWrite(IWriteMessage msg, NetEntityEvent.IData extraData = null!)
     {
         var request = ExtractEventData<Request>(extraData);
         msg.WriteUInt32(request.Session);
-        msg.WriteUInt16(request.Source);
+        if (request.Sources.Length <= 1)
+        {
+            msg.WriteUInt16(request.Sources.FirstOrDefault());
+            return;
+        }
+        msg.WriteUInt16(ushort.MaxValue); // Reserved entity ID marks a multi-package drag.
+        msg.WriteByte((byte)request.Sources.Length);
+        foreach (ushort id in request.Sources) { msg.WriteUInt16(id); }
     }
 
     public void ClientEventRead(IReadMessage msg, float sendingTime)
@@ -66,7 +73,7 @@ public sealed partial class ManualMagazineLoading
             OnClicked = (_, _) =>
             {
                 if (local == this && Unloading) { CancelLocal(); return true; }
-                return Character.Controlled is { } player && StartLocal(player, Item);
+                return Character.Controlled is { } player && StartLocal(player, [Item]);
             }
         };
         bool left = user.HasEquippedItem(Item, InvSlotType.LeftHand);
@@ -86,7 +93,7 @@ public sealed partial class ManualMagazineLoading
             !slot.Slot.MouseOn() || !source.IsOwnedBy(user) || !target.IsOwnedBy(user) ||
             target.GetComponent<ManualMagazineLoading>() is not { } loading) { return false; }
 
-        bool accepted = loading.StartLocal(user, source);
+        bool accepted = loading.StartLocal(user, Inventory.DraggingItems);
         if (accepted) { slot.ForceTooltipRefresh = true; }
         Inventory.DraggingItems.Clear();
         Inventory.DraggingSlot = null;
@@ -94,15 +101,15 @@ public sealed partial class ManualMagazineLoading
         return true;
     }
 
-    private bool StartLocal(Character user, Item source)
+    private bool StartLocal(Character user, IReadOnlyList<Item> sources)
     {
-        if (!Begin(user, source, ++nextSession)) { return false; }
+        if (!Begin(user, sources, ++nextSession)) { return false; }
         justFinished = null;
         local = this;
         if (GameMain.Client != null)
         {
             duration = 0; // Wait for the server's starting count.
-            Item.CreateClientEvent(this, new Request(session, source.ID));
+            Item.CreateClientEvent(this, new Request(session, sources.Select(i => i.ID).ToArray()));
         }
         return true;
     }
@@ -110,7 +117,7 @@ public sealed partial class ManualMagazineLoading
     private void CancelLocal()
     {
         if (GameMain.Client != null && !Item.Removed && !Item.IsInRemoveQueue)
-        { Item.CreateClientEvent(this, new Request(session, 0)); }
+        { Item.CreateClientEvent(this, new Request(session, [])); }
         End(false);
     }
 

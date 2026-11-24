@@ -169,6 +169,88 @@ internal static class ManualMagazineLoadingTests
         Tick(.4f);
         check(!loading.IsActive && LastState() == (user.ID, 19u, 0, -1f) && loading.CapacityProgress == 0 &&
             source.Condition == 13, "mixed magazine ends empty, with all three rounds accounted for");
+        user.Inventory.AllItems.Clear();
+        magazine.MaxSize = 100;
+        packB.MaxStackSize = 3;
+        bool Place(Item item, int slot) => user.Inventory.TryPutItem(item, slot, false, false, user);
+        check(Place(target, 1), "place the 100-round magazine");
+        Item[] SpawnStack()
+        {
+            int start = Entity.Spawner.Spawned.Count;
+            for (int i = 0; i < 3; i++) { Entity.Spawner.AddItemToSpawnQueue(packB, user.Inventory); }
+            Entity.Spawner.ProcessQueue();
+            var packs = Entity.Spawner.Spawned.Skip(start).ToArray();
+            foreach (var pack in packs) { check(Place(pack, 0), "place full 30-round package in the source stack"); }
+            return packs;
+        }
+        void Drag(uint token, params Item[] packs)
+        {
+            var msg = new Message();
+            msg.WriteUInt32(token);
+            msg.WriteUInt16(ushort.MaxValue);
+            msg.WriteByte((byte)packs.Length);
+            foreach (var pack in packs) { msg.WriteUInt16(pack.ID); }
+            loading.ServerEventRead(msg.Rewind(), client);
+        }
+        void Advance(int count)
+        {
+            for (int i = 0; i < count; i++) { Tick(.4f); Entity.Spawner.ProcessQueue(); }
+        }
+        var packs = SpawnStack();
+        Drag(20, packs[0], packs[0]);
+        check(!loading.IsActive, "a batch cannot name the same package twice");
+        check(Place(packs[2], 4), "move third package outside the source stack");
+        Drag(21, packs);
+        check(!loading.IsActive, "a batch cannot include packages from another slot");
+        check(Place(packs[2], 0), "return third package to stack");
+        user.Inventory.Capacity = 2;
+        Drag(22, packs);
+        Advance(1);
+        check(!loading.IsActive && magazine.LoadedCount == 0 && packs.All(p => p.Condition == 30),
+            "no room to split preserves the entire source stack");
+        user.Inventory.Capacity = 20;
+        packs[0].IgnoreConditionChanges = true;
+        Drag(23, packs);
+        Advance(1);
+        packs[0].IgnoreConditionChanges = false;
+        check(!loading.IsActive && magazine.LoadedCount == 0 && user.Inventory.GetItemsAt(0).Count() == 3,
+            "rejected debit restores both the magazine and the split stack");
+        Drag(24, packs);
+        Advance(1);
+        check(Place(packs[1], 4), "move a queued package during the session");
+        Advance(29);
+        check(!loading.IsActive && magazine.LoadedCount == 30 && packs[1].Condition == 30 && packs[2].Condition == 30,
+            "a moved queued package stops the session without debiting either remaining package");
+        Request(25, target.ID);
+        Advance(30);
+        packs = user.Inventory.AllItems.Where(p => p.Prefab == packB).ToArray();
+        foreach (var pack in packs.Where(p => user.Inventory.FindIndex(p) != 0))
+        { check(Place(pack, 0), "bring the three packages back to the source slot"); }
+        Drag(26, packs);
+        Advance(1);
+        check(loading.IsActive && magazine.LoadedCount == 1 && packs[0].Condition == 29 &&
+            user.Inventory.FindIndex(packs[0]) != 0 && packs.Skip(1).All(p => user.Inventory.FindIndex(p) == 0),
+            "only the package being consumed moves to its own slot");
+        Advance(89);
+        check(!loading.IsActive && LastState() == (user.ID, 26u, 90, -1f) && packs.All(p => p.Removed),
+            "one drag transfers 3 x 30 into the 100-round magazine");
+        Request(27, target.ID);
+        Advance(90);
+        var returned = user.Inventory.AllItems.Where(i => i.Prefab == packB).ToArray();
+        check(!loading.IsActive && magazine.LoadedCount == 0 && returned.Length == 3 &&
+            returned.All(p => p.Condition == 30) && returned.Select(user.Inventory.FindIndex).Distinct().Count() == 1,
+            "unloading the same 90 rounds produces one stack of three full packages");
+        Drag(28, returned[1], returned[2]);
+        Advance(60);
+        check(!loading.IsActive && magazine.LoadedCount == 60 && returned[0].Condition == 30 && !returned[0].Removed,
+            "dragging a subset consumes only the selected packages");
+        check(Place(returned[0], 5), "set the unselected package aside");
+        var extra = SpawnStack();
+        Drag(29, extra);
+        Advance(40);
+        check(!loading.IsActive && magazine.LoadedCount == 100 && extra[0].Removed && extra[1].Condition == 20 &&
+            extra[2].Condition == 30 && user.Inventory.FindIndex(extra[1]) != user.Inventory.FindIndex(extra[2]),
+            "reaching capacity stops mid-package and leaves the untouched package intact");
         ItemPrefab.Prefabs.Values.Remove(packB);
     }
 }

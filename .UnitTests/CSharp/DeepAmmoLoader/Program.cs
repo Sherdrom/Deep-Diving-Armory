@@ -190,7 +190,8 @@ static void Run(string[] args)
 
 static void ValidateXml(string dda, Dictionary<string, string> expected)
 {
-    var machine = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewAmmoLoader/NewAmmoLoader.xml"));
+    var machine = XDocument.Load(Path.Combine(dda, "machine/machine.xml")).Descendants("Item")
+        .Single(item => (string?)item.Attribute("identifier") == "deep_new_ammoloader");
     var component = machine.Descendants("DeepAmmoLoader").Single();
     var magazines = XDocument.Load(Path.Combine(dda, "weapon/ammo/NewMag/NewMag.xml")).Root!.Elements("Item").ToArray();
     Assert(magazines.Length > 0 && magazines.All(m => m.Element("VirtualizedMagazine") != null &&

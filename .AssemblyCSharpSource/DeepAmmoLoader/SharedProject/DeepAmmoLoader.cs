@@ -216,11 +216,19 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         if (item.ParentInventory is not { } source || item.GetRootInventoryOwner() is not Character user) { return; }
         var indices = source.FindIndices(item);
         bool needsSplit = indices.Any(i => source.GetItemsAt(i).Any(other => other != item && !SameMagazineContents(magazine, other)));
-        if (!needsSplit && (magazine.LoadedCount == 0 || indices is not [var slot] ||
+        if (!needsSplit && (indices is not [var slot] ||
             source.GetItemsAt(slot).Any(other => other != item) || InWeapon(item) ||
             (source is CharacterInventory worn && worn.SlotTypes[slot] != InvSlotType.Any))) { return; }
 
-        bool TryPlace(Inventory inventory, bool stack)
+        bool Matches(Item other) => SameMagazineContents(magazine, other);
+        if (!TryPlaceCarriedItem(item, user, stack: true, Matches) && needsSplit &&
+            !TryPlaceCarriedItem(item, user, stack: false)) { item.Drop(user); }
+    }
+
+    internal static bool TryPlaceCarriedItem(Item item, Character user, bool stack, Func<Item, bool>? matches = null)
+    {
+        if (item.ParentInventory is not { } source) { return false; }
+        bool TryPlace(Inventory inventory)
         {
             for (int i = 0; i < inventory.Capacity; i++)
             {
@@ -228,15 +236,13 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
                     (inventory is CharacterInventory character && character.SlotTypes[i] != InvSlotType.Any) ||
                     !inventory.CanBePutInSlot(item, i)) { continue; }
                 // Full magazines can have the same condition but different firing orders.
-                if (stack && !inventory.GetItemsAt(i).All(other => other != item && SameMagazineContents(magazine, other))) { continue; }
+                if (stack && !inventory.GetItemsAt(i).All(other => other != item && (matches == null || matches(other)))) { continue; }
                 if (inventory.TryPutItem(item, i, allowSwapping: false, allowCombine: false, user, triggerOnInsertedEffects: false))
                 { return true; }
             }
             return false;
         }
-        bool TryCarriedSlots(bool stack) => TryPlace(source, stack) ||
-            (source != user.Inventory && TryPlace(user.Inventory, stack));
-        if (!TryCarriedSlots(stack: true) && needsSplit && !TryCarriedSlots(stack: false)) { item.Drop(user); }
+        return TryPlace(source) || (source != user.Inventory && TryPlace(user.Inventory));
     }
 
     private static bool InWeapon(Item item)

@@ -188,6 +188,9 @@ loader.Stock.TryAdd(Amount("b", 24));
         empties.All(m => m.LoadedCount == 2) && loader.Stock["a"] == 114,
         "the entire batch including its last empty magazine forms one loaded stack and frees the original slot");
     foreach (var filled in empties) { SendAs(batchUser, 2, Revision(), filled.Item.ID); }
+    Check(twoSlots.Inventory.GetItemAt(1) == null && twoSlots.Inventory.GetItemsAt(0).SequenceEqual(empties.Select(m => m.Item)) &&
+        empties.All(m => m.LoadedCount == 0) && loader.Stock["a"] == 120,
+        "unloading the last magazine frees the loaded slot, stacks all three empties and credits each round once");
     var packed = new Character();
     packed.Inventory.Capacity = 1;
     var stack = Enumerable.Range(0, 3).Select(_ =>
@@ -241,7 +244,9 @@ loader.Stock.TryAdd(Amount("b", 24));
     Check(slots.GetItemAt(2) == selected.Item && selected.LoadedCount == 1 && spare.LoadedCount == 0,
         "a partial load uses an empty slot in its own bag");
     SendAs(sender, 2, Revision(), selected.Item.ID);
-    Check(slots.GetItemAt(2) == selected.Item, "a magazine that started alone stays in its slot");
+    Check(slots.GetItemAt(2) == null && slots.GetItemsAt(0).SequenceEqual([spare.Item, selected.Item]),
+        "a partially loaded magazine rejoins the empty stack in its own bag after unloading");
+    Check(slots.TryPutItem(selected.Item, 2, false, false, carrier), "occupy the free bag slot for the overflow case");
     var another = PutMagazine(0);
     carrier.Inventory.SlotTypes[0] = InvSlotType.LeftHand;
     SendAs(sender, 1, Revision(), another.Item.ID, (1, 1));

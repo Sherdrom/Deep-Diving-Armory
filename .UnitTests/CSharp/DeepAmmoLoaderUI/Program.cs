@@ -53,7 +53,7 @@ static void Run()
         { throw new Exception("Container configuration was persisted as mutable machine state."); }
     }
     Console.WriteLine("PASS: native construction/load/save keeps three prefab container orders and ignores obsolete saved indices.");
-    var source = XDocument.Load("weapon/ammo/NewAmmoLoader/NewAmmoLoader.xml").Descendants("Item")
+    var source = XDocument.Load("machine/machine.xml").Descendants("Item")
         .Single(e => (string?)e.Attribute("identifier") == "deep_new_ammoloader").Element("DeepAmmoLoader")!.Element("GuiFrame")!;
     var loader = (DeepAmmoLoader)RuntimeHelpers.GetUninitializedObject(typeof(DeepAmmoLoader));
     var draft = new List<AmmoRun> { new("shotgunammo", 1), new("shotgunammoblunt", 1) };
