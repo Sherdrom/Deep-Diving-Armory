@@ -32,36 +32,38 @@ internal static class DdaSupply
             uranium.Add(prefix + duSuffix, cost);
         }
 
-        // Each caliber shares one price across magazines: legacy base-magazine Condition / nominal rounds.
-        AddRounds("556x45round", 1.5625 / 30, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
-        AddRounds("545x39round", 1.5625 / 30, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
-        AddRounds("58x42round", 1.5625 / 30, duSuffix: "_du");
-        AddRounds("762x39round", 1.5625 / 30, fuSuffix: "_bp", apSuffix: "_mai_ap");
-        AddRounds("762x51round", 1.5625 / 20, fuSuffix: "_m61", apSuffix: "_m993");
-        AddRounds("762x54rround", 1.5625 / 5, apSuffix: "_7n37");
-        AddRounds("762x63round", 1.5625 / 8);
-        AddRounds("792x33round", 1.5625 / 30, leadSuffix: "");
-        AddRounds("792x57round", 1.5625 / 10);
-        AddRounds("65x50round", 1.5625 / 5);
-        AddRounds("303round", 1.5625 / 10);
-        AddRounds("9x39round", 1.5625 / 20, duSuffix: "_du");
-        AddRounds("127x55round", 1.5625 / 20, leadSuffix: "");
-        AddRounds("127x99round", 6.25 / 10);
-        AddRounds("338lmround", 3.125 / 5);
-        AddRounds("338nmround", 12.5 / 100);
-        AddRounds("50beowulfround", 3.125 / 10);
-        AddRounds("9x18round", 0.78125 / 8);
-        AddRounds("9x19round", 0.78125 / 15);
-        AddRounds("45acpround", 0.78125 / 7);
-        AddRounds("57x28round", 0.78125 / 20);
-        AddRounds("46x30round", 1.0417 / 40);
-        AddRounds("44mground", 0.78125 / 6);
-        AddRounds("50aeround", 0.78125 / 7);
-        AddRounds("50glround", 0.78125 / 7);
-        AddRounds("50swround", 0.78125 / 5);
+        // Each caliber shares one price across magazines. Cost is Condition consumed per projectile,
+        // so a 100% condition ammo box (budget 100) yields 100 / cost rounds; cost is written as 100 / rounds.
+        // value 0.6 => 3200, 1 => 1920, 2 => 960, 3 => 640, 4 => 480, 8 => 240, 10 => 192 rounds per box.
+        AddRounds("556x45round", 100 / 1920, leadSuffix: "", fuSuffix: "_m995", apSuffix: "_ssa_ap");
+        AddRounds("545x39round", 100 / 1920, leadSuffix: "", fuSuffix: "_bs", apSuffix: "_7n39");
+        AddRounds("58x42round", 100 / 1920, duSuffix: "_du");
+        AddRounds("762x39round", 100 / 1920, fuSuffix: "_bp", apSuffix: "_mai_ap");
+        AddRounds("762x51round", 100 / 640, fuSuffix: "_m61", apSuffix: "_m993");
+        AddRounds("762x54rround", 100 / 640, apSuffix: "_7n37");
+        AddRounds("762x63round", 100 / 640);
+        AddRounds("792x33round", 100 / 1920, leadSuffix: "");
+        AddRounds("792x57round", 100 / 640);
+        AddRounds("65x50round", 100 / 640);
+        AddRounds("303round", 100 / 640);
+        AddRounds("9x39round", 100 / 960, duSuffix: "_du");
+        AddRounds("127x55round", 100 / 480, leadSuffix: "");
+        AddRounds("127x99round", 100 / 192);
+        AddRounds("338lmround", 100 / 480);
+        AddRounds("338nmround", 100 / 480);
+        AddRounds("50beowulfround", 100 / 640);
+        AddRounds("9x18round", 100 / 3200);
+        AddRounds("9x19round", 100 / 3200);
+        AddRounds("45acpround", 100 / 3200);
+        AddRounds("57x28round", 100 / 3200);
+        AddRounds("46x30round", 100 / 3200);
+        AddRounds("44mground", 100 / 640);
+        AddRounds("50aeround", 100 / 640);
+        AddRounds("50glround", 100 / 640);
+        AddRounds("50swround", 100 / 480);
 
-        AddRounds("deep_12shell", 18.75 / 25, duSuffix: "_du");
-        AddRounds("deep_12slug", 18.75 / 25, duSuffix: "_du");
+        AddRounds("deep_12shell", 100 / 240, duSuffix: "_du");
+        AddRounds("deep_12slug", 100 / 240, duSuffix: "_du");
     }
 
     internal static AmmoSupplyDefinition? Resolve(Item source) =>
