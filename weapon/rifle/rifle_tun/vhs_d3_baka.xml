@@ -22,14 +22,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="Onactive" interval="0.9" target="Character" SpeedMultiplier="1.2" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!-- VCE检测 -->
     </Holdable>
     <SwitchableRangedWeapon reload="0.075" weapondamagemodifier="1.1" holdtrigger="true" barrelpos="232,2" spread="1" unskilledspread="2" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
@@ -44,10 +36,10 @@
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true"></StatusEffect>
       <!-- 枪械过热卡壳 -->
@@ -72,12 +64,12 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_5.56x45,deep_5.56x45_expansion,deep_556x45_vhs,556mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_556x45_mag,556mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="80" />
       <StatusHUD drawhudwhenequipped="false" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_5.56x45,deep_5.56x45_expansion,deep_556x45_vhs,556mag" hide="false" setactive="true" itempos="-19,-15" rotation="0">
+      <Containable items="deep_556x45_mag,556mag" hide="false" setactive="true" itempos="-19,-15" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -100,7 +92,7 @@
         <StatusEffect type="OnInserted" target="This" holdpos="50,-10" aimpos="52,8" handle1="0,-35" handle2="80,10" holdangle="-35" aimangle="0" disabledeltatime="true" delay="1.2" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="1.2" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/5.56re_2.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/5.56re_2.ogg" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>

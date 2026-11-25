@@ -21,14 +21,19 @@ jobs:
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
+        env:
+          # Keep the runner's preinstalled SDKs out of version selection.
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 8.0.x
 
       - name: Run Lua tests
         shell: bash
         run: |
           set -euo pipefail
           for test in .UnitTests/Lua/*.test.lua; do
+            # These scripts require a running single-player game session.
+            [[ "$test" == .UnitTests/Lua/VirtualMagazineRuntime*.test.lua ]] && continue
             lua5.4 "$test"
           done
 
@@ -73,6 +78,12 @@ jobs:
             for project in "${projects[@]}"; do
               dotnet test "$project" -c Release -m:1
             done
+            dotnet test .UnitTests/CSharp/UnstableCompatibility/UnstableCompatibility.Tests.csproj -c Release -m:1 -p:BuildTarget=Server
+            dotnet build .UnitTests/CSharp/MoreInformationDisplay -c Release -m:1
+            dotnet build .UnitTests/CSharp/VirtualMagazine -c Release -m:1
+            dotnet build .UnitTests/CSharp/DeepAmmoLoader -c Release -m:1
+            dotnet build .UnitTests/CSharp/DeepAmmoLoaderUI -c Release -m:1
+            dotnet run --project .UnitTests/CSharp/DeepAmmoLoaderRegression -c Release
           fi
 
       - name: Build C# plugins
@@ -178,8 +189,11 @@ jobs:
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v6
+        env:
+          # Keep the runner's preinstalled SDKs out of version selection.
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dda-dotnet
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 8.0.x
 
       - name: Build C# plugins
         shell: bash

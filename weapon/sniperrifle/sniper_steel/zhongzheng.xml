@@ -31,14 +31,6 @@
 
 
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.8" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!--6倍镜
       <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
@@ -68,7 +60,7 @@
 
       <StatValue stattype="MovementSpeed" value="0.15" />
     </Holdable>
-    <SwitchableRangedWeapon reload="1.2" weapondamagemodifier="1" holdtrigger="true" barrelpos="263,29" spread="3" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.2" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="1.2" weapondamagemodifier="3" holdtrigger="true" barrelpos="263,29" spread="3" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.2" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V" penetration="0.1">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
@@ -110,7 +102,7 @@
       <!-- 拉 -->
       <StatusEffect type="OnUse" target="This" delay="0.4" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="0.4" setValue="true" forceplaysounds="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_bolt.ogg" type="OnUse" range="200" volume="0.5" />
+        <Sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_bolt.ogg" range="200" volume="0.5" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-150,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="0.6" disabledeltatime="true">
@@ -122,7 +114,7 @@
       </StatusEffect>
       <!-- 推 -->
       <StatusEffect type="OnUse" target="This" delay="0.7" setValue="true" forceplaysounds="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_bolt_forward.ogg" type="OnUse" range="200" volume="0.5" />
+        <Sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_bolt_forward.ogg" range="200" volume="0.5" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" handle1="-120,-5" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="0.9" disabledeltatime="true">
@@ -131,12 +123,12 @@
       <StatusEffect type="OnUse" target="This" delay="1" setvalue="true" holdpos="60,-20" aimpos="70,0" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnUse" target="This" delay="1.1" setvalue="true" handle2="80,-5" handle1="-120,-5" />
       <!-- ============== 拉栓动画结束 ================= -->
-      <RequiredItems items="792_57_sniper_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_kar98k_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="60" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="792_57_sniper_mag" hide="false" itempos="-12,10" setactive="true" rotation="0">
+      <Containable items="deep_kar98k_mag" hide="false" itempos="-12,10" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -186,7 +178,7 @@
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="0" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" stackable="false" />
         <StatusEffect type="OnInserted" target="This" delay="1.7" setValue="true" disabledeltatime="true">
-          <sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_re.ogg" type="OnUse" range="200.0" loop="false" volume="0.5" />
+          <sound file="%ModDir%/Sound/Weapons/ZHONGZHENG/gunOther/zhongzheng_re.ogg" range="200.0" loop="false" volume="0.5" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
       </Containable>

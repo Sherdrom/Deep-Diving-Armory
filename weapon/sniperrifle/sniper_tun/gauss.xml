@@ -31,14 +31,6 @@
         <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" />
         <RequiredItems items="deep_gauss_mag" type="Contained" />
       </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!-- VCE检测 -->
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
@@ -62,7 +54,7 @@
         <Use />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="1">
-        <sound file="%ModDir%/weapon/ammo/gauss_nopower.ogg" type="OnUse" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/gauss_nopower.ogg" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="This" Interval="0.5">
         <ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="30" particleamount="3" anglemin="0" anglemax="360" scalemin="0.05" scalemax="0.1" />
@@ -96,7 +88,7 @@
         <StatusEffect type="OnInserted" target="This" handle1="-85,-8" handle2="100,20" holdangle="-35" holdpos="70,-10" aimangle="0" aimpos="90,5" disabledeltatime="true" delay="3" setvalue="true" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="2" setValue="true" disabledeltatime="true" delay="3" stackable="false" />
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/gauss_reload.ogg" type="OnUse" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/gauss_reload.ogg" forceplay="true" range="200.0" loop="false" frequencymultiplier="0.9" volume="1" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />

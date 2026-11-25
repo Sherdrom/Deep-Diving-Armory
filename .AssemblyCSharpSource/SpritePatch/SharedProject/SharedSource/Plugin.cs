@@ -21,7 +21,7 @@
         {
             // After all plugins have loaded
             // Put code that interacts with other plugins here.
-            harmonyInstance?.PatchAll();
+            harmonyInstance?.PatchAll(typeof(SpritePatch).Assembly);
         }
 
         public void PreInitPatching()

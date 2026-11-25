@@ -95,6 +95,8 @@ namespace DamageRollbackFix
             if (GameMain.NetworkMember is not { IsClient: true }) { return true; }
             if (__instance is not Projectile proj || type != ActionType.OnImpact) { return true; }
             if (!NetworkEventContext.IsItemEvent) { return true; }
+            // VCE reuses one projectile across shots and sends each ray hit without a vanilla launch replay.
+            if (IsVceVirtualizedProjectile(proj)) { return true; }
 
             if (ImpactTimeTracker.TimeSinceLastImpact(proj) < DedupWindow)
             {
@@ -112,6 +114,15 @@ namespace DamageRollbackFix
                 user,
                 worldPosition,
                 attackMultiplier));
+            return false;
+        }
+
+        private static bool IsVceVirtualizedProjectile(Projectile projectile)
+        {
+            for (Type? type = projectile.GetType(); type != null && type != typeof(Projectile); type = type.BaseType)
+            {
+                if (type.FullName == "VCE_VirtualizedMagazine.VirtualizedProjectile") { return true; }
+            }
             return false;
         }
     }

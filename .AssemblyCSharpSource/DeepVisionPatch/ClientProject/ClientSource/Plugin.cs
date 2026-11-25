@@ -128,7 +128,7 @@ namespace DeepVisionPatch
             => instruction.opcode == OpCodes.Call || instruction.opcode == OpCodes.Callvirt;
 
         private static bool HasDdaTag(Item? item, string tag)
-            => item?.HasTag(tag) == true && item.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
+            => item?.HasTag(tag.ToIdentifier()) == true && item.Prefab.ContentPackage?.Name == DeepVisionPatch.Package.Name;
 
         private static void DrawDdaVisionOrClear(
             GraphicsDevice graphics,

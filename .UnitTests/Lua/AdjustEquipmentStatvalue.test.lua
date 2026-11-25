@@ -143,7 +143,9 @@ setmetatable(AfflictionPrefab.Prefabs, {
         error("The given key '" .. identifier .. "' was not present in the dictionary.")
     end,
 })
-ItemPrefab = { GetItemPrefab = function() return true end }
+ItemPrefab = { GetItemPrefab = function(id)
+    return id ~= "missing_required_item" and id ~= "missing_dlc_item"
+end }
 
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
@@ -172,6 +174,8 @@ _G.AdjustEquipmentConfig = {
         },
     },
     subItems = {
+        missing_required_item = {},
+        missing_dlc_item = { optionalPrefab = true },
         module = {
             stats = { { statType = "MovementSpeed", value = 1 } },
             flags = { "SharedFlag" },
@@ -456,7 +460,12 @@ slots[InvSlotType.OuterClothes] = noneArmor
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 do
     local originalPrint, warnings = print, {}
-    print = function(_, message, ...) warnings[message] = { ... } end
+    print = function(_, message, ...)
+        if message == "item prefab not found" then
+            assert((...) == "missing_required_item", "absent DLC produced a missing-item warning")
+        end
+        warnings[message] = { ... }
+    end
     local serverOk, serverErr, clientOk, clientErr
     CLIENT = false
     serverOk, serverErr = pcall(events.loaded)
@@ -465,6 +474,7 @@ do
     print = originalPrint
     assert(serverOk, serverErr)
     assert(clientOk, clientErr)
+    assert(warnings["item prefab not found"], "missing required item was not reported")
     assert(warnings["invalid Affliction"][2] == "missing_marker", "missing effect prefab was not reported")
     assert(warnings["legacy Affliction prefab not found"][1] == "deep_chip_blaster_equipped",
         "missing legacy prefab was not reported")
@@ -1466,6 +1476,13 @@ for category in pairs(categoryFiles) do
     end
 end
 local legacy = production.legacyAfflictions
+local mags = production.weaponAccessories
+assert(mags.deep_556x45_virtual_60_stanag.statsKey == "expansion_mag" and not mags.deep_556x45_virtual_30_stanag)
+assert(mags.deep_9x19_virtual_33_glock.statsKey == "deep_glock_long_mag")
+assert(mags.deep_9x19_virtual_50_glock.statsKey == "deep_glock_drum_mag")
+assert(hasTalentMarker(mags.deep_9x39_virtual_20_9a91, "deep_damage_fall_off_1500_2300_detect"))
+assert(production.subItems.deep_ten_star_general_assist_upgrading.optionalPrefab
+    and hasTalentMarker(legacy.deep_chip_ten_star_general_assist_upgrading_effect, "deep_ten_star_general_assist_upgrading"))
 assert(legacy.deep_Semi.timeout > 0
     and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
     and legacy.deep_machinegun_crouch.when
@@ -1505,7 +1522,8 @@ assert(production.mainItems.deep_hpc
     and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
     and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
     and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
-    and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
+    and production.weaponAccessories.deep_12shell_lead.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
+    and production.weaponAccessories.deep_12slug_lead == nil
     and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
     and production.weaponAccessories.cqr_grips.when
     and production.weaponAccessories.oblique_grips.when

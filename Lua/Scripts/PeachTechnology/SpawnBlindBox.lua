@@ -91,29 +91,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK74M", contains = { { id = "deep_5.45x39_tit", amount = 1 } }},
-                               { id = "deep_5.45x39_tit", amount = 4},
+                               { id = "deep_AK74M", contains = { { id = "deep_545x39_virtual_30_6l23", amount = 1 } }},
+                               { id = "deep_545x39_virtual_30_6l23", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK103", contains = { { id = "deep_7.62x39", amount = 1 } }},
-                               { id = "deep_7.62x39", amount = 4},
+                               { id = "deep_AK103", contains = { { id = "deep_762x39_virtual_30_ak103", amount = 1 } }},
+                               { id = "deep_762x39_virtual_30_ak103", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AKM", contains = { { id = "deep_7.62x39", amount = 1 } }},
-                               { id = "deep_7.62x39", amount = 4},
+                               { id = "deep_AKM", contains = { { id = "deep_762x39_virtual_30_ak103", amount = 1 } }},
+                               { id = "deep_762x39_virtual_30_ak103", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK201", contains = { { id = "deep_5.56x45_tit", amount = 1 } }},
-                               { id = "deep_5.56x45_tit", amount = 4},
+                               { id = "deep_AK201", contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 } }},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
             },
@@ -176,29 +176,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_mp7", contains = { { id = "deep_smg_mp7", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
-                               { id = "deep_smg_mp7", amount = 4},
+                               { id = "deep_mp7", contains = { { id = "deep_46x30_virtual_30_mp7", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_46x30_virtual_30_mp7", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_p90", contains = { { id = "deep_smg_p90_phy", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
-                               { id = "deep_smg_p90_phy", amount = 4},
+                               { id = "deep_p90", contains = { { id = "deep_57x28_virtual_50_p90", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_57x28_virtual_50_p90", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_mp5sd", contains = { { id = "deep_smg_9mm_fu", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
-                               { id = "deep_smg_9mm_fu", amount = 4},
+                               { id = "deep_mp5sd", contains = { { id = "deep_9x19_virtual_30_mp5", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_9x19_virtual_30_mp5", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_pdw", contains = { { id = "deep_smg_9mm_fu", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
-                               { id = "deep_smg_9mm_fu", amount = 4},
+                               { id = "deep_pdw", contains = { { id = "deep_9x19_virtual_30_mp5", amount = 1 },{ id = "holographic_sight", amount = 1 } }},
+                               { id = "deep_9x19_virtual_30_mp5", amount = 4},
                            },
                 },
             },
@@ -257,29 +257,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AWM", contains = { { id = "deep_AWM_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
-                               { id = "deep_AWM_mag", amount = 4},
+                               { id = "deep_AWM", contains = { { id = "deep_338lm_virtual_10_awm", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_338lm_virtual_10_awm", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_r93", contains = { { id = "deep_r93_mag_tit", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_r93_mag_tit", amount = 4},
+                               { id = "deep_r93", contains = { { id = "deep_762x51_virtual_10_r93", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_10_r93", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_m700", contains = { { id = "deep_m700_mag_tit", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_m700_mag_tit", amount = 4},
+                               { id = "deep_m700", contains = { { id = "deep_762x51_virtual_20_m700", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_20_m700", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_sr25", contains = { { id = "deep_sr25_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_sr25_mag_phy", amount = 4},
+                               { id = "deep_sr25", contains = { { id = "deep_762x51_virtual_20_kac", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_20_kac", amount = 4},
                            },
                 },
             },
@@ -349,29 +349,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_hk416", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_hk416", contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_R4C", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_R4C", contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_qbz_97", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_qbz_97", contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AK19", contains = { { id = "deep_5.56x45_phy", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
-                               { id = "deep_5.56x45_phy", amount = 4},
+                               { id = "deep_AK19", contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "2.5x_sight", amount = 1 }}},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
             },
@@ -410,29 +410,29 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_SCAR-H", contains = { { id = "deep_762x51_expansion_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_762x51_expansion_phy", amount = 3},
+                               { id = "deep_SCAR-H", contains = { { id = "deep_762x51_virtual_50_x25", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_50_x25", amount = 3},
                            },
                 },
                 {
                      weight = 25,
                      bundle = {
-                               { id = "deep_m4_super90", contains = { { id = "deep_12shell_boneshark", amount = 7 }}},
-                               { id = "deep_12shell_boneshark", amount = 12},
+                               { id = "deep_m4_super90", contains = { { id = "deep_12shell_lead", amount = 7 }}},
+                               { id = "deep_12shell_lead", amount = 12},
                            },
                 },
                 {
                      weight = 25,
                      bundle = {
-                               { id = "deep_m4_super90", contains = { { id = "deep_slug_phy", amount = 7 }}},
-                               { id = "deep_slug_phy", amount = 12},
+                               { id = "deep_m4_super90", contains = { { id = "deep_12slug_phy", amount = 7 }}},
+                               { id = "deep_12slug_phy", amount = 12},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_m249", contains = { { id = "deep_m249_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_m249_mag", amount = 2},
+                               { id = "deep_m249", contains = { { id = "deep_556x45_virtual_100_m249", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_556x45_virtual_100_m249", amount = 2},
                            },
                 },
             },
@@ -446,36 +446,36 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_m82a1", forceEquip=true,contains = { { id = "deep_m82a1_mag", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
-                               { id = "deep_m82a1_mag", amount = 2},
+                               { id = "deep_m82a1", forceEquip=true,contains = { { id = "deep_127x99_virtual_10_m82a1", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_127x99_virtual_10_m82a1", amount = 2},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_AWM", contains = { { id = "deep_AWM_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
-                               { id = "deep_AWM_mag_phy", amount = 4},
+                               { id = "deep_AWM", contains = { { id = "deep_338lm_virtual_10_awm", amount = 1 },{ id = "1_3x_sight", amount = 1 } }},
+                               { id = "deep_338lm_virtual_10_awm", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_r93", contains = { { id = "deep_r93_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_r93_mag_phy", amount = 4},
+                               { id = "deep_r93", contains = { { id = "deep_762x51_virtual_10_r93", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_10_r93", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_m700", contains = { { id = "deep_m700_mag_phy", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_m700_mag_phy", amount = 4},
+                               { id = "deep_m700", contains = { { id = "deep_762x51_virtual_20_m700", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_20_m700", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_sr25", contains = { { id = "deep_sr25_mag_M61", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
-                               { id = "deep_sr25_mag_M61", amount = 4},
+                               { id = "deep_sr25", contains = { { id = "deep_762x51_virtual_20_kac", amount = 1 },{ id = "1_3x_sight", amount = 1 }}},
+                               { id = "deep_762x51_virtual_20_kac", amount = 4},
                            },
                 },
             },
@@ -521,22 +521,22 @@ local CONFIG = {
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_mp7", forceEquip=true,contains = { { id = "deep_smg_mp7_fu", amount = 1 },{ id = "red_sight", amount = 1 } }},
-                               { id = "deep_smg_mp7_fu", amount = 4},
+                               { id = "deep_mp7", forceEquip=true,contains = { { id = "deep_46x30_virtual_30_mp7", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_46x30_virtual_30_mp7", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_hk416", forceEquip=true,contains = { { id = "deep_556x45_M995", amount = 1 },{ id = "red_sight", amount = 1 } }},
-                               { id = "deep_556x45_M995", amount = 4},
+                               { id = "deep_hk416", forceEquip=true,contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
                 {
                      weight = 50,
                      bundle = {
-                               { id = "deep_R4C", forceEquip=true,contains = { { id = "deep_556x45_M995", amount = 1 },{ id = "red_sight", amount = 1 } }},
-                               { id = "deep_556x45_M995", amount = 4},
+                               { id = "deep_R4C", forceEquip=true,contains = { { id = "deep_556x45_virtual_30_stanag", amount = 1 },{ id = "red_sight", amount = 1 } }},
+                               { id = "deep_556x45_virtual_30_stanag", amount = 4},
                            },
                 },
             },

@@ -48,6 +48,61 @@ namespace MoreInformationDisplay
         }
     }
 
+    internal static class VirtualMagazineTooltip
+    {
+        private static ItemContainer Magazine(Item item)
+        {
+            if (item == null || !item.HasTag(new Identifier("deep_virtualmagazine"))) return null;
+            var container = item.GetComponent<ItemContainer>();
+            return container?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine" ? container : null;
+        }
+
+        private static IEnumerable<Identifier> Rounds(ItemContainer magazine)
+        {
+            // shortcut: read VCE's stack until it exposes a read-only contents API; never unload to inspect it.
+            return AccessTools.Property(magazine.GetType(), "LoadedAmmoIdentifiers")?.GetValue(magazine) as IEnumerable<Identifier>;
+        }
+
+        internal static int State(Item item)
+        {
+            var magazine = Magazine(item);
+            if (magazine == null) return 0;
+            var type = magazine.GetType();
+            var hash = new HashCode();
+            // LuaCs exposes private overloads to the compiler; select the public generic method.
+            hash.Add<int>((int)type.GetProperty("LoadedCount").GetValue(magazine));
+            hash.Add((Identifier)type.GetProperty("TopIdentifier").GetValue(magazine));
+            var rounds = Rounds(magazine);
+            if (rounds != null) foreach (var ammo in rounds) hash.Add(ammo);
+            return hash.ToHashCode();
+        }
+
+        private static string AmmoName(Identifier id)
+        {
+            string name = ItemPrefab.Prefabs.TryGet(id, out var prefab) ? prefab.Name.Value : null;
+            return string.IsNullOrWhiteSpace(name) ? id.Value : name;
+        }
+
+        internal static string Describe(Item item)
+        {
+            var magazine = Magazine(item);
+            if (magazine == null) return "";
+            var type = magazine.GetType();
+            int count = (int)type.GetProperty("LoadedCount").GetValue(magazine);
+            int capacity = (int)type.GetProperty("MaxSize").GetValue(magazine);
+            var next = (Identifier)type.GetProperty("TopIdentifier").GetValue(magazine);
+            string nextName = count > 0 ? AmmoName(next) : "空匣";
+            string text = $"余弹: {count}/{capacity}\n下一发: {nextName}";
+            var rounds = Rounds(magazine);
+            if (count > 0 && rounds != null)
+            {
+                text += "\n弹种组成: "
+                    + string.Join(" / ", rounds.GroupBy(id => id).Select(group => $"{AmmoName(group.Key)} × {group.Count()}"));
+            }
+            return text;
+        }
+    }
+
     /// <summary>
     /// 库存提示框缓存与显示条件同步：
     /// SlotReference 的提示文本构建后被缓存，仅当 TooltipNeedsRefresh 判定需要更新时才重建
@@ -63,6 +118,8 @@ namespace MoreInformationDisplay
         private sealed class BuildState
         {
             public bool ShiftDown;
+            public int MagazineState;
+            public int ChipState;
         }
 
         private static readonly ConditionalWeakTable<Inventory.SlotReference, BuildState> buildStates
@@ -76,7 +133,9 @@ namespace MoreInformationDisplay
 
             bool shiftDown = PlayerInput.IsShiftDown();
             if (buildStates.TryGetValue(__instance, out var state)
-                && state.ShiftDown == shiftDown)
+                && state.ShiftDown == shiftDown
+                && state.MagazineState == VirtualMagazineTooltip.State(__instance.Item)
+                && state.ChipState == Patch_ItemStatsTooltip.ChipState(__instance.Item))
             {
                 return;
             }
@@ -89,6 +148,20 @@ namespace MoreInformationDisplay
         {
             BuildState state = buildStates.GetOrCreateValue(__instance);
             state.ShiftDown = PlayerInput.IsShiftDown();
+            state.MagazineState = VirtualMagazineTooltip.State(__instance.Item);
+            state.ChipState = Patch_ItemStatsTooltip.ChipState(__instance.Item);
+        }
+    }
+
+    // 虚拟库存没有 Item 实例，通过 prefab 的提示接口复用弹药详情。
+    [HarmonyPatch(typeof(ItemPrefab), nameof(ItemPrefab.GetTooltip))]
+    internal static class Patch_PrefabAmmoTooltip
+    {
+        internal static void Postfix(ItemPrefab __instance, ref LocalizedString __result)
+        {
+            if (!PlayerInput.IsShiftDown()) return;
+            string extra = Patch_ItemStatsTooltip.ParseProjectileFromPrefab(__instance);
+            if (!string.IsNullOrWhiteSpace(extra)) __result += "\n\n" + extra;
         }
     }
 
@@ -97,11 +170,20 @@ namespace MoreInformationDisplay
     {
         static void Postfix(ItemComponent __instance, ref LocalizedString name, ref LocalizedString description)
         {
+            Item item = __instance.Item;
+            if (item == null) return;
+            if (__instance == item.Components.First())
+            {
+                string magazineInfo = VirtualMagazineTooltip.Describe(item);
+                if (!string.IsNullOrEmpty(magazineInfo))
+                {
+                    if (!description.IsNullOrEmpty()) description += "\n";
+                    description += magazineInfo;
+                }
+            }
             // 显示条件：仅当鼠标悬停物品且按住 Shift 时显示（提示框仅在悬停时构建，此处补充 Shift 条件）
             if (!PlayerInput.IsShiftDown()) return;
 
-            Item item = __instance.Item;
-            if (item == null) return;
             // 去重
             if (__instance == item.Components.First())
             {
@@ -148,9 +230,15 @@ namespace MoreInformationDisplay
                 var ranged = item.GetComponent<RangedWeapon>();
                 if (ranged != null)
                 {
+                    // 碎甲芯片加成：与伤害结算保持同一数值口径（DoDamageToLimb 将枪械
+                    // Penetration 叠入攻击穿甲后，ChipBodyshotPenetration.lua 再注入 +0.1）
+                    float chipBonus = GetChipPenetrationBonus(item);
+                    float effectivePenetration = ranged.Penetration + chipBonus;
                     var sb = new StringBuilder();
                     sb.AppendLine("‖color:gui.orange‖<远程武器>‖color:end‖");
-                    sb.AppendLine($"穿甲: {ranged.Penetration:F2}{PenArmorSuffix(ranged.Penetration)}");
+                    sb.AppendLine($"穿甲: {effectivePenetration:F2}{PenArmorSuffix(effectivePenetration, item.Prefab)}");
+                    if (chipBonus > 0f)
+                        sb.AppendLine($"‖color:gui.green‖碎甲芯片生效: 穿甲+{chipBonus:F2}‖color:end‖");
                     sb.AppendLine($"重装: {ranged.Reload:F2}s");
                     sb.AppendLine($"散布: {ranged.Spread:F2}");
                     if (ranged.MaxChargeTime > 0f)
@@ -165,7 +253,7 @@ namespace MoreInformationDisplay
                 // 4. 投射物处理
                 var proj = FindProjectile(item);
                 if (proj?.Attack != null)
-                    parts.Add(BuildProjectileInfo(proj));
+                    parts.Add(BuildProjectileInfo(proj, item));
 
                 // 5. 弹药盒子弹信息
                 if (proj?.Attack == null)
@@ -233,7 +321,7 @@ namespace MoreInformationDisplay
         {
             var sb = new StringBuilder();
             sb.AppendLine($"‖color:gui.orange‖<{title}>‖color:end‖");
-            sb.AppendLine($"穿甲: {atk.Penetration:F2}{PenArmorSuffix(atk.Penetration)}");
+            sb.AppendLine($"穿甲: {atk.Penetration:F2}{PenArmorSuffix(atk.Penetration, item.Prefab)}");
             sb.AppendLine($"结构伤害: {atk.StructureDamage:F1}");
             sb.AppendLine($"物品伤害: {atk.ItemDamage:F1}");
             sb.AppendLine($"重装: {reload:F2}s");
@@ -260,13 +348,13 @@ namespace MoreInformationDisplay
             return sb.ToString().Trim();
         }
 
-        private static string BuildProjectileInfo(Projectile proj)
+        private static string BuildProjectileInfo(Projectile proj, Item item)
         {
             var sb = new StringBuilder();
             int bullets = (proj.Hitscan && proj.HitScanCount > 0) ? proj.HitScanCount : 1;
 
             sb.AppendLine("‖color:gui.orange‖<发射物>‖color:end‖");
-            sb.AppendLine($"穿甲: {proj.Attack.Penetration:F2}{PenArmorSuffix(proj.Attack.Penetration)}");
+            sb.AppendLine($"穿甲: {proj.Attack.Penetration:F2}{PenArmorSuffix(proj.Attack.Penetration, item.Prefab)}");
             sb.AppendLine($"射弹数: {bullets}");
             sb.AppendLine($"结构伤害: {proj.Attack.StructureDamage:F1}");
             sb.AppendLine($"物品伤害: {proj.Attack.ItemDamage:F1}");
@@ -277,7 +365,14 @@ namespace MoreInformationDisplay
             if (!proj.FriendlyFire)
                 sb.AppendLine("‖color:gui.green‖可穿透友军‖color:end‖");
 
-            string headshot = BuildHeadshotMultiplierLine(proj.Item.Prefab);
+            ItemPrefab ammoPrefab = proj.Item.Prefab;
+            var magazine = proj.Item.Container?.GetComponent<ItemContainer>();
+            if (magazine?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine")
+            {
+                var ammoId = (Identifier)magazine.GetType().GetProperty("TopIdentifier").GetValue(magazine);
+                if (ItemPrefab.Prefabs.TryGet(ammoId, out var loadedPrefab)) ammoPrefab = loadedPrefab;
+            }
+            string headshot = BuildHeadshotMultiplierLine(ammoPrefab);
             if (!string.IsNullOrEmpty(headshot)) sb.AppendLine(headshot);
 
             string affs = BuildAfflictions(proj.Attack);
@@ -315,14 +410,50 @@ namespace MoreInformationDisplay
             return null;
         }
 
+        // 碎甲芯片(chip_bodyshot)穿甲加成：判定规则与 ChipBodyshotPenetration.lua 一致，
+        // 仅对带 gunsmith 标签的枪械生效，芯片位于枪械自身物品栏内时 +0.1，拔出立即失效。
+        // 伤害侧为逐击注入不落盘，显示侧逐次悬停现查，双端无需额外同步
+        private const string ChipIdentifier = "chip_bodyshot";
+        private const string ChipGunsmithTag = "gunsmith";
+        private const float ChipPenetrationBonus = 0.1f;
+
+        private static float GetChipPenetrationBonus(Item gun)
+        {
+            if (gun == null || gun.Removed) return 0f;
+            if (!gun.HasTag(new Identifier(ChipGunsmithTag))) return 0f;
+            Identifier chipId = new Identifier(ChipIdentifier);
+            if (gun.OwnInventory != null)
+            {
+                foreach (var contained in gun.OwnInventory.AllItems)
+                {
+                    if (contained != null && !contained.Removed && contained.Prefab.Identifier == chipId)
+                        return ChipPenetrationBonus;
+                }
+                return 0f;
+            }
+            foreach (var contained in gun.ContainedItems)
+            {
+                if (contained != null && !contained.Removed && contained.Prefab.Identifier == chipId)
+                    return ChipPenetrationBonus;
+            }
+            return 0f;
+        }
+
+        // 芯片装配状态：供提示缓存判定插入/拔出芯片后强制重建
+        internal static int ChipState(Item item) => GetChipPenetrationBonus(item) > 0f ? 1 : 0;
+
         // 根据穿甲值生成防护等级提示：等级 = 穿甲值 * 10 截断取整，如 0.45 → 4级，1.0 → 10级
         // 穿甲值小于等于 0 时不追加
-        private static string PenArmorSuffix(float penetration)
+        // tags 含 gun 的物品（枪械）改用"增加穿甲等级"措辞，其余物品保留"可击穿防护"措辞
+        private static string PenArmorSuffix(float penetration, ItemPrefab prefab)
         {
             // 加 0.0001 余量修正浮点表示偏差（0.7f 实为 0.69999988，直接截断会得 6 而非 7）
             int level = (int)MathF.Floor(penetration * 10f + 0.0001f);
             if (level <= 0) return "";
-            return $"    ‖color:gui.green‖可击穿{level}级防护‖color:end‖";
+            bool isGun = prefab != null && prefab.Tags.Contains(new Identifier("gun"));
+            return isGun
+                ? $"    ‖color:gui.green‖增加{level}级穿甲等级‖color:end‖"
+                : $"    ‖color:gui.green‖可击穿{level}级防护‖color:end‖";
         }
 
         // 子弹爆头倍率：识别 prefab tags 中 deep_headshot_gunshotwound_<倍率>，
@@ -534,7 +665,7 @@ namespace MoreInformationDisplay
             if (penAttr != null)
             {
                 float penetration = el.GetAttributeFloat("penetration", 0f);
-                sb.AppendLine($"穿甲: {penetration:F2}{PenArmorSuffix(penetration)}");
+                sb.AppendLine($"穿甲: {penetration:F2}{PenArmorSuffix(penetration, prefab)}");
             }
             sb.AppendLine($"重装: {el.GetAttributeFloat("reload", 0f):F2}s");
             sb.AppendLine($"散布: {el.GetAttributeFloat("spread", 0f):F2}");
@@ -1006,7 +1137,7 @@ namespace MoreInformationDisplay
             return result;
         }
 
-        private static string ParseProjectileFromPrefab(ItemPrefab prefab)
+        internal static string ParseProjectileFromPrefab(ItemPrefab prefab)
         {
             var cfg = prefab.ConfigElement;
             if (cfg == null) return "";
@@ -1039,7 +1170,7 @@ namespace MoreInformationDisplay
                 var idAttr = atkEl.GetAttribute("itemdamage");
                 if (idAttr != null) float.TryParse(idAttr.Value, out itemDamage);
 
-                sb.Append($"穿甲:{penetration:F2}{PenArmorSuffix(penetration)}");
+                sb.Append($"穿甲:{penetration:F2}{PenArmorSuffix(penetration, prefab)}");
                 sb.Append($"\n射弹数:{bullets}");
                 sb.Append($"\n结构伤害:{structureDamage:F1}");
                 sb.Append($"\n物品伤害:{itemDamage:F1}");

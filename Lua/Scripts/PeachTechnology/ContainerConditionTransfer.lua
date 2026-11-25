@@ -53,56 +53,56 @@ local CONFIG = {
         -- 铅制弹药
         {
             target = { tag = "lead_ammobox_reload_1" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_2" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_3" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_4" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_5" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_6" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_7" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "lead_ammobox_reload_8" },
-            source = "ammobox1",
+            source = "deep_ammobox_lead",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -111,77 +111,77 @@ local CONFIG = {
         -- 钛制弹药
         {
             target = { tag = "tit_ammobox_reload_0_25" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 25.0,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_0_33" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 18.75,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_0_5" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 12.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_1" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_2" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_3" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_4" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_5" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_6" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_7" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tit_ammobox_reload_8" },
-            source = "ammobox_7.62",
+            source = "deep_ammobox_titanium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -190,77 +190,77 @@ local CONFIG = {
         -- 刚素弹药
         {
             target = { tag = "phy_ammobox_reload_0_25" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 25.0,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_0_33" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 18.75,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_0_5" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 12.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_1" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_2" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_3" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_4" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_5" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_6" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_7" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ammobox_reload_8" },
-            source = "ammobox_12.7",
+            source = "deep_ammobox_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -269,63 +269,63 @@ local CONFIG = {
         -- 雷刚弹药
         {
             target = { tag = "phy_ful_ammobox_reload_0_5" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 12.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_1" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_2" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_3" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_4" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_5" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_6" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_7" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "phy_ful_ammobox_reload_8" },
-            source = "ammobox_phy_ful",
+            source = "deep_ammobox_fulgurium_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -334,70 +334,70 @@ local CONFIG = {
         -- 钨刚弹药
         {
             target = { tag = "tun_ful_ammobox_reload_0_16" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 37.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_0_5" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 12.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_1" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_2" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_3" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_4" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_5" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_6" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_7" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "tun_ful_ammobox_reload_8" },
-            source = "ammobox_tun_ful",
+            source = "deep_ammobox_tungsten_physicorium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -406,63 +406,63 @@ local CONFIG = {
         -- 贫铀弹药
         {
             target = { tag = "du_ammobox_reload_0_5" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 12.5,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_1" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_2" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_3" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_4" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_5" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_6" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_7" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "du_ammobox_reload_8" },
-            source = "ammobox_du",
+            source = "deep_ammobox_depleted_uranium",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -471,56 +471,56 @@ local CONFIG = {
         -- RIP弹药
         {
             target = { tag = "rip_ammobox_reload_1" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 6.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_2" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 3.125,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_3" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 2.0833,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_4" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 1.5625,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_5" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 1.25,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_6" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 1.0417,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_7" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 0.8926,
             fullCondition = 100.0,
         },
         {
             target = { tag = "rip_ammobox_reload_8" },
-            source = "ammobox_rip",
+            source = "deep_ammobox_copper",
             gainPerSecond = 100.0,
             drainPerSecond = 0.78125,
             fullCondition = 100.0,
@@ -785,6 +785,52 @@ end
 if SERVER or not Game.IsMultiplayer then
 
     local IdentifierStatic = LuaUserData.CreateStatic("Barotrauma.Identifier")
+    local virtualMagazineType = Deep_Lua.HF.VirtualMagazineType
+
+    -- 5.56 虚拟弹匣按选定弹药箱装填，原配方只提供容量对应的速率与消耗。
+    local virtualAmmo = {
+        ["deep_ammobox_lead"] = "556x45round",
+        ["deep_ammobox_titanium"] = "556x45round_tit",
+        ["deep_ammobox_physicorium"] = "556x45round_phy",
+        ["deep_ammobox_fulgurium_physicorium"] = "556x45round_M995",
+        ["deep_ammobox_tungsten_physicorium"] = "556x45round_SSA_AP",
+        ["deep_ammobox_depleted_uranium"] = "556x45round_depleted_uranium",
+    }
+    local virtualMagazineTag = IdentifierStatic("556mag")
+
+    local function GetVirtualMagazine(item)
+        local container = item.OwnInventory and item.OwnInventory.Container
+        if virtualMagazineType and container and LuaUserData.IsTargetType(container, virtualMagazineType) then
+            return container
+        end
+    end
+
+    local function RefillVirtualMagazine(job, dt)
+        local target, source, magazine, recipe = job.target, job.source, job.magazine, job.recipe
+        local remaining = math.min(magazine.MaxSize - magazine.LoadedCount, job.remaining)
+        if remaining <= 0 then return "done" end
+        local costPerRound = recipe.fullCondition * recipe.drainRatio / magazine.MaxSize
+        local affordable = costPerRound > 0 and math.floor(source.Condition / costPerRound + 1e-6) or remaining
+        if affordable <= 0 then return "empty" end
+        local ammoId = virtualAmmo[string.lower(tostring(source.Prefab.Identifier))]
+        local progress = math.min(remaining, job.progress
+            + recipe.gainPerSecond * dt * magazine.MaxSize / recipe.fullCondition)
+        local count = math.min(math.floor(progress + 1e-6), affordable)
+        if count > 0 then
+            local rounds = {}
+            for i = 1, count do rounds[i] = IdentifierStatic(ammoId) end
+            local before = magazine.LoadedCount
+            magazine.PushAmmoArray(rounds)
+            local loaded = magazine.LoadedCount - before
+            source.Condition = math.max(0, source.Condition - loaded * costPerRound)
+            job.remaining = job.remaining - loaded
+            progress = progress - loaded
+            if loaded < count then return "rejected" end
+        end
+        -- Keep fractional loading time, never charge for rejected or incomplete rounds.
+        job.progress = math.max(0, math.min(progress, 1))
+        if job.remaining == 0 or magazine.LoadedCount == magazine.MaxSize then return "done" end
+    end
 
     BuildConfig()
 
@@ -871,6 +917,80 @@ if SERVER or not Game.IsMultiplayer then
         end
     end
 
+    LuaUserData.MakeFieldAccessible(Descriptors["Barotrauma.Items.Components.CustomInterface"], "customInterfaceElementList")
+
+    local function PressStatus(container, status, job)
+        local interface = container.GetComponentString("CustomInterface")
+        if not interface then return end
+        local text = TextManager.Get("dda.magpress." .. status).Value
+        if job then
+            text = text:gsub("%[loaded%]", tostring(job.total - job.remaining)):gsub("%[total%]", tostring(job.total))
+        end
+        interface.Labels = "dda.magpress.source,dda.magpress.target,dda.magpress.count," .. text .. ",dda.magpress.stop"
+    end
+
+    local function StopPress(container, status)
+        local state = activeContainers[container]
+        PressStatus(container, status, state and state.virtualJob)
+        if state then state.virtualJob = nil end
+    end
+
+    Hook.Add("dda.magpress.start", MOD_NAME .. ".StartPress", function(effect, deltaTime, container)
+        if not container or tostring(container.Prefab.Identifier) ~= "ammoreload_machine" then return end
+        -- shortcut: controlled mixed-ammo loading is single-player until VCE synchronizes its stack.
+        if Game.IsMultiplayer then PressStatus(container, "singleplayer"); return end
+        ActivateContainer(container)
+        local state = activeContainers[container]
+        if state.virtualJob then return end
+        local interface = container.GetComponentString("CustomInterface")
+        if not interface or not container.OwnInventory then return end
+        local values, index = {}, 0
+        for element in interface.customInterfaceElementList do
+            index = index + 1
+            values[index] = tonumber(element.Signal)
+            if index == 3 then break end
+        end
+        local sourceSlot, targetSlot, count = values[1], values[2], values[3]
+        local function valid(value, minimum, maximum)
+            return value and value >= minimum and value <= maximum and value == math.floor(value)
+        end
+        if not valid(sourceSlot, 1, 6) or not valid(targetSlot, 1, 6) or not valid(count, 0, 60) then
+            PressStatus(container, "invalid"); return
+        end
+        local inventory = container.OwnInventory
+        local source, target = inventory.GetItemAt(sourceSlot - 1), inventory.GetItemAt(targetSlot + 5)
+        local magazine = target and GetVirtualMagazine(target)
+        if not source or not virtualAmmo[string.lower(tostring(source.Prefab.Identifier))]
+            or not magazine or not target:HasTag(virtualMagazineTag) then
+            PressStatus(container, "invalid"); return
+        end
+        local recipe = ResolveItemRoles(target).targets[1]
+        if not recipe then PressStatus(container, "invalid"); return end
+        local remaining = magazine.MaxSize - magazine.LoadedCount
+        if count > 0 then remaining = math.min(remaining, count) end
+        state.virtualJob = {
+            target = target, source = source, magazine = magazine, recipe = recipe,
+            sourceSlot = sourceSlot - 1, targetSlot = targetSlot + 5,
+            remaining = remaining, total = remaining, progress = 0,
+        }
+        PressStatus(container, "loading", state.virtualJob)
+    end)
+
+    Hook.Add("dda.magpress.stop", MOD_NAME .. ".StopPress", function(effect, deltaTime, container)
+        if container and tostring(container.Prefab.Identifier) == "ammoreload_machine" then
+            StopPress(container, "stopped")
+        end
+    end)
+
+    Hook.Patch(MOD_NAME .. ".CancelRemoved", "Barotrauma.Items.Components.ItemContainer", "OnItemRemoved",
+        { "Barotrauma.Item" }, function(instance, ptable)
+            local state = activeContainers[instance.Item]
+            local job = state and state.virtualJob
+            if job and (ptable.containedItem == job.source or ptable.containedItem == job.target) then
+                StopPress(instance.Item, "stopped")
+            end
+        end, Hook.HookMethodType.After)
+
     -- inventoryPutItem: 物品放入任意库存, 命中配置容器与配方物品即标记激活
     -- 事件为 Prefix 时机 (物品尚未真正入容器), 正确性由下一 think 周期复核收编
     Hook.Add("inventoryPutItem", MOD_NAME .. ".OnPutItem", function(inventory, item)
@@ -900,11 +1020,11 @@ if SERVER or not Game.IsMultiplayer then
     end)
 
     -- 初始扫描: 覆盖脚本加载前已存在的容器实例
-    -- AllItemsMod 物化为 List<Item>, pairs 迭代为项目已验证模式 (AllItems 为 yield 迭代器不可用)
+    -- C# 集合使用 LuaCs 的直接迭代，pairs 仅用于 Lua 表。
     local function ScanExistingItems()
-        for _, item in pairs(Item.ItemList) do
+        for item in Item.ItemList do
             if IsConfiguredContainer(item) and item.OwnInventory ~= nil then
-                for _, contained in pairs(item.OwnInventory.AllItemsMod) do
+                for contained in item.OwnInventory.AllItemsMod do
                     local roles = ResolveItemRoles(contained)
                     if #roles.targets > 0 or #roles.sources > 0 then
                         ActivateContainer(item)
@@ -935,12 +1055,13 @@ if SERVER or not Game.IsMultiplayer then
         -- 收集: 每配方取首个未满 target 与首个有耐久 source (顺序填充语义)
         local targetOf, sourceOf = {}, {}
         local hasRecipeItem = false
-        for _, contained in pairs(ownInventory.AllItemsMod) do
+        for contained in ownInventory.AllItemsMod do
             local roles = ResolveItemRoles(contained)
+            local conditionTarget = #roles.targets > 0 and not Deep_Lua.HF.IsVirtualMagazine(contained)
             for i = 1, #roles.targets do
                 local recipe = roles.targets[i]
                 hasRecipeItem = true
-                if targetOf[recipe] == nil and contained.Condition < recipe.fullCondition then
+                if conditionTarget and targetOf[recipe] == nil and contained.Condition < recipe.fullCondition then
                     targetOf[recipe] = contained
                 end
             end
@@ -953,12 +1074,25 @@ if SERVER or not Game.IsMultiplayer then
             end
         end
 
+        local job = state.virtualJob
+        if job then
+            if container.Condition <= 0 or job.target.Removed or job.source.Removed
+                or ownInventory.GetItemAt(job.sourceSlot) ~= job.source
+                or ownInventory.GetItemAt(job.targetSlot) ~= job.target then
+                StopPress(container, "stopped")
+            else
+                local status = RefillVirtualMagazine(job, dt)
+                if status then StopPress(container, status)
+                else PressStatus(container, "loading", job) end
+            end
+        end
+
         if not hasRecipeItem then return false end
 
         for recipe in pairs(targetOf) do
+            local target = targetOf[recipe]
             local source = sourceOf[recipe]
             if source ~= nil then
-                local target = targetOf[recipe]
                 local remaining = recipe.fullCondition - target.Condition
                 if remaining > 0.0 then
                     -- gain/drain 严格成比例 (drain = gain x drainRatio), 任一侧被钳制时

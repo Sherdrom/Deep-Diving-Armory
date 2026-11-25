@@ -36,14 +36,6 @@
 
 
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!-- VCE检测 -->
 
@@ -66,30 +58,20 @@
       <StatusEffect type="OnUse" target="This" delay="0.2" disabledeltatime="true">
         <LuaHook name="M1887PumbInSprite" />
       </StatusEffect>
-      <!-- 抛壳特效(12号霰弹) -->
+      <!-- 抛壳特效(12号霰弹,6种材质) -->
       <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
         <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <RequiredItems items="deep_12shell" type="Contained" targetslot="0" />
+        <RequiredItems items="deep_12shell_lead,deep_12shell_tit,deep_12shell_phy,deep_12shell_fu,deep_12shell_ap,deep_12shell_du" type="Contained" targetslot="0" />
       </StatusEffect>
       <!-- 抛壳特效(原版弹药红色) -->
       <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
         <ParticleEmitter particle="deep_casingfirearm_12shell" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
         <RequiredItems items="shotgunshell,shotgunshellblunt,shotgunslugexplosive" type="Contained" targetslot="0" />
       </StatusEffect>
-      <!-- 抛壳特效(12号虎尾蛇) -->
-      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
-        <ParticleEmitter particle="deep_casingfirearm_12shell_tiger" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <RequiredItems items="deep_12shell_tigershark" type="Contained" targetslot="0" />
-      </StatusEffect>
-      <!-- 抛壳特效(12号独头) -->
+      <!-- 抛壳特效(12号独头,6种材质) -->
       <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
         <ParticleEmitter particle="deep_casingfirearm_12shell_slug" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <RequiredItems items="deep_slug" type="Contained" targetslot="0" />
-      </StatusEffect>
-      <!-- 抛壳特效(12号鸟弹) -->
-      <StatusEffect type="OnUse" target="This" delay="0.3" setvalue="true" handle2="50,19" handle1="-42,-14" disabledeltatime="true">
-        <ParticleEmitter particle="deep_casingfirearm_12shell_bird" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
-        <RequiredItems items="deep_birdshot" type="Contained" targetslot="0" />
+        <RequiredItems items="deep_12slug_lead,deep_12slug_tit,deep_12slug_phy,deep_12slug_fu,deep_12slug_ap,deep_12slug_du" type="Contained" targetslot="0" />
       </StatusEffect>
 
       <!-- 回归常规态 -->

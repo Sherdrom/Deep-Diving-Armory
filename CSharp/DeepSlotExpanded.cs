@@ -15,7 +15,7 @@ namespace DeepSlotExpanded
     /// 本框架不注册任何槽位——全部槽位由 XML/Lua 声明产生（见《框架接口说明书.md》）。
     ///
     /// 原理：
-    ///  - InvSlotType 是 int32 底层 [Flags] 枚举，1024 及以上的位未被游戏使用（最多 21 个自定义槽）；
+    ///  - InvSlotType 是 int32 底层 [Flags] 枚举，16384 及以上的位可用于自定义槽；
     ///  - SlotRegistry 维护「槽位声明」列表：每个声明 = 一个空闲 bit + 触发迁移的物品标签/identifier + 来源槽掩码；
     ///  - ParseSlotTypes postfix：角色槽位表含某声明的来源槽时，追加该声明的 bit（按 bit 升序，双端确定性一致）；
     ///  - Item 构造 postfix：物品标签/identifier 命中声明时，把来源槽位改写为新 bit（Item.allowedSlots 与 Pickable.AllowedSlots 双同步）；
@@ -30,7 +30,7 @@ namespace DeepSlotExpanded
     {
         public const string Version = "1.0.0";
         public const int VanillaPersonalSlotsMask = 504; // Head|InnerClothes|OuterClothes|Headset|Card|Bag
-        public const int FirstCustomBit = 1024;          // InvSlotType 第 10 位起未被使用
+        public const int FirstCustomBit = 16384;         // Unstable 的 1024~8192 已用于义肢槽。
         public const int MaxCustomBit = 1 << 30;         // bit31 是符号位，不可用
     }
 
@@ -39,7 +39,7 @@ namespace DeepSlotExpanded
     /// </summary>
     public class SlotDef
     {
-        public int Bit;                 // 槽位标志位（1024/2048/...，必须是 2 的幂）
+        public int Bit;                 // 槽位标志位（16384/32768/...，必须是 2 的幂）
         public string Id;               // 诊断用标识
         public string[] Tags;           // 物品标签（命中即迁移），大小写不敏感
         public string[] Identifiers;    // 可选：物品 identifier 精确匹配（与 Tags 取并集，命中其一即迁移）
@@ -75,7 +75,7 @@ namespace DeepSlotExpanded
             if (!hasTags && !hasIds) { return false; }
             if (!IsValidBit(def.Bit))
             {
-                Log("[框架] 拒绝非法 bit=" + def.Bit + " (id=" + def.Id + ")，必须为 1024~2^30 的 2 的幂");
+                Log("[框架] 拒绝非法 bit=" + def.Bit + " (id=" + def.Id + ")，必须为 16384~2^30 的 2 的幂");
                 return false;
             }
             lock (Lock)
@@ -319,7 +319,7 @@ namespace DeepSlotExpanded
     /// 第三方模组零代码即可声明新服装槽。
     /// 格式：
     /// &lt;DeepSlotExpandeds&gt;
-    ///   &lt;Slot bit="2048" id="belt" tags="..." identifiers="toolbelt" from="Bag" priority="0" row="1" col="0" /&gt;
+    ///   &lt;Slot bit="16384" id="belt" tags="..." identifiers="toolbelt" from="Bag" priority="0" row="1" col="0" /&gt;
     /// &lt;/DeepSlotExpandeds&gt;
     /// bit 必填；tags 与 identifiers 至少其一；from 缺省 OuterClothes；priority 缺省 0；
     /// row 缺省 1（装备行上方第一排；0 = 与 align 吸附槽同排）；col 缺省自动填空位（M8）；
@@ -457,7 +457,7 @@ namespace DeepSlotExpanded
     /// <summary>
     /// Lua API（M4）：向 LuaCs 全局环境注册 DeepSlotExpanded 表，Lua 模组可动态声明槽位。
     /// 用法：
-    ///   DeepSlotExpanded.RegisterSlot({ bit=4096, id="x", tags={"a","b"}, identifiers="toolbelt", from="Bag", priority=0, row=1, col=0 })
+    ///   DeepSlotExpanded.RegisterSlot({ bit=16384, id="x", tags={"a","b"}, identifiers="toolbelt", from="Bag", priority=0, row=1, col=0 })
     /// tags/identifiers 可以是逗号分隔字符串或字符串数组；from 缺省 OuterClothes；priority 缺省 0；
     /// row 缺省 1（装备行上方第一排；0 = 与 align 吸附槽同排）；col 缺省自动填空位（M8）；align 可选。
     /// bit 冲突/非法时 Register 会拒绝并输出告警日志（冲突日志）。
@@ -608,6 +608,8 @@ namespace DeepSlotExpanded
             slotIconsDone = false;
             diagEntryLogged = false;
             diagPostfixEntered = false;
+            mismatchDiagLogged = false;
+            emptyRegistryRescanAttempted = false;
             SlotRegistry.ClearForReload();
             SlotRegistry.Log("框架已卸载（回主菜单），下次进入会话时自动重新初始化");
         }
@@ -661,6 +663,13 @@ namespace DeepSlotExpanded
         public static void SelfHealPrefix()
         {
             ApplyPatches();
+            // 联机时序兜底：客户端加入时启用包可能尚未就绪导致 XML 扫描为空，
+            // 角色槽位表解析时注册表仍为空则补扫一次（每会话一次，Register 保证幂等）
+            if (!emptyRegistryRescanAttempted && SlotRegistry.GetSlotsByBit().Count == 0)
+            {
+                emptyRegistryRescanAttempted = true;
+                SlotXmlDiscovery.ScanEnabledPackages();
+            }
         }
 
         /// <summary>
@@ -670,6 +679,8 @@ namespace DeepSlotExpanded
         /// </summary>
         private static bool luaApiDone = false;
         private static bool luaApiWarned = false;
+        private static bool mismatchDiagLogged = false;           // 越界防护诊断每会话只记一次
+        private static bool emptyRegistryRescanAttempted = false; // 空注册表补扫每会话只做一次
 
         private static void TryRegisterLuaApi()
         {
@@ -740,6 +751,16 @@ namespace DeepSlotExpanded
 
             // 3) AI 槽位识别补丁（v1.2.0 逻辑泛化到全部注册 bit）
             PatchAI(harmony);
+
+            // 4) Inventory.SharedRead 越界防护（双端）：原版按消息里的槽位区间直接写数组，
+            //    联机双端槽位声明数不一致时（对端比本地多）receivedItemIds[j] 越界，
+            //    客户端表现为持续刷 "Error while reading a message from server"。
+            var sharedRead = AccessTools.Method(typeof(Barotrauma.Inventory), "SharedRead");
+            if (sharedRead != null)
+            {
+                harmony.Patch(sharedRead, prefix: new HarmonyMethod(typeof(DeepSlotExpandedPlugin), nameof(SharedReadPrefix)));
+                SlotRegistry.Log("物品栏同步容错补丁已应用 (Inventory.SharedRead)");
+            }
         }
 
         /// <summary>
@@ -1894,6 +1915,46 @@ namespace DeepSlotExpanded
 
         // ===================== 前缀/后缀实现 =====================
 
+        /// <summary>
+        /// Inventory.SharedRead 替换前缀（双端）：原版实现收到消息里的槽位区间 [start,end) 后
+        /// 直接 receivedItemIds[j] = ... 写入，j ≥ 本地容量时抛 IndexOutOfRangeException。
+        /// 联机双端槽位声明数不一致（对端容量 > 本地容量）时每条物品栏状态事件都越界，
+        /// 客户端持续刷 "Error while reading a message from server"、物品栏停止同步。
+        /// 本前缀按原版字节序完整消费消息（count+ids 逐槽读取），仅丢弃超出本地容量的槽位：
+        /// 线上协议零改动，双端容量一致时与原版行为逐字节等价；不一致时不再崩溃。
+        /// </summary>
+        public static bool SharedReadPrefix(Barotrauma.Inventory __instance,
+            Barotrauma.Networking.IReadMessage msg,
+            System.Collections.Generic.List<ushort>[] receivedItemIds,
+            out bool readyToApply)
+        {
+            byte start = msg.ReadByte();
+            byte end = msg.ReadByte();
+            if (start == 0)
+            {
+                for (int i = 0; i < receivedItemIds.Length; i++) { receivedItemIds[i] = null; }
+            }
+            for (int j = start; j < end; j++)
+            {
+                var newItemIds = new System.Collections.Generic.List<ushort>();
+                int itemCount = msg.ReadRangedInteger(0, 63);
+                for (int k = 0; k < itemCount; k++) { newItemIds.Add(msg.ReadUInt16()); }
+                if (j < receivedItemIds.Length)
+                {
+                    receivedItemIds[j] = newItemIds;
+                }
+                else if (!mismatchDiagLogged)
+                {
+                    mismatchDiagLogged = true;
+                    SlotRegistry.Log("[同步] 物品栏状态槽位区间超出本地容量: 本地槽位数=" + receivedItemIds.Length
+                        + " 消息区间=[" + start + "," + end + ") 实例=" + (__instance == null ? "null" : __instance.GetType().Name)
+                        + " (超界槽位已忽略并继续消费消息字节; 联机双端槽位声明数不一致, 请确认双端启用同一份槽位声明)");
+                }
+            }
+            readyToApply = !System.Linq.Enumerable.Contains(receivedItemIds, null);
+            return false; // 跳过原版实现（字节消费已完成，语义等价）
+        }
+
         /// <summary>HasEquippedItem(Item, InvSlotType?, Func&lt;InvSlotType,bool&gt;) 前缀。</summary>
         public static void HasEquippedItemPrefix(ref Barotrauma.InvSlotType? slotType)
         {
@@ -1995,7 +2056,7 @@ namespace DeepSlotExpanded
 
         /// <summary>
         /// Item 构造 postfix：标签命中声明后，把来源槽位改写为新 bit。
-        /// Item.allowedSlots（装备校验主数据）与 Pickable.AllowedSlots（AI/快捷键等使用）双同步。
+        /// 通过 Pickable.SetAllowedSlots 同步组件槽位与 Item 的装备校验缓存。
         /// </summary>
         public static void ItemCtorPostfix(object __instance)
         {
@@ -2044,20 +2105,6 @@ namespace DeepSlotExpanded
 
                 bool changed = false;
 
-                // Item.allowedSlots (HashSet<InvSlotType>) —— 装备校验的主数据
-                var af = AccessTools.Field(itemType, "allowedSlots");
-                if (af != null && af.GetValue(__instance) is HashSet<Barotrauma.InvSlotType> set)
-                {
-                    foreach (int bit in SlotRegistry.BitsOf(def.FromMask))
-                    {
-                        if (set.Remove((Barotrauma.InvSlotType)bit))
-                        {
-                            set.Add((Barotrauma.InvSlotType)def.Bit);
-                            changed = true;
-                        }
-                    }
-                }
-
                 // 组件层: Wearable 继承自 Pickable，同步它的 AllowedSlots 列表
                 var componentsProp = itemType.GetProperty("Components");
                 if (componentsProp != null && componentsProp.GetValue(__instance) is IEnumerable comps)
@@ -2065,8 +2112,8 @@ namespace DeepSlotExpanded
                     foreach (var comp in comps)
                     {
                         if (!(comp is Barotrauma.Items.Components.Pickable pickable)) { continue; }
-                        var list = pickable.AllowedSlots;
-                        if (list == null) { continue; }
+                        var list = pickable.AllowedSlots.ToList();
+                        bool slotsChanged = false;
                         foreach (int bit in SlotRegistry.BitsOf(def.FromMask))
                         {
                             if (list.Remove((Barotrauma.InvSlotType)bit))
@@ -2075,8 +2122,13 @@ namespace DeepSlotExpanded
                                 {
                                     list.Add((Barotrauma.InvSlotType)def.Bit);
                                 }
-                                changed = true;
+                                slotsChanged = true;
                             }
+                        }
+                        if (slotsChanged)
+                        {
+                            pickable.SetAllowedSlots(list);
+                            changed = true;
                         }
                     }
                 }

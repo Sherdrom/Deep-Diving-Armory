@@ -38,7 +38,7 @@ end
 -- 装备完成点 (After): 物品已注册到肢体槽位, 按佩戴者阵营改写其 WifiComponent.TeamID。
 -- 门控链全部前置, 无阵营生物与无 WifiComponent 的物品在头几行退出,
 -- 常规装备操作仅多一次组件类型查找, 零额外开销。
-Hook.Patch(MOD_ID, "Barotrauma.Item", "Equip", { "Barotrauma.Character" }, function(instance, ptable)
+Hook.Patch(MOD_ID, "Barotrauma.Item", "Equip", { "Barotrauma.Character", "System.Boolean" }, function(instance, ptable)
     local item = instance
     local character = ptable["character"]
     if item == nil or item.Removed
