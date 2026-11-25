@@ -104,6 +104,292 @@ namespace MoreInformationDisplay
     }
 
     /// <summary>
+    /// 可安装弹匣提示：从枪械根 ItemContainer 的根级 Containable 声明解析适配弹匣，
+    /// 仅显示 Deep-Diving-Armory 模组内定义的弹匣，防止跨模组信息过多。
+    /// 解析口径与游戏源码 RelatedItem 构造一致（items/item/identifiers/tags 属性按序读取，
+    /// identifier 命中与 tag 命中取并集）；候选弹匣必须是容器类物品
+    /// （ItemContainer 或 *Magazine 结尾组件），以此过滤发射器的炮弹/保险销/后喷器等附件。
+    /// 结果按枪械 identifier 缓存——prefab 数据会话内不变，悬停时零解析开销。
+    /// </summary>
+    internal static class CompatibleMagazineInfo
+    {
+        private const string ModPackageName = "Deep-Diving-Armory";
+        private const string ModDirMarker = "deep-diving-armory";
+
+        private static readonly Dictionary<Identifier, List<ItemPrefab>> cache = new Dictionary<Identifier, List<ItemPrefab>>();
+
+        /// <summary>构建"可安装弹匣"提示块；无本模组适配弹匣时返回空串（原版枪械等不显示该板块）。</summary>
+        internal static string BuildList(ItemPrefab gunPrefab)
+        {
+            var magazines = GetMagazines(gunPrefab);
+            if (magazines == null || magazines.Count == 0) return "";
+            var sb = new StringBuilder();
+            sb.AppendLine("‖color:gui.orange‖可安装弹匣(只显示本模组弹匣)：‖color:end‖");
+            foreach (var mag in magazines)
+                sb.AppendLine(mag.Name.Value);
+            return sb.ToString().TrimEnd();
+        }
+
+        private static List<ItemPrefab> GetMagazines(ItemPrefab gunPrefab)
+        {
+            if (gunPrefab == null) return null;
+            if (cache.TryGetValue(gunPrefab.Identifier, out var cached)) return cached;
+            var magazines = Resolve(gunPrefab);
+            cache[gunPrefab.Identifier] = magazines;
+            return magazines;
+        }
+
+        private static List<ItemPrefab> Resolve(ItemPrefab gunPrefab)
+        {
+            var result = new List<ItemPrefab>();
+            var cfg = gunPrefab.ConfigElement;
+            if (cfg == null) return result;
+
+            // 只取根 <ItemContainer> 的根级 <Containable>——弹匣槽；
+            // SubContainer 是瞄具/枪口件/芯片等附件槽，不参与
+            ContentXElement containerEl = null;
+            foreach (var el in cfg.Elements())
+            {
+                if (el.Name.LocalName.Equals("ItemContainer", StringComparison.OrdinalIgnoreCase)) { containerEl = el; break; }
+            }
+            if (containerEl == null) return result;
+
+            var tokens = new HashSet<Identifier>();
+            foreach (var containable in containerEl.Elements())
+            {
+                if (!containable.Name.LocalName.Equals("Containable", StringComparison.OrdinalIgnoreCase)) continue;
+                foreach (var token in ReadContainableTokens(containable)) tokens.Add(token);
+            }
+            if (tokens.Count == 0) return result;
+
+            // identifier 命中与 tag 命中取并集（与 RelatedItem.MatchesItem 一致）；
+            // tag 需全 prefab 扫描，prefab 数据静态且结果整体缓存，开销可忽略
+            var seen = new HashSet<Identifier>();
+            foreach (var token in tokens)
+            {
+                if (ItemPrefab.Prefabs.TryGet(token, out var prefab)) AddCandidate(prefab, seen, result);
+            }
+            foreach (var prefab in ItemPrefab.Prefabs)
+            {
+                foreach (var token in tokens)
+                {
+                    if (prefab.Tags.Contains(token)) { AddCandidate(prefab, seen, result); break; }
+                }
+            }
+            return result;
+        }
+
+        private static bool AddCandidate(ItemPrefab prefab, HashSet<Identifier> seen, List<ItemPrefab> result)
+        {
+            if (prefab == null || !seen.Add(prefab.Identifier)) return false;
+            if (!IsDDAOwned(prefab) || !IsMagazinePrefab(prefab)) return false;
+            result.Add(prefab);
+            return true;
+        }
+
+        // Containable 属性优先级与游戏源码 RelatedItem 构造一致；
+        // DDA 枪械根容器未使用 excludedidentifiers/allowvariants 属性，无需解析
+        private static IEnumerable<Identifier> ReadContainableTokens(ContentXElement containable)
+        {
+            string raw = null;
+            foreach (string attr in new[] { "items", "item", "identifiers", "tags", "identifier", "tag" })
+            {
+                var a = containable.GetAttribute(attr);
+                if (a != null && !string.IsNullOrWhiteSpace(a.Value)) { raw = a.Value; break; }
+            }
+            if (raw == null) yield break;
+            foreach (string part in raw.Split(','))
+            {
+                string id = part.Trim();
+                if (id.Length > 0) yield return id.ToIdentifier();
+            }
+        }
+
+        // 归属判断：包名精确匹配（filelist.xml 的 name 属性），回退到来源文件路径包含模组目录名
+        private static bool IsDDAOwned(ItemPrefab prefab)
+        {
+            var pkg = prefab.ContentPackage;
+            if (pkg != null && string.Equals(pkg.Name, ModPackageName, StringComparison.OrdinalIgnoreCase)) return true;
+            var file = prefab.ContentFile;
+            if (file == null) return false;
+            string path = file.Path.Value ?? "";
+            return path.IndexOf(ModDirMarker, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        // 弹匣判定：物品本体带容器类组件（原版弹匣为 ItemContainer，本模组虚拟弹匣为 VirtualizedMagazine），
+        // "*Magazine" 结尾匹配自定义弹匣组件；ManualMagazineLoading 以 Loading 结尾不会误判
+        private static bool IsMagazinePrefab(ItemPrefab prefab)
+        {
+            var cfg = prefab.ConfigElement;
+            if (cfg == null) return false;
+            foreach (var el in cfg.Elements())
+            {
+                string name = el.Name.LocalName;
+                if (name.Equals("ItemContainer", StringComparison.OrdinalIgnoreCase)) return true;
+                if (name.EndsWith("Magazine", StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 弹匣属性调整提示：解析 AdjustEquipmentStatvalue-Config/WeaponMagazines.lua（DDA 弹匣数值登记表），
+    /// 悬停弹匣时显示其登记的属性调整——只显示该脚本登记的物品，未登记或仅登记 talentMarkers 的不显示。
+    /// 生效时机与框架一致：弹匣属性仅在主武器手持（weaponSlots）时生效；statsKey 相同的多个弹匣不叠加。
+    /// 配置文件会话内不变，解析结果按物品 identifier 缓存。
+    /// </summary>
+    internal static class MagazineStatAdjustInfo
+    {
+        private const string ConfigRelativePath =
+            "Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config/WeaponMagazines.lua";
+
+        private static readonly Dictionary<Identifier, string> cache = new Dictionary<Identifier, string>();
+        private static bool loaded;
+
+        // 常用 StatTypes 中文名（对应 AdjustEquipmentStatvalue-Config.lua 附录A）
+        private static readonly Dictionary<string, string> statTypeNames = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["WeaponsSkillBonus"] = "武器技能",
+            ["MedicalSkillBonus"] = "医疗技能",
+            ["ElectricalSkillBonus"] = "电气技能",
+            ["MechanicalSkillBonus"] = "机械技能",
+            ["HelmSkillBonus"] = "舰桥技能",
+            ["MovementSpeed"] = "移动速度",
+            ["WalkingSpeed"] = "步行速度",
+            ["SwimmingSpeed"] = "游泳速度",
+            ["PropulsionSpeed"] = "水中推进速度",
+        };
+
+        internal static string Build(Identifier itemIdentifier)
+        {
+            EnsureLoaded();
+            return cache.TryGetValue(itemIdentifier, out var text) ? text : "";
+        }
+
+        // 首次调用时扫描已启用模组下的 WeaponMagazines.lua（同 EnsureArmorConfigsLoaded 模式）
+        private static void EnsureLoaded()
+        {
+            if (loaded) return;
+            loaded = true;
+            try
+            {
+                foreach (var package in ContentPackageManager.EnabledPackages.Regular)
+                {
+                    string dir = package.Dir;
+                    if (string.IsNullOrEmpty(dir) || !Directory.Exists(dir)) continue;
+                    string path = Path.Combine(dir, ConfigRelativePath);
+                    if (!File.Exists(path)) continue;
+                    ParseFile(File.ReadAllText(path));
+                }
+            }
+            catch (Exception e)
+            {
+                LuaCsLogger.Log($"[MoreInformationDisplay] 解析弹匣属性配置失败: {e.Message}");
+            }
+        }
+
+        // 逐个解析 add({...}, {...}) 配置块；文件结构固定，花括号配对取块，
+        // 仅提取 stats 表（{ statType = "名称", value = 数值 }）；只含 talentMarkers 的块无数值，跳过
+        private static void ParseFile(string content)
+        {
+            if (string.IsNullOrEmpty(content)) return;
+            var ids = new List<string>();
+            var stats = new List<(string Type, float Value)>();
+            int pos = 0;
+            while (true)
+            {
+                int addIndex = content.IndexOf("add(", pos, StringComparison.Ordinal);
+                if (addIndex < 0) break;
+                int idsStart = content.IndexOf('{', addIndex + 4);
+                if (idsStart < 0) break;
+                int idsEnd = MatchBrace(content, idsStart);
+                if (idsEnd < 0) break;
+                int cfgStart = content.IndexOf('{', idsEnd);
+                if (cfgStart < 0) break;
+                int cfgEnd = MatchBrace(content, cfgStart);
+                if (cfgEnd < 0) break;
+                pos = cfgEnd;
+
+                ids.Clear();
+                stats.Clear();
+                foreach (Match m in Regex.Matches(content.Substring(idsStart + 1, idsEnd - idsStart - 1), "\"([^\"]*)\""))
+                {
+                    string id = m.Groups[1].Value.Trim();
+                    if (!string.IsNullOrWhiteSpace(id)) ids.Add(id);
+                }
+                if (ids.Count == 0 || !TryExtractStats(content, cfgStart + 1, cfgEnd, stats)) continue;
+                string block = BuildBlock(stats);
+                foreach (string id in ids)
+                {
+                    cache[new Identifier(id)] = block;
+                }
+            }
+        }
+
+        // 定位 cfg 块内的 stats 表（要求 "stats" 后紧跟 '='，避免误命中 statsKey）
+        private static bool TryExtractStats(string content, int start, int end, List<(string Type, float Value)> stats)
+        {
+            int index = start;
+            while (true)
+            {
+                int keyIndex = content.IndexOf("stats", index, StringComparison.Ordinal);
+                if (keyIndex < 0 || keyIndex >= end) return false;
+                int cursor = keyIndex + "stats".Length;
+                while (cursor < end && char.IsWhiteSpace(content[cursor])) cursor++;
+                if (cursor >= end || content[cursor] != '=') { index = keyIndex + 1; continue; }
+                cursor++;
+                while (cursor < end && char.IsWhiteSpace(content[cursor])) cursor++;
+                if (cursor >= end || content[cursor] != '{') { index = keyIndex + 1; continue; }
+                int tableEnd = MatchBrace(content, cursor);
+                if (tableEnd < 0 || tableEnd > end) return false;
+
+                foreach (Match m in Regex.Matches(content.Substring(cursor + 1, tableEnd - cursor - 1),
+                    "\\{\\s*statType\\s*=\\s*\"([^\"]+)\"\\s*,\\s*value\\s*=\\s*(-?\\d+(?:\\.\\d+)?)\\s*\\}"))
+                {
+                    stats.Add((m.Groups[1].Value, float.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture)));
+                }
+                return stats.Count > 0;
+            }
+        }
+
+        private static string BuildBlock(List<(string Type, float Value)> stats)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("‖color:gui.orange‖属性调整(主武器手持时生效)：‖color:end‖");
+            foreach (var (type, value) in stats)
+            {
+                if (value == 0f) continue;
+                string name = statTypeNames.TryGetValue(type, out var mapped) ? mapped : type;
+                string number = FormatValue(type, value);
+                string color = value < 0f ? "gui.red" : "gui.green";
+                sb.AppendLine($"‖color:{color}‖{name} {number}‖color:end‖");
+            }
+            return sb.ToString().TrimEnd();
+        }
+
+        // 技能加成为整数点数；*Speed/*Multiplier 为倍率小数，按百分比显示（-0.05 = -5%）
+        private static string FormatValue(string type, float value)
+        {
+            bool percent = type.EndsWith("Multiplier", StringComparison.Ordinal)
+                || type.EndsWith("Speed", StringComparison.Ordinal);
+            if (!percent) return value.ToString("+0;-0;0", CultureInfo.InvariantCulture);
+            return (value * 100f).ToString("+0;-0;0", CultureInfo.InvariantCulture) + "%";
+        }
+
+        private static int MatchBrace(string text, int openIndex)
+        {
+            int depth = 0;
+            for (int i = openIndex; i < text.Length; i++)
+            {
+                char c = text[i];
+                if (c == '{') depth++;
+                else if (c == '}') { depth--; if (depth == 0) return i; }
+            }
+            return -1;
+        }
+    }
+
+    /// <summary>
     /// 库存提示框缓存与显示条件同步：
     /// SlotReference 的提示文本构建后被缓存，仅当 TooltipNeedsRefresh 判定需要更新时才重建
     /// （耐久变化、Contextual 键变化）。若不补此丁，未按 Shift 时构建的缓存，
@@ -247,6 +533,9 @@ namespace MoreInformationDisplay
                     sb.AppendLine($"伤害倍率: {ranged.WeaponDamageModifier:F2}");
                     string effects = BuildItemComponentEffects(item);
                     if (!string.IsNullOrEmpty(effects)) sb.Append(effects);
+                    // 可安装弹匣（仅显示本模组弹匣，无适配时整块隐藏）
+                    string magazines = CompatibleMagazineInfo.BuildList(item.Prefab);
+                    if (!string.IsNullOrEmpty(magazines)) sb.Append("\n").Append(magazines);
                     parts.Add(sb.ToString().Trim());
                 }
 
@@ -279,6 +568,10 @@ namespace MoreInformationDisplay
                 if (wifi != null)
                     parts.Add(BuildWifiInfo(wifi));
             }
+
+            // 8. 弹匣属性调整（仅 WeaponMagazines.lua 登记的物品）
+            string statAdjust = MagazineStatAdjustInfo.Build(item.Prefab.Identifier);
+            if (!string.IsNullOrWhiteSpace(statAdjust)) parts.Add(statAdjust);
 
             string extra = string.Join("\n", parts.Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim())).Trim();
 
@@ -560,7 +853,13 @@ namespace MoreInformationDisplay
             if (!string.IsNullOrWhiteSpace(armorCfg)) parts.Add(armorCfg);
 
             string ranged = ParseRangedFromPrefab(prefab);
-            if (!string.IsNullOrWhiteSpace(ranged)) parts.Add(ranged);
+            if (!string.IsNullOrWhiteSpace(ranged))
+            {
+                parts.Add(ranged);
+                // 可安装弹匣（仅显示本模组弹匣，无适配时整块隐藏）
+                string magazines = CompatibleMagazineInfo.BuildList(prefab);
+                if (!string.IsNullOrWhiteSpace(magazines)) parts.Add(magazines);
+            }
 
             // 枪械配方只显示远程武器属性；其余配方本体无 Projectile 时，
             // 仅弹匣（ItemContainer 带 SpawnWithId）显示默认子弹，普通容器不罗列内容物
@@ -577,6 +876,10 @@ namespace MoreInformationDisplay
                     if (!string.IsNullOrWhiteSpace(containedAmmo)) parts.Add(containedAmmo);
                 }
             }
+
+            // 弹匣属性调整（仅 WeaponMagazines.lua 登记的物品，无登记时不显示）
+            string statAdjust = MagazineStatAdjustInfo.Build(prefab.Identifier);
+            if (!string.IsNullOrWhiteSpace(statAdjust)) parts.Add(statAdjust);
 
             foreach (var hint in reloadBoxHints)
             {
