@@ -115,7 +115,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiVision.lua")--敌�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoFriendlyDamage.lua")--友谊芯片强制伤害为0
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予天赋
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ResistanceLimit.lua")--抗性限制
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpawnBlindBox.lua")--随机生成
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI随机切换武器
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
@@ -128,6 +127,8 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetTeamAutoSwitch.lua")--耳机阵营切换
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ChipBodyshotPenetration.lua")--碎甲芯片额外穿甲(双端)
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContractNoHighPenetration.lua")--禁用高穿弹合约
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
 if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")--NPC虚拟弹匣按身份填充弹药(服务端)
 end
