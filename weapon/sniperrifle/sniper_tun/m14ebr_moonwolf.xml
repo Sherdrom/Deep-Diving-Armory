@@ -26,14 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.2">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!-- 有短枪口件时，略微增加枪口距离-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="341,43" comparison="and" setvalue="true">
         <Conditional deep_muzzle_short_detect="gte 1.0" />
@@ -71,7 +63,7 @@
       <!-- VCE检测 -->
 
     </Holdable>
-    <SwitchableRangedWeapon reload="0.18" weapondamagemodifier="3" reloadnoskill="1" reloadskillrequirement="100" holdtrigger="true" barrelpos="321,43" spread="2" unskilledspread="3" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.18" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="0.18" weapondamagemodifier="3" reloadnoskill="1" reloadskillrequirement="100" holdtrigger="true" barrelpos="321,43" spread="2" unskilledspread="3" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" penetration="0.1" botreload="0.18" switchableSlots="0" switchableFiremodes="Auto,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />

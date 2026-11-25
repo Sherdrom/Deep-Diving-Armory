@@ -127,6 +127,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/BlockContainerInsertion.lu
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外插槽UI（大肥鱼科技）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetTeamAutoSwitch.lua")--耳机阵营切换
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ChipBodyshotPenetration.lua")--碎甲芯片额外穿甲(双端)
 if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")--NPC虚拟弹匣按身份填充弹药(服务端)
 end

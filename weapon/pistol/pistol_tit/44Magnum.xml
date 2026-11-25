@@ -40,14 +40,6 @@
       <StatusEffect type="OnSecondaryUse" target="This" setvalue="true" stackable="false">
         <sound file="%ModDir%/weapon/pistol/deadeyes.ogg" range="100.0" loop="false" volume="1" />
       </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">

@@ -119,6 +119,7 @@ namespace MoreInformationDisplay
         {
             public bool ShiftDown;
             public int MagazineState;
+            public int ChipState;
         }
 
         private static readonly ConditionalWeakTable<Inventory.SlotReference, BuildState> buildStates
@@ -133,7 +134,8 @@ namespace MoreInformationDisplay
             bool shiftDown = PlayerInput.IsShiftDown();
             if (buildStates.TryGetValue(__instance, out var state)
                 && state.ShiftDown == shiftDown
-                && state.MagazineState == VirtualMagazineTooltip.State(__instance.Item))
+                && state.MagazineState == VirtualMagazineTooltip.State(__instance.Item)
+                && state.ChipState == Patch_ItemStatsTooltip.ChipState(__instance.Item))
             {
                 return;
             }
@@ -147,6 +149,7 @@ namespace MoreInformationDisplay
             BuildState state = buildStates.GetOrCreateValue(__instance);
             state.ShiftDown = PlayerInput.IsShiftDown();
             state.MagazineState = VirtualMagazineTooltip.State(__instance.Item);
+            state.ChipState = Patch_ItemStatsTooltip.ChipState(__instance.Item);
         }
     }
 
@@ -227,9 +230,15 @@ namespace MoreInformationDisplay
                 var ranged = item.GetComponent<RangedWeapon>();
                 if (ranged != null)
                 {
+                    // 碎甲芯片加成：与伤害结算保持同一数值口径（DoDamageToLimb 将枪械
+                    // Penetration 叠入攻击穿甲后，ChipBodyshotPenetration.lua 再注入 +0.1）
+                    float chipBonus = GetChipPenetrationBonus(item);
+                    float effectivePenetration = ranged.Penetration + chipBonus;
                     var sb = new StringBuilder();
                     sb.AppendLine("‖color:gui.orange‖<远程武器>‖color:end‖");
-                    sb.AppendLine($"穿甲: {ranged.Penetration:F2}{PenArmorSuffix(ranged.Penetration, item.Prefab)}");
+                    sb.AppendLine($"穿甲: {effectivePenetration:F2}{PenArmorSuffix(effectivePenetration, item.Prefab)}");
+                    if (chipBonus > 0f)
+                        sb.AppendLine($"‖color:gui.green‖碎甲芯片生效: 穿甲+{chipBonus:F2}‖color:end‖");
                     sb.AppendLine($"重装: {ranged.Reload:F2}s");
                     sb.AppendLine($"散布: {ranged.Spread:F2}");
                     if (ranged.MaxChargeTime > 0f)
@@ -400,6 +409,38 @@ namespace MoreInformationDisplay
             }
             return null;
         }
+
+        // 碎甲芯片(chip_bodyshot)穿甲加成：判定规则与 ChipBodyshotPenetration.lua 一致，
+        // 仅对带 gunsmith 标签的枪械生效，芯片位于枪械自身物品栏内时 +0.1，拔出立即失效。
+        // 伤害侧为逐击注入不落盘，显示侧逐次悬停现查，双端无需额外同步
+        private const string ChipIdentifier = "chip_bodyshot";
+        private const string ChipGunsmithTag = "gunsmith";
+        private const float ChipPenetrationBonus = 0.1f;
+
+        private static float GetChipPenetrationBonus(Item gun)
+        {
+            if (gun == null || gun.Removed) return 0f;
+            if (!gun.HasTag(new Identifier(ChipGunsmithTag))) return 0f;
+            Identifier chipId = new Identifier(ChipIdentifier);
+            if (gun.OwnInventory != null)
+            {
+                foreach (var contained in gun.OwnInventory.AllItems)
+                {
+                    if (contained != null && !contained.Removed && contained.Prefab.Identifier == chipId)
+                        return ChipPenetrationBonus;
+                }
+                return 0f;
+            }
+            foreach (var contained in gun.ContainedItems)
+            {
+                if (contained != null && !contained.Removed && contained.Prefab.Identifier == chipId)
+                    return ChipPenetrationBonus;
+            }
+            return 0f;
+        }
+
+        // 芯片装配状态：供提示缓存判定插入/拔出芯片后强制重建
+        internal static int ChipState(Item item) => GetChipPenetrationBonus(item) > 0f ? 1 : 0;
 
         // 根据穿甲值生成防护等级提示：等级 = 穿甲值 * 10 截断取整，如 0.45 → 4级，1.0 → 10级
         // 穿甲值小于等于 0 时不追加

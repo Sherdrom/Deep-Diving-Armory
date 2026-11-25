@@ -32,14 +32,6 @@
         <LuaHook name="6P41OriginSprite" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false"></LightComponent>
       <!-- 右键瞄准时，设置电压为1.0-->
@@ -62,7 +54,7 @@
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/machinegun/machinegun_tun/Sprite/6P41_darkdog.png" canbehiddenbyotherwearables="false" sourcerect="18,9,607,160" rotation="90" inheritlimbdepth="false" depth="0.12" limb="Torso" scale="0.23" origin="0.5,0.95" />
     </Wearable>
-    <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="2.6" holdtrigger="true" barrelpos="300,34" spread="12" unskilledspread="24" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="0.085" weapondamagemodifier="2.6" holdtrigger="true" barrelpos="300,34" spread="12" unskilledspread="24" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V" penetration="0.1">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />

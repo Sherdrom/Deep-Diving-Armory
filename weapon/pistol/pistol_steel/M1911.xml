@@ -25,14 +25,6 @@
     <Holdable slots="Any,RightHand,LeftHand" controlpose="true" holdpos="30,-20" holdangle="45" aimpos="85,5" handle1="-30,-7" handle2="-20,-7" msg="ItemMsgPickUpSelect">
 
 
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!-- 有短枪口件时，略微增加枪口距离-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="76,27" comparison="and" setvalue="true">
