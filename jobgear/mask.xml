@@ -69,4 +69,50 @@
       <StatusEffect type="OnWearing" target="Character" HideFace="true" setvalue="true" disabledeltatime="true" />
     </Wearable>
   </Item>
+  <Item name="" identifier="deep_gp5_mask" category="Equipment" subcategory="deep_mask" tags="smallitem,deep_cloth_invisible,clothing,deep_mask" cargocontaineridentifier="metalcrate" description="" scale="0.28">
+    <Price baseprice="60" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/mask/mask_icon.png" sourcerect="8,133,117,173" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/mask/mask.png" depth="0.501" sourcerect="11,134,120,116" origin="0.5,0.5" />
+    <Body width="59" height="40" density="15" />
+    <Wearable slots="Any,Card" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/mask/mask.png" depth="0.501" limb="Head" depthlimb="Jaw" hidewearablesoftype="Hair,Beard,moustache" inheritlimbdepth="true" inheritscale="false" ignorelimbscale="true" scale="0.28" hidelimb="false" sourcerect="11,134,120,116" origin="0.38,0.42" />
+      <SkillModifier skillidentifier="weapons" skillvalue="3" />
+      <StatusEffect type="OnWearing" target="Character" HideFace="true" setvalue="true" disabledeltatime="true" />
+    </Wearable>
+  </Item>
+  <Item name="" identifier="deep_gp7_mask" category="Equipment" subcategory="deep_mask" tags="smallitem,deep_cloth_invisible,clothing,deep_mask" cargocontaineridentifier="metalcrate" description="" scale="0.28">
+    <Price baseprice="60" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="0" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredItem identifier="plastic" amount="2" />
+    </Fabricate>
+    <Deconstruct time="10">
+      <Item identifier="plastic" />
+    </Deconstruct>
+    <InventoryIcon texture="%ModDir%/jobgear/mask/mask_icon.png" sourcerect="129,132,157,164" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/jobgear/mask/mask.png" depth="0.501" sourcerect="136,132,101,108" origin="0.5,0.5" />
+    <Body width="59" height="40" density="15" />
+    <Wearable slots="Any,Card" msg="ItemMsgPickUpSelect">
+      <sprite texture="%ModDir%/jobgear/mask/mask.png" depth="0.501" limb="Head" depthlimb="Jaw" hidewearablesoftype="Hair,Beard,moustache" inheritlimbdepth="true" inheritscale="false" ignorelimbscale="true" scale="0.28" hidelimb="false" sourcerect="136,132,101,108" origin="0.4,0.42" />
+      <SkillModifier skillidentifier="weapons" skillvalue="3" />
+      <StatusEffect type="OnWearing" target="Character" HideFace="true" setvalue="true" disabledeltatime="true" />
+    </Wearable>
+  </Item>
 </Items>

@@ -131,7 +131,7 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ChipBodyshotPenetration.lu
 if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")--NPC虚拟弹匣按身份填充弹药(服务端)
 end
---dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手持加特林旋转枪管(客户端)
+dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手持加特林旋转枪管(客户端)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/WearableContainerPatch.lua")--穿着态容器物品绘制(客户端)（未完成）
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TwoHandGripSwitch.lua")--双持切换(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeathEquipmentRecycling.lua")--死亡装备回收(暂时用不到)
