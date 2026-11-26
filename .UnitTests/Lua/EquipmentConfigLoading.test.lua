@@ -30,14 +30,15 @@ for _, name in ipairs(expandedCategories.subItems) do
 end
 assert(found, "new category file was not exposed to membership tests")
 
+local existingSubItem = assert(next(config.subItems), "subItems config is empty")
 dofile = function(path)
     if path:match("/AdditionalTest%.lua$") then
-        return { deep_firendlyfire_avoid_tac = extra }
+        return { [existingSubItem] = extra }
     end
     return originalDofile(path)
 end
 local ok, err = pcall(assert(load(extended, "@" .. loader)))
-assert(not ok and tostring(err):find("duplicate equipment config: deep_firendlyfire_avoid_tac", 1, true),
+assert(not ok and tostring(err):find("duplicate equipment config: " .. existingSubItem, 1, true),
     "duplicate category identifiers were accepted")
 dofile = originalDofile
 

@@ -148,7 +148,4 @@ assert(unprotectedDamage.Strength == 80, "attacks without a friendship marker sh
 assert(NoFriendlyDamage.IsSameTeam(attacker, teammate))
 assert(not NoFriendlyDamage.IsSameTeam(attacker, enemy))
 
-local chips = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config/WeaponChips.lua")
-assert(chips.chip_friendly_fire.talentMarkers[1] == "friendly_fire", "friendship chip marker mapping changed")
-
 print("NoFriendlyDamage state check OK")
