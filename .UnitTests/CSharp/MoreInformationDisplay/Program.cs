@@ -4,11 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
 using Barotrauma;
 using Barotrauma.Items.Components;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using MoreInformationDisplay;
 
-// Offline fixtures against the local LuaCs reference assemblies, without game/UI startup.
+// Offline fixtures against the native plugin assembly, without game/UI startup.
 if (args.Length != 1)
 {
     Console.Error.WriteLine("Usage: MoreInformationDisplay.Tests <Unstable game directory>");
@@ -33,17 +30,22 @@ var cache = (IDictionary)Activator.CreateInstance(Field(typeof(Item), "component
 cache[typeof(ItemContainer)] = components;
 Set(item, "componentsByType", cache);
 Set(magazine, "item", item);
-var scriptState = CompileScriptState();
+string pluginPlatform = OperatingSystem.IsWindows() ? "Windows" : OperatingSystem.IsMacOS() ? "Mac" : "Linux";
+var plugin = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.GetFullPath($"bin/{pluginPlatform}/Client/Deep-Diving-ArmoryClient.dll"));
+var tooltip = plugin.GetType("MoreInformationDisplay.VirtualMagazineTooltip", true);
+const BindingFlags methods = BindingFlags.Static | BindingFlags.NonPublic;
+var state = tooltip.GetMethod("State", methods).CreateDelegate<Func<Item, int>>();
+var describe = tooltip.GetMethod("Describe", methods).CreateDelegate<Func<Item, string>>();
 
 magazine.Load("test_standard", "test_ap", "test_standard");
-int before = scriptState(item);
-string text = VirtualMagazineTooltip.Describe(item);
+int before = state(item);
+string text = describe(item);
 Assert(text.Contains("3/30") && text.Contains("test_standard × 2") && text.Contains("test_ap × 1"), "wrong count or composition");
 Assert(text.Split('\n')[1].EndsWith("test_standard"), "wrong next round");
 Assert(text.StartsWith("余弹: 3/30\n下一发: ") && text.Contains("\n弹种组成: "), "tooltip labels require removed localization keys");
-Assert(magazine.LoadedCount == 3 && before == scriptState(item), "tooltip mutated ammo");
+Assert(magazine.LoadedCount == 3 && before == state(item), "tooltip mutated ammo");
 magazine.Load("test_ap", "test_standard", "test_standard");
-Assert(before != scriptState(item), "same-count/same-top reorder did not invalidate tooltip");
+Assert(before != state(item), "same-count/same-top reorder did not invalidate tooltip");
 
 var lead = (ItemPrefab)RuntimeHelpers.GetUninitializedObject(typeof(ItemPrefab));
 Set(lead, "Identifier", new Identifier("556x45round"));
@@ -52,11 +54,11 @@ ItemPrefab.Prefabs.Add(lead, false);
 try
 {
     magazine.Load("556x45round", "556x45round", "556x45round", "556x45round_tit", "556x45round_tit", "556x45round");
-    text = VirtualMagazineTooltip.Describe(item);
+    text = describe(item);
     Assert(text.Contains("下一发: 556x45round\n") && text.Contains("556x45round × 4") && text.Contains("556x45round_tit × 2"),
         "a registered round without a translation lost its identifier");
     Set(lead, "name", (LocalizedString)"5.56×45 铅制弹");
-    Assert(VirtualMagazineTooltip.Describe(item).Contains("下一发: 5.56×45 铅制弹\n"), "a translated round lost its display name");
+    Assert(describe(item).Contains("下一发: 5.56×45 铅制弹\n"), "a translated round lost its display name");
 }
 finally
 {
@@ -64,13 +66,13 @@ finally
 }
 
 magazine.Load();
-text = VirtualMagazineTooltip.Describe(item);
+text = describe(item);
 Assert(text.Contains("0/30") && !text.Contains("×"), "empty magazine retained old contents");
 Assert(text.EndsWith("下一发: 空匣"), "empty magazine requires a removed localization key");
-Assert(scriptState(null) == 0 && VirtualMagazineTooltip.Describe(null) == "", "null item handling");
+Assert(state(null) == 0 && describe(null) == "", "null item handling");
 Set(item, "tags", new HashSet<Identifier>());
-Assert(VirtualMagazineTooltip.Describe(item) == "", "an item without the virtual magazine tag was changed");
-Console.WriteLine("ok: LuaCs-style script compilation and execution; contents, next round, empty state and same-count refresh pass");
+Assert(describe(item) == "", "an item without the virtual magazine tag was changed");
+Console.WriteLine("ok: native contents, next round, empty state and same-count refresh pass");
 
 // Prefab-backed virtual ammunition uses the same Shift detail patch without spawning an Item.
 Set(prefab, "name", (LocalizedString)"Test cartridge");
@@ -90,7 +92,7 @@ Set(headlessGame, "Platform", platform);
 typeof(GameMain).GetProperty(nameof(GameMain.Instance)).SetValue(null, headlessGame);
 typeof(PlayerInput).GetField("allowInput", staticFields).SetValue(null, true);
 var keyboard = typeof(PlayerInput).GetField("keyboardState", staticFields);
-var prefabPostfix = scriptState.Method.DeclaringType.Assembly.GetType("MoreInformationDisplay.Patch_PrefabAmmoTooltip")
+var prefabPostfix = state.Method.DeclaringType.Assembly.GetType("MoreInformationDisplay.Patch_PrefabAmmoTooltip")
     .GetMethod("Postfix", staticFields);
 string PrefabTooltip()
 {
@@ -119,35 +121,7 @@ finally
     typeof(PlayerInput).GetField("allowInput", staticFields).SetValue(null, false);
     typeof(GameMain).GetProperty(nameof(GameMain.Instance)).SetValue(null, null);
 }
-Console.WriteLine("ok: LuaCs-compiled prefab tooltip postfix preserves base text, expands on either Shift key, collapses on release, and ignores non-projectiles");
-
-static Func<Item, int> CompileScriptState()
-{
-    // LuaCs AssemblyLoader exposes private overloads to Roslyn, but CLR access checks still apply.
-    var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
-        optimizationLevel: OptimizationLevel.Release, metadataImportOptions: MetadataImportOptions.All);
-    typeof(CSharpCompilationOptions).GetProperty("TopLevelBinderFlags", BindingFlags.Instance | BindingFlags.NonPublic)
-        .SetValue(options, 37748738u);
-    var references = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator)
-        .Concat(new[] { "bin/Client/Windows/DeepAmmoLoader.dll", ".Tools/Refs/MonoMod.Utils.dll" })
-        .Select(path => MetadataReference.CreateFromFile(path));
-    var source = "global using System; global using System.Collections.Generic; global using System.Linq; "
-        + "global using Barotrauma; global using Barotrauma.LuaCs; global using Barotrauma.Extensions;\n"
-        + File.ReadAllText("CSharp/MoreInformationDisplay.cs");
-    // LuaCs injects these attributes while both the mod DLL and MonoMod are compiler references.
-    var attributes = "using System.Runtime.CompilerServices; "
-        + "[assembly: IgnoresAccessChecksTo(\"BarotraumaCore\")] [assembly: IgnoresAccessChecksTo(\"Barotrauma\")]";
-    var parseOptions = new CSharpParseOptions(preprocessorSymbols: new[] { "CLIENT" });
-    var compilation = CSharpCompilation.Create("TooltipScriptRegression",
-        new[] { CSharpSyntaxTree.ParseText(source, parseOptions), CSharpSyntaxTree.ParseText(attributes, parseOptions),
-            CSharpSyntaxTree.ParseText(File.ReadAllText("CSharp/DeepSlotExpanded.cs"), parseOptions) }, references, options);
-    using var stream = new MemoryStream();
-    var result = compilation.Emit(stream);
-    Assert(result.Success, string.Join("\n", result.Diagnostics));
-    stream.Position = 0;
-    return AssemblyLoadContext.Default.LoadFromStream(stream).GetType("MoreInformationDisplay.VirtualMagazineTooltip")
-        .GetMethod("State", BindingFlags.Static | BindingFlags.NonPublic).CreateDelegate<Func<Item, int>>();
-}
+Console.WriteLine("ok: native prefab tooltip postfix preserves base text, expands on either Shift key, collapses on release, and ignores non-projectiles");
 
 static FieldInfo Field(Type type, string name)
 {

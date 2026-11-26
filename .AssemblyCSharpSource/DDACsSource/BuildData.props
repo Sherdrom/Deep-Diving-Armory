@@ -10,12 +10,12 @@
     Enables the use of Publicized assemblies in place of the standard Barotrauma assemblies, allowing access to members that were
     previously restricted by access modifiers. Enable only if you know what you are doing.
      -->
-    <UsePublicizedAssemblies>false</UsePublicizedAssemblies>
+    <UsePublicizedAssemblies>true</UsePublicizedAssemblies>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)UserBuildData.props" Condition="Exists('$(MSBuildThisFileDirectory)UserBuildData.props')" />
   <PropertyGroup>
     <ModDeployDir Condition="'$(ModDeployDir)' == ''">$(MSBuildThisFileDirectory)bin/LocalMods</ModDeployDir>
-    <PluginDeployDir>$(ModDeployDir)/$(ModName)/bin/$(PlatformName)/$(BuildTarget)</PluginDeployDir>
+    <PluginDeployDir>$(ModDeployDir)/bin/$(PlatformName)/$(BuildTarget)</PluginDeployDir>
   </PropertyGroup>
 </Project>

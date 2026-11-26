@@ -5,9 +5,9 @@ using System.Runtime.Loader;
 using System.Xml.Linq;
 
 // Uses deployed assemblies without starting the game; no rendering, physics or network session.
-if (args.Length is < 4 or > 5 || args.Length == 5 && args[4] is not ("Client" or "Server"))
+if (args.Length is < 3 or > 4 || args.Length == 4 && args[3] is not ("Client" or "Server"))
 {
-    Console.Error.WriteLine("Usage: DeepAmmoLoader.Tests <game directory> <VCE directory> <DDA directory> <LuaCs plugin directory> [Client|Server]");
+    Console.Error.WriteLine("Usage: DeepAmmoLoader.Tests <game directory> <VCE directory> <DDA directory> [Client|Server]");
     return 2;
 }
 try { Run(args); return 0; }
@@ -15,35 +15,46 @@ catch (Exception error) { Console.Error.WriteLine(error); return 1; }
 
 static void Run(string[] args)
 {
-    string platform = OperatingSystem.IsWindows() ? "Windows" : OperatingSystem.IsMacOS() ? "Mac" : "Linux";
-    string target = args.Length == 5 ? args[4] : "Client";
+    string target = args.Length == 4 ? args[3] : "Client";
     string dda = Path.GetFullPath(args[2]);
-    string[] directories = [Path.GetFullPath(args[0]),
-        Path.Combine(Path.GetFullPath(args[3]), platform, target), Path.Combine(Path.GetFullPath(args[3]), target)];
+    string gameDirectory = Path.GetFullPath(args[0]);
     AssemblyLoadContext.Default.Resolving += (context, name) =>
     {
-        foreach (string directory in directories)
-        {
-            string path = Path.Combine(directory, name.Name + ".dll");
-            if (File.Exists(path)) return context.LoadFromAssemblyPath(path);
-        }
-        return null;
+        string path = Path.Combine(gameDirectory, name.Name + ".dll");
+        return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
     };
     Assembly game = Assembly.Load(target == "Client" ? "Barotrauma" : "DedicatedServer"), core = Assembly.Load("BarotraumaCore");
-    // Native VCE and LuaCs mods occupy separate contexts in the unstable game.
-    var vceContext = new AssemblyLoadContext("VCE-native", isCollectible: true);
-    var ddaContext = new AssemblyLoadContext("DDA-LuaCs", isCollectible: true);
-    Assembly vce = vceContext.LoadFromAssemblyPath(Path.Combine(Path.GetFullPath(args[1]), "bin", platform, target,
-        "VanillaComponentsExpanded" + target + ".dll"));
-    Assembly adapter = ddaContext.LoadFromAssemblyPath(Path.Combine(dda, "bin", target,
-        platform == "Mac" ? "OSX" : platform, "DeepAmmoLoader.dll"));
+    const BindingFlags staticMethods = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+    var nativeLoader = game.GetType("Barotrauma.Plugins.PluginLoader", true)!;
+    var packages = new Stack<object>();
+    var loaded = (IEnumerable)nativeLoader.GetProperty("LoadedPlugins", staticMethods)!.GetValue(null)!;
+    (Assembly Assembly, object Data) Load(string root)
+    {
+        string path = Path.Combine(Path.GetFullPath(root), "filelist.xml");
+        var manifest = XDocument.Load(path);
+        // Exercise the real loader and dependency rules without loading game assets or starting a session.
+        manifest.Root!.Elements().Where(x => x.Name.LocalName is not ("PluginInfo" or "Dependency")).Remove();
+        var package = Activator.CreateInstance(game.GetType("Barotrauma.RegularPackage", true)!, manifest, path)!;
+        var file = ((IEnumerable)package.GetType().GetProperty("Files")!.GetValue(package)!).Cast<object>().Single();
+        var result = nativeLoader.GetMethod("TryLoadPlugin", staticMethods)!.Invoke(null, [file]);
+        Assert(result?.ToString() == "Success", $"Native loader rejected {path}: {result}");
+        packages.Push(file);
+        if (target == "Server") { nativeLoader.GetMethod("FinalizePluginLoad", staticMethods)!.Invoke(null, [file]); }
+        var entry = loaded.Cast<object>().Last();
+        return ((Assembly)entry.GetType().GetProperty("Assembly")!.GetValue(entry)!, entry.GetType().GetProperty("Data")!.GetValue(entry)!);
+    }
+    void Unload() => nativeLoader.GetMethod("UnloadPlugin", staticMethods)!.Invoke(null, [packages.Pop()]);
+    var (vce, _) = Load(args[1]);
+    var (adapter, data) = Load(dda);
+    var registeredComponents = ((IEnumerable)Field(data.GetType(), "ItemComponents").GetValue(data)!).Cast<Type>();
+    Assert(registeredComponents.Select(t => t.Name).ToHashSet().SetEquals(["DeepAmmoLoader", "ManualMagazineLoading"]),
+        "Both XML components must be registered by Init.");
     Type GameType(string name) => game.GetType("Barotrauma." + name) ?? core.GetType("Barotrauma." + name, true)!;
     Type itemType = GameType("Item"), prefabType = GameType("ItemPrefab"), identifierType = GameType("Identifier");
     Type componentType = GameType("Items.Components.ItemComponent");
     Type loaderType = adapter.GetType("DDA.AmmoLoading.DeepAmmoLoader", true)!;
     Type pluginType = adapter.GetType("DDA.AmmoLoading.Plugin", true)!;
     PropertyInfo supply = loaderType.GetProperty("SupplyResolver")!;
-    object plugin = Activator.CreateInstance(pluginType)!;
     IList items = (IList)itemType.GetField("ItemList")!.GetValue(null)!;
     object Item(string id)
     {
@@ -59,17 +70,54 @@ static void Run(string[] args)
         object element = Activator.CreateInstance(GameType("ContentXElement"), null, XElement.Parse("<DeepAmmoLoader />"))!;
         return Activator.CreateInstance(loaderType, Item(id), element)!;
     }
+    void CheckPacket(string typeName, params object[] values)
+    {
+        var type = adapter.GetType(typeName, true)!;
+        var packet = Activator.CreateInstance(type, values);
+        var message = Activator.CreateInstance(GameType("Networking.ReadWriteMessage"))!;
+        var serializer = GameType("INetSerializableStruct");
+        serializer.GetMethod("Write")!.Invoke(packet, [message]);
+        message.GetType().GetProperty("BitPosition")!.SetValue(message, 0);
+        var decoded = serializer.GetMethod("Read")!.MakeGenericMethod(type).Invoke(null, [message]);
+        Assert(Equals(packet, decoded), "Native packet round trip failed for " + typeName);
+    }
+
     var onLoaded = itemType.GetMethods().Single(m => m.Name == "Load" && m.IsStatic);
     Type harmonyType = Assembly.Load("0Harmony").GetType("HarmonyLib.Harmony", true)!;
+    string owner = adapter.FullName!;
+    object harmony = Activator.CreateInstance(harmonyType, owner)!;
     bool Patched(MethodBase? method = null)
     {
         object? info = harmonyType.GetMethod("GetPatchInfo")!.Invoke(null, [method ?? onLoaded]);
         return info != null && ((IEnumerable)info.GetType().GetProperty("Owners")!.GetValue(info)!)
-            .Cast<string>().Contains("deepdivingarmory.deepammoloader");
+            .Cast<string>().Contains(owner);
     }
     try
     {
-        pluginType.GetMethod("Initialize")!.Invoke(plugin, null);
+        if (target == "Client")
+        {
+            // OnContentLoaded also creates GPU textures. Exercise its assembly-wide Harmony registration headlessly.
+            harmonyType.GetMethod("PatchAll", [typeof(Assembly)])!.Invoke(harmony, [adapter]);
+            var actions = ((IEnumerable)Field(data.GetType(), "StatusEffectActions").GetValue(data)!).Cast<object>();
+            Assert(actions.Select(x => (string)x.GetType().GetProperty("ElementName")!.GetValue(x)!).ToHashSet().SetEquals(
+                ["DDA_NightVision_On", "DDA_NightVision_Off", "DDA_ALTYN_Open", "DDA_ALTYN_Origin", "DDA_MASKA_Open", "DDA_MASKA_Origin"]),
+                "Incorrect native helmet action registrations.");
+        }
+        else
+        {
+            var spawner = GameType("EntitySpawner");
+            var loop = spawner.GetMethod("ProcessAll", [typeof(bool)]) ?? spawner.GetMethod("Update", [typeof(bool)])!;
+            Assert(Patched(loop), "Server queue budget patch was not installed.");
+            var ilReader = harmonyType.Assembly.GetType("HarmonyLib.PatchProcessor")!.GetMethods()
+                .Single(m => m.Name == "GetCurrentInstructions" && m.GetParameters()[1].ParameterType == typeof(int));
+            var instructions = ((IEnumerable)ilReader.Invoke(null, [loop, int.MaxValue, null])!).Cast<object>();
+            Assert(instructions.Any(i => i.GetType().GetField("operand")!.GetValue(i) is MethodInfo m &&
+                m.DeclaringType?.Assembly == adapter && m.Name == "FilterQueueCount"), "Server queue lacks its budget gate.");
+        }
+        CheckPacket("ThermalVisablePatch.ThermalVisablePatch+ThermalState", (ushort)417, true);
+        var impulseType = adapter.GetType("WeaponSyncFix.WeaponUseFeedback+Feedback", true)!.GetProperty("Impulse")!.PropertyType;
+        CheckPacket("WeaponSyncFix.WeaponUseFeedback+Feedback", (ushort)517, (ushort)1, (ushort)42, ushort.MaxValue,
+            3u, 0.017f, true, Activator.CreateInstance(impulseType, 1.5f, -0.125f)!, 5f);
         Assert(Patched(), "Saved-component migration was not installed.");
         MethodInfo[] inputMethods = target == "Client" ? [GameType("Inventory").GetMethod("UpdateDragging")!,
             GameType("Inventory").GetMethod("DrawFront")!, GameType("Inventory").GetMethod("DrawSlot")!,
@@ -78,27 +126,38 @@ static void Run(string[] args)
         if (target == "Client")
         {
             const BindingFlags hiddenStatic = BindingFlags.Static | BindingFlags.NonPublic;
+            var settingsType = adapter.GetType("DeepDivingArmory.PluginSettings", true)!;
+            var registeredSettings = (System.Collections.IDictionary)settingsType.GetField("registered", hiddenStatic)!.GetValue(null)!;
+            Assert(registeredSettings.Contains("KillNotification") && registeredSettings.Contains("NVGColorMode") && registeredSettings.Contains("StopManualLoading"),
+                "Config/PluginSettings.xml must register KillNotification, NVGColorMode, and StopManualLoading.");
+            var colorSetting = registeredSettings["NVGColorMode"]!;
+            Assert(colorSetting.GetType().GetProperty("Value")!.GetValue(colorSetting)!.ToString() == "Green",
+                "Expected default Green NVGColorMode.");
+            colorSetting.GetType().GetMethod("Load")!.Invoke(colorSetting, [XElement.Parse("<Setting value='Blue' />")]);
+            Assert(colorSetting.GetType().GetProperty("Value")!.GetValue(colorSetting)!.ToString() == "Blue",
+                "Saved NVGColorMode must be respected.");
+            colorSetting.GetType().GetMethod("ResetToDefault")!.Invoke(colorSetting, null);
+            Assert(colorSetting.GetType().GetProperty("Value")!.GetValue(colorSetting)!.ToString() == "Green",
+                "Reset must restore Green NVGColorMode.");
+
             var manualType = adapter.GetType("DDA.AmmoLoading.ManualMagazineLoading", true)!;
-            var config = XDocument.Load(Path.Combine(dda, "Config/ConfigClient.xml")).Descendants("Setting")
-                .Single(x => (string?)x.Attribute("Name") == "StopManualLoading");
             var binding = manualType.GetProperty("StopKey", hiddenStatic)!;
-            Assert((string?)config.Attribute("Type") == "control" && (string?)config.Attribute("Value") == "Escape" &&
-                binding.GetValue(null)!.ToString() == "Escape", "The default must be a native Escape binding.");
-            var controlType = Assembly.Load("LuaCsForBarotraumaPluginClient").GetType("Barotrauma.LuaCs.Data.SettingControl", true)!;
-            var control = RuntimeHelpers.GetUninitializedObject(controlType);
-            var keyType = binding.PropertyType.GetProperty("Key")?.PropertyType ?? binding.PropertyType.GetField("Key")!.FieldType;
-            var customKey = Activator.CreateInstance(binding.PropertyType, Enum.Parse(keyType, "K"));
-            controlType.GetMethod("TrySetValue")!.Invoke(control, [customKey]);
-            manualType.GetField("StopControl", hiddenStatic)!.SetValue(null, control);
-            Assert(binding.GetValue(null)!.ToString() == "K", "Changing the native client control must change the stop key.");
-            Assert((string?)controlType.GetMethod("GetDefaultStringValue")!.Invoke(control, null) == "Escape",
-                "Resetting the DDA binding in the LuaCs settings menu must restore Escape.");
+            var setting = registeredSettings["StopManualLoading"]!;
+            Assert(setting.GetType().Assembly == adapter, "StopManualLoading must be owned by DDA, not VCE.");
+            Assert(binding.GetValue(null)!.ToString() == "Escape", "Expected default Escape binding.");
+            setting.GetType().GetMethod("Load")!.Invoke(setting, [XElement.Parse("<Setting value='K' />")]);
+            Assert(binding.GetValue(null)!.ToString() == "K", "Saved key binding must be respected.");
+            var saved = new XElement("Setting");
+            setting.GetType().GetMethod("Save")!.Invoke(setting, [saved]);
+            Assert(saved.Attribute("value")?.Value == "K", "Saved XML attribute must use value='K'.");
+            setting.GetType().GetMethod("ResetToDefault")!.Invoke(setting, null);
+            Assert(binding.GetValue(null)!.ToString() == "Escape", "Reset must restore Escape.");
         }
         var existing = Loader("deep_new_ammoloader");
         Assert(loaderType.GetProperty("Target")!.PropertyType == vce.GetType("VCE_VirtualizedMagazine.VirtualizedMagazine", true),
             "DeepAmmoLoader must use the already-loaded native VCE type.");
-        Assert(!ddaContext.Assemblies.Any(a => a.GetName().Name!.StartsWith("VanillaComponentsExpanded")),
-            "The LuaCs context must not load a second copy of VCE.");
+        Assert(!AssemblyLoadContext.GetLoadContext(adapter)!.Assemblies.Any(a => a.GetName().Name!.StartsWith("VanillaComponentsExpanded")),
+            "The DDA context must not load a second copy of VCE.");
         Assert(supply.GetValue(existing) != null, "DDA supply must be available when the component is constructed.");
         Assert(loaderType.Assembly == adapter && loaderType.BaseType == componentType,
             "DeepAmmoLoader must own its implementation, not inherit VCE's loader.");
@@ -174,17 +233,15 @@ static void Run(string[] args)
             }
         }
         finally { foreach (object prefab in registered) { removePrefab.Invoke(prefabRegistry, [prefab]); } }
-        pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
+        Unload();
         Assert(!Patched(), "Unload must remove the migration hook.");
         Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");
         Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, six supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
     }
     finally
     {
-        pluginType.GetMethod("Dispose")!.Invoke(plugin, null);
+        while (packages.Count > 0) { Unload(); }
         items.Clear();
-        ddaContext.Unload();
-        vceContext.Unload();
     }
 }
 
@@ -241,20 +298,19 @@ static void ValidateXml(string dda, Dictionary<string, string> expected)
     {
         var texts = XDocument.Load(Path.Combine(dda, "text", language + ".xml")).Root!.Elements().ToArray();
         Assert(texts.Count(t => t.Name.LocalName == "dda.ammoloader.intake") == 1 &&
-            texts.Single(t => t.Name.LocalName == "dda.ammoloader.intake").Value == (language == "chinese" ? "放置弹药箱/弹药包" : "Place ammo boxes/packages"),
+            texts.Single(t => t.Name.LocalName == "dda.ammoloader.intake").Value == (language == "chinese" ? "放置弹药箱/弹药包" : "Insert ammo boxes or packages"),
             "The DDA intake label must live in DDA's localization.");
         foreach (var package in packages)
         { Assert(texts.Count(t => t.Name.LocalName == "entityname." + package.Attribute("identifier")!.Value) == 1, "Missing package name."); }
     }
-    var registrations = XDocument.Load(Path.Combine(dda, "ModConfig.xml")).Descendants("Assembly")
-        .Where(x => x.Attribute("File")!.Value.Contains("DeepAmmoLoader")).ToArray();
+    var registrations = XDocument.Load(Path.Combine(dda, "PluginInfo.xml")).Descendants("MainAssemblyInfo").ToArray();
     Assert(registrations.Length == 6, "Expected six binary registrations.");
     foreach (var target in new[] { "Client", "Server" })
-    foreach (var platform in new[] { "Windows", "Linux", "OSX" })
+    foreach (var platform in new[] { "Windows", "Linux", "Mac" })
     {
-        string relative = $"bin/{target}/{platform}/DeepAmmoLoader.dll";
-        Assert(registrations.Count(x => x.Attribute("File")!.Value == "%ModDir%/" + relative &&
-            x.Attribute("Target")?.Value == target && x.Attribute("Platform")?.Value == platform && x.Attribute("IsScript") == null) == 1,
+        string relative = $"bin/{platform}/{target}/Deep-Diving-Armory{target}.dll";
+        Assert(registrations.Count(x => x.Attribute("assemblypath")!.Value == "%ModDir%/" + relative &&
+            x.Attribute("targets")?.Value == target && x.Attribute("platforms")?.Value == platform && x.Attribute("IsScript") == null) == 1,
             "Incorrect binary registration: " + relative);
         Assert(File.Exists(Path.Combine(dda, relative)) && File.Exists(Path.Combine(dda, Path.ChangeExtension(relative, ".deps.json"))), "Missing deployed output.");
     }

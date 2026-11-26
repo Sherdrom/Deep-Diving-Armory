@@ -14,7 +14,7 @@
 			<sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.55" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="9,9,98,93" origin="0.55,0.62">
 			</sprite>
 			<StatusEffect type="OnWearing" target="This" setvalue="true" interval="60">
-				<LuaHook name="NightVision_Off" />
+				<DDA_NightVision_Off />
 				<RequiredItems items="114" matchonempty="true" type="Contained" targetslot="0" />
 			</StatusEffect>
 
@@ -53,12 +53,12 @@
 				<StatusEffect type="OnSecondaryUse" target="This" IsOn="false" HudTint="0,0,0,0" setvalue="true" />
 				<!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
 				<StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
-					<LuaHook name="NightVision_Off" />
+					<DDA_NightVision_Off />
 					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
 				</StatusEffect>
 				<!-- 检测到夜视仪开启时，更换开启的贴图 -->
 				<StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
-					<LuaHook name="NightVision_On"/>
+					<DDA_NightVision_On />
 					<RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
 				</StatusEffect>
 

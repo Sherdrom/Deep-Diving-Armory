@@ -30,7 +30,7 @@
       <sprite name="6b47" texture="%ModDir%/jobgear/helmet/6B47.png" depth="0.5" limb="Head" depthlimb="Jaw" inheritlimbdepth="true" inheritscale="true" ignorelimbscale="true" scale="0.62" sourcerect="9,9,98,93" origin="0.55,0.62">
       </sprite>
       <StatusEffect type="OnWearing" target="This" setvalue="true" interval="60">
-        <LuaHook name="NightVision_Off" />
+        <DDA_NightVision_Off />
         <RequiredItems items="114" matchonempty="true" type="Contained" targetslot="0" />
       </StatusEffect>
     </Wearable>
@@ -67,13 +67,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="SixBFortySeven_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到夜视仪开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="SixBFortySeven_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -284,13 +284,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到热成像开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -501,13 +501,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Ranger_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到热成像开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Ranger_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -848,13 +848,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Heavy_Trooper_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到热成像开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Heavy_Trooper_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -1067,13 +1067,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Sledge_Hammer_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到热成像开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_Sledge_Hammer_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -1284,13 +1284,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_BLACK_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到夜视仪开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="FAST_BLACK_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -1504,13 +1504,13 @@
         <!-- 检测到夜视仪关闭时，更换关闭的贴图 -->
         <StatusEffect type="OnSecondaryUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="GHOST_Night_Off" />
-          <LuaHook name="NightVision_Off" />
+          <DDA_NightVision_Off />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 检测到热成像开启时，更换开启的贴图 -->
         <StatusEffect type="OnUse" target="This" disabledeltatime="true" setValue="true">
           <LuaHook name="GHOST_Night_On" />
-          <LuaHook name="NightVision_On" />
+          <DDA_NightVision_On />
           <RequiredItems items="gpnvg_18" type="Contained" targetslot="0" />
         </StatusEffect>
         <!-- 开启健康扫描仪 -->
@@ -1812,12 +1812,12 @@
       <TickBox text="升起面罩" continuoussignal="false">
         <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
-          <Hook name="ALTYN_Open" />
+          <DDA_ALTYN_Open />
           <LuaHook name="ALTYN_Open_Lua" />
         </StatusEffect>
         <!-- 升起面罩 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
-          <Hook name="ALTYN_Origin" />
+          <DDA_ALTYN_Origin />
           <LuaHook name="ALTYN_Origin_Lua" />
         </StatusEffect>
       </TickBox>
@@ -1968,12 +1968,12 @@
       <TickBox text="升起面罩" continuoussignal="false">
         <!-- 关闭面罩 -->
         <StatusEffect type="OnUse" target="This" IsOn="true" TargetItemComponent="LightComponent" setvalue="true">
-          <Hook name="MASKA_Open" />
+          <DDA_MASKA_Open />
           <LuaHook name="MASKA_Open_Lua" />
         </StatusEffect>
         <!-- 升起面罩 -->
         <StatusEffect type="OnSecondaryUse" target="This" IsOn="false" TargetItemComponent="LightComponent" setvalue="true" currentmode="Passive">
-          <Hook name="MASKA_Origin" />
+          <DDA_MASKA_Origin />
           <LuaHook name="MASKA_Origin_Lua" />
         </StatusEffect>
       </TickBox>

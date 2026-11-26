@@ -1,17 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType><UseAppHost>false</UseAppHost>
+    <DdaBin Condition="'$(DdaBin)' == ''">$(MSBuildThisFileDirectory)../../../bin</DdaBin>
     <TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    <GamePlatform Condition="$([MSBuild]::IsOSPlatform('OSX'))">Mac</GamePlatform>
+    <GamePlatform Condition="$([MSBuild]::IsOSPlatform('Linux'))">Linux</GamePlatform>
+    <GamePlatform Condition="'$(GamePlatform)' == ''">Windows</GamePlatform>
+    <RefPlatform>$(GamePlatform)</RefPlatform>
+    <RefPlatform Condition="'$(GamePlatform)' == 'Mac'">OSX</RefPlatform>
+    <MonoGamePlatform>$(GamePlatform)</MonoGamePlatform>
+    <MonoGamePlatform Condition="'$(GamePlatform)' == 'Mac'">MacOS</MonoGamePlatform>
     <Libs>$(MSBuildThisFileDirectory)../../../.Tools/Refs</Libs>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Collections.Immutable" HintPath="$(Libs)/System.Collections.Immutable.dll" Private="false" />
+    <Reference Include="System.Collections.Immutable" HintPath="$(Libs)/System.Collections.Immutable.dll" />
     <Reference Include="MonoMod.Utils" HintPath="$(Libs)/MonoMod.Utils.dll" Private="false" />
-    <Reference Include="Barotrauma" HintPath="$(Libs)/Windows/Barotrauma.dll" Private="false" />
-    <Reference Include="BarotraumaCore" HintPath="$(Libs)/Windows/BarotraumaCore.dll" Private="false" />
-    <Reference Include="MonoGame.Framework.Windows.NetStandard" HintPath="$(Libs)/MonoGame.Framework.Windows.NetStandard.dll" Private="false" />
+    <Reference Include="Barotrauma" HintPath="$(Libs)/$(RefPlatform)/Barotrauma.dll" Private="false" />
+    <Reference Include="BarotraumaCore" HintPath="$(Libs)/$(RefPlatform)/BarotraumaCore.dll" Private="false" />
+    <Reference Include="MonoGame.Framework.$(MonoGamePlatform).NetStandard" HintPath="$(Libs)/MonoGame.Framework.$(MonoGamePlatform).NetStandard.dll" Private="false" />
     <Reference Include="XNATypes" HintPath="$(Libs)/XNATypes.dll" Private="false" />
-    <Reference Include="VanillaComponentsExpandedClient" HintPath="$(Libs)/Windows/VanillaComponentsExpandedClient.dll" Private="false" />
-    <Reference Include="DeepAmmoLoader" HintPath="../../../bin/Client/Windows/DeepAmmoLoader.dll" Private="false" />
+    <Reference Include="VanillaComponentsExpandedClient" HintPath="$(Libs)/$(RefPlatform)/VanillaComponentsExpandedClient.dll" Private="false" />
+    <Reference Include="Deep-Diving-ArmoryClient" HintPath="$(DdaBin)/$(GamePlatform)/Client/Deep-Diving-ArmoryClient.dll" Private="false" />
   </ItemGroup>
 </Project>

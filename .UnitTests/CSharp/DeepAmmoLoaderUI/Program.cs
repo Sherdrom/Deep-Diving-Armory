@@ -14,16 +14,17 @@ using VCE_VirtualizedMagazine;
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 
-// Run from the mod root after building WindowsClient; no game window is created.
+// Run from the mod root after building the client DLL; no game window is created.
 string root = Directory.GetCurrentDirectory();
 string gameDir = Path.GetFullPath(Path.Combine(root, "../.."));
 // A staged client directory lets the regression run while the game holds the deployed DLL.
-string clientDir = args.Length == 0 ? Path.Combine(root, "bin/Client/Windows") : Path.GetFullPath(args[0]);
+string platform = OperatingSystem.IsMacOS() ? "Mac" : OperatingSystem.IsWindows() ? "Windows" : "Linux";
+string clientDir = args.Length == 0 ? Path.Combine(root, "bin", platform, "Client") : Path.GetFullPath(args[0]);
 AssemblyLoadContext.Default.Resolving += (_, name) =>
 {
-    string path = Path.Combine(name.Name == "DeepAmmoLoader" ? clientDir :
-        name.Name == "VanillaComponentsExpandedClient" ? Path.Combine(root, "../Vanilla-Components-Expanded/bin/Windows/Client") :
-        name.Name == "LuaCsForBarotraumaPluginClient" ? Path.Combine(root, ".Tools/Refs/Windows") : gameDir, name.Name + ".dll");
+    string path = Path.Combine(name.Name == "Deep-Diving-ArmoryClient" ? clientDir :
+        name.Name == "VanillaComponentsExpandedClient" ? Path.Combine(root, "../Vanilla-Components-Expanded/bin", platform, "Client") :
+        gameDir, name.Name + ".dll");
     return File.Exists(path) ? AssemblyLoadContext.Default.LoadFromAssemblyPath(path) : null;
 };
 try { Run(); }

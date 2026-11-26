@@ -8,26 +8,41 @@ local NotificationSpacing = 35 -- 每条消息之间的距离
 local TopOffset = -5 -- 距离顶部偏移
 local BackgroundPadding = 3 -- 背景边框留白
 
--- Mod配置
+-- Mod配置（从官方插件 SettingsService 读取 Config/PluginSettings.xml 中的 KillNotification）
 --------------------------------------------------
-local EnableKillNotification = true
-local _, myPackage = trygetpackage("Deep-Diving-Armory")
-local success, cfg = ConfigService.TryGetConfig(
-        SettingBase.Boolean,
-        myPackage,
-        "KillNotification"
-    )
-
--- 初始化配置
-if success then
-    EnableKillNotification = cfg.Value
-    -- 配置发生改变
-    cfg.OnValueChanged.add(function(value)
-        EnableKillNotification = value.Value
-        print("[Deep-Diving-Armory] KillNotification Enabled = ".. tostring(EnableKillNotification))
+local killNotificationSetting = nil
+local function resolveKillNotificationSetting()
+    if killNotificationSetting ~= nil then return killNotificationSetting end
+    local ok, found = pcall(function()
+        local pluginDataDesc = LuaUserData.RegisterType("Barotrauma.PluginData")
+        LuaUserData.MakeFieldAccessible(pluginDataDesc, "SettingsServices")
+        local pluginData = LuaUserData.CreateStatic("Barotrauma.PluginData")
+        local services = pluginData and pluginData.SettingsServices
+        if not services then return nil end
+        for svc in services do
+            if svc and svc.ContentPackage and svc.ContentPackage.Name == "Deep-Diving-Armory" then
+                for s in svc.RegisteredSettings do
+                    if s and tostring(s.Identifier) == "KillNotification" then
+                        return s
+                    end
+                end
+            end
+        end
+        return nil
     end)
-else
-    print("[Deep-Diving-Armory] KillNotification Cannot load config.")
+    if ok and found ~= nil then
+        killNotificationSetting = found
+    end
+    return killNotificationSetting
+end
+
+local function isKillNotificationEnabled()
+    local s = resolveKillNotificationSetting()
+    if s ~= nil then
+        local ok, val = pcall(function() return s.Value end)
+        if ok and val ~= nil then return val end
+    end
+    return true
 end
 
 -- 数据
@@ -218,7 +233,7 @@ Hook.Add(
     "character.damageLimb",
     "KillNotificationDamage",
     function(character, _, _, _, _, _, _, attacker)
-        if not EnableKillNotification then return end
+        if not isKillNotificationEnabled() then return end
 
         -- 参数检查
         if character == nil or attacker == nil or character.IsDead then return end
@@ -240,7 +255,7 @@ local colorselect = 0
 -- Death Hook
 --------------------------------------------------
 Hook.Add( "characterDeath", "KillNotification", function(character)
-        if not EnableKillNotification then return end
+        if not isKillNotificationEnabled() then return end
 
         if character == nil then return end
 
@@ -322,7 +337,7 @@ Hook.Add(
     "KillNotificationThink",
     function()
 
-        if not EnableKillNotification then
+        if not isKillNotificationEnabled() then
             return
         end
 
@@ -421,7 +436,7 @@ Hook.Patch(
 
         -- 没开启
         ------------------------------------------------
-        if not EnableKillNotification then return end
+        if not isKillNotificationEnabled() then return end
 
         -- 没有消息
         ------------------------------------------------

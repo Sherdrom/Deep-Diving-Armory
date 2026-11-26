@@ -29,7 +29,6 @@
     <ItemGroup>
       <FilesToCopy Include="$(TargetDir)$(TargetName).dll" />
       <FilesToCopy Include="$(TargetDir)$(TargetName).deps.json" />
-      <FilesToCopy Include="$(TargetDir)$(TargetName).pdb" />
     </ItemGroup>
 
     <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(PluginDeployDir)" />

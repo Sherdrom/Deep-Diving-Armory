@@ -4,24 +4,21 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseAppHost>false</UseAppHost>
+    <RefPlatform Condition="$([MSBuild]::IsOSPlatform('OSX'))">OSX</RefPlatform>
+    <RefPlatform Condition="$([MSBuild]::IsOSPlatform('Linux'))">Linux</RefPlatform>
+    <RefPlatform Condition="'$(RefPlatform)' == ''">Windows</RefPlatform>
+    <MonoGamePlatform>$(RefPlatform)</MonoGamePlatform>
+    <MonoGamePlatform Condition="'$(RefPlatform)' == 'OSX'">MacOS</MonoGamePlatform>
     <Refs>../../../.Tools/Refs</Refs>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Collections.Immutable" HintPath="$(Refs)/System.Collections.Immutable.dll" />
-    <!-- LuaCs supplies these imports when compiling scripts in game. -->
-    <Using Include="Barotrauma.LuaCs" />
-    <Using Include="Barotrauma.Extensions" />
-    <Compile Include="../../../CSharp/MoreInformationDisplay.cs" Link="MoreInformationDisplay.cs" />
-    <Reference Include="Microsoft.CodeAnalysis"><HintPath>$(MSBuildToolsPath)/Roslyn/bincore/Microsoft.CodeAnalysis.dll</HintPath></Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp"><HintPath>$(MSBuildToolsPath)/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll</HintPath></Reference>
-    <Reference Include="Barotrauma"><HintPath>$(Refs)/Windows/Barotrauma.dll</HintPath></Reference>
-    <Reference Include="BarotraumaCore"><HintPath>$(Refs)/Windows/BarotraumaCore.dll</HintPath></Reference>
-    <Reference Include="LuaCsForBarotraumaPluginClient"><HintPath>$(Refs)/Windows/LuaCsForBarotraumaPluginClient.dll</HintPath></Reference>
+    <Reference Include="Barotrauma"><HintPath>$(Refs)/$(RefPlatform)/Barotrauma.dll</HintPath></Reference>
+    <Reference Include="BarotraumaCore"><HintPath>$(Refs)/$(RefPlatform)/BarotraumaCore.dll</HintPath></Reference>
     <Reference Include="0Harmony"><HintPath>$(Refs)/0Harmony.dll</HintPath></Reference>
-    <Reference Include="MonoGame.Framework.Windows.NetStandard"><HintPath>$(Refs)/MonoGame.Framework.Windows.NetStandard.dll</HintPath></Reference>
+    <Reference Include="MonoGame.Framework.$(MonoGamePlatform).NetStandard"><HintPath>$(Refs)/MonoGame.Framework.$(MonoGamePlatform).NetStandard.dll</HintPath></Reference>
     <Reference Include="Farseer.NetStandard"><HintPath>$(Refs)/Farseer.NetStandard.dll</HintPath></Reference>
     <Reference Include="Lidgren.NetStandard"><HintPath>$(Refs)/Lidgren.NetStandard.dll</HintPath></Reference>
-    <Reference Include="MoonSharp.Interpreter"><HintPath>$(Refs)/MoonSharp.Interpreter.dll</HintPath></Reference>
     <Reference Include="XNATypes"><HintPath>$(Refs)/XNATypes.dll</HintPath></Reference>
   </ItemGroup>
 </Project>

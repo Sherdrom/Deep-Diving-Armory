@@ -350,7 +350,7 @@ namespace Barotrauma.Plugins
     public interface IDebugConsole { void AddWarning(string message); }
 }
 
-namespace Barotrauma { public static class LuaCsLogger { public static void Log(string message) { } } }
+namespace Barotrauma { public static class DebugConsole { public static void NewMessage(string message) { } } }
 
 namespace Barotrauma
 {

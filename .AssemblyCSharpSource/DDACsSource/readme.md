@@ -12,6 +12,6 @@ Use the .NET 8 SDK and open [Deep-Diving-Armory.sln](Deep-Diving-Armory.sln) for
 
 To build just one platform, use the [Windows](Solutions/WindowsSolution.slnf), [Linux](Solutions/LinuxSolution.slnf), or [macOS](Solutions/OSXSolution.slnf) solution filter. For example, run `dotnet build .AssemblyCSharpSource/DDACsSource/Solutions/WindowsSolution.slnf -c Release` from the repository root.
 
-When this checkout is in the game's `LocalMods/Deep-Diving-Armory` directory, [UserBuildData.props](UserBuildData.props) deploys each plugin assembly and its `.deps.json` and `.pdb` files to `bin/<platform>/<target>` inside the mod. For a checkout elsewhere, pass `-p:ModDeployDir=<LocalMods directory>` to choose a destination. The mod content and its `filelist.xml` are maintained in the repository root.
+When this checkout is in the game's `LocalMods/Deep-Diving-Armory` directory, [UserBuildData.props](UserBuildData.props) deploys each plugin assembly and its `.deps.json` file to `bin/<platform>/<target>` inside the mod. For a checkout elsewhere, pass `-p:ModDeployDir=<mod package directory>` to choose a destination. The mod content and its `filelist.xml` are maintained in the repository root.
 
 The shared `IBarotraumaPlugin` entry point is in `SharedProject/SharedSource/Plugin.cs`. Edit platform-side code in `ClientProject/ClientSource` and `ServerProject/ServerSource`.
