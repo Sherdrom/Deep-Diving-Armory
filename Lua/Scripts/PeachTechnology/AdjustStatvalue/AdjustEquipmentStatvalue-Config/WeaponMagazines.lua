@@ -77,7 +77,7 @@ add({
     blockedByEnemyResistance = true,
     statsKey = "expansion_drum_heavy",
     stats = {
-        { statType = "WeaponsSkillBonus", value = -35 },
+        { statType = "WeaponsSkillBonus", value = -30 },
         { statType = "MovementSpeed", value = -0.2 },
     },
 })
