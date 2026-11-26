@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);CLIENT</DefineConstants>
+    <BuildTarget>Client</BuildTarget>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <Import Project="..\BuildData.props" />
+
+  <!-- Keep shared sources in the SharedProject node in VS Code Solution Explorer. -->
+  <ImportGroup>
+    <Import Project="..\SharedProject\$(PlatformName)SharedProject.projitems" Label="Shared" />
+  </ImportGroup>
+  <Import Project="..\SharedProject\SharedItems.props" />
+
+  <ItemGroup>
+    <None Remove="*.csproj;*.props" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RootNamespace>DeepDivingArmory</RootNamespace>
+    <AssemblyName>$(ModName)$(BuildTarget)</AssemblyName>
+  </PropertyGroup>
+
+  <Target Name="CopyFiles" AfterTargets="Build">
+    <ItemGroup>
+      <FilesToCopy Include="$(TargetDir)$(TargetName).dll" />
+      <FilesToCopy Include="$(TargetDir)$(TargetName).deps.json" />
+      <FilesToCopy Include="$(TargetDir)$(TargetName).pdb" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(FilesToCopy)" DestinationFolder="$(PluginDeployDir)" />
+  </Target>
+
+  <Import Project="..\CopyOtherFiles.props" />
+</Project>

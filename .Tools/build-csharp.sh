@@ -9,6 +9,8 @@ deploy_root=$(cd "$deploy_root" && pwd)
 
 for solution in "$repo_root"/.AssemblyCSharpSource/*/*.sln; do
     [[ -e "$solution" ]] || continue
-    [[ "$solution" == */LuaCsModTemplate/* ]] && continue
+    case "$solution" in
+        */LuaCsModTemplate/*|*/DDACsSource/*) continue ;;
+    esac
     dotnet build -c Release -m:1 -p:ModDeployDir="$deploy_root/" "$solution"
 done
