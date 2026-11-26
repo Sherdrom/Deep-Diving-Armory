@@ -27,14 +27,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!-- 有短枪口件时，略微增加枪口距离-->
       <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" barrelpos="330,30" comparison="and" setvalue="true">
         <Conditional deep_muzzle_short_detect="gte 1.0" />
@@ -64,7 +56,7 @@
         <Conditional Voltage="lte 0.8" />
       </StatusEffect>
       <!-- VCE检测 -->
-      <StatValue stattype="MovementSpeed" value="-0.3" />
+      <StatValue stattype="MovementSpeed" value="-0.2" />
     </Holdable>
     <Wearable slots="Bag" msg="ItemMsgPickUpUse" canbeselected="false" canbepicked="true" pickkey="Use">
       <sprite texture="%ModDir%/weapon/shotgun/shotgun_tun/shotgun_tun.png" canbehiddenbyotherwearables="false" sourcerect="9,9,599,192" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.21" origin="0.5,0.8" />
@@ -82,7 +74,7 @@
       <StatusEffect type="NotInWater" target="This" Condition="10" />
       <StatusEffect type="InWater" target="This" Condition="1000" />
       <StatusEffect type="OnBroken" target="This">
-        <sound file="%ModDir%/weapon/ammo/tomre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/tomre.ogg" range="500.0" loop="false" volume="1" />
         <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This">

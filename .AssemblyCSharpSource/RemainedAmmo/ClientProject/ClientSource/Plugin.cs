@@ -117,7 +117,7 @@ namespace RemainedAmmo
             // 支持RangedWeapon和SwitchableRangedWeapon
             if (rangedWeaponObj is not RangedWeapon rangedWeapon) { return; }
 
-            if(rangedWeapon.Item.HasTag("noammocount")) {return;}
+            if(rangedWeapon.Item.HasTag("noammocount".ToIdentifier())) {return;}
             Item ammoHostItem = rangedWeapon.Item;
             var itemContainer = rangedWeapon.Item.GetComponent<ItemContainer>();
             if (itemContainer == null) { return; }
@@ -197,6 +197,11 @@ namespace RemainedAmmo
             if (targetSlot >= itemContainer.Inventory.Capacity){return 0;}
             // 获取RemainedAmmo
             IEnumerable<Item> itemsAt = itemContainer.Inventory.GetItemsAt(targetSlot);
+            var magazine = itemsAt.FirstOrDefault()?.GetComponent<ItemContainer>();
+            if (magazine?.GetType().FullName == "VCE_VirtualizedMagazine.VirtualizedMagazine")
+            {
+                return (int)magazine.GetType().GetProperty("LoadedCount")!.GetValue(magazine)!;
+            }
             // if (itemsAt == null) {goto drawRemained;}
             // if(itemsAt.FirstOrDefault() == null) {goto drawRemained;}
             if(itemsAt == null || itemsAt.FirstOrDefault() == null || itemsAt.FirstOrDefault().ownInventory == null) { remainedAmmo = CurrentAmmoNumber(item,itemContainer);}

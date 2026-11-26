@@ -157,6 +157,7 @@ return {
 
     -- 十星将军(dlc)
     ["deep_ten_star_general_assist_upgrading"] = {
+        optionalPrefab = true,
         stats = {
             { statType = "SkillGainSpeed", value = 10 },
         },

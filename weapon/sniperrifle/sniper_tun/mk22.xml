@@ -26,14 +26,6 @@
         <dropitem />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.7" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.2">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
       <!--6倍镜
       <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
       <Affliction identifier="6x_sight" strength="10" />
@@ -57,7 +49,7 @@
       </StatusEffect>
       <!-- VCE检测 -->
     </Holdable>
-    <SwitchableRangedWeapon reload="1.4" weapondamagemodifier="1.5" reloadnoskill="1.8" reloadskillrequirement="100" holdtrigger="true" barrelpos="345,31" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.4" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="1.4" weapondamagemodifier="1.7" reloadnoskill="1.8" reloadskillrequirement="100" holdtrigger="true" barrelpos="345,31" spread="1" unskilledspread="2" combatPriority="120" drawhudwhenequipped="true" crosshairscale="0.5" botreload="1.4" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
@@ -113,7 +105,7 @@
       <!-- 拉 -->
       <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="0.6" setValue="true" forceplaysounds="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" type="OnUse" range="200" />
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt.ogg" range="200" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="0.8" setValue="true" handle1="-190,30" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="0.8" disabledeltatime="true">
@@ -125,7 +117,7 @@
       </StatusEffect>
       <!-- 推 -->
       <StatusEffect type="OnUse" target="This" delay="0.9" setValue="true" forceplaysounds="true" disabledeltatime="true">
-        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" type="OnUse" range="200" />
+        <Sound file="%ModDir%/Sound/Weapons/AWM/gunOther/awm_bolt_forward.ogg" range="200" />
       </StatusEffect>
       <StatusEffect type="OnUse" target="This" delay="1.1" setValue="true" handle1="-170,10" holdpos="70,-10" aimpos="80,0" holdangle="-5" aimangle="-5" disabledeltatime="true" />
       <StatusEffect type="OnUse" target="This" delay="1.1" disabledeltatime="true">
@@ -134,7 +126,7 @@
       <StatusEffect type="OnUse" target="This" delay="1.2" setvalue="true" holdpos="70,-10" aimpos="90,-2" holdangle="-35" aimangle="0" />
       <StatusEffect type="OnUse" target="This" delay="1.3" setvalue="true" handle2="100,20" handle1="-180,-40" />
       <!-- ============== 拉栓动画结束 ================= -->
-      <RequiredItems items="deep_mk22_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_338lm_mk22_mag,86_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
       <StatusEffect type="OnBroken" target="This">
         <!-- <sound file="%ModDir%/weapon/ammo/awmre.ogg" type="OnUse" range="200.0" loop="false" volume="1" /> -->
@@ -143,7 +135,7 @@
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_mk22_mag" hide="false" itempos="-22,-3" setactive="true" rotation="0">
+      <Containable items="deep_338lm_mk22_mag,86_mag" excludedidentifiers="deep_338lm_virtual_5_awm,deep_338lm_virtual_10_awm" hide="false" itempos="-22,-3" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" disabledeltatime="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->

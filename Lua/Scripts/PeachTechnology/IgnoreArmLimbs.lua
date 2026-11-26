@@ -87,6 +87,13 @@ Hook.Patch(
 )
 
 Hook.Patch(
+	"VCE_VirtualizedMagazine.VirtualizedProjectile",
+	"HandleProjectileCollision",
+	patchCallback,
+	Hook.HookMethodType.Before
+)
+
+Hook.Patch(
 	"Barotrauma.Items.Components.Projectile",
 	"HandleProjectileCollision",
 	{

@@ -14,6 +14,10 @@ string gameDirectory = Path.GetFullPath(args[0]);
 AssemblyLoadContext.Default.Resolving += (context, name) =>
 {
     string path = Path.Combine(gameDirectory, name.Name + ".dll");
+    if (!File.Exists(path))
+    {
+        path = Path.Combine(gameDirectory, "LuaCs.Temp", "Client", name.Name + ".dll");
+    }
     return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
 };
 

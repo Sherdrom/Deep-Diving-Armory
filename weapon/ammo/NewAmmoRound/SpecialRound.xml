@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <Item name="" identifier="ntw_20mm" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_high_penetration,deep_headshot_gunshotwound_4" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="2000" sold="false" buyingpricemultiplier="2.0" minamount="2" maxamount="2" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_tungsten_phy" />
+      <RequiredItem identifier="gun_powder_fulgurium" amount="2" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="fulgurium" />
+      <Item identifier="physicorium" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="637,1344,117,204" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Holdable canBeCombined="true" slots="Any,RightHand,LeftHand" handle1="0,0" msg="ItemMsgPickUpSelect">
+      <!-- 禁用高穿弹合约-->
+      <StatusEffect type="OnActive" targettype="This,Character" setvalue="true" comparison="and">
+        <Conditional deep_contract_no_high_penetration_detect="gt 0.0" />
+        <dropitem />
+      </StatusEffect>
+    </Holdable>
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="10" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="50" itemdamage="200" severlimbsprobability="1" penetration="1">
+        <Affliction identifier="deep_shot_gauss" strength="100" />
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="150" />
+        <Affliction identifier="gunshotwound" strength="250" />
+        <Affliction identifier="explosiondamage" strength="100" />
+        <Affliction identifier="stun" strength="4" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_lead" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="300" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="60" />
+      <RequiredItem identifier="lead" />
+      <RequiredItem identifier="gun_powder" amount="1" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="lead" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="24,1148,115,183" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="1" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="97,255,107,175" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.5">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_tit" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="70" />
+      <RequiredItem identifier="titanium" />
+      <RequiredItem identifier="gun_powder" amount="1" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="titanium" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="177,1150,115,181" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="1" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="250,200,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.7">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_phy" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="400" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder" amount="1" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="physicorium" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="330,1149,114,182" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="2" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,193,114,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.8">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_fu" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="450" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="90" />
+      <RequiredItem identifier="physicorium" />
+      <RequiredItem identifier="gun_powder_fulgurium" amount="1" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="physicorium" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="485,1149,115,181" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="2" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.9">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_ap" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="550" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="100" />
+      <RequiredItem identifier="deep_tungsten" />
+      <RequiredItem identifier="gun_powder_fulgurium" />
+      <RequiredItem identifier="copper" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="deep_tungsten" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="639,1150,113,180" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="3" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="1">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="ptrd_145mm_du" subcategory="deep_special_ammo" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,deep_round,deep_sniper_round,deep_headshot_gunshotwound_4,ptrd_145mm" maxstacksize="32" maxstacksizecharacterinventory="4" Scale="0.5" category="Weapon" impactsoundtag="impact_metal_light">
+    <Price baseprice="350" sold="false" buyingpricemultiplier="2.0" minamount="4" maxamount="4" canbespecial="true" minleveldifficulty="35" displaynonempty="false">
+      <Price storeidentifier="merchantoutpost" multiplier="1" />
+      <Price storeidentifier="merchantcity" multiplier="1" />
+      <Price storeidentifier="merchantresearch" multiplier="1" />
+      <Price storeidentifier="merchantmilitary" multiplier="1" />
+      <Price storeidentifier="merchantmine" multiplier="1" />
+    </Price>
+    <Fabricate suitablefabricators="deep_general_fabricator" requiredtime="5">
+      <RequiredSkill identifier="weapons" level="80" />
+      <RequiredItem identifier="depletedfuel" />
+      <RequiredItem identifier="gun_powder" />
+      <RequiredItem identifier="copper" amount="2" />
+    </Fabricate>
+    <Deconstruct time="5">
+      <Item identifier="copper" />
+      <Item identifier="depletedfuel" />
+    </Deconstruct>
+    <Sprite texture="%ModDir%/weapon/ammo/NewAmmoSprite/AmmoIcon3.png" sourcerect="793,1149,115,182" origin="0.5,0.5" />
+    <Body width="80" height="20" density="40" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="1" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="255,233,0,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="1" targetforce="40" itemdamage="150" severlimbsprobability="0.9" penetration="0.7">
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="18" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" scalemultiplier="3,3" colormultiplier="255,100,100,225" />
+        <ParticleEmitter particle="weldspark" particleamount="10" anglemin="0" anglemax="360" velocitymin="500" velocitymax="650" scalemin="1" scalemax="1.25" drawontop="true" colormultiplier="255,200,225,180" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+      </StatusEffect>
+    </Projectile>
+  </Item>
+  <Item name="" identifier="gauss_round" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,deep_sniper_round,deep_high_penetration,deep_headshot_gunshotwound_4" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="9,126,70,16" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="10" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="5" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="50" itemdamage="200" severlimbsprobability="1" penetration="1">
+        <Affliction identifier="deep_shot_gauss" strength="100" />
+        <Affliction identifier="deep_headshot_deadly_irresistible" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="gunshotwound" strength="200" />
+        <Affliction identifier="burn" strength="100" />
+        <Affliction identifier="stun" strength="4" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="0">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="izanagi_paidaxing_round_fu" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,deep_sniper_round,deep_headshot_gunshotwound_4" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="3" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="0,195,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="30" itemdamage="100" severlimbsprobability="0.8" penetration="0.95">
+        <Affliction identifier="deep_headshot_deadly" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="gunshotwound" strength="150" />
+        <Affliction identifier="burn" strength="80" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="0">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="izanagi_paidaxing_round_ap" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="deep_round,deep_sniper_round,deep_headshot_gunshotwound_4" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="896,960,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="195,282,17,6" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" maxtargetstohit="3" removeonhit="true">
+      <ParticleEmitter particle="tracerfirearm" particleamount="3" velocitymin="0" velocitymax="0" colormultiplier="48,72,109,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.5" targetforce="30" itemdamage="100" severlimbsprobability="0.8" penetration="1.0">
+        <Affliction identifier="deep_headshot_deadly" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="gunshotwound" strength="150" />
+        <Affliction identifier="burn" strength="80" />
+        <Affliction identifier="bleeding" strength="120" />
+        <Affliction identifier="stun" strength="3" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="0">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+  <Item name="" identifier="deep_12shell_three" category="Weapon" maxstacksize="1" interactthroughwalls="true" cargocontaineridentifier="metalcrate" tags="smallitem,shotgunammo" impactsoundtag="impact_metal_light" hideinmenus="true" scale="0.5">
+    <InventoryIcon texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" origin="0.5,0.5" />
+    <Sprite texture="%ModDir%/weapon/round/round.png" sourcerect="12,108,31,9" depth="0.55" origin="0.5,0.5" />
+    <Body width="40" height="14" density="30" />
+    <Pickable slots="Any" msg="ItemMsgPickUpSelect" />
+    <Projectile characterusable="false" hitscan="true" hitscancount="12" removeonhit="true" spread="20">
+      <ParticleEmitter particle="tracerfirearm" particleamount="1" velocitymin="0" velocitymax="0" colormultiplier="0,177,255,255" scalemultiplier="1,0.6" />
+      <Attack structuredamage="0.1" targetforce="3" itemdamage="100" severlimbsprobability="0.8" penetration="0.9">
+        <Affliction identifier="deep_shot_three_shotgun" strength="1" MultiplyByMaxVitality="true" />
+        <Affliction identifier="Shrapnel_residue" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="gunshotwound" strength="20" MultiplyByMaxVitality="true" />
+        <Affliction identifier="bleeding" strength="10" />
+        <Affliction identifier="stun" strength="0.5" />
+      </Attack>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <ParticleEmitter particle="impactfirearm" particleamount="1" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="true" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional ishuman="false" />
+        <ParticleEmitter particle="deep_impactfirearm" particleamount="0" velocitymin="0" velocitymax="0" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget">
+        <Conditional entitytype="eq Structure" />
+        <Conditional hastag="eq door" />
+        <ParticleEmitter particle="deep_spark" copyentityangle="true" anglemin="-10" anglemax="10" particleamount="5" velocitymin="-10" velocitymax="-200" scalemin="0.5" scalemax="1" />
+      </StatusEffect>
+      <!-- smg rounds should not exist outside magazines -->
+      <StatusEffect type="OnNotContained" target="This" stackable="false" delay="0">
+        <Remove />
+      </StatusEffect>
+    </Projectile>
+    <Upgrade gameversion="0.10.0.0" scale="0.5" />
+  </Item>
+</Items>

@@ -16,34 +16,4 @@ namespace WeaponSyncFix
             }
         }
     }
-
-    [HarmonyPatch]
-    internal static class RangedWeaponUsePatch
-    {
-        [HarmonyTargetMethods]
-        private static IEnumerable<MethodBase> TargetMethods()
-        {
-            foreach (var type in AccessTools.AllTypes())
-            {
-                if (!typeof(RangedWeapon).IsAssignableFrom(type)) { continue; }
-
-                var method = AccessTools.DeclaredMethod(type, nameof(RangedWeapon.Use),
-                    new[] { typeof(float), typeof(Character) });
-                if (method == null || method.IsAbstract) { continue; }
-
-                yield return method;
-            }
-        }
-
-        [HarmonyPostfix]
-        internal static void Postfix(RangedWeapon __instance, bool __result, Character character)
-        {
-            if (!__result || character == null) { return; }
-            if (GameMain.NetworkMember is not { IsServer: true } networkMember) { return; }
-
-            networkMember.CreateEntityEvent(
-                __instance.Item,
-                new Item.ApplyStatusEffectEventData(ActionType.OnUse, __instance, character));
-        }
-    }
 }

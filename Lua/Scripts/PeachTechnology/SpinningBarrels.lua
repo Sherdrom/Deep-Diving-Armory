@@ -38,18 +38,29 @@ if not CLIENT then return end
 local ITEM_IDENTIFIER    = "deep_hs3000"  -- 目标物品 identifier
 local BARREL_COUNT       = 6              -- 枪管数量
 
--- 枪管贴图：暂用原版 chaingun 的 Loaders.png 枪管条，后续可替换
-local TEXTURE_PATH       = "Content/Items/Weapons/Loaders.png"
-local SOURCE_RECT        = { 468, 0, 46, 296 }  -- 同 chaingun.xml SpinningBarrelSprite
-local ORIGIN_RELATIVE    = { 0.1, 1.4 }         -- 同 chaingun.xml origin（相对值）
+-- 枪管贴图：mod 内文件用 Deep_Lua.Path 拼相对路径（同 Gunsmith 配置
+-- 约定，Path 由 Autorun/init.lua 注入）；本体素材可直接写 "Content/..."
+local TEXTURE_PATH       = Deep_Lua.Path .. "/weapon/machinegun/machinegun_tun/Sprite/HS_3000.png"
+-- 竖向枪管条实测区域（透明像素包围盒：x=986..1010, y=807..1095）
+local SOURCE_RECT        = { x = 986, y = 807, w = 24, h = 288 }
+-- origin 相对值：x 必须对准条带矩形内的枪管线。chaingun 的 Loaders
+-- 条带右侧带透明留白（枪管线在 0.1 处）；HS_3000 条带为透明像素紧密
+-- 裁切，枪管线在矩形正中，取 0.5。y 含义同 chaingun：1.4 = pivot 在
+-- 条带近端外侧 0.4h 处
+local ORIGIN_RELATIVE    = { 0.5, 1.4 }
+-- 条带内枪口朝向：true = 枪口在条带顶端（原版 Loaders 条带如此）；
+-- false = 枪口在底端（HS_3000 条带如此），绘制时垂直翻转条带使远端
+-- 成为枪口方向。注意 Turret 的位移向量与条带旋转角必须使用同一角度
+-- （配对使用），不可通过取反旋转角换向，否则瞄准角非零时指向发散
+local STRIP_MUZZLE_AT_TOP = false
 
 -- 枪管簇轴心：相对物品 Sprite 原点的像素偏移（物品贴图坐标系）
 --   x: 贴图枪口方向为正；y: 图像向下为正。需按 deep_hs3000 贴图微调
-local BARREL_PIVOT_X     = 40.0
-local BARREL_PIVOT_Y     = -15.0
+local BARREL_PIVOT_X     = -140.0
+local BARREL_PIVOT_Y     = 15.0
 
 local SPIN_DISTANCE      = 45.0    -- 枪管伪 3D 摆动幅度（同 chaingun spinningbarreldistance，实际乘物品 Scale）
-local BARREL_DEPTH_DELTA = 0.003   -- 枪管相对枪体最终绘制深度的偏移（正值浮于枪体之上）
+local BARREL_DEPTH_DELTA = 0.000   -- 枪管相对枪体最终绘制深度的偏移（正值浮于枪体之上）
 local MAX_SPIN_SPEED     = 1800.0  -- 满转速（度/秒），1800 = 每秒 5 转
 local SPIN_UP_ACCEL      = 2700.0  -- 升速加速度（度/秒^2），约 0.67 秒升满
 local SPIN_DOWN_ACCEL    = 900.0   -- 松开扳机后的减速度（度/秒^2），2 秒停转
@@ -82,10 +93,16 @@ end
 
 local barrelSprite = Sprite(
     TEXTURE_PATH,
-    Rectangle(SOURCE_RECT[1], SOURCE_RECT[2], SOURCE_RECT[3], SOURCE_RECT[4])
+    Rectangle(SOURCE_RECT.x, SOURCE_RECT.y, SOURCE_RECT.w, SOURCE_RECT.h)
 )
--- origin 属性为绝对像素：chaingun.xml 的 origin="0.1,1.4" 即相对值乘以源矩形尺寸
-barrelSprite.Origin = Vector2(ORIGIN_RELATIVE[1] * SOURCE_RECT[3], ORIGIN_RELATIVE[2] * SOURCE_RECT[4])
+-- origin 属性为绝对像素：相对值乘以源矩形尺寸，x 对准枪管线，y 使
+-- pivot 位于条带近端外侧 0.4h（同原版 chaingun 几何关系）
+barrelSprite.Origin = Vector2(ORIGIN_RELATIVE[1] * SOURCE_RECT.w, ORIGIN_RELATIVE[2] * SOURCE_RECT.h)
+-- 枪口在条带底端时垂直翻转条带，朝向约定即与原版 Loaders 条带一致。
+-- SpriteEffects 用数值传递（None=0, FlipVertically=2）：MonoGame 程序集
+-- 的类型名无法经 CreateEnumTable 解析；Draw 第 6 参重载即该枚举，
+-- 数值由 MoonSharp 自动转换为枚举值（此前传 0 已验证走此重载）
+local barrelEffects = STRIP_MUZZLE_AT_TOP and 0 or 2
 
 -- ==================== 手持深度复刻 ====================
 -- 1:1 复刻 Item.cs L468-502 GetHeldItemDepth（局部静态函数，无法直接调用）
@@ -300,7 +317,7 @@ local function DrawSpinningBarrels(item, spriteBatch, back)
             Color(math.floor(fr + 0.5), math.floor(fg + 0.5), math.floor(fb + 0.5), math.floor(fa + 0.5)),
             alphaStrip,
             scale,
-            0,
+            barrelEffects,
             depth)
     end
 end

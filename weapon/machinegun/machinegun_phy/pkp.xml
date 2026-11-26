@@ -38,14 +38,6 @@
         <LuaHook name="PKPOriginSprite" />
       </StatusEffect>
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.5" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!-- 使用光源组件作为自变量-->
       <LightComponent range="0.0" lightcolor="0,0,0,0" powerconsumption="2" IsOn="false" allowingameediting="false">
@@ -73,7 +65,7 @@
       <sprite texture="%ModDir%/weapon/machinegun/machinegun_phy/Sprite/PKP.png" canbehiddenbyotherwearables="false" sourcerect="10,6,492,90" rotation="90" inheritlimbdepth="false" depth="0.2" limb="Torso" scale="0.3" origin="0.5,1" />
       <StatValue stattype="MovementSpeed" value="-0.2" />
     </Wearable>
-    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="1.5" holdtrigger="true" barrelpos="246,17" spread="14" unskilledspread="28" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="0.1" weapondamagemodifier="2.5" holdtrigger="true" barrelpos="246,17" spread="14" unskilledspread="28" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" switchableSlots="0" switchableFiremodes="Auto,Auto" firemodeswitchkey="V" penetration="0.1">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,249" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,245,249" />
@@ -87,10 +79,10 @@
       <StatusEffect type="NotInWater" targettype="This" Condition="5" />
       <StatusEffect type="InWater" target="This" Condition="100" disableDeltaTime="true" />
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/jam_alarm.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" delay="1" forceplaysounds="true">
-        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+        <sound file="%ModDir%/weapon/ammo/solve_jam.ogg" range="500.0" loop="false" volume="1" />
       </StatusEffect>
       <StatusEffect type="OnBroken" target="This" disableDeltaTime="true" condition="50" delay="3" setvalue="true">
       </StatusEffect>
@@ -117,12 +109,12 @@
       <StatusEffect type="OnUse" Condition="-1" target="This" disabledeltatime="true">
         <RequiredItems items="chip_oc_gun" type="Contained" />
       </StatusEffect>
-      <RequiredItems items="deep_pkp_mag,fkj_pkp_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems items="deep_pkm_mag,fkj_pkp_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="100" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="deep_pkp_mag,fkj_pkp_mag" hide="false" itempos="-5,-7" setactive="true" rotation="0">
+      <Containable items="deep_pkm_mag,fkj_pkp_mag" hide="false" itempos="-5,-7" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -171,7 +163,7 @@
         <StatusEffect type="OnInserted" target="This" MaxChargeTime="100" setValue="true" disabledeltatime="true" delay="0.01" />
         <!-- 换弹声音 -->
         <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/weapon/ammo/PKPre.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/weapon/ammo/PKPre.ogg" range="500.0" loop="false" volume="1" />
           <ParticleEmitter particle="fleshsmoke" particlespersecond="2" scalemin="1" scalemax="2" />
         </StatusEffect>
         <!-- 拔出弹匣时，回归初始贴图 -->

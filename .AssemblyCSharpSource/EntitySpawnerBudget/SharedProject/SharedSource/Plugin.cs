@@ -130,7 +130,7 @@ public sealed class Plugin : IAssemblyPlugin, IEventUpdate
                 {
                     foreach (var item in deferred.Character.Inventory.FindAllItems(recursive: true))
                     {
-                        item.SpawnedInCurrentOutpost = true;
+                        item.SpawnedInNonPlayerOutpostOrSubmarine = true;
                         item.AllowStealing = false;
                     }
                 }

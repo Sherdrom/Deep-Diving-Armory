@@ -31,14 +31,6 @@
 
 
       <StatusEffect type="OnSecondaryUse" target="Character" SpeedMultiplier="0.6" setvalue="true" />
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0.1">
-        <Conditional chip_bodyshot_detect="gt 10.0" />
-      </StatusEffect>
-      <!-- 有碎甲芯片时，增加1级穿甲-->
-      <StatusEffect type="OnActive" interval="0.5" targettype="This,Character" targetitemcomponent="SwitchableRangedWeapon" comparison="and" setvalue="true" penetration="0">
-        <Conditional chip_bodyshot_detect="lt 10.0" />
-      </StatusEffect>
 
       <!--6倍镜
       <StatusEffect type="OnActive" target="Character" multiplyafflictionsbymaxvitality="true">
@@ -67,7 +59,7 @@
       <!-- VCE检测 -->
 
     </Holdable>
-    <SwitchableRangedWeapon reload="0.23" weapondamagemodifier="1" holdtrigger="true" barrelpos="234,25" spread="3" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.23" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
+    <SwitchableRangedWeapon reload="0.23" weapondamagemodifier="3" holdtrigger="true" barrelpos="234,25" spread="3" unskilledspread="10" combatPriority="80" drawhudwhenequipped="true" crosshairscale="0.5" botreload="0.23" switchableSlots="0" switchableFiremodes="Semi,Semi" firemodeswitchkey="V">
       <!-- VCE检测 -->
       <Crosshair texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="8,0,253,255" />
       <CrosshairPointer texture="%ModDir%/weapon/sight/frontsight.png" sourcerect="273,0,237,249" />
@@ -102,12 +94,12 @@
       <RequiredItems items="3x_sight,thermalgoggles_sight_6x" type="Contained" />
       </StatusEffect>-->
 
-      <RequiredItems items="sks_mag" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredItems tags="deep_sks_mag" type="Contained" msg="ItemMsgAmmoRequired" />
       <RequiredSkill identifier="weapons" level="50" />
       <StatusHUD drawhudwhenequipped="true" overlaycolor="0,0,0,0" range="3000" thermalgoggles="false" showdeadcharacters="false" showtexts="false" />
     </SwitchableRangedWeapon>
     <ItemContainer capacity="1" maxstacksize="1" hideitems="false" containedstateindicatorslot="0" containedstateindicatorstyle="bullet">
-      <Containable items="sks_mag" hide="false" itempos="-6,11" setactive="true" rotation="0">
+      <Containable tags="deep_sks_mag" hide="false" itempos="-6,11" setactive="true" rotation="0">
         <!-- Locks the ammunition, preventing the person from adding more or removing. -->
         <StatusEffect type="OnInserted" target="Contained" NonInteractable="true" delay="0.01" setvalue="true" />
         <!-- Unlocks the ammunition, allowing the person to add more or remove. -->
@@ -143,7 +135,7 @@
           <LuaHook name="56BANBoltInSprite" />
         </StatusEffect>
         <StatusEffect type="OnInserted" target="This" setValue="true" disabledeltatime="true" delay="0.01">
-          <sound file="%ModDir%/Sound/Weapons/SKS/gunOther/sks_re.ogg" type="OnUse" range="500.0" loop="false" volume="1" />
+          <sound file="%ModDir%/Sound/Weapons/SKS/gunOther/sks_re.ogg" range="500.0" loop="false" volume="1" />
         </StatusEffect>
       </Containable>
       <SlotIcon slotindex="0" texture="%ModDir%/misc/ui.png" sourcerect="10,8,64,57" origin="0.5,0.5" />

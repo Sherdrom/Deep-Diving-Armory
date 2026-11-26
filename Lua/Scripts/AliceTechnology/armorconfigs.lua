@@ -2599,5 +2599,8 @@ Deep_Lua.Armors = {
 -- All pre-defined type will only decide damage with gunshot wound is valid.
 
 Timer.Wait(function()
-     VCE.ArmorSystem.AddtoMain(Deep_Lua.Armors)
+    -- shortcut: 等新版 VCE 恢复护甲接口后再注册。
+    if VCE and VCE.ArmorSystem and VCE.ArmorSystem.AddtoMain then
+        VCE.ArmorSystem.AddtoMain(Deep_Lua.Armors)
+    end
 end,100)

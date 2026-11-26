@@ -1,12 +1,9 @@
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Barotrauma;
 using Barotrauma.Items.Components;
-using Barotrauma.Networking;
 using DamageRollbackFix;
 using HarmonyLib;
-using Microsoft.Xna.Framework;
 
 namespace WeaponSyncFix
 {
@@ -17,23 +14,6 @@ namespace WeaponSyncFix
 
         [ThreadStatic]
         internal static bool IsProjectileLaunchReplay;
-    }
-
-    internal static class FireTimeTracker
-    {
-        private static readonly ConditionalWeakTable<RangedWeapon, StrongBox<double>> LastFireTimes = new();
-
-        internal static void RecordFire(RangedWeapon weapon)
-        {
-            LastFireTimes.GetOrCreateValue(weapon).Value = Timing.TotalTime;
-        }
-
-        internal static double TimeSinceLastFire(RangedWeapon weapon)
-        {
-            return LastFireTimes.TryGetValue(weapon, out var box)
-                ? Timing.TotalTime - box.Value
-                : double.MaxValue;
-        }
     }
 
     internal static class PredictedProjectiles
@@ -140,78 +120,6 @@ namespace WeaponSyncFix
             {
                 body.Dir = 1;
             }
-        }
-    }
-
-    [HarmonyPatch]
-    internal static class RangedWeaponUsePatch
-    {
-        [HarmonyTargetMethods]
-        private static IEnumerable<MethodBase> TargetMethods()
-        {
-            foreach (var type in AccessTools.AllTypes())
-            {
-                if (!typeof(RangedWeapon).IsAssignableFrom(type)) { continue; }
-
-                var method = AccessTools.DeclaredMethod(type, nameof(RangedWeapon.Use),
-                    new[] { typeof(float), typeof(Character) });
-                if (method == null || method.IsAbstract) { continue; }
-
-                yield return method;
-            }
-        }
-
-        [HarmonyPostfix]
-        internal static void Postfix(RangedWeapon __instance, bool __result)
-        {
-            if (__result && !NetworkEventContext.IsItemEvent)
-            {
-                FireTimeTracker.RecordFire(__instance);
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(ItemComponent), nameof(ItemComponent.ApplyStatusEffects))]
-    internal static class ApplyStatusEffectsPatch
-    {
-        private const double DedupWindow = 1.0;
-
-        private static readonly MethodInfo PlaySoundMethod =
-            AccessTools.Method(typeof(ItemComponent), "PlaySound",
-                new[] { typeof(ActionType), typeof(Character) });
-
-        [HarmonyPrefix]
-        internal static bool Prefix(ItemComponent __instance, ActionType type)
-        {
-            if (!NetworkEventContext.IsItemEvent || __instance is not RangedWeapon || type != ActionType.OnUse)
-            {
-                return true;
-            }
-
-            var weapon = (RangedWeapon)__instance;
-            return FireTimeTracker.TimeSinceLastFire(weapon) >= DedupWindow;
-        }
-
-        [HarmonyPostfix]
-        internal static void Postfix(ItemComponent __instance, ActionType type, Character character)
-        {
-            if (!NetworkEventContext.IsItemEvent || __instance is not RangedWeapon rw || type != ActionType.OnUse)
-            {
-                return;
-            }
-            if (FireTimeTracker.TimeSinceLastFire(rw) < DedupWindow) { return; }
-
-            PlaySoundMethod?.Invoke(rw, new object[] { ActionType.OnUse, character });
-            AccessTools.Method(rw.GetType(), "LaunchProjSpecific")?.Invoke(rw, null);
-
-            var body = rw.Item.body;
-            if (body == null) { return; }
-
-            float rotation = body.Rotation;
-            if (body.Dir < 0f) { rotation += MathHelper.Pi; }
-            body.ApplyLinearImpulse(
-                new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation)) * body.Mass * -50.0f,
-                maxVelocity: NetConfig.MaxPhysicsBodyVelocity);
         }
     }
 }

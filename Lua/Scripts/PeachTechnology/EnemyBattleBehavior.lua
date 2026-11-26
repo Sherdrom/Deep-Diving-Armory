@@ -25,9 +25,10 @@ local function SetAimTarget(target, limb)
 end
 
 Hook.Patch("Barotrauma.HumanAIController", "Update", function(instance)
-    if instance.AnimController.Crouching then
+    local animController = instance.Character.AnimController
+    if animController.Crouching then
         if AH.GetAffStrength(instance.Character, "deep_enemy_affliction_resistance") > 0.1 then
-            instance.AnimController.Crouching = false
+            animController.Crouching = false
         end
     end
 end, Hook.HookMethodType.After)
@@ -273,7 +274,7 @@ Hook.Patch(
 
 -- ------------------------------------------------------------
 -- [PATCH 2] Disable Attack Reporting + Force Immediate Counterattack
--- Target: HumanAIController.RespondToAttack(Character, AttackResult)
+-- Target: HumanAIController.RespondToAttack(Character, AttackResult, AttackResult?)
 -- Not affected by NFF (NFF does not patch RespondToAttack)
 -- ------------------------------------------------------------
 
@@ -281,7 +282,6 @@ Hook.Patch(
     "AttackDistanceLimit_NoReport",
     "Barotrauma.HumanAIController",
     "RespondToAttack",
-    { "Barotrauma.Character", "Barotrauma.AttackResult" },
     function(instance, ptable)
         local config = GetJobConfig(instance.Character)
         if config == nil then

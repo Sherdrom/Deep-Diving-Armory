@@ -11,8 +11,20 @@ Deep_Lua.HF = {
         return false
     end,
 
+    IsVirtualMagazine = function(item)
+        return item.HasTag("deep_virtualmagazine") or item.HasTag("VCE_VirtualizedMagazine")
+    end,
+
     Vector2Dir = function(vector)
 	    return math.atan2(vector.Y, vector.X)
     end
 
 }
+
+-- Only the legacy press needs direct access to the VCE component.
+if CSActive and (SERVER or not Game.IsMultiplayer) then
+    local typeName = "VCE_VirtualizedMagazine.VirtualizedMagazine"
+    if pcall(LuaUserData.RegisterType, typeName) then
+        Deep_Lua.HF.VirtualMagazineType = typeName
+    end
+end

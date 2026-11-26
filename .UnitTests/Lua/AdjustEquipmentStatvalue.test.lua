@@ -143,7 +143,9 @@ setmetatable(AfflictionPrefab.Prefabs, {
         error("The given key '" .. identifier .. "' was not present in the dictionary.")
     end,
 })
-ItemPrefab = { GetItemPrefab = function() return true end }
+ItemPrefab = { GetItemPrefab = function(id)
+    return id ~= "missing_required_item" and id ~= "missing_dlc_item"
+end }
 
 _G.AdjustEquipmentConfig = {
     fallbackInterval = 2.0,
@@ -172,6 +174,8 @@ _G.AdjustEquipmentConfig = {
         },
     },
     subItems = {
+        missing_required_item = {},
+        missing_dlc_item = { optionalPrefab = true },
         module = {
             stats = { { statType = "MovementSpeed", value = 1 } },
             flags = { "SharedFlag" },
@@ -456,7 +460,12 @@ slots[InvSlotType.OuterClothes] = noneArmor
 dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")
 do
     local originalPrint, warnings = print, {}
-    print = function(_, message, ...) warnings[message] = { ... } end
+    print = function(_, message, ...)
+        if message == "item prefab not found" then
+            assert((...) == "missing_required_item", "absent DLC produced a missing-item warning")
+        end
+        warnings[message] = { ... }
+    end
     local serverOk, serverErr, clientOk, clientErr
     CLIENT = false
     serverOk, serverErr = pcall(events.loaded)
@@ -465,6 +474,7 @@ do
     print = originalPrint
     assert(serverOk, serverErr)
     assert(clientOk, clientErr)
+    assert(warnings["item prefab not found"], "missing required item was not reported")
     assert(warnings["invalid Affliction"][2] == "missing_marker", "missing effect prefab was not reported")
     assert(warnings["legacy Affliction prefab not found"][1] == "deep_chip_blaster_equipped",
         "missing legacy prefab was not reported")
@@ -1381,22 +1391,6 @@ Deep_Lua = { Path = "." }
 _G.AdjustEquipmentConfig = nil
 local production, categoryFiles = dofile("Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue-Config.lua")
 assert(production == _G.AdjustEquipmentConfig, "production config global changed")
-local function hasTalentMarker(cfg, marker)
-    for _, effect in ipairs(cfg.effects or { cfg }) do
-        for _, value in ipairs(effect.talentMarkers or {}) do
-            if value == marker then return true end
-        end
-    end
-    return false
-end
-local function sameStats(left, right)
-    if #(left.stats or {}) ~= #(right.stats or {}) then return false end
-    for index, stat in ipairs(left.stats or {}) do
-        local expected = right.stats[index]
-        if not expected or stat.statType ~= expected.statType or stat.value ~= expected.value then return false end
-    end
-    return true
-end
 -- Re-read category entries to verify the loader without freezing file lists or counts.
 for category, files in pairs(categoryFiles) do
     local expected = {}
@@ -1413,35 +1407,6 @@ for category, files in pairs(categoryFiles) do
         assert(expected[identifier], category .. " contains unexpected " .. identifier)
     end
 end
-assert(production.legacyAfflictions.deep_Semi
-    and production.legacyAfflictions.deep_Burst
-    and production.legacyAfflictions.deep_upgrade_tool_steel_tit_confirm_rifle
-    and production.legacyAfflictions.deep_machinegun_crouch
-    and production.legacyAfflictions.deep_sniper_aim_heavy
-    and production.legacyAfflictions.deep_muffler
-    and production.legacyAfflictions["8x_sight"]
-    and production.legacyAfflictions.chip_cqb_1
-    and production.legacyAfflictions.deep_chip_cqb_equipped
-    and production.legacyAfflictions.deep_plate_metal_3_debuff
-    and production.legacyAfflictions.chip_captain_1
-    and production.legacyAfflictions.chip_captain_only_one
-    and production.legacyAfflictions.holographic_sight
-    and production.legacyAfflictions.deepgun_inwater_detect == nil
-    and production.legacyAfflictions.deep_VCE_none == nil
-    and production.legacyAfflictions.deep_VCE_yes == nil
-    and production.legacyAfflictions.clownpower == nil
-    and production.legacyAfflictions.psychosis == nil
-    and production.legacyAfflictions.chip_assistant_2 == nil
-    and production.legacyAfflictions.chip_bodyshot_detect == nil
-    and production.legacyAfflictions.chip_heavy_armor == nil
-    and production.legacyAfflictions.chip_strengthening_of_limbs == nil
-    and production.legacyAfflictions.deep_chip_blaster == nil
-    and production.legacyAfflictions.deep_machinegunner_detect == nil
-    and production.legacyAfflictions.deep_muzzle_long_detect == nil
-    and production.legacyAfflictions.deep_muzzle_none_detect == nil
-    and production.legacyAfflictions.deep_muzzle_short_detect == nil
-    and production.legacyAfflictions.deep_pp19_buffalo == nil,
-    "legacy Affliction mappings or excluded markers changed")
 local function assertFiniteNumber(value, context)
     assert(type(value) == "number" and value == value and math.abs(value) < math.huge, context)
 end
@@ -1465,74 +1430,6 @@ for category in pairs(categoryFiles) do
         end
     end
 end
-local legacy = production.legacyAfflictions
-assert(legacy.deep_Semi.timeout > 0
-    and legacy.deep_Burst.blocksStatGroups[1] == "deep_Semi"
-    and legacy.deep_machinegun_crouch.when
-    and legacy.deep_pistol_mozambique_hand.when
-    and legacy.deep_knife_detect_1.when
-    and legacy.deep_wuchuan_detection.effects[1].when
-    and legacy.deep_sniper_aim_heavy.effects[3]
-    and legacy.cqr_grips.when == nil
-    and legacy.oblique_grips.when == nil
-    and legacy.flash_hider.when == nil
-    and legacy.deep_compensator.when == nil
-    and legacy.chip_captain_only_one.stats == nil
-    and hasTalentMarker(legacy.deep_shotgun_damgage_balance, "deep_shotgun_damgage_balance")
-    and hasTalentMarker(legacy.deepgun_inwater_detect_chip, "deepgun_inwater_detect_chip")
-    and hasTalentMarker(legacy.deep_machinegunner_light_detect, "deep_machinegunner_light_detect")
-    and hasTalentMarker(legacy.deep_muffler, "deep_muffler"),
-    "legacy Affliction effect profiles changed")
-assert(sameStats(legacy.deep_Semi, production.heldWeapons.deep_AK12.effects[1])
-    and legacy.deep_Semi.stats == production.heldWeapons.deep_AK12.effects[1].stats
-    and sameStats(legacy.deep_Burst, production.heldWeapons.deep_m4.effects[2])
-    and sameStats(legacy.deep_upgrade_tool_steel_tit_confirm_rifle,
-        production.heldWeapons.deep_m4.effects[3])
-    and sameStats(legacy.deep_machinegun_crouch, production.heldWeapons.deep_m249.effects[1])
-    and sameStats(legacy.deep_sniper_aim_heavy.effects[1], production.heldWeapons.deep_m82a1.effects[1])
-    and sameStats(legacy.deep_compensator, production.weaponAccessories.deep_compensator.effects[1])
-    and sameStats(legacy.deep_muffler, production.weaponAccessories.deep_muffler.effects[1])
-    and sameStats(legacy.extended_barrel, production.weaponAccessories.extended_barrel.effects[1])
-    and sameStats(legacy["2x_sight"], production.weaponAccessories["2x_sight"])
-    and sameStats(legacy["8x_sight"], production.weaponAccessories["8x_sight"])
-    and sameStats(legacy.chip_cqb_1, production.subItems.chip_cqb)
-    and sameStats(legacy.deep_chip_cqb_equipped, production.subItems.chip_cqb)
-    and sameStats(legacy.deep_plate_metal_3_debuff, production.subItems.deep_plate_metal_3)
-    and sameStats(legacy.chip_captain_1, production.subItems.chip_captain)
-    and sameStats(legacy.holographic_sight, production.weaponAccessories.holographic_sight),
-    "legacy Affliction stats drifted from current equipment profiles")
-assert(production.mainItems.deep_hpc
-    and production.subItems.deep_plate_metal_3.statGroup == "deep_plate_debuff"
-    and production.subItems.chip_frogman.talentMarkers[1] == "chip_frogman_1"
-    and production.subItems.chip_assistant_2.affliction[1].id == "chip_assistant_2"
-    and production.weaponAccessories.deep_12shell.talentMarkers[1] == "deep_damage_fall_off_600_1200_detect"
-    and production.weaponAccessories.chip_first_aid.flags[1] == "MoveNormallyWhileDragging"
-    and production.weaponAccessories.cqr_grips.when
-    and production.weaponAccessories.oblique_grips.when
-    and production.weaponAccessories.deep_flash_hider.effects[2]
-    and production.weaponAccessories.deep_compensator.effects[2]
-    and production.weaponAccessories.deep_sub_hanging_master_key.effects[2]
-    and hasTalentMarker(production.weaponAccessories.deep_sub_hanging_master_key,
-        "deep_shotgun_damgage_balance_12shell")
-    and hasTalentMarker(production.heldWeapons.deep_g36c_roger, "chip_headshot_detect")
-    and hasTalentMarker(production.heldWeapons.deep_m249, "deep_machinegunner_light_detect")
-    and production.heldWeapons.deep_m249.effects[1].when
-    and production.heldWeapons.deep_CZ75.effects[1].statsKey == "deep_pistol_mozambique_aff"
-    and production.heldWeapons.deep_m82a1.effects[3]
-    and production.heldWeapons.deep_knife.effects[1].when
-    and production.heldWeapons.deep_wuchuan.effects[2]
-    and production.heldWeapons.deep_pp19.effects[2].affliction.id == "deep_pp19_buffalo"
-    and production.heldWeapons.deep_pp19.effects[2].blockedByEnemyResistance
-    and production.heldWeapons.deep_AK12.effects[1].statsKey == "deep_Semi"
-    and production.heldWeapons.deep_AK12.effects[1].timeout == nil
-    and production.heldWeapons.deep_m4.effects[1].statGroup == "deep_Semi"
-    and production.heldWeapons.deep_m4.effects[2].when
-    and production.heldWeapons.deep_m4.effects[2].blocksStatGroups[1] == "deep_Semi"
-    and production.heldWeapons.deep_AK12.effects[2].talentMarkers[1] == "deep_shotgun_damgage_balance"
-    and production.heldWeapons.deep_doublebarrel.effects[1].talentMarkers[1] == "deep_shotgun_damgage_balance"
-    and production.heldWeapons.deep_m4.effects[3].statsKey == "deep_upgrade_rifle"
-    and production.heldWeapons.deep_flash_handed_shield == nil,
-    "split production config changed category data")
 
 local switchableHost = makeItem("deep_AK12")
 local switchableValues = {

@@ -17,7 +17,12 @@ namespace VanillaBugFixes
 
         partial void PreInitPatchingProjSpecific();
 
-        public void OnLoadCompleted() { }
+        public void OnLoadCompleted()
+        {
+#if CLIENT
+            WeaponSyncFix.WeaponUseFeedback.Register();
+#endif
+        }
 
         public void PreInitPatching()
         {
