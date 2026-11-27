@@ -98,6 +98,7 @@ static void Run(string[] args)
         {
             // OnContentLoaded also creates GPU textures. Exercise its assembly-wide Harmony registration headlessly.
             harmonyType.GetMethod("PatchAll", [typeof(Assembly)])!.Invoke(harmony, [adapter]);
+            DeepLaserChecks.Run(adapter, GameType, Item, Field);
             var actions = ((IEnumerable)Field(data.GetType(), "StatusEffectActions").GetValue(data)!).Cast<object>();
             Assert(actions.Select(x => (string)x.GetType().GetProperty("ElementName")!.GetValue(x)!).ToHashSet().SetEquals(
                 ["DDA_NightVision_On", "DDA_NightVision_Off", "DDA_ALTYN_Open", "DDA_ALTYN_Origin", "DDA_MASKA_Open", "DDA_MASKA_Origin"]),
