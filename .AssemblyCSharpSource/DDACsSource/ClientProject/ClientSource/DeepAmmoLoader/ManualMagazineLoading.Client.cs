@@ -17,18 +17,18 @@ public sealed partial class ManualMagazineLoading
     private static double hideAt;
     private GUIButton? unloadButton;
 
-    private sealed record Request(uint Session, ushort[] Sources) : IEventData;
+    private sealed record Request(uint Session, ushort[] Sources, (ushort Owner, int Container, int Slot) Target = default) : IEventData;
     public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<Request>(data, out _);
     public void ClientEventWrite(IWriteMessage msg, NetEntityEvent.IData extraData = null!)
     {
         var request = ExtractEventData<Request>(extraData);
         msg.WriteUInt32(request.Session);
-        if (request.Sources.Length <= 1)
-        {
-            msg.WriteUInt16(request.Sources.FirstOrDefault());
-            return;
-        }
-        msg.WriteUInt16(ushort.MaxValue); // Reserved entity ID marks a multi-package drag.
+        msg.WriteUInt16(request.Sources.Length > 1 ? ushort.MaxValue : request.Sources.FirstOrDefault());
+        if (request.Sources.Length == 0) { return; }
+        msg.WriteUInt16(request.Target.Owner);
+        msg.WriteInt32(request.Target.Container);
+        msg.WriteInt32(request.Target.Slot);
+        if (request.Sources.Length == 1) { return; }
         msg.WriteByte((byte)request.Sources.Length);
         foreach (ushort id in request.Sources) { msg.WriteUInt16(id); }
     }
@@ -46,7 +46,12 @@ public sealed partial class ManualMagazineLoading
             if (duration > 0) { PlayPressSound(); }
             loaded = rounds;
         }
-        if (seconds <= 0) { End(seconds < 0); return; }
+        if (seconds <= 0)
+        {
+            if (seconds == 0 && duration == 0) { SoundPlayer.PlayUISound(GUISoundType.PickItemFail); }
+            End(seconds < 0);
+            return;
+        }
         elapsed = 0;
         duration = seconds;
     }
@@ -70,7 +75,9 @@ public sealed partial class ManualMagazineLoading
             OnClicked = (_, _) =>
             {
                 if (local == this && Unloading) { CancelLocal(); return true; }
-                return Character.Controlled is { } player && StartLocal(player, [Item]);
+                bool started = Character.Controlled is { } player && StartLocal(player, [Item]);
+                if (!started) { SoundPlayer.PlayUISound(GUISoundType.PickItemFail); }
+                return started;
             }
         };
         bool left = user.HasEquippedItem(Item, InvSlotType.LeftHand);
@@ -91,7 +98,6 @@ public sealed partial class ManualMagazineLoading
             target.GetComponent<ManualMagazineLoading>() is not { } loading) { return false; }
 
         bool accepted = loading.StartLocal(user, Inventory.DraggingItems);
-        if (accepted) { slot.ForceTooltipRefresh = true; }
         Inventory.DraggingItems.Clear();
         Inventory.DraggingSlot = null;
         SoundPlayer.PlayUISound(accepted ? GUISoundType.PickItem : GUISoundType.PickItemFail);
@@ -103,17 +109,18 @@ public sealed partial class ManualMagazineLoading
         if (!Begin(user, sources, ++nextSession)) { return false; }
         justFinished = null;
         local = this;
-        if (GameMain.Client != null)
+        if (Inventory.SelectedSlot is { } slot && slot.Item == Item) { slot.ForceTooltipRefresh = true; }
+        if (remoteSession)
         {
             duration = 0; // Wait for the server's starting count.
-            Item.CreateClientEvent(this, new Request(session, sources.Select(i => i.ID).ToArray()));
+            Item.CreateClientEvent(this, new Request(session, sources.Select(i => i.ID).ToArray(), TargetAddress(Item)));
         }
         return true;
     }
 
     private void CancelLocal()
     {
-        if (GameMain.Client != null && !Item.Removed && !Item.IsInRemoveQueue)
+        if (remoteSession && GameMain.Client != null && !Item.Removed && !Item.IsInRemoveQueue)
         { Item.CreateClientEvent(this, new Request(session, [])); }
         End(false);
     }
@@ -139,7 +146,7 @@ public sealed partial class ManualMagazineLoading
 
     public override void AddTooltipInfo(ref LocalizedString name, ref LocalizedString description)
     {
-        if (local == this)
+        if (local == this && SlotOf(Item) is ({ } inventory, var index) && inventory.GetItemsAt(index).Count() == 1)
         { description += "\n" + TextManager.Get(Unloading ? "dda.manualunload.hint" : "dda.manualloading.stop").Value.Replace("[key]", StopKey.GetName().Value); }
     }
 
@@ -165,10 +172,11 @@ public sealed partial class ManualMagazineLoading
 
     [HarmonyPatch(typeof(Inventory), nameof(Inventory.DrawSlot))]
     [HarmonyPostfix]
-    private static void DrawProgress(SpriteBatch spriteBatch, Inventory inventory, VisualSlot slot, Item item, bool drawItem)
+    private static void DrawProgress(SpriteBatch spriteBatch, Inventory inventory, VisualSlot slot, Item item, int slotIndex, bool drawItem)
     {
         var loading = local ?? justFinished;
         if (loading == null || loading.Item != item || inventory == null || !drawItem || item.ParentInventory != inventory) { return; }
+        if (SlotOf(item).Index != slotIndex || inventory.GetItemsAt(slotIndex).Count() != 1) { return; }
         float progress = loading.CapacityProgress;
         Vector2 center = slot.Rect.Center.ToVector2() + slot.DrawOffset;
         float radius = Math.Min(slot.Rect.Width, slot.Rect.Height) * 0.36f;

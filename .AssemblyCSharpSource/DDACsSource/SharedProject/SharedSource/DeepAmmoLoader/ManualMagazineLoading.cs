@@ -12,11 +12,12 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private VirtualizedMagazine? magazine;
     private VirtualizedAmmoStorage? package;
     private Character? owner;
-    private (Inventory? Inventory, int Index) sourceSlot, originalStack, targetSlot;
+    private (Inventory? Inventory, int Index) sourceSlot, originalStack, targetSlot, splitFrom;
     private Queue<Item>? nextPackages;
     private int loaded;
     private float elapsed, duration;
     private uint session;
+    private bool remoteSession;
     private ItemPrefab? pendingPackage;
     private bool Unloading => owner != null && package == null;
 
@@ -41,8 +42,53 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private static bool Accessible(Item item, Character user) =>
         !item.Removed && !item.IsInRemoveQueue && item.IsOwnedBy(user) && user.CanInteractWith(item);
 
-    private static (Inventory? Inventory, int Index) SlotOf(Item item) =>
-        (item.ParentInventory, item.ParentInventory?.FindIndex(item) ?? -1);
+    private static (Inventory? Inventory, int Index) SlotOf(Item item)
+    {
+        var inventory = item.ParentInventory;
+        int index = inventory?.FindIndex(item) ?? -1;
+        // A held small item also occupies an Any slot, which can follow its hand in the slot array.
+        if (index >= 0 && inventory is CharacterInventory character && character.SlotTypes[index] != InvSlotType.Any)
+        {
+            foreach (int i in character.FindIndices(item))
+            {
+                if (character.SlotTypes[i] == InvSlotType.Any) { return (character, i); }
+            }
+        }
+        return (inventory, index);
+    }
+
+    private static (ushort Owner, int Container, int Slot) TargetAddress(Item item)
+    {
+        var (inventory, index) = SlotOf(item);
+        int component = inventory is ItemInventory { Container: { } container } ? container.Item.GetComponentIndex(container) : -1;
+        return (inventory?.Owner?.ID ?? 0, component, index);
+    }
+
+    private bool MoveMagazine(Character user, Inventory destination, int index, bool matchingStack = false)
+    {
+        if (destination == Item.ParentInventory && destination is CharacterInventory character && HeldBy(user))
+        {
+            // Indexed TryPutItem clears every slot, including the hand holding this same item.
+            int previous = SlotOf(Item).Index;
+            if (previous < 0 || character.SlotTypes[previous] != InvSlotType.Any) { return false; }
+            character.ForceToSlot(Item, index);
+            character.ForceRemoveFromSlot(Item, previous);
+            character.CreateNetworkEvent();
+            return true;
+        }
+        return destination.TryPutItem(Item, index, false, false, user, ignoreCondition: matchingStack, triggerOnInsertedEffects: false);
+    }
+
+    private bool SplitMagazine(Character user, Inventory inventory)
+    {
+        for (int i = 0; i < inventory.Capacity; i++)
+        {
+            if (inventory.GetItemAt(i) != null || (inventory is CharacterInventory c && c.SlotTypes[i] != InvSlotType.Any) ||
+                !inventory.CanBePutInSlot(Item, i)) { continue; }
+            if (remoteSession || MoveMagazine(user, inventory, i)) { return true; }
+        }
+        return false;
+    }
 
     private bool Begin(Character user, IReadOnlyList<Item> sources, uint token)
     {
@@ -51,8 +97,8 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         { return false; }
         var source = sources[0];
         var slot = SlotOf(source);
-        targetSlot = SlotOf(Item);
-        if (slot.Index < 0 || targetSlot.Index < 0) { return false; }
+        var origin = SlotOf(Item);
+        if (slot.Index < 0 || origin.Index < 0) { return false; }
         VirtualizedAmmoStorage? storage = null;
         // The magazine's own ID requests unloading; zero is reserved for cancellation.
         if (source == Item)
@@ -70,6 +116,14 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
                 other.GetComponent<VirtualizedAmmoStorage>()?.AmmoIdentifier != storage.AmmoIdentifier))) { return false; }
         }
 
+        remoteSession = GameMain.NetworkMember is { IsClient: true };
+        if (origin.Inventory!.GetItemsAt(origin.Index).Count() > 1)
+        {
+            if (!SplitMagazine(user, origin.Inventory) &&
+                (origin.Inventory == user.Inventory || !SplitMagazine(user, user.Inventory))) { return false; }
+            splitFrom = origin;
+        }
+        targetSlot = SlotOf(Item);
         sourceSlot = originalStack = slot;
         nextPackages = sources.Count > 1 ? new Queue<Item>(sources.Skip(1)) : null;
         owner = user;
@@ -86,7 +140,8 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
     private bool HeldBy(Character user) => user.HasEquippedItem(Item, InvSlotType.LeftHand | InvSlotType.RightHand);
 
     private bool TargetInPlace(Character user) => user.CanInteract && Accessible(Item, user) &&
-        SlotOf(Item) == targetSlot && (!Unloading || HeldBy(user));
+        Item.ParentInventory is { } inventory && inventory == targetSlot.Inventory && inventory.IsInSlot(Item, targetSlot.Index) &&
+        inventory.GetItemsAt(targetSlot.Index).Count() == 1 && (!Unloading || HeldBy(user));
 
     private bool CanContinue(Character user, Item source) =>
 #if SERVER
@@ -94,7 +149,7 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
 #else
         Character.Controlled == user &&
 #endif
-        TargetInPlace(user) && Accessible(source, user) && SlotOf(source) == sourceSlot;
+        TargetInPlace(user) && (source == Item || (Accessible(source, user) && SlotOf(source) == sourceSlot));
 
     public override void Update(float deltaTime, Camera cam)
     {
@@ -102,10 +157,10 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         Item source = package?.Item ?? Item;
 #if CLIENT
         if (owner != Character.Controlled) { CancelLocal(); return; }
-        if (GameMain.Client != null)
+        if (remoteSession)
         {
-            // The authority splits and replaces source packages as the selected stack is consumed.
-            if (!TargetInPlace(owner)) { CancelLocal(); return; }
+            if (GameMain.Client == null) { End(false); return; }
+            // Only the server can distinguish its split/merge from a player move across delayed inventory snapshots.
             elapsed += deltaTime;
             if (duration == 0 && elapsed > 10) { CancelLocal(); }
             return;
@@ -247,16 +302,52 @@ public sealed partial class ManualMagazineLoading : ItemComponent, IClientSerial
         { inventory.TryPutItem(item, inventory.FindIndex(peer), false, false, user, triggerOnInsertedEffects: false); }
     }
 
+    private void RestackMagazine(Character user)
+    {
+        // Keep equipped-only items and installed weapon magazines in their native slots.
+        if (targetSlot.Inventory is CharacterInventory gear && gear.SlotTypes[targetSlot.Index] != InvSlotType.Any ||
+            splitFrom.Inventory == null && DeepAmmoLoader.InWeapon(Item)) { return; }
+        bool held = HeldBy(user);
+        bool MatchesSlot(Inventory inventory, int index) => index >= 0 && index < inventory.Capacity &&
+            (inventory is not CharacterInventory c || c.SlotTypes[index] == InvSlotType.Any) &&
+            (!held || inventory == user.Inventory) &&
+            inventory.GetItemAt(index) is { } peer && peer != Item && Accessible(peer, user) &&
+            inventory.CanBePutInSlot(Item, index, ignoreCondition: true) &&
+            inventory.GetItemsAt(index).All(other => other != Item && other.Condition == Item.Condition &&
+                DeepAmmoLoader.SameMagazineContents(magazine!, other));
+
+        if (splitFrom.Inventory is { } original && MatchesSlot(original, splitFrom.Index) &&
+            MoveMagazine(user, original, splitFrom.Index, matchingStack: true)) { return; }
+
+        bool MatchesPeer(Item peer)
+        {
+            if (peer == Item || peer.Prefab != Item.Prefab) { return false; }
+            var (inventory, index) = SlotOf(peer);
+            return inventory?.GetItemAt(index) == peer && MatchesSlot(inventory, index);
+        }
+
+        // A held magazine can only join another hotbar stack while retaining its hand slot.
+        var match = user.Inventory.FindItem(MatchesPeer, recursive: !held);
+        if (match != null)
+        {
+            var (inventory, index) = SlotOf(match);
+            MoveMagazine(user, inventory!, index, matchingStack: true);
+        }
+    }
+
     private void End(bool finished)
     {
         if (owner == null) { return; }
         NotifyEnd(finished);
+        if (!remoteSession && magazine != null && TargetInPlace(owner))
+        { RestackMagazine(owner); }
         active.Remove(owner);
+        remoteSession = false;
         owner = null;
         package = null;
         pendingPackage = null;
         nextPackages = null;
-        sourceSlot = originalStack = targetSlot = default;
+        sourceSlot = originalStack = targetSlot = splitFrom = default;
         IsActive = false;
     }
 

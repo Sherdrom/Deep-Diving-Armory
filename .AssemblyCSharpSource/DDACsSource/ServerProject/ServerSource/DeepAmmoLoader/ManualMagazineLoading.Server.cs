@@ -34,7 +34,8 @@ public sealed partial class ManualMagazineLoading
         var previous = lastStart.GetOrCreateValue(client);
         if (unchecked((int)(token - previous.Value)) <= 0) { return; }
         previous.Value = token;
-        if (client.InGame && Begin(user, ReadSources(msg, sourceId), token))
+        var origin = (msg.ReadUInt16(), msg.ReadInt32(), msg.ReadInt32());
+        if (client.InGame && TargetAddress(Item) == origin && Begin(user, ReadSources(msg, sourceId), token))
         {
             requester = client;
             PublishProgress();

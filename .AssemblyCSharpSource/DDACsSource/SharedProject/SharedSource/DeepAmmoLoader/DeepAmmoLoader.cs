@@ -206,7 +206,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         if (changed) { Changed(); PublishState(); }
     }
 
-    private static bool SameMagazineContents(VirtualizedMagazine magazine, Item other) =>
+    internal static bool SameMagazineContents(VirtualizedMagazine magazine, Item other) =>
         other.Prefab == magazine.Item.Prefab && other.GetComponent<VirtualizedMagazine>() is { } peer &&
         peer.LoadedAmmoIdentifiers.SequenceEqual(magazine.LoadedAmmoIdentifiers);
 
@@ -245,7 +245,7 @@ public sealed partial class DeepAmmoLoader : ItemComponent, IServerSerializable,
         return TryPlace(source) || (source != user.Inventory && TryPlace(user.Inventory));
     }
 
-    private static bool InWeapon(Item item)
+    internal static bool InWeapon(Item item)
     {
         for (var owner = item.ParentInventory?.Owner as Item; owner != null; owner = owner.ParentInventory?.Owner as Item)
         {
