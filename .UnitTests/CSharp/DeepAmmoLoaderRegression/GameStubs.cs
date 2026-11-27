@@ -58,13 +58,14 @@ namespace Barotrauma
         public static readonly Prefabs Prefabs = new();
         public Identifier Identifier = new(id);
         public uint UintIdentifier = number;
+        public ContentPackage? ContentPackage;
         public float Health = 100;
         public int MaxStackSize = Inventory.MaxPossibleStackSize;
         public HashSet<Identifier> Tags = tags.Select(t => t.ToIdentifier()).ToHashSet();
         public ContentXElement ConfigElement = new(XElement.Parse("<Item><Projectile /></Item>"));
         public static ItemPrefab FindByIdentifier(Identifier id) => Prefabs.Values.Single(p => p.Identifier == id);
     }
-    public sealed class Character
+    public sealed partial class Character : Entity
     {
         public ushort ID;
         public bool CanInteract = true;
@@ -76,7 +77,7 @@ namespace Barotrauma
         public readonly CharacterInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
-    public sealed class Item
+    public sealed class Item : Entity
     {
         public Item(ushort id, ItemPrefab prefab) { ID = id; Prefab = prefab; Entity.Items[id] = this; }
         public ushort ID;
@@ -95,6 +96,7 @@ namespace Barotrauma
             if (executeEffects && condition == 0 && previous > 0) { ApplyStatusEffects(ActionType.OnBroken, 1); }
         }
         public void ApplyStatusEffects(ActionType type, float deltaTime) { if (type == ActionType.OnBroken) { BrokenEffects++; } }
+        public ItemInventory? OwnInventory;
         public float MaxCondition = 100;
         public bool Removed, IsInRemoveQueue;
         public Inventory? ParentInventory;
@@ -126,7 +128,7 @@ namespace Barotrauma
         public void CreateServerEvent(ItemComponent component, ItemComponent.IEventData data) => Events.Add(data);
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
-    public sealed class ItemInventory(int capacity) : Inventory(capacity);
+    public sealed class ItemInventory(int capacity) : Inventory(capacity) { public ItemContainer? Container; }
     public sealed class CharacterInventory(int capacity) : Inventory(capacity)
     {
         public readonly InvSlotType[] SlotTypes = Enumerable.Repeat(InvSlotType.Any, capacity).ToArray();
@@ -202,7 +204,7 @@ namespace Barotrauma
         }
         public void AddItemToRemoveQueue(Item item) => item.IsInRemoveQueue = true;
     }
-    public static class Entity
+    public class Entity
     {
         public static EntitySpawner Spawner = new();
         public static readonly Dictionary<ushort, Item> Items = [];
@@ -234,12 +236,12 @@ namespace Barotrauma.Items.Components
         }
         protected T ExtractEventData<T>(NetEntityEvent.IData data) => ((NetEntityEvent.Wrapper)data).Value is T t ? t : throw new Exception();
     }
-    public sealed class ItemContainer(Item item, int capacity) : ItemComponent(item, new(new XElement("ItemContainer")))
+    public class ItemContainer(Item item, int capacity) : ItemComponent(item, new(new XElement("ItemContainer")))
     {
         public readonly ItemInventory Inventory = new(capacity);
     }
-    public sealed class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
-    public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public sealed partial class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { public float Penetration; }
 }
 
 namespace Barotrauma.Networking
@@ -294,12 +296,13 @@ namespace VCE_VirtualizedMagazine
                 : null;
     }
 
-    public sealed partial class VirtualizedMagazine(Item item) : ItemComponent(item, new(new XElement("VirtualizedMagazine")))
+    public sealed partial class VirtualizedMagazine(Item item) : ItemContainer(item, 1)
     {
         public readonly Stack<Identifier> LoadedAmmoIdentifiers = new();
         public readonly HashSet<Identifier> AllowedAmmoTags = ["compatible".ToIdentifier()];
         public int MaxSize = 30;
         public int LoadedCount => LoadedAmmoIdentifiers.Count;
+        public Identifier TopIdentifier => LoadedAmmoIdentifiers.TryPeek(out var id) ? id : default;
         public bool ThrowOnRefresh;
         public Identifier[] LoadedAmmoIdentifiersArray
         {

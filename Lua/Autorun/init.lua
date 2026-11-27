@@ -104,7 +104,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HelperFunctions.lua")--工
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AdjustStatvalue/AdjustEquipmentStatvalue.lua")--装备属性调整（本体代码）
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepHitmarker.lua")--命中反馈
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/KillNotification.lua")--击杀通知
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/IgnoreArmLimbs.lua")--60%概率子弹无视手臂
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoCollisionHoldable.lua")--盾牌不推人
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoInjuryShaking.lua")--止痛药，受伤手臂不会乱晃
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotOnly.lua")--致命爆头only
@@ -117,8 +116,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/GiveTalents.lua")--给予�
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ResistanceLimit.lua")--抗性限制
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpawnBlindBox.lua")--随机生成
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AIRandomWeapon.lua")--AI随机切换武器
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ShieldBlock.lua")--多层盾牌
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/FriendlyFireProjectile.lua")--可调整的友军子弹穿透
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContainerConditionTransfer.lua")--压弹机和插板修理台
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/CarriedItemSyncThrottle.lua")--穿戴时移动实体优化
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DeepClaymoreAutoArm.lua")--敌我识别阔剑
@@ -127,7 +124,6 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/DdaRefreshUI.lua")--额外
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetTeamAutoSwitch.lua")--耳机阵营切换
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadsetFootstepAmplifier.lua")--耳机声音放大
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ChipBodyshotPenetration.lua")--碎甲芯片额外穿甲(双端)
-dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ContractNoHighPenetration.lua")--禁用高穿弹合约
 dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HeadShotMultiplier.lua")--爆头倍率
 if SERVER or not Game.IsMultiplayer then
     dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/AmmoFill/NpcMagazineLoadout.lua")--NPC虚拟弹匣按身份填充弹药(服务端)

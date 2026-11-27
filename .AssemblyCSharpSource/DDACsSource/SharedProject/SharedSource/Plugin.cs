@@ -19,6 +19,7 @@ public sealed class Plugin : IBarotraumaPlugin
         components.RegisterItemComponents(typeof(DDA.AmmoLoading.DeepAmmoLoader), typeof(DDA.AmmoLoading.ManualMagazineLoading));
         Network.RegisterNetworkHeaders<NetworkHeader>();
         hooks.RegisterHook<PluginRoundEndedDelegate>(RoundEnded);
+        ProjectilePatches.Install(patches.GetHarmony());
         DDA.AmmoLoading.Plugin.Init(patches.GetHarmony(), Package);
         DeepSlotExpanded.DeepSlotExpandedPlugin.Init(patches.GetHarmony());
 #if CLIENT
@@ -55,6 +56,9 @@ public sealed class Plugin : IBarotraumaPlugin
 
     private static void ClearRound()
     {
+        ProjectileCollisions.ClearRound();
+        FriendlyFireProjectile.ClearRound();
+        ContractNoHighPenetration.ClearRound();
         DeepSlotExpanded.DeepSlotExpandedPlugin.ClearRound();
 #if CLIENT
         DeepVisionPatch.DeepVisionPatch.ClearRound();

@@ -115,6 +115,7 @@ static void Run(string[] args)
             Assert(instructions.Any(i => i.GetType().GetField("operand")!.GetValue(i) is MethodInfo m &&
                 m.DeclaringType?.Assembly == adapter && m.Name == "FilterQueueCount"), "Server queue lacks its budget gate.");
         }
+        var projectileMethods = ProjectilePatchChecks.Run(game, vce, adapter, harmonyType);
         CheckPacket("ThermalVisablePatch.ThermalVisablePatch+ThermalState", (ushort)417, true);
         var impulseType = adapter.GetType("WeaponSyncFix.WeaponUseFeedback+Feedback", true)!.GetProperty("Impulse")!.PropertyType;
         CheckPacket("WeaponSyncFix.WeaponUseFeedback+Feedback", (ushort)517, (ushort)1, (ushort)42, ushort.MaxValue,
@@ -235,9 +236,10 @@ static void Run(string[] args)
         }
         finally { foreach (object prefab in registered) { removePrefab.Invoke(prefabRegistry, [prefab]); } }
         Unload();
+        Assert(projectileMethods.All(m => !Patched(m)), "Unload must remove every projectile patch.");
         Assert(!Patched(), "Unload must remove the migration hook.");
         Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");
-        Console.WriteLine($"PASS ({target}): isolated native VCE resolution, DDA-owned loader, network handler, six supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
+        Console.WriteLine($"PASS ({target}): game {game.GetName().Version}, {projectileMethods.Length} projectile targets installed and unloaded, isolated native VCE resolution, DDA-owned loader, network handler, six supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
     }
     finally
     {

@@ -15,8 +15,8 @@ local function parseHeadshotMultipliers(tagsStr)
 		return nil
 	end
 	local multipliers = {}
-	for tagStr in string.gmatch(tagsStr, "[^,]+") do
-		tagStr = string.gsub(tagStr, "^%s*(.-)%s*$", "%1")
+	for tag in string.gmatch(tagsStr, "[^,]+") do
+		local tagStr = string.gsub(tag, "^%s*(.-)%s*$", "%1")
 		local affType, multStr = string.match(tagStr, "^deep_headshot_(.+)_([%d%.]+)$")
 		if affType and multStr then
 			local mult = tonumber(multStr)
@@ -90,6 +90,11 @@ function(instance, p)
 	pendingHeadshot[instance] = copy
 	log("-> multipliers recorded")
 end, Hook.HookMethodType.Before)
+
+-- A later prefix can cancel this hit before AddLimbAffliction consumes its multipliers.
+Hook.Patch("Barotrauma.Character", "ApplyAttack", function(instance)
+	pendingHeadshot[instance] = nil
+end, Hook.HookMethodType.After)
 
 local bypassResistanceId = nil
 
