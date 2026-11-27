@@ -267,7 +267,39 @@ static (WeakReference Context, object[] GameObjects) Run(string[] args)
         var savedSnapshot = loaderType.GetMethod("EncodeSnapshot", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(existing, null);
         Assert(loaderType.GetMethod("DecodeSnapshot", staticMethods)!.Invoke(null, [savedSnapshot]) != null, "Stock snapshot round trip failed.");
         var context = new WeakReference(AssemblyLoadContext.GetLoadContext(adapter), trackResurrection: true);
+        var round = Item("gauss_round");
+        var magazine = Item("deep_gauss_mag");
+        var guards = adapter.GetType("DeepDivingArmory.NoProjectileConsume", true)!;
+        var magazines = guards.GetField("magazines", staticMethods)!.GetValue(null)!;
+        Field(itemType, "container").SetValue(round, magazine);
+        magazines.GetType().GetMethod("Add")!.Invoke(magazines, [round, magazine]);
+        bool MayRemove() => (bool)guards.GetMethod("AllowRemoval", staticMethods)!.Invoke(null, [round])!;
+        Assert(!MayRemove(), "Server and single player must protect the contained round.");
+        itemType.GetMethod("Remove", Type.EmptyTypes)!.Invoke(round, null);
+        Assert(!(bool)itemType.GetProperty("Removed")!.GetValue(round)!, "Patched Item.Remove destroyed the round.");
+        if (target == "Client")
+        {
+            var client = GameType("GameMain").GetField("Client", staticMethods)!;
+            var previous = client.GetValue(null);
+            try
+            {
+                client.SetValue(null, RuntimeHelpers.GetUninitializedObject(client.FieldType));
+                Assert(MayRemove(), "A multiplayer client must accept authoritative removal.");
+            }
+            finally { client.SetValue(null, previous); }
+            var projectile = RuntimeHelpers.GetUninitializedObject(GameType("Items.Components.Projectile"));
+            Field(projectile.GetType(), "item").SetValue(projectile, round);
+            var submarine = RuntimeHelpers.GetUninitializedObject(GameType("Submarine"));
+            var sub = itemType.GetProperty("Submarine")!;
+            sub.SetValue(round, submarine);
+            guards.GetMethod("FixTracer", staticMethods)!.Invoke(null, [projectile, true]);
+            Assert(sub.GetValue(round) == null, "World-space tracer kept the submarine offset.");
+            guards.GetMethod("RestoreTracer", staticMethods)!.Invoke(null, [projectile]);
+            Assert(sub.GetValue(round) == submarine, "Tracer did not restore the projectile submarine.");
+        }
+        gameObjects = [.. gameObjects, round, magazine];
         Unload();
+        Assert(MayRemove(), "Native unload left the surviving round protected.");
         Assert(projectileMethods.All(m => !Patched(m)), "Unload must remove every projectile patch.");
         Assert(!Patched(), "Unload must remove the migration hook.");
         Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");

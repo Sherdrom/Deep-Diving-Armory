@@ -259,6 +259,35 @@ static void RunTests(string[] args)
         projectileComponents[0] = Empty(proxy.GetType().BaseType!);
         cleanup.Invoke(null, [weapon, proxyItem]);
         Assert(itemType.GetProperty("Container")!.GetValue(proxyItem) == null, "ordinary projectiles must still be removed");
+        // A remote launch reaches Projectile.Use without a preceding local SwitchableRangedWeapon.Use.
+        var consume = loader.GetType("DeepDivingArmory.NoProjectileConsume", true)!;
+        var beginProjectile = consume.GetMethod("BeginProjectile", moduleMethods)!;
+        bool CanDrop() => (bool)consume.GetMethod("AllowDrop", moduleMethods)!.Invoke(null, [proxyItem])!;
+        loader.GetType("DeepDivingArmory.Plugin", true)!.GetProperty("Package", moduleMethods)!.SetValue(null, package);
+        var replay = loader.GetType("WeaponSyncFix.NetworkEventContext", true)!.GetField("IsProjectileLaunchReplay", moduleMethods)!;
+        Set(proxyItem, "container", magazineItem);
+        Set(magazineItem, "container", weapon);
+        Set(magazineItem, "condition", 1f);
+        var weaponComponents = (IList)NewList(GameType("Barotrauma.Items.Components.ItemComponent"));
+        weaponComponents.Add(srw);
+        var weaponCache = (IDictionary)Activator.CreateInstance(componentCache.GetType())!;
+        weaponCache[srw.GetType()] = weaponComponents;
+        Set(weapon, "componentsByType", weaponCache);
+        object ordinaryRound = projectileComponents[0]!;
+        Set(ordinaryRound, "item", proxyItem);
+        replay.SetValue(null, true);
+        try
+        {
+            beginProjectile.Invoke(null, [proxy]);
+            Assert(CanDrop(), "Client replay must leave the VCE proxy alone.");
+            beginProjectile.Invoke(null, [ordinaryRound]);
+            Assert(!CanDrop(), "First remote shot must protect its nested main-slot round.");
+            Set(srw, "currentselected", 1);
+            beginProjectile.Invoke(null, [ordinaryRound]);
+            Assert(CanDrop(), "Client replay must pass the alternate slot through.");
+        }
+        finally { replay.SetValue(null, false); }
+        Console.WriteLine("PASS: remote handheld replay protects the ordinary main-slot round and passes virtual and secondary rounds through.");
         Console.WriteLine("PASS: deployed SRW consecutive shots and empty stop, cleanup scope, VCE consumption, HUD and mixed-stack round-trip.");
         var fixes = loader;
         CheckNetworkImpacts(game, fixes, proxy);

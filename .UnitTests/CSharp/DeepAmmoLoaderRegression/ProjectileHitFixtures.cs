@@ -39,7 +39,7 @@ namespace Barotrauma
 
 namespace Barotrauma.Items.Components
 {
-    public sealed partial class Projectile
+    public partial class Projectile
     {
         public Attack? Attack;
         public Item? Launcher;

@@ -77,7 +77,7 @@ namespace Barotrauma
         public readonly CharacterInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
-    public sealed class Item : Entity
+    public sealed partial class Item : Entity
     {
         public Item(ushort id, ItemPrefab prefab) { ID = id; Prefab = prefab; Entity.Items[id] = this; }
         public ushort ID;
@@ -128,7 +128,7 @@ namespace Barotrauma
         public void CreateServerEvent(ItemComponent component, ItemComponent.IEventData data) => Events.Add(data);
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
-    public sealed class ItemInventory(int capacity) : Inventory(capacity) { public ItemContainer? Container; }
+    public sealed partial class ItemInventory(int capacity) : Inventory(capacity) { public ItemContainer? Container; }
     public sealed class CharacterInventory(int capacity) : Inventory(capacity)
     {
         public readonly InvSlotType[] SlotTypes = Enumerable.Repeat(InvSlotType.Any, capacity).ToArray();
@@ -240,7 +240,7 @@ namespace Barotrauma.Items.Components
     {
         public readonly ItemInventory Inventory = new(capacity);
     }
-    public sealed partial class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public partial class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
     public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { public float Penetration; }
 }
 

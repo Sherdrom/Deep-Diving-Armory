@@ -135,5 +135,4 @@ dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/SpinningBarrels.lua")--手
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/TruePercentDamage.lua")--致命爆头无视虚血（有character性能问题）(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/HumanAiIgnoreEnemyAi.lua")--使IgnoredByEnemyAI对人类敌人ai生效(暂时用不到)
 --dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/ImmuneToImpact.lua")--冲击力修改(暂时用不到)
---dofile(Deep_Lua.Path .. "/Lua/Scripts/PeachTechnology/NoProjectileConsume.lua")--无子弹消耗优化（已废弃）
 --桃子科技

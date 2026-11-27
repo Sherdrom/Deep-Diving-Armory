@@ -50,6 +50,41 @@ internal static class ProjectilePatchChecks
             throw new Exception("The two contract prefixes must bracket the normal-priority chip patch.");
         }
         Check(Method(game.GetType("Barotrauma.StatusEffect", true)!, "HasRequiredItems", "Entity"), "Prefixes", "HasRequiredItems");
+        var item = game.GetType("Barotrauma.Item", true)!;
+        Check(Method(item, "Drop", "Character", "Boolean", "Boolean", "Boolean"), "Prefixes", "AllowDrop");
+        Check(Method(item, "Remove"), "Prefixes", "AllowRemoval");
+        Check(Method(game.GetType("Barotrauma.Entity", true)!, "Remove"), "Prefixes", "AllowRemoval");
+        Check(Method(game.GetType("Barotrauma.EntitySpawner", true)!, "AddItemToRemoveQueue", "Item", "Action`1"), "Prefixes", "AllowItemOperation");
+        Check(Method(item, "RemoveContained", "Item"), "Prefixes", "AllowItemOperation");
+        foreach (var name in new[] { "Inventory", "CharacterInventory" })
+        {
+            Check(Method(game.GetType("Barotrauma." + name, true)!, "PutItem", "Item", "Int32", "Character", "Boolean", "Boolean", "Boolean"),
+                "Prefixes", "AllowItemOperation");
+        }
+        var weapon = vce.GetType("VCE_SRW.SwitchableRangedWeapon", true)!;
+        Check(Method(weapon, "FindProjectile", "Boolean"), "Postfixes", "FindRound");
+        var fire = Method(weapon, "Use", "Single", "Character");
+        Check(fire, "Prefixes", "BeginHandheld");
+        Check(fire, "Postfixes", "RestoreHandheld");
+        Check(fire, "Finalizers", "EndHandheld");
+        var use = Method(vanilla, "Use", "Character", "Single");
+        Check(use, "Prefixes", "BeginProjectile");
+        Check(use, "Postfixes", "RestoreRound");
+        var turret = game.GetType("Barotrauma.Items.Components.Turret", true)!;
+        Check(Method(turret, "Launch", "Item", "Character", "Nullable`1", "Single"), "Prefixes", "CaptureBolt");
+        var tryLaunch = Method(turret, "TryLaunch", "Single", "Character", "Boolean");
+        Check(tryLaunch, "Prefixes", "BeginTurret");
+        Check(tryLaunch, "Finalizers", "EndTurret");
+        if (game.GetName().Name == "Barotrauma")
+        {
+            var replay = Method(turret, "ClientEventRead", "IReadMessage", "Single");
+            Check(replay, "Prefixes", "BeginTurret");
+            Check(replay, "Finalizers", "EndTurret");
+            Check(Method(vanilla, "ClientEventRead", "IReadMessage", "Single"), "Postfixes", "RestoreRound");
+            Check(Method(vanilla, "HandleProjectileCollision", "Fixture", "Vector2", "Vector2"), "Postfixes", "FixTracer");
+            Check(Method(vanilla, "LaunchProjSpecific", "Vector2", "Vector2"), "Postfixes", "RestoreTracer");
+            Check(use, "Finalizers", "RestoreTracer");
+        }
         // A missing fixture throws inside the real VCE method, after our hit prefix has pushed its frame.
         var proxyCollision = Method(proxy, "HandleProjectileCollision", "Fixture", "Vector2", "FiredRound");
         try

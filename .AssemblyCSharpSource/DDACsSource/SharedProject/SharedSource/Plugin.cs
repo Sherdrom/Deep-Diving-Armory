@@ -20,6 +20,7 @@ public sealed class Plugin : IBarotraumaPlugin
         Network.RegisterNetworkHeaders<NetworkHeader>();
         hooks.RegisterHook<PluginRoundEndedDelegate>(RoundEnded);
         ProjectilePatches.Install(patches.GetHarmony());
+        NoProjectileConsume.Install(patches.GetHarmony());
         DDA.AmmoLoading.Plugin.Init(patches.GetHarmony(), Package);
         DeepSlotExpanded.DeepSlotExpandedPlugin.Init(patches.GetHarmony());
 #if CLIENT
@@ -58,6 +59,7 @@ public sealed class Plugin : IBarotraumaPlugin
     {
         WeaponSyncFix.WeaponUseFeedback.ClearRound();
         ProjectileCollisions.ClearRound();
+        NoProjectileConsume.ClearRound();
         FriendlyFireProjectile.ClearRound();
         ContractNoHighPenetration.ClearRound();
         DeepSlotExpanded.DeepSlotExpandedPlugin.ClearRound();
