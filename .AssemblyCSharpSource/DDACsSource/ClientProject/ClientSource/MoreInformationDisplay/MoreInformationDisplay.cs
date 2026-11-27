@@ -395,6 +395,8 @@ namespace MoreInformationDisplay
         private static readonly ConditionalWeakTable<Inventory.SlotReference, BuildState> buildStates
             = new ConditionalWeakTable<Inventory.SlotReference, BuildState>();
 
+        internal static void ClearRound() => buildStates.Clear();
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Inventory.SlotReference), nameof(Inventory.SlotReference.TooltipNeedsRefresh))]
         internal static void ForceRefreshOnConditionChange(Inventory.SlotReference __instance, ref bool __result)

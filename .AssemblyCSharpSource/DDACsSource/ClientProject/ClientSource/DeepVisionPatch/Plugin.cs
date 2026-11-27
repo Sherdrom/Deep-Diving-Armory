@@ -20,6 +20,8 @@ namespace DeepVisionPatch
             }
         }
 
+        private static readonly ConditionalWeakTable<StatusEffect, object> actionOwners = new();
+
         internal static void RegisterActions(IStatusEffectService service)
         {
             Register("NightVision_On", item => NightVisionPatch.HandleNightVision(item, true));
@@ -30,7 +32,21 @@ namespace DeepVisionPatch
             Register("MASKA_Origin", item => HelmetMaskPatch.HandleHelmetMask(item, false));
 
             void Register(string name, Action<Item> apply) => service.RegisterAction(
-                new StatusEffectActionFactory("DDA_" + name, (_, _) => new HelmetAction(apply)));
+                new StatusEffectActionFactory("DDA_" + name, (effect, _) =>
+                {
+                    actionOwners.GetOrCreateValue(effect);
+                    return new HelmetAction(apply);
+                }));
+        }
+
+        internal static void RemoveActions()
+        {
+            // The service removes factories only. Existing effects keep their instantiated actions.
+            foreach (var (effect, _) in actionOwners)
+            {
+                effect.statusEffectActions.RemoveAll(static action => action is HelmetAction);
+            }
+            actionOwners.Clear();
         }
 
         private sealed class HelmetAction(Action<Item> apply) : IStatusEffectAction

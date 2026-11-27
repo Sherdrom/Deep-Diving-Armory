@@ -56,12 +56,15 @@ public sealed class Plugin : IBarotraumaPlugin
 
     private static void ClearRound()
     {
+        WeaponSyncFix.WeaponUseFeedback.ClearRound();
         ProjectileCollisions.ClearRound();
         FriendlyFireProjectile.ClearRound();
         ContractNoHighPenetration.ClearRound();
         DeepSlotExpanded.DeepSlotExpandedPlugin.ClearRound();
 #if CLIENT
+        MoreInformationDisplay.Patch_TooltipShiftRefresh.ClearRound();
         DeepVisionPatch.DeepVisionPatch.ClearRound();
+        DDA.AmmoLoading.DeepAmmoLoader.ClosePresetPrompts();
         DDA.AmmoLoading.ManualMagazineLoading.ResetClient();
         ThermalVisablePatch.ThermalVisablePatch.ClearRound();
 #else
@@ -75,6 +78,7 @@ public sealed class Plugin : IBarotraumaPlugin
         DeepSlotExpanded.SlotRegistry.ClearForReload();
         DDA.AmmoLoading.Plugin.Dispose();
 #if CLIENT
+        DeepVisionPatch.DeepVisionPatch.RemoveActions();
         PluginSettings.Clear();
         DeepLaser.DeepLaser.DisposeGraphics();
         DeepVisionPatch.DeepVisionPatch.DisposeTextures();

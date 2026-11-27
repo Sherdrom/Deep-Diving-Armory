@@ -9,6 +9,7 @@ internal static class PluginSettings
     private const string Prefix = "Deep-Diving-Armory";
     private sealed record Entry(string Name, ISetting Setting, LocalizedString Label, LocalizedString Category, LocalizedString? Tooltip);
     private static readonly List<Entry> ordered = [];
+    private static readonly ConditionalWeakTable<GUIComponent, object?> menuRows = new();
     private static readonly Dictionary<string, ISetting> registered = new(StringComparer.OrdinalIgnoreCase);
 
     internal static void Register(ContentPackage package, ISettingsService service)
@@ -43,6 +44,17 @@ internal static class PluginSettings
 
     internal static void Clear()
     {
+        foreach (var (row, _) in menuRows)
+        {
+            if (GUI.KeyboardDispatcher?.Subscriber is GUIComponent focused && row.RectTransform.IsParentOf(focused.RectTransform))
+            {
+                GUI.KeyboardDispatcher.Subscriber = null;
+            }
+            // Detaching the dropdown itself unsubscribes it from its highest styled ancestor.
+            if (row.GetChild<GUIDropDown>() is { } picker) { picker.RectTransform.Parent = null; }
+            row.RectTransform.Parent = null;
+        }
+        menuRows.Clear();
         ordered.Clear();
         registered.Clear();
     }
@@ -141,8 +153,9 @@ internal static class PluginSettings
         var visible = ordered.Where(e => e.Setting.ShowInUI).ToList();
         foreach (var group in visible.GroupBy(e => e.Category.Value))
         {
-            new GUITextBlock(new RectTransform((1.0f, 0.06f), content.RectTransform), group.Key,
+            var header = new GUITextBlock(new RectTransform((1.0f, 0.06f), content.RectTransform), group.Key,
                 font: GUIStyle.SubHeadingFont, textAlignment: Alignment.CenterLeft);
+            menuRows.Add(header, null);
             foreach (var entry in group)
             {
                 var row = new GUILayoutGroup(new RectTransform((1.0f, 0.07f), content.RectTransform),
@@ -150,6 +163,7 @@ internal static class PluginSettings
                 {
                     Stretch = true
                 };
+                menuRows.Add(row, null);
                 string? tipText = entry.Tooltip?.Value;
                 LocalizedString? tip = string.IsNullOrEmpty(tipText) ? null : entry.Tooltip;
                 new GUITextBlock(new RectTransform((0.6f, 1.0f), row.RectTransform), entry.Label,

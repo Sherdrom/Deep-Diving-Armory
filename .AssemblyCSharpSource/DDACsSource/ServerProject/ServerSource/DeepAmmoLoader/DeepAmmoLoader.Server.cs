@@ -112,7 +112,7 @@ public sealed partial class DeepAmmoLoader
             }
         }
         finally { if (revision != before) { PublishState(); } }
-        if (batchResult != null) { Item.CreateServerEvent(this, new BatchReply(client, JsonSerializer.Serialize(batchResult))); }
+        if (batchResult != null) { Item.CreateServerEvent(this, new BatchReply(client, JsonSerializer.Serialize(batchResult, LoaderJson.Default.BatchResult))); }
     }
 
     private static AmmoRun[]? ReadPlan(IReadMessage msg, int count)

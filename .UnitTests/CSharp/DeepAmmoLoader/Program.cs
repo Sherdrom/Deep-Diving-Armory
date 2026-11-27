@@ -10,19 +10,32 @@ if (args.Length is < 3 or > 4 || args.Length == 4 && args[3] is not ("Client" or
     Console.Error.WriteLine("Usage: DeepAmmoLoader.Tests <game directory> <VCE directory> <DDA directory> [Client|Server]");
     return 2;
 }
-try { Run(args); return 0; }
+string gameDirectory = Path.GetFullPath(args[0]);
+AssemblyLoadContext.Default.Resolving += (context, name) =>
+{
+    string path = Path.Combine(gameDirectory, name.Name + ".dll");
+    return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
+};
+try
+{
+    var (context, gameObjects) = Run(args);
+    for (int i = 0; context.IsAlive && i < 10; i++)
+    {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+    }
+    Assert(!context.IsAlive, "DDA's collectible load context survived native unload.");
+    GC.KeepAlive(gameObjects);
+    Console.WriteLine("PASS: DDA load context collected while game objects survived.");
+    return 0;
+}
 catch (Exception error) { Console.Error.WriteLine(error); return 1; }
 
-static void Run(string[] args)
+[MethodImpl(MethodImplOptions.NoInlining)]
+static (WeakReference Context, object[] GameObjects) Run(string[] args)
 {
     string target = args.Length == 4 ? args[3] : "Client";
     string dda = Path.GetFullPath(args[2]);
-    string gameDirectory = Path.GetFullPath(args[0]);
-    AssemblyLoadContext.Default.Resolving += (context, name) =>
-    {
-        string path = Path.Combine(gameDirectory, name.Name + ".dll");
-        return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
-    };
     Assembly game = Assembly.Load(target == "Client" ? "Barotrauma" : "DedicatedServer"), core = Assembly.Load("BarotraumaCore");
     const BindingFlags staticMethods = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
     var nativeLoader = game.GetType("Barotrauma.Plugins.PluginLoader", true)!;
@@ -235,11 +248,31 @@ static void Run(string[] args)
             }
         }
         finally { foreach (object prefab in registered) { removePrefab.Invoke(prefabRegistry, [prefab]); } }
+        // Game objects can outlive a content package change. Keep only native keys alive across GC.
+        var weapon = RuntimeHelpers.GetUninitializedObject(GameType("Items.Components.RangedWeapon"));
+        var shooter = RuntimeHelpers.GetUninitializedObject(GameType("Character"));
+        adapter.GetType("WeaponSyncFix.WeaponUseFeedback", true)!.GetMethod("For", staticMethods)!.Invoke(null, [weapon, shooter]);
+        object[] gameObjects = [weapon, shooter];
+        if (target == "Client")
+        {
+            var slot = RuntimeHelpers.GetUninitializedObject(GameType("Inventory+SlotReference"));
+            slot.GetType().GetMethod("RefreshTooltip")!.Invoke(slot, null);
+            var xml = XElement.Parse("<StatusEffect type='OnUse' target='This'><DDA_NightVision_On/><DDA_MASKA_Origin/></StatusEffect>");
+            var element = Activator.CreateInstance(GameType("ContentXElement"), null, xml);
+            var effect = GameType("StatusEffect").GetMethod("Load", staticMethods)!.Invoke(null, [element, "helmet"])!;
+            var actions = (IList)Field(effect.GetType(), "statusEffectActions").GetValue(effect)!;
+            Assert(actions.Count == 2, "Both helmet actions must be installed on the same native status effect.");
+            gameObjects = [weapon, shooter, slot, effect];
+        }
+        var savedSnapshot = loaderType.GetMethod("EncodeSnapshot", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(existing, null);
+        Assert(loaderType.GetMethod("DecodeSnapshot", staticMethods)!.Invoke(null, [savedSnapshot]) != null, "Stock snapshot round trip failed.");
+        var context = new WeakReference(AssemblyLoadContext.GetLoadContext(adapter), trackResurrection: true);
         Unload();
         Assert(projectileMethods.All(m => !Patched(m)), "Unload must remove every projectile patch.");
         Assert(!Patched(), "Unload must remove the migration hook.");
         Assert(inputMethods.All(method => !Patched(method)), "Unload must remove the personal magazine input/drawing hooks.");
         Console.WriteLine($"PASS ({target}): game {game.GetName().Version}, {projectileMethods.Length} projectile targets installed and unloaded, isolated native VCE resolution, DDA-owned loader, network handler, six supply sources, six native package lookups, saved-stock rename, unload and XML registration.");
+        return (context, gameObjects);
     }
     finally
     {

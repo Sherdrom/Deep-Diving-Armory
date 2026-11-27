@@ -1,9 +1,14 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using VCE_VirtualizedMagazine;
 
 namespace DDA.AmmoLoading;
 
 internal sealed record AmmoPreset(string Name, AmmoRun[] Rounds, bool BuiltIn = false);
+
+[JsonSourceGenerationOptions(WriteIndented = true)]
+[JsonSerializable(typeof(List<AmmoPreset>))]
+internal sealed partial class PresetJson : JsonSerializerContext;
 
 internal static class AmmoPresets
 {
@@ -22,7 +27,7 @@ internal static class AmmoPresets
                 string source = File.Exists(FilePath) ? FilePath : Path.Combine(
                     SaveUtil.GetSaveFolder(SaveUtil.SaveType.Singleplayer), "VCE", "AmmoLoaderPresets.json");
                 saved = File.Exists(source)
-                    ? JsonSerializer.Deserialize<List<AmmoPreset>>(File.ReadAllText(source)) ?? []
+                    ? JsonSerializer.Deserialize(File.ReadAllText(source), PresetJson.Default.ListAmmoPreset) ?? []
                     : [];
                 if (saved.Any(p => p == null || string.IsNullOrWhiteSpace(p.Name) ||
                     p.Rounds == null || !AmmoPlan.IsValid(p.Rounds, AmmoPlan.MaxRounds)))
@@ -55,7 +60,7 @@ internal static class AmmoPresets
         if (loadError != null) { throw new IOException(loadError); }
         Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
         string temporary = FilePath + ".tmp";
-        File.WriteAllText(temporary, JsonSerializer.Serialize(Saved, new JsonSerializerOptions { WriteIndented = true }));
+        File.WriteAllText(temporary, JsonSerializer.Serialize(Saved, PresetJson.Default.ListAmmoPreset));
         File.Move(temporary, FilePath, overwrite: true);
     }
 

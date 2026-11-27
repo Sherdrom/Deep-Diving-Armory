@@ -73,7 +73,7 @@ public sealed partial class DeepAmmoLoader
         string data = msg.ReadString();
         if (index == -1 && count == 0)
         {
-            if (data.Length != 0 && JsonSerializer.Deserialize<BatchResult>(data) is { } result) { ShowBatchResult(result); }
+            if (data.Length != 0 && JsonSerializer.Deserialize(data, LoaderJson.Default.BatchResult) is { } result) { ShowBatchResult(result); }
             return;
         }
         if (count is < 1 or > MaxSnapshotPages || index < 0 || index >= count || data.Length > SnapshotPageSize) { return; }

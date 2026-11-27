@@ -53,6 +53,8 @@ internal static partial class WeaponUseFeedback
     internal readonly record struct Feedback(ushort ItemId, ushort Component, ushort ShooterId, ushort Input,
         uint Ordinal, float DeltaTime, bool HasRecoil, Vector2 Impulse, float MaxVelocity) : INetSerializableStruct;
     private static readonly ConditionalWeakTable<RangedWeapon, ConditionalWeakTable<Character, WeaponShots>> shots = new();
+    internal static void ClearRound() => shots.Clear();
+
     private static WeaponShots For(RangedWeapon weapon, Character shooter) =>
         shots.GetOrCreateValue(weapon).GetOrCreateValue(shooter);
 

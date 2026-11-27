@@ -733,6 +733,14 @@ public sealed partial class DeepAmmoLoader
         DraftChanged();
     }
 
+    internal static void ClosePresetPrompts()
+    {
+        foreach (var prompt in GUIMessageBox.MessageBoxes.OfType<GUIMessageBox>().Where(box => box.UserData is DeepAmmoLoader).ToArray())
+        {
+            prompt.Close();
+        }
+    }
+
     private void LoadSelectedPreset()
     {
         var preset = selectedPreset;
@@ -753,7 +761,12 @@ public sealed partial class DeepAmmoLoader
             message = "";
             uiDirty = true;
         }
-        if (draftDirty) { GUI.AskForConfirmation(L("loadpreset"), L("confirmreplace"), Apply).DrawOnTop = true; }
+        if (draftDirty)
+        {
+            var prompt = GUI.AskForConfirmation(L("loadpreset"), L("confirmreplace"), Apply);
+            prompt.UserData = this;
+            prompt.DrawOnTop = true;
+        }
         else { Apply(); }
     }
 
