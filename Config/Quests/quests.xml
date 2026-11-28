@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <Quest id="bulkhead" npc="dispatch" category="main" repeatable="false" allowRemoteTurnIn="false">
+    <Objectives><Objective id="plates" type="DeliverItem" target="steel" count="3" /></Objectives>
+    <Rewards marks="320" trust="5" reputation="1" unlock="soundings"><Item id="saltpeter_powder" count="2" /></Rewards>
+  </Quest>
+  <Quest id="soundings" npc="dispatch" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites><RequireQuest id="bulkhead" /><RequireTrust npc="dispatch" count="5" /></Prerequisites>
+    <Objectives><Objective id="port" type="ReachLocation" target="city" count="1" /></Objectives>
+    <Rewards marks="650" trust="4" reputation="2" />
+  </Quest>
+  <Quest id="samples" npc="stores" category="repeat" repeatable="true" allowRemoteTurnIn="false">
+    <Objectives><Objective id="ore" type="DeliverItem" target="saltpeter_mineral" count="2" /></Objectives>
+    <Rewards marks="240" trust="2"><Item id="steel" count="2" /></Rewards>
+  </Quest>
+  <Quest id="watch" npc="dispatch" category="bounty" repeatable="true" allowRemoteTurnIn="true">
+    <Objectives><Objective id="crawlers" type="KillTag" target="crawler" count="3" /></Objectives>
+    <Rewards marks="450" trust="3" reputation="1" />
+  </Quest>
+</Quests>

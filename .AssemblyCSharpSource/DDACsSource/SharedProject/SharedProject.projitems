@@ -9,5 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)SharedSource\**\*.cs" />
+    <!-- Single-player campaigns run the same authority as the dedicated server. -->
+    <Compile Condition="'$(BuildTarget)' == 'Client'" Include="$(MSBuildThisFileDirectory)../ServerProject/ServerSource/QuestSystem/QuestAuthority.cs" Link="QuestSystem/QuestAuthority.cs" />
   </ItemGroup>
 </Project>

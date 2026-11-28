@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <UseAppHost>false</UseAppHost>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Source>../../../.AssemblyCSharpSource/DDACsSource</Source>
+    <PlatformName Condition="$([MSBuild]::IsOSPlatform('OSX'))">Mac</PlatformName>
+    <PlatformName Condition="$([MSBuild]::IsOSPlatform('Linux'))">Linux</PlatformName>
+    <PlatformName Condition="'$(PlatformName)' == ''">Windows</PlatformName>
+    <BuildTarget>Client</BuildTarget>
+  </PropertyGroup>
+  <Import Project="../../../.AssemblyCSharpSource/DDACsSource/References.props" />
+  <ItemGroup>
+    <Reference Update="System.Collections.Immutable" Private="true" />
+    <Compile Include="$(Source)/SharedProject/SharedSource/QuestSystem/QuestRules.cs" />
+    <Compile Include="$(Source)/SharedProject/SharedSource/QuestSystem/QuestState.cs" />
+    <Compile Include="$(Source)/ClientProject/ClientSource/QuestSystem/QuestLayout.cs" />
+    <None Include="../../../Config/Quests/*.xml" Link="Config/Quests/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../../text/*Quests.xml" Link="text/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

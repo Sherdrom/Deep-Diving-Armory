@@ -1,6 +1,6 @@
 namespace DeepDivingArmory;
 
-internal enum NetworkHeader { Thermal, WeaponUse }
+internal enum NetworkHeader { Thermal, WeaponUse, QuestRequest, QuestState }
 
 public sealed class Plugin : IBarotraumaPlugin
 {
@@ -19,6 +19,7 @@ public sealed class Plugin : IBarotraumaPlugin
         components.RegisterItemComponents(typeof(DDA.AmmoLoading.DeepAmmoLoader), typeof(DDA.AmmoLoading.ManualMagazineLoading));
         Network.RegisterNetworkHeaders<NetworkHeader>();
         hooks.RegisterHook<PluginRoundEndedDelegate>(RoundEnded);
+        Quests.QuestRuntime.Register(hooks);
         ProjectilePatches.Install(patches.GetHarmony());
         NoProjectileConsume.Install(patches.GetHarmony());
         DDA.AmmoLoading.Plugin.Init(patches.GetHarmony(), Package);
@@ -57,6 +58,7 @@ public sealed class Plugin : IBarotraumaPlugin
 
     private static void ClearRound()
     {
+        Quests.QuestRuntime.ClearRound();
         WeaponSyncFix.WeaponUseFeedback.ClearRound();
         ProjectileCollisions.ClearRound();
         NoProjectileConsume.ClearRound();
@@ -77,6 +79,7 @@ public sealed class Plugin : IBarotraumaPlugin
     public void Dispose()
     {
         ClearRound();
+        Quests.QuestRuntime.Dispose();
         DeepSlotExpanded.SlotRegistry.ClearForReload();
         DDA.AmmoLoading.Plugin.Dispose();
 #if CLIENT
