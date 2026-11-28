@@ -33,6 +33,8 @@ public static partial class QuestRuntime
             { OpenDialogue(npc, 0, true); }
             else { console.NewMessage("dda_quest_npc <" + string.Join(" | ", Rules.Npcs.Keys) + ">"); }
         }, () => [Rules.Npcs.Keys.ToArray()]);
+        console.RegisterCommand("dda_quest_debug", "dda_quest_debug [on|strict|all|trust <n>|reset|off]", CommandFlags.DoNotRelayToServer,
+            args => console.NewMessage(DebugCommand(args)), () => [["on", "strict", "all", "trust", "reset", "off"]]);
     }
 
     internal static Sprite? Portrait(Publisher npc)
@@ -296,6 +298,7 @@ public static partial class QuestRuntime
         ClearSide();
         console?.DeregisterCommand("dda_quest_ui");
         console?.DeregisterCommand("dda_quest_npc");
+        console?.DeregisterCommand("dda_quest_debug");
         console = null;
     }
 }

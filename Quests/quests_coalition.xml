@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <!-- 联盟战区 · 艾琳·斯特林上校 (9) -->
+  <Quest id="co_pirate_patrol" npc="sterling" category="main" repeatable="false" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="pirates" type="KillTag" target="dda_pirate" count="5" />
+    </Objectives>
+    <Rewards marks="800" trust="3" unlock="co_beacon_recovery">
+      <Reputation faction="coalition" amount="3" />
+      <Reputation faction="separatists" amount="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_pirate_bounty" npc="sterling" category="bounty" repeatable="true" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="pirates" type="KillTag" target="dda_pirate" count="6" />
+    </Objectives>
+    <Rewards marks="750" trust="3">
+      <Reputation faction="coalition" amount="2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_beacon_recovery" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="co_pirate_patrol" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="outpost" type="ReachLocation" target="outpost" count="1" />
+      <Objective id="steel" type="DeliverItem" target="steel" count="4" />
+      <Objective id="lead_ammo" type="DeliverItem" target="deep_ammobox_lead" count="1" />
+    </Objectives>
+    <Rewards marks="1150" trust="3" unlock="co_ironjaw_bounty">
+      <Reputation faction="coalition" amount="3" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_ironjaw_bounty" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="co_beacon_recovery" />
+      <RequireTrust npc="sterling" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="pirates" type="KillTag" target="dda_pirate" count="10" />
+      <Objective id="plate" type="DeliverItem" target="deep_plate_metal_5" count="1" />
+    </Objectives>
+    <Rewards marks="1900" trust="5" unlock="co_latte_perimeter,co_kaitenburg_line">
+      <Reputation faction="coalition" amount="5" />
+      <Reputation faction="separatists" amount="2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_latte_perimeter" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="co_ironjaw_bounty" />
+      <RequireTrust npc="sterling" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="seps" type="KillTag" target="dda_separatist" count="6" />
+    </Objectives>
+    <Rewards marks="2300" trust="4" unlock="co_beixun_supply">
+      <Reputation faction="coalition" amount="5" />
+      <Reputation faction="separatists" amount="-4" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_kaitenburg_line" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="co_ironjaw_bounty" />
+      <RequireTrust npc="sterling" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="seps" type="KillTag" target="dda_separatist" count="10" />
+      <Objective id="tit_ammo" type="DeliverItem" target="deep_ammobox_titanium" count="2" />
+    </Objectives>
+    <Rewards marks="2900" trust="5" unlock="co_beixun_supply">
+      <Reputation faction="coalition" amount="6" />
+      <Reputation faction="separatists" amount="-5" />
+      <Item id="deep_tactec" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_beixun_supply" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="co_latte_perimeter" />
+      <RequireQuest id="co_kaitenburg_line" />
+      <RequireTrust npc="sterling" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tungsten" type="DeliverItem" target="deep_tungsten" count="4" />
+      <Objective id="phy_ammo" type="DeliverItem" target="deep_ammobox_physicorium" count="1" />
+    </Objectives>
+    <Rewards marks="3600" trust="6" unlock="co_mining_chokepoint">
+      <Reputation faction="coalition" amount="6" />
+      <Reputation faction="separatists" amount="-4" />
+      <Item id="deep_plate_ceramic_6" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_mining_chokepoint" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="co_beixun_supply" />
+      <RequireTrust npc="sterling" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="mine" type="ReachLocation" target="mine" count="1" />
+      <Objective id="seps" type="KillTag" target="dda_separatist" count="12" />
+    </Objectives>
+    <Rewards marks="4400" trust="6" unlock="co_grizzlies_wall">
+      <Reputation faction="coalition" amount="8" />
+      <Reputation faction="separatists" amount="-7" />
+      <Item id="deep_ammobox_fulgurium_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="co_grizzlies_wall" npc="sterling" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="co_mining_chokepoint" />
+      <RequireTrust npc="sterling" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="grizzlies" type="KillTag" target="dda_grizzlies" count="8" />
+      <Objective id="plate8" type="DeliverItem" target="deep_plate_metal_8" count="1" />
+    </Objectives>
+    <Rewards marks="6800" trust="6">
+      <Reputation faction="coalition" amount="14" />
+      <Reputation faction="separatists" amount="-12" />
+      <Item id="deep_ammobox_tungsten_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+</Quests>

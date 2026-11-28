@@ -42,10 +42,10 @@ internal static class NativeChecks
         var metadata = new CampaignMetadata();
         var key = "dda.quest.state".ToIdentifier();
         var state = new DeepDivingArmory.Quests.QuestState();
-        state.Active["bulkhead"] = new() { ["plates"] = 2 };
-        state.Stock["steel"] = 4;
-        state.Active["watch"] = new() { ["crawlers"] = 2 };
-        state.Trust["dispatch"] = 5;
+        state.Active["gunsmith_plastic_test"] = new() { ["plastic"] = 2 };
+        state.Stock["engineeringplastic"] = 4;
+        state.Active["co_pirate_bounty"] = new() { ["pirates"] = 2 };
+        state.Trust["benzene"] = 5;
         metadata.SetValue(key, state.Write());
         var xml = new XElement("campaign");
         metadata.Save(xml);
@@ -68,7 +68,7 @@ internal static class NativeChecks
             var decoded = reader.GetMethod("Read")!.MakeGenericMethod(incoming).Invoke(null, [payload]);
             Check(Equals(Activator.CreateInstance(incoming, fields), decoded), "cross-end packet " + name);
         }
-        Packet(plugin, server, "QuestRequest", (byte)DeepDivingArmory.Quests.QuestAction.Deliver, "bulkhead", (ushort)42, "test-round", 18, "plates");
+        Packet(plugin, server, "QuestRequest", (byte)DeepDivingArmory.Quests.QuestAction.Deliver, "gunsmith_plastic_test", (ushort)42, "test-round", 18, "plastic");
         Packet(server, plugin, "QuestSnapshot", "test-round", 18, state.Write(true), true);
         Console.WriteLine("PASS deployed client-to-server request, server-to-client snapshot and CampaignMetadata persistence");
 
@@ -85,11 +85,11 @@ internal static class NativeChecks
         cfg.Graphics.HUDScale = 1;
         typeof(GameSettings).GetField("currentConfig", flags)!.SetValue(null, cfg);
         foreach (var file in files) { file.LoadFile(); }
-        Check(TextManager.Get("dda.quest.bulkhead.title").Value == "Bulkhead repairs", "native TextManager English");
+        Check(TextManager.Get("dda.quest.gunsmith_plastic_test.title").Value == "Watertight Polymer", "native TextManager English");
         cfg.Language = "Simplified Chinese".ToLanguageIdentifier();
         typeof(GameSettings).GetField("currentConfig", flags)!.SetValue(null, cfg);
         TextManager.IncrementLanguageVersion();
-        Check(TextManager.Get("dda.quest.bulkhead.title").Value == "舱壁修补单", "native TextManager Chinese");
+        Check(TextManager.Get("dda.quest.gunsmith_plastic_test.title").Value == "水密工程塑料", "native TextManager Chinese");
         Console.WriteLine("PASS both registered native TextManager packs");
 
         GameMain.GraphicsWidth = 1920;
@@ -97,19 +97,26 @@ internal static class NativeChecks
         GUIStyle.ComponentStyles.Add(new GUIComponentStyle(new ContentXElement(null,
             XElement.Parse("<GUIScrollBar><GUIFrameVertical/><GUIButtonVertical/></GUIScrollBar>")), null), false);
         var config = Path.Combine(mod, "Quests");
-        var testQuests = XElement.Load(Path.Combine(config, "quests.xml"));
-        var bulkhead = testQuests.Elements().First(e => (string?)e.Attribute("id") == "bulkhead");
-        bulkhead.Element("Rewards")!.Add(new XElement("Item", new XAttribute("id", "steel"), new XAttribute("count", 7)));
-        bulkhead.Element("Objectives")!.Add(new XElement("Custom", new XAttribute("id", "relay"), new XAttribute("target", "relay")));
-        var factions = XElement.Load(Path.Combine(config, "quests_factions.xml"));
-        factions.Elements("Quest").First(q => (string?)q.Attribute("id") == "soundings").Element("Objectives")!.Add(
-            Enumerable.Range(1, 24).Select(i => new XElement("ReachLocation", new XAttribute("id", "port" + i), new XAttribute("target", "city"))));
-        object rules = Module("QuestRules").GetMethod("Parse", flags)!.Invoke(null, [XElement.Load(Path.Combine(config, "npcs.xml")), new[] { testQuests, factions }])!;
+        var questFiles = Directory.EnumerateFiles(config, "quests_*.xml")
+            .OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase)
+            .Select(p => XElement.Load(p, LoadOptions.SetBaseUri)).ToArray();
+        var gunsmith = questFiles.SelectMany(f => f.Elements("Quest")).First(e => (string?)e.Attribute("id") == "gunsmith_plastic_test");
+        gunsmith.Element("Rewards")!.Add(
+            new XElement("Reputation", new XAttribute("faction", "coalition"), new XAttribute("amount", 1)),
+            new XElement("Item", new XAttribute("id", "steel"), new XAttribute("count", 7)));
+        gunsmith.Element("Objectives")!.Add(new XElement("Custom", new XAttribute("id", "relay"), new XAttribute("target", "relay")));
+        var tideGauge = questFiles.SelectMany(f => f.Elements("Quest")).First(q => (string?)q.Attribute("id") == "dda_tide_gauge");
+        tideGauge.Element("Objectives")!.Add(
+            Enumerable.Range(1, 23).Select(i => new XElement("ReachLocation", new XAttribute("id", "port" + i), new XAttribute("target", "city"))));
+        object rules = Module("QuestRules").GetMethod("Parse", flags)!.Invoke(null, [XElement.Load(Path.Combine(config, "npcs.xml")), questFiles])!;
         runtime.GetProperty("Rules", flags)!.SetValue(null, rules);
         var portraits = (IDictionary)runtime.GetField("portraits", flags)!.GetValue(null)!;
         // This host exercises native geometry and hit targets without opening a graphics device.
-        portraits["dispatch"] = null;
-        portraits["stores"] = null;
+        void StubPortraits()
+        {
+            foreach (string id in new[] { "peachhat", "benzene", "sterling", "natalia", "harland", "liaison" }) { portraits[id] = null; }
+        }
+        StubPortraits();
         var npcs = (IDictionary)Field(rules, "Npcs")!;
         foreach (var dims in new[] { new Point(72, 470), new Point(145, 395), new Point(100, 650) })
         {
@@ -132,8 +139,8 @@ internal static class NativeChecks
             var badge = (GUIFrame)runtime.GetField("readyBadge", flags)!.GetValue(null)!;
             Check(!badge.Visible, "zero ready hides badge");
             var ready = new DeepDivingArmory.Quests.QuestState();
-            ready.Active["bulkhead"] = new() { ["relay"] = 1, ["plates"] = 3 };
-            ready.Stock["steel"] = 3;
+            ready.Active["gunsmith_plastic_test"] = new() { ["relay"] = 1, ["plastic"] = 4 };
+            ready.Stock["engineeringplastic"] = 4;
             var snapshot = Module("QuestState").GetMethod("Read", flags)!.Invoke(null, [ready.Write(true)]);
             runtime.GetProperty("State", flags)!.SetValue(null, snapshot);
             runtime.GetProperty("Revision", flags)!.SetValue(null, 1);
@@ -150,11 +157,11 @@ internal static class NativeChecks
             Check(bar.Children.SequenceEqual(originals) && originals[0].Rect.Width == natural && bar.RectTransform.MaxSize == max &&
                 added.OnClicked == null && runtime.GetField("sidebar", flags)!.GetValue(null) == null, "release restores original five and sidebar bounds");
         }
-        portraits["dispatch"] = portraits["stores"] = null;
+        StubPortraits();
         foreach (var dimensions in new[] { new Point(680, 400), new Point(1152, 680), new Point(1680, 960) })
         {
             var host = new GUIFrame(new RectTransform(dimensions), style: null);
-            foreach (string? npc in new string?[] { null, "dispatch", "stores" })
+            foreach (string? npc in new string?[] { null, "benzene", "peachhat" })
             {
                 var panelType = Module("QuestPanel");
                 var panel = Activator.CreateInstance(panelType, flags, null, [host, npc == null ? null : npcs[npc], (ushort)0, true], null)!;
@@ -170,8 +177,8 @@ internal static class NativeChecks
                 body.RecalculateChildren();
                 Check(sections.Zip(sections.Skip(1)).All(pair => pair.First.Rect.Bottom + body.Spacing <= pair.Second.Rect.Top), "separate scroll blocks");
                 Check(sections.All(b => b.Rect.Width == body.Content.Rect.Width && b.Rect.Height > 0), "uniform detail edges");
-                Check((sections[0].FindChild("quote", true) != null) == (npc != "stores"), "optional native quote block");
-                if (npc != "stores")
+                Check(sections[0].FindChild("quote", true) != null, "native quote block present on main quest");
+                if (npc == "benzene")
                 {
                     var cols = sections[1].GetAllChildren<GUITextBlock>().Where(t => Equals(t.UserData, "count")).ToArray();
                     Check(cols.Length == 2 && cols[0].Rect.Left == cols[1].Rect.Left, "shared objective count column");
@@ -183,8 +190,18 @@ internal static class NativeChecks
                         cards[0].Rect.Left == cards[2].Rect.Left && cards[1].Rect.Right == cards[3].Rect.Right, "balanced two-column reward card grid");
                     Check(items.Length == 2 &&
                         items.All(c => { var s = c.FindChild("itemslot", true); return s != null && s.Rect.Width == s.Rect.Height && !s.GetAllChildren<GUITextBlock>().Any(); }) &&
-                        items[0].GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("×2")) &&
+                        items[0].GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("×1")) &&
                         items[1].GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("×7")), "reward item cards keep ×count in text without icon badge");
+                }
+                if (npc == "peachhat")
+                {
+                    var repeatCard = list.Content.Children.OfType<GUIButton>().Single(b => Equals(b.UserData, "typhoon_powder_stock"));
+                    repeatCard.OnClicked(repeatCard, repeatCard.UserData);
+                    panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
+                    Check(body.Content.FindChild("description").FindChild("quote", true) == null, "optional native quote block omitted on repeat");
+                    var mainCard = list.Content.Children.OfType<GUIButton>().First();
+                    mainCard.OnClicked(mainCard, mainCard.UserData);
+                    panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
                 }
                 Check(filters[0].Rect.Left == list.Rect.Left && filters[^1].Rect.Right == list.Rect.Right, "native filter/list edges");
                 Check(header.Rect.Left == actions.Rect.Left && summary.Rect.Bottom == actions.Rect.Bottom, "native content/footers");
@@ -212,10 +229,10 @@ internal static class NativeChecks
                 {
                     var publishers = (GUIFrame)Field(panel, "publisherRow")!;
                     var thumbs = publishers.Children.OfType<GUIButton>().ToArray();
-                    Check(thumbs.Length == 3 && thumbs[2].ToolTip.SanitizedString.Value.Contains("补给商"), "all and both named publishers");
-                    thumbs[2].OnClicked(thumbs[2], null);
+                    Check(thumbs.Length >= 3 && thumbs[1].ToolTip.SanitizedString.Value.Contains("桃帽"), "all and named publishers");
+                    thumbs[1].OnClicked(thumbs[1], null);
                     panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
-                    Check(list.Content.CountChildren == 1 && filters[0].Text.Value.Contains("1"), "publisher scopes cards and counters");
+                    Check(list.Content.CountChildren == 8 && filters[0].Text.Value.Contains("8"), "publisher scopes cards and counters");
                     var all = publishers.Children.OfType<GUIButton>().First();
                     all.OnClicked(all, null);
                     panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
@@ -226,7 +243,7 @@ internal static class NativeChecks
                     r.GetAllChildren<GUITextBlock>().Count(label => label.Text.SanitizedString.Value.Length > 0) >= 4), "structured task cards and tooltips");
                 Check(rows.Count(r => r.Selected) == 1 && Equals(rows.Single(r => r.Selected).UserData, Field(panel, "selected")) &&
                     filters[0].Text.Value.Contains(rows.Length.ToString()), "filter count and selected card");
-                Check(rows.Length == (npc == null ? 5 : npc == "stores" ? 1 : 4), "mode-scoped list");
+                Check(rows.Length == (npc == null ? 48 : npc == "benzene" ? 9 : 8), "mode-scoped list");
                 rows[^1].OnClicked(rows[^1], rows[^1].UserData);
                 panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
                 Check(ReferenceEquals(list, Field(panel, "list")) && Equals(Field(panel, "selected"), rows[^1].UserData), "selection keeps controls");
@@ -237,7 +254,7 @@ internal static class NativeChecks
                 {
                     void Refresh() => panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
                     var active = new DeepDivingArmory.Quests.QuestState();
-                    foreach (string id in new[] { "bulkhead", "watch", "soundings" }) { active.Active[id] = new(); }
+                    foreach (string id in new[] { "gunsmith_plastic_test", "co_pirate_bounty", "dda_tide_gauge" }) { active.Active[id] = new(); }
                     void UpdateState(int revision)
                     {
                         var snapshot = Module("QuestState").GetMethod("Read", flags)!.Invoke(null, [active.Write(true)]);
@@ -254,17 +271,17 @@ internal static class NativeChecks
                         card.OnClicked(card, card.UserData);
                         Refresh();
                     }
-                    foreach (string id in new[] { "watch", "soundings" })
+                    foreach (string id in new[] { "co_pirate_bounty", "dda_tide_gauge" })
                     {
                         Select(id);
                         Check(!body.Content.FindChild("objectives").GetAllChildren<GUIButton>().Any(), "no material action on " + id);
                     }
-                    Select("manifest");
+                    Select("sp_break_embargo");
                     var reputationCards = body.Content.FindChild("rewards").Children.OfType<GUIFrame>()
                         .Where(c => Equals(c.UserData, "rewardstat")).ToArray();
-                    Check(reputationCards.Length == 2 && reputationCards[0].Rect.Height == reputationCards[1].Rect.Height &&
-                        reputationCards[0].Rect.Top == reputationCards[1].Rect.Top, "two faction rewards share one row");
-                    foreach (var (index, amount, faction, tone) in new[] { (0, "+3", "木卫二联盟", "Green"), (1, "-2", "木星分离派", "Red") })
+                    Check(reputationCards.Length >= 4 && reputationCards[2].Rect.Height == reputationCards[3].Rect.Height &&
+                        reputationCards[2].Rect.Top == reputationCards[3].Rect.Top, "two faction rewards share one row");
+                    foreach (var (index, amount, faction, tone) in new[] { (2, "+4", "木星分离派", "Green"), (3, "-2", "木卫二联盟", "Red") })
                     {
                         var reward = reputationCards[index];
                         var accent = (Color)Module("QuestStyle").GetField(tone, flags)!.GetValue(null)!;
@@ -273,12 +290,12 @@ internal static class NativeChecks
                         Check(reward.Children.First().Color == accent && flag.CountChildren == 3 && flag.Children.All(c => c.Color == accent) &&
                             labels.Any(t => t.Text.SanitizedString.Value == amount && t.TextColor == accent) && labels.Any(t => t.Text.SanitizedString.Value == faction), "flag, stripe, sign and faction " + tone);
                     }
-                    Select("bulkhead");
+                    Select("gunsmith_plastic_test");
                     var goals = body.Content.FindChild("objectives");
                     var hand = goals.GetAllChildren<GUIButton>().Single();
-                    var materialRow = goals.FindChild("plates");
+                    var materialRow = goals.FindChild("plastic");
                     var customRow = goals.FindChild("relay");
-                    Check(hand.Parent == materialRow && !hand.Enabled && hand.ToolTip.SanitizedString.Value.Contains("主管") &&
+                    Check(hand.Parent == materialRow && !hand.Enabled && hand.ToolTip.SanitizedString.Value.Contains("氧化苯") &&
                         !customRow.GetAllChildren<GUIButton>().Any(), "global nonremote material button and custom row");
                     var numeric = materialRow.FindChild("count");
                     var objectiveName = materialRow.Children.OfType<GUITextBlock>().First();
@@ -286,7 +303,7 @@ internal static class NativeChecks
                     var itemInfo = materialRow.FindChild("iteminfo", true);
                     Check(itemSlot != null && itemInfo != null && itemSlot.Rect.Width == itemSlot.Rect.Height &&
                         !itemSlot.GetAllChildren<GUITextBlock>().Any() &&
-                        itemInfo.GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("×3")) &&
+                        itemInfo.GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("×4")) &&
                         itemSlot.Rect.Right < itemInfo.Rect.Left && itemInfo.Rect.Right < hand.Rect.Left &&
                         hand.Rect.Right <= materialRow.Rect.Right && itemSlot.Rect.Top >= numeric.Rect.Bottom &&
                         hand.Rect.Top >= numeric.Rect.Bottom && hand.Rect.Height == itemInfo.Rect.Height &&
@@ -297,12 +314,26 @@ internal static class NativeChecks
                         numeric.Rect.Left == customRow.FindChild("count").Rect.Left &&
                         numeric.Rect.Right == customRow.FindChild("count").Rect.Right,
                         "objective progress column stays cleanly aligned across rows");
-                    active.Active["bulkhead"]["plates"] = 3;
+                    active.Active["gunsmith_plastic_test"]["plastic"] = 4;
                     UpdateState(11);
                     var complete = body.Content.FindChild("objectives").GetAllChildren<GUIButton>().Single();
                     Check(!complete.Enabled && complete.Text.Value == "已上交", "filled material disabled even with other goals outstanding");
+                    // Verify debug bypass exposes Submit in TAB for in-person quests and promotes newly unlocked quests.
+                    actions = (GUIFrame)Field(panel, "actions")!;
+                    runtime.GetProperty("DebugBypass", flags)!.SetValue(null, true);
+                    int readyCount = (int)runtime.GetMethod("ReadyAvailable", flags)!.Invoke(null, [false])!;
+                    Check(readyCount >= 12, "debug mode readies all TL1 quests");
+                    runtime.GetProperty("Revision", flags)!.SetValue(null, 12);
+                    Refresh();
+                    Select("gunsmith_plastic_test");
+                    Check(actions.GetAllChildren<GUIButton>().Any(b => b.Text.Value == "提交"), "debug bypass shows Submit in TAB for in-person quest");
+                    int allCount = (int)runtime.GetMethod("ReadyAvailable", flags)!.Invoke(null, [true])!;
+                    Check(allCount == 48, "debug all readies all 48 quests");
+                    runtime.GetProperty("DebugBypass", flags)!.SetValue(null, false);
+                    UpdateState(13);
+                    Check(actions.GetAllChildren<GUIButton>().All(b => b.Text.Value != "提交"), "normal mode hides Submit in TAB for in-person quest");
                     // Drive actual native scrollbars across overflow and back without changing the panel width.
-                    foreach (int height in new[] { 2000, 90, 2000 })
+                    foreach (int height in new[] { 6000, 90, 6000 })
                     {
                         foreach (var box in new[] { list, body })
                         {
@@ -322,8 +353,8 @@ internal static class NativeChecks
                 var field = runtime.GetField(npc == null ? "tabPanel" : "dialoguePanel", flags)!;
                 field.SetValue(null, panel);
                 Call("ClearRound");
-                Check(!host.Children.Any() && field.GetValue(null) == null && portraits.Count == 0, "ClearRound detaches panel and releases portraits");
-                portraits["dispatch"] = portraits["stores"] = null;
+                Check(!host.Children.Any() && field.GetValue(null) == null && portraits.Count == 0 && !(bool)runtime.GetProperty("DebugBypass", flags)!.GetValue(null)!, "ClearRound detaches panel and releases portraits");
+                StubPortraits();
             }
         }
         Call("ClearRound");

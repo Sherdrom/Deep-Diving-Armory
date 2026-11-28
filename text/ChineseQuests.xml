@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <infotexts language="Simplified Chinese" nowhitespace="false" translatedname="中文(简体)">
+  <!-- UI 基础文本 -->
   <dda.quest.ui.tab>NPC 委托</dda.quest.ui.tab>
   <dda.quest.ui.close>关闭</dda.quest.ui.close>
   <dda.quest.ui.all>全部</dda.quest.ui.all>
@@ -50,34 +51,337 @@
   <dda.quest.ui.obj.killtag>击败 [target]</dda.quest.ui.obj.killtag>
   <dda.quest.ui.obj.reachlocation>抵达 [target]</dda.quest.ui.obj.reachlocation>
   <dda.quest.ui.obj.custom>完成 [target]</dda.quest.ui.obj.custom>
-  <dda.quest.npc.dispatch.name>站务主管</dda.quest.npc.dispatch.name>
-  <dda.quest.npc.dispatch.role>航路调度</dda.quest.npc.dispatch.role>
-  <dda.quest.npc.dispatch.faction>当地行政署</dda.quest.npc.dispatch.faction>
-  <dda.quest.npc.dispatch.location>前哨站行政区</dda.quest.npc.dispatch.location>
-  <dda.quest.npc.stores.name>补给商</dda.quest.npc.stores.name>
-  <dda.quest.npc.stores.role>物资收发员</dda.quest.npc.stores.role>
-  <dda.quest.npc.stores.faction>当地贸易处</dda.quest.npc.stores.faction>
-  <dda.quest.npc.stores.location>普通前哨站商店</dda.quest.npc.stores.location>
-  <dda.quest.bulkhead.title>舱壁修补单</dda.quest.bulkhead.title>
-  <dda.quest.bulkhead.desc>泵房的舱壁又渗水了。带上钢材来找主管，在材料一栏点击「上交」，可以分批交付。交齐三份后，点击「提交」领取报酬。</dda.quest.bulkhead.desc>
-  <dda.quest.bulkhead.quote>“先把水堵上，表格可以晚点填。”</dda.quest.bulkhead.quote>
-  <dda.quest.bulkhead.obj.plates>备齐修补用钢材</dda.quest.bulkhead.obj.plates>
-  <dda.quest.soundings.title>港口测深回执</dda.quest.soundings.title>
-  <dda.quest.soundings.desc>下一程请进入一座城市的港区。靠港记录会随航海日志发回调度台，届时可以远程提交。</dda.quest.soundings.desc>
-  <dda.quest.soundings.obj.port>进入城市港口</dda.quest.soundings.obj.port>
-  <dda.quest.soundings.location>任一城市港区</dda.quest.soundings.location>
-  <dda.quest.samples.title>矿样补货</dda.quest.samples.title>
-  <dda.quest.samples.desc>补给商需要两块完整的硝石矿样作库存比对。备好后到普通前哨站商店交付，可重复接取。</dda.quest.samples.desc>
-  <dda.quest.samples.obj.ore>交付硝石矿样</dda.quest.samples.obj.ore>
-  <dda.quest.watch.title>航道清障</dda.quest.watch.title>
-  <dda.quest.watch.desc>爬行者群正在接近进港航线。由本船船员击败三只爬行者后，通过无线电领取悬赏。</dda.quest.watch.desc>
-  <dda.quest.watch.quote>“声呐上少三个回波，我就签字。”</dda.quest.watch.quote>
-  <dda.quest.watch.obj.crawlers>由本船船员击败爬行者</dda.quest.watch.obj.crawlers>
   <dda.quest.ui.turninpanel>打开委托面板提交</dda.quest.ui.turninpanel>
-  <dda.quest.faction.location>当地阵营</dda.quest.faction.location>
+  <dda.quest.faction.location>中立与当地商团</dda.quest.faction.location>
   <dda.quest.faction.coalition>木卫二联盟</dda.quest.faction.coalition>
   <dda.quest.faction.separatists>木星分离派</dda.quest.faction.separatists>
-  <dda.quest.manifest.title>优先配发令</dda.quest.manifest.title>
-  <dda.quest.manifest.desc>联盟征用了原定送往分离派船坞的钢材。从船上拨出两份钢材，再通过无线电提交货单。</dda.quest.manifest.desc>
-  <dda.quest.manifest.obj.steel>拨付预留钢材</dda.quest.manifest.obj.steel>
+
+  <!-- 6 位核心发布者 -->
+  <dda.quest.npc.peachhat.name>“台风大百货” 桃帽</dda.quest.npc.peachhat.name>
+  <dda.quest.npc.peachhat.role>百货掌柜</dda.quest.npc.peachhat.role>
+  <dda.quest.npc.peachhat.faction>台风级移动城市</dda.quest.npc.peachhat.faction>
+  <dda.quest.npc.peachhat.location>台风移动城市 · 百货柜台</dda.quest.npc.peachhat.location>
+
+  <dda.quest.npc.benzene.name>“枪匠” 氧化苯</dda.quest.npc.benzene.name>
+  <dda.quest.npc.benzene.role>首席兵器技师</dda.quest.npc.benzene.role>
+  <dda.quest.npc.benzene.faction>中立军械工坊</dda.quest.npc.benzene.faction>
+  <dda.quest.npc.benzene.location>军械库与改枪工位</dda.quest.npc.benzene.location>
+
+  <dda.quest.npc.sterling.name>艾琳·斯特林上校</dda.quest.npc.sterling.name>
+  <dda.quest.npc.sterling.role>战区作战协调官</dda.quest.npc.sterling.role>
+  <dda.quest.npc.sterling.faction>木卫二联盟</dda.quest.npc.sterling.faction>
+  <dda.quest.npc.sterling.location>联盟哨站 · 行政区</dda.quest.npc.sterling.location>
+
+  <dda.quest.npc.natalia.name>政委 娜塔莉亚</dda.quest.npc.natalia.name>
+  <dda.quest.npc.natalia.role>前线政治委员</dda.quest.npc.natalia.role>
+  <dda.quest.npc.natalia.faction>木星分离派</dda.quest.npc.natalia.faction>
+  <dda.quest.npc.natalia.location>分离哨站 · 指挥处</dda.quest.npc.natalia.location>
+
+  <dda.quest.npc.harland.name>马库斯·哈兰德博士</dda.quest.npc.harland.name>
+  <dda.quest.npc.harland.role>防护研究所顾问</dda.quest.npc.harland.role>
+  <dda.quest.npc.harland.faction>联盟防护研究所</dda.quest.npc.harland.faction>
+  <dda.quest.npc.harland.location>科研前哨 · 补给站</dda.quest.npc.harland.location>
+
+  <dda.quest.npc.liaison.name>D.D.A. 轮值对接员</dda.quest.npc.liaison.name>
+  <dda.quest.npc.liaison.role>合约外勤观察员</dda.quest.npc.liaison.role>
+  <dda.quest.npc.liaison.faction>深潜武装（匿名）</dda.quest.npc.liaison.faction>
+  <dda.quest.npc.liaison.location>前哨行政区 / 外挂接驳舱</dda.quest.npc.liaison.location>
+
+  <!-- ==================== 桃帽 · 台风大百货 (8) ==================== -->
+  <dda.quest.typhoon_powder_stock.title>铅弹底火补货</dda.quest.typhoon_powder_stock.title>
+  <dda.quest.typhoon_powder_stock.desc>船长，最近寒冰洋打得太凶，连民用船都在狂囤铅弹。我柜台底下压弹的底火料快见底了。下次路过矿道顺手凿三块硝石、三块硫磺带回台风大百货，分批交也行，货干爽不掺冰渣就按高价现结，再搭你一箱铅制复装弹。</dda.quest.typhoon_powder_stock.desc>
+  <dda.quest.typhoon_powder_stock.obj.saltpeter>上交硝石矿块</dda.quest.typhoon_powder_stock.obj.saltpeter>
+  <dda.quest.typhoon_powder_stock.obj.sulfur>上交硫磺矿块</dda.quest.typhoon_powder_stock.obj.sulfur>
+
+  <dda.quest.typhoon_dock_run.title>台风泊位报到</dda.quest.typhoon_dock_run.title>
+  <dda.quest.typhoon_dock_run.desc>新面孔？欢迎来到台风级移动城市——冰盖底下少有不问你阵营出身、只认马克和信用的地方。老霍尔姆刚把港务区修缮单甩我桌上，缺四根好钢补货运栈道。把船停进台风城泊位，顺手把钢材送到台风大百货柜台，以后这儿的好货和内幕消息，咱就算搭上线了。</dda.quest.typhoon_dock_run.desc>
+  <dda.quest.typhoon_dock_run.quote>“停稳了就来柜台报个到，台风号不问出处，只认货色和马克。”</dda.quest.typhoon_dock_run.quote>
+  <dda.quest.typhoon_dock_run.obj.typhoon>停靠一座台风级移动城市</dda.quest.typhoon_dock_run.obj.typhoon>
+  <dda.quest.typhoon_dock_run.obj.steel>交付修补用钢材</dda.quest.typhoon_dock_run.obj.steel>
+  <dda.quest.typhoon_dock_run.location>台风级移动城市</dda.quest.typhoon_dock_run.location>
+
+  <dda.quest.typhoon_medical_shortage.title>止血带涨价潮</dda.quest.typhoon_medical_shortage.title>
+  <dda.quest.typhoon_medical_shortage.desc>老主顾，海脊那边这周不太平。三艘拉矿的民用艇在航道口挨了黑枪，连殖民地城市的诊所都在抢绷带。你下趟顺路进一趟大城市看看行情，再帮我调两个小急救包送回台风大百货。别小看这点急救物资，打到深处，半卷干净绷带能换半箱子弹。</dda.quest.typhoon_medical_shortage.desc>
+  <dda.quest.typhoon_medical_shortage.quote>“上周三艘运货艇刚过海脊就挨了黑枪，现在止血带比伏特加还好卖。”</dda.quest.typhoon_medical_shortage.quote>
+  <dda.quest.typhoon_medical_shortage.obj.city>停靠任意殖民地城市</dda.quest.typhoon_medical_shortage.obj.city>
+  <dda.quest.typhoon_medical_shortage.obj.medkits>交付小急救包</dda.quest.typhoon_medical_shortage.obj.medkits>
+  <dda.quest.typhoon_medical_shortage.location>任意殖民地城市 / 台风城</dda.quest.typhoon_medical_shortage.location>
+
+  <dda.quest.typhoon_farport_backlog.title>远港断货风波</dda.quest.typhoon_farport_backlog.title>
+  <dda.quest.typhoon_farport_backlog.desc>船长，出怪事了。往年远港建造厂每隔半个月就会给我们发一整批复装弹箱和工程塑料外壳，这回整整拖了两轮巡回——派去催货的跑腿回来说，远港民用码头突然被军方贴了封条，说是全线转产军需。我手里几个老买主催得紧，帮我匀一箱钛制复装弹外加四块工程塑料顶顶账，我拿铜制空尖弹箱补你差价。</dda.quest.typhoon_farport_backlog.desc>
+  <dda.quest.typhoon_farport_backlog.quote>“远港那边突然停了所有民用单子，连台风大百货都得拆旧箱子凑复装弹。”</dda.quest.typhoon_farport_backlog.quote>
+  <dda.quest.typhoon_farport_backlog.obj.tit_ammo>交付钛制复装弹药箱</dda.quest.typhoon_farport_backlog.obj.tit_ammo>
+  <dda.quest.typhoon_farport_backlog.obj.plastic>交付工程塑料</dda.quest.typhoon_farport_backlog.obj.plastic>
+
+  <dda.quest.typhoon_0041_crate.title>EU-0041 匿名箱</dda.quest.typhoon_0041_crate.title>
+  <dda.quest.typhoon_0041_crate.desc>船长，你来得正好，帮我把里间刚素复装箱的缺口补上。远港断货以后，偏偏冒出一家怪得要命的供货商，隔三差五开着没挂应答机的小艇，把货往外围货运气闸一丢就走，尾款全走匿名划账。我耐不住好奇，拿工商终端查了箱底钢印的注册号 EU-0041，系统居然跳红字说这号在木卫二从未注册过。算了，咱开百货只认货色不认户口，先帮我匀一箱刚素弹垫上。</dda.quest.typhoon_0041_crate.desc>
+  <dda.quest.typhoon_0041_crate.quote>“箱底印着 EU-0041，工商终端却说这号从未存在过——货倒比军方流出来的还规整。”</dda.quest.typhoon_0041_crate.quote>
+  <dda.quest.typhoon_0041_crate.obj.phy_ammo>交付刚素制复装弹药箱</dda.quest.typhoon_0041_crate.obj.phy_ammo>
+
+  <dda.quest.typhoon_beacon_batteries.title>不买声呐的检修工</dda.quest.typhoon_beacon_batteries.title>
+  <dda.quest.typhoon_beacon_batteries.desc>听氧化苯说，你最近也在帮他查台风城的风声？巧了，我这边也觉得不对劲。港务局新招了几个外包检修工，出手阔绰得不像修压载舱的——专挑我柜台里高功率长距水下信标电池扫货，却从不买配套的民用声呐。老霍尔姆最近停靠老撞伏兵，我看八成跟这群人脱不了干系。你去矿站帮我摸摸底，顺手备两颗烟雾弹和两颗碰炸雷防身交差，无线电联系。</dda.quest.typhoon_beacon_batteries.desc>
+  <dda.quest.typhoon_beacon_batteries.quote>“专挑长距水下信标电池扫货，却从不买声呐——这帮外包工修的怕不是压载舱。”</dda.quest.typhoon_beacon_batteries.quote>
+  <dda.quest.typhoon_beacon_batteries.obj.mine>停靠一座矿业前哨</dda.quest.typhoon_beacon_batteries.obj.mine>
+  <dda.quest.typhoon_beacon_batteries.obj.smoke>交付 M18 烟雾手雷</dda.quest.typhoon_beacon_batteries.obj.smoke>
+  <dda.quest.typhoon_beacon_batteries.obj.grenades>交付 RGO 碰炸式手雷</dda.quest.typhoon_beacon_batteries.obj.grenades>
+  <dda.quest.typhoon_beacon_batteries.location>任意矿业前哨</dda.quest.typhoon_beacon_batteries.location>
+
+  <dda.quest.typhoon_leak_trail.title>十四号寄存柜</dda.quest.typhoon_leak_trail.title>
+  <dda.quest.typhoon_leak_trail.desc>实锤了，船长。外包工那几个混蛋连夜溜了，走之前只留下一张沾着机油的提货单，写着把台风号压载舱排空排班表发往旧军用跳频，尾款打进我店里的十四号匿名寄存柜。怪不得最近总有人卡着点在外面截停台风号！你进一趟交战区把那批蹲点的武装混蛋清掉十个，顺手带回一根金条把十四号柜的烂账平了，我拿钨刚复装弹箱谢你。</dda.quest.typhoon_leak_trail.desc>
+  <dda.quest.typhoon_leak_trail.quote>“十四号柜那个匿名租户再也没露过面……老霍尔姆要是知道，准得把人塞进鱼雷管。”</dda.quest.typhoon_leak_trail.quote>
+  <dda.quest.typhoon_leak_trail.obj.zone>抵达任意交战区</dda.quest.typhoon_leak_trail.obj.zone>
+  <dda.quest.typhoon_leak_trail.obj.raiders>在交战区击败武装袭击者</dda.quest.typhoon_leak_trail.obj.raiders>
+  <dda.quest.typhoon_leak_trail.obj.gold>交付金条以平账</dda.quest.typhoon_leak_trail.obj.gold>
+  <dda.quest.typhoon_leak_trail.location>任意交战区</dda.quest.typhoon_leak_trail.location>
+
+  <dda.quest.typhoon_mk17_legacy.title>柜台底下的 MK17</dda.quest.typhoon_mk17_legacy.title>
+  <dda.quest.typhoon_mk17_legacy.desc>老熟人，看你一路从寒冰洋杀到渊洋，手里家伙事儿也换了好几轮。不瞒你说，我退下来守台风大百货之前，也是天天扛着枪往黑水里钻的。柜台最底下压着一份我自己攒出来的 MK17 战斗步枪设计图，陪我扛过不少烂摊子，留在这儿吃灰太可惜了。你凑两份钨刚枪械零件加一箱雷刚复装弹来换——就当替我把老伙计再带回深渊逛一圈吧。</dda.quest.typhoon_mk17_legacy.desc>
+  <dda.quest.typhoon_mk17_legacy.quote>“该出发了老伙计，深渊在等着我们……”</dda.quest.typhoon_mk17_legacy.quote>
+  <dda.quest.typhoon_mk17_legacy.obj.parts>交付钨刚枪械零件</dda.quest.typhoon_mk17_legacy.obj.parts>
+  <dda.quest.typhoon_mk17_legacy.obj.fulg_ammo>交付雷刚复装弹药箱</dda.quest.typhoon_mk17_legacy.obj.fulg_ammo>
+
+  <!-- ==================== 氧化苯 · 首席枪匠 (9) ==================== -->
+  <dda.quest.gunsmith_scrap_plates.title>废板拆解回收</dda.quest.gunsmith_scrap_plates.title>
+  <dda.quest.gunsmith_scrap_plates.desc>伙计，别光顾着问我工位后头那台高斯步枪什么时候能完工，眼下连试车台夹具的料都不够。带三块钢材和两块工程塑料过来，我拿压好的四级铁板跟你换。别拿泡烂发脆的次品糊弄我，我手一摸就听得出来。</dda.quest.gunsmith_scrap_plates.desc>
+  <dda.quest.gunsmith_scrap_plates.obj.steel>交付钢材</dda.quest.gunsmith_scrap_plates.obj.steel>
+  <dda.quest.gunsmith_scrap_plates.obj.plastic>交付工程塑料</dda.quest.gunsmith_scrap_plates.obj.plastic>
+
+  <dda.quest.gunsmith_plastic_test.title>水密工程塑料</dda.quest.gunsmith_plastic_test.title>
+  <dda.quest.gunsmith_plastic_test.desc>知道为什么早期移民在潜艇里死活不敢开枪吗？一怕跳弹打穿壳，二怕高压盐水灌进导气箍，两分钟就给你锈死。直到高密度工程塑料量产，现代枪械才真正在木卫二站稳脚跟。给我送四块合格的工程塑料过来，我要测一批新护木的抗腐膨胀率。办妥了，送你一套插板载体防身。</dda.quest.gunsmith_plastic_test.desc>
+  <dda.quest.gunsmith_plastic_test.quote>“在两千米水压下，卡壳半秒就够画皮把你肋骨拆下来当笛子吹了。”</dda.quest.gunsmith_plastic_test.quote>
+  <dda.quest.gunsmith_plastic_test.obj.plastic>交付工程塑料</dda.quest.gunsmith_plastic_test.obj.plastic>
+
+  <dda.quest.gunsmith_titanium_parts.title>第一批钛制机匣</dda.quest.gunsmith_titanium_parts.title>
+  <dda.quest.gunsmith_titanium_parts.desc>看你还在用海盗同款铁管子我就来气。那玩意儿除了拿枪托砸人，射速一拉高就飘得没边。想往欧罗巴海脊底下钻，趁早把机匣和导气组件换成钛铝合金。替我收两套钛制枪械零件，再带两块四级金属插板做抗破片衬垫，我回你一根校直好的钛制枪管。</dda.quest.gunsmith_titanium_parts.desc>
+  <dda.quest.gunsmith_titanium_parts.quote>“别留恋那些老掉牙的铁疙瘩了，换上钛铝合金机匣，你的手腕会谢谢你。”</dda.quest.gunsmith_titanium_parts.quote>
+  <dda.quest.gunsmith_titanium_parts.obj.tit_parts>交付钛制枪械零件</dda.quest.gunsmith_titanium_parts.obj.tit_parts>
+  <dda.quest.gunsmith_titanium_parts.obj.plates>交付 4 级金属插板（铁板）</dda.quest.gunsmith_titanium_parts.obj.plates>
+
+  <dda.quest.gunsmith_plate_bench.title>公差 0.02 毫米</dda.quest.gunsmith_plate_bench.title>
+  <dda.quest.gunsmith_plate_bench.desc>手艺人，过来帮我搭把手。我刚在靶箱里测完一批黑市流出来的通用导轨——啧，倒角公差居然压在 0.02 毫米以内。全木卫二只有当年远港三号精密车床铣得出这手感，可三号车床六年前在 103 船厂转移事故里早就登记沉没了，难不成深海鱼学会开数控机床了？先别管它，给我带两块五级金属板和一块五级陶瓷板来测侵彻，咱们慢慢查。</dda.quest.gunsmith_plate_bench.desc>
+  <dda.quest.gunsmith_plate_bench.quote>“这倒角公差只有远港三号车床铣得出来——可它六年前就在 103 船厂登记沉没了，怪事。”</dda.quest.gunsmith_plate_bench.quote>
+  <dda.quest.gunsmith_plate_bench.obj.metal5>交付 5 级金属插板（轻质钢）</dda.quest.gunsmith_plate_bench.obj.metal5>
+  <dda.quest.gunsmith_plate_bench.obj.ceramic5>交付 5 级陶瓷插板（高纯度氧化铝）</dda.quest.gunsmith_plate_bench.obj.ceramic5>
+
+  <dda.quest.gunsmith_shield_stress.title>刚素盾板耐压测</dda.quest.gunsmith_shield_stress.title>
+  <dda.quest.gunsmith_shield_stress.desc>最近走廊窄巷交火越来越多，靠肉身硬吃破片就是找死，机动护盾和加固板才是正经保命件。给我带两块钢筋加固板外加一块六级钢板，我帮你压一块钛铝合金加固板试试手感。对了，前几天有个穿港务局制服的小子鬼鬼祟祟来借旧版军用跳频表，说是修台风号压载舱信号灯——修个破信号灯用得着军用跳频？你路过百货柜台时顺嘴提醒桃帽一句。</dda.quest.gunsmith_shield_stress.desc>
+  <dda.quest.gunsmith_shield_stress.quote>“上周有个港务局小子来借旧版军用跳频表，说是修信号灯——真当我是第一天焊电路？”</dda.quest.gunsmith_shield_stress.quote>
+  <dda.quest.gunsmith_shield_stress.obj.shield_steel>交付钢筋加固板</dda.quest.gunsmith_shield_stress.obj.shield_steel>
+  <dda.quest.gunsmith_shield_stress.obj.metal6>交付 6 级金属插板（45号钢）</dda.quest.gunsmith_shield_stress.obj.metal6>
+
+  <dda.quest.gunsmith_103_recon.title>未完工的儒艮</dda.quest.gunsmith_103_recon.title>
+  <dda.quest.gunsmith_103_recon.desc>我越琢磨三号车床那事越不对劲。当年我在新伊阿佩特斯 103 超钢船厂干活，战火烧过来那天，船坞里那艘儒艮级潜艇的龙骨还没焊完，我们就匆匆封库撤离了。如今旧址成了海盗和各方武装藏货的窟窿。你替我进一趟交战区，顺手清掉八个盘踞在那片的海盗杂碎，把外围通路给我扫出来，无线电回报就行。</dda.quest.gunsmith_103_recon.desc>
+  <dda.quest.gunsmith_103_recon.quote>“我走那天那艘儒艮的龙骨还没焊完，现在倒好，全成了海盗藏军火的窟窿。”</dda.quest.gunsmith_103_recon.quote>
+  <dda.quest.gunsmith_103_recon.obj.zone>抵达任意交战区</dda.quest.gunsmith_103_recon.obj.zone>
+  <dda.quest.gunsmith_103_recon.obj.pirates>击败海盗武装人员</dda.quest.gunsmith_103_recon.obj.pirates>
+  <dda.quest.gunsmith_103_recon.location>任意交战区</dda.quest.gunsmith_103_recon.location>
+
+  <dda.quest.gunsmith_103_mold.title>103 船厂核销单</dda.quest.gunsmith_103_mold.title>
+  <dda.quest.gunsmith_103_mold.desc>刚托老关系翻到了 103 船厂当年的资产核销底单——果然有猫腻！“航道事故沉没”几个字被人拿黑笔划掉了，库管老周在背面留了一行铅笔小字，说三号精密车床和四台压弹母机在沉没前 48 小时，就被一家叫“深潜物流”的空壳机构拿高层放行条连夜吊走了。算了，机器找不回来了，咱们自己干。带两套刚素枪械零件和两块七级钢板过来，我给你车一根刚素枪管。</dda.quest.gunsmith_103_mold.desc>
+  <dda.quest.gunsmith_103_mold.quote>“老周在核销单背面写了行铅笔字——三号车床压根没沉，是被人连夜吊走的。”</dda.quest.gunsmith_103_mold.quote>
+  <dda.quest.gunsmith_103_mold.obj.phy_parts>交付刚素枪械零件</dda.quest.gunsmith_103_mold.obj.phy_parts>
+  <dda.quest.gunsmith_103_mold.obj.metal7>交付 7 级金属插板（复合钢）</dda.quest.gunsmith_103_mold.obj.metal7>
+
+  <dda.quest.gunsmith_tungsten_bore.title>钨刚膛线校准</dda.quest.gunsmith_tungsten_bore.title>
+  <dda.quest.gunsmith_tungsten_bore.desc>既然你已经摸到渊洋边上，寻常刚素件很快就不够看了。精炼钨配刚素锻出来的钨刚，硬度胜过钻石——我拿它给我台后那把高斯原型机配导轨，车刀报废了三把才啃出一条槽。带两份钨刚枪械零件和一块刚素盾加固板过来，我替你锻一块顶配钨刚加固板，拿去砸穿那帮重甲铁罐头。</dda.quest.gunsmith_tungsten_bore.desc>
+  <dda.quest.gunsmith_tungsten_bore.quote>“车刀报废三把才磨出一根膛线——但一枪掀开十级板的那一刻，值了。”</dda.quest.gunsmith_tungsten_bore.quote>
+  <dda.quest.gunsmith_tungsten_bore.obj.tun_parts>交付钨刚枪械零件</dda.quest.gunsmith_tungsten_bore.obj.tun_parts>
+  <dda.quest.gunsmith_tungsten_bore.obj.shield_phy>交付刚素加固板</dda.quest.gunsmith_tungsten_bore.obj.shield_phy>
+
+  <dda.quest.gunsmith_blackbox_check.title>解不开的黑盒子</dda.quest.gunsmith_blackbox_check.title>
+  <dda.quest.gunsmith_blackbox_check.desc>伙计，别跟我聊外面谁又占了哪座站，我只对一件事感兴趣：你从无光海原带回来的那块热成像干扰器。联盟防护研究所成天吹嘘他们的活体密钥锁无懈可击，死人身上的盒子谁也撬不开——我倒不打算破解它的软件权限，我只想拆开外壳看看里面的电路排布和焊点。给我弄一台实机放到工作台上。别用焊枪暴力割壳，弄坏了主板我就拿卡尺敲你脑袋。</dda.quest.gunsmith_blackbox_check.desc>
+  <dda.quest.gunsmith_blackbox_check.quote>“外壳封条是联盟研究所的，可里头主板飞线的手法……操，跟六年前在 103 船厂一起失踪的那批老师傅一模一样。”</dda.quest.gunsmith_blackbox_check.quote>
+  <dda.quest.gunsmith_blackbox_check.obj.jammer>交付缴获的热成像干扰器</dda.quest.gunsmith_blackbox_check.obj.jammer>
+
+  <!-- ==================== 艾琳·斯特林上校 · 联盟战区 (9) ==================== -->
+  <dda.quest.co_pirate_bounty.title>航道清道夫</dda.quest.co_pirate_bounty.title>
+  <dda.quest.co_pirate_bounty.desc>外包船长，联盟常备清剿预算仍有结余。任意航道或交战区发现武装海盗，均可视为合法清除目标。击毙六名海盗人员后通过加密无线电回报即可自动结算，此项悬赏长期有效。</dda.quest.co_pirate_bounty.desc>
+  <dda.quest.co_pirate_bounty.obj.pirates>击败海盗武装人员</dda.quest.co_pirate_bounty.obj.pirates>
+
+  <dda.quest.co_pirate_patrol.title>寒冰洋治安巡逻</dda.quest.co_pirate_patrol.title>
+  <dda.quest.co_pirate_patrol.desc>船长，我是战区作战协调官艾琳·斯特林。寒冰洋浅层航道近来海盗劫船频发，联盟决定向信誉良好的独立船队外包部分清剿业务。先证明你们的纪律性：清除五名海盗武装人员，并通过无线电复命。顺便重申联盟铁规——任何站内交火严禁动用舰炮摧毁可复用基础设施，违者扣发全部酬金。</dda.quest.co_pirate_patrol.desc>
+  <dda.quest.co_pirate_patrol.quote>“联盟付你马克是为了完整收回哨站与航道，不是看你拿舰炮把几百万的反应堆炸成废铁。”</dda.quest.co_pirate_patrol.quote>
+  <dda.quest.co_pirate_patrol.obj.pirates>击败海盗武装人员</dda.quest.co_pirate_patrol.obj.pirates>
+
+  <dda.quest.co_beacon_recovery.title>信标站抢修料</dda.quest.co_beacon_recovery.title>
+  <dda.quest.co_beacon_recovery.desc>上一次行动很干净，船长。现在我们需要恢复被海盗破坏的中继信标网，否则联盟补给舰队无法在浅层建立稳定航标。请靠泊一处普通前哨站完成航路核验，并向我处交付四份钢材与一箱铅制复装弹，用于武装驻站工程队。</dda.quest.co_beacon_recovery.desc>
+  <dda.quest.co_beacon_recovery.quote>“信标站一瘫痪，整条浅层航线就成了瞎子。先稳住后勤，再谈清巢。”</dda.quest.co_beacon_recovery.quote>
+  <dda.quest.co_beacon_recovery.obj.outpost>停靠一座普通前哨站</dda.quest.co_beacon_recovery.obj.outpost>
+  <dda.quest.co_beacon_recovery.obj.steel>交付抢修用钢材</dda.quest.co_beacon_recovery.obj.steel>
+  <dda.quest.co_beacon_recovery.obj.lead_ammo>交付铅制复装弹药箱</dda.quest.co_beacon_recovery.obj.lead_ammo>
+  <dda.quest.co_beacon_recovery.location>任意普通前哨站</dda.quest.co_beacon_recovery.location>
+
+  <dda.quest.co_ironjaw_bounty.title>“铁颚”的过路税</dda.quest.co_ironjaw_bounty.title>
+  <dda.quest.co_ironjaw_bounty.desc>情况比预想的麻烦。一个绰号“铁颚”的前阿尔伯利特矿业保安队长，正在把海脊上的散兵海盗整合成有组织的劫掠同盟——更反常的是，原本只端着二战老枪的匪徒，最近竟装备上了成批钢制步枪与防弹插板。替联盟清除十名海盗精锐，并带回一块五级金属插板供军情处核查来源。</dda.quest.co_ironjaw_bounty.desc>
+  <dda.quest.co_ironjaw_bounty.quote>“一个矿业保安出身的逃犯，哪来的成箱制式步枪和防弹板？清干净，把货扣下来。”</dda.quest.co_ironjaw_bounty.quote>
+  <dda.quest.co_ironjaw_bounty.obj.pirates>击败海盗武装人员</dda.quest.co_ironjaw_bounty.obj.pirates>
+  <dda.quest.co_ironjaw_bounty.obj.plate>交付 5 级金属插板样本</dda.quest.co_ironjaw_bounty.obj.plate>
+
+  <dda.quest.co_latte_perimeter.title>莱特城外围稳控</dda.quest.co_latte_perimeter.title>
+  <dda.quest.co_latte_perimeter.desc>各位，小打小闹结束了。分离主义正规军已经渗透进海脊的通用标准城市，包括泰勒·莱特当年亲自设计的示范城模块。他们不是乌合之众，装备有全套插板与重火力。进入交战区，肃清六名分离主义武装人员后通过加密频道复命。顺带提醒：外围对接口挂着的那座灰壳子接驳舱，上面交代过不许军方人员去碰，你们自己心里有数就行。</dda.quest.co_latte_perimeter.desc>
+  <dda.quest.co_latte_perimeter.quote>“泰勒·莱特修标准城是为了让人类体面活下去，不是给分离分子当交叉火力碉堡用的。”</dda.quest.co_latte_perimeter.quote>
+  <dda.quest.co_latte_perimeter.obj.zone>抵达任意交战区</dda.quest.co_latte_perimeter.obj.zone>
+  <dda.quest.co_latte_perimeter.obj.seps>击败分离主义士兵</dda.quest.co_latte_perimeter.obj.seps>
+  <dda.quest.co_latte_perimeter.location>任意交战区</dda.quest.co_latte_perimeter.location>
+
+  <dda.quest.co_kaitenburg_line.title>凯腾堡补给线</dda.quest.co_kaitenburg_line.title>
+  <dda.quest.co_kaitenburg_line.desc>凯腾堡中继站作为高原航线咽喉，近两个月已被分离主义夺走两次。这一次他们甚至截获了站内保险箱的加密硬盘。我需要贵船队在交战区清除十名分离主义主力，并亲自调拨两箱钛制复装弹支援联盟夺回航线。作为回报，我从军需库特批一套 Tactec 插板胸挂拨给你们。</dda.quest.co_kaitenburg_line.desc>
+  <dda.quest.co_kaitenburg_line.quote>“凯腾堡丢了两次，我们不能再丢第三次。把分离主力顶出航线中心。”</dda.quest.co_kaitenburg_line.quote>
+  <dda.quest.co_kaitenburg_line.obj.seps>击败分离主义士兵</dda.quest.co_kaitenburg_line.obj.seps>
+  <dda.quest.co_kaitenburg_line.obj.tit_ammo>交付钛制复装弹药箱</dda.quest.co_kaitenburg_line.obj.tit_ammo>
+
+  <dda.quest.co_beixun_supply.title>“备汛”优先配发</dda.quest.co_beixun_supply.title>
+  <dda.quest.co_beixun_supply.desc>船长，接下来的单子属于战区一级保密后勤调度。远港建造厂已经奉命暂停全部民用艇龙骨工期，二、三号车间全面转产钨刚弹芯与重型插板，目前前线原料周转存在缺口。我需要贵船队调拨四份精炼钨与一箱刚素复装弹，亲自送交我处入库。提醒一句：签收单右上角加盖的红章字样不属于外包单位的知情范围，不要向任何中立港口或分离派联络人提及本次货单。</dda.quest.co_beixun_supply.desc>
+  <dda.quest.co_beixun_supply.quote>【远港调度令 #409 · 加急事由：[备汛·最高优先级]】（背面圆珠笔涂鸦：“水底三千米，备哪门子的汛？！”）</dda.quest.co_beixun_supply.quote>
+  <dda.quest.co_beixun_supply.obj.tungsten>交付精炼钨</dda.quest.co_beixun_supply.obj.tungsten>
+  <dda.quest.co_beixun_supply.obj.phy_ammo>交付刚素制复装弹药箱</dda.quest.co_beixun_supply.obj.phy_ammo>
+
+  <dda.quest.co_mining_chokepoint.title>阿尔伯利特封锁令</dda.quest.co_mining_chokepoint.title>
+  <dda.quest.co_mining_chokepoint.desc>无光海原的阿尔伯利特矿业中心已全面戒严。那座矿场掌握着木卫二最重要的深渊钨矿产线，分离主义正不惜代价试图抢占上层长廊与升降梯。请巡航至一座矿业前哨并清剿十二名分离主义精锐。至于军舰为何同时封死了矿区深处的 14 号测井——服从合同条款即可，好奇心在深海里是最短命的奢侈品。</dda.quest.co_mining_chokepoint.desc>
+  <dda.quest.co_mining_chokepoint.quote>“阿尔伯利特的钨脉决定了谁能撑过下一个十年。至于 14 号井封舱的理由——不在你的权限内。”</dda.quest.co_mining_chokepoint.quote>
+  <dda.quest.co_mining_chokepoint.obj.mine>停靠一座矿业前哨</dda.quest.co_mining_chokepoint.obj.mine>
+  <dda.quest.co_mining_chokepoint.obj.seps>击败分离主义士兵</dda.quest.co_mining_chokepoint.obj.seps>
+  <dda.quest.co_mining_chokepoint.location>任意矿业前哨</dda.quest.co_mining_chokepoint.location>
+
+  <dda.quest.co_grizzlies_wall.title>砸碎铁幕</dda.quest.co_grizzlies_wall.title>
+  <dda.quest.co_grizzlies_wall.desc>船长，这是联盟战区能开出的最高等级外包悬赏。分离主义把王牌重装部队“灰熊”推进了渊洋要冲，他们的主宰与机枪堡垒已连续击溃两支联盟增援队。总部要求立刻重创灰熊编制：击毙八名灰熊重装兵，并上交一块八级刚素金属板供防护研究所评估破甲阈值。记住，绝不能让他们把渊洋封锁线炸开。</dda.quest.co_grizzlies_wall.desc>
+  <dda.quest.co_grizzlies_wall.quote>“灰熊大尉占着渊洋口不肯退。不管他们从 14 号矿井底下看到了什么，绝不能让他们把通道炸开。”</dda.quest.co_grizzlies_wall.quote>
+  <dda.quest.co_grizzlies_wall.obj.grizzlies>击败灰熊重装旅成员</dda.quest.co_grizzlies_wall.obj.grizzlies>
+  <dda.quest.co_grizzlies_wall.obj.plate8>交付 8 级金属插板（刚素板）</dda.quest.co_grizzlies_wall.obj.plate8>
+
+  <!-- ==================== 政委 娜塔莉亚 · 分离前线 (8) ==================== -->
+  <dda.quest.sp_raider_bounty.title>敌后袭扰</dda.quest.sp_raider_bounty.title>
+  <dda.quest.sp_raider_bounty.desc>同志，联盟封锁艇卡得越紧，我们越要在他们眼皮底下放血。不管你在哪座交战区撞上联盟正规军，干掉五个后直接用加密电台找我结账，马克和声望绝不克扣。</dda.quest.sp_raider_bounty.desc>
+  <dda.quest.sp_raider_bounty.obj.coalition>击败联盟军士兵</dda.quest.sp_raider_bounty.obj.coalition>
+
+  <dda.quest.sp_break_embargo.title>打破配额封锁</dda.quest.sp_break_embargo.title>
+  <dda.quest.sp_break_embargo.desc>船长，欢迎停靠真正属于木卫二人的哨站。联盟嘴上喊着“反恐管制”，背地里把钨矿、火药和船坞配额全锁进自己口袋，逼着底层矿工拿高价买劣质弹。如果我们想活着走出这片冰盖，第一步就是打破他们的弹药垄断。带三份精炼硝石和三份精炼硫磺交给我，咱们把第一批自造火药压出来。</dda.quest.sp_break_embargo.desc>
+  <dda.quest.sp_break_embargo.quote>“联盟管我们叫叛军，可这冰盖底下每一米管道都是矿工拿命焊出来的。”</dda.quest.sp_break_embargo.quote>
+  <dda.quest.sp_break_embargo.obj.saltpeter>交付精炼硝石</dda.quest.sp_break_embargo.obj.saltpeter>
+  <dda.quest.sp_break_embargo.obj.sulfur>交付精炼硫磺</dda.quest.sp_break_embargo.obj.sulfur>
+
+  <dda.quest.sp_underground_reloading.title>地下压弹点</dda.quest.sp_underground_reloading.title>
+  <dda.quest.sp_underground_reloading.desc>干得好，同志！火药有了，接下来得把矿洞里的地下复装点转起来。远港建造厂的产线被联盟锁死了，我们靠老船厂退下来的技师和矿工自己改装压弹机。请走一趟矿业前哨摸清巡逻空档，再带四块工程塑料与两箱铅制复装弹交过来，我回你一箱精工钛弹。</dda.quest.sp_underground_reloading.desc>
+  <dda.quest.sp_underground_reloading.quote>“远港的产线被联盟锁死了，我们就用矿洞里的旧机床自己压子弹。”</dda.quest.sp_underground_reloading.quote>
+  <dda.quest.sp_underground_reloading.obj.mine>停靠一座矿业前哨</dda.quest.sp_underground_reloading.obj.mine>
+  <dda.quest.sp_underground_reloading.obj.plastic>交付工程塑料</dda.quest.sp_underground_reloading.obj.plastic>
+  <dda.quest.sp_underground_reloading.obj.lead_ammo>交付铅制复装弹药箱</dda.quest.sp_underground_reloading.obj.lead_ammo>
+  <dda.quest.sp_underground_reloading.location>任意矿业前哨</dda.quest.sp_underground_reloading.location>
+
+  <dda.quest.sp_cut_blockade.title>拔除封锁哨</dda.quest.sp_cut_blockade.title>
+  <dda.quest.sp_cut_blockade.desc>同志，联盟军刚刚在高原咽喉建起新的武装封锁点，截停了我们两艘运药潜艇。这帮穿着制式战术背心的家伙装备精良，别拿对付海盗的轻慢心态去碰他们。进战区敲掉八名联盟正规军，打通航线后直接电台报捷。</dda.quest.sp_cut_blockade.desc>
+  <dda.quest.sp_cut_blockade.quote>“他们把民用船坞全改成了弹药厂，却连一颗平价子弹都不肯卖给独立船队。”</dda.quest.sp_cut_blockade.quote>
+  <dda.quest.sp_cut_blockade.obj.coalition>击败联盟军士兵</dda.quest.sp_cut_blockade.obj.coalition>
+
+  <dda.quest.sp_frozen_staging.title>冰封洞穴屯兵</dda.quest.sp_frozen_staging.title>
+  <dda.quest.sp_frozen_staging.desc>大尉在极寒冰窟里找到一处天然能屏蔽联盟声呐的旧科考洞穴，我们正把反攻远港的突击队悄悄集结在那里。可低温水域和狭小巷战让伤亡率飙升，前线极缺创伤包和防破片插板。跑一趟交战区核验外围通路，再把两个创伤急救包与一块六级钢板交给我，我拿灰熊专属急救背包跟你换。</dda.quest.sp_frozen_staging.desc>
+  <dda.quest.sp_frozen_staging.quote>“零下水域能挡住联盟声呐，可也冻坏了不少小伙子的手。把创伤包送进去，下一仗会很惨。”</dda.quest.sp_frozen_staging.quote>
+  <dda.quest.sp_frozen_staging.obj.zone>抵达任意交战区</dda.quest.sp_frozen_staging.obj.zone>
+  <dda.quest.sp_frozen_staging.obj.trauma>交付创伤急救包</dda.quest.sp_frozen_staging.obj.trauma>
+  <dda.quest.sp_frozen_staging.obj.plate6>交付 6 级金属插板（45号钢）</dda.quest.sp_frozen_staging.obj.plate6>
+  <dda.quest.sp_frozen_staging.location>任意交战区</dda.quest.sp_frozen_staging.location>
+
+  <dda.quest.sp_ghost_traces.title>死寂的哨站</dda.quest.sp_ghost_traces.title>
+  <dda.quest.sp_ghost_traces.desc>船长，出大事了。无光海原边上那座对我们至关重要的中继站昨晚彻底断联——侦察艇靠近时站内灯光全灭，没有墙体破口，没有求救录音，热成像回放里整条过道白茫茫一片，可里面的守军和援军已经全灭。能把一场屠杀干得这么安静的，只有联盟见不得光的黑手套：GHOST 幽灵小队。进交战区先撕开他们的防线，击毙三名幽灵成员。</dda.quest.sp_ghost_traces.desc>
+  <dda.quest.sp_ghost_traces.quote>“没有求救信号，没有墙体破口，热成像里整条走廊空无一人——那是 GHOST 动手了。”</dda.quest.sp_ghost_traces.quote>
+  <dda.quest.sp_ghost_traces.obj.zone>抵达任意交战区</dda.quest.sp_ghost_traces.obj.zone>
+  <dda.quest.sp_ghost_traces.obj.ghosts>击败 GHOST 幽灵成员</dda.quest.sp_ghost_traces.obj.ghosts>
+  <dda.quest.sp_ghost_traces.location>任意交战区</dda.quest.sp_ghost_traces.location>
+
+  <dda.quest.sp_ghost_hunt.title>熄灯之后</dda.quest.sp_ghost_hunt.title>
+  <dda.quest.sp_ghost_hunt.desc>同志，我就不跟你绕弯子了。GHOST 之所以敢在断电后单方面屠杀正规军，靠的正是全员腰上挂着的那台热成像干扰器——仗着熄灯欺负瞎子。去把那批幽灵精锐再清理六个，顺手给我带回一台他们身上的热成像干扰器。大尉说了，就算联盟加了活体密钥锁撬不开，也得让兄弟们记住这群鬼的频段。</dda.quest.sp_ghost_hunt.desc>
+  <dda.quest.sp_ghost_hunt.quote>“灯一灭，热成像里什么都看不见？那就拿大口径和曳光弹把整条走廊烧亮！”</dda.quest.sp_ghost_hunt.quote>
+  <dda.quest.sp_ghost_hunt.obj.ghosts>击败 GHOST 幽灵成员</dda.quest.sp_ghost_hunt.obj.ghosts>
+  <dda.quest.sp_ghost_hunt.obj.jammer>交付缴获的热成像干扰器</dda.quest.sp_ghost_hunt.obj.jammer>
+
+  <dda.quest.sp_blackout_truth.title>14 号测井的铁罐</dda.quest.sp_blackout_truth.title>
+  <dda.quest.sp_blackout_truth.desc>你能活着提着幽灵的干扰器回来，配得上听大尉醉后才肯说的一段旧账。四年前“黑灯之夜”那天，我们热成像里一片空白，以为走廊里全是开了屏蔽仪的幽灵，大尉直接砸碎目镜喊人拿燃烧瓶把通道烧亮——可火光炸开那一刻，连幽灵自己都在往角落里狂泼铝热剂。站在热成像盲区里的，根本不是活人，而是从 14 号矿井捞上来的三个穿着旧外骨骼、脑袋已烂却还在扣扳机的“死人”。同志，联盟封锁渊洋根本不是怕我们。去一趟交战区，备齐四块钨刚和一块八级陶瓷板，这冰底下的大潮快压不住了。</dda.quest.sp_blackout_truth.desc>
+  <dda.quest.sp_blackout_truth.quote>“火光炸开那一刻，连幽灵都在发抖……同志，备好伏特加和钨刚弹吧。”</dda.quest.sp_blackout_truth.quote>
+  <dda.quest.sp_blackout_truth.obj.zone>抵达任意交战区</dda.quest.sp_blackout_truth.obj.zone>
+  <dda.quest.sp_blackout_truth.obj.tungsten_phy>交付钨刚</dda.quest.sp_blackout_truth.obj.tungsten_phy>
+  <dda.quest.sp_blackout_truth.obj.plate8>交付 8 级陶瓷插板（碳化硼）</dda.quest.sp_blackout_truth.obj.plate8>
+  <dda.quest.sp_blackout_truth.location>任意交战区</dda.quest.sp_blackout_truth.location>
+
+  <!-- ==================== 马库斯·哈兰德博士 · 防护研究所 (7) ==================== -->
+  <dda.quest.res_bio_bounty.title>生物活性采样</dda.quest.res_bio_bounty.title>
+  <dda.quest.res_bio_bounty.desc>样本提供者，防护研究所需要持续监测各海域画皮寄生体的活跃度曲线。清除四名画皮类目标并回传击杀遥测数据即可结算，此项委托长期开放。</dda.quest.res_bio_bounty.desc>
+  <dda.quest.res_bio_bounty.obj.husks>击败画皮类敌人</dda.quest.res_bio_bounty.obj.husks>
+
+  <dda.quest.res_radio_rumor.title>木卫二睡前故事</dda.quest.res_radio_rumor.title>
+  <dda.quest.res_radio_rumor.desc>受托人，最近“木卫二广播电台”那个三流主播又在频段里大肆炒作废弃信标站里的“捕蟹人”怪谈。愚昧的民间传闻总是掩盖着有趣的生物学变量。替我清理六只爬行者与三名画皮感染者，顺便让我看看那些信标站里究竟传出了什么怪声。</dda.quest.res_radio_rumor.desc>
+  <dda.quest.res_radio_rumor.quote>“捕蟹人并不存在；在木卫二听见怪声，画皮寄生体变异的可能性高出四个数量级。”</dda.quest.res_radio_rumor.quote>
+  <dda.quest.res_radio_rumor.obj.crawlers>击败爬行者</dda.quest.res_radio_rumor.obj.crawlers>
+  <dda.quest.res_radio_rumor.obj.husks>击败画皮类敌人</dda.quest.res_radio_rumor.obj.husks>
+
+  <dda.quest.res_husk_beacon.title>失联的 4 号巡逻班</dda.quest.res_husk_beacon.title>
+  <dda.quest.res_husk_beacon.desc>你的上一份遥测读数证实了我的猜想。我们在失联信标站回收的防弹插板上辨认出了划痕编号——那根本不是什么深海野兽，而是上周失踪的 4 号巡逻班成员。寄生体顶裂了他们的下颌，却没有破坏他们握持步枪的肌群记忆。请再清除六名画皮目标并停靠一座科研站同步数据，我奖你一枚独狼定位器升级。</dda.quest.res_husk_beacon.desc>
+  <dda.quest.res_husk_beacon.quote>“那块划伤的陶瓷插板属于 4 号班老马。画皮寄生了他们，却没让他们松开护木。”</dda.quest.res_husk_beacon.quote>
+  <dda.quest.res_husk_beacon.obj.husks>击败画皮类敌人</dda.quest.res_husk_beacon.obj.husks>
+  <dda.quest.res_husk_beacon.obj.research>停靠一座科研前哨</dda.quest.res_husk_beacon.obj.research>
+  <dda.quest.res_husk_beacon.location>任意科研前哨</dda.quest.res_husk_beacon.location>
+
+  <dda.quest.res_tungsten_sample.title>深渊硬度极限</dda.quest.res_tungsten_sample.title>
+  <dda.quest.res_tungsten_sample.desc>谈完生物样本，来聊聊真正改变木卫二战争规则的东西：深渊钨矿。仅在无光海原以深才稳定析出的高密度矿脉，一旦与刚素融合为“钨刚”，其抗侵彻与穿甲指标便胜过钻石。给我送来四块未经精炼的深渊钨矿，我换你两份精炼钨，并把你纳入研究所高级外包名录。</dda.quest.res_tungsten_sample.desc>
+  <dda.quest.res_tungsten_sample.quote>“硬度胜过钻石，也比任何和平条约都管用。把原矿放下，别碰台面上的培养皿。”</dda.quest.res_tungsten_sample.quote>
+  <dda.quest.res_tungsten_sample.obj.ore>交付深渊钨矿</dda.quest.res_tungsten_sample.obj.ore>
+
+  <dda.quest.res_husk_crabman.title>无体温换弹</dda.quest.res_husk_crabman.title>
+  <dda.quest.res_husk_crabman.desc>令人着迷的异常。你知道军用热成像瞄具天生无法捕捉画皮类目标——它们没有正常体温。而昨晚一位被困战地医生的残缺语音记录显示，身披陶瓷插板的武装感染体在中弹后，竟然主动缩回铁箱掩体后面完成了标准换弹动作。再清理十名画皮目标，并交给我一块六级碳化硅陶瓷板做弹道模拟。若未来深渊大潮把这批东西卷向浅层，水下无衰减弹头或许能救你一命。</dda.quest.res_husk_crabman.desc>
+  <dda.quest.res_husk_crabman.quote>“热成像对画皮天然失效——更迷人的是，弹壳分布证明受寄生体完成了两次标准换弹。”</dda.quest.res_husk_crabman.quote>
+  <dda.quest.res_husk_crabman.obj.husks>击败画皮类敌人</dda.quest.res_husk_crabman.obj.husks>
+  <dda.quest.res_husk_crabman.obj.plate6>交付 6 级陶瓷插板（碳化硅）</dda.quest.res_husk_crabman.obj.plate6>
+
+  <dda.quest.res_neural_drift.title>低频波与耳鸣</dda.quest.res_neural_drift.title>
+  <dda.quest.res_neural_drift.desc>受托人，头盔内的神经调整芯片能让普通射手在一秒内复现老兵三秒的肌肉记忆。至于部分前线人员反映的耳鸣、梦魇与低频杂音？相比被钨刚弹掀开天灵盖，这点代价微不足道。不过近来渊洋底层潮汐波动剧烈，我需要两块钨刚与一块八级刚素板校准屏蔽罩，酬劳是一枚友谊护盾基础升级。</dda.quest.res_neural_drift.desc>
+  <dda.quest.res_neural_drift.quote>“相比被 7.62 钨刚弹打穿面罩，一点轻微的神经耳鸣和梦魇微不足道。”</dda.quest.res_neural_drift.quote>
+  <dda.quest.res_neural_drift.obj.tungsten_phy>交付钨刚</dda.quest.res_neural_drift.obj.tungsten_phy>
+  <dda.quest.res_neural_drift.obj.plate8>交付 8 级金属插板（刚素板）</dda.quest.res_neural_drift.obj.plate8>
+
+  <dda.quest.res_chip_recall.title>第 7 批静默回收</dda.quest.res_chip_recall.title>
+  <dda.quest.res_chip_recall.desc>受托人，你的交付效率令人满意，所以我决定把一项未经登记的私下核查交给你。此前我向联盟高层递交了第 7 批神经调整芯片的紧急召回申请——在模拟深渊低频潮汐波的实验舱内，一名已宣告脑死亡的测试体在断电四十秒后，被残余脉冲驱动完成了抬枪并连扣三次扳机。高层驳回了召回，只派 GHOST 去销毁样本。更荒唐的是，前线监测阵上周竟在热液废土录到了未授权的全编队热成像屏蔽频谱。帮我补齐一台干扰器实物与两份钨刚枪械零件，我需要做最后一次交叉比对。</dda.quest.res_chip_recall.desc>
+  <dda.quest.res_chip_recall.quote>“批复红章写得很简洁：前线急缺神经模块，压下报告。至于热液废土那边是谁绕过了我的活体密钥……真令人好奇。”</dda.quest.res_chip_recall.quote>
+  <dda.quest.res_chip_recall.obj.jammer>交付缴获的热成像干扰器</dda.quest.res_chip_recall.obj.jammer>
+  <dda.quest.res_chip_recall.obj.parts>交付钨刚枪械零件</dda.quest.res_chip_recall.obj.parts>
+
+  <!-- ==================== D.D.A. 轮值对接员 · 幕后黑箱 (7) ==================== -->
+  <dda.quest.dda_field_trial.title>外围战地实测</dda.quest.dda_field_trial.title>
+  <dda.quest.dda_field_trial.desc>老板，咱们小作坊人手紧、买不起官方靶场，只好请路过的狠人帮忙做点战地实测咯！不管对面是海盗、联盟还是分离，进交战区放倒八个武装目标，把战斗数据回传给接驳舱终端就行。酬金和铜制空尖弹箱远程现结，想刷几回刷几回！</dda.quest.dda_field_trial.desc>
+  <dda.quest.dda_field_trial.obj.hostiles>在战区击败武装敌人</dda.quest.dda_field_trial.obj.hostiles>
+
+  <dda.quest.dda_route_slip.title>刚游过封锁线</dda.quest.dda_route_slip.title>
+  <dda.quest.dda_route_slip.desc>哟，船长！呼……累死我了，刚从 103 船厂外围换班游过来，靴子里全是凉水。啥？你说那条航道这三天全被联盟水雷和巡逻艇锁死了？哈哈哈，哪有的事，熟门熟路绕个弯就过来了嘛！闲话少说，去一趟交战区顺手清掉六个海盗，把外围线路帮我压压场子，一箱钛弹直接打到你船上。</dda.quest.dda_route_slip.desc>
+  <dda.quest.dda_route_slip.quote>“刚从 103 船厂外围换班游过来靴子还湿着——水雷封锁线？哦，绕着走就行嘛。”</dda.quest.dda_route_slip.quote>
+  <dda.quest.dda_route_slip.obj.zone>抵达任意交战区</dda.quest.dda_route_slip.obj.zone>
+  <dda.quest.dda_route_slip.obj.pirates>击败海盗武装人员</dda.quest.dda_route_slip.obj.pirates>
+  <dda.quest.dda_route_slip.location>任意交战区</dda.quest.dda_route_slip.location>
+
+  <dda.quest.dda_tide_gauge.title>无名水流读数</dda.quest.dda_tide_gauge.title>
+  <dda.quest.dda_tide_gauge.desc>船长，下趟跑高原顺路帮个小忙呗。我们老板最近迷上了水文气象，非要我收集矿站和交战区外围的深层底流读数。你进一座矿业前哨、再摸一趟交战区，潜艇传感器会自动把涌流斜率抄回终端。别问老板看水文图干嘛——听说最近无光海原底下的水流曲线，跟十七年前冲垮三座深渊站那回挺像的，怪有意思的。</dda.quest.dda_tide_gauge.desc>
+  <dda.quest.dda_tide_gauge.quote>“老板说最近底层涌流斜率跟十七年前挺像——反正我一打工的看不懂，抄回来领钱就行。”</dda.quest.dda_tide_gauge.quote>
+  <dda.quest.dda_tide_gauge.obj.mine>停靠一座矿业前哨</dda.quest.dda_tide_gauge.obj.mine>
+  <dda.quest.dda_tide_gauge.obj.zone>抵达任意交战区</dda.quest.dda_tide_gauge.obj.zone>
+  <dda.quest.dda_tide_gauge.location>矿业前哨与交战区</dda.quest.dda_tide_gauge.location>
+
+  <dda.quest.dda_ballistic_audit.title>匿名弹道校验</dda.quest.dda_ballistic_audit.title>
+  <dda.quest.dda_ballistic_audit.desc>老主顾，咱们小摊刚调好一批新配方，需要拿现役刚素复装弹和五级陶瓷插板做个对照校验。你直接从货舱拨一箱刚素弹加一块五级陶瓷板远程划转，我按加急价给你结算，再塞你一箱雷刚复装弹尝鲜。放心，绝对不是联盟偷工减料那种次品，箱底钢印锃亮着呢。</dda.quest.dda_ballistic_audit.desc>
+  <dda.quest.dda_ballistic_audit.quote>“别盯着箱底那串 0041 编号看啦，那是咱们小作坊流水号，顺手刻着玩的！”</dda.quest.dda_ballistic_audit.quote>
+  <dda.quest.dda_ballistic_audit.obj.phy_ammo>交付刚素制复装弹药箱</dda.quest.dda_ballistic_audit.obj.phy_ammo>
+  <dda.quest.dda_ballistic_audit.obj.plate5>交付 5 级陶瓷插板（高纯度氧化铝）</dda.quest.dda_ballistic_audit.obj.plate5>
+
+  <dda.quest.dda_deep_pressure.title>灰毛海狗</dda.quest.dda_deep_pressure.title>
+  <dda.quest.dda_deep_pressure.desc>老板，前面水域越来越黑了啊。听说今天值班的是“灰猎犬”那个面瘫，你进去之后可千万别背对着通风井……嗯？我刚才说什么了？没、没有啊，我是说外头那只灰毛海狗凶得很！咳，总之这单专门测你们在热成像盲区里的反应速度——干掉四个开启热成像屏蔽的高危目标，一箱钨刚复装弹归你。</dda.quest.dda_deep_pressure.desc>
+  <dda.quest.dda_deep_pressure.quote>“……打工人哪懂联盟幽灵的排班啊！我说的是灰毛海狗，赶紧干活领箱子吧！”</dda.quest.dda_deep_pressure.quote>
+  <dda.quest.dda_deep_pressure.obj.cloaked>击败开启热成像屏蔽的目标</dda.quest.dda_deep_pressure.obj.cloaked>
+
+  <dda.quest.dda_duplex_stress.title>双线抗压采样</dda.quest.dda_duplex_stress.title>
+  <dda.quest.dda_duplex_stress.desc>船长，到了渊洋这一层，普通巡逻兵的数据已经没有参考价值了。我们老板点名想看看——同一支独立船队，到底能不能同时扛住联盟最阴的渗透队和分离最硬的重甲队。别管谁占理、谁是叛军，给我同时交上三名 GHOST 幽灵和三名灰熊重装兵的实战交火采样，酬劳是一枚神射手神经调整芯片。</dda.quest.dda_duplex_stress.desc>
+  <dda.quest.dda_duplex_stress.quote>“联盟的鬼和分离的熊都挺能打的吧？帮我把两边的交火样本凑齐，这单绝对让你满意。”</dda.quest.dda_duplex_stress.quote>
+  <dda.quest.dda_duplex_stress.obj.ghosts>击败 GHOST 幽灵成员</dda.quest.dda_duplex_stress.obj.ghosts>
+  <dda.quest.dda_duplex_stress.obj.grizzlies>击败灰熊重装旅成员</dda.quest.dda_duplex_stress.obj.grizzlies>
+
+  <dda.quest.dda_tidal_list.title>猎潮前夜</dda.quest.dda_tidal_list.title>
+  <dda.quest.dda_tidal_list.desc>哟，老板！听说了吗，联盟那群装模作样的幽灵跟分离那帮重甲大熊，居然先后在你手里吃了瘪？厉害啊，咱们小作坊的实测数据榜这回直接让你刷爆了！最后一单轻松点：帮我备四块钨刚外加一箱贫铀复装弹，远程签收就行。别问小作坊要贫铀干嘛——最近热液废土下面水流怪得很，老听见冰壳咯吱响，老板说得提前囤点硬货压压惊。交完货直接拿金条，咱们后会有期！</dda.quest.dda_tidal_list.desc>
+  <dda.quest.dda_tidal_list.quote>“……目标船队先后击穿 GHOST 与灰熊防线，高强度脉冲干扰下未检出神经共振排异。样本移入《猎潮》终选名单，维持静默观测——【啪！】卧槽切错频段了！隔壁放广播剧呢，听不见听不见！”</dda.quest.dda_tidal_list.quote>
+  <dda.quest.dda_tidal_list.obj.tungsten_phy>交付钨刚</dda.quest.dda_tidal_list.obj.tungsten_phy>
+  <dda.quest.dda_tidal_list.obj.du_ammo>交付贫铀复装弹药箱</dda.quest.dda_tidal_list.obj.du_ammo>
 </infotexts>

@@ -7,7 +7,7 @@ static void Check(bool condition, string test)
 }
 string root = AppContext.BaseDirectory;
 var rules = QuestRules.Load(Path.Combine(root, "Quests"));
-Check(rules.Quests.Count == 5 && rules.Npcs.Count == 2, "shipped quest rules");
+Check(rules.Quests.Count == 48 && rules.Npcs.Count == 6, "shipped quest rules");
 var npcXml = XElement.Parse("<Npcs><Npc id='n' tags='chief' faction='coalition'/></Npcs>");
 static XElement QuestFile(string id, string requirements = "", string rewards = "<Rewards/>") =>
     XElement.Parse($"<Quests><Quest id='{id}' npc='n' category='chain'>{requirements}<Objectives><Custom id='x' target='x'/></Objectives>{rewards}</Quest></Quests>");
@@ -48,8 +48,10 @@ foreach (string amount in new[] { "0", "-101", "101", "1.5", "", "bad" })
 { Invalid(() => Reputation($"<Rewards><Reputation amount='{amount}'/></Rewards>"), "rep"); }
 Invalid(() => Reputation("<Rewards><Reputation/></Rewards>"), "rep");
 Invalid(() => Reputation("<Rewards reputation='2147483647'><Reputation amount='1'/></Rewards>"), "rep");
-Check(rules.Quests["manifest"].Requires.Contains("bulkhead") && rules.Quests["bulkhead"].Rewards.Unlock.Contains("soundings") &&
-    rules.Quests["manifest"].Rewards.Reputation["coalition"] == 3 && rules.Quests["manifest"].Rewards.Reputation["separatists"] == -2, "shipped faction contract");
+Check(rules.Quests["sp_underground_reloading"].Requires.Contains("sp_break_embargo") &&
+    rules.Quests["sp_break_embargo"].Rewards.Unlock.Contains("sp_underground_reloading") &&
+    rules.Quests["sp_break_embargo"].Rewards.Reputation["separatists"] == 4 &&
+    rules.Quests["sp_break_embargo"].Rewards.Reputation["coalition"] == -2, "shipped faction contract");
 Console.WriteLine("PASS split catalogs, cross-file references, diagnostics and signed faction merging");
 
 HashSet<string>? english = null;
@@ -64,16 +66,17 @@ foreach (string language in new[] { "English", "Chinese" })
     {
         Check(text.Title(q.Id) != q.Id && text.Field(q.Id, "desc") != "" && text.Npc(q.Npc, "role") != "", "text contract " + q.Id);
     }
-    var first = rules.Quests["bulkhead"];
-    pack.Remove("dda.quest.bulkhead.obj.plates");
-    Check(text.Title("missing") == "missing" && text.Field("missing", "desc") == "" && text.Field("watch", "location") == "", "optional fields");
-    Check(text.Field("samples", "quote") == "" && text.Field("watch", "quote") != "", "optional quote");
-    Check(text.Objective(first, first.Objectives[0]).Contains("ITEM/steel"), "localized delivery fallback");
+    var first = rules.Quests["gunsmith_plastic_test"];
+    pack.Remove("dda.quest.gunsmith_plastic_test.obj.plastic");
+    Check(text.Title("missing") == "missing" && text.Field("missing", "desc") == "" && text.Field("co_pirate_bounty", "location") == "", "optional fields");
+    Check(text.Field("typhoon_powder_stock", "quote") == "" && text.Field("co_pirate_patrol", "quote") != "", "optional quote");
+    Check(text.Objective(first, first.Objectives[0]).Contains("ITEM/engineeringplastic"), "localized delivery fallback");
 }
 Console.WriteLine("PASS bilingual rules, title/description/objective fallbacks and optional quote");
 
 var state = new QuestState();
-Quest start = rules.Quests["bulkhead"], next = rules.Quests["soundings"], watch = rules.Quests["watch"];
+Quest start = rules.Quests["gunsmith_plastic_test"], next = rules.Quests["gunsmith_titanium_parts"],
+    watch = rules.Quests["co_pirate_bounty"], arrival = rules.Quests["dda_route_slip"];
 bool Apply(Quest q, QuestAction action, bool npc = true) => state.Apply(rules, q, action, npc, _ => true);
 Check(!Apply(next, QuestAction.Accept) && !Apply(start, QuestAction.Accept, false), "accept gates");
 Check(Apply(start, QuestAction.Accept) && !Apply(start, QuestAction.Accept), "single acceptance");
@@ -85,36 +88,36 @@ int Take(string target, int remaining)
     state.Stock[target] = state.Stock.GetValueOrDefault(target) - taken;
     return taken;
 }
-var plates = start.Objectives.Single();
+var plastic = start.Objectives.Single();
 bool HandIn(Quest quest, string objective, bool atNpc = true) => state.Deliver(quest, objective, atNpc, Take);
-state.Stock["steel"] = 3;
-Check(!Apply(start, QuestAction.Submit) && state.Progress(start, plates) == 0, "stock alone cannot complete a legacy active objective");
-Check(!HandIn(start, plates.Id, false) && !HandIn(start, "unknown") && takeCalls == 0, "validate location and objective before taking anything");
-state.Stock["steel"] = 0;
-Check(!HandIn(start, plates.Id) && state.Progress(start, plates) == 0, "zero stock rejected");
-state.Stock["steel"] = 1;
-Check(HandIn(start, plates.Id) && state.Stock["steel"] == 0 && state.Progress(start, plates) == 1 && !Apply(start, QuestAction.Submit), "partial delivery");
+state.Stock["engineeringplastic"] = 4;
+Check(!Apply(start, QuestAction.Submit) && state.Progress(start, plastic) == 0, "stock alone cannot complete a legacy active objective");
+Check(!HandIn(start, plastic.Id, false) && !HandIn(start, "unknown") && takeCalls == 0, "validate location and objective before taking anything");
+state.Stock["engineeringplastic"] = 0;
+Check(!HandIn(start, plastic.Id) && state.Progress(start, plastic) == 0, "zero stock rejected");
+state.Stock["engineeringplastic"] = 1;
+Check(HandIn(start, plastic.Id) && state.Stock["engineeringplastic"] == 0 && state.Progress(start, plastic) == 1 && !Apply(start, QuestAction.Submit), "partial delivery");
 var partial = QuestState.Read(state.Write(true));
-Check(partial.Active[start.Id][plates.Id] == 1 && partial.Stock["steel"] == 0, "partial snapshot");
+Check(partial.Active[start.Id][plastic.Id] == 1 && partial.Stock["engineeringplastic"] == 0, "partial snapshot");
 state = QuestState.Read(state.Write());
-Check(state.Progress(start, plates) == 1 && state.Stock.Count == 0, "reload keeps delivered count independently of stock");
-state.Stock["steel"] = 5;
-Check(HandIn(start, plates.Id) && state.Stock["steel"] == 3 && state.Status(rules, start) == QuestStatus.Ready, "take exactly the remaining two");
+Check(state.Progress(start, plastic) == 1 && state.Stock.Count == 0, "reload keeps delivered count independently of stock");
+state.Stock["engineeringplastic"] = 6;
+Check(HandIn(start, plastic.Id) && state.Stock["engineeringplastic"] == 3 && state.Status(rules, start) == QuestStatus.Ready, "take exactly the remaining three");
 int callsAtReady = takeCalls;
-Check(!HandIn(start, plates.Id) && takeCalls == callsAtReady && !Apply(start, QuestAction.Submit, false), "duplicate hand-in and remote settlement rejected");
-Check(!state.Apply(rules, start, QuestAction.Submit, true, _ => false) && state.Progress(start, plates) == 3, "reward failure preserves delivery");
+Check(!HandIn(start, plastic.Id) && takeCalls == callsAtReady && !Apply(start, QuestAction.Submit, false), "duplicate hand-in and remote settlement rejected");
+Check(!state.Apply(rules, start, QuestAction.Submit, true, _ => false) && state.Progress(start, plastic) == 4, "reward failure preserves delivery");
 int marks = 0, reputation = 0, rewards = 0;
 bool Settle(Quest q)
 {
     marks += q.Rewards.Marks;
-    reputation += q.Rewards.Reputation["location"];
-    rewards += q.Rewards.Items.Single(i => i.Id == "saltpeter_powder").Count;
+    if (q.Rewards.Reputation.TryGetValue("coalition", out int rep)) { reputation += rep; }
+    rewards += q.Rewards.Items.Where(i => i.Id == "deep_plate_carrier").Sum(i => i.Count);
     return true;
 }
 Check(state.Apply(rules, start, QuestAction.Submit, true, Settle) && !state.Apply(rules, start, QuestAction.Submit, true, Settle), "settles once");
-Check(state.Stock["steel"] == 3 && takeCalls == callsAtReady && !HandIn(start, plates.Id) && marks == 320 && reputation == 1 && rewards == 2 && state.Trust["dispatch"] == 5, "settlement totals");
+Check(state.Stock["engineeringplastic"] == 3 && takeCalls == callsAtReady && !HandIn(start, plastic.Id) && marks == 600 && rewards == 1 && state.Trust["benzene"] == 3, "settlement totals");
 Check(state.Unlocked.Contains(next.Id) && !Apply(start, QuestAction.Accept) && Apply(next, QuestAction.Accept), "chain unlock");
-Check(Apply(watch, QuestAction.Accept) && state.Advance(rules, ObjectiveType.KillTag, x => x == "crawler", 2), "shared combat counter");
+Check(Apply(watch, QuestAction.Accept) && state.Advance(rules, ObjectiveType.KillTag, x => x == "dda_pirate", 2), "shared combat counter");
 state.Stock["steel"] = 10;
 state.LastPort = 3;
 string save = state.Write();
@@ -122,9 +125,10 @@ Check(QuestState.Read(state.Write(true)).Stock["steel"] == 10, "snapshot include
 state = QuestState.Read(save);
 Check(state.LastPort == 3 && state.Stock.Count == 0 && state.Write() == save && state.Progress(watch, watch.Objectives[0]) == 2, "persistent progress, transient stock");
 Check(Apply(watch, QuestAction.Abandon) && Apply(watch, QuestAction.Accept) && state.Progress(watch, watch.Objectives[0]) == 0, "abandon resets counters");
-Check(state.Advance(rules, ObjectiveType.KillTag, x => x == "crawler", 8) && !state.Advance(rules, ObjectiveType.KillTag, _ => true), "counter saturation");
-Check(Apply(watch, QuestAction.Submit, false) && Apply(watch, QuestAction.Accept), "remote repeatable");
-Check(state.Advance(rules, ObjectiveType.ReachLocation, x => x == "city") && Apply(next, QuestAction.Submit, false), "arrival and remote completion");
+Check(state.Advance(rules, ObjectiveType.KillTag, x => x == "dda_pirate", 8) && !state.Advance(rules, ObjectiveType.KillTag, _ => true), "counter saturation");
+Check(state.Apply(rules, watch, QuestAction.Submit, false, Settle) && reputation == 2 && Apply(watch, QuestAction.Accept), "remote repeatable");
+Check(Apply(arrival, QuestAction.Accept) && state.Advance(rules, ObjectiveType.ReachLocation, x => x == "deep_outpost_fight") &&
+    state.Advance(rules, ObjectiveType.KillTag, x => x == "dda_pirate", 6) && Apply(arrival, QuestAction.Submit, false), "arrival and remote completion");
 var extra = start with
 {
     Id = "extra", Remote = true,

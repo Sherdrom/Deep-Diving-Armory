@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <!-- 分离前线 · 政委 娜塔莉亚 (8) -->
+  <Quest id="sp_break_embargo" npc="natalia" category="main" repeatable="false" allowRemoteTurnIn="false">
+    <Objectives>
+      <Objective id="saltpeter" type="DeliverItem" target="deep_refine_saltpeter" count="3" />
+      <Objective id="sulfur" type="DeliverItem" target="deep_refine_sulfur" count="3" />
+    </Objectives>
+    <Rewards marks="850" trust="3" unlock="sp_underground_reloading">
+      <Reputation faction="separatists" amount="4" />
+      <Reputation faction="coalition" amount="-2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_raider_bounty" npc="natalia" category="bounty" repeatable="true" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="coalition" type="KillTag" target="dda_coalition" count="5" />
+    </Objectives>
+    <Rewards marks="900" trust="3">
+      <Reputation faction="separatists" amount="3" />
+      <Reputation faction="coalition" amount="-2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_underground_reloading" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="sp_break_embargo" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="mine" type="ReachLocation" target="mine" count="1" />
+      <Objective id="plastic" type="DeliverItem" target="engineeringplastic" count="4" />
+      <Objective id="lead_ammo" type="DeliverItem" target="deep_ammobox_lead" count="2" />
+    </Objectives>
+    <Rewards marks="1350" trust="3" unlock="sp_cut_blockade,sp_frozen_staging">
+      <Reputation faction="separatists" amount="4" />
+      <Reputation faction="coalition" amount="-3" />
+      <Item id="deep_ammobox_titanium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_cut_blockade" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="sp_underground_reloading" />
+      <RequireTrust npc="natalia" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="coalition" type="KillTag" target="dda_coalition" count="8" />
+    </Objectives>
+    <Rewards marks="2200" trust="5" unlock="sp_ghost_traces">
+      <Reputation faction="separatists" amount="6" />
+      <Reputation faction="coalition" amount="-5" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_frozen_staging" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="sp_underground_reloading" />
+      <RequireTrust npc="natalia" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="trauma" type="DeliverItem" target="deep_medical_kit_wound" count="2" />
+      <Objective id="plate6" type="DeliverItem" target="deep_plate_metal_6" count="1" />
+    </Objectives>
+    <Rewards marks="2800" trust="5" unlock="sp_ghost_traces">
+      <Reputation faction="separatists" amount="7" />
+      <Reputation faction="coalition" amount="-5" />
+      <Item id="deep_medical_kit_grizzly" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_ghost_traces" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="sp_cut_blockade" />
+      <RequireQuest id="sp_frozen_staging" />
+      <RequireTrust npc="natalia" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="ghosts" type="KillTag" target="dda_ghost" count="3" />
+    </Objectives>
+    <Rewards marks="3900" trust="6" unlock="sp_ghost_hunt">
+      <Reputation faction="separatists" amount="8" />
+      <Reputation faction="coalition" amount="-8" />
+      <Item id="deep_plate_ceramic_7" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_ghost_hunt" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="sp_ghost_traces" />
+      <RequireTrust npc="natalia" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="ghosts" type="KillTag" target="dda_ghost" count="6" />
+      <Objective id="jammer" type="DeliverItem" target="deep_thermal_interference" count="1" />
+    </Objectives>
+    <Rewards marks="5200" trust="6" unlock="sp_blackout_truth">
+      <Reputation faction="separatists" amount="12" />
+      <Reputation faction="coalition" amount="-12" />
+      <Item id="deep_ammobox_fulgurium_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="sp_blackout_truth" npc="natalia" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="sp_ghost_hunt" />
+      <RequireTrust npc="natalia" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="tungsten_phy" type="DeliverItem" target="deep_tungsten_phy" count="4" />
+      <Objective id="plate8" type="DeliverItem" target="deep_plate_ceramic_8" count="1" />
+    </Objectives>
+    <Rewards marks="6200" trust="6">
+      <Reputation faction="separatists" amount="10" />
+      <Reputation faction="coalition" amount="-8" />
+      <Item id="deep_plate_ceramic_10" count="1" />
+    </Rewards>
+  </Quest>
+</Quests>

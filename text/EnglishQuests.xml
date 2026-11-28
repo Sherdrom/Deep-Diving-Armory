@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <infotexts language="English" nowhitespace="false" translatedname="English">
+  <!-- UI Base Strings -->
   <dda.quest.ui.tab>NPC contracts</dda.quest.ui.tab>
   <dda.quest.ui.close>Close</dda.quest.ui.close>
   <dda.quest.ui.all>All</dda.quest.ui.all>
@@ -50,34 +51,337 @@
   <dda.quest.ui.obj.killtag>Defeat [target]</dda.quest.ui.obj.killtag>
   <dda.quest.ui.obj.reachlocation>Reach [target]</dda.quest.ui.obj.reachlocation>
   <dda.quest.ui.obj.custom>Complete [target]</dda.quest.ui.obj.custom>
-  <dda.quest.npc.dispatch.name>Station chief</dda.quest.npc.dispatch.name>
-  <dda.quest.npc.dispatch.role>Route dispatcher</dda.quest.npc.dispatch.role>
-  <dda.quest.npc.dispatch.faction>Station administration</dda.quest.npc.dispatch.faction>
-  <dda.quest.npc.dispatch.location>Outpost administration</dda.quest.npc.dispatch.location>
-  <dda.quest.npc.stores.name>Supply merchant</dda.quest.npc.stores.name>
-  <dda.quest.npc.stores.role>Quartermaster</dda.quest.npc.stores.role>
-  <dda.quest.npc.stores.faction>Station trading office</dda.quest.npc.stores.faction>
-  <dda.quest.npc.stores.location>Outpost shop</dda.quest.npc.stores.location>
-  <dda.quest.bulkhead.title>Bulkhead repairs</dda.quest.bulkhead.title>
-  <dda.quest.bulkhead.desc>The pump room bulkhead is leaking again. Bring steel to the chief and select Hand In on the material objective. You can deliver it in batches. Once all three pieces are in, select Turn in to claim your reward.</dda.quest.bulkhead.desc>
-  <dda.quest.bulkhead.quote>“Stop the leak first. The forms can wait.”</dda.quest.bulkhead.quote>
-  <dda.quest.bulkhead.obj.plates>Supply steel for the patch</dda.quest.bulkhead.obj.plates>
-  <dda.quest.soundings.title>City sounding report</dda.quest.soundings.title>
-  <dda.quest.soundings.desc>Enter a city port on a later leg. Its arrival stamp goes into the ship’s log, so you can file the report by radio.</dda.quest.soundings.desc>
-  <dda.quest.soundings.obj.port>Enter a city port</dda.quest.soundings.obj.port>
-  <dda.quest.soundings.location>Any city port</dda.quest.soundings.location>
-  <dda.quest.samples.title>Mineral samples</dda.quest.samples.title>
-  <dda.quest.samples.desc>The merchant needs two intact saltpeter samples for the stock ledger. Deliver them at an outpost shop. Further consignments are welcome.</dda.quest.samples.desc>
-  <dda.quest.samples.obj.ore>Deliver saltpeter mineral samples</dda.quest.samples.obj.ore>
-  <dda.quest.watch.title>Crawler watch</dda.quest.watch.title>
-  <dda.quest.watch.desc>A pack is closing on the shipping lane. Have the crew take down three crawlers, then claim the bounty by radio.</dda.quest.watch.desc>
-  <dda.quest.watch.quote>“Three fewer blips on sonar and I’ll sign.”</dda.quest.watch.quote>
-  <dda.quest.watch.obj.crawlers>Defeat crawlers with your crew</dda.quest.watch.obj.crawlers>
   <dda.quest.ui.turninpanel>Open the contracts panel to turn in</dda.quest.ui.turninpanel>
-  <dda.quest.faction.location>Local faction</dda.quest.faction.location>
+  <dda.quest.faction.location>Neutral &amp; local guilds</dda.quest.faction.location>
   <dda.quest.faction.coalition>Europa Coalition</dda.quest.faction.coalition>
   <dda.quest.faction.separatists>Jovian Separatists</dda.quest.faction.separatists>
-  <dda.quest.manifest.title>Priority steel shipment</dda.quest.manifest.title>
-  <dda.quest.manifest.desc>The Coalition has requisitioned steel promised to a Separatist dock. Deliver two pieces from ship stores and file the manifest by radio.</dda.quest.manifest.desc>
-  <dda.quest.manifest.obj.steel>Release the reserved steel</dda.quest.manifest.obj.steel>
+
+  <!-- 6 Core Publishers -->
+  <dda.quest.npc.peachhat.name>"Typhoon Emporium" Peachhat</dda.quest.npc.peachhat.name>
+  <dda.quest.npc.peachhat.role>Emporium proprietor</dda.quest.npc.peachhat.role>
+  <dda.quest.npc.peachhat.faction>Typhoon Mobile City</dda.quest.npc.peachhat.faction>
+  <dda.quest.npc.peachhat.location>Typhoon Mobile City · Emporium</dda.quest.npc.peachhat.location>
+
+  <dda.quest.npc.benzene.name>"Gunsmith" Benzene</dda.quest.npc.benzene.name>
+  <dda.quest.npc.benzene.role>Chief weaponsmith</dda.quest.npc.benzene.role>
+  <dda.quest.npc.benzene.faction>Independent Armory</dda.quest.npc.benzene.faction>
+  <dda.quest.npc.benzene.location>Armory &amp; gunsmith bench</dda.quest.npc.benzene.location>
+
+  <dda.quest.npc.sterling.name>Col. Eileen Sterling</dda.quest.npc.sterling.name>
+  <dda.quest.npc.sterling.role>Theater operations coordinator</dda.quest.npc.sterling.role>
+  <dda.quest.npc.sterling.faction>Europa Coalition</dda.quest.npc.sterling.faction>
+  <dda.quest.npc.sterling.location>Coalition outpost · Administration</dda.quest.npc.sterling.location>
+
+  <dda.quest.npc.natalia.name>Commissar Natalia</dda.quest.npc.natalia.name>
+  <dda.quest.npc.natalia.role>Frontline political commissar</dda.quest.npc.natalia.role>
+  <dda.quest.npc.natalia.faction>Jovian Separatists</dda.quest.npc.natalia.faction>
+  <dda.quest.npc.natalia.location>Separatist outpost · Command</dda.quest.npc.natalia.location>
+
+  <dda.quest.npc.harland.name>Dr. Marcus Harland</dda.quest.npc.harland.name>
+  <dda.quest.npc.harland.role>Defense Institute advisor</dda.quest.npc.harland.role>
+  <dda.quest.npc.harland.faction>Coalition Defense Institute</dda.quest.npc.harland.faction>
+  <dda.quest.npc.harland.location>Research outpost · Supply bay</dda.quest.npc.harland.location>
+
+  <dda.quest.npc.liaison.name>D.D.A. Rotating Liaison</dda.quest.npc.liaison.name>
+  <dda.quest.npc.liaison.role>Contract field observer</dda.quest.npc.liaison.role>
+  <dda.quest.npc.liaison.faction>Deep-Diving Armory (Unlisted)</dda.quest.npc.liaison.faction>
+  <dda.quest.npc.liaison.location>Outpost admin / External docking pod</dda.quest.npc.liaison.location>
+
+  <!-- ==================== Peachhat · Typhoon Emporium (8) ==================== -->
+  <dda.quest.typhoon_powder_stock.title>Primer &amp; Powder Stock</dda.quest.typhoon_powder_stock.title>
+  <dda.quest.typhoon_powder_stock.desc>Captain, the Cold Caverns have gone hot and even civilian haulers are hoarding lead rounds. My reloading stock behind the counter is scraping bottom. Next time you pass a mineral vein, chip off three saltpeter and three sulfur for Typhoon Emporium. Deliver in batches if you want—keep it dry and I will pay top marks plus a lead ammo box.</dda.quest.typhoon_powder_stock.desc>
+  <dda.quest.typhoon_powder_stock.obj.saltpeter>Deliver saltpeter mineral</dda.quest.typhoon_powder_stock.obj.saltpeter>
+  <dda.quest.typhoon_powder_stock.obj.sulfur>Deliver sulfur mineral</dda.quest.typhoon_powder_stock.obj.sulfur>
+
+  <dda.quest.typhoon_dock_run.title>Typhoon Berth Check-In</dda.quest.typhoon_dock_run.title>
+  <dda.quest.typhoon_dock_run.desc>New face on the lane? Welcome to a Typhoon-class mobile city—one of the few ports under the ice that checks your marks instead of your politics. Old Holm just dumped a pier repair requisition on my desk and we are short four steel bars. Dock at a Typhoon city and drop the steel at my counter; once we know you deliver, the real stock and rumors open up.</dda.quest.typhoon_dock_run.desc>
+  <dda.quest.typhoon_dock_run.quote>“Tie off and report to the counter. Typhoon asks no flags—only clean goods and good marks.”</dda.quest.typhoon_dock_run.quote>
+  <dda.quest.typhoon_dock_run.obj.typhoon>Dock at a Typhoon mobile city</dda.quest.typhoon_dock_run.obj.typhoon>
+  <dda.quest.typhoon_dock_run.obj.steel>Deliver structural steel</dda.quest.typhoon_dock_run.obj.steel>
+  <dda.quest.typhoon_dock_run.location>Typhoon Mobile City</dda.quest.typhoon_dock_run.location>
+
+  <dda.quest.typhoon_medical_shortage.title>Tourniquet Surge</dda.quest.typhoon_medical_shortage.title>
+  <dda.quest.typhoon_medical_shortage.desc>Regular, the Ridge lanes have turned nasty this week. Three ore haulers took ambushes at the junction and even the colony clinics are scrambling for gauze. Swing by a city port to check prices, then bring two small medical kits back to Typhoon Emporium. Down deep, half a roll of clean bandage trades better than whiskey.</dda.quest.typhoon_medical_shortage.desc>
+  <dda.quest.typhoon_medical_shortage.quote>“Three haulers caught ambushes past the Ridge last week. Bandages move faster than vodka now.”</dda.quest.typhoon_medical_shortage.quote>
+  <dda.quest.typhoon_medical_shortage.obj.city>Dock at any colony city</dda.quest.typhoon_medical_shortage.obj.city>
+  <dda.quest.typhoon_medical_shortage.obj.medkits>Deliver small medical kits</dda.quest.typhoon_medical_shortage.obj.medkits>
+  <dda.quest.typhoon_medical_shortage.location>Any colony city / Typhoon</dda.quest.typhoon_medical_shortage.location>
+
+  <dda.quest.typhoon_farport_backlog.title>Farport Supply Freeze</dda.quest.typhoon_farport_backlog.title>
+  <dda.quest.typhoon_farport_backlog.desc>Captain, something is off. Farport Construction Yard normally ships us fresh ammo crates and polymer casings like clockwork, yet they have missed two straight rotations. My runner came back saying military seals went up over the civilian slipways overnight. Regular buyers are breathing down my neck—spare one titanium ammo box and four engineering plastic, and I will throw in a copper RIP box on top.</dda.quest.typhoon_farport_backlog.desc>
+  <dda.quest.typhoon_farport_backlog.quote>“Farport froze every civilian order overnight. Even Typhoon Emporium is cannibalizing old crates.”</dda.quest.typhoon_farport_backlog.quote>
+  <dda.quest.typhoon_farport_backlog.obj.tit_ammo>Deliver titanium reloading ammo box</dda.quest.typhoon_farport_backlog.obj.tit_ammo>
+  <dda.quest.typhoon_farport_backlog.obj.plastic>Deliver engineering plastic</dda.quest.typhoon_farport_backlog.obj.plastic>
+
+  <dda.quest.typhoon_0041_crate.title>Unlisted Crate EU-0041</dda.quest.typhoon_0041_crate.title>
+  <dda.quest.typhoon_0041_crate.desc>Good timing, Captain—help me plug a hole in my physicorium ammo shelf. Since Farport dried up, a bizarre silent supplier has been dropping crates at the outer cargo airlock from transponder-off skiffs and settling automatically. Out of curiosity I ran the hull stamp EU-0041 through the trade registry and got a red error: that license has never existed on Europa. Whatever, quality speaks louder than paperwork. Bring me one physicorium reloading box.</dda.quest.typhoon_0041_crate.desc>
+  <dda.quest.typhoon_0041_crate.quote>“Stamped EU-0041, yet the registry swears it never existed—and it is cleaner than military surplus.”</dda.quest.typhoon_0041_crate.quote>
+  <dda.quest.typhoon_0041_crate.obj.phy_ammo>Deliver physicorium reloading ammo box</dda.quest.typhoon_0041_crate.obj.phy_ammo>
+
+  <dda.quest.typhoon_beacon_batteries.title>Mechanics Without Sonar</dda.quest.typhoon_beacon_batteries.title>
+  <dda.quest.typhoon_beacon_batteries.desc>Benzene told me you have been poking around Typhoon's rumors too. Funny coincidence—the port authority hired a few outside ballast contractors who spend like captains, buying up every high-output long-range beacon battery on my shelf without ever touching civilian sonar gear. Combine that with Old Holm running into ambushes right after anchoring, and it smells rotten. Swing by a mining outpost and supply two smoke grenades plus two impact grenades by radio.</dda.quest.typhoon_beacon_batteries.desc>
+  <dda.quest.typhoon_beacon_batteries.quote>“Buying long-range beacon cells by the crate without a single sonar unit—those contractors are not fixing ballast.”</dda.quest.typhoon_beacon_batteries.quote>
+  <dda.quest.typhoon_beacon_batteries.obj.mine>Dock at a mining outpost</dda.quest.typhoon_beacon_batteries.obj.mine>
+  <dda.quest.typhoon_beacon_batteries.obj.smoke>Deliver M18 smoke grenades</dda.quest.typhoon_beacon_batteries.obj.smoke>
+  <dda.quest.typhoon_beacon_batteries.obj.grenades>Deliver RGO impact grenades</dda.quest.typhoon_beacon_batteries.obj.grenades>
+  <dda.quest.typhoon_beacon_batteries.location>Any mining outpost</dda.quest.typhoon_beacon_batteries.location>
+
+  <dda.quest.typhoon_leak_trail.title>Locker Fourteen</dda.quest.typhoon_leak_trail.title>
+  <dda.quest.typhoon_leak_trail.desc>Caught them red-handed, Captain. Those outside contractors vanished overnight, leaving an oil-stained slip detailing Typhoon's ballast flush schedule transmitted over an old military hop-frequency—with payment routed to Locker 14 right here in my store. No wonder ambush teams keep intercepting Typhoon! Hit a contested zone, put down ten armed hostiles, and settle the Locker 14 ledger with one gold bar. There is a tungsten-physicorium box waiting for you.</dda.quest.typhoon_leak_trail.desc>
+  <dda.quest.typhoon_leak_trail.quote>“Locker 14's renter never showed back up… if Old Holm finds out, someone is leaving via torpedo tube.”</dda.quest.typhoon_leak_trail.quote>
+  <dda.quest.typhoon_leak_trail.obj.zone>Reach any combat zone</dda.quest.typhoon_leak_trail.obj.zone>
+  <dda.quest.typhoon_leak_trail.obj.raiders>Defeat armed hostiles</dda.quest.typhoon_leak_trail.obj.raiders>
+  <dda.quest.typhoon_leak_trail.obj.gold>Deliver a gold bar to settle the locker</dda.quest.typhoon_leak_trail.obj.gold>
+  <dda.quest.typhoon_leak_trail.location>Any combat zone</dda.quest.typhoon_leak_trail.location>
+
+  <dda.quest.typhoon_mk17_legacy.title>The MK17 Under the Counter</dda.quest.typhoon_mk17_legacy.title>
+  <dda.quest.typhoon_mk17_legacy.desc>Old friend, I have watched your crew carve its way from the Cold Caverns down to the Abyss. Truth be told, before I settled behind Typhoon's counter, I spent plenty of dives in black water with a rifle myself. Tucked under my counter is my personal MK17 battle rifle blueprint—scratched up, dependable, and wasted collecting dust here. Bring two tungsten-physicorium weapon parts and a fulgurium-physicorium ammo box, and take my old partner back down to the deep.</dda.quest.typhoon_mk17_legacy.desc>
+  <dda.quest.typhoon_mk17_legacy.quote>“Time to move, old friend—the abyss is waiting for us…”</dda.quest.typhoon_mk17_legacy.quote>
+  <dda.quest.typhoon_mk17_legacy.obj.parts>Deliver tungsten-physicorium weapon parts</dda.quest.typhoon_mk17_legacy.obj.parts>
+  <dda.quest.typhoon_mk17_legacy.obj.fulg_ammo>Deliver fulgurium-physicorium ammo box</dda.quest.typhoon_mk17_legacy.obj.fulg_ammo>
+
+  <!-- ==================== Benzene · Chief Gunsmith (9) ==================== -->
+  <dda.quest.gunsmith_scrap_plates.title>Bench Stock &amp; Scrap</dda.quest.gunsmith_scrap_plates.title>
+  <dda.quest.gunsmith_scrap_plates.desc>Pal, stop asking when the Gauss prototype behind my bench will be finished—I am short raw stock just to keep the jigs running. Bring three steel and two engineering plastic, and I will trade you a pressed Tier-4 iron plate. Do not hand me brittle seawater junk; I can tell by touch.</dda.quest.gunsmith_scrap_plates.desc>
+  <dda.quest.gunsmith_scrap_plates.obj.steel>Deliver steel</dda.quest.gunsmith_scrap_plates.obj.steel>
+  <dda.quest.gunsmith_scrap_plates.obj.plastic>Deliver engineering plastic</dda.quest.gunsmith_scrap_plates.obj.plastic>
+
+  <dda.quest.gunsmith_plastic_test.title>Watertight Polymer</dda.quest.gunsmith_plastic_test.title>
+  <dda.quest.gunsmith_plastic_test.desc>Know why early colonists refused to carry firearms inside a hull? Ricochets punched pressure bulkheads, and high-pressure brine seized gas blocks in two minutes flat. Modern rifles only survived Europa once corrosion-proof engineering plastic hit production. Bring four clean sheets so I can test swelling tolerances on a new handguard batch, and take a plate carrier on the house.</dda.quest.gunsmith_plastic_test.desc>
+  <dda.quest.gunsmith_plastic_test.quote>“At two thousand meters, a half-second jam gives a husk enough time to turn your ribs into a flute.”</dda.quest.gunsmith_plastic_test.quote>
+  <dda.quest.gunsmith_plastic_test.obj.plastic>Deliver engineering plastic</dda.quest.gunsmith_plastic_test.obj.plastic>
+
+  <dda.quest.gunsmith_titanium_parts.title>First Titanium Receivers</dda.quest.gunsmith_titanium_parts.title>
+  <dda.quest.gunsmith_titanium_parts.desc>Watching you haul pirate iron around gives me a headache. Those museum pieces are only good as clubs once sustained fire starts drifting your point of aim. If you plan on diving past the Ridge, switch to titanium-aluminum receivers. Source two titanium weapon parts and two Tier-4 metal plates for spall liners, and I will hand back a trued titanium barrel.</dda.quest.gunsmith_titanium_parts.desc>
+  <dda.quest.gunsmith_titanium_parts.quote>“Drop the museum iron. Swap in a titanium-aluminum receiver and your wrists will thank you.”</dda.quest.gunsmith_titanium_parts.quote>
+  <dda.quest.gunsmith_titanium_parts.obj.tit_parts>Deliver titanium weapon parts</dda.quest.gunsmith_titanium_parts.obj.tit_parts>
+  <dda.quest.gunsmith_titanium_parts.obj.plates>Deliver Tier-4 metal plates</dda.quest.gunsmith_titanium_parts.obj.plates>
+
+  <dda.quest.gunsmith_plate_bench.title>0.02mm Tolerance</dda.quest.gunsmith_plate_bench.title>
+  <dda.quest.gunsmith_plate_bench.desc>Craftsman, lend a hand. I just gauged a batch of black-market universal rails on my test box—chamfer tolerances held within 0.02 millimeters. Only one machine on Europa ever milled that clean: Farport's No. 3 precision lathe. Problem is, No. 3 was logged lost in a sinking during the 103 Shipyard transfer six years ago. Unless crawlers learned CNC machining, someone lied. Bring two Tier-5 metal plates and one Tier-5 ceramic plate for penetration checks.</dda.quest.gunsmith_plate_bench.desc>
+  <dda.quest.gunsmith_plate_bench.quote>“Only Farport's No. 3 lathe cuts chamfers this tight—and it was logged sunk at Shipyard 103 six years ago.”</dda.quest.gunsmith_plate_bench.quote>
+  <dda.quest.gunsmith_plate_bench.obj.metal5>Deliver Tier-5 metal plates</dda.quest.gunsmith_plate_bench.obj.metal5>
+  <dda.quest.gunsmith_plate_bench.obj.ceramic5>Deliver Tier-5 ceramic plate</dda.quest.gunsmith_plate_bench.obj.ceramic5>
+
+  <dda.quest.gunsmith_shield_stress.title>Ballistic Shield Stress Test</dda.quest.gunsmith_shield_stress.title>
+  <dda.quest.gunsmith_shield_stress.desc>Corridor CQB is getting brutal; eating spall with your sternum is a quick way to die. Mobile shields and reinforcement plates keep squads breathing. Bring two steel shield plates plus a Tier-6 steel plate and I will press you a titanium shield plate. Oh—some kid in a port-authority jacket stopped by last week asking to borrow an old military hop-frequency table to 'fix Typhoon ballast lamps.' Mention it to Peachhat next time you stop by.</dda.quest.gunsmith_shield_stress.desc>
+  <dda.quest.gunsmith_shield_stress.quote>“Some port-authority kid asked for a military hop-frequency table to 'fix ballast lamps.' Do I look naive?”</dda.quest.gunsmith_shield_stress.quote>
+  <dda.quest.gunsmith_shield_stress.obj.shield_steel>Deliver steel shield reinforcement plates</dda.quest.gunsmith_shield_stress.obj.shield_steel>
+  <dda.quest.gunsmith_shield_stress.obj.metal6>Deliver Tier-6 metal plate</dda.quest.gunsmith_shield_stress.obj.metal6>
+
+  <dda.quest.gunsmith_103_recon.title>The Unfinished Dugong</dda.quest.gunsmith_103_recon.title>
+  <dda.quest.gunsmith_103_recon.desc>That No. 3 lathe mystery is gnawing at me. Back when I worked New Iapetus Supersteel Shipyard—Yard 103—the war hit so fast we sealed the bay with a half-welded Dugong still sitting in the cradle. Now raiders use the ruins as an arms cache. Push into a combat zone and clear out eight pirates so my contacts can slip in and pull the old transfer logs.</dda.quest.gunsmith_103_recon.desc>
+  <dda.quest.gunsmith_103_recon.quote>“That Dugong's keel was still half-welded the day we evacuated. Now pirates stack rifles inside her ribs.”</dda.quest.gunsmith_103_recon.quote>
+  <dda.quest.gunsmith_103_recon.obj.zone>Reach any combat zone</dda.quest.gunsmith_103_recon.obj.zone>
+  <dda.quest.gunsmith_103_recon.obj.pirates>Defeat pirate combatants</dda.quest.gunsmith_103_recon.obj.pirates>
+  <dda.quest.gunsmith_103_recon.location>Any combat zone</dda.quest.gunsmith_103_recon.location>
+
+  <dda.quest.gunsmith_103_mold.title>Shipyard 103 Write-Off</dda.quest.gunsmith_103_mold.title>
+  <dda.quest.gunsmith_103_mold.desc>Got the old Yard 103 write-off ledger through a favor—and sure enough, it stinks. 'Lost in transit' is crossed out in black ink, and Quartermaster Zhou scribbled in pencil on the back that No. 3 lathe plus four reloading presses were craned out 48 hours before the supposed sinking by a shell outfit called Deep Logistics, carrying top-level clearance. Fine, we build our own. Bring two physicorium weapon parts and two Tier-7 plates and I will turn you a physicorium barrel.</dda.quest.gunsmith_103_mold.desc>
+  <dda.quest.gunsmith_103_mold.quote>“Zhou's pencil note on the back says No. 3 never sank—someone craned it out overnight under brass clearance.”</dda.quest.gunsmith_103_mold.quote>
+  <dda.quest.gunsmith_103_mold.obj.phy_parts>Deliver physicorium weapon parts</dda.quest.gunsmith_103_mold.obj.phy_parts>
+  <dda.quest.gunsmith_103_mold.obj.metal7>Deliver Tier-7 metal plates</dda.quest.gunsmith_103_mold.obj.metal7>
+
+  <dda.quest.gunsmith_tungsten_bore.title>Tungsten-Physicorium Rifling</dda.quest.gunsmith_tungsten_bore.title>
+  <dda.quest.gunsmith_tungsten_bore.desc>Now that you are running the Abyssal edge, plain physicorium is going to fall short. Refined tungsten alloyed with physicorium beats diamond on hardness—I snapped three carbide cutters just machining rails for the Gauss prototype behind me. Bring two tungsten-physicorium weapon parts and a physicorium shield plate, and I will forge you a top-grade tungsten-physicorium shield plate.</dda.quest.gunsmith_tungsten_bore.desc>
+  <dda.quest.gunsmith_tungsten_bore.quote>“Three cutters ruined for one rifled bore—worth every spark the moment it punches a Tier-10 plate.”</dda.quest.gunsmith_tungsten_bore.quote>
+  <dda.quest.gunsmith_tungsten_bore.obj.tun_parts>Deliver tungsten-physicorium weapon parts</dda.quest.gunsmith_tungsten_bore.obj.tun_parts>
+  <dda.quest.gunsmith_tungsten_bore.obj.shield_phy>Deliver physicorium shield reinforcement plate</dda.quest.gunsmith_tungsten_bore.obj.shield_phy>
+
+  <dda.quest.gunsmith_blackbox_check.title>The Sealed Black Box</dda.quest.gunsmith_blackbox_check.title>
+  <dda.quest.gunsmith_blackbox_check.desc>Pal, save the war news—I only care about one item: the thermal imaging jammer you pulled out of the Aphotic Plateau. The Coalition Defense Institute brags that their biometric lock makes captured units worthless bricks. I do not care about cracking their firmware; I want the shell open to inspect the board layout and solder joints. Put one intact unit on my bench—and if you torched the casing open, I am hitting you with my calipers.</dda.quest.gunsmith_blackbox_check.desc>
+  <dda.quest.gunsmith_blackbox_check.quote>“Institute seals on the casing, yet the jumper soldering inside… damn it, that is the exact handiwork of the old Yard 103 crew who vanished six years ago.”</dda.quest.gunsmith_blackbox_check.quote>
+  <dda.quest.gunsmith_blackbox_check.obj.jammer>Deliver captured thermal imaging jammer</dda.quest.gunsmith_blackbox_check.obj.jammer>
+
+  <!-- ==================== Col. Eileen Sterling · Coalition (9) ==================== -->
+  <dda.quest.co_pirate_bounty.title>Lane Sweeper</dda.quest.co_pirate_bounty.title>
+  <dda.quest.co_pirate_bounty.desc>Contractor, Coalition anti-piracy funds remain open. Armed raiders encountered along shipping lanes or contested outposts are cleared for lethal engagement. Eliminate six pirate combatants and report via encrypted radio for automatic payout.</dda.quest.co_pirate_bounty.desc>
+  <dda.quest.co_pirate_bounty.obj.pirates>Defeat pirate combatants</dda.quest.co_pirate_bounty.obj.pirates>
+
+  <dda.quest.co_pirate_patrol.title>Cold Caverns Patrol</dda.quest.co_pirate_patrol.title>
+  <dda.quest.co_pirate_patrol.desc>Captain, this is Theater Coordinator Colonel Eileen Sterling. Piracy in the Cold Caverns has disrupted scheduled convoys, and the Coalition is contracting reliable independent crews to restore order. Prove your discipline first: neutralize five pirate combatants and confirm over radio. One standing directive—do not use submarine turrets to wreck reusable stations, or your payout is forfeit.</dda.quest.co_pirate_patrol.desc>
+  <dda.quest.co_pirate_patrol.quote>“The Coalition pays you marks to reclaim intact stations, not to shell million-mark reactors into scrap.”</dda.quest.co_pirate_patrol.quote>
+  <dda.quest.co_pirate_patrol.obj.pirates>Defeat pirate combatants</dda.quest.co_pirate_patrol.obj.pirates>
+
+  <dda.quest.co_beacon_recovery.title>Beacon Repair Allocation</dda.quest.co_beacon_recovery.title>
+  <dda.quest.co_beacon_recovery.desc>Clean execution, Captain. Next we must restore the relay beacons damaged during pirate occupations before supply traffic grinds to a halt. Log a docking stop at a standard outpost, then deliver four steel and one lead reloading ammo box to equip our repair detachment.</dda.quest.co_beacon_recovery.desc>
+  <dda.quest.co_beacon_recovery.quote>“Without relay beacons, the whole shallow corridor runs blind. Secure logistics first, then hunt their nests.”</dda.quest.co_beacon_recovery.quote>
+  <dda.quest.co_beacon_recovery.obj.outpost>Dock at a standard outpost</dda.quest.co_beacon_recovery.obj.outpost>
+  <dda.quest.co_beacon_recovery.obj.steel>Deliver repair steel</dda.quest.co_beacon_recovery.obj.steel>
+  <dda.quest.co_beacon_recovery.obj.lead_ammo>Deliver lead reloading ammo box</dda.quest.co_beacon_recovery.obj.lead_ammo>
+  <dda.quest.co_beacon_recovery.location>Any standard outpost</dda.quest.co_beacon_recovery.location>
+
+  <dda.quest.co_ironjaw_bounty.title>Ironjaw's Toll</dda.quest.co_ironjaw_bounty.title>
+  <dda.quest.co_ironjaw_bounty.desc>The situation has escalated. A former Alborite Mining security chief calling himself 'Ironjaw' Sam is consolidating scattered Ridge pirates into an organized syndicate—and worse, thugs who carried antique rifles a month ago are suddenly fielding modern steel carbines and ballistic plates. Eliminate ten pirates and submit one Tier-5 metal plate for intelligence trace.</dda.quest.co_ironjaw_bounty.desc>
+  <dda.quest.co_ironjaw_bounty.quote>“Where does a fugitive mining guard get crates of standard rifles and armor plates? Wipe them out and seize the stock.”</dda.quest.co_ironjaw_bounty.quote>
+  <dda.quest.co_ironjaw_bounty.obj.pirates>Defeat pirate combatants</dda.quest.co_ironjaw_bounty.obj.pirates>
+  <dda.quest.co_ironjaw_bounty.obj.plate>Deliver Tier-5 metal plate sample</dda.quest.co_ironjaw_bounty.obj.plate>
+
+  <dda.quest.co_latte_perimeter.title>Latte City Perimeter</dda.quest.co_latte_perimeter.title>
+  <dda.quest.co_latte_perimeter.desc>The skirmishes are over, Captain. Regular Separatist units have moved into modular colony hubs—including the standard cities Taylor Latte designed for civilian life. They carry proper armor plates and heavy ordnance. Enter a combat zone, neutralize six Separatist troops, and report in. Regarding those unmarked grey docking pods welded to outer airlocks: command has ordered military staff not to touch them. Keep your focus on the mission.</dda.quest.co_latte_perimeter.desc>
+  <dda.quest.co_latte_perimeter.quote>“Taylor Latte built modular cities for civilization, not as crossfire bunkers for Separatist squads.”</dda.quest.co_latte_perimeter.quote>
+  <dda.quest.co_latte_perimeter.obj.zone>Reach any combat zone</dda.quest.co_latte_perimeter.obj.zone>
+  <dda.quest.co_latte_perimeter.obj.seps>Defeat Separatist troops</dda.quest.co_latte_perimeter.obj.seps>
+  <dda.quest.co_latte_perimeter.location>Any combat zone</dda.quest.co_latte_perimeter.location>
+
+  <dda.quest.co_kaitenburg_line.title>Kaitenburg Supply Line</dda.quest.co_kaitenburg_line.title>
+  <dda.quest.co_kaitenburg_line.desc>Kaitenburg Relay sits dead center on our Great Sea transit line, and Separatists have overrun it twice in two months—even breaching our encrypted safe drives. Neutralize ten Separatist regulars and deliver two titanium ammo boxes in person to reinforce the counterattack. I have cleared a Tactec plate rig from stores as your bonus.</dda.quest.co_kaitenburg_line.desc>
+  <dda.quest.co_kaitenburg_line.quote>“We lost Kaitenburg twice; there will not be a third time. Push their regulars off the main corridor.”</dda.quest.co_kaitenburg_line.quote>
+  <dda.quest.co_kaitenburg_line.obj.seps>Defeat Separatist troops</dda.quest.co_kaitenburg_line.obj.seps>
+  <dda.quest.co_kaitenburg_line.obj.tit_ammo>Deliver titanium reloading ammo boxes</dda.quest.co_kaitenburg_line.obj.tit_ammo>
+
+  <dda.quest.co_beixun_supply.title>Priority Directive: Flood Prep</dda.quest.co_beixun_supply.title>
+  <dda.quest.co_beixun_supply.desc>Captain, this requisition is classified Theater Logistics Level-1. Farport Construction Yard has halted all civilian hull keels by order of Command; Bays 2 and 3 are running round-the-clock on tungsten-physicorium cores and composite plates, leaving a short-term feedstock deficit. Deliver four refined tungsten and one physicorium ammo box in person. Note: the red priority stamp in the upper corner is above contractor clearance—do not discuss this manifest at neutral ports.</dda.quest.co_beixun_supply.desc>
+  <dda.quest.co_beixun_supply.quote>[Farport Dispatch #409 · Priority: FLOOD PREP] (Ballpoint note on back: “Three kilometers underwater—what flood?!”)</dda.quest.co_beixun_supply.quote>
+  <dda.quest.co_beixun_supply.obj.tungsten>Deliver refined tungsten</dda.quest.co_beixun_supply.obj.tungsten>
+  <dda.quest.co_beixun_supply.obj.phy_ammo>Deliver physicorium reloading ammo box</dda.quest.co_beixun_supply.obj.phy_ammo>
+
+  <dda.quest.co_mining_chokepoint.title>Alborite Lockdown</dda.quest.co_mining_chokepoint.title>
+  <dda.quest.co_mining_chokepoint.desc>Alborite Mining Center in the Aphotic Plateau is under full martial lockdown. Its shafts hold the most critical tungsten veins on Europa, and Separatist forces are throwing everything at its upper galleries. Patrol to a mining outpost and eliminate twelve Separatist troops. As for why Coalition frigates simultaneously sealed Borehole 14 at the shaft bottom—stick to the contract; curiosity is a short-lived luxury at this depth.</dda.quest.co_mining_chokepoint.desc>
+  <dda.quest.co_mining_chokepoint.quote>“Alborite's tungsten decides who survives the next decade. Borehole 14's lockdown is above your pay grade.”</dda.quest.co_mining_chokepoint.quote>
+  <dda.quest.co_mining_chokepoint.obj.mine>Dock at a mining outpost</dda.quest.co_mining_chokepoint.obj.mine>
+  <dda.quest.co_mining_chokepoint.obj.seps>Defeat Separatist troops</dda.quest.co_mining_chokepoint.obj.seps>
+  <dda.quest.co_mining_chokepoint.location>Any mining outpost</dda.quest.co_mining_chokepoint.location>
+
+  <dda.quest.co_grizzlies_wall.title>Shatter the Iron Wall</dda.quest.co_grizzlies_wall.title>
+  <dda.quest.co_grizzlies_wall.desc>Captain, this is the highest bounty Theater Command can authorize. The Separatists have deployed their elite heavy brigade—the Grizzlies—into the Abyssal approaches, and their juggernauts have wiped out two Coalition relief squads. Eliminate eight Grizzlies heavy troopers and deliver one Tier-8 physicorium plate for penetration telemetry. Whatever they saw down in Borehole 14, they must not breach our Abyssal perimeter.</dda.quest.co_grizzlies_wall.desc>
+  <dda.quest.co_grizzlies_wall.quote>“The Grizzlies captain refuses to yield the Abyssal choke. Whatever he saw down in Shaft 14, hold that gate.”</dda.quest.co_grizzlies_wall.quote>
+  <dda.quest.co_grizzlies_wall.obj.grizzlies>Defeat Grizzlies heavy troopers</dda.quest.co_grizzlies_wall.obj.grizzlies>
+  <dda.quest.co_grizzlies_wall.obj.plate8>Deliver Tier-8 metal plate</dda.quest.co_grizzlies_wall.obj.plate8>
+
+  <!-- ==================== Commissar Natalia · Separatists (8) ==================== -->
+  <dda.quest.sp_raider_bounty.title>Behind Enemy Lines</dda.quest.sp_raider_bounty.title>
+  <dda.quest.sp_raider_bounty.desc>Comrade, the tighter the Coalition pulls its blockade, the harder we bleed their patrols. Drop five Coalition regulars in any contested zone and hail me on encrypted radio—your marks and standing are guaranteed.</dda.quest.sp_raider_bounty.desc>
+  <dda.quest.sp_raider_bounty.obj.coalition>Defeat Coalition troops</dda.quest.sp_raider_bounty.obj.coalition>
+
+  <dda.quest.sp_break_embargo.title>Break the Quota</dda.quest.sp_break_embargo.title>
+  <dda.quest.sp_break_embargo.desc>Captain, welcome to a station that still belongs to Europans. The Coalition preaches 'counter-terrorism' while locking every tungsten quota, powder shipment, and shipyard slip behind their seal, forcing miners to pay ransom prices for garbage ammo. Breaking their monopoly starts with our own powder. Bring three refined saltpeter and three refined sulfur in person.</dda.quest.sp_break_embargo.desc>
+  <dda.quest.sp_break_embargo.quote>“They call us rebels, yet every meter of pipe under this ice was welded in miners' blood.”</dda.quest.sp_break_embargo.quote>
+  <dda.quest.sp_break_embargo.obj.saltpeter>Deliver refined saltpeter</dda.quest.sp_break_embargo.obj.saltpeter>
+  <dda.quest.sp_break_embargo.obj.sulfur>Deliver refined sulfur</dda.quest.sp_break_embargo.obj.sulfur>
+
+  <dda.quest.sp_underground_reloading.title>Subterranean Presses</dda.quest.sp_underground_reloading.title>
+  <dda.quest.sp_underground_reloading.desc>Solid work, comrade. Now that we have powder, we need the covert reloading benches inside the shafts running at full tempo. With Farport's lines locked by Coalition brass, former yard machinists are building presses right inside the rock. Scout a mining outpost, then deliver four engineering plastic and two lead ammo boxes—I will send you back with a titanium box.</dda.quest.sp_underground_reloading.desc>
+  <dda.quest.sp_underground_reloading.quote>“If the Coalition locks Farport's gates, we press our own rounds on salvaged mine lathes.”</dda.quest.sp_underground_reloading.quote>
+  <dda.quest.sp_underground_reloading.obj.mine>Dock at a mining outpost</dda.quest.sp_underground_reloading.obj.mine>
+  <dda.quest.sp_underground_reloading.obj.plastic>Deliver engineering plastic</dda.quest.sp_underground_reloading.obj.plastic>
+  <dda.quest.sp_underground_reloading.obj.lead_ammo>Deliver lead reloading ammo boxes</dda.quest.sp_underground_reloading.obj.lead_ammo>
+  <dda.quest.sp_underground_reloading.location>Any mining outpost</dda.quest.sp_underground_reloading.location>
+
+  <dda.quest.sp_cut_blockade.title>Crack the Blockade</dda.quest.sp_cut_blockade.title>
+  <dda.quest.sp_cut_blockade.desc>Comrade, Coalition regulars just threw up a fresh checkpoint across the Great Sea corridor and seized two of our medical boats. These are disciplined troops in full plate rigs, not ragged raiders. Push in, eliminate eight Coalition soldiers, and report back over radio once the lane breathes again.</dda.quest.sp_cut_blockade.desc>
+  <dda.quest.sp_cut_blockade.quote>“They converted civilian shipyards into ammo factories, yet refuse independent crews a single fair-priced round.”</dda.quest.sp_cut_blockade.quote>
+  <dda.quest.sp_cut_blockade.obj.coalition>Defeat Coalition troops</dda.quest.sp_cut_blockade.obj.coalition>
+
+  <dda.quest.sp_frozen_staging.title>Frozen Cavern Staging</dda.quest.sp_frozen_staging.title>
+  <dda.quest.sp_frozen_staging.desc>The Captain found an abandoned research cavern in sub-zero water that naturally blinds Coalition sonar—we are staging our Farport counter-assault force inside. Brutal cold and tight corridors have driven trauma casualties sky-high. Check the approaches to a combat zone, then bring two trauma kits and one Tier-6 steel plate; I will trade you a Grizzly field pack.</dda.quest.sp_frozen_staging.desc>
+  <dda.quest.sp_frozen_staging.quote>“Sub-zero water hides us from their sonar, but it freezes trigger fingers raw. Get those trauma kits in.”</dda.quest.sp_frozen_staging.quote>
+  <dda.quest.sp_frozen_staging.obj.zone>Reach any combat zone</dda.quest.sp_frozen_staging.obj.zone>
+  <dda.quest.sp_frozen_staging.obj.trauma>Deliver trauma medical kits</dda.quest.sp_frozen_staging.obj.trauma>
+  <dda.quest.sp_frozen_staging.obj.plate6>Deliver Tier-6 metal plate</dda.quest.sp_frozen_staging.obj.plate6>
+  <dda.quest.sp_frozen_staging.location>Any combat zone</dda.quest.sp_frozen_staging.location>
+
+  <dda.quest.sp_ghost_traces.title>The Silent Outpost</dda.quest.sp_ghost_traces.title>
+  <dda.quest.sp_ghost_traces.desc>Captain, we have a disaster. Our key Aphotic Plateau relay went dark last night—recon found zero hull breaches, zero distress calls, and empty white thermal feeds across every hallway, yet both the garrison and relief squad were slaughtered. Only one unit kills that quietly: Coalition black-ops, GHOST. Enter a combat zone and put down three GHOST operatives.</dda.quest.sp_ghost_traces.desc>
+  <dda.quest.sp_ghost_traces.quote>“No distress call, no hull breach, blank white thermal feeds down every hall—GHOST is here.”</dda.quest.sp_ghost_traces.quote>
+  <dda.quest.sp_ghost_traces.obj.zone>Reach any combat zone</dda.quest.sp_ghost_traces.obj.zone>
+  <dda.quest.sp_ghost_traces.obj.ghosts>Defeat GHOST operatives</dda.quest.sp_ghost_traces.obj.ghosts>
+  <dda.quest.sp_ghost_traces.location>Any combat zone</dda.quest.sp_ghost_traces.location>
+
+  <dda.quest.sp_ghost_hunt.title>After Lights Out</dda.quest.sp_ghost_hunt.title>
+  <dda.quest.sp_ghost_hunt.desc>Comrade, I will spare you the speeches. GHOST slaughters regular squads in the dark because every operator wears a thermal imaging jammer—killing the lights and hunting blind men. Eliminate six more GHOST operatives and bring me one of their jammers in person. The Captain says even if Coalition biometric locks keep it bricked, our men need to learn its signal profile.</dda.quest.sp_ghost_hunt.desc>
+  <dda.quest.sp_ghost_hunt.quote>“Lights cut and thermals blank? Then light up the whole hallway with heavy caliber and tracers!”</dda.quest.sp_ghost_hunt.quote>
+  <dda.quest.sp_ghost_hunt.obj.ghosts>Defeat GHOST operatives</dda.quest.sp_ghost_hunt.obj.ghosts>
+  <dda.quest.sp_ghost_hunt.obj.jammer>Deliver captured thermal imaging jammer</dda.quest.sp_ghost_hunt.obj.jammer>
+
+  <dda.quest.sp_blackout_truth.title>The Cans from Borehole 14</dda.quest.sp_blackout_truth.title>
+  <dda.quest.sp_blackout_truth.desc>Coming back alive with a GHOST jammer earns you the story the Captain only tells after half a flask. On Blackout Night four years ago, our thermals went blank and we swore the corridor was packed with cloaked GHOSTs. The Captain smashed his goggles and ordered incendiaries downrange—yet when the flames flared up, even GHOST was dumping thermite in sheer panic. Standing in that thermal blind spot were three 'corpses' hauled out of Borehole 14 in old exosuits, heads rotted through, still twitching on the trigger. The Coalition is not sealing the Abyss because of us. Reach a combat zone and supply four tungsten-physicorium plus a Tier-8 ceramic plate—the tide is rising.</dda.quest.sp_blackout_truth.desc>
+  <dda.quest.sp_blackout_truth.quote>“When the flames lit that hall, even GHOST was shaking… pour the vodka and load tungsten, comrade.”</dda.quest.sp_blackout_truth.quote>
+  <dda.quest.sp_blackout_truth.obj.zone>Reach any combat zone</dda.quest.sp_blackout_truth.obj.zone>
+  <dda.quest.sp_blackout_truth.obj.tungsten_phy>Deliver tungsten-physicorium</dda.quest.sp_blackout_truth.obj.tungsten_phy>
+  <dda.quest.sp_blackout_truth.obj.plate8>Deliver Tier-8 ceramic plate</dda.quest.sp_blackout_truth.obj.plate8>
+  <dda.quest.sp_blackout_truth.location>Any combat zone</dda.quest.sp_blackout_truth.location>
+
+  <!-- ==================== Dr. Marcus Harland · Defense Institute (7) ==================== -->
+  <dda.quest.res_bio_bounty.title>Parasite Activity Telemetry</dda.quest.res_bio_bounty.title>
+  <dda.quest.res_bio_bounty.desc>Specimen supplier, the Defense Institute requires ongoing husk activity metrics across active corridors. Neutralize four husk-class hostiles and transmit telemetry remotely; this commission remains open indefinitely.</dda.quest.res_bio_bounty.desc>
+  <dda.quest.res_bio_bounty.obj.husks>Defeat husk-class hostiles</dda.quest.res_bio_bounty.obj.husks>
+
+  <dda.quest.res_radio_rumor.title>Europan Bedtime Stories</dda.quest.res_radio_rumor.title>
+  <dda.quest.res_radio_rumor.desc>Contractor, that third-rate host on Europa Radio is once again broadcasting hysterical tales about 'Crabmen' haunting abandoned beacons. Superstition routinely masks fascinating biological variables. Eliminate six crawlers and three husk hostiles so I can verify what is actually making noise inside those relay stations.</dda.quest.res_radio_rumor.desc>
+  <dda.quest.res_radio_rumor.quote>“Crabmen do not exist; strange sounds under Europa's ice are four orders of magnitude more likely to be mutated husks.”</dda.quest.res_radio_rumor.quote>
+  <dda.quest.res_radio_rumor.obj.crawlers>Defeat crawlers</dda.quest.res_radio_rumor.obj.crawlers>
+  <dda.quest.res_radio_rumor.obj.husks>Defeat husk-class hostiles</dda.quest.res_radio_rumor.obj.husks>
+
+  <dda.quest.res_husk_beacon.title>Missing Patrol Squad 4</dda.quest.res_husk_beacon.title>
+  <dda.quest.res_husk_beacon.desc>Your telemetry confirmed my suspicion. Scratches on a ceramic plate recovered from the silent beacon matched Patrol Squad 4, reported missing last week. Those were not deep-sea beasts—the parasite ruptured their jaws while leaving rifle-handling motor patterns intact. Neutralize six more husks and dock at a research outpost to sync logs; take a locator upgrade for your trouble.</dda.quest.res_husk_beacon.desc>
+  <dda.quest.res_husk_beacon.quote>“That scored ceramic plate belonged to Squad 4. The husk took their throats, yet never pried their fingers off the handguard.”</dda.quest.res_husk_beacon.quote>
+  <dda.quest.res_husk_beacon.obj.husks>Defeat husk-class hostiles</dda.quest.res_husk_beacon.obj.husks>
+  <dda.quest.res_husk_beacon.obj.research>Dock at a research outpost</dda.quest.res_husk_beacon.obj.research>
+  <dda.quest.res_husk_beacon.location>Any research outpost</dda.quest.res_husk_beacon.location>
+
+  <dda.quest.res_tungsten_sample.title>Abyssal Hardness Limit</dda.quest.res_tungsten_sample.title>
+  <dda.quest.res_tungsten_sample.desc>Enough biology—let us examine what actually dictates survival on Europa: abyssal tungsten ore. Precipitated only from the Aphotic Plateau downward, tungsten fused with physicorium yields an alloy harder than diamond. Deliver four unrefined tungsten ores in person; I will trade two refined bars and place you on the Institute's senior contractor list.</dda.quest.res_tungsten_sample.desc>
+  <dda.quest.res_tungsten_sample.quote>“Harder than diamond, and infinitely more binding than any treaty. Leave the ore and do not touch the petri dishes.”</dda.quest.res_tungsten_sample.quote>
+  <dda.quest.res_tungsten_sample.obj.ore>Deliver abyssal tungsten ore</dda.quest.res_tungsten_sample.obj.ore>
+
+  <dda.quest.res_husk_crabman.title>Cold-Body Reloads</dda.quest.res_husk_crabman.title>
+  <dda.quest.res_husk_crabman.desc>A truly captivating anomaly. Military thermal optics cannot detect husks—they emit no living heat signature. Yet an unsent field-medic audio log recovered last night describes an armored infected target taking rounds to its ceramic plate, ducking behind a steel crate, and executing a textbook magazine swap. Eliminate ten husks and bring one Tier-6 ceramic plate for ballistic modeling. If a deep tide ever sweeps those things upward, zero-drag underwater rounds may keep you breathing.</dda.quest.res_husk_crabman.desc>
+  <dda.quest.res_husk_crabman.quote>“Thermals are blind to husks—and spent brass patterns prove the infected host performed two clean magazine swaps.”</dda.quest.res_husk_crabman.quote>
+  <dda.quest.res_husk_crabman.obj.husks>Defeat husk-class hostiles</dda.quest.res_husk_crabman.obj.husks>
+  <dda.quest.res_husk_crabman.obj.plate6>Deliver Tier-6 ceramic plate</dda.quest.res_husk_crabman.obj.plate6>
+
+  <dda.quest.res_neural_drift.title>Low-Frequency Tinnitus</dda.quest.res_neural_drift.title>
+  <dda.quest.res_neural_drift.desc>Contractor, helmet neural-adjustment chips compress three seconds of veteran muscle memory into one. Frontline complaints about tinnitus, nightmares, and sub-audible hum? Negligible compared to taking a 7.62 tungsten round through the visor. Still, abnormal Abyssal tidal harmonics have been inducing signal drift. Deliver two tungsten-physicorium and one Tier-8 metal plate for shielding calibration; I will grant a Friendly-Fire Shield upgrade.</dda.quest.res_neural_drift.desc>
+  <dda.quest.res_neural_drift.quote>“Compared to a 7.62 tungsten slug through the visor, mild neural tinnitus and nightmares are trivial.”</dda.quest.res_neural_drift.quote>
+  <dda.quest.res_neural_drift.obj.tungsten_phy>Deliver tungsten-physicorium</dda.quest.res_neural_drift.obj.tungsten_phy>
+  <dda.quest.res_neural_drift.obj.plate8>Deliver Tier-8 metal plate</dda.quest.res_neural_drift.obj.plate8>
+
+  <dda.quest.res_chip_recall.title>Batch-7 Quiet Recall</dda.quest.res_chip_recall.title>
+  <dda.quest.res_chip_recall.desc>Contractor, your efficiency merits an off-the-books audit. I previously filed an emergency recall for Batch-7 neural chips after a simulated low-frequency tidal wave drove a clinically brain-dead subject—forty seconds after helmet power cut—to shoulder a rifle and pull the trigger three times. Command denied the recall and sent GHOST to burn the bodies. Worse still, sensor arrays in the Hydrothermal Wastes logged an unauthorized squad-wide thermal-jamming spectrum last week. Bring one thermal jammer and two tungsten-physicorium weapon parts for cross-verification.</dda.quest.res_chip_recall.desc>
+  <dda.quest.res_chip_recall.quote>“The red stamp was terse: frontline shortage, suppress report. As for who bypassed my biometric lock in the Wastes… fascinating.”</dda.quest.res_chip_recall.quote>
+  <dda.quest.res_chip_recall.obj.jammer>Deliver captured thermal imaging jammer</dda.quest.res_chip_recall.obj.jammer>
+  <dda.quest.res_chip_recall.obj.parts>Deliver tungsten-physicorium weapon parts</dda.quest.res_chip_recall.obj.parts>
+
+  <!-- ==================== D.D.A. Rotating Liaison · Hidden Blackbox (7) ==================== -->
+  <dda.quest.dda_field_trial.title>Outer-Rim Field Trial</dda.quest.dda_field_trial.title>
+  <dda.quest.dda_field_trial.desc>Hey boss! Our tiny outfit is too broke to rent official proving grounds, so we pay passing pros for live combat telemetry! Pirates, Coalition, Separatists—doesn't matter who. Drop eight armed hostiles in any contested zone and ping the docking pod terminal. Marks and a copper RIP box settle remotely, repeat as often as you like!</dda.quest.dda_field_trial.desc>
+  <dda.quest.dda_field_trial.obj.hostiles>Defeat armed hostiles in combat zones</dda.quest.dda_field_trial.obj.hostiles>
+
+  <dda.quest.dda_route_slip.title>Fresh Past the Mines</dda.quest.dda_route_slip.title>
+  <dda.quest.dda_route_slip.desc>Yo, Captain! Whew… beat to hell—just swam in off a shift change near Shipyard 103 and my boots are still soaking. Huh? Coalition mines and patrol boats sealed that lane tight for three days? Hahaha, no way, you just take the side currents if you know the rocks! Anyway, drop into a combat zone, clear six pirates for me, and I will wire a titanium ammo box straight to your hull.</dda.quest.dda_route_slip.desc>
+  <dda.quest.dda_route_slip.quote>“Boots are still wet from swimming off shift at Yard 103—minefield blockade? Eh, just swim around it.”</dda.quest.dda_route_slip.quote>
+  <dda.quest.dda_route_slip.obj.zone>Reach any combat zone</dda.quest.dda_route_slip.obj.zone>
+  <dda.quest.dda_route_slip.obj.pirates>Defeat pirate combatants</dda.quest.dda_route_slip.obj.pirates>
+  <dda.quest.dda_route_slip.location>Any combat zone</dda.quest.dda_route_slip.location>
+
+  <dda.quest.dda_tide_gauge.title>Unmarked Current Logs</dda.quest.dda_tide_gauge.title>
+  <dda.quest.dda_tide_gauge.desc>Captain, quick favor on your next Great Sea leg. The boss got weirdly into hydrography lately and wants deep-current readings off both a mining outpost and an active combat zone. Just dock and enter—your hull sensors will auto-copy the bottom-flow slope to our terminal. Don't ask why he cares; supposedly the curve out of the Aphotic Plateau looks dead identical to the surge that crushed three abyssal stations seventeen years ago.</dda.quest.dda_tide_gauge.desc>
+  <dda.quest.dda_tide_gauge.quote>“Boss says the deep-flow slope matches the surge seventeen years back—no clue what it means, I just collect logs.”</dda.quest.dda_tide_gauge.quote>
+  <dda.quest.dda_tide_gauge.obj.mine>Dock at a mining outpost</dda.quest.dda_tide_gauge.obj.mine>
+  <dda.quest.dda_tide_gauge.obj.zone>Reach any combat zone</dda.quest.dda_tide_gauge.obj.zone>
+  <dda.quest.dda_tide_gauge.location>Mining outpost &amp; combat zone</dda.quest.dda_tide_gauge.location>
+
+  <dda.quest.dda_ballistic_audit.title>Anonymous Ballistic Audit</dda.quest.dda_ballistic_audit.title>
+  <dda.quest.dda_ballistic_audit.desc>Regular! Our little shop just tuned a new load recipe and needs a control sample—one physicorium reloading ammo box and one Tier-5 ceramic plate transferred straight off your sub. Rush-rate marks plus a fresh fulgurium-physicorium box in return. Relax, none of that cut-corner military junk; our crate stamps shine like new.</dda.quest.dda_ballistic_audit.desc>
+  <dda.quest.dda_ballistic_audit.quote>“Quit staring at that 0041 stamp on the lid—just our workshop batch number, stamped it for fun!”</dda.quest.dda_ballistic_audit.quote>
+  <dda.quest.dda_ballistic_audit.obj.phy_ammo>Deliver physicorium reloading ammo box</dda.quest.dda_ballistic_audit.obj.phy_ammo>
+  <dda.quest.dda_ballistic_audit.obj.plate5>Deliver Tier-5 ceramic plate</dda.quest.dda_ballistic_audit.obj.plate5>
+
+  <dda.quest.dda_deep_pressure.title>Grey Sea-Hound</dda.quest.dda_deep_pressure.title>
+  <dda.quest.dda_deep_pressure.desc>Boss, the water ahead is pitch black. Heard 'Greyhound'—that stone-faced creep—is running shift today, so keep your back off the air vents… wait, what did I just say? N-nothing! I meant the grey sea-hound outside! Ahem—this contract tests your reaction inside thermal blind spots: neutralize four thermal-cloaked hostiles and a tungsten-physicorium box is yours.</dda.quest.dda_deep_pressure.desc>
+  <dda.quest.dda_deep_pressure.quote>“…how would a temp worker know GHOST rosters?! I said grey sea-hound—go earn your crate!”</dda.quest.dda_deep_pressure.quote>
+  <dda.quest.dda_deep_pressure.obj.cloaked>Defeat thermal-cloaked hostiles</dda.quest.dda_deep_pressure.obj.cloaked>
+
+  <dda.quest.dda_duplex_stress.title>Dual-Line Stress Sample</dda.quest.dda_duplex_stress.title>
+  <dda.quest.dda_duplex_stress.desc>Captain, down at Abyssal depth, ordinary patrol data is worthless. The boss specifically asked whether a single independent crew can simultaneously survive the Coalition's quietest killers and the Separatists' heaviest hammers. Forget who is right or who is rebel—log three GHOST kills and three Grizzlies kills, and I will wire you a Marksman neural-adjustment chip.</dda.quest.dda_duplex_stress.desc>
+  <dda.quest.dda_duplex_stress.quote>“Coalition ghosts and Separatist bears both hit hard, huh? Bring me telemetry from both sides and I will make it worth your blood.”</dda.quest.dda_duplex_stress.quote>
+  <dda.quest.dda_duplex_stress.obj.ghosts>Defeat GHOST operatives</dda.quest.dda_duplex_stress.obj.ghosts>
+  <dda.quest.dda_duplex_stress.obj.grizzlies>Defeat Grizzlies heavy troopers</dda.quest.dda_duplex_stress.obj.grizzlies>
+
+  <dda.quest.dda_tidal_list.title>Eve of Tidal Hunt</dda.quest.dda_tidal_list.title>
+  <dda.quest.dda_tidal_list.desc>Yo, boss! Word travels fast—Coalition's fancy ghosts and Separatist heavy bears both ate dirt against your crew? Incredible, you literally blew the lid off our little shop's leaderboard! One easy finale: set aside four tungsten-physicorium and one depleted-uranium reloading box, remote sign-off. Don't ask why a mom-and-pop shop wants DU rounds—currents down in the Hydrothermal Wastes sound downright eerie lately, and the boss likes heavy metal on hand when the ice groans. Take your gold bars and stay sharp!</dda.quest.dda_tidal_list.desc>
+  <dda.quest.dda_tidal_list.quote>“…target crew breached both GHOST and Grizzlies lines; zero neural resonance rejection under high-pulse load. Specimen promoted to Tidal Hunt shortlist; maintain silent observation—[CLICK!] Aw crap, wrong channel! That was a radio drama next door, ignore that!”</dda.quest.dda_tidal_list.quote>
+  <dda.quest.dda_tidal_list.obj.tungsten_phy>Deliver tungsten-physicorium</dda.quest.dda_tidal_list.obj.tungsten_phy>
+  <dda.quest.dda_tidal_list.obj.du_ammo>Deliver depleted-uranium reloading ammo box</dda.quest.dda_tidal_list.obj.du_ammo>
 </infotexts>

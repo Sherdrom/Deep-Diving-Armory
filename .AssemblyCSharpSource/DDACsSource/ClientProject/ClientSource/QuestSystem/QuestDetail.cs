@@ -341,7 +341,8 @@ internal sealed partial class QuestPanel
 
     private void BuildActions(Quest q, QuestStatus status)
     {
-        bool active = status is QuestStatus.Active or QuestStatus.Ready, atNpc = publisher != null;
+        bool active = status is QuestStatus.Active or QuestStatus.Ready;
+        bool atNpc = publisher != null || (QuestRuntime.DebugBypass && GameMain.IsSingleplayer);
         var buttons = new List<(string Label, Action Run, Color Accent, bool Primary, bool Enabled)>();
         void Command(string key, QuestAction op, Color color, bool primary, bool enabled = true) =>
             buttons.Add((Text.Ui(key), () => QuestRuntime.Request(op, q.Id, speaker, preview), color, primary, enabled && canAct));

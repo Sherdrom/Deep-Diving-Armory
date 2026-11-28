@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <!-- 联盟防护研究所 · 马库斯·哈兰德博士 (7) -->
+  <Quest id="res_radio_rumor" npc="harland" category="main" repeatable="false" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="crawlers" type="KillTag" target="crawler" count="6" />
+      <Objective id="husks" type="KillTag" target="husk" count="3" />
+    </Objectives>
+    <Rewards marks="850" trust="5" unlock="res_husk_beacon,res_tungsten_sample">
+      <Reputation faction="coalition" amount="1" />
+      <Item id="deep_medical_kit" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_bio_bounty" npc="harland" category="repeat" repeatable="true" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="husks" type="KillTag" target="husk" count="4" />
+    </Objectives>
+    <Rewards marks="700" trust="3">
+      <Reputation faction="coalition" amount="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_husk_beacon" npc="harland" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="res_radio_rumor" />
+      <RequireTrust npc="harland" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="husks" type="KillTag" target="husk" count="6" />
+      <Objective id="research" type="ReachLocation" target="research" count="1" />
+    </Objectives>
+    <Rewards marks="1600" trust="5" unlock="res_husk_crabman">
+      <Reputation faction="coalition" amount="2" />
+      <Item id="chip_locate" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_tungsten_sample" npc="harland" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="res_radio_rumor" />
+      <RequireTrust npc="harland" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="ore" type="DeliverItem" target="deep_tungsten_ore" count="4" />
+    </Objectives>
+    <Rewards marks="1500" trust="5" unlock="res_neural_drift">
+      <Reputation faction="coalition" amount="2" />
+      <Item id="deep_tungsten" count="2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_husk_crabman" npc="harland" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="res_husk_beacon" />
+      <RequireTrust npc="harland" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="husks" type="KillTag" target="husk" count="10" />
+      <Objective id="plate6" type="DeliverItem" target="deep_plate_ceramic_6" count="1" />
+    </Objectives>
+    <Rewards marks="2600" trust="6">
+      <Reputation faction="coalition" amount="2" />
+      <Item id="chip_gun_in_water" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_neural_drift" npc="harland" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="res_tungsten_sample" />
+      <RequireTrust npc="harland" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tungsten_phy" type="DeliverItem" target="deep_tungsten_phy" count="2" />
+      <Objective id="plate8" type="DeliverItem" target="deep_plate_metal_8" count="1" />
+    </Objectives>
+    <Rewards marks="3200" trust="6" unlock="res_chip_recall">
+      <Reputation faction="coalition" amount="3" />
+      <Item id="chip_friendly_fire" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="res_chip_recall" npc="harland" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="res_neural_drift" />
+      <RequireTrust npc="harland" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="jammer" type="DeliverItem" target="deep_thermal_interference" count="1" />
+      <Objective id="parts" type="DeliverItem" target="tungsten_phy_part" count="2" />
+    </Objectives>
+    <Rewards marks="5200" trust="6">
+      <Reputation faction="coalition" amount="5" />
+      <Item id="chip_cqb" count="1" />
+    </Rewards>
+  </Quest>
+</Quests>

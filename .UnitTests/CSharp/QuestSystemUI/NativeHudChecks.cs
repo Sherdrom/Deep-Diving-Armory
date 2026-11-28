@@ -33,7 +33,7 @@ internal static class NativeHudChecks
         session.IsRunning = true;
         Screen.Selected = GameMain.GameScreen = Fixture<GameScreen>();
         var cfg = GameSettings.CurrentConfig;
-        State("manifest", "steel", 1);
+        State("co_pirate_patrol", "pirates", 2);
         foreach (var (w, h, scale) in new[] { (1280, 720, 1f), (1280, 720, 1.5f), (1920, 1080, 1f), (3440, 1440, 1.25f) })
         {
             GameMain.GraphicsWidth = w;
@@ -44,7 +44,7 @@ internal static class NativeHudChecks
             HUDLayoutSettings.InventoryTopY = h - h / 6;
             HUDLayoutSettings.CreateAreas();
             var b = Collect()!;
-            Check(b.Visible && ReferenceEquals(b, Collect()) && Says(b, "★ 优先配发令") && Says(b, "1 / 2") && Says(b, "拨付预留钢材"), "active, cached rows and title");
+            Check(b.Visible && ReferenceEquals(b, Collect()) && Says(b, "★ 寒冰洋治安巡逻") && Says(b, "2 / 5") && Says(b, "击败海盗武装人员"), "active, cached rows and title");
             Check(HUDLayoutSettings.TutorialObjectiveListArea.Contains(b.Rect) && !new[] { HUDLayoutSettings.CrewArea,
                 HUDLayoutSettings.ButtonAreaTop, HUDLayoutSettings.MessageAreaTop, HUDLayoutSettings.HealthBarAfflictionArea,
                 HUDLayoutSettings.BottomRightInfoArea, HUDLayoutSettings.InventoryAreaLower }.Any(r => b.Rect.Intersects(r)), $"safe bounds at {w}x{h} / {scale}: {b.Rect}");
@@ -59,7 +59,7 @@ internal static class NativeHudChecks
             Check(allocated == 0, $"steady HUD {tracked.GetValue(null)} allocated {allocated} bytes over 100 frames");
         }
         CheckAllocations();
-        State("soundings", "port", 0);
+        State("dda_tide_gauge", "mine", 0);
         var longHud = Collect()!;
         var bar = longHud.GetChild<GUIScrollBar>();
         var rows = longHud.Children.Single(c => c.CountChildren == 25);
@@ -70,14 +70,14 @@ internal static class NativeHudChecks
         Check(!rows.Children.First().Visible && rows.Children.Last().Visible && rows.Children.Where(c => c.Visible).All(c => rows.Rect.Contains(c.Rect)),
             "last objectives reachable and visible rows stay in the card");
         CheckAllocations();
-        State("manifest", "steel", 1);
+        State("co_pirate_patrol", "pirates", 2);
         var previousRound = Collect()!;
         runtime.GetProperty("Round", flags)!.SetValue(null, "next-round");
         var active = Collect()!;
         Check(!ReferenceEquals(active, previousRound) && previousRound.RectTransform.Parent == null, "new round with identical revision");
-        State("manifest", "steel", 2);
+        State("co_pirate_patrol", "pirates", 5);
         var ready = Collect()!;
-        Check(!ReferenceEquals(ready, active) && active.RectTransform.Parent == null && Says(ready, "✓") && Says(ready, "2 / 2") &&
+        Check(!ReferenceEquals(ready, active) && active.RectTransform.Parent == null && Says(ready, "✓") && Says(ready, "5 / 5") &&
             Says(ready, "打开委托面板提交"), "live progress, ready guidance and stale tree release");
         GUI.DisableHUD = true;
         Check(!Collect()!.Visible, "disable");
@@ -105,10 +105,10 @@ internal static class NativeHudChecks
             var conversation = new GUIFrame(new RectTransform(new Point(8, 8)), style: null) { UserData = "ConversationAction" };
             GUIMessageBox.MessageBoxes.Add(conversation);
             var portraits = (System.Collections.IDictionary)runtime.GetField("portraits", flags)!.GetValue(null)!;
-            portraits["dispatch"] = portraits["stores"] = null;
+            foreach (string id in new[] { "peachhat", "benzene", "sterling", "natalia", "harland", "liaison" }) { portraits[id] = null; }
             Check(ready.OnClicked(ready, null), "click accepted");
             var panel = runtime.GetField("dialoguePanel", flags)!.GetValue(null)!;
-            Check(Equals(panel.GetType().GetField("selected", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(panel), "manifest") &&
+            Check(Equals(panel.GetType().GetField("selected", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(panel), "co_pirate_patrol") &&
                 !Collect()!.Visible, "click opens contracts at tracked quest");
             Call("CloseDialogue");
             GUIMessageBox.MessageBoxes.Remove(conversation);
@@ -116,18 +116,18 @@ internal static class NativeHudChecks
         GUI.ForceMouseOn(ready);
         tracked.SetValue(null, null);
         Check(Collect() == null && ready.OnClicked == null && ready.CountChildren == 0 && GUI.MouseOn == null && ready.RectTransform.Parent == null, "untrack releases hit target");
-        State("watch", "crawlers", 1);
+        State("co_pirate_bounty", "pirates", 1);
         var abandoned = Collect()!;
         var stateProperty = runtime.GetProperty("State", flags)!;
         stateProperty.SetValue(null, stateProperty.PropertyType.GetMethod("Read", flags)!.Invoke(null, [""]));
         Call("Publish");
         Check(tracked.GetValue(null) == null && Collect() == null && abandoned.RectTransform.Parent == null, "abandoned quest disappears");
-        State("bulkhead", "plates", 3);
+        State("gunsmith_plastic_test", "plastic", 4);
         var both = new DeepDivingArmory.Quests.QuestState();
-        both.Active["bulkhead"] = new() { ["plates"] = 3, ["relay"] = 1 };
+        both.Active["gunsmith_plastic_test"] = new() { ["plastic"] = 4, ["relay"] = 1 };
         stateProperty.SetValue(null, stateProperty.PropertyType.GetMethod("Read", flags)!.Invoke(null, [both.Write()]));
         var last = Collect()!;
-        Check(Says(last, "✓") && last.GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("主管")) &&
+        Check(Says(last, "✓") && last.GetAllChildren<GUITextBlock>().Any(t => t.Text.SanitizedString.Value.Contains("氧化苯")) &&
             last.OnClicked != null, "in-person guidance and click target");
         Call(cleanup);
         Check(hud.GetValue(null) == null && last.OnClicked == null && last.RectTransform.Parent == null && tracked.GetValue(null) == null, cleanup);

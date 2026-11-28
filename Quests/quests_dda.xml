@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <!-- 幕后黑箱 D.D.A. · 轮值对接员 (7) -->
+  <Quest id="dda_route_slip" npc="liaison" category="main" repeatable="false" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="pirates" type="KillTag" target="dda_pirate" count="6" />
+    </Objectives>
+    <Rewards marks="1400" trust="5" unlock="dda_tide_gauge,dda_ballistic_audit">
+      <Item id="deep_ammobox_titanium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_field_trial" npc="liaison" category="bounty" repeatable="true" allowRemoteTurnIn="true">
+    <Objectives>
+      <Objective id="hostiles" type="KillTag" target="bandit" count="8" />
+    </Objectives>
+    <Rewards marks="900" trust="3">
+      <Item id="deep_ammobox_copper" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_tide_gauge" npc="liaison" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="dda_route_slip" />
+      <RequireTrust npc="liaison" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="mine" type="ReachLocation" target="mine" count="1" />
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+    </Objectives>
+    <Rewards marks="2200" trust="5" unlock="dda_deep_pressure">
+      <Item id="deep_plate_metal_7" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_ballistic_audit" npc="liaison" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="dda_route_slip" />
+      <RequireTrust npc="liaison" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="phy_ammo" type="DeliverItem" target="deep_ammobox_physicorium" count="1" />
+      <Objective id="plate5" type="DeliverItem" target="deep_plate_ceramic_5" count="1" />
+    </Objectives>
+    <Rewards marks="2500" trust="5" unlock="dda_deep_pressure">
+      <Item id="deep_ammobox_fulgurium_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_deep_pressure" npc="liaison" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="dda_tide_gauge" />
+      <RequireQuest id="dda_ballistic_audit" />
+      <RequireTrust npc="liaison" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="cloaked" type="KillTag" target="HideInThermalGoggles" count="4" />
+    </Objectives>
+    <Rewards marks="3800" trust="6" unlock="dda_duplex_stress">
+      <Item id="deep_ammobox_tungsten_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_duplex_stress" npc="liaison" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="dda_deep_pressure" />
+      <RequireTrust npc="liaison" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="ghosts" type="KillTag" target="dda_ghost" count="3" />
+      <Objective id="grizzlies" type="KillTag" target="dda_grizzlies" count="3" />
+    </Objectives>
+    <Rewards marks="5500" trust="6" unlock="dda_tidal_list">
+      <Item id="chip_marksman" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="dda_tidal_list" npc="liaison" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="dda_duplex_stress" />
+      <RequireQuest id="sp_ghost_hunt" />
+      <RequireQuest id="co_grizzlies_wall" />
+      <RequireTrust npc="liaison" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tungsten_phy" type="DeliverItem" target="deep_tungsten_phy" count="4" />
+      <Objective id="du_ammo" type="DeliverItem" target="deep_ammobox_depleted_uranium" count="1" />
+    </Objectives>
+    <Rewards marks="9000" trust="8">
+      <Item id="deep_gold_bar" count="3" />
+    </Rewards>
+  </Quest>
+</Quests>

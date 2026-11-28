@@ -11,6 +11,7 @@ public static partial class QuestRuntime
     internal static QuestState State { get; private set; } = new();
     internal static string Round { get; private set; } = "";
     internal static int Revision { get; private set; }
+    internal static bool DebugBypass { get; private set; }
     private static CampaignMode? campaign;
     private static bool readable;
     private static float stockTimer;
@@ -104,9 +105,69 @@ public static partial class QuestRuntime
         Publish();
     }
 
+    internal static int ReadyAvailable(bool includeAll = false)
+    {
+        int ready = 0;
+        foreach (var q in Rules.Quests.Values)
+        {
+            if (State.Completed.Contains(q.Id) && !q.Repeatable) { continue; }
+            if (!includeAll && !State.Active.ContainsKey(q.Id) && State.Status(Rules, q) != QuestStatus.Available) { continue; }
+            if (!State.Active.TryGetValue(q.Id, out var counts)) { State.Active[q.Id] = counts = new(); }
+            foreach (var o in q.Objectives) { counts[o.Id] = o.Count; }
+            ready++;
+        }
+        return ready;
+    }
+
+    internal static string DebugCommand(string[] args)
+    {
+        if (!Authority || !GameMain.IsSingleplayer) { return "[DDA] dda_quest_debug 仅支持单人战役调试。"; }
+        string modeArg = args.Length > 0 ? args[0].Trim().ToLowerInvariant() : "on";
+        if (modeArg == "off")
+        {
+            DebugBypass = false;
+            Revision++;
+            Publish();
+            return "[DDA] 任务调试已关闭，恢复正常接取与提交限制。";
+        }
+        if (GameMain.GameSession?.Campaign is not { } mode || !EnsureCampaign(mode))
+        { return "[DDA] 请先进入单人战役存档后再执行 dda_quest_debug。"; }
+        if (modeArg == "reset")
+        {
+            DebugBypass = false;
+            State = new();
+            Changed(true);
+            return "[DDA] 已重置当前存档全部任务进度并关闭调试模式。";
+        }
+        if (modeArg == "trust")
+        {
+            int target = args.Length > 1 && int.TryParse(args[1], out int parsed) ? Math.Max(0, parsed) : 30;
+            foreach (string npc in Rules.Npcs.Keys) { State.Trust[npc] = target; }
+            int promoted = DebugBypass ? ReadyAvailable() : 0;
+            Changed(true);
+            return $"[DDA] 已将全部发布者信任度设为 {target}" + (promoted > 0 ? $"，当前可提交任务：{promoted}。" : "。");
+        }
+        bool all = modeArg is "all" or "unlockall";
+        bool strict = modeArg == "strict";
+        if (!all && !strict && modeArg != "on")
+        { return "[DDA] 用法：dda_quest_debug [on|strict|all|trust <数值>|reset|off]"; }
+        DebugBypass = true;
+        if (!strict)
+        {
+            foreach (string npc in Rules.Npcs.Keys) { State.Trust[npc] = Math.Max(State.Trust.GetValueOrDefault(npc), 30); }
+        }
+        if (all) { State.Unlocked.UnionWith(Rules.Quests.Keys); }
+        int count = ReadyAvailable(includeAll: all);
+        Changed(true);
+        return all
+            ? $"[DDA] 任务调试（全解锁）已开启：全部 {count} 个任务已设为可提交，按 TAB 打开委托面板即可直接提交。"
+            : $"[DDA] 任务调试已开启（{(strict ? "保留当前信任度" : "信任度已补至30")}）：当前 {count} 个任务已可提交，按 TAB 提交后会自动解锁并就绪下一环。";
+    }
+
     internal static void ClearRound()
     {
         ClearSide();
+        DebugBypass = false;
         campaign = null;
         readable = false;
         Round = "";

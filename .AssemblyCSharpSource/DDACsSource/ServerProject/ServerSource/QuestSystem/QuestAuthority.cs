@@ -74,11 +74,13 @@ public static partial class QuestRuntime
             GameMain.GameSession is not { IsRunning: true, Campaign: { } mode } || !EnsureCampaign(mode) || req.Round != Round || req.Revision != Revision ||
             req.Quest == null || !Rules.Quests.TryGetValue(req.Quest, out var q)) { return false; }
         var speaker = Entity.FindEntityByID(req.Speaker) as Character;
-        bool atPublisher = (preview && GameMain.IsSingleplayer) || (Match(speaker)?.Id == q.Npc && InReach(actor, speaker!));
+        bool debug = DebugBypass && GameMain.IsSingleplayer;
+        bool atPublisher = debug || (preview && GameMain.IsSingleplayer) || (Match(speaker)?.Id == q.Npc && InReach(actor, speaker!));
         var action = (QuestAction)req.Action;
         bool changed = action == QuestAction.Deliver
             ? State.Deliver(q, req.ObjectiveId, atPublisher, (target, remaining) => TakeItems(target, remaining, actor))
             : State.Apply(Rules, q, action, atPublisher, quest => Settle(quest, actor));
+        if (changed && debug && action is QuestAction.Submit or QuestAction.Accept) { ReadyAvailable(); }
         bool stockChanged = RefreshStock();
         if (changed || stockChanged) { Changed(changed); }
         return changed;

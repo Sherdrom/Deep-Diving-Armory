@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <!-- 台风大百货 · 桃帽 (8) -->
+  <Quest id="typhoon_dock_run" npc="peachhat" category="main" repeatable="false" allowRemoteTurnIn="false">
+    <Objectives>
+      <Objective id="typhoon" type="ReachLocation" target="deep_mobile_city_typhoon" count="1" />
+      <Objective id="steel" type="DeliverItem" target="steel" count="4" />
+    </Objectives>
+    <Rewards marks="650" trust="5" unlock="typhoon_medical_shortage,typhoon_farport_backlog" />
+  </Quest>
+
+  <Quest id="typhoon_powder_stock" npc="peachhat" category="repeat" repeatable="true" allowRemoteTurnIn="false">
+    <Objectives>
+      <Objective id="saltpeter" type="DeliverItem" target="saltpeter_mineral" count="3" />
+      <Objective id="sulfur" type="DeliverItem" target="sulfur_mineral" count="3" />
+    </Objectives>
+    <Rewards marks="450" trust="3">
+      <Item id="deep_ammobox_lead" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_medical_shortage" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="typhoon_dock_run" />
+      <RequireTrust npc="peachhat" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="city" type="ReachLocation" target="city" count="1" />
+      <Objective id="medkits" type="DeliverItem" target="deep_medical_kit_small" count="2" />
+    </Objectives>
+    <Rewards marks="1100" trust="5" unlock="typhoon_0041_crate">
+      <Item id="deep_medical_kit" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_farport_backlog" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="typhoon_dock_run" />
+      <RequireTrust npc="peachhat" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tit_ammo" type="DeliverItem" target="deep_ammobox_titanium" count="1" />
+      <Objective id="plastic" type="DeliverItem" target="engineeringplastic" count="4" />
+    </Objectives>
+    <Rewards marks="1600" trust="5" unlock="typhoon_0041_crate">
+      <Item id="deep_ammobox_copper" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_0041_crate" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="typhoon_medical_shortage" />
+      <RequireQuest id="typhoon_farport_backlog" />
+      <RequireTrust npc="peachhat" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="phy_ammo" type="DeliverItem" target="deep_ammobox_physicorium" count="1" />
+    </Objectives>
+    <Rewards marks="2400" trust="6" unlock="typhoon_beacon_batteries,typhoon_mk17_legacy">
+      <Item id="deep_plate_metal_7" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_beacon_batteries" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="typhoon_0041_crate" />
+      <RequireTrust npc="peachhat" count="18" />
+      <RequireTrust npc="benzene" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="mine" type="ReachLocation" target="mine" count="1" />
+      <Objective id="smoke" type="DeliverItem" target="deep_m18" count="2" />
+      <Objective id="grenades" type="DeliverItem" target="deep_RGO" count="2" />
+    </Objectives>
+    <Rewards marks="2900" trust="6" unlock="typhoon_leak_trail">
+      <Item id="deep_plate_ceramic_7" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_leak_trail" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="typhoon_beacon_batteries" />
+      <RequireTrust npc="peachhat" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="raiders" type="KillTag" target="bandit" count="10" />
+      <Objective id="gold" type="DeliverItem" target="deep_gold_bar" count="1" />
+    </Objectives>
+    <Rewards marks="4500" trust="6">
+      <Item id="deep_ammobox_tungsten_physicorium" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="typhoon_mk17_legacy" npc="peachhat" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="typhoon_0041_crate" />
+      <RequireTrust npc="peachhat" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="parts" type="DeliverItem" target="tungsten_phy_part" count="2" />
+      <Objective id="fulg_ammo" type="DeliverItem" target="deep_ammobox_fulgurium_physicorium" count="1" />
+    </Objectives>
+    <Rewards marks="5200" trust="6">
+      <Item id="mk17_peach_design" count="1" />
+    </Rewards>
+  </Quest>
+
+  <!-- 枪匠 · 氧化苯 (9) -->
+  <Quest id="gunsmith_plastic_test" npc="benzene" category="main" repeatable="false" allowRemoteTurnIn="false">
+    <Objectives>
+      <Objective id="plastic" type="DeliverItem" target="engineeringplastic" count="4" />
+    </Objectives>
+    <Rewards marks="600" trust="3" unlock="gunsmith_titanium_parts">
+      <Item id="deep_plate_carrier" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_scrap_plates" npc="benzene" category="repeat" repeatable="true" allowRemoteTurnIn="false">
+    <Objectives>
+      <Objective id="steel" type="DeliverItem" target="steel" count="3" />
+      <Objective id="plastic" type="DeliverItem" target="engineeringplastic" count="2" />
+    </Objectives>
+    <Rewards marks="480" trust="3">
+      <Item id="deep_plate_metal_4" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_titanium_parts" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_plastic_test" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tit_parts" type="DeliverItem" target="titaniumaluminiumalloy_part" count="2" />
+      <Objective id="plates" type="DeliverItem" target="deep_plate_metal_4" count="2" />
+    </Objectives>
+    <Rewards marks="1050" trust="3" unlock="gunsmith_plate_bench,gunsmith_shield_stress">
+      <Item id="titaniumaluminiumalloy_barrel" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_plate_bench" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_titanium_parts" />
+      <RequireTrust npc="benzene" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="metal5" type="DeliverItem" target="deep_plate_metal_5" count="2" />
+      <Objective id="ceramic5" type="DeliverItem" target="deep_plate_ceramic_5" count="1" />
+    </Objectives>
+    <Rewards marks="1500" trust="5" unlock="gunsmith_103_recon">
+      <Item id="deep_plate_metal_6" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_shield_stress" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_titanium_parts" />
+      <RequireTrust npc="benzene" count="8" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="shield_steel" type="DeliverItem" target="deep_mobile_shield_fix_plate_steel" count="2" />
+      <Objective id="metal6" type="DeliverItem" target="deep_plate_metal_6" count="1" />
+    </Objectives>
+    <Rewards marks="1800" trust="5" unlock="gunsmith_tungsten_bore">
+      <Item id="deep_mobile_shield_fix_plate_tit" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_103_recon" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_plate_bench" />
+      <RequireTrust npc="benzene" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="zone" type="ReachLocation" target="deep_outpost_fight" count="1" />
+      <Objective id="pirates" type="KillTag" target="dda_pirate" count="8" />
+    </Objectives>
+    <Rewards marks="2400" trust="5" unlock="gunsmith_103_mold">
+      <Item id="physicorium_part" count="2" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_103_mold" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_103_recon" />
+      <RequireTrust npc="benzene" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="phy_parts" type="DeliverItem" target="physicorium_part" count="2" />
+      <Objective id="metal7" type="DeliverItem" target="deep_plate_metal_7" count="2" />
+    </Objectives>
+    <Rewards marks="3100" trust="5" unlock="gunsmith_blackbox_check">
+      <Item id="physicorium_barrel" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_tungsten_bore" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_shield_stress" />
+      <RequireTrust npc="benzene" count="18" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="tun_parts" type="DeliverItem" target="tungsten_phy_part" count="2" />
+      <Objective id="shield_phy" type="DeliverItem" target="deep_mobile_shield_fix_plate_phy" count="1" />
+    </Objectives>
+    <Rewards marks="3900" trust="5" unlock="gunsmith_blackbox_check">
+      <Item id="deep_mobile_shield_fix_plate_tun" count="1" />
+    </Rewards>
+  </Quest>
+
+  <Quest id="gunsmith_blackbox_check" npc="benzene" category="chain" repeatable="false" allowRemoteTurnIn="false">
+    <Prerequisites>
+      <RequireQuest id="gunsmith_103_mold" />
+      <RequireQuest id="gunsmith_tungsten_bore" />
+      <RequireTrust npc="benzene" count="30" />
+    </Prerequisites>
+    <Objectives>
+      <Objective id="jammer" type="DeliverItem" target="deep_thermal_interference" count="1" />
+    </Objectives>
+    <Rewards marks="6000" trust="6">
+      <Item id="deep_plate_metal_10" count="1" />
+      <Item id="tungsten_phy_barrel" count="1" />
+    </Rewards>
+  </Quest>
+</Quests>
