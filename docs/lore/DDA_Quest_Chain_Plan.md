@@ -1,176 +1,250 @@
-# DDA 独立 NPC 委托任务链完整规划（v2.0 · 44 任务长战役版）
+# DDA 独立 NPC 委托任务链完整规划（v3.0 · 塔科夫式信任阶梯 × 48 任务网状树）
 
-> **设计依据**：[DDA_World_Bible.md](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/docs/lore/DDA_World_Bible.md)（v2.0）与 [DDA_Hidden_Threads_Blueprint.md](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/docs/lore/DDA_Hidden_Threads_Blueprint.md)（v2.0）  
-> **引擎对齐**：100% 贴合 [QuestRules.cs](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/QuestSystem/QuestRules.cs) 与 [QuestRuntime.cs](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/QuestSystem/QuestRuntime.cs) 现有能力（零 C# 引擎改动即可运行）。  
-> **战役节奏目标**：匹配《潜渊症》30–50 巡回的完整长战役跨度，将 6 位发布者的剧情线细化为 **44 个递进委托**——每一环都对应新的材料/弹药/插板/地标跃迁与一格新的世界观切片，零注水、零信任度死锁。
+> **设计依据**：[DDA_World_Bible.md](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/docs/lore/DDA_World_Bible.md)（v2.0）、[DDA_Hidden_Threads_Blueprint.md](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/docs/lore/DDA_Hidden_Threads_Blueprint.md)（v2.0），并深度参考《逃离塔科夫》任务树（`eftarkov.com/task-tree`）的**信任度阶梯门控、平行分支网络与第一人称商人电报体文案**。  
+> **引擎对齐**：100% 适配 [QuestRules.cs](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/QuestSystem/QuestRules.cs) 与 [QuestState.cs](file:///Users/sherd/.t3/worktrees/Deep-Diving-Armory/feat-lore-080263d4b52e1ea4/.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/QuestSystem/QuestState.cs) 现有 `RequireTrust` / `RequireQuest` / `unlock` / `Reputation` 机制（零 C# 改动即可跑通）。
 
 ---
 
-## 一、工程对接与海域巡回节奏总览
+## 一、核心升级：借鉴《逃离塔科夫》的两大支柱
 
-### 1. 五大海域巡回节奏映射
-| 战役阶段 | 预计巡回 | 装备/弹药演进锚点 | 活跃任务数量 | 叙事与暗线推进重点 |
+### 1. 真正的“四阶信任阶梯（TL1 → TL4）”与网状分叉
+不再做“做完 A 自动解锁 B”的死板糖葫芦单线，而是让**信任度（Trust）真正成为阶段门槛与进度钥匙**：
+
+| 信任阶梯 | 所需信任值 | 对应战役海域 / 巡回 | 解锁内容特征 |
+| :--- | :--- | :--- | :--- |
+| **TL1 · 初识** | `0+` | 寒冰洋（1–8 巡回 / N3） | 入门试水单 + **专属可重复日常/悬赏**（每位发布者 1 个，用来灵活补信任度、永不死锁） |
+| **TL2 · 熟客** | `8+` | 欧罗巴海脊—高原（9–22 巡回 / N4–N6） | **平行双分支展开**（物资/工艺线 vs 战区/清剿线，玩家按航线自由决定先后顺序） |
+| **TL3 · 心腹** | `18+` | 高原—无光海原（23–38 巡回 / N7–N8） | 阵营机密单、**跨发布者联动暗线**（需同时满足两位 NPC 的信任度或前置）、热成像/神经芯片核心线索 |
+| **TL4 · 核心** | `30+` | 渊洋—热液前夜（39–50 巡回 / N9） | 各线压轴终局单、顶配钨刚/10 级板/作者彩蛋蓝图，以及终章 **《猎潮前夜》** |
+
+> **为什么信任度不再形同虚设？**  
+> 每档只做单条主干线，信任值会刻意比下一档门槛少 **2–4 点**——玩家需要顺手完成该发布者的另一条平行支线，或交 1–2 次贴合人设的日常/悬赏单，才能把关系推上 TL2 / TL3 / TL4，完美还原塔科夫“既要跑主线、也要养商人好感”的成长节奏。
+
+### 2. “塔科夫式”第一人称电报文案规范（6 种绝不串台的人格）
+放弃冷冰冰的第三人称系统说明（*“补给商需要两块硝石……”*）。所有 `desc` 均写成**发布者本人通过加密终端发来的一段第一人称语音/电报**，遵循四段式结构：**① 贴人设打招呼/吐槽近况 → ② 功利且具体的雇佣理由（自然夹带一丁点世界观或暗线细节，绝不说教）→ ③ 明确目标与交付方式 → ④ 性格化收尾**；下方的 `quote` 引用框则专放**画龙点睛的金句、单据手写批注或无线电截获残句**。
+
+| 发布者 | 塔科夫风味对标 | 专属称呼 | 语言气质与口癖特征 |
+| :--- | :--- | :--- | :--- |
+| **“台风大百货” 桃帽** (`peachhat`) | **Ragman + 温和版 Skier** | 船长 / 老主顾 | 鲜活、精明、爱凑热闹的深海包打听；张口就是货价行情、哪条航线挨了黑枪，偶尔流露老牌狠人的底气（柜台下压着战痕 MK17）。 |
+| **“枪匠” 氧化苯** (`benzene`) | **Mechanic（机械师）** | 伙计 / 手艺人 | 偏执于 0.02mm 公差、气密、导轨与电磁工艺的硬核极客技师；对政客不耐烦、动辄嫌弃军方批量货粗糙，唯独见了精密件与黑盒会两眼放光。 |
+| **艾琳·斯特林上校** (`sterling`) | **Peacekeeper（美商）** | 船长 / 外包单位 | 体面、冷硬、官僚腔拉满；满口“航道秩序”“资产保全”“合规结算”，把最脏的封锁、灭口和 `[备汛]` 秘密都包装成冷静的行政指令。 |
+| **政委 娜塔莉亚** (`natalia`) | **Prapor（俄商）+ 信念派政委** | 同志 / 船长 | 直爽、血性、务实护短、带着焊枪与伏特加味儿；痛骂联盟垄断从不绕弯，关照前线伤员，提起传奇大尉满是敬重，给钱痛快。 |
+| **哈兰德博士** (`harland`) | **冷漠实验派 Researcher** | 受托人 / 样本提供者 | 极度理性、学术冷漠到令人脊背发凉；把画皮换弹和死尸扣扳机称作“迷人的神经反射数据”，字里行间透着研究所视人命如耗材的寒意。 |
+| **D.D.A. 轮值对接员** (`liaison`) | **Fence + Lightkeeper 反差体** | 老板 / 船长 | TL1–TL2 满嘴摸鱼段子、假装小作坊看摊人；TL3 开始不经意漏出绝密代号与时间破绽；TL4 意外切错 3 秒毫无感情的总控加密频段。 |
+
+---
+
+## 二、6 位核心发布者与信任阶梯网状图（全 48 个任务）
+
+### 1. 发布者总览（`Quests/npcs.xml`）
+| Publisher `id` | 显示名与职称 | 现有可绑定 NPC | `faction` | 任务数（含 1 个日常） |
 | :--- | :--- | :--- | :--- | :--- |
-| **寒冰洋（N3）** | 第 1–8 巡回 | 硝石/硫磺、钢材、工程塑料、铅弹、3–4 级板 | 8 个 | 认识 6 位发布者、台风城停靠、浅层海盗清剿、捕蟹人电台初现 |
-| **欧罗巴海脊（N4–N5）** | 第 9–18 巡回 | 钛制枪械零件、钛弹、5 级板、精炼火药 | 10 个 | 打击海盗王、远港三号车床公差疑云、失联 4 号巡逻班、103 封锁线口误、初进莱特城 |
-| **高原（N6–N7）** | 第 19–28 巡回 | 刚素零件/弹箱、6–7 级板、机动护盾加固板 | 11 个 | 远港断供、`EU-0041` 匿名货箱、103 船厂核销单、凯腾堡与冰封据点拉锯、`[备汛]` 急件、无体温换弹画皮 |
-| **无光海原（N8）** | 第 29–38 巡回 | 深渊钨矿、精炼钨、雷刚弹、8 级板、热成像屏蔽仪 | 8 个 | 港务电池与跳频表线索、阿尔伯利特矿区封锁、GHOST 幽灵行动、“灰毛海狗”口误、神经芯片低频自激 |
-| **渊洋—热液前夜（N9）** | 第 39–50 巡回 | 钨刚、钨刚枪管、9–10 级板、贫铀弹 | 7 个 | 14 号寄存柜内鬼收束、氧化苯拆检热成像屏蔽仪、灰熊重装旅决战、黑灯之夜真相、**《猎潮前夜》3 秒切错频段** |
+| `peachhat` | **“台风大百货” 桃帽** · 台风城百货掌柜 *(作者彩蛋)* | `deep_mobile_city_typhoon_shop` | `location` | 8（7 主支 + 1 日常） |
+| `benzene` | **“枪匠” 氧化苯** · 首席兵器技师 *(作者彩蛋)* | `merchantarmory` *(进阶可建 `deep_typhoon_gunsmith`)* | `location` | 9（8 主支 + 1 日常） |
+| `sterling` | **艾琳·斯特林上校** · 联盟战区协调官 | `outpostmanagercoalition` | `coalition` | 10（9 主支 + 1 悬赏） |
+| `natalia` | **政委 娜塔莉亚** · 分离前线联络官 | `outpostmanagerseparatists` | `separatists` | 9（8 主支 + 1 悬赏） |
+| `harland` | **马库斯·哈兰德博士** · 防护研究所顾问 | `merchantresearch` | `coalition` | 7（6 主支 + 1 日常） |
+| `liaison` | **D.D.A. 轮值对接员** · 合约外勤观察员 | `deep_pigcat_easy` | `location` | 5（5 主支 + 1 悬赏 = 6）*注：总计 48 个* |
 
-### 2. 唯一建议补齐的轻量 XML 前置项
-目前 `NPC/*/*.xml` 中所有人类敌人 `tags` 统一只有 `bandit`（及精英的 `HideInThermalGoggles`）。落地前仅需给五大敌对势力补 5 个轻量阵营 tag（不影响现有任何机制）：
-- `dda_pirate`（海盗）、`dda_coalition`（联盟敌军）、`dda_separatist`（分离敌军）、`dda_ghost`（GHOST 幽灵）、`dda_grizzlies`（灰熊重装旅）。
+*(精确计数：桃帽 8 + 氧化苯 9 + 艾琳 9 + 娜塔莉亚 8 + 哈兰德 7 + 对接员 7 = **48 个任务**，每位均自带 1 个专属可重复单！)*
 
----
-
-## 二、6 位核心发布者规划（`Quests/npcs.xml`）
-
-| Publisher `id` | 角色名与定位 | 现有可绑定 NPC（开箱即用） | `faction` | 任务数 | 负责的主线 / 暗线职责 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `peachhat` | **“台风大百货” 桃帽** *(模组作者彩蛋)* | `npcIdentifier="deep_mobile_city_typhoon_shop"` | `location` | 7 | 台风城生态、日常火药补给、**暗线 1（`EU-0041`）**、**暗线 4（十四号寄存柜内鬼）** |
-| `benzene` | **“枪匠” 氧化苯** *(模组作者彩蛋)* | `npcIdentifier="merchantarmory"` *(进阶可在台风城新增 `deep_typhoon_gunsmith`)* | `location` | 8 | 四代枪械/插板/护盾工艺、**支线 A（103 船厂模具）**、**暗线 1（远港车床 + 拆检热屏蔽仪）** |
-| `sterling` | **艾琳·斯特林上校**（联盟战区协调官） | `npcIdentifier="outpostmanagercoalition"` | `coalition` | 9 | **第一幕海盗 → 第二幕莱特/凯腾堡 → `[备汛]` 急件 → 阿尔伯利特封锁 → 第四幕灰熊（N9）** |
-| `natalia` | **政委 娜塔莉亚**（分离前线联络官） | `npcIdentifier="outpostmanagerseparatists"` | `separatists` | 8 | **打破禁运 → 冰封据点 → 第三幕 GHOST 幽灵（N8）→ 第四幕黑灯之夜真相** |
-| `harland` | **马库斯·哈兰德博士**（防护研究所顾问） | `npcIdentifier="merchantresearch"` | `coalition` | 6 | **支线 B 捕蟹人三部曲（潮汐 B 线伏笔）** + **深渊钨矿与第 7 批神经芯片自激（潮汐 A 线伏笔）** |
-| `liaison` | **D.D.A. 轮值对接员**（“先辈” / 匿名接线员） | `npcIdentifier="deep_pigcat_easy"` *(后续可并入合约室 NPC)* | `location` | 6 | 战地实测悬赏、**暗线 3（103 封锁线口误 → 灰毛海狗 → 双线采样 → 《猎潮前夜》3 秒切错频段）** |
-
----
-
-## 三、任务链总拓扑图（6 条主干 · 44 个任务）
+### 2. 网状任务树总览（分阶段平行分支 + 跨商人交织）
 
 ```mermaid
 flowchart LR
-    subgraph TY1["台风大百货 · 桃帽 (7)"]
-        M1["M1 铅弹底火补货<br/>(repeat)"]
-        M2["M2 台风泊位报到"] --> M3["M3 止血带涨价潮"] --> M4["M4 远港断货风波"] --> M5["M5 EU-0041匿名箱"] --> M6["M6 不买声呐的检修工"] --> M7["M7 十四号寄存柜"]
+    subgraph P["桃帽 · 台风大百货 (8)"]
+        P0["[TL1 日常] 铅弹底火补货"]
+        P1["[TL1] 台风泊位报到"] --> P2["[TL2 8+] 止血带涨价潮"]
+        P1 --> P3["[TL2 8+] 远港断货风波"]
+        P2 --> P4["[TL3 18+] EU-0041匿名箱"]
+        P3 --> P4
+        P4 --> P5["[TL3 18+] 不买声呐的检修工"]
+        P5 --> P6["[TL4 30+] 十四号寄存柜"]
+        P4 --> P7["[TL4 30+] 柜台底下的MK17"]
     end
 
-    subgraph TY2["枪匠线 · 氧化苯 (8)"]
-        C1["C1 水密工程塑料"] --> C2["C2 钛制机匣"] --> C3["C3 公差0.02毫米"] --> C4["C4 未完工的儒艮"] --> C5["C5 103核销单"] --> C6["C6 刚素盾板耐压测"] --> C7["C7 钨刚膛线校准"] --> C8["C8 解不开的黑盒子"]
+    subgraph B["氧化苯 · 首席枪匠 (9)"]
+        B0["[TL1 日常] 废板拆解回收"]
+        B1["[TL1] 水密工程塑料"] --> B2["[TL1] 第一批钛制机匣"]
+        B2 --> B3["[TL2 8+] 公差0.02毫米"]
+        B2 --> B4["[TL2 8+] 刚素盾板耐压测"]
+        B3 --> B5["[TL3 18+] 未完工的儒艮"]
+        B5 --> B6["[TL3 18+] 103船厂核销单"]
+        B4 --> B7["[TL3 18+] 钨刚膛线校准"]
+        B6 --> B8["[TL4 30+] 解不开的黑盒子"]
+        B7 --> B8
     end
 
-    subgraph CO["联盟线 · 艾琳上校 (9)"]
-        S1["S1 航道巡逻"] --> S2["S2 信标抢修料"] --> S3["S3 铁颚的过路税"] --> S4["S4 莱特城外围"] --> S5["S5 凯腾堡补给线"] --> S6["S6 备汛优先配发"] --> S7["S7 阿尔伯利特封锁"] --> S8["S8 铁幕试探"] --> S9["S9 砸碎铁幕(N9)"]
+    subgraph CO["艾琳上校 · 联盟战区 (9)"]
+        S0["[TL1 悬赏] 航道清道夫"]
+        S1["[TL1] 寒冰洋巡逻"] --> S2["[TL1] 信标站抢修料"]
+        S2 --> S3["[TL2 8+] 铁颚的过路税"]
+        S3 --> S4["[TL2 8+] 莱特城外围稳控"]
+        S3 --> S5["[TL2 8+] 凯腾堡补给线"]
+        S4 --> S6["[TL3 18+] 备汛优先配发"]
+        S5 --> S6
+        S6 --> S7["[TL3 18+] 阿尔伯利特封锁令"]
+        S7 --> S8["[TL4 30+] 砸碎铁幕(N9)"]
     end
 
-    subgraph SP["分离线 · 娜塔莉亚政委 (8)"]
-        N1["N1 打破配额封锁"] --> N2["N2 地下压弹点"] --> N3["N3 拔除封锁哨"] --> N4["N4 冰封洞穴屯兵"] --> N5["N5 死寂的哨站"] --> N6["N6 熄灯之后(N8)"] --> N7["N7 大尉的酒壶"] --> N8["N8 14号测井的铁罐"]
+    subgraph SP["娜塔莉亚政委 · 分离前线 (8)"]
+        N0["[TL1 悬赏] 敌后袭扰"]
+        N1["[TL1] 打破配额封锁"] --> N2["[TL1] 地下压弹点"]
+        N2 --> N3["[TL2 8+] 拔除封锁哨"]
+        N2 --> N4["[TL2 8+] 冰封洞穴屯兵"]
+        N3 --> N5["[TL3 18+] 死寂的哨站"]
+        N4 --> N5
+        N5 --> N6["[TL3 18+] 熄灯之后(N8)"]
+        N6 --> N7["[TL4 30+] 14号测井的铁罐"]
     end
 
-    subgraph RE["防护研究所 · 哈兰德 (6)"]
-        H1["H1 木卫二睡前故事"] --> H2["H2 失联4号巡逻班"] --> H3["H3 无体温换弹(B线)"]
-        H4["H4 深渊硬度极限"] --> H5["H5 低频波与耳鸣"] --> H6["H6 第7批静默回收(A线)"]
+    subgraph RE["哈兰德博士 · 防护研究所 (7)"]
+        H0["[TL1 日常] 生物活性采样"]
+        H1["[TL1] 木卫二睡前故事"] --> H2["[TL2 8+] 失联4号巡逻班"] --> H3["[TL3 18+] 无体温换弹(B线)"]
+        H4["[TL2 8+] 深渊硬度极限"] --> H5["[TL3 18+] 低频波与耳鸣"] --> H6["[TL4 30+] 第7批静默回收(A线)"]
     end
 
-    subgraph DDA["幕后黑箱 · D.D.A. 对接员 (6)"]
-        D1["D1 外围战地实测<br/>(bounty)"] --> D2["D2 刚游过封锁线"] --> D3["D3 无名水流读数"] --> D4["D4 灰毛海狗"] --> D5["D5 双线抗压采样"] --> D6["D6 猎潮前夜"]
+    subgraph DDA["轮值对接员 · 幕后 D.D.A. (7)"]
+        D0["[TL1 悬赏] 外围战地实测"]
+        D1["[TL1] 刚游过封锁线"] --> D2["[TL2 8+] 无名水流读数"]
+        D1 --> D3["[TL2 8+] 匿名弹道校验"]
+        D2 --> D4["[TL3 18+] 灰毛海狗"]
+        D3 --> D4
+        D4 --> D5["[TL3 18+] 双线抗压采样"]
+        D5 --> D6["[TL4 30+] 猎潮前夜"]
     end
 
-    C2 -.->|"跨线信任"| M6
-    N6 -.->|"跨线解锁"| D6
-    S9 -.->|"跨线解锁"| D6
+    B3 -.->|"跨商人 Trust≥8"| P5
+    N6 -.->|"击穿N8"| D6
+    S8 -.->|"击穿N9"| D6
 ```
 
 ---
 
-## 四、44 个任务逐项设计明细（全部核对真实 ID 与信任度无死锁）
+## 三、48 个任务逐项明细（全员挂钩 TL1–TL4 信任阶梯）
 
-### 文件 1：`Quests/quests_typhoon.xml`（台风城 · 桃帽 7 个 + 氧化苯 8 个 = 15 个）
+> **前置 XML 建议**：给 `NPC/*/*.xml` 补 5 个阵营 tag（`dda_pirate` / `dda_coalition` / `dda_separatist` / `dda_ghost` / `dda_grizzlies`），不影响现有机制。
 
-#### A. “台风大百货” 桃帽（`peachhat`）—— 商路、民生与台风内鬼 *(作者彩蛋)*
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+### 文件 1：`Quests/quests_typhoon.xml`（桃帽 8 个 + 氧化苯 9 个 = 17 个）
+
+#### A. “台风大百货” 桃帽（`peachhat` · 8 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | `typhoon_powder_stock` | 寒冰洋 | `repeat` / 当面 | 无 | `DeliverItem`: `saltpeter_mineral` ×3、`sulfur_mineral` ×3 | 450 马克、信任 +2、`deep_ammobox_lead` ×1 | 浅层火药短缺日常周转。*“前线又在拿铅弹泼水了，有多少硝石硫磺台风大百货全吃。”* |
-| 2 | `typhoon_dock_run` | 寒冰洋 | `main` / 当面 | 无 | `ReachLocation`: `deep_mobile_city_typhoon` ×1；`DeliverItem`: `steel` ×4 | 600 马克、信任 +3、解锁 `typhoon_medical_shortage` | 引导初访台风移动城市。*“停稳了就来柜台报个到，台风号不问出处，只认货和马克。”* |
-| 3 | `typhoon_medical_shortage` | 海脊 | `chain` / 当面 | `typhoon_dock_run` | `ReachLocation`: `city` ×1；`DeliverItem`: `deep_medical_kit_small` ×2 | 950 马克、信任 +3、`deep_medical_kit` ×1、解锁 `typhoon_farport_backlog` | 战火外溢导致殖民地止血带断货。*“上周三艘运货艇刚过海脊就挨了黑枪，现在绷带比威士忌还好卖。”* |
-| 4 | `typhoon_farport_backlog` | 高原 | `chain` / 当面 | `typhoon_medical_shortage` + `peachhat`≥6 | `DeliverItem`: `deep_ammobox_titanium` ×1、`engineeringplastic` ×4 | 1500 马克、信任 +3、`deep_ammobox_copper` ×1、解锁 `typhoon_0041_crate` | 引出远港停造民用艇、货源断供。*“远港那边突然停了所有民用单子，连台风大百货都得拆旧箱子凑复装弹。”* |
-| 5 | `typhoon_0041_crate` | 高原 | `chain` / 当面 | `typhoon_farport_backlog` + `peachhat`≥9 | `DeliverItem`: `deep_ammobox_physicorium` ×1 | 2100 马克、信任 +4、`deep_plate_metal_7` ×1、解锁 `typhoon_beacon_batteries` | **暗线 1**：查无此号的 `EU-0041` 匿名箱。*“箱底印着 EU-0041，工商终端却说这号从未存在过——管它呢，货比军方的还规整。”* |
-| 6 | `typhoon_beacon_batteries` | 无光 | `chain` / 远程 | `typhoon_0041_crate` + `benzene`≥6 | `ReachLocation`: `mine` ×1；`DeliverItem`: `deep_m18` ×2、`deep_RGO` ×2 | 2600 马克、信任 +4、`deep_plate_ceramic_7` ×1、解锁 `typhoon_leak_trail` | **暗线 4 中段**：外包检修工狂买高功率信标电池却不买声呐。*“港务局新来的外包工怪得很，专挑长距水下信标电池扫货，出手比船长还阔绰。”* |
-| 7 | `typhoon_leak_trail` | 渊洋 | `chain` / 远程 | `typhoon_beacon_batteries` + `peachhat`≥16 | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `bandit` ×10；`DeliverItem`: `deep_gold_bar` ×1 | 3800 马克、信任 +5、`deep_ammobox_tungsten_physicorium` ×1 *(可选彩蛋加赠 `mk17_peach_design`)* | **暗线 4 收束**：排班表尾款指向台风大百货 14 号匿名寄存柜。*“十四号柜那个匿名租户再也没露过面……老霍尔姆要是知道，准得把人塞进鱼雷管。”* |
+| 1 | `typhoon_powder_stock` | TL1 | `repeat` / 当面 | 无 | `DeliverItem`: `saltpeter_mineral`×3、`sulfur_mineral`×3 | 450 / **+3** / `deep_ammobox_lead`×1 | 专属日常，快速补信任度至 TL2 |
+| 2 | `typhoon_dock_run` | TL1 | `main` / 当面 | 无 | `ReachLocation`: `deep_mobile_city_typhoon`×1；`DeliverItem`: `steel`×4 | 650 / **+5** / 解锁 `typhoon_medical_shortage,typhoon_farport_backlog` | 初访台风城，一次即得 +5（配 1 次日常稳进 TL2！） |
+| 3 | `typhoon_medical_shortage` | TL2 | `chain` / 当面 | `typhoon_dock_run` + `peachhat`≥8 | `ReachLocation`: `city`×1；`DeliverItem`: `deep_medical_kit_small`×2 | 1100 / **+5** / `deep_medical_kit`×1 / 解锁 `typhoon_0041_crate` | 平行分支①：航道挨黑枪导致止血带暴涨 |
+| 4 | `typhoon_farport_backlog` | TL2 | `chain` / 当面 | `typhoon_dock_run` + `peachhat`≥8 | `DeliverItem`: `deep_ammobox_titanium`×1、`engineeringplastic`×4 | 1600 / **+5** / `deep_ammobox_copper`×1 / 解锁 `typhoon_0041_crate` | 平行分支②：远港突然停接民用单、复装弹断供 |
+| 5 | `typhoon_0041_crate` | TL3 | `chain` / 当面 | `typhoon_medical_shortage` + `typhoon_farport_backlog` + `peachhat`≥18 | `DeliverItem`: `deep_ammobox_physicorium`×1 | 2400 / **+6** / `deep_plate_metal_7`×1 / 解锁 `typhoon_beacon_batteries,typhoon_mk17_legacy` | **暗线 1**：查无此号的 `EU-0041` 匿名货箱 |
+| 6 | `typhoon_beacon_batteries` | TL3 | `chain` / 远程 | `typhoon_0041_crate` + `peachhat`≥18 + `benzene`≥8 | `ReachLocation`: `mine`×1；`DeliverItem`: `deep_m18`×2、`deep_RGO`×2 | 2900 / **+6** / `deep_plate_ceramic_7`×1 / 解锁 `typhoon_leak_trail` | **暗线 4（跨商人）**：联合氧化苯的线索，锁定狂买高功率电池的外包检修工 |
+| 7 | `typhoon_leak_trail` | TL4 | `chain` / 远程 | `typhoon_beacon_batteries` + `peachhat`≥30 | `ReachLocation`: `deep_outpost_fight`×1；`KillTag`: `bandit`×10；`DeliverItem`: `deep_gold_bar`×1 | 4500 / **+6** / `deep_ammobox_tungsten_physicorium`×1 | **暗线 4 收束**：十四号寄存柜匿名的台风排班表尾款 |
+| 8 | `typhoon_mk17_legacy` | TL4 | `chain` / 当面 | `typhoon_0041_crate` + `peachhat`≥30 | `DeliverItem`: `tungsten_phy_part`×2、`deep_ammobox_fulgurium_physicorium`×1 | 5200 / **+6** / **`mk17_peach_design`×1** | **作者彩蛋压轴单**：桃帽认可你这支船队，把柜台底下老伙计 MK17 的专属设计图托付给你 |
 
-#### B. “枪匠” 氧化苯（`benzene`）—— 枪械演化、103 船厂旧账与黑盒拆检 *(作者彩蛋)*
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+#### B. “枪匠” 氧化苯（`benzene` · 9 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 8 | `gunsmith_plastic_test` | 寒冰洋 | `main` / 当面 | 无 | `DeliverItem`: `engineeringplastic` ×4 | 550 马克、信任 +3、`deep_plate_carrier` ×1、解锁 `gunsmith_titanium_parts` | 工程塑料防水革命与枪匠入门。*“在两千米水压下，卡壳半秒就够画皮把你肋骨拆下来当笛子吹了。”* |
-| 9 | `gunsmith_titanium_parts` | 海脊 | `chain` / 当面 | `gunsmith_plastic_test` | `DeliverItem`: `titaniumaluminiumalloy_part` ×2、`deep_plate_metal_4` ×2 | 1000 马克、信任 +3、`titaniumaluminiumalloy_barrel` ×1、解锁 `gunsmith_plate_bench` | 现代轻量化钛件替代二战铁疙瘩。*“别留恋那些老掉牙的铁管子了，换上钛铝合金机匣，你的手腕会谢谢你。”* |
-| 10 | `gunsmith_plate_bench` | 海脊 | `chain` / 当面 | `gunsmith_titanium_parts` + `benzene`≥6 | `DeliverItem`: `deep_plate_metal_5` ×2、`deep_plate_ceramic_5` ×1 | 1400 马克、信任 +3、`deep_plate_metal_6` ×1、解锁 `gunsmith_103_recon` | **暗线 1 起点**：吐槽 0.02mm 导轨公差像极了沉没的远港三号车床。*“这倒角公差只有远港三号车床铣得出来——可它六年前就在 103 船厂登记沉没了，怪事。”* |
-| 11 | `gunsmith_103_recon` | 高原 | `chain` / 远程 | `gunsmith_plate_bench` + `benzene`≥9 | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `dda_pirate` ×8 | 1900 马克、信任 +3、`deep_mobile_shield_fix_plate_tit` ×1、解锁 `gunsmith_103_mold` | **支线 A 上半**：回忆 103 超钢船厂停摆与未完工的儒艮级潜艇。*“我走那天那艘儒艮龙骨还没焊完，现在倒好，全成了海盗藏军火的窟窿。”* |
-| 12 | `gunsmith_103_mold` | 高原 | `chain` / 当面 | `gunsmith_103_recon` + `benzene`≥12 | `DeliverItem`: `physicorium_part` ×2、`deep_mobile_shield_fix_plate_steel` ×2 | 2500 马克、信任 +4、`physicorium_barrel` ×1、解锁 `gunsmith_shield_stress` | **支线 A 收束 + 暗线 1**：库管老周称三号车床沉没前两天被“深潜物流”提走。*“老周在核销单背面写了行铅笔字——三号车床压根没沉，是被人拿上面签的放行条连夜吊走的。”* |
-| 13 | `gunsmith_shield_stress` | 无光 | `chain` / 当面 | `gunsmith_103_mold` + `benzene`≥16 | `DeliverItem`: `deep_plate_metal_7` ×2、`deep_mobile_shield_fix_plate_phy` ×1 | 3200 马克、信任 +4、`deep_plate_ceramic_8` ×1、解锁 `gunsmith_tungsten_bore` | 机动护盾刚素强化 + **暗线 4 旁证**（港务员来借军用跳频表）。*“对了，上周有个港务局小子来借旧版军用跳频表，说是修压载舱信号灯——修信号灯用得着跳频？”* |
-| 14 | `gunsmith_tungsten_bore` | 渊洋 | `chain` / 当面 | `gunsmith_shield_stress` + `benzene`≥20 | `DeliverItem`: `tungsten_phy_part` ×2、`tungsten_phy_barrel` ×1 | 4200 马克、信任 +4、`deep_mobile_shield_fix_plate_tun` ×1、解锁 `gunsmith_blackbox_check` | 钨刚材料学巅峰体验。*“精炼钨掺刚素，车刀报废三把才磨出一根膛线——但打穿十级板的那一刻，值了。”* |
-| 15 | `gunsmith_blackbox_check` | 渊洋 | `chain` / 当面 | `gunsmith_tungsten_bore` + `benzene`≥24 | `DeliverItem`: `deep_thermal_interference` ×1 | 5500 马克、信任 +6、`deep_plate_metal_10` ×1 | **暗线 1 × 热成像屏蔽仪引爆**：拆检缴获的 GHOST 热成像干扰器。*“外壳是联盟研究所的封条，可里头主板飞线的手法……操，跟 103 船厂失踪那批老师傅一模一样。”* |
+| 9 | `gunsmith_scrap_plates` | TL1 | `repeat` / 当面 | 无 | `DeliverItem`: `steel`×3、`engineeringplastic`×2 | 480 / **+3** / `deep_plate_metal_4`×1 | 专属日常：收工坊边角料与护甲耗材，灵活补信任 |
+| 10 | `gunsmith_plastic_test` | TL1 | `main` / 当面 | 无 | `DeliverItem`: `engineeringplastic`×4 | 600 / **+3** / `deep_plate_carrier`×1 / 解锁 `gunsmith_titanium_parts` | 工程塑料防水革命与枪匠入门 |
+| 11 | `gunsmith_titanium_parts` | TL1 | `chain` / 当面 | `gunsmith_plastic_test` | `DeliverItem`: `titaniumaluminiumalloy_part`×2、`deep_plate_metal_4`×2 | 1050 / **+3** / `titaniumaluminiumalloy_barrel`×1 / 解锁 `gunsmith_plate_bench,gunsmith_shield_stress` | 告别二战铁枪，迈进钛制机匣时代（做完得 6，补 1 次日常进 TL2！） |
+| 12 | `gunsmith_plate_bench` | TL2 | `chain` / 当面 | `gunsmith_titanium_parts` + `benzene`≥8 | `DeliverItem`: `deep_plate_metal_5`×2、`deep_plate_ceramic_5`×1 | 1500 / **+5** / `deep_plate_metal_6`×1 / 解锁 `gunsmith_103_recon` | 平行分支① + **暗线 1 起点**：吐槽 0.02mm 公差像极了沉没的远港三号车床 |
+| 13 | `gunsmith_shield_stress` | TL2 | `chain` / 当面 | `gunsmith_titanium_parts` + `benzene`≥8 | `DeliverItem`: `deep_mobile_shield_fix_plate_steel`×2、`deep_plate_metal_6`×1 | 1800 / **+5** / `deep_mobile_shield_fix_plate_tit`×1 / 解锁 `gunsmith_tungsten_bore` | 平行分支② + **暗线 4 旁证**：机动护盾测试，顺嘴抱怨港务局小子来借军用跳频表 |
+| 14 | `gunsmith_103_recon` | TL3 | `chain` / 远程 | `gunsmith_plate_bench` + `benzene`≥18 | `ReachLocation`: `deep_outpost_fight`×1；`KillTag`: `dda_pirate`×8 | 2400 / **+5** / `physicorium_part`×2 / 解锁 `gunsmith_103_mold` | **支线 A 上半**：103 船厂停摆与没焊完龙骨的儒艮级 |
+| 15 | `gunsmith_103_mold` | TL3 | `chain` / 当面 | `gunsmith_103_recon` + `benzene`≥18 | `DeliverItem`: `physicorium_part`×2、`deep_plate_metal_7`×2 | 3100 / **+5** / `physicorium_barrel`×1 / 解锁 `gunsmith_blackbox_check` | **支线 A 收束 + 暗线 1**：库管老周核销单揭露三号车床沉没前两天已被连夜提走 |
+| 16 | `gunsmith_tungsten_bore` | TL3 | `chain` / 当面 | `gunsmith_shield_stress` + `benzene`≥18 | `DeliverItem`: `tungsten_phy_part`×2、`deep_mobile_shield_fix_plate_phy`×1 | 3900 / **+5** / `deep_mobile_shield_fix_plate_tun`×1 / 解锁 `gunsmith_blackbox_check` | 钨刚膛线与深海重盾巅峰工艺（顺带吐槽台后高斯步枪原型机） |
+| 17 | `gunsmith_blackbox_check` | TL4 | `chain` / 当面 | `gunsmith_103_mold` + `gunsmith_tungsten_bore` + `benzene`≥30 | `DeliverItem`: `deep_thermal_interference`×1 | 6000 / **+6** / `deep_plate_metal_10`×1、`tungsten_phy_barrel`×1 | **暗线 1 × 热成像屏蔽仪引爆**：联盟封条下竟藏着 103 船厂失踪老师傅的飞线手法 |
 
 ---
 
-### 文件 2：`Quests/quests_coalition.xml`（联盟 · 艾琳·斯特林上校，9 个）
-
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+### 文件 2：`Quests/quests_coalition.xml`（艾琳·斯特林上校 · 9 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 声望 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 16 | `co_pirate_patrol` | 寒冰洋 | `main` / 远程 | 无 | `KillTag`: `dda_pirate` ×5 | 750 马克、信任 +3、联盟 +3、分离 +1、解锁 `co_beacon_recovery` | **第一幕开篇**：浅层清剿与“禁用舰炮炸站”铁规。*“联盟付你马克是为了完整收回哨站，不是看你把反应堆炸成废铁。”* |
-| 17 | `co_beacon_recovery` | 寒冰洋 | `chain` / 当面 | `co_pirate_patrol` | `ReachLocation`: `outpost` ×1；`DeliverItem`: `steel` ×4、`deep_ammobox_lead` ×1 | 1100 马克、信任 +3、联盟 +3、解锁 `co_ironjaw_bounty` | 对应短兵相接：夺回并修补被海盗占据的中继信标站。*“信标站一瘫痪，整条浅层航线就成了瞎子。先稳住后勤，再谈清巢。”* |
-| 18 | `co_ironjaw_bounty` | 海脊 | `chain` / 远程 | `co_beacon_recovery` + `sterling`≥6 | `KillTag`: `dda_pirate` ×10；`DeliverItem`: `deep_plate_metal_5` ×1 | 1800 马克、信任 +4、联盟 +5、分离 +2、解锁 `co_latte_perimeter` | **第一幕高潮**：打击海盗王“铁颚”萨姆，起疑背后放货源头。*“一个矿业保安出身的逃犯，哪来的成箱制式步枪和芳纶插板？清干净，把货扣下来。”* |
-| 19 | `co_latte_perimeter` | 海脊 | `chain` / 远程 | `co_ironjaw_bounty` + `sterling`≥10 | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `dda_separatist` ×6 | 2200 马克、信任 +3、联盟 +5、分离 -4、解锁 `co_kaitenburg_line` | **第二幕开端**：莱特城等示范城市卷入正规军拉锯。*“泰勒·莱特修这些标准城是为了让人类体面活下去，不是给分离分子当掩体用的。”* |
-| 20 | `co_kaitenburg_line` | 高原 | `chain` / 当面 | `co_latte_perimeter` + `sterling`≥13 | `KillTag`: `dda_separatist` ×10；`DeliverItem`: `deep_ammobox_titanium` ×2 | 2800 马克、信任 +4、联盟 +6、分离 -5、`deep_tactec` ×1、解锁 `co_beixun_supply` | 呼应“兵戎相见”凯腾堡争夺与机密文件外泄。*“凯腾堡丢了两次，我们不能再丢第三次。备齐弹药，把分离主力顶出航线中心。”* |
-| 21 | `co_beixun_supply` | 高原 | `chain` / 当面 | `co_kaitenburg_line` + `sterling`≥17 | `DeliverItem`: `deep_tungsten` ×4、`deep_ammobox_physicorium` ×1 | 3400 马克、信任 +4、联盟 +6、分离 -4、`deep_plate_ceramic_6` ×1、解锁 `co_mining_chokepoint` | **暗线 2 核心**：远港紧急调度令上的 **`[备汛·最高优先级]`** 红章。*“单子上印的‘备汛’二字不用你理解，也别跟外人提。把钨料交齐，领钱走人。”* |
-| 22 | `co_mining_chokepoint` | 无光 | `chain` / 远程 | `co_beixun_supply` + `sterling`≥21 | `ReachLocation`: `mine` ×1；`KillTag`: `dda_separatist` ×12 | 4000 马克、信任 +4、联盟 +8、分离 -7、`deep_ammobox_fulgurium_physicorium` ×1、解锁 `co_grizzlies_probe` | 阿尔伯利特矿业全面封锁，严禁外船靠近 14 号测井。*“阿尔伯利特的钨脉决定了谁能撑过下一个十年。至于 14 号井封舱的理由——那不在你的权限内。”* |
-| 23 | `co_grizzlies_probe` | 渊洋 | `chain` / 远程 | `co_mining_chokepoint` + `sterling`≥25 | `KillTag`: `dda_grizzlies` ×4；`DeliverItem`: `deep_plate_metal_8` ×1 | 4800 马克、信任 +5、联盟 +10、分离 -8、`deep_plate_metal_9` ×1、解锁 `co_grizzlies_wall` | **第四幕序章**：初次遭遇灰熊重装旅与防水重甲压迫感。*“普通穿甲弹打在灰熊主宰身上跟敲铁皮差不多。带回实战损伤样本，总部要重新核算弹药配额。”* |
-| 24 | `co_grizzlies_wall` | 渊洋 | `chain` / 远程 | `co_grizzlies_probe` + `sterling`≥30 | `KillTag`: `dda_grizzlies` ×8 | 6500 马克、信任 +6、联盟 +14、分离 -12、`deep_ammobox_tungsten_physicorium` ×1 | **第四幕 N9 高潮**：击溃渊洋灰熊主力，夺回通道。*“灰熊大尉占着渊洋口不肯退。不管他们从 14 号矿井底下看到了什么，绝不能让他们把通道炸开。”* |
+| 18 | `co_pirate_bounty` | TL1 | `bounty` / 远程 | 无 *(可重复)* | `KillTag`: `dda_pirate`×6 | 750 / **+3** / 联盟 +2 / — | 专属悬赏：常驻航道清匪，灵活冲联盟信任 |
+| 19 | `co_pirate_patrol` | TL1 | `main` / 远程 | 无 | `KillTag`: `dda_pirate`×5 | 800 / **+3** / 联盟 +3、分离 +1 / 解锁 `co_beacon_recovery` | 初识艾琳“不许舰炮炸站”的官僚铁规 |
+| 20 | `co_beacon_recovery` | TL1 | `chain` / 当面 | `co_pirate_patrol` | `ReachLocation`: `outpost`×1；`DeliverItem`: `steel`×4、`deep_ammobox_lead`×1 | 1150 / **+3** / 联盟 +3 / 解锁 `co_ironjaw_bounty` | 夺回并修复海盗占领的中继信标站 |
+| 21 | `co_ironjaw_bounty` | TL2 | `chain` / 远程 | `co_beacon_recovery` + `sterling`≥8 | `KillTag`: `dda_pirate`×10；`DeliverItem`: `deep_plate_metal_5`×1 | 1900 / **+5** / 联盟 +5、分离 +2 / 解锁 `co_latte_perimeter,co_kaitenburg_line` | 打击海盗王“铁颚”萨姆，起疑走私货源 |
+| 22 | `co_latte_perimeter` | TL2 | `chain` / 远程 | `co_ironjaw_bounty` + `sterling`≥8 | `ReachLocation`: `deep_outpost_fight`×1；`KillTag`: `dda_separatist`×6 | 2300 / **+4** / 联盟 +5、分离 -4 / 解锁 `co_beixun_supply` | 平行分支①：莱特城标准示范城卷入正规军拉锯 |
+| 23 | `co_kaitenburg_line` | TL2 | `chain` / 当面 | `co_ironjaw_bounty` + `sterling`≥8 | `KillTag`: `dda_separatist`×10；`DeliverItem`: `deep_ammobox_titanium`×2 | 2900 / **+5** / 联盟 +6、分离 -5 / `deep_tactec`×1 / 解锁 `co_beixun_supply` | 平行分支②：凯腾堡补给线争夺与机密文件危机 |
+| 24 | `co_beixun_supply` | TL3 | `chain` / 当面 | `co_latte_perimeter` + `co_kaitenburg_line` + `sterling`≥18 | `DeliverItem`: `deep_tungsten`×4、`deep_ammobox_physicorium`×1 | 3600 / **+6** / 联盟 +6、分离 -4 / `deep_plate_ceramic_6`×1 / 解锁 `co_mining_chokepoint` | **暗线 2 核心**：远港调度令上的 `[备汛·最高优先级]` 红章 |
+| 25 | `co_mining_chokepoint` | TL3 | `chain` / 远程 | `co_beixun_supply` + `sterling`≥18 | `ReachLocation`: `mine`×1；`KillTag`: `dda_separatist`×12 | 4400 / **+6** / 联盟 +8、分离 -7 / `deep_ammobox_fulgurium_physicorium`×1 / 解锁 `co_grizzlies_wall` | 阿尔伯利特矿业强行封锁，绝口不提 14 号测井事故 |
+| 26 | `co_grizzlies_wall` | TL4 | `chain` / 远程 | `co_mining_chokepoint` + `sterling`≥30 | `KillTag`: `dda_grizzlies`×8；`DeliverItem`: `deep_plate_metal_8`×1 | 6800 / **+6** / 联盟 +14、分离 -12 / `deep_ammobox_tungsten_physicorium`×1 | **第四幕 N9 高潮**：击溃渊洋灰熊重装旅主力 |
 
 ---
 
-### 文件 3：`Quests/quests_separatists.xml`（分离主义 · 政委 娜塔莉亚，8 个）
-
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+### 文件 3：`Quests/quests_separatists.xml`（政委 娜塔莉亚 · 8 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 声望 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 25 | `sp_break_embargo` | 寒冰洋 | `main` / 当面 | 无 | `DeliverItem`: `deep_refine_saltpeter` ×3、`deep_refine_sulfur` ×3 | 850 马克、信任 +3、分离 +4、联盟 -2、解锁 `sp_underground_reloading` | 分离线开篇：打破联盟原料配额垄断。*“联盟管我们叫叛军，可这冰盖下每一米管道都是矿工拿命焊出来的。”* |
-| 26 | `sp_underground_reloading` | 海脊 | `chain` / 当面 | `sp_break_embargo` | `ReachLocation`: `mine` ×1；`DeliverItem`: `engineeringplastic` ×4、`deep_ammobox_lead` ×2 | 1300 马克、信任 +3、分离 +4、联盟 -3、`deep_ammobox_titanium` ×1、解锁 `sp_cut_blockade` | 矿工与船厂老技师搭起地下压弹自给线。*“远港的产线被联盟锁死了，我们就用矿洞里的旧机床自己压子弹。”* |
-| 27 | `sp_cut_blockade` | 高原 | `chain` / 远程 | `sp_underground_reloading` + `natalia`≥6 | `KillTag`: `dda_coalition` ×6 | 2000 马克、信任 +4、分离 +6、联盟 -5、解锁 `sp_frozen_staging` | 正规军正面交锋，拔除联盟封锁哨。*“他们把民用船坞全改成了弹药厂，却连一颗平价子弹都不肯卖给独立船队。”* |
-| 28 | `sp_frozen_staging` | 高原 | `chain` / 当面 | `sp_cut_blockade` + `natalia`≥10 | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `dda_coalition` ×10；`DeliverItem`: `deep_medical_kit_wound` ×2 | 2900 马克、信任 +4、分离 +7、联盟 -6、`deep_medical_kit_grizzly` ×1、解锁 `sp_ghost_traces` | 引出冰封据点极寒蔽声呐屯兵点与医疗保障。*“零下水域能挡住联盟声呐，可也冻坏了不少小伙子的手。把创伤包送进去，下一仗会很惨。”* |
-| 29 | `sp_ghost_traces` | 无光 | `chain` / 远程 | `sp_frozen_staging` + `natalia`≥14 | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `dda_ghost` ×3 | 3800 马克、信任 +4、分离 +8、联盟 -8、`deep_plate_ceramic_7` ×1、解锁 `sp_ghost_hunt` | **第三幕 N8 序章**：无光海原分离哨站一夜无声覆灭，初遇热屏蔽幽灵。*“没有求救信号，没有墙体破口，热成像回放里整条走廊空无一人——那是 GHOST 动手了。”* |
-| 30 | `sp_ghost_hunt` | 无光 | `chain` / 当面 | `sp_ghost_traces` + `natalia`≥18 | `KillTag`: `dda_ghost` ×6；`DeliverItem`: `deep_thermal_interference` ×1 | 5000 马克、信任 +5、分离 +12、联盟 -12、`deep_ammobox_fulgurium_physicorium` ×1、解锁 `sp_blackout_vodka` | **第三幕 N8 高潮**：狙杀幽灵并回收绝密热成像屏蔽仪。*“带回一台他们腰上的干扰器。大尉说就算撬不开权限锁，也得让兄弟们记住它的频段。”* |
-| 31 | `sp_blackout_vodka` | 渊洋 | `chain` / 当面 | `sp_ghost_hunt` + `natalia`≥23 | `DeliverItem`: `deep_tungsten` ×4、`deep_plate_ceramic_8` ×1 | 4600 马克、信任 +4、分离 +6、联盟 -4、`deep_plate_metal_9` ×1、解锁 `sp_blackout_truth` | 过渡揭秘“黑灯之夜”大尉摔碎目镜、用曳光弹烧亮走廊的惨烈反推。*“大尉当年就是把瞎了的热成像砸在地上，吼着让机枪手拿燃烧瓶把走廊点亮，才从幽灵手里活下来的。”* |
-| 32 | `sp_blackout_truth` | 渊洋 | `chain` / 远程 | `sp_blackout_vodka` + `natalia`≥27 | `ReachLocation`: `deep_outpost_fight` ×1；`DeliverItem`: `deep_tungsten_phy` ×4 | 5800 马克、信任 +6、分离 +10、联盟 -8、`deep_plate_ceramic_10` ×1 | **第四幕暗线 2 爆发**：热成像里同样没有体温的，不止是幽灵，还有从 14 号井捞上来的“死人”。*“火光炸开那一刻，连幽灵都在往那三个抽搐的铁罐子泼铝热剂……同志，大潮要来了，备好穿甲弹。”* |
+| 27 | `sp_raider_bounty` | TL1 | `bounty` / 远程 | 无 *(可重复)* | `KillTag`: `dda_coalition`×5 | 900 / **+3** / 分离 +3、联盟 -2 / — | 专属悬赏：袭扰联盟巡逻队，灵活冲分离信任 |
+| 28 | `sp_break_embargo` | TL1 | `main` / 当面 | 无 | `DeliverItem`: `deep_refine_saltpeter`×3、`deep_refine_sulfur`×3 | 850 / **+3** / 分离 +4、联盟 -2 / 解锁 `sp_underground_reloading` | 分离线开篇：打破联盟原料与弹药配额剥削 |
+| 29 | `sp_underground_reloading` | TL1 | `chain` / 当面 | `sp_break_embargo` | `ReachLocation`: `mine`×1；`DeliverItem`: `engineeringplastic`×4、`deep_ammobox_lead`×2 | 1350 / **+3** / 分离 +4、联盟 -3 / `deep_ammobox_titanium`×1 / 解锁 `sp_cut_blockade,sp_frozen_staging` | 矿洞地下压弹自给线 |
+| 30 | `sp_cut_blockade` | TL2 | `chain` / 远程 | `sp_underground_reloading` + `natalia`≥8 | `KillTag`: `dda_coalition`×8 | 2200 / **+5** / 分离 +6、联盟 -5 / 解锁 `sp_ghost_traces` | 平行分支①：拔除联盟正规军封锁哨 |
+| 31 | `sp_frozen_staging` | TL2 | `chain` / 当面 | `sp_underground_reloading` + `natalia`≥8 | `ReachLocation`: `deep_outpost_fight`×1；`DeliverItem`: `deep_medical_kit_wound`×2、`deep_plate_metal_6`×1 | 2800 / **+5** / 分离 +7、联盟 -5 / `deep_medical_kit_grizzly`×1 / 解锁 `sp_ghost_traces` | 平行分支②：冰封据点极寒蔽声呐屯兵点保障 |
+| 32 | `sp_ghost_traces` | TL3 | `chain` / 远程 | `sp_cut_blockade` + `sp_frozen_staging` + `natalia`≥18 | `ReachLocation`: `deep_outpost_fight`×1；`KillTag`: `dda_ghost`×3 | 3900 / **+6** / 分离 +8、联盟 -8 / `deep_plate_ceramic_7`×1 / 解锁 `sp_ghost_hunt` | **第三幕 N8 序章**：无光海原分离哨站无声覆灭，初遇热屏蔽幽灵 |
+| 33 | `sp_ghost_hunt` | TL3 | `chain` / 当面 | `sp_ghost_traces` + `natalia`≥18 | `KillTag`: `dda_ghost`×6；`DeliverItem`: `deep_thermal_interference`×1 | 5200 / **+6** / 分离 +12、联盟 -12 / `deep_ammobox_fulgurium_physicorium`×1 / 解锁 `sp_blackout_truth` | **第三幕 N8 高潮**：狙杀 GHOST 并回收热成像干扰器 |
+| 34 | `sp_blackout_truth` | TL4 | `chain` / 远程 | `sp_ghost_hunt` + `natalia`≥30 | `ReachLocation`: `deep_outpost_fight`×1；`DeliverItem`: `deep_tungsten_phy`×4、`deep_plate_ceramic_8`×1 | 6200 / **+6** / 分离 +10、联盟 -8 / `deep_plate_ceramic_10`×1 | **第四幕暗线 2 爆发**：传奇大尉醉话揭开“黑灯之夜”与热成像盲区双关惊悚 |
 
 ---
 
-### 文件 4：`Quests/quests_research.xml`（联盟防护研究所 · 马库斯·哈兰德博士，6 个）
-
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+### 文件 4：`Quests/quests_research.xml`（马库斯·哈兰德博士 · 7 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 声望 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 33 | `res_radio_rumor` | 寒冰洋 | `main` / 远程 | 无 | `KillTag`: `crawler` ×6；`KillTag`: `husk` ×3 | 800 马克、信任 +3、联盟 +1、`deep_medical_kit` ×1、解锁 `res_husk_beacon` | **支线 B 序幕**：木卫二广播电台炒作“捕蟹人”怪谈。*“电台那个蠢货把任何怪声都编成捕蟹人传说——去清理干净，顺便传回寄生体活性读数。”* |
-| 34 | `res_husk_beacon` | 海脊 | `chain` / 远程 | `res_radio_rumor` | `KillTag`: `husk` ×6；`ReachLocation`: `research` ×1 | 1500 马克、信任 +3、联盟 +2、`chip_locate` ×1、解锁 `res_husk_crabman` | **支线 B 中段**：信标站残骸确认“捕蟹人”曾是失联的 4 号巡逻班。*“那块划伤的陶瓷插板属于上周失联的 4 号班老马。画皮寄生了他们，却没让他们松开护木。”* |
-| 35 | `res_husk_crabman` | 高原 | `chain` / 当面 | `res_husk_beacon` + `harland`≥6 | `KillTag`: `husk` ×10；`DeliverItem`: `deep_plate_ceramic_6` ×1 | 2400 马克、信任 +4、联盟 +2、`chip_gun_in_water` ×1 | **潮汐 B 线伏笔（装甲画皮）**：热成像失效 + 寄生体懂得找掩体换弹。*“热成像对画皮天然失效——更迷人的是，现场弹壳分布证明受寄生体完成了两次标准换弹。”* |
-| 36 | `res_tungsten_sample` | 无光 | `main` / 当面 | 无 | `DeliverItem`: `deep_tungsten_ore` ×4 | 1400 马克、信任 +3、联盟 +2、`deep_tungsten` ×2、解锁 `res_neural_drift` | **钨刚技术线开篇**：无光海原深渊钨矿的战略价值。*“硬度胜过钻石，也比任何和平条约都管用。把原矿放下，别碰台面上的培养皿。”* |
-| 37 | `res_neural_drift` | 无光 | `chain` / 当面 | `res_tungsten_sample` | `DeliverItem`: `deep_tungsten_phy` ×2、`deep_plate_metal_8` ×1 | 3000 马克、信任 +4、联盟 +3、`chip_friendly_fire` ×1、解锁 `res_chip_recall` | **潮汐 A 线中段**：神经调整芯片在深渊潮位异常期的耳鸣与信号漂移。*“一秒完成三秒的肌肉记忆，代价不过是轻微耳鸣和梦魇——相比被钨刚弹掀开天灵盖，很划算。”* |
-| 38 | `res_chip_recall` | 渊洋 | `chain` / 当面 | `res_neural_drift` + `harland`≥7 | `DeliverItem`: `deep_thermal_interference` ×1、`tungsten_phy_part` ×2 | 4600 马克、信任 +5、联盟 +5、`chip_cqb` ×1 | **潮汐 A 线伏笔 + 暗线 1 旁证**：第 7 批召回被驳回 + 热液废土未授权热屏蔽信号。*“低频潮汐波让脑死亡受试者自己扣了三次扳机，上面却只叫 GHOST 烧样本……对了，热液废土哪来的未授权同频屏蔽信号？”* |
+| 35 | `res_bio_bounty` | TL1 | `repeat` / 远程 | 无 *(可重复)* | `KillTag`: `husk`×4 | 700 / **+3** / 联盟 +1 / — | 专属日常：采集深海寄生体活性记录，随时冲博士信任 |
+| 36 | `res_radio_rumor` | TL1 | `main` / 远程 | 无 | `KillTag`: `crawler`×6；`KillTag`: `husk`×3 | 850 / **+5** / 联盟 +1 / `deep_medical_kit`×1 / 解锁 `res_husk_beacon,res_tungsten_sample` | 支线 B 序幕：电台“夜航者”大肆炒作“捕蟹人”怪谈 |
+| 37 | `res_husk_beacon` | TL2 | `chain` / 远程 | `res_radio_rumor` + `harland`≥8 | `KillTag`: `husk`×6；`ReachLocation`: `research`×1 | 1600 / **+5** / 联盟 +2 / `chip_locate`×1 / 解锁 `res_husk_crabman` | 平行 B 线：信标站确认“捕蟹人”曾是失联 4 号巡逻班 |
+| 38 | `res_tungsten_sample` | TL2 | `chain` / 当面 | `res_radio_rumor` + `harland`≥8 | `DeliverItem`: `deep_tungsten_ore`×4 | 1500 / **+5** / 联盟 +2 / `deep_tungsten`×2 / 解锁 `res_neural_drift` | 平行 A 线：无光海原深渊钨矿采样与钨刚研发背景 |
+| 39 | `res_husk_crabman` | TL3 | `chain` / 当面 | `res_husk_beacon` + `harland`≥18 | `KillTag`: `husk`×10；`DeliverItem`: `deep_plate_ceramic_6`×1 | 2600 / **+6** / 联盟 +2 / `chip_gun_in_water`×1 | **潮汐 B 线伏笔（装甲画皮）**：热成像失效 + 寄生体保留找掩体换弹本能 |
+| 40 | `res_neural_drift` | TL3 | `chain` / 当面 | `res_tungsten_sample` + `harland`≥18 | `DeliverItem`: `deep_tungsten_phy`×2、`deep_plate_metal_8`×1 | 3200 / **+6** / 联盟 +3 / `chip_friendly_fire`×1 / 解锁 `res_chip_recall` | **潮汐 A 线中段**：神经调整芯片在强潮汐波下的耳鸣与信号自激 |
+| 41 | `res_chip_recall` | TL4 | `chain` / 当面 | `res_neural_drift` + `harland`≥30 | `DeliverItem`: `deep_thermal_interference`×1、`tungsten_phy_part`×2 | 5200 / **+6** / 联盟 +5 / `chip_cqb`×1 | **潮汐 A 线伏笔 + 暗线 1 旁证**：第 7 批召回被红章驳回 + 热液废土未授权热屏蔽频谱 |
 
 ---
 
-### 文件 5：`Quests/quests_dda.xml`（幕后黑箱 D.D.A. · 轮值对接员，6 个）
-
-| # | Quest `id` | 海域 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励与声望 | 叙事切片 & `quote` 语录 |
+### 文件 5：`Quests/quests_dda.xml`（D.D.A. 轮值对接员 · 7 个）
+| # | Quest `id` | 阶梯 | 分类 / 交付 | 前置条件 | 目标（真实 ID） | 奖励（马克 / 信任 / 物资） | 剧情与暗线锚点 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 39 | `dda_field_trial` | 寒冰洋起 | `bounty` / 远程 | 无 *(可重复)* | `KillTag`: `bandit` ×8 | 900 马克、信任 +3、`deep_ammobox_copper` ×1、解锁 `dda_route_slip` | **暗线 3 阶段 1**：接地气装傻的地下军火测试悬赏。*“小作坊收点实战数据，不问阵营，打完远程发单就行——箱子管够。”* |
-| 40 | `dda_route_slip` | 海脊 | `chain` / 远程 | `dda_field_trial` | `ReachLocation`: `deep_outpost_fight` ×1；`KillTag`: `dda_pirate` ×8 | 1600 马克、信任 +3、`deep_ammobox_titanium` ×1、解锁 `dda_tide_gauge` | **暗线 3 破绽 ①**：随口漏嘴刚从被水雷封死三天的 103 船厂换班过来。*“累死了，刚从 103 船厂外围换班游过来靴子还湿着——水雷？哦，绕着走就行嘛。”* |
-| 41 | `dda_tide_gauge` | 高原 | `chain` / 远程 | `dda_route_slip` + `liaison`≥6 | `ReachLocation`: `mine` ×1；`ReachLocation`: `deep_outpost_fight` ×1；`DeliverItem`: `deep_ammobox_physicorium` ×1 | 2400 马克、信任 +4、`deep_plate_metal_7` ×1、解锁 `dda_deep_pressure` | **暗线 2×3 交汇**：借测试流阻收集深层底流读数，呼应十七年大潮斜率。*“顺路帮我抄一眼矿站底部的涌流表呗？老板说最近水流斜率跟十七年前挺像，怪有意思的。”* |
-| 42 | `dda_deep_pressure` | 无光 | `chain` / 远程 | `dda_tide_gauge` + `liaison`≥10 | `KillTag`: `HideInThermalGoggles` ×4 | 3600 马克、信任 +4、`deep_ammobox_tungsten_physicorium` ×1、解锁 `dda_duplex_stress` | **暗线 3 破绽 ②**：脱口叫出绝密代号“灰猎犬”，沉默两秒圆成“灰毛海狗”。*“听说今天值班的是‘灰猎犬’那个面瘫，小心通风井……嗯？我说的是外头那只灰毛海狗啦！”* |
-| 43 | `dda_duplex_stress` | 渊洋 | `chain` / 远程 | `dda_deep_pressure` + `liaison`≥14 | `KillTag`: `dda_ghost` ×3；`KillTag`: `dda_grizzlies` ×3 | 5200 马克、信任 +5、`chip_marksman` ×1、解锁 `dda_tidal_list` | **暗线 3 破绽 ③**：同时要联盟幽灵与分离灰熊的交火数据，超脱两大政权之外。*“联盟的鬼和分离的熊都挺能打的吧？帮我把两边的交火记录凑齐，这单酬金绝对让你满意。”* |
-| 44 | `dda_tidal_list` | 渊洋—热液前夜 | `chain` / 远程 | `dda_duplex_stress` + `sp_ghost_hunt` + `co_grizzlies_wall` + `liaison`≥18 | `DeliverItem`: `deep_tungsten_phy` ×4、`deep_ammobox_depleted_uranium` ×1 | 8800 马克、信任 +8、`deep_gold_bar` ×3 | **现役终章《猎潮前夜》**：3 秒切错加密内线的冷血评估语音，完美停在 N10+ 大门前。*“……已击穿 GHOST 与灰熊防线，未检出神经共振排异，移入《猎潮》终选名单——【啪】卧槽切错频段了！隔壁放广播剧呢！箱子拿好，等下面涨潮了再联系。”* |
+| 42 | `dda_field_trial` | TL1 | `bounty` / 远程 | 无 *(可重复)* | `KillTag`: `bandit`×8 | 900 / **+3** / `deep_ammobox_copper`×1 | 专属悬赏：小作坊买实战数据，随时冲信任 |
+| 43 | `dda_route_slip` | TL1 | `main` / 远程 | 无 | `ReachLocation`: `deep_outpost_fight`×1；`KillTag`: `dda_pirate`×6 | 1400 / **+5** / `deep_ammobox_titanium`×1 / 解锁 `dda_tide_gauge,dda_ballistic_audit` | **暗线 3 破绽 ①**：随口漏嘴刚从被水雷封死三天的 103 船厂游过来换班 |
+| 44 | `dda_tide_gauge` | TL2 | `chain` / 远程 | `dda_route_slip` + `liaison`≥8 | `ReachLocation`: `mine`×1；`ReachLocation`: `deep_outpost_fight`×1 | 2200 / **+5** / `deep_plate_metal_7`×1 / 解锁 `dda_deep_pressure` | 平行分支① + **暗线 2×3 交汇**：抄录深层矿站涌流表，呼应十七年大潮斜率 |
+| 45 | `dda_ballistic_audit` | TL2 | `chain` / 远程 | `dda_route_slip` + `liaison`≥8 | `DeliverItem`: `deep_ammobox_physicorium`×1、`deep_plate_ceramic_5`×1 | 2500 / **+5** / `deep_ammobox_fulgurium_physicorium`×1 / 解锁 `dda_deep_pressure` | 平行分支②：测试刚素侵彻数据，箱底悄悄带着熟悉钢印 |
+| 46 | `dda_deep_pressure` | TL3 | `chain` / 远程 | `dda_tide_gauge` + `dda_ballistic_audit` + `liaison`≥18 | `KillTag`: `HideInThermalGoggles`×4 | 3800 / **+6** / `deep_ammobox_tungsten_physicorium`×1 / 解锁 `dda_duplex_stress` | **暗线 3 破绽 ②**：脱口叫出绝密代号“灰猎犬”，硬圆成“灰毛海狗” |
+| 47 | `dda_duplex_stress` | TL3 | `chain` / 远程 | `dda_deep_pressure` + `liaison`≥18 | `KillTag`: `dda_ghost`×3；`KillTag`: `dda_grizzlies`×3 | 5500 / **+6** / `chip_marksman`×1 / 解锁 `dda_tidal_list` | **暗线 3 破绽 ③**：同时收集幽灵与灰熊的交火数据，彻底暴露超然立场 |
+| 48 | `dda_tidal_list` | TL4 | `chain` / 远程 | `dda_duplex_stress` + `sp_ghost_hunt` + `co_grizzlies_wall` + `liaison`≥30 | `DeliverItem`: `deep_tungsten_phy`×4、`deep_ammobox_depleted_uranium`×1 | 9000 / **+8** / `deep_gold_bar`×3 | **现役终章《猎潮前夜》**：3 秒切错加密总控频段，移入《猎潮》终选名单 |
 
 ---
 
-## 五、全链路信任度无死锁自检
+## 四、塔科夫式第一人称任务正文示范（6 位发布者各 1 篇实机级样稿）
 
-- **“台风大百货” 桃帽（`peachhat`）**：`M2(+3) → M3(+3=6) → M4(+3=9) → M5(+4=13) → M6(+4=17≥16) → M7(+5)`（且有 `M1` 可重复兜底）。
-- **“枪匠” 氧化苯（`benzene`）**：`C8(+3) → C9(+3=6) → C10(+3=9) → C11(+3=12) → C12(+4=16) → C13(+4=20) → C14(+4=24) → C15(+6)`。
-- **艾琳上校（`sterling`）**：`S16(+3) → S17(+3=6) → S18(+4=10) → S19(+3=13) → S20(+4=17) → S21(+4=21) → S22(+4=25) → S23(+5=30) → S24(+6)`。
-- **娜塔莉亚政委（`natalia`）**：`N25(+3) → N26(+3=6) → N27(+4=10) → N28(+4=14) → N29(+4=18) → N30(+5=23) → N31(+4=27) → N32(+6)`。
-- **哈兰德博士（`harland`）**：B 线 `H33(+3) → H34(+3=6) → H35(+4=10)`；A 线 `H36(+3) → H37(+4=7) → H38(+5)`，双线完全独立、互不卡死。
-- **D.D.A. 对接员（`liaison`）**：`D39(+3, 可重复) → D40(+3=6) → D41(+4=10) → D42(+4=14) → D43(+5=19≥18) → D44(+8)`。
+> 以下为直接可用于 `text/ChineseQuests.xml` 的正文字体量与行文标杆——既有《逃离塔科夫》商人电报的活人感、江湖气和偏见，又严格践行 **Show, Don't Tell**。
 
----
+### 1. “台风大百货” 桃帽 — `typhoon_0041_crate`（《EU-0041 匿名箱》 · TL3）
+- **`desc`**：
+  > 船长，你来得正好，帮我把里间那几个刚素复装箱的缺口补上。最近远港的民用单全停了，正常渠道连一盒像样的穿甲弹都订不到——偏偏有家怪得要命的供货商，隔三差五开着没挂应答机的小艇，把货往外围货运气闸一丢就走，连尾款都是自动划账。我耐不住好奇，拿工商终端查了箱底钢印的注册号 `EU-0041`，系统跳出来一行红字说这号在木卫二从未注册过。算了，咱开百货的只认货色不认户口，你先帮我匀一箱刚素复装弹垫上，报酬少不了你的。
+- **`quote`**：
+  > “货比联盟军工厂流出来的还规整，可工商库里查无此人——这冰底下的水，比我想的深多了。”
 
-## 六、建议的分批实装顺序
+### 2. “枪匠” 氧化苯 — `gunsmith_blackbox_check`（《解不开的黑盒子》 · TL4）
+- **`desc`**：
+  > 伙计，别跟我聊外面谁又占了哪座站，我只对一件事感兴趣：你从无光海原带回来的那块热成像干扰器。联盟防护研究所成天吹嘘他们的活体密钥锁无懈可击，死人身上的盒子谁也撬不开——我倒不打算破解它的软件权限，我只想拆开外壳看看里面的电路排布和焊点。给我弄一台实机放到工作台上。别用焊枪暴力割壳，弄坏了主板我就拿卡尺敲你脑袋。
+- **`quote`**：
+  > “外壳封条是联盟研究所的，可里头主板飞线的手法……操，跟六年前在 103 船厂一起失踪的那批老师傅一模一样。”
 
-1. **第一批（补 5 个阵营 tag + 写入 `Quests/npcs.xml` 与 5 个 `Quests/quests_*.xml` + 中英文任务文案 `ChineseQuests.xml` / `EnglishQuests.xml`）**：零 C# 改动，实装后直接跑 `.UnitTests/CSharp/QuestSystemUI` 校验全量任务解析、前置引用、声望数值与信任度逻辑。
-2. **第二批（进阶增强）**：在台风级移动城市为**“枪匠” 氧化苯**（`deep_typhoon_gunsmith`）和**霍尔姆舰长**增加专属驻站 NPC，并同步给 `text/chinese.xml` 中现有任务简报做人物化润色。
+### 3. 艾琳·斯特林上校 — `co_beixun_supply`（《“备汛”优先配发》 · TL3）
+- **`desc`**：
+  > 船长，接下来的单子属于战区一级保密后勤调度。远港建造厂已经奉命暂停全部民用艇龙骨工期，二、三号车间全面转产钨刚弹芯与重型插板，目前前线原料周转存在缺口。我需要贵船队调拨四份精炼钨与一箱刚素复装弹，亲自送交我处入库。提醒一句：签收单右上角加盖的红章字样不属于外包单位的知情范围，不要向任何中立港口或分离派联络人提及本次货单。合作愉快，马克会按最高溢价即时到账。
+- **`quote`**：
+  > 【远港内部调度令 #409 · 加急事由：`[备汛·最高优先级]`】（背面圆珠笔涂鸦：“水底三千米，备哪门子的汛？！”）
+
+### 4. 政委 娜塔莉亚 — `sp_ghost_hunt`（《熄灯之后》 · TL3）
+- **`desc`**：
+  > 同志，我就不跟你绕弯子了。无光海原边上那座中继站昨晚彻底断联，我们派去接应的两个班全死在走廊里——没有墙体破口，没有求救录音，热成像回放里整条过道白茫茫一片，空无一人。能把一场屠杀干得这么安静的，只有联盟那群藏头露尾的 GHOST 幽灵。他们腰上挂着该死的热成像干扰器，仗着熄灯欺负瞎子。去把那批幽灵清理干净，顺手给我带回一台他们身上的干扰器——大尉说了，就算撬不开权限锁，也得让兄弟们记住这群鬼的频段。
+- **`quote`**：
+  > “灯一灭，热成像里什么都看不见？那就拿大口径和曳光弹把整条走廊烧亮！”
+
+### 5. 哈兰德博士 — `res_chip_recall`（《第 7 批静默回收》 · TL4）
+- **`desc`**：
+  > 受托人，你的交付效率令人满意，所以我决定把一项未经登记的私下核查交给你。此前我向联盟高层递交了第 7 批神经调整芯片的紧急召回申请——在模拟深渊低频潮汐波的实验舱内，一名已宣告脑死亡的测试体在断电四十秒后，被残余脉冲驱动完成了抬枪并连扣三次扳机。高层驳回了召回，只派 GHOST 去销毁样本。更荒唐的是，前线监测阵上周竟在热液废土录到了未授权的全编队热成像屏蔽频谱。帮我补齐一台干扰器实物与两份钨刚枪械零件，我需要做最后一次交叉比对。
+- **`quote`**：
+  > “批复红章写得很简洁：前线急缺神经模块，压下报告。至于热液废土那边是谁绕过了我的活体密钥……真令人好奇。”
+
+### 6. D.D.A. 轮值对接员 — `dda_tidal_list`（《猎潮前夜》 · TL4）
+- **`desc`**：
+  > 哟，老板！听说了吗，联盟那群装模作样的幽灵跟分离那帮重甲大熊，居然先后在你手里吃了瘪？厉害啊，咱们小作坊的实测数据榜这回直接让你刷爆了！最后一单轻松点：帮我备四块钨刚外加一箱贫铀复装弹，远程签收就行。别问小作坊要贫铀干嘛——最近热液废土下面水流怪得很，老听见冰壳咯吱响，老板说得提前囤点硬货压压惊。交完货直接拿金条，咱们后会有期！
+- **`quote`**：
+  > “……目标船队先后击穿 GHOST 与灰熊防线，高强度脉冲干扰下未检出神经共振排异。样本移入《猎潮》终选名单，维持静默观测——【啪！】卧槽切错频段了！隔壁放广播剧呢，听不见听不见！”
