@@ -58,28 +58,27 @@ namespace Barotrauma
         public static readonly Prefabs Prefabs = new();
         public Identifier Identifier = new(id);
         public uint UintIdentifier = number;
+        public ContentPackage? ContentPackage;
         public float Health = 100;
         public int MaxStackSize = Inventory.MaxPossibleStackSize;
         public HashSet<Identifier> Tags = tags.Select(t => t.ToIdentifier()).ToHashSet();
         public ContentXElement ConfigElement = new(XElement.Parse("<Item><Projectile /></Item>"));
         public static ItemPrefab FindByIdentifier(Identifier id) => Prefabs.Values.Single(p => p.Identifier == id);
     }
-    public sealed class Character
+    public sealed partial class Character : Entity
     {
-        public ushort ID;
         public bool CanInteract = true;
         public float WeaponsSkill;
         public float GetSkillLevel(Identifier id) => id.Value == "weapons" ? WeaponsSkill : 0;
         public bool CanInteractWith(Item item) => CanInteract && item.IsOwnedBy(this);
-        public Item? HeldItem;
-        public bool HasEquippedItem(Item item, InvSlotType slot) => HeldItem == item;
+        public bool HasEquippedItem(Item item, InvSlotType slot) =>
+            Inventory.FindIndices(item).Any(i => slot.HasFlag(Inventory.SlotTypes[i]) && Inventory.GetItemAt(i) == item);
         public readonly CharacterInventory Inventory;
         public Character() { Inventory = new(20) { Owner = this }; }
     }
-    public sealed class Item
+    public sealed partial class Item : Entity
     {
         public Item(ushort id, ItemPrefab prefab) { ID = id; Prefab = prefab; Entity.Items[id] = this; }
-        public ushort ID;
         public ItemPrefab Prefab;
         private float condition = 100;
         public Action<float>? BeforeConditionSet;
@@ -95,6 +94,7 @@ namespace Barotrauma
             if (executeEffects && condition == 0 && previous > 0) { ApplyStatusEffects(ActionType.OnBroken, 1); }
         }
         public void ApplyStatusEffects(ActionType type, float deltaTime) { if (type == ActionType.OnBroken) { BrokenEffects++; } }
+        public ItemInventory? OwnInventory;
         public float MaxCondition = 100;
         public bool Removed, IsInRemoveQueue;
         public Inventory? ParentInventory;
@@ -108,6 +108,7 @@ namespace Barotrauma
             ParentInventory = null;
         }
         public readonly List<ItemComponent> Components = [];
+        public int GetComponentIndex(ItemComponent component) => Components.IndexOf(component);
         public readonly List<Item> ContainedItems = [];
         public readonly List<ItemComponent.IEventData> Events = [];
         public readonly List<ItemComponent.IEventData> Requests = [];
@@ -126,7 +127,7 @@ namespace Barotrauma
         public void CreateServerEvent(ItemComponent component, ItemComponent.IEventData data) => Events.Add(data);
         public void CreateClientEvent(ItemComponent component, ItemComponent.IEventData data) => Requests.Add(data);
     }
-    public sealed class ItemInventory(int capacity) : Inventory(capacity);
+    public sealed partial class ItemInventory(int capacity) : Inventory(capacity) { public ItemContainer? Container; }
     public sealed class CharacterInventory(int capacity) : Inventory(capacity)
     {
         public readonly InvSlotType[] SlotTypes = Enumerable.Repeat(InvSlotType.Any, capacity).ToArray();
@@ -134,28 +135,44 @@ namespace Barotrauma
     public class Inventory(int capacity)
     {
         public const int MaxPossibleStackSize = 63;
-        public object? Owner;
+        public Entity? Owner;
         public int Capacity = capacity;
-        private readonly Dictionary<Item, int> assignedSlots = [];
-        public int FindIndex(Item item) => assignedSlots.GetValueOrDefault(item, AllItems.IndexOf(item));
-        public List<int> FindIndices(Item item) => AllItems.Contains(item) ? [FindIndex(item)] : [];
+        private readonly Dictionary<Item, List<int>> assignedSlots = [];
+        public int FindIndex(Item item) => !AllItems.Contains(item) ? -1 :
+            assignedSlots.TryGetValue(item, out var indices) ? indices.Min() : AllItems.IndexOf(item);
+        public List<int> FindIndices(Item item) => !AllItems.Contains(item) ? [] :
+            assignedSlots.TryGetValue(item, out var indices) ? indices.Order().ToList() : [AllItems.IndexOf(item)];
+        public bool IsInSlot(Item item, int index) => FindIndices(item).Contains(index);
         public readonly List<Item> AllItems = [];
-        public IEnumerable<Item> GetItemsAt(int slot) => AllItems.Where(i => FindIndex(i) == slot);
-        public Item? GetItemAt(int slot) => GetItemsAt(slot).FirstOrDefault();
-        public bool CanBePutInSlot(Item item, int slot) => slot >= 0 && slot < Capacity && (Accepts?.Invoke(item.Prefab) ?? true) &&
-            GetItemsAt(slot).Count() < item.Prefab.MaxStackSize &&
-            GetItemsAt(slot).All(other => other.Prefab == item.Prefab && other.Condition == item.Condition &&
-                (item.Condition == 0 || item.Condition == item.MaxCondition));
-        public bool TryPutItem(Item item, int slot, bool allowSwapping, bool allowCombine, Character user, bool triggerOnInsertedEffects = true)
+        public IEnumerable<Item> GetItemsAt(int slot) => AllItems.Where(i => IsInSlot(i, slot));
+        public void ForceToSlot(Item item, int index)
         {
-            if (RejectInsertion || !CanBePutInSlot(item, slot)) { return false; }
+            var indices = FindIndices(item);
+            if (!AllItems.Contains(item)) { AllItems.Add(item); }
+            if (!indices.Contains(index)) { indices.Add(index); }
+            assignedSlots[item] = indices;
+            item.ParentInventory = this;
+        }
+        public void ForceRemoveFromSlot(Item item, int index) => assignedSlots[item].Remove(index);
+        public int NetworkEvents;
+        public void CreateNetworkEvent() => NetworkEvents++;
+        public Item? GetItemAt(int slot) => GetItemsAt(slot).FirstOrDefault();
+        public bool CanBePutInSlot(Item item, int slot, bool ignoreCondition = false) => slot >= 0 && slot < Capacity && (Accepts?.Invoke(item.Prefab) ?? true) &&
+            GetItemsAt(slot).Count() < item.Prefab.MaxStackSize &&
+            GetItemsAt(slot).All(other => other.Prefab == item.Prefab && (ignoreCondition ||
+                (other.Condition == item.Condition && (item.Condition == 0 || item.Condition == item.MaxCondition))));
+        public bool TryPutItem(Item item, int slot, bool allowSwapping, bool allowCombine, Character user,
+            bool createNetworkEvent = true, bool ignoreCondition = false, bool triggerOnInsertedEffects = true)
+        {
+            if (RejectInsertion || !CanBePutInSlot(item, slot, ignoreCondition)) { return false; }
             item.ParentInventory?.AllItems.Remove(item);
-            assignedSlots[item] = slot;
+            assignedSlots[item] = [slot];
             AllItems.Add(item);
             item.ParentInventory = this;
             return true;
         }
-        public Item? FindItem(Func<Item, bool> predicate, bool recursive) => AllItems.FirstOrDefault(predicate);
+        public Item? FindItem(Func<Item, bool> predicate, bool recursive) => AllItems.FirstOrDefault(predicate) ??
+            (recursive ? AllItems.Select(item => item.OwnInventory?.FindItem(predicate, true)).FirstOrDefault(match => match != null) : null);
         public Func<ItemPrefab, bool>? Accepts;
         public bool RejectInsertion;
         public bool CanProbablyBePut(ItemPrefab prefab, float? condition = null, int? quality = null) =>
@@ -187,8 +204,11 @@ namespace Barotrauma
                 Spawned.Add(item);
                 if (!spawn.Inventory.RejectInsertion && spawn.Inventory.CanProbablyBePut(spawn.Prefab, item.Condition, 0))
                 {
-                    spawn.Inventory.AllItems.Add(item);
-                    item.ParentInventory = spawn.Inventory;
+                    for (int slot = 0; slot < spawn.Inventory.Capacity; slot++)
+                    {
+                        if (spawn.Inventory is CharacterInventory c && c.SlotTypes[slot] != InvSlotType.Any) { continue; }
+                        if (spawn.Inventory.TryPutItem(item, slot, false, false, null!)) { break; }
+                    }
                 }
                 BeforeCallback?.Invoke(item);
                 spawn.OnSpawned?.Invoke(item);
@@ -202,8 +222,9 @@ namespace Barotrauma
         }
         public void AddItemToRemoveQueue(Item item) => item.IsInRemoveQueue = true;
     }
-    public static class Entity
+    public class Entity
     {
+        public ushort ID;
         public static EntitySpawner Spawner = new();
         public static readonly Dictionary<ushort, Item> Items = [];
         public static object? FindEntityByID(ushort id) => Items.GetValueOrDefault(id);
@@ -234,12 +255,12 @@ namespace Barotrauma.Items.Components
         }
         protected T ExtractEventData<T>(NetEntityEvent.IData data) => ((NetEntityEvent.Wrapper)data).Value is T t ? t : throw new Exception();
     }
-    public sealed class ItemContainer(Item item, int capacity) : ItemComponent(item, new(new XElement("ItemContainer")))
+    public class ItemContainer(Item item, int capacity) : ItemComponent(item, new(new XElement("ItemContainer")))
     {
         public readonly ItemInventory Inventory = new(capacity);
     }
-    public sealed class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
-    public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public partial class Projectile(Item item, ContentXElement element) : ItemComponent(item, element) { }
+    public sealed class RangedWeapon(Item item, ContentXElement element) : ItemComponent(item, element) { public float Penetration; }
 }
 
 namespace Barotrauma.Networking
@@ -294,12 +315,13 @@ namespace VCE_VirtualizedMagazine
                 : null;
     }
 
-    public sealed partial class VirtualizedMagazine(Item item) : ItemComponent(item, new(new XElement("VirtualizedMagazine")))
+    public sealed partial class VirtualizedMagazine(Item item) : ItemContainer(item, 1)
     {
         public readonly Stack<Identifier> LoadedAmmoIdentifiers = new();
         public readonly HashSet<Identifier> AllowedAmmoTags = ["compatible".ToIdentifier()];
         public int MaxSize = 30;
         public int LoadedCount => LoadedAmmoIdentifiers.Count;
+        public Identifier TopIdentifier => LoadedAmmoIdentifiers.TryPeek(out var id) ? id : default;
         public bool ThrowOnRefresh;
         public Identifier[] LoadedAmmoIdentifiersArray
         {
@@ -350,7 +372,7 @@ namespace Barotrauma.Plugins
     public interface IDebugConsole { void AddWarning(string message); }
 }
 
-namespace Barotrauma { public static class LuaCsLogger { public static void Log(string message) { } } }
+namespace Barotrauma { public static class DebugConsole { public static void NewMessage(string message) { } } }
 
 namespace Barotrauma
 {

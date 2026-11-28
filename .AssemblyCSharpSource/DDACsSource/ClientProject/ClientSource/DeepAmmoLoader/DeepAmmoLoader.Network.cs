@@ -1,0 +1,108 @@
+using System.Text.Json;
+using Barotrauma.Networking;
+
+namespace DDA.AmmoLoading;
+
+public sealed partial class DeepAmmoLoader
+{
+    private uint receivingRevision;
+    private string?[] pages = [];
+    private int remainingPages;
+    private bool hasSnapshot;
+    private float refreshTimer;
+
+    public bool IsSynchronized => GameMain.Client == null || (hasSnapshot && receivingRevision == revision);
+
+    public void UpdateClientState(float deltaTime)
+    {
+        refreshTimer -= deltaTime;
+        if (GameMain.Client != null && refreshTimer <= 0 && !IsSynchronized)
+        {
+            refreshTimer = 2;
+            Send(Command.Refresh);
+        }
+    }
+
+    public void RequestLoad(AmmoRun[] plan)
+    {
+        if (!IsSynchronized || Target == null || !AmmoPlan.IsValid(plan, AmmoPlan.MaxRounds)) { return; }
+        Send(Command.Load, plan);
+    }
+    public void RequestUnload() => Send(Command.Unload);
+    public void RequestWithdraw(string id)
+    {
+        if (IsSynchronized && IsProjectile(id)) { Send(Command.Withdraw, [new(id, 1)]); }
+    }
+
+    public override bool ValidateEventData(NetEntityEvent.IData data) => TryExtractEventData<Request>(data, out _);
+
+    private void Send(Command command, AmmoRun[]? plan = null)
+    {
+        var magazine = GetOwnedMagazine(Target?.Item, Character.Controlled);
+        if ((command is Command.Load or Command.Unload or Command.LoadBatch) && magazine == null) { return; }
+        if (GameMain.Client != null)
+        {
+            Item.CreateClientEvent(this, new Request(command, revision, Target?.Item.ID ?? 0, plan ?? []));
+        }
+        else if (command == Command.Load && Character.Controlled!.CanInteractWith(Item)) { TryLoad(plan ?? [], magazine); }
+        else if (command == Command.LoadBatch && Character.Controlled!.CanInteractWith(Item))
+        { ShowBatchResult(LoadBatch(Character.Controlled, magazine, plan ?? [])); }
+        else if (command == Command.Unload && Character.Controlled!.CanInteractWith(Item)) { TryUnload(magazine); }
+        else if (command == Command.Withdraw && plan is { Length: 1 }) { TryWithdraw(plan[0].Id); }
+    }
+
+    public void ClientEventWrite(IWriteMessage msg, NetEntityEvent.IData extraData = null!)
+    {
+        var request = ExtractEventData<Request>(extraData);
+        msg.WriteByte((byte)request.Command);
+        msg.WriteUInt32(request.Revision);
+        msg.WriteUInt16(request.Target);
+        msg.WriteByte((byte)request.Plan.Length);
+        foreach (var run in request.Plan)
+        {
+            msg.WriteUInt32(ItemPrefab.FindByIdentifier(run.Id.ToIdentifier())?.UintIdentifier ?? 0);
+            msg.WriteUInt16((ushort)run.Count);
+        }
+    }
+
+    public void ClientEventRead(IReadMessage msg, float sendingTime)
+    {
+        uint incomingRevision = msg.ReadUInt32();
+        int index = msg.ReadInt32();
+        int count = msg.ReadInt32();
+        string data = msg.ReadString();
+        if (index == -1 && count == 0)
+        {
+            if (data.Length != 0 && JsonSerializer.Deserialize(data, LoaderJson.Default.BatchResult) is { } result) { ShowBatchResult(result); }
+            return;
+        }
+        if (count is < 1 or > MaxSnapshotPages || index < 0 || index >= count || data.Length > SnapshotPageSize) { return; }
+        if (hasSnapshot && incomingRevision <= revision) { return; }
+        if (incomingRevision < receivingRevision) { return; }
+        if (pages.Length == 0 || receivingRevision != incomingRevision)
+        {
+            receivingRevision = incomingRevision;
+            pages = new string?[count];
+            remainingPages = count;
+        }
+        if (pages.Length != count) { return; }
+        if (pages[index] == null) { remainingPages--; }
+        pages[index] = data;
+        if (remainingPages != 0) { return; }
+        var snapshot = DecodeSnapshot(string.Concat(pages));
+        pages = [];
+        if (snapshot?.Stock == null || snapshot.Revision != incomingRevision) { return; }
+        var restored = new AmmoStock();
+        if (snapshot.Stock.Count != 0 && !restored.TryAdd(snapshot.Stock)) { return; }
+        var receivedSupplies = snapshot.Supplies ?? [];
+        if (!ValidSupplies(receivedSupplies) || (snapshot.SupplyError && receivedSupplies.Length != 0)) { return; }
+        SetSupplies(receivedSupplies.Select(p => p with
+        {
+            Costs = new Dictionary<string, double>(p.Costs, StringComparer.OrdinalIgnoreCase)
+        }).ToArray());
+        supplyError = snapshot.SupplyError;
+        Stock = restored;
+        revision = snapshot.Revision;
+        hasSnapshot = true;
+    }
+}

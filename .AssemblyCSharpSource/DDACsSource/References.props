@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <Refs>$(MSBuildThisFileDirectory)../../.Tools/Refs</Refs>
+    <RefPlatform>$(PlatformName)</RefPlatform>
+    <RefPlatform Condition="'$(PlatformName)' == 'Mac'">OSX</RefPlatform>
+    <MonoGamePlatform>$(PlatformName)</MonoGamePlatform>
+    <MonoGamePlatform Condition="'$(PlatformName)' == 'Mac'">MacOS</MonoGamePlatform>
+    <GameAssembly Condition="'$(BuildTarget)' == 'Client'">Barotrauma</GameAssembly>
+    <GameAssembly Condition="'$(BuildTarget)' == 'Server'">DedicatedServer</GameAssembly>
+    <GameReference>$(Refs)/$(RefPlatform)/$(GameAssembly).dll</GameReference>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="$(GameAssembly)" HintPath="$(Refs)/$(RefPlatform)/$(GameAssembly).dll" Private="false" />
+    <Reference Include="BarotraumaCore" HintPath="$(Refs)/$(RefPlatform)/BarotraumaCore.dll" Private="false" />
+    <Reference Include="VanillaComponentsExpanded$(BuildTarget)" HintPath="$(Refs)/$(RefPlatform)/VanillaComponentsExpanded$(BuildTarget).dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(Refs)/0Harmony.dll" Private="false" />
+    <Reference Include="MonoMod.Utils" HintPath="$(Refs)/MonoMod.Utils.dll" Private="false" />
+    <Reference Include="Farseer.NetStandard" HintPath="$(Refs)/Farseer.NetStandard.dll" Private="false" />
+    <Reference Include="Lidgren.NetStandard" HintPath="$(Refs)/Lidgren.NetStandard.dll" Private="false" />
+    <Reference Include="MonoGame.Framework.$(MonoGamePlatform).NetStandard" HintPath="$(Refs)/MonoGame.Framework.$(MonoGamePlatform).NetStandard.dll" Private="false" />
+    <Reference Include="XNATypes" HintPath="$(Refs)/XNATypes.dll" Private="false" />
+    <Reference Include="System.Collections.Immutable" HintPath="$(Refs)/System.Collections.Immutable.dll" Private="false" />
+  </ItemGroup>
+</Project>

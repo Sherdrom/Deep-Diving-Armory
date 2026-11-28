@@ -6,9 +6,9 @@ using System.Runtime.Loader;
 using MoonSharp.Interpreter;
 
 // Real deployed DLLs; rendering/physics refresh is stubbed, stack operations and Lua conversion are not.
-if (args.Length != 4)
+if (args.Length != 3)
 {
-    Console.Error.WriteLine("Usage: VirtualMagazine.Tests <game directory> <VCE directory> <DDA directory> <LuaCs plugin directory>");
+    Console.Error.WriteLine("Usage: VirtualMagazine.Tests <game directory> <VCE directory> <DDA directory>");
     return 2;
 }
 try
@@ -28,16 +28,14 @@ static void RunTests(string[] args)
     string platform = OperatingSystem.IsWindows() ? "Windows" : OperatingSystem.IsMacOS() ? "Mac" : "Linux";
     string vceDirectory = Path.Combine(Path.GetFullPath(args[1]), "bin", platform, "Client");
     string ddaDirectory = Path.GetFullPath(args[2]);
-    string luaCsDirectory = Path.Combine(Path.GetFullPath(args[3]), platform, "Client");
     foreach (string path in new[] {
         Path.Combine(gameDirectory, "Barotrauma.dll"),
         Path.Combine(vceDirectory, "VanillaComponentsExpandedClient.dll"),
-        Path.Combine(luaCsDirectory, "LuaCsForBarotraumaPluginClient.dll"),
-        Path.Combine(ddaDirectory, "bin/Client", platform == "Mac" ? "OSX" : platform, "RemainedAmmo.dll") })
+        Path.Combine(ddaDirectory, "bin", platform, "Client", "Deep-Diving-ArmoryClient.dll") })
         if (!File.Exists(path)) throw new FileNotFoundException("Required runtime DLL is missing", path);
     AssemblyLoadContext.Default.Resolving += (context, name) =>
     {
-        foreach (string directory in new[] { gameDirectory, vceDirectory, luaCsDirectory })
+        foreach (string directory in new[] { gameDirectory, vceDirectory })
         {
             string path = Path.Combine(directory, name.Name + ".dll");
             if (File.Exists(path)) return context.LoadFromAssemblyPath(path);
@@ -86,8 +84,9 @@ static void RunTests(string[] args)
     Type harmonyMethodType = Assembly.Load("0Harmony").GetType("HarmonyLib.HarmonyMethod", true)!;
     object harmony = Activator.CreateInstance(harmonyType, "DDA.VirtualMagazine.Tests")!;
     Assembly loader = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
-        "bin/Client", platform == "Mac" ? "OSX" : platform, "DeepAmmoLoader.dll"));
-    object plugin = Activator.CreateInstance(loader.GetType("DDA.AmmoLoading.Plugin", true)!)!;
+        "bin", platform, "Client", "Deep-Diving-ArmoryClient.dll"));
+    Type module = loader.GetType("DDA.AmmoLoading.Plugin", true)!;
+    const BindingFlags moduleMethods = BindingFlags.Static | BindingFlags.NonPublic;
     try
     {
         // The game owns IBarotraumaPlugin services; exercise VCE's real firing patch without faking that host.
@@ -140,8 +139,7 @@ static void RunTests(string[] args)
         object weaponContainer = Empty(containerType);
         object weaponInventory = Inventory(magazineItem);
         Set(weaponContainer, "Inventory", weaponInventory);
-        Assembly hud = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
-            "bin/Client", platform == "Mac" ? "OSX" : platform, "RemainedAmmo.dll"));
+        Assembly hud = loader;
         MethodInfo countAmmo = hud.GetType("RemainedAmmo.RemainedAmmo", throwOnError: true)!.GetMethod("GetRemainedAmmo")
             ?? throw new MissingMethodException("RemainedAmmo.GetRemainedAmmo");
         Assert((int)countAmmo.Invoke(null, new object[] { 0, Empty(itemType), weaponContainer, 0.99f })! == 1,
@@ -226,16 +224,9 @@ static void RunTests(string[] args)
         remove.Invoke(weapon, [proxyItem]);
         Assert(find.Invoke(srw, [true]) == null, "unpatched shot cleanup should reproduce the missing second round");
         Set(proxyItem, "container", magazineItem);
-        foreach (string name in new[] { "LuaCsPluginService", "LuaCsConfigService" })
-        {
-            var property = plugin.GetType().GetProperty(name)!;
-            var service = (TestPluginServices)DispatchProxy.Create(property.PropertyType, typeof(TestPluginServices));
-            service.OwnerPackage = package;
-            property.SetValue(plugin, service);
-        }
-        plugin.GetType().GetMethod("Initialize")!.Invoke(plugin, null);
-        plugin.GetType().GetMethod("OnLoadCompleted")!.Invoke(plugin, null);
-        var cleanup = plugin.GetType().GetMethod("RemoveFiredProjectile", BindingFlags.Static | BindingFlags.NonPublic)!;
+        module.GetMethod("Init", moduleMethods)!.Invoke(null, [harmony, package]);
+        module.GetMethod("PatchWeapons", moduleMethods)!.Invoke(null, [harmony]);
+        var cleanup = module.GetMethod("RemoveFiredProjectile", BindingFlags.Static | BindingFlags.NonPublic)!;
         var getInstructions = harmonyType.Assembly.GetType("HarmonyLib.PatchProcessor")!.GetMethods()
             .Single(m => m.Name == "GetCurrentInstructions" && m.GetParameters()[1].ParameterType == typeof(int));
         foreach (var weaponType in new[] { srw.GetType(), srw.GetType().BaseType! })
@@ -268,15 +259,43 @@ static void RunTests(string[] args)
         projectileComponents[0] = Empty(proxy.GetType().BaseType!);
         cleanup.Invoke(null, [weapon, proxyItem]);
         Assert(itemType.GetProperty("Container")!.GetValue(proxyItem) == null, "ordinary projectiles must still be removed");
+        // A remote launch reaches Projectile.Use without a preceding local SwitchableRangedWeapon.Use.
+        var consume = loader.GetType("DeepDivingArmory.NoProjectileConsume", true)!;
+        var beginProjectile = consume.GetMethod("BeginProjectile", moduleMethods)!;
+        bool CanDrop() => (bool)consume.GetMethod("AllowDrop", moduleMethods)!.Invoke(null, [proxyItem])!;
+        loader.GetType("DeepDivingArmory.Plugin", true)!.GetProperty("Package", moduleMethods)!.SetValue(null, package);
+        var replay = loader.GetType("WeaponSyncFix.NetworkEventContext", true)!.GetField("IsProjectileLaunchReplay", moduleMethods)!;
+        Set(proxyItem, "container", magazineItem);
+        Set(magazineItem, "container", weapon);
+        Set(magazineItem, "condition", 1f);
+        var weaponComponents = (IList)NewList(GameType("Barotrauma.Items.Components.ItemComponent"));
+        weaponComponents.Add(srw);
+        var weaponCache = (IDictionary)Activator.CreateInstance(componentCache.GetType())!;
+        weaponCache[srw.GetType()] = weaponComponents;
+        Set(weapon, "componentsByType", weaponCache);
+        object ordinaryRound = projectileComponents[0]!;
+        Set(ordinaryRound, "item", proxyItem);
+        replay.SetValue(null, true);
+        try
+        {
+            beginProjectile.Invoke(null, [proxy]);
+            Assert(CanDrop(), "Client replay must leave the VCE proxy alone.");
+            beginProjectile.Invoke(null, [ordinaryRound]);
+            Assert(!CanDrop(), "First remote shot must protect its nested main-slot round.");
+            Set(srw, "currentselected", 1);
+            beginProjectile.Invoke(null, [ordinaryRound]);
+            Assert(CanDrop(), "Client replay must pass the alternate slot through.");
+        }
+        finally { replay.SetValue(null, false); }
+        Console.WriteLine("PASS: remote handheld replay protects the ordinary main-slot round and passes virtual and secondary rounds through.");
         Console.WriteLine("PASS: deployed SRW consecutive shots and empty stop, cleanup scope, VCE consumption, HUD and mixed-stack round-trip.");
-        var fixes = AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine(ddaDirectory,
-            "bin/Client", platform == "Mac" ? "OSX" : platform, "VanillaBugFixes.dll"));
+        var fixes = loader;
         CheckNetworkImpacts(game, fixes, proxy);
         CheckWeaponUseFeedback(fixes);
     }
     finally
     {
-        plugin.GetType().GetMethod("Dispose")!.Invoke(plugin, null);
+        module.GetMethod("Dispose", moduleMethods)!.Invoke(null, null);
         harmonyType.GetMethod("UnpatchSelf")!.Invoke(harmony, null);
     }
 }
@@ -417,15 +436,3 @@ static void CheckLua(object magazine, Type identifierType)
         """);
 }
 public static class TestHooks { public static bool SkipRefresh() => false; }
-
-public class TestPluginServices : DispatchProxy
-{
-    public object? OwnerPackage;
-    protected override object? Invoke(MethodInfo? method, object?[]? args)
-    {
-        if (method?.Name == "TryGetConfig") { return false; }
-        if (method?.Name != "TryGetPackageForPlugin") { throw new NotSupportedException(method?.Name); }
-        args![0] = OwnerPackage;
-        return true;
-    }
-}

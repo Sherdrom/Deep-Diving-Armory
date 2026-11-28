@@ -1,0 +1,15 @@
+<Project>
+  <Import Project="../References.props" />
+  <PropertyGroup>
+    <Company>Deep-Diving-Armory</Company>
+    <Version>0.5.197</Version>
+  </PropertyGroup>
+  <Target Name="ReadGameVersion" BeforeTargets="GetAssemblyAttributes" DependsOnTargets="ResolveReferences">
+    <GetAssemblyIdentity AssemblyFiles="$(GameReference)">
+      <Output TaskParameter="Assemblies" ItemName="GameAssemblyIdentity" />
+    </GetAssemblyIdentity>
+    <ItemGroup>
+      <AssemblyMetadata Include="GameVersion" Value="@(GameAssemblyIdentity->'%(Version)')" />
+    </ItemGroup>
+  </Target>
+</Project>

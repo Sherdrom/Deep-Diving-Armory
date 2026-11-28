@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../../../.AssemblyCSharpSource/LuaCsModTemplate/Build.props" />
   <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Libs>../../../.Tools/Refs</Libs>
+    <DdaBin Condition="'$(DdaBin)' == ''">$(MSBuildThisFileDirectory)../../../bin</DdaBin>
+    <PlatformTarget>x64</PlatformTarget>
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>UnstableCompatibility.Tests</AssemblyName>
     <BuildTarget Condition="'$(BuildTarget)' == ''">Client</BuildTarget>
@@ -19,10 +22,11 @@
     <Reference Include="DedicatedServer" HintPath="$(Libs)/Windows/DedicatedServer.dll" Condition="'$(BuildTarget)' == 'Server'" />
     <Reference Include="BarotraumaCore" HintPath="$(Libs)/Windows/BarotraumaCore.dll" />
     <Reference Include="MonoGame.Framework.Windows.NetStandard" HintPath="$(Libs)/MonoGame.Framework.Windows.NetStandard.dll" />
-    <Reference Include="LuaCsForBarotraumaPlugin$(BuildTarget)" HintPath="$(Libs)/Windows/LuaCsForBarotraumaPlugin$(BuildTarget).dll" />
+    <Reference Include="0Harmony" HintPath="$(Libs)/0Harmony.dll" />
+    <Reference Include="Lidgren.NetStandard" HintPath="$(Libs)/Lidgren.NetStandard.dll" />
+    <Reference Include="Farseer.NetStandard" HintPath="$(Libs)/Farseer.NetStandard.dll" />
+    <Reference Include="XNATypes" HintPath="$(Libs)/XNATypes.dll" />
+    <Reference Include="Deep-Diving-Armory$(BuildTarget)" HintPath="$(DdaBin)/Windows/$(BuildTarget)/Deep-Diving-Armory$(BuildTarget).dll" />
     <Using Include="Barotrauma" />
-    <Using Include="Barotrauma.LuaCs" />
-    <Compile Include="../../../CSharp/DeepSlotExpanded.cs" Link="DeepSlotExpanded.cs" />
-    <Compile Include="../../../CSharp/MoreInformationDisplay.cs" Link="MoreInformationDisplay.cs" Condition="'$(BuildTarget)' == 'Client'" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Native/**</DefaultItemExcludes>
     <DefineConstants>$(DefineConstants);SERVER</DefineConstants>
     <OutputType>Exe</OutputType><UseAppHost>false</UseAppHost>
     <TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/ClientProject/AmmoPresets.cs" />
-    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/SharedProject/*.cs" Exclude="../../../.AssemblyCSharpSource/DeepAmmoLoader/SharedProject/Plugin.cs" />
-    <Compile Include="../../../.AssemblyCSharpSource/DeepAmmoLoader/ServerProject/*.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DDACsSource/ClientProject/ClientSource/DeepAmmoLoader/AmmoPresets.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/DeepAmmoLoader/*.cs" Exclude="../../../.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/DeepAmmoLoader/Plugin.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DDACsSource/ServerProject/ServerSource/DeepAmmoLoader/*.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/ProjectileHits/*.cs" Exclude="../../../.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/ProjectileHits/ProjectilePatches.cs" />
+    <Compile Include="../../../.AssemblyCSharpSource/DDACsSource/SharedProject/SharedSource/NoProjectileConsume/NoProjectileConsume.cs" />
   </ItemGroup>
 </Project>

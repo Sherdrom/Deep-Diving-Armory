@@ -64,31 +64,22 @@ jobs:
           print(f"Validated {count} XML files.")
           PY
 
-      - name: Run C# unit tests when present
-        shell: bash
-        run: |
-          set -euo pipefail
-          projects=()
-          if [[ -d .UnitTests/CSharp ]]; then
-            mapfile -t projects < <(find .UnitTests/CSharp -type f -name '*.csproj' -print)
-          fi
-          if ((${#projects[@]} == 0)); then
-            echo "::notice::No C# unit test projects found under .UnitTests/CSharp"
-          else
-            for project in "${projects[@]}"; do
-              dotnet test "$project" -c Release -m:1
-            done
-            dotnet test .UnitTests/CSharp/UnstableCompatibility/UnstableCompatibility.Tests.csproj -c Release -m:1 -p:BuildTarget=Server
-            dotnet build .UnitTests/CSharp/MoreInformationDisplay -c Release -m:1
-            dotnet build .UnitTests/CSharp/VirtualMagazine -c Release -m:1
-            dotnet build .UnitTests/CSharp/DeepAmmoLoader -c Release -m:1
-            dotnet build .UnitTests/CSharp/DeepAmmoLoaderUI -c Release -m:1
-            dotnet run --project .UnitTests/CSharp/DeepAmmoLoaderRegression -c Release
-          fi
-
       - name: Build C# plugins
         shell: bash
         run: .Tools/build-csharp.sh "$RUNNER_TEMP/mod"
+
+      - name: Build C# test projects and run unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DdaBin="$RUNNER_TEMP/mod/bin"
+          for project in .UnitTests/CSharp/*/*.csproj; do
+            dotnet build "$project" -c Release -m:1
+          done
+          dotnet test .UnitTests/CSharp/EntitySpawnerBudget -c Release --no-build
+          dotnet test .UnitTests/CSharp/UnstableCompatibility -c Release --no-build
+          dotnet test .UnitTests/CSharp/UnstableCompatibility -c Release -m:1 -p:BuildTarget=Server
+          dotnet run --project .UnitTests/CSharp/DeepAmmoLoaderRegression -c Release --no-build
 
       - name: Verify C# deployment
         shell: bash
@@ -99,14 +90,18 @@ jobs:
           import xml.etree.ElementTree as ET
 
           deploy_root = Path(sys.argv[1])
-          assemblies = [
-              assembly for assembly in ET.parse("ModConfig.xml").getroot().findall("./Assembly")
-              if assembly.get("IsScript", "false").lower() != "true"
-          ]
+          registrations = ET.parse("filelist.xml").getroot().findall("PluginInfo")
+          if [r.get("file") for r in registrations] != ["%ModDir%/PluginInfo.xml"]:
+              raise SystemExit("The content package must register PluginInfo.xml exactly once")
+          assemblies = ET.parse("PluginInfo.xml").getroot().findall("MainAssemblyInfo")
+          expected = {(p, t) for p in ("Windows", "Linux", "Mac") for t in ("Client", "Server")}
+          actual = [(a.attrib["platforms"], a.attrib["targets"]) for a in assemblies]
+          if len(actual) != 6 or set(actual) != expected:
+              raise SystemExit(f"Invalid plugin matrix: {actual}")
 
           missing = []
           for assembly in assemblies:
-              relative = assembly.attrib["File"].replace("%ModDir%", "", 1).lstrip("/\\")
+              relative = assembly.attrib["assemblypath"].replace("%ModDir%", "", 1).lstrip("/\\")
               dll = deploy_root.joinpath(*relative.replace("\\", "/").split("/"))
               deps = dll.with_suffix(".deps.json")
               for path in (dll, deps):
@@ -132,10 +127,8 @@ jobs:
 
           def package_release(repo_root, deploy_root, archive):
               required = set()
-              for assembly in ET.parse(repo_root / "ModConfig.xml").getroot().findall("./Assembly"):
-                  if assembly.get("IsScript", "false").lower() == "true":
-                      continue
-                  relative = assembly.attrib["File"].replace("%ModDir%", "", 1).lstrip("/\\")
+              for assembly in ET.parse(repo_root / "PluginInfo.xml").getroot().findall("MainAssemblyInfo"):
+                  relative = assembly.attrib["assemblypath"].replace("%ModDir%", "", 1).lstrip("/\\")
                   dll = Path(relative.replace("\\", "/"))
                   required.update((dll, dll.with_suffix(".deps.json")))
               missing = sorted(str(path) for path in required if not (deploy_root / path).is_file())
@@ -150,10 +143,8 @@ jobs:
                   path = Path(os.fsdecode(raw_path))
                   if path.parts[0] != "bin" and not any(part.startswith(".") for part in path.parts):
                       files[path] = repo_root / path
-              # Never fall back to checked-in binaries: only this build's output is shipped.
-              for path in (deploy_root / "bin").rglob("*"):
-                  if path.is_file():
-                      files[path.relative_to(deploy_root)] = path
+              for relative in required:
+                  files[relative] = deploy_root / relative
 
               with ZipFile(archive, "w", ZIP_DEFLATED) as release:
                   for relative, source in sorted(files.items()):

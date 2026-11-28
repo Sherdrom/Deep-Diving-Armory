@@ -14,16 +14,17 @@ using VCE_VirtualizedMagazine;
 [assembly: IgnoresAccessChecksTo("Barotrauma")]
 [assembly: IgnoresAccessChecksTo("BarotraumaCore")]
 
-// Run from the mod root after building WindowsClient; no game window is created.
+// Run from the mod root after building the client DLL; no game window is created.
 string root = Directory.GetCurrentDirectory();
 string gameDir = Path.GetFullPath(Path.Combine(root, "../.."));
 // A staged client directory lets the regression run while the game holds the deployed DLL.
-string clientDir = args.Length == 0 ? Path.Combine(root, "bin/Client/Windows") : Path.GetFullPath(args[0]);
+string platform = OperatingSystem.IsMacOS() ? "Mac" : OperatingSystem.IsWindows() ? "Windows" : "Linux";
+string clientDir = args.Length == 0 ? Path.Combine(root, "bin", platform, "Client") : Path.GetFullPath(args[0]);
 AssemblyLoadContext.Default.Resolving += (_, name) =>
 {
-    string path = Path.Combine(name.Name == "DeepAmmoLoader" ? clientDir :
-        name.Name == "VanillaComponentsExpandedClient" ? Path.Combine(root, "../Vanilla-Components-Expanded/bin/Windows/Client") :
-        name.Name == "LuaCsForBarotraumaPluginClient" ? Path.Combine(root, ".Tools/Refs/Windows") : gameDir, name.Name + ".dll");
+    string path = Path.Combine(name.Name == "Deep-Diving-ArmoryClient" ? clientDir :
+        name.Name == "VanillaComponentsExpandedClient" ? Path.Combine(root, "../Vanilla-Components-Expanded/bin", platform, "Client") :
+        gameDir, name.Name + ".dll");
     return File.Exists(path) ? AssemblyLoadContext.Default.LoadFromAssemblyPath(path) : null;
 };
 try { Run(); }
@@ -223,6 +224,23 @@ static void Run()
     typeof(GameMain).GetProperty(nameof(GameMain.GraphicsHeight))!.SetValue(null, 1080);
     GUIStyle.ComponentStyles.Add(new GUIComponentStyle(new ContentXElement(null,
         XElement.Parse("<GUIScrollBar><GUIFrameVertical /><GUIButtonVertical /></GUIScrollBar>")), null), false);
+    GUIStyle.ComponentStyles.Add(new GUIComponentStyle(new ContentXElement(null,
+        XElement.Parse("<GUIDropDown><GUIButton/><GUITextBlock/><GUIListBox/></GUIDropDown>")), null), false);
+    var settings = typeof(DeepAmmoLoader).Assembly.GetType("DeepDivingArmory.PluginSettings", true)!;
+    const BindingFlags hiddenStatic = BindingFlags.NonPublic | BindingFlags.Static;
+    var entries = (System.Collections.IList)settings.GetField("ordered", hiddenStatic)!.GetValue(null)!;
+    foreach (var element in XDocument.Load("Config/PluginSettings.xml").Descendants("Setting"))
+    {
+        entries.Add(settings.GetMethod("Create", hiddenStatic)!.Invoke(null, [element, (string)element.Attribute("Name")!]));
+    }
+    var settingsHost = new GUIFrame(new RectTransform(new Point(640, 480)), style: null);
+    var otherControl = new GUIFrame(new RectTransform(new Point(10, 10), settingsHost.RectTransform), style: null);
+    settings.GetMethod("BuildUI", hiddenStatic)!.Invoke(null, [settingsHost]);
+    var picker = settingsHost.GetAllChildren<GUIDropDown>().Single();
+    settings.GetMethod("Clear", hiddenStatic)!.Invoke(null, null);
+    if (settingsHost.Children.Single() != otherControl || picker.RectTransform.Parent != null)
+    { throw new Exception("Unloading DDA must detach its settings rows and dropdown from a surviving host."); }
+
     var dragList = new GUIListBox(new RectTransform(new Point(400, 300)), style: null)
     {
         CurrentDragMode = GUIListBox.DragMode.DragWithinBox,
@@ -279,6 +297,15 @@ static void Run()
     { throw new Exception("A saved plan unnecessarily prompted before loading a preset."); }
     draft.Clear();
     Console.WriteLine("PASS: native preset confirmation waits before replacing, cancel preserves edits, confirm uses the captured preset, and clean plans load directly.");
+    dirtyField.SetValue(loader, true);
+    var unrelatedPrompt = GUI.AskForConfirmation("", "", () => { });
+    loadPreset.Invoke(loader, null);
+    confirmation = (GUIMessageBox)GUIMessageBox.VisibleBox;
+    typeof(DeepAmmoLoader).GetMethod("ClosePresetPrompts", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, null);
+    if (!confirmation.Closed || GUIMessageBox.VisibleBox != unrelatedPrompt || !(bool)dirtyField.GetValue(loader)!)
+    { throw new Exception("Round cleanup must dismiss only DDA preset prompts without applying the draft."); }
+    unrelatedPrompt.Close();
+
     var firstRow = new GUIFrame(new RectTransform(new Point(350, 32), dragList.Content.RectTransform), style: null)
         { CanBeFocused = true, UserData = 0 };
     _ = new GUIFrame(new RectTransform(new Point(350, 32), dragList.Content.RectTransform), style: null)

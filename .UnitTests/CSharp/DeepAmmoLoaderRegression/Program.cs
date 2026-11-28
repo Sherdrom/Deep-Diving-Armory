@@ -10,6 +10,9 @@ void Check(bool condition, string message)
 }
 Dictionary<string, int> Amount(string id, int count) => new() { [id] = count };
 
+ProjectileHitTests.Run();
+NoProjectileConsumeTests.Run();
+
 var stock = new AmmoStock();
 Check(stock.TryAdd(Amount("a", 120)) && stock.TryAdd(Amount("b", 24)), "package deposit");
 Check(stock["A"] == 120, "case-insensitive identity");

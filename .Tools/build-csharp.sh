@@ -7,8 +7,9 @@ deploy_root=${1:-$repo_root}
 mkdir -p "$deploy_root"
 deploy_root=$(cd "$deploy_root" && pwd)
 
-for solution in "$repo_root"/.AssemblyCSharpSource/*/*.sln; do
-    [[ -e "$solution" ]] || continue
-    [[ "$solution" == */LuaCsModTemplate/* ]] && continue
-    dotnet build -c Release -m:1 -p:ModDeployDir="$deploy_root/" "$solution"
+for platform in Windows Linux Mac; do
+    for target in Client Server; do
+        project="$repo_root/.AssemblyCSharpSource/DDACsSource/${target}Project/${platform}${target}.csproj"
+        dotnet build "$project" -c Release -m:1 -p:ModDeployDir="$deploy_root"
+    done
 done
