@@ -156,7 +156,7 @@ public static partial class QuestRuntime
         }
         if (tabs.tabButtons.FirstOrDefault()?.Parent is not GUILayoutGroup bar) { return; }
         tabIcon ??= new UISprite(new ContentXElement(Plugin.Package, new XElement("Sprite",
-            new XAttribute("texture", "%ModDir%/Config/Quests/quest-tab.png"),
+            new XAttribute("texture", "%ModDir%/Quests/quest-tab.png"),
             new XAttribute("sourcerect", "0,0,65,65"), new XAttribute("maintainaspectratio", true), new XAttribute("tile", false))));
         AttachSidebar(bar, selected == QuestTab, () => tabs.SelectInfoFrameTab(QuestTab), tabIcon);
         tabs.tabButtons.Add(tabButton!);
@@ -270,6 +270,7 @@ public static partial class QuestRuntime
 
     static partial void ClearSide()
     {
+        ReleaseTrackedHud();
         CloseDialogue();
         ReleaseTab();
         if (TabMenu.SelectedTab == QuestTab)
@@ -302,6 +303,8 @@ public static partial class QuestRuntime
 [HarmonyPatch]
 internal static class QuestEntrances
 {
+    [HarmonyPostfix, HarmonyPatch(typeof(GameScreen), nameof(GameScreen.AddToGUIUpdateList))]
+    private static void Hud() => QuestRuntime.CollectTrackedHud();
     [HarmonyPostfix, HarmonyPatch(typeof(TabMenu), nameof(TabMenu.CreateInfoFrame))]
     private static void Added(TabMenu __instance, TabMenu.InfoFrameTab selectedTab) => QuestRuntime.AddTab(__instance, selectedTab);
     [HarmonyPostfix, HarmonyPatch(typeof(TabMenu), nameof(TabMenu.SelectInfoFrameTab))]

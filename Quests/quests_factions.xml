@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quests>
+  <Quest id="soundings" npc="dispatch" category="chain" repeatable="false" allowRemoteTurnIn="true">
+    <Prerequisites><RequireQuest id="bulkhead" /><RequireTrust npc="dispatch" count="5" /></Prerequisites>
+    <Objectives><Objective id="port" type="ReachLocation" target="city" count="1" /></Objectives>
+    <Rewards marks="650" trust="4" reputation="2" />
+  </Quest>
+  <Quest id="manifest" npc="dispatch" category="chain" allowRemoteTurnIn="true">
+    <Prerequisites><RequireQuest id="bulkhead" /></Prerequisites>
+    <Objectives><DeliverItem id="steel" target="steel" count="2" /></Objectives>
+    <Rewards>
+      <Reputation faction="coalition" amount="3" />
+      <Reputation faction="separatists" amount="-2" />
+    </Rewards>
+  </Quest>
+</Quests>

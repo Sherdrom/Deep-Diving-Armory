@@ -13,11 +13,12 @@
   </PropertyGroup>
   <Import Project="../../../.AssemblyCSharpSource/DDACsSource/References.props" />
   <ItemGroup>
+    <Reference Include="DedicatedServer" HintPath="$(Refs)/$(RefPlatform)/DedicatedServer.dll" Aliases="server" Private="false" />
     <Reference Update="System.Collections.Immutable" Private="true" />
     <Compile Include="$(Source)/SharedProject/SharedSource/QuestSystem/QuestRules.cs" />
     <Compile Include="$(Source)/SharedProject/SharedSource/QuestSystem/QuestState.cs" />
     <Compile Include="$(Source)/ClientProject/ClientSource/QuestSystem/QuestLayout.cs" />
-    <None Include="../../../Config/Quests/*.xml" Link="Config/Quests/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../../Quests/*.xml" Link="Quests/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../../text/*Quests.xml" Link="text/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

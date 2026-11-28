@@ -238,6 +238,15 @@ internal sealed partial class QuestPanel
         Surface(box, new(x + poleW + leftW - 1, y + drop, rightW, clothH), color);
     }
 
+    private static string FactionName(string id, Publisher npc)
+    {
+        var custom = TextManager.Get("dda.quest.faction." + id);
+        if (custom.Loaded) { return custom.Value; }
+        if (FactionPrefab.Prefabs.TryGet(id, out var prefab) && prefab != null) { return prefab.Name.Value; }
+        string fallback = id.Equals(npc.Faction, StringComparison.OrdinalIgnoreCase) ? Text.Npc(npc.Id, "faction") : "";
+        return TextManager.Get("faction." + id).Fallback(fallback.Length > 0 ? fallback : id).Value;
+    }
+
     private readonly record struct RewardCard(string Kind, string Title, string Value, string Subtitle,
         string Badge, Color Accent, Color Fill, ItemPrefab? Prefab, string ToolTip);
 
@@ -267,10 +276,11 @@ internal sealed partial class QuestPanel
             string sub = npcLoc.Length > 0 ? npcName + " · " + npcLoc : npcName;
             cards.Add(new("rewardstat", title, "+" + q.Rewards.Trust, sub, "★", Cyan, Tile, null, title + " +" + q.Rewards.Trust + "\n" + sub));
         }
-        if (q.Rewards.Reputation > 0)
+        foreach (var (id, amount) in q.Rewards.Reputation)
         {
-            string title = Text.Ui("reputation"), sub = Text.Npc(npc.Id, "faction");
-            cards.Add(new("rewardstat", title, "+" + q.Rewards.Reputation, sub, "flag", Green, Tile, null, title + " +" + q.Rewards.Reputation + (sub.Length > 0 ? "\n" + sub : "")));
+            string title = Text.Ui("reputation"), value = amount > 0 ? "+" + amount : amount.ToString();
+            string sub = FactionName(id, npc);
+            cards.Add(new("rewardstat", title, value, sub, "flag", amount > 0 ? Green : Red, Tile, null, title + " " + value + "\n" + sub));
         }
         foreach (string id in q.Rewards.Unlock)
         {

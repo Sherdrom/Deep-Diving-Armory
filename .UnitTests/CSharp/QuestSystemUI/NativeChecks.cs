@@ -72,6 +72,8 @@ internal static class NativeChecks
         Packet(server, plugin, "QuestSnapshot", "test-round", 18, state.Write(true), true);
         Console.WriteLine("PASS deployed client-to-server request, server-to-client snapshot and CampaignMetadata persistence");
 
+        NativeSettlement.Verify(server);
+
         var filelist = Path.Combine(mod, "filelist.xml");
         var manifest = XDocument.Load(filelist);
         manifest.Root!.Elements().Where(e => e.Name != "Text" || !((string)e.Attribute("file")!).EndsWith("Quests.xml")).Remove();
@@ -94,12 +96,15 @@ internal static class NativeChecks
         GameMain.GraphicsHeight = 1080;
         GUIStyle.ComponentStyles.Add(new GUIComponentStyle(new ContentXElement(null,
             XElement.Parse("<GUIScrollBar><GUIFrameVertical/><GUIButtonVertical/></GUIScrollBar>")), null), false);
-        var config = Path.Combine(mod, "Config/Quests");
+        var config = Path.Combine(mod, "Quests");
         var testQuests = XElement.Load(Path.Combine(config, "quests.xml"));
         var bulkhead = testQuests.Elements().First(e => (string?)e.Attribute("id") == "bulkhead");
         bulkhead.Element("Rewards")!.Add(new XElement("Item", new XAttribute("id", "steel"), new XAttribute("count", 7)));
         bulkhead.Element("Objectives")!.Add(new XElement("Custom", new XAttribute("id", "relay"), new XAttribute("target", "relay")));
-        object rules = Module("QuestRules").GetMethod("Parse", flags)!.Invoke(null, [XElement.Load(Path.Combine(config, "npcs.xml")), testQuests])!;
+        var factions = XElement.Load(Path.Combine(config, "quests_factions.xml"));
+        factions.Elements("Quest").First(q => (string?)q.Attribute("id") == "soundings").Element("Objectives")!.Add(
+            Enumerable.Range(1, 24).Select(i => new XElement("ReachLocation", new XAttribute("id", "port" + i), new XAttribute("target", "city"))));
+        object rules = Module("QuestRules").GetMethod("Parse", flags)!.Invoke(null, [XElement.Load(Path.Combine(config, "npcs.xml")), new[] { testQuests, factions }])!;
         runtime.GetProperty("Rules", flags)!.SetValue(null, rules);
         var portraits = (IDictionary)runtime.GetField("portraits", flags)!.GetValue(null)!;
         // This host exercises native geometry and hit targets without opening a graphics device.
@@ -221,7 +226,7 @@ internal static class NativeChecks
                     r.GetAllChildren<GUITextBlock>().Count(label => label.Text.SanitizedString.Value.Length > 0) >= 4), "structured task cards and tooltips");
                 Check(rows.Count(r => r.Selected) == 1 && Equals(rows.Single(r => r.Selected).UserData, Field(panel, "selected")) &&
                     filters[0].Text.Value.Contains(rows.Length.ToString()), "filter count and selected card");
-                Check(rows.Length == (npc == null ? 4 : npc == "stores" ? 1 : 3), "mode-scoped list");
+                Check(rows.Length == (npc == null ? 5 : npc == "stores" ? 1 : 4), "mode-scoped list");
                 rows[^1].OnClicked(rows[^1], rows[^1].UserData);
                 panelType.GetMethod("Refresh", flags)!.Invoke(panel, null);
                 Check(ReferenceEquals(list, Field(panel, "list")) && Equals(Field(panel, "selected"), rows[^1].UserData), "selection keeps controls");
@@ -253,6 +258,20 @@ internal static class NativeChecks
                     {
                         Select(id);
                         Check(!body.Content.FindChild("objectives").GetAllChildren<GUIButton>().Any(), "no material action on " + id);
+                    }
+                    Select("manifest");
+                    var reputationCards = body.Content.FindChild("rewards").Children.OfType<GUIFrame>()
+                        .Where(c => Equals(c.UserData, "rewardstat")).ToArray();
+                    Check(reputationCards.Length == 2 && reputationCards[0].Rect.Height == reputationCards[1].Rect.Height &&
+                        reputationCards[0].Rect.Top == reputationCards[1].Rect.Top, "two faction rewards share one row");
+                    foreach (var (index, amount, faction, tone) in new[] { (0, "+3", "木卫二联盟", "Green"), (1, "-2", "木星分离派", "Red") })
+                    {
+                        var reward = reputationCards[index];
+                        var accent = (Color)Module("QuestStyle").GetField(tone, flags)!.GetValue(null)!;
+                        var labels = reward.GetAllChildren<GUITextBlock>().ToArray();
+                        var flag = reward.FindChild("itemslot");
+                        Check(reward.Children.First().Color == accent && flag.CountChildren == 3 && flag.Children.All(c => c.Color == accent) &&
+                            labels.Any(t => t.Text.SanitizedString.Value == amount && t.TextColor == accent) && labels.Any(t => t.Text.SanitizedString.Value == faction), "flag, stripe, sign and faction " + tone);
                     }
                     Select("bulkhead");
                     var goals = body.Content.FindChild("objectives");
@@ -308,10 +327,11 @@ internal static class NativeChecks
             }
         }
         Call("ClearRound");
+        NativeHudChecks.Verify(runtime, "ClearRound");
         var finalHost = new GUIFrame(new RectTransform(new Point(86, 450)), style: null);
         var finalSidebar = new GUILayoutGroup(new RectTransform(Vector2.One, finalHost.RectTransform));
         Call("AttachSidebar", finalSidebar, false, (Action)(() => { }), null);
-        Call("Dispose");
+        NativeHudChecks.Verify(runtime, "Dispose");
         Check(finalSidebar.CountChildren == 0 && runtime.GetField("readyBadge", flags)!.GetValue(null) == null, "direct dispose releases sidebar and badge");
         var remainingRules = runtime.GetProperty("Rules", flags)!.GetValue(null)!;
         Check(((IDictionary)Field(remainingRules, "Quests")!).Count == 0 && runtime.GetField("Tracked", flags)!.GetValue(null) == null, "dispose rules and tracking");

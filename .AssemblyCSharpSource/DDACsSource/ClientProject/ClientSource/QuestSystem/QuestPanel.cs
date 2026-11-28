@@ -223,6 +223,18 @@ internal sealed partial class QuestPanel : GUIFrame
         Label(card, new(end - stateW, p + line, stateW, line), stateText, tone, align: Alignment.CenterRight);
     }
 
+    internal void RevealTracked()
+    {
+        if (list.ScrollBarVisible && list.Content.FindChild(QuestRuntime.Tracked) is { } card)
+        {
+            list.RecalculateChildren();
+            if (!list.Content.Rect.Contains(card.Rect))
+            {
+                list.BarScroll += (float)(card.Rect.Top - list.Content.Rect.Top) / Math.Max(1, list.TotalSize - list.Content.Rect.Height);
+            }
+        }
+    }
+
     internal void Close()
     {
         RemoveFromGUIUpdateList();

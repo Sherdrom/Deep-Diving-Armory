@@ -6,8 +6,52 @@ static void Check(bool condition, string test)
     if (!condition) { throw new Exception(test); }
 }
 string root = AppContext.BaseDirectory;
-var rules = QuestRules.Load(Path.Combine(root, "Config/Quests"));
-Check(rules.Quests.Count == 4 && rules.Npcs.Count == 2, "shipped quest rules");
+var rules = QuestRules.Load(Path.Combine(root, "Quests"));
+Check(rules.Quests.Count == 5 && rules.Npcs.Count == 2, "shipped quest rules");
+var npcXml = XElement.Parse("<Npcs><Npc id='n' tags='chief' faction='coalition'/></Npcs>");
+static XElement QuestFile(string id, string requirements = "", string rewards = "<Rewards/>") =>
+    XElement.Parse($"<Quests><Quest id='{id}' npc='n' category='chain'>{requirements}<Objectives><Custom id='x' target='x'/></Objectives>{rewards}</Quest></Quests>");
+static void Invalid(Action action, params string[] fragments)
+{
+    try { action(); }
+    catch (FormatException e) when (fragments.All(f => e.Message.Contains(f, StringComparison.Ordinal))) { return; }
+    throw new Exception("expected FormatException containing " + string.Join(", ", fragments));
+}
+var temp = Directory.CreateTempSubdirectory();
+try
+{
+    string FileAt(string name) => Path.Combine(temp.FullName, name);
+    npcXml.Save(FileAt("npcs.xml"));
+    QuestFile("ignored").Save(FileAt("questsOther.xml"));
+    Invalid(() => QuestRules.Load(temp.FullName), "quests.xml", "quests_*.xml");
+    QuestFile("later", "<Prerequisites><RequireQuest id='middle'/></Prerequisites>").Save(FileAt("quests_Z.xml"));
+    QuestFile("middle", rewards: "<Rewards unlock='later'/>").Save(FileAt("quests_a.xml"));
+    Check(QuestRules.Load(temp.FullName).Quests.Keys.SequenceEqual(["middle", "later"]), "split-only forward and backward references");
+    QuestFile("first").Save(FileAt("quests.xml"));
+    Check(QuestRules.Load(temp.FullName).Quests.Keys.SequenceEqual(["first", "middle", "later"]), "deterministic filename order");
+    QuestFile("middle").Save(FileAt("quests_Z.xml"));
+    Invalid(() => QuestRules.Load(temp.FullName), "quests_a.xml", "quests_Z.xml", "middle");
+    new XElement("Quest").Save(FileAt("quests_Z.xml"));
+    Invalid(() => QuestRules.Load(temp.FullName), "quests_Z.xml", "<Quests>");
+    QuestFile("other").Save(FileAt("quests_Z.xml"));
+    Invalid(() => QuestRules.Load(temp.FullName), "quests_a.xml", "middle", "later");
+}
+finally { temp.Delete(true); }
+
+IReadOnlyDictionary<string, int> Reputation(string rewards) => QuestRules.Parse(npcXml, QuestFile("rep", rewards: rewards)).Quests["rep"].Rewards.Reputation;
+Check(Reputation("<Rewards reputation='-3'/>")["coalition"] == -3 && Reputation("<Rewards reputation='120'/>")["coalition"] == 120 &&
+    Reputation("<Rewards reputation='0'/>").Count == 0, "legacy signed, unbounded positive and zero shorthand");
+var mixed = Reputation("<Rewards reputation='3'><Reputation amount='-3'/><Reputation faction='husk' amount='100'/>" +
+    "<Reputation faction='HUSK' amount='-2'/><Reputation faction='modded' amount='-100'/></Rewards>");
+Check(mixed.Count == 2 && mixed["husk"] == 98 && mixed["modded"] == -100, "merge factions and drop net zero");
+foreach (string amount in new[] { "0", "-101", "101", "1.5", "", "bad" })
+{ Invalid(() => Reputation($"<Rewards><Reputation amount='{amount}'/></Rewards>"), "rep"); }
+Invalid(() => Reputation("<Rewards><Reputation/></Rewards>"), "rep");
+Invalid(() => Reputation("<Rewards reputation='2147483647'><Reputation amount='1'/></Rewards>"), "rep");
+Check(rules.Quests["manifest"].Requires.Contains("bulkhead") && rules.Quests["bulkhead"].Rewards.Unlock.Contains("soundings") &&
+    rules.Quests["manifest"].Rewards.Reputation["coalition"] == 3 && rules.Quests["manifest"].Rewards.Reputation["separatists"] == -2, "shipped faction contract");
+Console.WriteLine("PASS split catalogs, cross-file references, diagnostics and signed faction merging");
+
 HashSet<string>? english = null;
 foreach (string language in new[] { "English", "Chinese" })
 {
@@ -63,7 +107,7 @@ int marks = 0, reputation = 0, rewards = 0;
 bool Settle(Quest q)
 {
     marks += q.Rewards.Marks;
-    reputation += q.Rewards.Reputation;
+    reputation += q.Rewards.Reputation["location"];
     rewards += q.Rewards.Items.Single(i => i.Id == "saltpeter_powder").Count;
     return true;
 }

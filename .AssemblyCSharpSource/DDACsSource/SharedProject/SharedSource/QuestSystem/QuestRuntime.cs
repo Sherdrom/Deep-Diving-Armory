@@ -23,7 +23,7 @@ public static partial class QuestRuntime
 
     internal static void Register(ISimpleHookService hooks)
     {
-        try { Rules = QuestRules.Load(Path.Combine(Plugin.Package.Dir, "Config", "Quests")); }
+        try { Rules = QuestRules.Load(Path.Combine(Plugin.Package.Dir, "Quests")); }
         catch (Exception e) { DebugConsole.ThrowError("[DDA] Quest rules: " + e.Message); }
         hooks.RegisterHook<PluginRoundStartedDelegate>(StartRound);
         hooks.RegisterHook<PluginCampaignOnEnterOutpostDelegate>(EnterOutpost);

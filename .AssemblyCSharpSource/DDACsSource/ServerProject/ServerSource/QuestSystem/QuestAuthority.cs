@@ -46,12 +46,21 @@ public static partial class QuestRuntime
     private static bool Settle(Quest q, Character actor)
     {
         var spawner = Entity.Spawner;
-        var faction = campaign!.GetMatchingFaction(Rules.Npcs[q.Npc].Faction.ToIdentifier());
-        if (spawner == null || actor.Inventory == null || (q.Rewards.Reputation > 0 && faction?.Reputation == null)) { return false; }
+        if (spawner == null || actor.Inventory == null || campaign == null) { return false; }
+        var changes = new Dictionary<Reputation, long>();
+        foreach (var (id, amount) in q.Rewards.Reputation)
+        {
+            if (campaign.GetMatchingFaction(id.ToIdentifier())?.Reputation is not { } reputation) { return false; }
+            // "location" can resolve to another faction named in the same reward.
+            changes[reputation] = changes.GetValueOrDefault(reputation) + amount;
+        }
         var rewards = q.Rewards.Items.Select(r => (Prefab: ItemPrefab.FindByIdentifier(r.Id.ToIdentifier()) as ItemPrefab, r.Count)).ToArray();
         if (rewards.Any(r => r.Prefab == null)) { return false; }
         if (q.Rewards.Marks > 0) { campaign.Bank.Give(q.Rewards.Marks); }
-        if (q.Rewards.Reputation > 0) { faction!.Reputation.AddReputation(q.Rewards.Reputation); }
+        foreach (var (reputation, amount) in changes)
+        {
+            if (amount != 0) { reputation.AddReputation(amount); }
+        }
         foreach (var reward in rewards)
         {
             for (int i = 0; i < reward.Count; i++) { spawner.AddItemToSpawnQueue(reward.Prefab, actor.Inventory); }
