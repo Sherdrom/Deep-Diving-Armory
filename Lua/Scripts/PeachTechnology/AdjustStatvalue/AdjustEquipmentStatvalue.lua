@@ -66,6 +66,13 @@ local function canAdjustCharacter(character)
 end
 
 local DDA_PACKAGE_NAME = "Deep-Diving-Armory"
+-- 支持包（可选依赖 Deep Diving Supporter Pack）锚点物品：prefab 存在即视为
+-- 支持包已启用。未启用时配置表中支持包物品的加载期校验静默跳过（缺失属预期，
+-- 运行时按装备物品查配置，查不到自然跳过，不影响功能）
+local SUPPORTER_PACK_ANCHOR_ID = "deep_wuchuan"
+local function isSupporterPackEnabled()
+    return ItemPrefab ~= nil and ItemPrefab.GetItemPrefab(SUPPORTER_PACK_ANCHOR_ID) ~= nil
+end
 local SKILL_STAT_TYPES = {
     electrical = StatTypes.ElectricalSkillBonus,
     helm = StatTypes.HelmSkillBonus,
@@ -309,9 +316,13 @@ local function validateEffectConfig(itemId, cfg)
 end
 
 local function validateItemConfigs(configs)
+    local supporterEnabled = isSupporterPackEnabled()
     for itemId, cfg in pairs(configs) do
         if cfg.optionalPrefab ~= true and ItemPrefab and not ItemPrefab.GetItemPrefab(itemId) then
-            warn("item prefab not found", itemId)
+            -- 支持包未启用时，缺失物品即支持包内容，静默跳过；支持包已启用仍缺失则如实报错
+            if supporterEnabled then
+                warn("item prefab not found", itemId)
+            end
         end
         for _, effect in ipairs(cfg.effects or { cfg }) do validateEffectConfig(itemId, effect) end
     end
